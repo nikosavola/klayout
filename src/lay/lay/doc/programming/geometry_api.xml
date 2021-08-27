@@ -625,7 +625,7 @@ ly.top_cell.shapes(ly.layer(100, 0)).insert(r11 &amp; r21)
      <class_doc href="Region#^"/> implement boolean operations (AND, OR, NOT and XOR).
      The operations can be combined with assignment (in-place) using <class_doc href="Region#&amp;="/> etc.
      <class_doc href="Region#+"/> adds the polygons from another region to self which is basically
-     the same then a boolean OR.
+     the same as a boolean OR.
   </p>
   <p><class_doc href="Region#area"/> and <class_doc href="Region#bbox"/> deliver the area and bounding
     box of the region.
@@ -687,7 +687,7 @@ ly.top_cell.shapes(ly.layer(100, 0)).insert(r11 &amp; r21)
      <class_doc href="Edges#^"/> implement boolean operations (AND, OR, NOT and XOR).
      The operations can be combined with assignment (in-place) using <class_doc href="Region#&amp;="/> etc.
      <class_doc href="Edges#+"/> adds the polygons from another edge set to self which is basically
-     the same then a boolean OR. Boolean AND and NOT are available between edges and regions as well 
+     the same as a boolean OR. Boolean AND and NOT are available between edges and regions as well 
      and will deliver the edge parts inside the given region or not inside the given region.
   </p>
   <p><class_doc href="Edges#length"/> and <class_doc href="Edges#bbox"/> deliver the total length and bounding

@@ -276,8 +276,8 @@ class Config(object):
             else:
                 return []
         else:
-            return ["-Wno-strict-aliasing",  # Avoids many "type-punned pointer" warnings
-                    "-std=c++11",  # because we use unordered_map/unordered_set
+            return [  # Avoids many "type-punned pointer" warnings
+                    "-std=c++17",  # because we use unordered_map/unordered_set
                     ]
 
     def libraries(self, mod):

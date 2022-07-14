@@ -1025,7 +1025,8 @@ void Shapes::reset_bbox_dirty ()
 
 void Shapes::update ()
 {
-  std::for_each(std::execution::par_unseq, m_layers.begin (), m_layers.end (), [&](auto l) {
+  std::for_each(std::execution::par_unseq, m_layers.begin (), m_layers.end (),
+    [](tl::vector<LayerBase *>::const_iterator l) {
     (*l)->sort ();
     (*l)->update_bbox ();
   });
@@ -1050,7 +1051,8 @@ Shapes::box_type Shapes::bbox () const
 {
   box_type box;
   std::mutex mtx;
-  std::for_each(std::execution::par, m_layers.begin (), m_layers.end (), [&](auto l) {
+  std::for_each(std::execution::par_unseq, m_layers.begin (), m_layers.end (),
+    [](tl::vector<LayerBase *>::const_iterator l) {
     if ((*l)->is_bbox_dirty ()) {
       (*l)->update_bbox ();
     }
@@ -1064,7 +1066,8 @@ Shapes::box_type Shapes::bbox () const
 void Shapes::sort () 
 {
   // tl::vector<LayerBase *>::const_iterator l = m_layers.begin ()
-  std::for_each(std::execution::par_unseq, m_layers.begin (), m_layers.end (), [&](auto l) {
+  std::for_each(std::execution::par_unseq, m_layers.begin (), m_layers.end (),
+    [](tl::vector<LayerBase *>::const_iterator l) {
     (*l)->sort ();
   });
 }

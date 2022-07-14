@@ -89,7 +89,6 @@ LIBS += -L$$LIBDIR -lklayout_db
       -Wno-long-long \
       -Wno-strict-aliasing \
       -Wno-deprecated-declarations \
-      -Wno-reserved-user-defined-literal \
 
   # because we use unordered_map/unordered_set:
   QMAKE_CXXFLAGS += -std=c++17

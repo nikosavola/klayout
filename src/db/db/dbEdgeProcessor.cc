@@ -32,6 +32,7 @@
 #include <vector>
 #include <deque>
 #include <memory>
+#include <execution>
 
 #if 0
 #define DEBUG_MERGEOP
@@ -1107,7 +1108,7 @@ add_hparallel_cutpoints (WorkEdge &e1, WorkEdge &e2, std::vector <CutPoints> &cu
 static void
 get_intersections_per_band_90 (std::vector <CutPoints> &cutpoints, std::vector <WorkEdge>::iterator current, std::vector <WorkEdge>::iterator future, db::Coord y, db::Coord yy, bool with_h)
 {
-  std::sort (current, future, edge_xmin_compare<db::Coord> ());
+  std::sort (std::execution::par_unseq, current, future, edge_xmin_compare<db::Coord> ());
 
 #ifdef DEBUG_EDGE_PROCESSOR
   printf ("y=%d..%d (90 degree)\n", y, yy);
@@ -1338,7 +1339,7 @@ get_intersections_per_band_any (std::vector <CutPoints> &cutpoints, std::vector 
   double dy = y - 0.5;
   double dyy = yy + 0.5;
 
-  std::sort (current, future, edge_xmin_at_yinterval_double_compare<db::Coord> (dy, dyy));
+  std::sort (std::execution::par_unseq, current, future, edge_xmin_at_yinterval_double_compare<db::Coord> (dy, dyy));
 
 #ifdef DEBUG_EDGE_PROCESSOR
   printf ("y=%d..%d\n", y, yy);
@@ -2224,7 +2225,7 @@ EdgeProcessor::redo_or_process (const std::vector<std::pair<db::EdgeSink *, db::
   } else {
 
     //  step 2: find intersections
-    std::sort (mp_work_edges->begin (), mp_work_edges->end (), edge_ymin_compare<db::Coord> ());
+    std::sort (std::execution::par_unseq, mp_work_edges->begin (), mp_work_edges->end (), edge_ymin_compare<db::Coord> ());
 
     y = edge_ymin ((*mp_work_edges) [0]);
     future = mp_work_edges->begin ();
@@ -2320,7 +2321,7 @@ EdgeProcessor::redo_or_process (const std::vector<std::pair<db::EdgeSink *, db::
 
           db::Edge e = ew;
           property_type p = ew.prop;
-          std::sort (cut_points->cut_points.begin (), cut_points->cut_points.end (), ProjectionCompare (e));
+          std::sort (std::execution::par_unseq, cut_points->cut_points.begin (), cut_points->cut_points.end (), ProjectionCompare (e));
 
           db::Point pll = e.p1 ();
           db::Point pl = e.p1 ();
@@ -2405,7 +2406,7 @@ EdgeProcessor::redo_or_process (const std::vector<std::pair<db::EdgeSink *, db::
   gs.reset ();
   gs.reserve (n_props);
 
-  std::sort (mp_work_edges->begin (), mp_work_edges->end (), edge_ymin_compare<db::Coord> ());
+  std::sort (std::execution::par_unseq, mp_work_edges->begin (), mp_work_edges->end (), edge_ymin_compare<db::Coord> ());
 
   y = edge_ymin ((*mp_work_edges) [0]);
 
@@ -2422,7 +2423,7 @@ EdgeProcessor::redo_or_process (const std::vector<std::pair<db::EdgeSink *, db::
       tl_assert (future->data == 0); // HINT: for development
       ++future;
     }
-    std::sort (f0, future, EdgeXAtYCompare2 (y));
+    std::sort (std::execution::par_unseq, f0, future, EdgeXAtYCompare2 (y));
 
     db::Coord yy = std::numeric_limits <db::Coord>::max ();
     if (future != mp_work_edges->end ()) {
@@ -2515,9 +2516,9 @@ EdgeProcessor::redo_or_process (const std::vector<std::pair<db::EdgeSink *, db::
                 //  order, in the other case we the other way round so that the opening
                 //  edges are always delivered with ascending property ID order.
                 if (prefer_touch) {
-                  std::sort (cc, fc, EdgePropCompare ());
+                  std::sort (std::execution::par_unseq, cc, fc, EdgePropCompare ());
                 } else {
-                  std::sort (cc, fc, EdgePropCompareReverse ());
+                  std::sort (std::execution::par_unseq, cc, fc, EdgePropCompareReverse ());
                 }
               }
 

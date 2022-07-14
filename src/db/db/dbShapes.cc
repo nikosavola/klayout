@@ -30,6 +30,8 @@
 #include "dbLayout.h"
 
 #include <limits>
+#include <execution>
+#include <mutex>
 
 namespace db
 {
@@ -1023,10 +1025,10 @@ void Shapes::reset_bbox_dirty ()
 
 void Shapes::update ()
 {
-  for (tl::vector<LayerBase *>::const_iterator l = m_layers.begin (); l != m_layers.end (); ++l) {
+  std::for_each(std::execution::par_unseq, m_layers.begin (), m_layers.end (), [&](auto l) {
     (*l)->sort ();
     (*l)->update_bbox ();
-  }
+  });
   set_dirty (false);
 }
 
@@ -1035,6 +1037,7 @@ bool Shapes::is_bbox_dirty () const
   if (is_dirty ()) {
     return true;
   }
+
   for (tl::vector<LayerBase *>::const_iterator l = m_layers.begin (); l != m_layers.end (); ++l) {
     if ((*l)->is_tree_dirty ()) {
       return true;
@@ -1046,20 +1049,24 @@ bool Shapes::is_bbox_dirty () const
 Shapes::box_type Shapes::bbox () const
 {
   box_type box;
-  for (tl::vector<LayerBase *>::const_iterator l = m_layers.begin (); l != m_layers.end (); ++l) {
+  std::mutex mtx;
+  std::for_each(std::execution::par, m_layers.begin (), m_layers.end (), [&](auto l) {
     if ((*l)->is_bbox_dirty ()) {
       (*l)->update_bbox ();
     }
+    mtx.lock()
     box += (*l)->bbox ();
-  }
+    mtx.unlock()
+  });
   return box;
 }
 
 void Shapes::sort () 
 {
-  for (tl::vector<LayerBase *>::const_iterator l = m_layers.begin (); l != m_layers.end (); ++l) {
+  // tl::vector<LayerBase *>::const_iterator l = m_layers.begin ()
+  std::for_each(std::execution::par_unseq, m_layers.begin (), m_layers.end (), [&](auto l) {
     (*l)->sort ();
-  }
+  });
 }
 
 void 

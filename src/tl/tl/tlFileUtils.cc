@@ -408,7 +408,7 @@ std::vector<std::string> dir_entries (const std::string &s, bool with_files, boo
   if (h) {
 
     struct dirent *d;
-    while ((d = readdir (h)) != NULL) {
+    while ((d = readdir (h)) != nullptr) {
 
       std::string e = tl::to_string_from_local (d->d_name);
       if (e.empty () || e == "." || e == "..") {
@@ -700,8 +700,8 @@ std::string current_dir ()
 {
 #if defined(_WIN32)
 
-  wchar_t *cwd = _wgetcwd (NULL, 0);
-  if (cwd == NULL) {
+  wchar_t *cwd = _wgetcwd (nullptr, 0);
+  if (cwd == nullptr) {
     return std::string ();
   } else {
     std::string cwds (tl::to_string (std::wstring (cwd)));
@@ -711,8 +711,8 @@ std::string current_dir ()
 
 #else
 
-  char *cwd = getcwd (NULL, 0);
-  if (cwd == NULL) {
+  char *cwd = getcwd (nullptr, 0);
+  if (cwd == nullptr) {
     return std::string ();
   } else {
     std::string cwds (tl::to_string_from_local (cwd));
@@ -736,8 +736,8 @@ static std::pair<std::string, bool> absolute_path_of_existing (const std::string
 {
 #if defined(_WIN32)
 
-  wchar_t *fp = _wfullpath (NULL, tl::to_wstring (s).c_str (), 0);
-  if (fp == NULL) {
+  wchar_t *fp = _wfullpath (nullptr, tl::to_wstring (s).c_str (), 0);
+  if (fp == nullptr) {
     return std::make_pair (std::string (), false);
   } else {
     std::string fps (tl::to_string (std::wstring (fp)));
@@ -748,8 +748,8 @@ static std::pair<std::string, bool> absolute_path_of_existing (const std::string
 #else
 
   char *fp;
-  fp = realpath (tl::to_local (s).c_str (), NULL);
-  if (fp == NULL) {
+  fp = realpath (tl::to_local (s).c_str (), nullptr);
+  if (fp == nullptr) {
     return std::make_pair (std::string (), false);
   } else {
     std::string fps (tl::to_string_from_local (fp));
@@ -933,8 +933,8 @@ bool is_same_file (const std::string &a, const std::string &b)
 
 #if defined(_WIN32)
 
-  HANDLE h1 = ::CreateFileW (tl::to_wstring (a).c_str (), 0, FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
-  HANDLE h2 = ::CreateFileW (tl::to_wstring (b).c_str (), 0, FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
+  HANDLE h1 = ::CreateFileW (tl::to_wstring (a).c_str (), 0, FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
+  HANDLE h2 = ::CreateFileW (tl::to_wstring (b).c_str (), 0, FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
 
   bool result = false;
 
@@ -1002,7 +1002,7 @@ get_app_path_internal ()
 
   wchar_t buffer[MAX_PATH];
   int len;
-  if ((len = GetModuleFileNameW (NULL, buffer, MAX_PATH)) > 0) {
+  if ((len = GetModuleFileNameW (nullptr, buffer, MAX_PATH)) > 0) {
     return tl::to_string (std::wstring (buffer));
   }
 
@@ -1020,7 +1020,7 @@ get_app_path_internal ()
   char path[PATH_MAX];
   size_t len = PATH_MAX;
   const int mib[4] = {CTL_KERN, KERN_PROC, KERN_PROC_PATHNAME, -1};
-  if (sysctl(&mib[0], 4, &path, &len, NULL, 0) == 0) {
+  if (sysctl(&mib[0], 4, &path, &len, nullptr, 0) == 0) {
     return path;
   }
   return "";
@@ -1061,7 +1061,7 @@ get_module_path (void *addr)
 {
 #if defined(_WIN32)
 
-  HMODULE h_module = NULL;
+  HMODULE h_module = nullptr;
   if (GetModuleHandleEx (GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCTSTR) addr, &h_module)) {
 
     wchar_t buffer[MAX_PATH];
@@ -1170,7 +1170,7 @@ tmpdir (const std::string &domain)
     throw tl::Exception (tl::to_string (tr ("Unable to create temporary folder in %s")), tmp);
   }
 #else
-  if (mkdtemp (tmpstr) == NULL) {
+  if (mkdtemp (tmpstr) == nullptr) {
     free (tmpstr);
     throw tl::Exception (tl::to_string (tr ("Unable to create temporary folder in %s")), tmp);
   }

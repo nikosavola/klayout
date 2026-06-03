@@ -175,7 +175,7 @@ class GitBuffer
 public:
   GitBuffer ()
   {
-    m_buf = GIT_BUF_INIT_CONST (NULL, 0);
+    m_buf = GIT_BUF_INIT_CONST (nullptr, 0);
   }
 
   ~GitBuffer ()
@@ -220,7 +220,7 @@ checkout_branch (git_repository *repo, git_remote *remote, const git_checkout_op
   //  resolve the branch by using ls-remote:
 
   size_t n = 0;
-  const git_remote_head **ls = NULL;
+  const git_remote_head **ls = nullptr;
   check (git_remote_ls (&ls, &n, remote));
 
   if (tl::verbosity () >= 20) {
@@ -334,12 +334,12 @@ GitObject::read (const std::string &org_url, const std::string &org_filter, cons
   git_strarray refspecs;
   refspecs.count = 1;
   refspecs.strings = refs;
-  git_strarray *refspecs_p = branch.empty () ? NULL : &refspecs;
+  git_strarray *refspecs_p = branch.empty () ? nullptr : &refspecs;
 
   //  Make repository
 
-  git_repository *cloned_repo = NULL;
-  git_remote *remote = NULL;
+  git_repository *cloned_repo = nullptr;
+  git_remote *remote = nullptr;
 
   try {
 
@@ -351,7 +351,7 @@ GitObject::read (const std::string &org_url, const std::string &org_filter, cons
     if (tl::verbosity () >= 10) {
       tl::info << tr ("Fetching Git repo from ") << git_remote_url (remote) << " ...";
     }
-    check (git_remote_fetch (remote, refspecs_p, &fetch_opts, NULL));
+    check (git_remote_fetch (remote, refspecs_p, &fetch_opts, nullptr));
 
     //  checkout
     checkout_branch (cloned_repo, remote, &checkout_opts, branch.empty () ? 0 : branch.c_str ());
@@ -366,10 +366,10 @@ GitObject::read (const std::string &org_url, const std::string &org_filter, cons
 
   } catch (...) {
     //  free the repo in the error case
-    if (cloned_repo != NULL) {
+    if (cloned_repo != nullptr) {
       git_repository_free (cloned_repo);
     }
-    if (remote != NULL) {
+    if (remote != nullptr) {
       git_remote_free (remote);
     }
     throw;

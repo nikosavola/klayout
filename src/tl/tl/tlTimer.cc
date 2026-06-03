@@ -194,7 +194,7 @@ Timer::memory_size ()
   size_t mem = 0;
 
   HANDLE h_process = OpenProcess (PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, GetCurrentProcessId ());
-  if (h_process != NULL) {
+  if (h_process != nullptr) {
 
     PROCESS_MEMORY_COUNTERS pmc;
     if (GetProcessMemoryInfo (h_process, &pmc, sizeof (pmc))) {
@@ -222,7 +222,7 @@ Timer::memory_size ()
     
   unsigned long memsize = 0;
   FILE *procfile = fopen ("/proc/self/stat", "r");
-  if (procfile != NULL) {
+  if (procfile != nullptr) {
     int n = fscanf (procfile, "%*d " // pid
                               "%*s " // comm
                               "%*c " // state

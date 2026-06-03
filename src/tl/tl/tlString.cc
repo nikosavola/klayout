@@ -741,9 +741,9 @@ to_word_or_quoted_string (const std::string &s, const char *non_term)
   //  If the string does not contain non_term characters, we may simply keep it.
   //  Otherwise we need to quote it.
   const char *cp = s.c_str ();
-  if (*cp && (safe_isalpha (*cp) || strchr (non_term, *cp) != NULL)) {
+  if (*cp && (safe_isalpha (*cp) || strchr (non_term, *cp) != nullptr)) {
     ++cp;
-    for ( ; *cp && (safe_isalnum (*cp) || strchr (non_term, *cp) != NULL); ++cp) {
+    for ( ; *cp && (safe_isalnum (*cp) || strchr (non_term, *cp) != nullptr); ++cp) {
       ;
     }
   }
@@ -1410,14 +1410,14 @@ Extractor::try_read_name (std::string &string, const char *non_term)
   string.clear ();
 
   //  first character must not be a digit
-  if (*m_cp && (safe_isalpha (*m_cp) || strchr (non_term, *m_cp) != NULL)) {
+  if (*m_cp && (safe_isalpha (*m_cp) || strchr (non_term, *m_cp) != nullptr)) {
     string += *m_cp;
     ++m_cp;
   } else {
     return false;
   }
 
-  while (*m_cp && (safe_isalnum (*m_cp) || strchr (non_term, *m_cp) != NULL)) {
+  while (*m_cp && (safe_isalnum (*m_cp) || strchr (non_term, *m_cp) != nullptr)) {
     string += *m_cp;
     ++m_cp;
   }
@@ -1434,7 +1434,7 @@ Extractor::try_read_word (std::string &string, const char *non_term)
 
   string.clear ();
 
-  while (*m_cp && (safe_isalnum (*m_cp) || strchr (non_term, *m_cp) != NULL)) {
+  while (*m_cp && (safe_isalnum (*m_cp) || strchr (non_term, *m_cp) != nullptr)) {
     string += *m_cp;
     ++m_cp;
   }
@@ -1495,7 +1495,7 @@ Extractor::try_read (std::string &string, const char *term)
   }
 
   string.clear ();
-  while (*m_cp && (term_is_space || ! safe_isspace (*m_cp)) && strchr (term, *m_cp) == NULL) {
+  while (*m_cp && (term_is_space || ! safe_isspace (*m_cp)) && strchr (term, *m_cp) == nullptr) {
     string += *m_cp;
     ++m_cp;
   }

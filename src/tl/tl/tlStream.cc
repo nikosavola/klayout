@@ -136,7 +136,7 @@ public:
 class ZLibFilePrivate
 {
 public:
-  ZLibFilePrivate () : zs (NULL) { }
+  ZLibFilePrivate () : zs (nullptr) { }
   gzFile zs;
 };
 
@@ -1017,7 +1017,7 @@ InputZLibFile::InputZLibFile (const std::string &path)
 #else
   mp_d->zs = gzopen (tl::string_to_system (source).c_str (), "rb");
 #endif
-  if (mp_d->zs == NULL) {
+  if (mp_d->zs == nullptr) {
     throw FileOpenErrorException (source, errno);
   }
 }
@@ -1032,16 +1032,16 @@ InputZLibFile::~InputZLibFile ()
 void
 InputZLibFile::close ()
 {
-  if (mp_d->zs != NULL) {
+  if (mp_d->zs != nullptr) {
     gzclose (mp_d->zs);
-    mp_d->zs = NULL;
+    mp_d->zs = nullptr;
   }  
 }
 
 size_t 
 InputZLibFile::read (char *b, size_t n)
 {
-  tl_assert (mp_d->zs != NULL);
+  tl_assert (mp_d->zs != nullptr);
   int ret = gzread (mp_d->zs, b, (unsigned int) n);
   if (ret < 0) {
     int gz_err = 0;
@@ -1059,7 +1059,7 @@ InputZLibFile::read (char *b, size_t n)
 void 
 InputZLibFile::reset ()
 {
-  if (mp_d->zs != NULL) {
+  if (mp_d->zs != nullptr) {
     gzrewind (mp_d->zs);
   }
 }
@@ -1472,23 +1472,23 @@ OutputZLibFile::OutputZLibFile (const std::string &p, int keep_backups)
 {
 #if defined(_WIN32)
   FILE *file = _wfopen (tl::to_wstring (path ()).c_str (), L"wb");
-  if (file == NULL) {
+  if (file == nullptr) {
     throw FileOpenErrorException (path (), errno);
   }
   mp_d->zs = gzdopen (_fileno (file), "wb");
 #else
   mp_d->zs = gzopen (tl::string_to_system (path ()).c_str (), "wb");
 #endif
-  if (mp_d->zs == NULL) {
+  if (mp_d->zs == nullptr) {
     throw FileOpenErrorException (path (), errno);
   }
 }
 
 OutputZLibFile::~OutputZLibFile ()
 {
-  if (mp_d->zs != NULL) {
+  if (mp_d->zs != nullptr) {
     gzclose (mp_d->zs);
-    mp_d->zs = NULL;
+    mp_d->zs = nullptr;
   }  
   delete mp_d;
   mp_d = 0;
@@ -1497,7 +1497,7 @@ OutputZLibFile::~OutputZLibFile ()
 void 
 OutputZLibFile::write_file (const char *b, size_t n)
 {
-  tl_assert (mp_d->zs != NULL);
+  tl_assert (mp_d->zs != nullptr);
   int ret = gzwrite (mp_d->zs, (char *) b, (unsigned int) n);
   if (ret < 0) {
     int gz_err = 0;
@@ -1516,12 +1516,12 @@ OutputZLibFile::write_file (const char *b, size_t n)
 //  InputPipe delegate implementation
 
 InputPipe::InputPipe (const std::string &path)
-  : m_file (NULL)
+  : m_file (nullptr)
 {
   std::wstring wpath = tl::to_wstring (path);
   m_source = path;
   m_file = _wpopen (wpath.c_str (), L"r");
-  if (m_file == NULL) {
+  if (m_file == nullptr) {
     throw FilePOpenErrorException (m_source, errno);
   }
 }
@@ -1540,9 +1540,9 @@ InputPipe::close ()
 int InputPipe::wait ()
 {
   int ret = 0;
-  if (m_file != NULL) {
+  if (m_file != nullptr) {
     ret = _pclose (m_file);
-    m_file = NULL;
+    m_file = nullptr;
   }
   return ret;
 }
@@ -1550,7 +1550,7 @@ int InputPipe::wait ()
 size_t
 InputPipe::read (char *b, size_t n)
 {
-  tl_assert (m_file != NULL);
+  tl_assert (m_file != nullptr);
   size_t ret = fread (b, 1, n, m_file);
   if (ret < n) {
     if (ferror (m_file)) {
@@ -1571,28 +1571,28 @@ InputPipe::reset ()
 //  OutputPipe delegate implementation
 
 OutputPipe::OutputPipe (const std::string &path)
-  : m_file (NULL)
+  : m_file (nullptr)
 {
   std::wstring wpath = tl::to_wstring (path);
   m_source = path;
   m_file = _wpopen (wpath.c_str (), L"w");
-  if (m_file == NULL) {
+  if (m_file == nullptr) {
     throw FilePOpenErrorException (m_source, errno);
   }
 }
 
 OutputPipe::~OutputPipe ()
 {
-  if (m_file != NULL) {
+  if (m_file != nullptr) {
     _pclose (m_file);
-    m_file = NULL;
+    m_file = nullptr;
   }
 }
 
 void
 OutputPipe::write (const char *b, size_t n)
 {
-  tl_assert (m_file != NULL);
+  tl_assert (m_file != nullptr);
   size_t ret = fwrite (b, 1, n, m_file);
   if (ret < n) {
     if (ferror (m_file)) {
@@ -1607,11 +1607,11 @@ OutputPipe::write (const char *b, size_t n)
 //  InputPipe delegate implementation
 
 InputPipe::InputPipe (const std::string &source)
-  : m_file (NULL)
+  : m_file (nullptr)
 {
   m_source = source;
   m_file = popen (tl::string_to_system (source).c_str (), "r");
-  if (m_file == NULL) {
+  if (m_file == nullptr) {
     throw FilePOpenErrorException (m_source, errno);
   }
 }
@@ -1630,9 +1630,9 @@ InputPipe::close ()
 int InputPipe::wait ()
 {
   int ret = 0;
-  if (m_file != NULL) {
+  if (m_file != nullptr) {
     ret = pclose (m_file);
-    m_file = NULL;
+    m_file = nullptr;
   }
   return ret;
 }
@@ -1640,7 +1640,7 @@ int InputPipe::wait ()
 size_t 
 InputPipe::read (char *b, size_t n)
 {
-  tl_assert (m_file != NULL);
+  tl_assert (m_file != nullptr);
 
   bool retry = true;
   size_t ret = 0;
@@ -1673,27 +1673,27 @@ InputPipe::reset ()
 //  OutputPipe delegate implementation
 
 OutputPipe::OutputPipe (const std::string &path)
-  : m_file (NULL)
+  : m_file (nullptr)
 {
   m_source = path;
   m_file = popen (tl::string_to_system (path).c_str (), "w");
-  if (m_file == NULL) {
+  if (m_file == nullptr) {
     throw FilePOpenErrorException (m_source, errno);
   }
 }
 
 OutputPipe::~OutputPipe ()
 {
-  if (m_file != NULL) {
+  if (m_file != nullptr) {
     pclose (m_file);
-    m_file = NULL;
+    m_file = nullptr;
   }  
 }
 
 void 
 OutputPipe::write (const char *b, size_t n)
 {
-  tl_assert (m_file != NULL);
+  tl_assert (m_file != nullptr);
 
   size_t ret = fwrite (b, 1, n, m_file);
   if (ret < n) {

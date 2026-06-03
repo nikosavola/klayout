@@ -499,19 +499,19 @@ PixelBuffer::subsample (tl::PixelBuffer &dest, unsigned int os, double g)
 PixelBuffer
 PixelBuffer::read_png (tl::InputStream &input)
 {
-  png_structp png_ptr = NULL;
-  png_infop info_ptr = NULL;
+  png_structp png_ptr = nullptr;
+  png_infop info_ptr = nullptr;
 
-  png_ptr = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, &png_read_error_f, &png_read_warn_f);
-  tl_assert (png_ptr != NULL);
+  png_ptr = png_create_read_struct (PNG_LIBPNG_VER_STRING, nullptr, &png_read_error_f, &png_read_warn_f);
+  tl_assert (png_ptr != nullptr);
 
   info_ptr = png_create_info_struct (png_ptr);
-  tl_assert (info_ptr != NULL);
+  tl_assert (info_ptr != nullptr);
 
   png_set_read_fn (png_ptr, (void *) &input, &read_from_stream_f);
   png_set_bgr (png_ptr);    // compatible with tl::color_t
 
-  png_read_png (png_ptr, info_ptr, PNG_TRANSFORM_IDENTITY, NULL);
+  png_read_png (png_ptr, info_ptr, PNG_TRANSFORM_IDENTITY, nullptr);
 
   PixelBuffer res (png_get_image_width (png_ptr, info_ptr), png_get_image_height (png_ptr, info_ptr));
 
@@ -590,12 +590,12 @@ PixelBuffer::read_png (tl::InputStream &input)
 
   } else {
 
-    png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
+    png_destroy_read_struct(&png_ptr, &info_ptr, nullptr);
     throw PixelBufferReadError (tl::sprintf (tl::to_string (tr ("PNG reader supports 8 bit G, GA, RGB or RGBA files only (file: %s, format is %d, bit depth is %d)")), input.filename (), fmt, bd));
 
   }
 
-  png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
+  png_destroy_read_struct(&png_ptr, &info_ptr, nullptr);
 
   return res;
 }
@@ -603,14 +603,14 @@ PixelBuffer::read_png (tl::InputStream &input)
 void
 PixelBuffer::write_png (tl::OutputStream &output) const
 {
-  png_structp png_ptr = NULL;
-  png_infop info_ptr = NULL;
+  png_structp png_ptr = nullptr;
+  png_infop info_ptr = nullptr;
 
-  png_ptr = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, &png_write_error_f, &png_write_warn_f);
-  tl_assert (png_ptr != NULL);
+  png_ptr = png_create_write_struct (PNG_LIBPNG_VER_STRING, nullptr, &png_write_error_f, &png_write_warn_f);
+  tl_assert (png_ptr != nullptr);
 
   info_ptr = png_create_info_struct (png_ptr);
-  tl_assert (info_ptr != NULL);
+  tl_assert (info_ptr != nullptr);
 
   png_set_write_fn (png_ptr, (void *) &output, &write_to_stream_f, &flush_stream_f);
   png_set_bgr (png_ptr);    // compatible with tl::color_t
@@ -868,19 +868,19 @@ BitmapBuffer::from_image (const QImage &img)
 BitmapBuffer
 BitmapBuffer::read_png (tl::InputStream &input)
 {
-  png_structp png_ptr = NULL;
-  png_infop info_ptr = NULL;
+  png_structp png_ptr = nullptr;
+  png_infop info_ptr = nullptr;
 
-  png_ptr = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, &png_read_error_f, &png_read_warn_f);
-  tl_assert (png_ptr != NULL);
+  png_ptr = png_create_read_struct (PNG_LIBPNG_VER_STRING, nullptr, &png_read_error_f, &png_read_warn_f);
+  tl_assert (png_ptr != nullptr);
 
   info_ptr = png_create_info_struct (png_ptr);
-  tl_assert (info_ptr != NULL);
+  tl_assert (info_ptr != nullptr);
 
   png_set_read_fn (png_ptr, (void *) &input, &read_from_stream_f);
   png_set_packswap (png_ptr); // compatible with BitmapBuffer
 
-  png_read_png (png_ptr, info_ptr, PNG_TRANSFORM_IDENTITY, NULL);
+  png_read_png (png_ptr, info_ptr, PNG_TRANSFORM_IDENTITY, nullptr);
 
   BitmapBuffer res (png_get_image_width (png_ptr, info_ptr), png_get_image_height (png_ptr, info_ptr));
 
@@ -901,12 +901,12 @@ BitmapBuffer::read_png (tl::InputStream &input)
 
   } else {
 
-    png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
+    png_destroy_read_struct(&png_ptr, &info_ptr, nullptr);
     throw PixelBufferReadError (tl::sprintf (tl::to_string (tr ("PNG bitmap reader supports monochrome files only (file: %s, format is %d, bit depth is %d)")), input.filename (), fmt, bd));
 
   }
 
-  png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
+  png_destroy_read_struct(&png_ptr, &info_ptr, nullptr);
 
   return res;
 }
@@ -914,14 +914,14 @@ BitmapBuffer::read_png (tl::InputStream &input)
 void
 BitmapBuffer::write_png (tl::OutputStream &output) const
 {
-  png_structp png_ptr = NULL;
-  png_infop info_ptr = NULL;
+  png_structp png_ptr = nullptr;
+  png_infop info_ptr = nullptr;
 
-  png_ptr = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, &png_write_error_f, &png_write_warn_f);
-  tl_assert (png_ptr != NULL);
+  png_ptr = png_create_write_struct (PNG_LIBPNG_VER_STRING, nullptr, &png_write_error_f, &png_write_warn_f);
+  tl_assert (png_ptr != nullptr);
 
   info_ptr = png_create_info_struct (png_ptr);
-  tl_assert (info_ptr != NULL);
+  tl_assert (info_ptr != nullptr);
 
   png_set_write_fn (png_ptr, (void *) &output, &write_to_stream_f, &flush_stream_f);
   png_set_packswap (png_ptr); // compatible with BitmapBuffer

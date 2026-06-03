@@ -69,7 +69,7 @@ void usleep (unsigned long us)
     sigset_t mask;
     init_sigmask_for_sleep (&mask);
 
-    pselect (0, NULL, NULL, NULL, &wait, &mask);
+    pselect (0, nullptr, nullptr, nullptr, &wait, &mask);
 
 #endif
 }
@@ -91,7 +91,7 @@ void msleep (unsigned long ms)
     sigset_t mask;
     init_sigmask_for_sleep (&mask);
 
-    pselect (0, NULL, NULL, NULL, &wait, &mask);
+    pselect (0, nullptr, nullptr, nullptr, &wait, &mask);
 
 #endif
 }

@@ -225,12 +225,12 @@ public:
     : mp_struct_handler (0)
   {
     mp_parser = XML_ParserCreate ("UTF-8");
-    tl_assert (mp_parser != NULL);
+    tl_assert (mp_parser != nullptr);
   }
 
   ~XMLParserPrivateData ()
   {
-    if (mp_parser != NULL) {
+    if (mp_parser != nullptr) {
       XML_ParserFree (mp_parser);
     }
   }
@@ -270,7 +270,7 @@ public:
     mp_struct_handler = &struct_handler;
 
     //  Just in case we want to reuse it ...
-    XML_ParserReset (mp_parser, NULL);
+    XML_ParserReset (mp_parser, nullptr);
     XML_SetUserData (mp_parser, (void *) this);
     XML_SetElementHandler (mp_parser, start_element_handler, end_element_handler);
     XML_SetCharacterDataHandler (mp_parser, cdata_handler);

@@ -1237,7 +1237,7 @@ void CurlNetworkManager::tick ()
 #else
     // Portable sleep for platforms other than Windows.
     struct timeval wait = { 0, 10 * 1000 }; /* 10ms */
-    rc = select (0, NULL, NULL, NULL, &wait);
+    rc = select (0, nullptr, nullptr, nullptr, &wait);
 #endif
   }
   else {

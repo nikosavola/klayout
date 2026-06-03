@@ -113,9 +113,9 @@ public:
   WaitConditionPrivate ()
     : m_initialized (false)
   {
-    if (pthread_mutex_init (&m_mutex, NULL) != 0) {
+    if (pthread_mutex_init (&m_mutex, nullptr) != 0) {
       tl::error << tr ("Unable to create pthread Mutex for WaitCondition");
-    } else if (pthread_cond_init(&m_cond, NULL) != 0) {
+    } else if (pthread_cond_init(&m_cond, nullptr) != 0) {
       tl::error << tr ("Unable to create pthread Condition for WaitCondition");
     } else {
       m_initialized = true;
@@ -320,7 +320,7 @@ void Thread::start ()
 
   mp_data->initialized = true;
   mp_data->running = true;
-  if (pthread_create (&mp_data->pthread, NULL, &start_thread, (void *) this) != 0) {
+  if (pthread_create (&mp_data->pthread, nullptr, &start_thread, (void *) this) != 0) {
     tl::error << tr ("Failed to create thread");
   }
 }

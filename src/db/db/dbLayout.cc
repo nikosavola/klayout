@@ -553,9 +553,9 @@ Layout::clear ()
 
   m_layers.clear ();
 
-  for (std::vector<const char *>::const_iterator p = m_cell_names.begin (); p != m_cell_names.end (); ++p) {
-    if (*p) {
-      delete [] *p;
+  for (auto p : m_cell_names) {
+    if (p) {
+      delete [] p;
     }
   }
   m_cell_names.clear ();
@@ -564,8 +564,8 @@ Layout::clear ()
   m_shape_repository = db::GenericRepository ();
   m_array_repository = db::ArrayRepository ();
 
-  for (std::vector<pcell_header_type *>::const_iterator pc = m_pcells.begin (); pc != m_pcells.end (); ++pc) {
-    delete *pc;
+  for (auto pc : m_pcells) {
+    delete pc;
   }
   m_pcells.clear ();
   m_pcell_ids.clear ();
@@ -591,9 +591,9 @@ Layout::operator= (const Layout &d)
     m_pcell_ids = d.m_pcell_ids;
     m_pcells.reserve (d.m_pcells.size ());
 
-    for (std::vector<pcell_header_type *>::const_iterator pc = d.m_pcells.begin (); pc != d.m_pcells.end (); ++pc) {
-      if (*pc) {
-        m_pcells.push_back (new pcell_header_type (**pc));
+    for (auto pc : d.m_pcells) {
+      if (pc) {
+        m_pcells.push_back (new pcell_header_type (*pc));
       } else {
         m_pcells.push_back (0);
       }
@@ -617,10 +617,10 @@ Layout::operator= (const Layout &d)
     m_cell_names.reserve (d.m_cell_names.size ());
 
     cell_index_type i = 0;
-    for (std::vector<const char *>::const_iterator p = d.m_cell_names.begin (); p != d.m_cell_names.end (); ++p) {
-      if (*p) {
-        char *pp = new char [strlen (*p) + 1];
-        strcpy (pp, *p);
+    for (auto p : d.m_cell_names) {
+      if (p) {
+        char *pp = new char [strlen (p) + 1];
+        strcpy (pp, p);
         m_cell_names.push_back (pp);
         m_cell_map.insert (std::make_pair (pp, i));
       } else {
@@ -847,14 +847,14 @@ Layout::mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat
   db::mem_stat (stat, purpose, cat, m_shape_repository, true, (void *) this);
   db::mem_stat (stat, purpose, cat, m_array_repository, true, (void *) this);
 
-  for (std::vector<const char *>::const_iterator i = m_cell_names.begin (); i != m_cell_names.end (); ++i) {
-    stat->add (typeid (char []), (void *) *i, *i ? (strlen (*i) + 1) : 0, *i ? (strlen (*i) + 1) : 0, (void *) this, purpose, cat);
+  for (auto i : m_cell_names) {
+    stat->add (typeid (char []), (void *) i, i ? (strlen (i) + 1) : 0, i ? (strlen (i) + 1) : 0, (void *) this, purpose, cat);
   }
-  for (cell_list::const_iterator i = m_cells.begin (); i != m_cells.end (); ++i) {
-    db::mem_stat (stat, MemStatistics::CellInfo, int (i->id ()), *i, false, (void *) this);
+  for (const auto &i : m_cells) {
+    db::mem_stat (stat, MemStatistics::CellInfo, int (i.id ()), i, false, (void *) this);
   }
-  for (std::vector<pcell_header_type *>::const_iterator i = m_pcells.begin (); i != m_pcells.end (); ++i) {
-    db::mem_stat (stat, MemStatistics::CellInfo, 0, **i, false, (void *) this);
+  for (auto i : m_pcells) {
+    db::mem_stat (stat, MemStatistics::CellInfo, 0, *i, false, (void *) this);
   }
 }
 
@@ -899,8 +899,8 @@ Layout::delete_cells (const std::set<cell_index_type> &cells_to_delete)
 {
   //  Collect parent cells
   std::set <cell_index_type> pcs;
-  for (std::set<cell_index_type>::const_iterator c = cells_to_delete.begin (); c != cells_to_delete.end (); ++c) {
-    const db::Cell &cref = cell (*c);
+  for (auto c : cells_to_delete) {
+    const db::Cell &cref = cell (c);
     cref.check_locked ();
     for (db::Cell::parent_cell_iterator pc = cref.begin_parent_cells (); pc != cref.end_parent_cells (); ++pc) {
       pcs.insert (*pc);

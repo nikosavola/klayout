@@ -42,6 +42,18 @@ TL_PUBLIC NO_RETURN void assertion_failed (const char *filename, unsigned int li
   tl::assertion_failed (__FILE__, __LINE__, #COND); \
 }
 
+//  Contract markers (Phase 5.5).
+//
+//  C++26 contracts (P2900: pre(...)/post(...)/contract_assert(...)) are not yet
+//  available in any shipping compiler. Until then these macros make
+//  precondition / postcondition intent explicit at the top / bottom of a
+//  function body while behaving exactly like tl_assert. When contracts ship, a
+//  TL_HAS_CONTRACTS helper can be added to tlCxxFeatures.h and the function-level
+//  pre()/post() forms adopted at the declaration site; these statement-level
+//  markers then become contract_assert. See doc/modernization/5.5-contracts.md.
+#define tl_precondition(COND)  tl_assert (COND)
+#define tl_postcondition(COND) tl_assert (COND)
+
 } // namespace tl
 
 #endif

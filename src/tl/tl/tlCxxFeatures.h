@@ -40,8 +40,8 @@
  *
  *  Modernization steps should prefer the TL_CXX* / TL_HAS_* convenience macros
  *  below so that the default C++17 build keeps compiling unchanged and
- *  newer-standard features stay strictly opt-in (enabled simply by building with
- *  a newer -std=, e.g. via build.sh's -cpp20 / -cpp23 / -cpp26 options).
+ *  newer-standard features stay strictly opt-in (enabled simply by compiling
+ *  against a newer -std=, e.g. CXXFLAGS=-std=c++20).
  */
 
 //  Provide __cpp_* feature-test macros where available (since C++20 these are

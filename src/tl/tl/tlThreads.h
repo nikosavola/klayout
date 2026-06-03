@@ -165,7 +165,7 @@ private:
  *
  *    tl::ScopedLock<tl::Mutex, tl::Mutex> lk (m1, m2);  // no fixed lock order
  *
- *  Only available when building with C++17 or newer (-cpp20 and friends); the
+ *  Only available when the compiler is building as C++17 or newer; the
  *  pointer-based MutexLocker above remains the portable default.
  */
 template <class... Mutexes>

@@ -41,9 +41,6 @@ HAVE_CURL=0
 HAVE_EXPAT=0
 HAVE_GIT2=1
 HAVE_LSTREAM=1
-HAVE_CPP20=0
-HAVE_CPP23=0
-HAVE_CPP26=0
 
 RUBYINCLUDE=""
 RUBYINCLUDE2=""
@@ -220,18 +217,6 @@ while [ "$*" != "" ]; do
   -nolstream)
     HAVE_LSTREAM=0
     ;;
-  -cpp20)
-    HAVE_CPP20=1
-    ;;
-  -cpp23)
-    HAVE_CPP20=1
-    HAVE_CPP23=1
-    ;;
-  -cpp26)
-    HAVE_CPP20=1
-    HAVE_CPP23=1
-    HAVE_CPP26=1
-    ;;
   -qt5)
     echo "*** WARNING: -qt5 option is ignored - Qt version is auto-detected now."
     ;;
@@ -290,13 +275,15 @@ while [ "$*" != "" ]; do
     echo "  -libpng               Use libpng instead of Qt for PNG generation"
     echo "  -nolibgit2            Do not include libgit2 for Git package support"
     echo "  -nolstream            Do not include the LStream plugin"
-    echo "  -cpp20                Uses some C++20 features (e.g. atomics)"
-    echo "  -cpp23                Uses some C++23 features (implies -cpp20)"
-    echo "  -cpp26                Uses some C++26 features (implies -cpp23)"
     echo ""
     echo "Environment Variables:"
     echo ""
     echo "  QMAKE_CCACHE=1        Adds CONFIG+=ccache to qmake command (only works if Qt>=5.9.2)"
+    echo ""
+    echo "The C++ standard is not forced by this script: it follows the compiler /"
+    echo "Qt mkspec default. Build against a newer standard by selecting it in the"
+    echo "compiler flags (e.g. CXXFLAGS=-std=c++20 with -expert, or CONFIG+=c++20 in"
+    echo "qmake); newer-standard features are then detected automatically."
     echo ""
     exit 0
     ;;
@@ -688,9 +675,6 @@ qmake_options=(
   HAVE_PNG="$HAVE_PNG"
   HAVE_GIT2="$HAVE_GIT2"
   HAVE_LSTREAM="$HAVE_LSTREAM"
-  HAVE_CPP20="$HAVE_CPP20"
-  HAVE_CPP23="$HAVE_CPP23"
-  HAVE_CPP26="$HAVE_CPP26"
   PREFIX="$BIN"
   RPATH="$RPATH"
   KLAYOUT_VERSION="$KLAYOUT_VERSION"

@@ -204,25 +204,13 @@ msvc {
   #     -Wno-reserved-user-defined-literal \
   #
 
-  # C++ standard selection. The -cpp20 / -cpp23 / -cpp26 build options select
-  # the -std= flag (higher standards imply the lower ones). No HAVE_CPP* defines
-  # are emitted: the code infers available features directly from __cplusplus and
-  # the standard __cpp_* / __cpp_lib_* feature-test macros (see tlCxxFeatures.h),
-  # so the standard chosen here is the single source of truth.
-  equals(HAVE_CPP26, "1") {
-    QMAKE_CXXFLAGS += -std=c++26
-  } else:equals(HAVE_CPP23, "1") {
-    QMAKE_CXXFLAGS += -std=c++23
-  } else:equals(HAVE_CPP20, "1") {
-    QMAKE_CXXFLAGS += -std=c++20
-  } else {
-    lessThan(QT_MAJOR_VERSION, 6) {
-      # because we use unordered_map/unordered_set:
-      QMAKE_CXXFLAGS += -std=c++11
-    } else {
-      QMAKE_CXXFLAGS += -std=c++17
-    }
-  }
+  # No C++ standard is forced here. The standard is whatever the compiler is
+  # given - its default, or an explicit -std= passed via CXXFLAGS
+  # (e.g. CXXFLAGS=-std=c++20). The code then infers which features are available
+  # directly from __cplusplus and the standard __cpp_* / __cpp_lib_* feature-test
+  # macros (see tlCxxFeatures.h), so the given standard is the single source of
+  # truth. Note: KLayout requires at least C++17 with Qt6 (C++11 with Qt5); all
+  # currently supported compilers default to at least that.
 
   win32 {
 

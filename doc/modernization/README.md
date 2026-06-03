@@ -6,9 +6,10 @@ This directory tracks the staged C++11 → C++17/20/23/26 modernization effort.
 
 - **The default build must not break.** The Qt6 build is C++17, but the Qt5
   build still compiles at **C++11**, so any C++17+ feature in shared code is
-  guarded and opt-in. The `-cpp20` / `-cpp23` / `-cpp26` switches in `build.sh`
-  / `src/klayout.pri` only select the `-std=` flag; they emit no `HAVE_CPP*`
-  define.
+  guarded and opt-in. Neither `build.sh` nor `src/klayout.pri` forces a `-std=`
+  flag or emits any `HAVE_CPP*` define: the C++ standard is whatever the compiler
+  / Qt mkspec is configured with, and a newer standard is selected purely through
+  the compiler flags (e.g. `CXXFLAGS=-std=c++20`).
 - **Central feature detection:** `src/tl/tl/tlCxxFeatures.h` infers everything
   from the compiler itself - `__cplusplus` for the standard level and the
   standard `__cpp_*` / `__cpp_lib_*` feature-test macros for individual features

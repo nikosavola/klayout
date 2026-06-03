@@ -170,4 +170,22 @@ namespace tl
 #  define TL_IF_CONSTEXPR if
 #endif
 
+//  std::span (C++20). Exposed as tl::span when the standard library provides it
+//  (TL_HAS_SPAN). Use it to replace (pointer, size) parameter pairs in binary
+//  readers, polygon point arrays and other buffer interfaces with a single
+//  bounds-aware, zero-cost view:
+//
+//    #if TL_HAS_SPAN
+//      void write (tl::span<const db::Point> points);
+//    #else
+//      void write (const db::Point *points, size_t n);
+//    #endif
+#if TL_HAS_SPAN
+#  include <span>
+namespace tl
+{
+  using std::span;
+}
+#endif
+
 #endif

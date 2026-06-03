@@ -25,6 +25,7 @@
 #define HDR_tlString
 
 #include "tlCommon.h"
+#include "tlCxxFeatures.h"
 
 #include <string>
 #include <sstream>
@@ -36,6 +37,10 @@
 #include "tlException.h"
 #include "tlVariant.h"
 #include "tlTypeTraits.h"
+
+#if TL_HAS_STD_FORMAT
+#  include <format>
+#endif
 
 #if defined(HAVE_QT)
 class QImage;
@@ -928,6 +933,28 @@ inline std::string sprintf (const std::string &fmt, const tl::Variant &a1, const
   a.push_back (a7);
   return sprintf(fmt, a);
 }
+
+#if TL_HAS_STD_FORMAT
+/**
+ *  @brief Type-safe std::format wrapper for new formatting code (C++20)
+ *
+ *  tl::format forwards to std::format. It is type-safe and faster than the
+ *  sprintf / snprintf family, and is intended for *new* internal formatting,
+ *  logging and error messages.
+ *
+ *  Note: it is NOT a replacement for tl::sprintf above. tl::sprintf uses the
+ *  %-style, translatable (tr()) format strings together with tl::Variant
+ *  arguments that the rest of the code base and the GUI rely on; migrating those
+ *  would change both the format syntax ({} vs %) and the translation strings.
+ *  Use tl::format only where you would otherwise reach for std::ostringstream or
+ *  snprintf.
+ */
+template <class... Args>
+inline std::string format (std::format_string<Args...> fmt, Args &&... args)
+{
+  return std::format (fmt, std::forward<Args> (args)...);
+}
+#endif
 
 TL_PUBLIC std::string trim (const std::string &s);
 TL_PUBLIC std::vector<std::string> split (const std::string &s, const std::string &sep);

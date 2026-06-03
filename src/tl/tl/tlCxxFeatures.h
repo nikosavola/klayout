@@ -146,4 +146,28 @@ namespace tl
 #  define TL_HAS_STRING_VIEW 0
 #endif
 
+//  "if constexpr" enabler (Phase 1.5). Using "if constexpr" directly would break
+//  the C++11 Qt5 build, so template code that wants compile-time branch pruning
+//  writes TL_IF_CONSTEXPR instead:
+//
+//    template <class T>
+//    void f (const T &x) {
+//      TL_IF_CONSTEXPR (std::is_integral<T>::value) {
+//        ... integer path ...
+//      } else {
+//        ... other path ...
+//      }
+//    }
+//
+//  On C++17+ this becomes "if constexpr" (the dead branch is discarded, enabling
+//  SFINAE-free dispatch). On C++11/14 it degrades to an ordinary "if" - which is
+//  exactly the pre-existing behaviour, so nothing regresses. Note: when relying
+//  on a branch being *discarded* (e.g. it would not compile for some T), the
+//  code must still also provide a C++11 fallback (tag dispatch / overload).
+#if defined(__cpp_if_constexpr) || (defined(__cplusplus) && __cplusplus >= 201703L)
+#  define TL_IF_CONSTEXPR if constexpr
+#else
+#  define TL_IF_CONSTEXPR if
+#endif
+
 #endif

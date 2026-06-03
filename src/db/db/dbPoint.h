@@ -32,8 +32,12 @@
 #include "tlString.h"
 #include "tlTypeTraits.h"
 #include "tlVector.h"
+#include "tlCxxFeatures.h"
 
 #include <string>
+#if TL_HAS_SPACESHIP
+#  include <compare>
+#endif
 
 namespace db {
 
@@ -214,6 +218,25 @@ public:
   {
     return m_y < p.m_y || (m_y == p.m_y && m_x < p.m_x);
   }
+
+#if TL_HAS_SPACESHIP
+  /**
+   *  @brief Three-way comparison operator (C++20)
+   *
+   *  This intentionally mirrors operator< above (y first, then x) rather than
+   *  using a defaulted comparison, which would compare in member declaration
+   *  order (x first) and silently change the established sorting order used by
+   *  point-keyed maps/sets. It supplies the >, <=, >= operators for free while
+   *  staying consistent with the existing operator<.
+   */
+  auto operator<=> (const point<C> &p) const
+  {
+    if (auto c = (m_y <=> p.m_y); c != 0) {
+      return c;
+    }
+    return m_x <=> p.m_x;
+  }
+#endif
 
   /**
    *  @brief Equality test operator

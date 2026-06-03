@@ -27,6 +27,7 @@
 #include "tlCommon.h"
 #include "tlThreads.h"
 #include <algorithm>
+#include <atomic>
 
 namespace tl
 {
@@ -86,12 +87,12 @@ public:
     return mp_x;
   }
 
-  int ref_count () const { return m_ref_count; };
-  int dec_ref () { return --m_ref_count; }
-  void inc_ref () { ++m_ref_count; }
+  int ref_count () const { return m_ref_count.load(std::memory_order_relaxed); };
+  int dec_ref () { return m_ref_count.fetch_sub(1, std::memory_order_acq_rel) - 1; }
+  void inc_ref () { m_ref_count.fetch_add(1, std::memory_order_relaxed); }
 
 private:
-  int m_ref_count;
+  std::atomic<int> m_ref_count;
   X *mp_x;
 };
 

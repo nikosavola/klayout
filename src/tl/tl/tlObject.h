@@ -29,6 +29,7 @@
 #include "tlAssert.h"
 #include "tlThreads.h"
 
+#include <atomic>
 #include <iterator>
 #include <vector>
 
@@ -134,7 +135,8 @@ private:
   void unregister_ptr (WeakOrSharedPtr *p);
   bool has_strong_references () const;
 
-  WeakOrSharedPtr *mp_ptrs;  
+  std::atomic<uintptr_t> mp_ptrs;
+  mutable std::atomic<bool> m_list_lock;
 };
 
 /**

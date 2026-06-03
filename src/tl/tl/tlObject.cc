@@ -31,8 +31,47 @@ namespace tl
 // ---------------------------------------------------------------------
 //  Object implementation
 
+namespace {
+  /**
+   *  @brief A high-performance, cache-friendly spinlock helper
+   *  Based on the rigtorp spinlock design (https://rigtorp.se/spinlock/)
+   */
+  class SpinLocker {
+  public:
+    SpinLocker(std::atomic<bool>& lock) : m_lock(lock) {
+      for (;;) {
+        if (!m_lock.exchange(true, std::memory_order_acquire)) {
+          return;
+        }
+        while (m_lock.load(std::memory_order_relaxed)) {
+#if defined(__i386__) || defined(__x86_64__) || defined(_M_IX86) || defined(_M_X64)
+#  if defined(_MSC_VER)
+          _mm_pause();
+#  else
+          __asm__ __volatile__("pause");
+#  endif
+#elif defined(__arm__) || defined(__aarch64__) || defined(_M_ARM) || defined(_M_ARM64)
+#  if defined(_MSC_VER)
+          __yield();
+#  else
+          __asm__ __volatile__("yield");
+#  endif
+#endif
+        }
+      }
+    }
+
+    ~SpinLocker() {
+      m_lock.store(false, std::memory_order_release);
+    }
+
+  private:
+    std::atomic<bool>& m_lock;
+  };
+}
+
 Object::Object ()
-  : mp_ptrs (0)
+  : mp_ptrs (0), m_list_lock (false)
 {
   //  .. nothing yet ..
 }
@@ -51,13 +90,13 @@ Object::reset ()
   //  But this will easily create deadlocks and the
   //  destructor should not be called while other threads
   //  are accessing this object anyway.
-  while ((ptrs = reinterpret_cast<WeakOrSharedPtr *> (size_t (mp_ptrs) & ~size_t (1))) != 0) {
+  while ((ptrs = reinterpret_cast<WeakOrSharedPtr *> (mp_ptrs.load(std::memory_order_relaxed) & ~uintptr_t (1))) != 0) {
     ptrs->reset_object ();
   }
 }
 
 Object::Object (const Object & /*other*/)
-  : mp_ptrs (0)
+  : mp_ptrs (0), m_list_lock (false)
 {
   //  .. nothing yet ..
 }
@@ -73,24 +112,28 @@ void Object::register_ptr (WeakOrSharedPtr *p)
   tl_assert (p->mp_next == 0);
   tl_assert (p->mp_prev == 0);
 
-  WeakOrSharedPtr *ptrs = (WeakOrSharedPtr *)(size_t (mp_ptrs) & ~size_t (1));
-  bool kept = (size_t (mp_ptrs) & size_t(1));
+  SpinLocker lock(m_list_lock);
+  uintptr_t cur_ptrs = mp_ptrs.load(std::memory_order_relaxed);
+  WeakOrSharedPtr *ptrs = reinterpret_cast<WeakOrSharedPtr*>(cur_ptrs & ~uintptr_t(1));
+  bool kept = (cur_ptrs & uintptr_t(1));
 
   p->mp_next = ptrs;
   if (ptrs) {
     ptrs->mp_prev = p;
   }
 
-  mp_ptrs = (WeakOrSharedPtr *)(size_t (p) | (kept ? 1 : 0));
+  mp_ptrs.store(reinterpret_cast<uintptr_t>(p) | (kept ? 1 : 0), std::memory_order_relaxed);
 }
 
 void Object::unregister_ptr (WeakOrSharedPtr *p)
 {
-  WeakOrSharedPtr *ptrs = (WeakOrSharedPtr *)(size_t (mp_ptrs) & ~size_t (1));
-  bool kept = (size_t (mp_ptrs) & size_t(1));
+  SpinLocker lock(m_list_lock);
+  uintptr_t cur_ptrs = mp_ptrs.load(std::memory_order_relaxed);
+  WeakOrSharedPtr *ptrs = reinterpret_cast<WeakOrSharedPtr*>(cur_ptrs & ~uintptr_t(1));
+  bool kept = (cur_ptrs & uintptr_t(1));
 
   if (p == ptrs) {
-    mp_ptrs = (WeakOrSharedPtr *)(size_t (p->mp_next) | (kept ? 1 : 0));
+    mp_ptrs.store(reinterpret_cast<uintptr_t>(p->mp_next) | (kept ? 1 : 0), std::memory_order_relaxed);
   } 
   if (p->mp_prev) {
     p->mp_prev->mp_next = p->mp_next;
@@ -103,12 +146,30 @@ void Object::unregister_ptr (WeakOrSharedPtr *p)
 
 void Object::detach_from_all_events ()
 {
-  WeakOrSharedPtr *ptrs = (WeakOrSharedPtr *)(size_t (mp_ptrs) & ~size_t (1));
+  tl::MutexLocker locker (&WeakOrSharedPtr::lock());
+  SpinLocker slock(m_list_lock);
+  
+  WeakOrSharedPtr *ptrs = reinterpret_cast<WeakOrSharedPtr*>(mp_ptrs.load(std::memory_order_relaxed) & ~uintptr_t(1));
 
   for (WeakOrSharedPtr *p = ptrs; p; ) {
     WeakOrSharedPtr *pnext = p->mp_next;
     if (p->is_event ()) {
-      p->reset_object ();
+      if (p == ptrs) {
+          uintptr_t cur_ptrs = mp_ptrs.load(std::memory_order_relaxed);
+          bool kept = (cur_ptrs & uintptr_t(1));
+          mp_ptrs.store(reinterpret_cast<uintptr_t>(p->mp_next) | (kept ? 1 : 0), std::memory_order_relaxed);
+          ptrs = p->mp_next;
+      } 
+      if (p->mp_prev) {
+          p->mp_prev->mp_next = p->mp_next;
+      }
+      if (p->mp_next) {
+          p->mp_next->mp_prev = p->mp_prev;
+      }
+      p->mp_prev = p->mp_next = 0;
+      
+      p->mp_t = 0;
+      p->m_is_shared = true;
     }
     p = pnext;
   }
@@ -116,12 +177,15 @@ void Object::detach_from_all_events ()
 
 bool Object::has_strong_references () const
 {
-  WeakOrSharedPtr *ptrs = (WeakOrSharedPtr *)(size_t (mp_ptrs) & ~size_t (1));
-  if (ptrs != mp_ptrs) {
+  uintptr_t cur_ptrs = mp_ptrs.load(std::memory_order_acquire);
+  if (cur_ptrs & uintptr_t(1)) {
     //  Object is kept
     return true;
   }
 
+  SpinLocker lock(m_list_lock);
+  cur_ptrs = mp_ptrs.load(std::memory_order_relaxed);
+  WeakOrSharedPtr *ptrs = reinterpret_cast<WeakOrSharedPtr*>(cur_ptrs & ~uintptr_t(1));
   for (WeakOrSharedPtr *p = ptrs; p; p = p->mp_next) {
     if (p->is_shared ()) {
       return true;
@@ -132,15 +196,23 @@ bool Object::has_strong_references () const
 
 void Object::keep_object ()
 {
-  mp_ptrs = (WeakOrSharedPtr *)(size_t (mp_ptrs) | size_t (1));
+  mp_ptrs.fetch_or(1, std::memory_order_relaxed);
 }
 
 void Object::release_object ()
 {
-  mp_ptrs = (WeakOrSharedPtr *)(size_t (mp_ptrs) & ~size_t (1));
+  bool do_delete = false;
+  {
+    tl::MutexLocker locker (&WeakOrSharedPtr::lock());
+    mp_ptrs.fetch_and(~uintptr_t(1), std::memory_order_release);
 
-  //  If no more strong references are left, we have to delete ourselves
-  if (! has_strong_references ()) {
+    //  If no more strong references are left, we have to delete ourselves
+    if (! has_strong_references ()) {
+      do_delete = true;
+    }
+  }
+  
+  if (do_delete) {
     delete this;
   }
 }

@@ -325,7 +325,7 @@ public:
   inline double operator[] (double x) const
   {
     size_t i = size_t ((x - m_xmin) * m_dxinv);
-    return mp_y[i];
+    return m_y[i];
   }
 
   /**
@@ -338,7 +338,7 @@ public:
   inline unsigned int operator() (double x) const
   {
     size_t i = size_t ((x - m_xmin) * m_dxinv);
-    return mp_c[i];
+    return m_c[i];
   }
 
   /**
@@ -354,8 +354,8 @@ public:
 private:
   double m_dxinv;
   double m_xmin;
-  double *mp_y;
-  unsigned int *mp_c;
+  std::vector<double> m_y;
+  std::vector<unsigned int> m_c;
   size_t m_size;
   DataMappingBase *mp_dm;
 

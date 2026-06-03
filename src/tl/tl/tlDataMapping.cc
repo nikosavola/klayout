@@ -321,7 +321,7 @@ TableDataMapping::dump () const
 //  DataMappingLookupTable implementation
 
 DataMappingLookupTable::DataMappingLookupTable (DataMappingBase *dm)
-  : m_dxinv (1.0), m_xmin (0.0), mp_y (0), mp_c (0), m_size (0), mp_dm (dm)
+  : m_dxinv (1.0), m_xmin (0.0), m_size (0), mp_dm (dm)
 {
   // .. nothing yet ..
 }
@@ -334,14 +334,9 @@ DataMappingLookupTable::~DataMappingLookupTable ()
 void
 DataMappingLookupTable::release ()
 {
-  if (mp_y) {
-    delete [] mp_y;
-    mp_y = 0;
-  }
-  if (mp_c) {
-    delete [] mp_c;
-    mp_c = 0;
-  }
+  m_y.clear ();
+  m_c.clear ();
+  m_size = 0;
 
   if (mp_dm) {
     delete mp_dm;
@@ -359,14 +354,8 @@ DataMappingLookupTable::set_data_mapping (DataMappingBase *dm)
 void 
 DataMappingLookupTable::update_table (double xmin, double xmax, double delta_y, unsigned int ifactor)
 {
-  if (mp_y) {
-    delete [] mp_y;
-    mp_y = 0;
-  }
-  if (mp_c) {
-    delete [] mp_c;
-    mp_c = 0;
-  }
+  m_y.clear ();
+  m_c.clear ();
 
   std::vector< std::pair<double, double> > table;
 
@@ -379,11 +368,11 @@ DataMappingLookupTable::update_table (double xmin, double xmax, double delta_y, 
     //  TODO: should mimic a linear behaviour by observing delta_y
     m_dxinv = 1.0 / (xmax - xmin);
     m_xmin = xmin;
-    mp_y = new double[3];
+    m_y.resize (3);
     m_size = 2;
-    mp_y[0] = xmin;
-    mp_y[1] = xmax;
-    mp_y[2] = xmax;
+    m_y[0] = xmin;
+    m_y[1] = xmax;
+    m_y[2] = xmax;
 
   } else if (table.size () < 2) {
 
@@ -391,8 +380,8 @@ DataMappingLookupTable::update_table (double xmin, double xmax, double delta_y, 
 
     m_dxinv = 1.0 / (xmax - xmin);
     m_xmin = xmin;
-    mp_y = new double[3];
-    mp_y[0] = mp_y[1] = mp_y[2] = yconst;
+    m_y.resize (3);
+    m_y[0] = m_y[1] = m_y[2] = yconst;
     m_size = 2;
 
   } else {
@@ -417,7 +406,7 @@ DataMappingLookupTable::update_table (double xmin, double xmax, double delta_y, 
 
     delta_x = (xmax - xmin) / double (nsteps);
 
-    mp_y = new double[nsteps + 1]; // plus one for safety
+    m_y.resize (nsteps + 1); // plus one for safety
     m_size = nsteps;
 
     std::vector< std::pair<double, double> >::const_iterator t = table.begin ();
@@ -428,21 +417,21 @@ DataMappingLookupTable::update_table (double xmin, double xmax, double delta_y, 
       while (t != table.end () && t->first <= x) {
         ++t;
       }
-      mp_y[i] = interpolate (table, t, x);
+      m_y[i] = interpolate (table, t, x);
     }
 
     //  add one item for safety (rounding problems in operator[] implementation)
-    mp_y[i] = mp_y[i - 1];
+    m_y[i] = m_y[i - 1];
     m_xmin = xmin - delta_x * 0.5;
     m_dxinv = 1.0 / delta_x;
 
   }
 
-  mp_c = new unsigned int [m_size + 1];
+  m_c.resize (m_size + 1);
   for (size_t i = 0; i < m_size; ++i) {
-    mp_c [i] = (unsigned int) std::min (255.0, std::max (0.0, mp_y [i])) * ifactor;
+    m_c [i] = (unsigned int) std::min (255.0, std::max (0.0, m_y [i])) * ifactor;
   }
-  mp_c [m_size] = mp_c [m_size - 1];
+  m_c [m_size] = m_c [m_size - 1];
 }
 
 std::string
@@ -452,7 +441,7 @@ DataMappingLookupTable::dump () const
 
   r += "xmin=" + tl::to_string (m_xmin) + ",dx=" + tl::to_string (1.0 / m_dxinv) + ":";
   for (size_t i = 0; i < m_size; ++i) {
-    r += tl::to_string (mp_y [i]) + ";";
+    r += tl::to_string (m_y [i]) + ";";
   }
 
   return r;

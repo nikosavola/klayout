@@ -736,7 +736,7 @@ CurlConnection::CurlConnection (CURL *handle)
   : mp_handle (handle)
 {
 #if defined(DEBUG_CURL)
-  std::cerr << "CurlConnection(" << (void *)handle << ")" << std::endl;
+  std::cerr << "CurlConnection(" << static_cast<void *> (handle) << ")" << std::endl;
 #endif
   init ();
 }
@@ -745,7 +745,7 @@ CurlConnection::CurlConnection (const CurlConnection &other)
   : mp_handle (other.mp_handle)
 {
 #if defined(DEBUG_CURL)
-  std::cerr << "CurlConnection(" << (void *)mp_handle << ")" << std::endl;
+  std::cerr << "CurlConnection(" << static_cast<void *> (mp_handle) << ")" << std::endl;
 #endif
   init ();
 }
@@ -777,7 +777,7 @@ void CurlConnection::init ()
 CurlConnection::~CurlConnection ()
 {
 #if defined(DEBUG_CURL)
-  std::cerr << "~CurlConnection(" << (void *)mp_handle << ")" << std::endl;
+  std::cerr << "~CurlConnection(" << static_cast<void *> (mp_handle) << ")" << std::endl;
 #endif
   if (mp_handle) {
     CurlNetworkManager::instance ()->release_connection (this);
@@ -890,17 +890,17 @@ void CurlConnection::send ()
   curl_easy_setopt (mp_handle, CURLOPT_ERRORBUFFER, &m_error_msg);
 
   curl_easy_setopt (mp_handle, CURLOPT_READFUNCTION, &read_func);
-  curl_easy_setopt (mp_handle, CURLOPT_READDATA, (void *) this);
+  curl_easy_setopt (mp_handle, CURLOPT_READDATA, static_cast<void *> (this));
   curl_easy_setopt (mp_handle, CURLOPT_SEEKFUNCTION, &seek_func);
-  curl_easy_setopt (mp_handle, CURLOPT_SEEKDATA, (void *) this);
+  curl_easy_setopt (mp_handle, CURLOPT_SEEKDATA, static_cast<void *> (this));
   curl_easy_setopt (mp_handle, CURLOPT_WRITEFUNCTION, &write_func);
-  curl_easy_setopt (mp_handle, CURLOPT_WRITEDATA, (void *) this);
+  curl_easy_setopt (mp_handle, CURLOPT_WRITEDATA, static_cast<void *> (this));
   curl_easy_setopt (mp_handle, CURLOPT_HEADERFUNCTION, &write_header_func);
-  curl_easy_setopt (mp_handle, CURLOPT_HEADERDATA, (void *) this);
+  curl_easy_setopt (mp_handle, CURLOPT_HEADERDATA, static_cast<void *> (this));
 
   if (! m_data.empty ()) {
     curl_easy_setopt (mp_handle, CURLOPT_UPLOAD, 1L);
-    curl_easy_setopt (mp_handle, CURLOPT_INFILESIZE, (long) m_data.size ());
+    curl_easy_setopt (mp_handle, CURLOPT_INFILESIZE, static_cast<long> (m_data.size ()));
   } else {
     curl_easy_setopt (mp_handle, CURLOPT_UPLOAD, 0L);
   }
@@ -1130,7 +1130,7 @@ CurlConnection *CurlNetworkManager::create_connection ()
 void CurlNetworkManager::start (CurlConnection *connection)
 {
 #if defined(DEBUG_CURL)
-  std::cerr << "CurlNetworkManager::start(" << (void*)connection->mp_handle << ")" << std::endl;
+  std::cerr << "CurlNetworkManager::start(" << static_cast<void *> (connection->mp_handle) << ")" << std::endl;
 #endif
   curl_multi_add_handle (mp_multi_handle, connection->mp_handle);
   curl_multi_perform(mp_multi_handle, &m_still_running);
@@ -1150,7 +1150,7 @@ void CurlNetworkManager::release_connection (CurlConnection *connection)
   if (m_handle_refcount[connection->mp_handle] == 0) {
 
 #if defined(DEBUG_CURL)
-    std::cerr << "CurlNetworkManager::release_connection(" << (void*)connection->mp_handle << ")" << std::endl;
+    std::cerr << "CurlNetworkManager::release_connection(" << static_cast<void *> (connection->mp_handle) << ")" << std::endl;
 #endif
     curl_easy_cleanup(connection->mp_handle);
     m_handle_refcount.erase (connection->mp_handle);

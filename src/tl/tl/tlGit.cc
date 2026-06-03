@@ -147,7 +147,7 @@ static void check (int error)
 #else
     const git_error *err = giterr_last ();
 #endif
-    throw tl::Exception (tl::to_string (tr ("Error cloning Git repo: %s")), (const char *) err->message);
+    throw tl::Exception (tl::to_string (tr ("Error cloning Git repo: %s")), static_cast<const char *> (err->message));
   }
 }
 
@@ -234,7 +234,7 @@ checkout_branch (git_repository *repo, git_remote *remote, const git_checkout_op
     if (tl::verbosity () >= 20) {
       char oid_fmt [80];
       git_oid_tostr (oid_fmt, sizeof (oid_fmt), &rh->oid);
-      tl::info << "  " << rh->name << ": " << (const char *) oid_fmt;
+      tl::info << "  " << rh->name << ": " << static_cast<const char *> (oid_fmt);
     }
     if (ref_matches (rh->name, branch)) {
       oid = rh->oid;
@@ -249,7 +249,7 @@ checkout_branch (git_repository *repo, git_remote *remote, const git_checkout_op
   if (tl::verbosity () >= 10) {
     char oid_fmt [80];
     git_oid_tostr (oid_fmt, sizeof (oid_fmt), &oid);
-    tl::info << tr ("Git checkout: resolving ") << branch << tr (" to ") << (const char *) oid_fmt;
+    tl::info << tr ("Git checkout: resolving ") << branch << tr (" to ") << static_cast<const char *> (oid_fmt);
   }
 
   check (git_repository_set_head_detached (repo, &oid));
@@ -299,11 +299,11 @@ GitObject::read (const std::string &org_url, const std::string &org_filter, cons
   paths_cstr[0] = filter.c_str ();
   if (! filter.empty ()) {
     checkout_opts.paths.count = 1;
-    checkout_opts.paths.strings = (char **) &paths_cstr;
+    checkout_opts.paths.strings = const_cast<char **> (paths_cstr);
   }
 
   checkout_opts.progress_cb = &checkout_progress;
-  checkout_opts.progress_payload = (void *) &progress;
+  checkout_opts.progress_payload = static_cast<void *> (&progress);
 
   //  build fetch options
 
@@ -316,7 +316,7 @@ GitObject::read (const std::string &org_url, const std::string &org_filter, cons
 #endif
   fetch_opts.callbacks.transfer_progress = &fetch_progress;
   fetch_opts.callbacks.credentials = &credentials_cb;
-  fetch_opts.callbacks.payload = (void *) &progress;
+  fetch_opts.callbacks.payload = static_cast<void *> (&progress);
 
   //  get proxy configuration from environment variable if available
   //  (see https://www.klayout.de/forum/discussion/2404)
@@ -330,7 +330,7 @@ GitObject::read (const std::string &org_url, const std::string &org_filter, cons
 
   //  build refspecs in case they are needed
 
-  char *refs[] = { (char *) branch.c_str () };
+  char *refs[] = { const_cast<char *> (branch.c_str ()) };
   git_strarray refspecs;
   refspecs.count = 1;
   refspecs.strings = refs;

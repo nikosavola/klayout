@@ -24,6 +24,7 @@
 #define HDR_tlThreads
 
 #include "tlCommon.h"
+#include "tlCxxFeatures.h"
 
 #include <limits>
 
@@ -34,6 +35,11 @@
 #  include <QThreadStorage>
 #else
 #  include <atomic>
+#endif
+
+#if TL_CXX17
+#  include <mutex>
+#  include <shared_mutex>
 #endif
 
 namespace tl
@@ -52,6 +58,11 @@ class TL_PUBLIC Mutex
 {
 public:
   Mutex () : QMutex () { }
+
+  //  Lockable "try_lock" spelling (lower case) so tl::Mutex satisfies the
+  //  standard Lockable requirements and can be used with std::scoped_lock /
+  //  std::lock for deadlock-free multi-mutex locking.
+  bool try_lock () { return QMutex::tryLock (); }
 };
 
 #else
@@ -70,6 +81,13 @@ public:
   void unlock ()
   {
     flag.clear (std::memory_order_release);
+  }
+
+  //  Lockable "try_lock": returns true if the lock was acquired. test_and_set
+  //  returns the previous value, so a false return means we acquired it.
+  bool try_lock ()
+  {
+    return ! flag.test_and_set (std::memory_order_acquire);
   }
 
 private:
@@ -134,6 +152,42 @@ public:
 private:
   Mutex *mp_mutex;
 };
+
+#if TL_CXX17
+
+/**
+ *  @brief A scoped lock supporting one or more mutexes (C++17 and later)
+ *
+ *  tl::ScopedLock<M...> aliases std::scoped_lock<M...>. With a single mutex it
+ *  behaves like MutexLocker (but taking a reference, not a pointer). With
+ *  several mutexes it uses std::lock's deadlock-avoidance algorithm, which is
+ *  why tl::Mutex now provides try_lock(). Example:
+ *
+ *    tl::ScopedLock<tl::Mutex, tl::Mutex> lk (m1, m2);  // no fixed lock order
+ *
+ *  Only available when building with C++17 or newer (-cpp20 and friends); the
+ *  pointer-based MutexLocker above remains the portable default.
+ */
+template <class... Mutexes>
+using ScopedLock = std::scoped_lock<Mutexes...>;
+
+/**
+ *  @brief A reader-writer mutex (C++17 and later)
+ *
+ *  tl::SharedMutex aliases std::shared_mutex for reader-writer patterns where
+ *  many concurrent readers are common and writes are rare. Use it with
+ *  std::shared_lock for the read side and std::unique_lock / tl::ScopedLock for
+ *  the write side:
+ *
+ *    tl::SharedMutex rw;
+ *    { std::shared_lock<tl::SharedMutex> r (rw); ... read ... }
+ *    { std::unique_lock<tl::SharedMutex> w (rw); ... write ... }
+ *
+ *  Only available with C++17 or newer.
+ */
+using SharedMutex = std::shared_mutex;
+
+#endif
 
 /**
  *  @brief A thread implementation

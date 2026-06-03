@@ -897,11 +897,15 @@ void local_processor<TS, TI, TR>::compute_contexts (local_processor_contexts<TS,
 
     tl::SelfTimer timer (tl::verbosity () > base_verbosity () + 10, tl::to_string (tr ("Computing contexts for ")) + description (op));
 
+#if defined(_OPENMP)
+    mp_cc_job.reset (0);
+#else
     if (threads () > 0) {
       mp_cc_job.reset (new tl::Job<local_processor_context_computation_worker<TS, TI, TR> > (threads ()));
     } else {
       mp_cc_job.reset (0);
     }
+#endif
 
     contexts.clear ();
     contexts.set_intruder_layers (intruder_layers);
@@ -918,7 +922,22 @@ void local_processor<TS, TI, TR>::compute_contexts (local_processor_contexts<TS,
     }
 
     typename local_processor_cell_contexts<TS, TI, TR>::context_key_type intruders;
+#if defined(_OPENMP)
+    if (threads() > 0) {
+      int nthreads = threads();
+      #pragma omp parallel num_threads(nthreads) shared(contexts, intruders)
+      {
+        #pragma omp single
+        {
+          issue_compute_contexts (contexts, 0, 0, mp_subject_top, db::ICplxTrans (), mp_intruder_top, intruders, op->dist (), override_distance);
+        }
+      }
+    } else {
+      issue_compute_contexts (contexts, 0, 0, mp_subject_top, db::ICplxTrans (), mp_intruder_top, intruders, op->dist (), override_distance);
+    }
+#else
     issue_compute_contexts (contexts, 0, 0, mp_subject_top, db::ICplxTrans (), mp_intruder_top, intruders, op->dist (), override_distance);
+#endif
 
     if (mp_cc_job.get ()) {
       mp_cc_job->start ();
@@ -944,11 +963,24 @@ void local_processor<TS, TI, TR>::issue_compute_contexts (local_processor_contex
 {
   bool is_small_job = subject_cell->begin ().at_end ();
 
+#if defined(_OPENMP)
+  if (! is_small_job && threads() > 0) {
+    typename local_processor_cell_contexts<TS, TI, TR>::context_key_type my_intruders;
+    my_intruders.swap (intruders);
+    #pragma omp task shared(contexts) firstprivate(parent_context, subject_parent, subject_cell, subject_cell_inst, intruder_cell, my_intruders, dist, override_distance)
+    {
+      compute_contexts (contexts, parent_context, subject_parent, subject_cell, subject_cell_inst, intruder_cell, my_intruders, dist, override_distance);
+    }
+  } else {
+    compute_contexts (contexts, parent_context, subject_parent, subject_cell, subject_cell_inst, intruder_cell, intruders, dist, override_distance);
+  }
+#else
   if (! is_small_job && mp_cc_job.get ()) {
     mp_cc_job->schedule (new local_processor_context_computation_task<TS, TI, TR> (this, contexts, parent_context, subject_parent, subject_cell, subject_cell_inst, intruder_cell, intruders, dist, override_distance));
   } else {
     compute_contexts (contexts, parent_context, subject_parent, subject_cell, subject_cell_inst, intruder_cell, intruders, dist, override_distance);
   }
+#endif
 }
 
 template <class TS, class TI, class TR>
@@ -1189,8 +1221,6 @@ local_processor<TS, TI, TR>::compute_results (local_processor_contexts<TS, TI, T
 
   if (threads () > 0) {
 
-    std::unique_ptr<tl::Job<local_processor_result_computation_worker<TS, TI, TR> > > rc_job (new tl::Job<local_processor_result_computation_worker<TS, TI, TR> > (threads ()));
-
     //  schedule computation jobs in "waves": we need to make sure they are executed
     //  bottom-up. So we identify a new bunch of cells each time we pass through the cell set
     //  and proceed until all cells are removed.
@@ -1213,6 +1243,8 @@ local_processor<TS, TI, TR>::compute_results (local_processor_contexts<TS, TI, T
       std::vector<db::cell_index_type> next_cells_bu;
       next_cells_bu.reserve (cells_bu.size ());
 
+      std::vector<local_processor_result_computation_task<TS, TI, TR>*> tasks;
+
       for (std::vector<db::cell_index_type>::const_iterator bu = cells_bu.begin (); bu != cells_bu.end (); ++bu) {
 
         tl::MutexLocker locker (& contexts.lock ());
@@ -1222,7 +1254,7 @@ local_processor<TS, TI, TR>::compute_results (local_processor_contexts<TS, TI, T
 
           if (later.find (*bu) == later.end ()) {
 
-            rc_job->schedule (new local_processor_result_computation_task<TS, TI, TR> (this, contexts, cpc->first, &cpc->second, op, output_layers));
+            tasks.push_back(new local_processor_result_computation_task<TS, TI, TR> (this, contexts, cpc->first, &cpc->second, op, output_layers));
             any = true;
 
           } else {
@@ -1243,20 +1275,37 @@ local_processor<TS, TI, TR>::compute_results (local_processor_contexts<TS, TI, T
         break;
       }
 
-      if (rc_job.get ()) {
-
+      if (!tasks.empty()) {
         try {
-
-          rc_job->start ();
+#if defined(_OPENMP)
+          int nthreads = threads();
+          #pragma omp parallel for num_threads(nthreads) schedule(dynamic)
+          for (long long i = 0; i < (long long)tasks.size(); ++i) {
+            tasks[i]->perform();
+          }
+#else
+          std::unique_ptr<tl::Job<local_processor_result_computation_worker<TS, TI, TR> > > rc_job (new tl::Job<local_processor_result_computation_worker<TS, TI, TR> > (threads ()));
+          for (size_t i = 0; i < tasks.size(); ++i) {
+            rc_job->schedule(tasks[i]);
+          }
+          rc_job->start();
           while (! rc_job->wait (10)) {
             progress.set (get_progress ());
           }
-
+#endif
         } catch (...) {
-          rc_job->terminate ();
+#if !defined(_OPENMP)
+          // rc_job cleanup will be handled by the smart pointer, but we don't have it explicitly throwing here in openmp mode
+#endif
+          for (size_t i = 0; i < tasks.size(); ++i) { delete tasks[i]; }
           throw;
         }
-
+#if defined(_OPENMP)
+        for (size_t i = 0; i < tasks.size(); ++i) {
+          delete tasks[i];
+        }
+        progress.set(get_progress());
+#endif
       }
 
     }
@@ -2006,4 +2055,3 @@ template class DB_PUBLIC local_processor<db::EdgePair, db::PolygonRef, db::Polyg
 template class DB_PUBLIC local_processor<db::EdgePair, db::Edge, db::Edge>;
 
 }
-

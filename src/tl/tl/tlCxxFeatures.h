@@ -59,7 +59,11 @@
 #  define TL_CXX20 0
 #endif
 
-#if defined(HAVE_CPP23) || (defined(__cplusplus) && __cplusplus >= 202302L)
+//  Note on the threshold: a compiler in an in-progress mode reports an
+//  intermediate __cplusplus value (e.g. GCC reports 202100L for -std=c++23
+//  until the standard is finalized), so anything strictly greater than the
+//  previous standard's value is treated as that standard.
+#if defined(HAVE_CPP23) || (defined(__cplusplus) && __cplusplus > 202002L)
 #  define TL_CXX23 1
 #else
 #  define TL_CXX23 0
@@ -71,45 +75,47 @@
 #  define TL_CXX26 0
 #endif
 
-//  Library feature helpers (these stay 0 when the standard library does not
-//  ship the corresponding header, even if the language level would allow it).
-#if TL_CXX20 && defined(__cpp_concepts) && __cpp_concepts >= 201907L
+//  Library feature helpers. These rely on the standard __cpp_lib_* / __cpp_*
+//  feature-test macros, which are the authoritative signal that the header is
+//  actually available. They stay 0 when the standard library does not ship the
+//  feature, independently of the requested language level.
+#if defined(__cpp_concepts) && __cpp_concepts >= 201907L
 #  define TL_HAS_CONCEPTS 1
 #else
 #  define TL_HAS_CONCEPTS 0
 #endif
 
-#if TL_CXX20 && defined(__cpp_lib_span)
+#if defined(__cpp_lib_span)
 #  define TL_HAS_SPAN 1
 #else
 #  define TL_HAS_SPAN 0
 #endif
 
-#if TL_CXX20 && defined(__cpp_lib_three_way_comparison)
+#if defined(__cpp_lib_three_way_comparison)
 #  define TL_HAS_SPACESHIP 1
 #else
 #  define TL_HAS_SPACESHIP 0
 #endif
 
-#if TL_CXX20 && defined(__cpp_lib_format)
+#if defined(__cpp_lib_format)
 #  define TL_HAS_STD_FORMAT 1
 #else
 #  define TL_HAS_STD_FORMAT 0
 #endif
 
-#if TL_CXX23 && defined(__cpp_lib_expected)
+#if defined(__cpp_lib_expected)
 #  define TL_HAS_EXPECTED 1
 #else
 #  define TL_HAS_EXPECTED 0
 #endif
 
-#if TL_CXX23 && defined(__cpp_lib_mdspan)
+#if defined(__cpp_lib_mdspan)
 #  define TL_HAS_MDSPAN 1
 #else
 #  define TL_HAS_MDSPAN 0
 #endif
 
-#if TL_CXX23 && defined(__cpp_lib_generator)
+#if defined(__cpp_lib_generator)
 #  define TL_HAS_GENERATOR 1
 #else
 #  define TL_HAS_GENERATOR 0
@@ -185,6 +191,25 @@ namespace tl
 namespace tl
 {
   using std::span;
+}
+#endif
+
+//  std::expected (C++23). Exposed as tl::expected / tl::unexpected when the
+//  standard library provides it (TL_HAS_EXPECTED). This is the monadic,
+//  exception-free alternative to the error-code/out-parameter patterns in file
+//  I/O, parsing and network code:
+//
+//    #if TL_HAS_EXPECTED
+//      tl::expected<Layout, std::string> read (const std::string &path);
+//    #else
+//      bool read (const std::string &path, Layout &out, std::string &error);
+//    #endif
+#if TL_HAS_EXPECTED
+#  include <expected>
+namespace tl
+{
+  using std::expected;
+  using std::unexpected;
 }
 #endif
 

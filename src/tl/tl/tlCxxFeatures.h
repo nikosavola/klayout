@@ -213,4 +213,25 @@ namespace tl
 }
 #endif
 
+//  std::mdspan (C++23). Exposed as tl::mdspan / tl::extents / tl::dextents when
+//  available (TL_HAS_MDSPAN). It is a non-owning, multi-dimensional view over a
+//  flat buffer, ideal for the row/column rasterization grids in DRC and the
+//  pixel rows in the image-processing layers:
+//
+//    #if TL_HAS_MDSPAN
+//      tl::mdspan<uint8_t, tl::dextents<size_t, 2>> grid (data, rows, cols);
+//      grid[r, c] = v;
+//    #else
+//      data[r * cols + c] = v;   //  manual index arithmetic
+//    #endif
+#if TL_HAS_MDSPAN
+#  include <mdspan>
+namespace tl
+{
+  using std::mdspan;
+  using std::extents;
+  using std::dextents;
+}
+#endif
+
 #endif

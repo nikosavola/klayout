@@ -23,9 +23,60 @@
 #ifndef HDR_tlOptional
 #define HDR_tlOptional
 
+#include "tlCommon.h"
+
+//  Use std::optional for C++17 and later builds
+#if __cplusplus >= 201703L
+
+#include <optional>
+#include <string>
+#include <sstream>
+#include <iostream>
+
+namespace tl
+{
+
+using nullopt_t = std::nullopt_t;
+inline constexpr std::nullopt_t nullopt = std::nullopt;
+
+template<typename T>
+using optional = std::optional<T>;
+
+template<typename T>
+optional<T> make_optional (const T &value)
+{
+  return std::make_optional<T> (value);
+}
+
+template<typename T>
+std::ostream &operator<< (std::ostream &ostr, const optional<T> &rhs)
+{
+  if (rhs.has_value()) {
+    ostr << rhs.value();
+  } else {
+    ostr << "<invalid>";
+  }
+  return ostr;
+}
+
+template <class T>
+std::string to_string (const optional<T> &opt)
+{
+  if (opt.has_value ()) {
+    std::ostringstream os;
+    os << opt.value ();
+    return os.str ();
+  } else {
+    return std::string ();
+  }
+}
+
+} // namespace tl
+
+#else // C++11/14 fallback
+
 #include "tlAssert.h"
 #include "tlString.h"
-#include "tlCommon.h"
 
 #include <iostream>
 
@@ -171,5 +222,7 @@ std::string to_string (const optional<T> &opt)
 }
 
 } // namespace tl
+
+#endif // C++17 check
 
 #endif /* HDR_tlOptional */

@@ -234,4 +234,17 @@ namespace tl
 }
 #endif
 
+//  std::generator (C++23). Exposed as tl::generator when available
+//  (TL_HAS_GENERATOR). It is the standard coroutine generator for lazy
+//  iteration, the intended replacement for the hand-written at_end()-style
+//  iterator state machines (shape / cell traversal). See
+//  doc/modernization/4.4-coroutines.md and doc/modernization/5.3-generator.md.
+#if TL_HAS_GENERATOR
+#  include <generator>
+namespace tl
+{
+  using std::generator;
+}
+#endif
+
 #endif

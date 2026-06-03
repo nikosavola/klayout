@@ -204,7 +204,17 @@ msvc {
   #     -Wno-reserved-user-defined-literal \
   #
 
-  equals(HAVE_CPP20, "1") {
+  # C++ standard selection. Higher standards imply the lower ones, so the
+  # corresponding HAVE_CPP* defines are activated cumulatively. This lets
+  # modernization steps gate new-standard features behind feature-test macros
+  # while the default build keeps working at C++17 (or C++11 with Qt<6).
+  equals(HAVE_CPP26, "1") {
+    QMAKE_CXXFLAGS += -std=c++26
+    DEFINES += HAVE_CPP26 HAVE_CPP23 HAVE_CPP20
+  } else:equals(HAVE_CPP23, "1") {
+    QMAKE_CXXFLAGS += -std=c++23
+    DEFINES += HAVE_CPP23 HAVE_CPP20
+  } else:equals(HAVE_CPP20, "1") {
     QMAKE_CXXFLAGS += -std=c++20
     DEFINES += HAVE_CPP20
   } else {

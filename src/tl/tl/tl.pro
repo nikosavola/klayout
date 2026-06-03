@@ -103,6 +103,7 @@ HEADERS = \
     tlVariantUserClasses.h \
     tlVector.h \
     tlCommon.h \
+    tlCxxFeatures.h \
     tlMath.h \
     tlCpp.h \
     tlFileUtils.h \

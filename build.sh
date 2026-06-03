@@ -42,6 +42,8 @@ HAVE_EXPAT=0
 HAVE_GIT2=1
 HAVE_LSTREAM=1
 HAVE_CPP20=0
+HAVE_CPP23=0
+HAVE_CPP26=0
 
 RUBYINCLUDE=""
 RUBYINCLUDE2=""
@@ -221,6 +223,15 @@ while [ "$*" != "" ]; do
   -cpp20)
     HAVE_CPP20=1
     ;;
+  -cpp23)
+    HAVE_CPP20=1
+    HAVE_CPP23=1
+    ;;
+  -cpp26)
+    HAVE_CPP20=1
+    HAVE_CPP23=1
+    HAVE_CPP26=1
+    ;;
   -qt5)
     echo "*** WARNING: -qt5 option is ignored - Qt version is auto-detected now."
     ;;
@@ -280,6 +291,8 @@ while [ "$*" != "" ]; do
     echo "  -nolibgit2            Do not include libgit2 for Git package support"
     echo "  -nolstream            Do not include the LStream plugin"
     echo "  -cpp20                Uses some C++20 features (e.g. atomics)"
+    echo "  -cpp23                Uses some C++23 features (implies -cpp20)"
+    echo "  -cpp26                Uses some C++26 features (implies -cpp23)"
     echo ""
     echo "Environment Variables:"
     echo ""
@@ -676,6 +689,8 @@ qmake_options=(
   HAVE_GIT2="$HAVE_GIT2"
   HAVE_LSTREAM="$HAVE_LSTREAM"
   HAVE_CPP20="$HAVE_CPP20"
+  HAVE_CPP23="$HAVE_CPP23"
+  HAVE_CPP26="$HAVE_CPP26"
   PREFIX="$BIN"
   RPATH="$RPATH"
   KLAYOUT_VERSION="$KLAYOUT_VERSION"

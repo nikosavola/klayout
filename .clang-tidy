@@ -1,0 +1,23 @@
+# clang-tidy configuration for the KLayout C++ modernization effort.
+#
+# These checks back the Phase 1/2 modernization steps and can be run across the
+# whole code base once a compilation database (compile_commands.json) has been
+# generated from a configured build, e.g.:
+#
+#   run-clang-tidy -p <build-dir> -fix -checks='-*,modernize-use-override'
+#
+# The set is intentionally conservative: only mechanical, low-risk checks that
+# do not change behaviour are enabled by default.
+Checks: >
+  -*,
+  modernize-use-nullptr,
+  modernize-use-override,
+  modernize-use-using,
+  modernize-use-nodiscard,
+  google-readability-casting,
+  readability-redundant-member-init
+
+# Treat nothing as an error by default; these are advisory during migration.
+WarningsAsErrors: ''
+HeaderFilterRegex: 'src/.*'
+FormatStyle: none

@@ -26,6 +26,7 @@
 #define HDR_tlExpression
 
 #include "tlCommon.h"
+#include "tlCxxFeatures.h"
 
 #include "tlException.h"
 #include "tlVariant.h"
@@ -214,7 +215,7 @@ public:
   /**
    *  @brief Clone the node
    */
-  virtual ExpressionNode *clone (const tl::Expression *expr) const = 0;
+  TL_NODISCARD virtual ExpressionNode *clone (const tl::Expression *expr) const = 0;
 
 protected:
   std::vector <ExpressionNode *> m_c;
@@ -452,7 +453,7 @@ public:
    *  @brief Gets the function for the given name
    *  Returns 0 if there is no such function.
    */
-  EvalFunction *function (const std::string &name);
+  TL_NODISCARD EvalFunction *function (const std::string &name);
 
   /**
    *  @brief Define a global variable for use within an expression
@@ -471,7 +472,7 @@ public:
    *  @brief Gets the function for the given name
    *  Returns 0 if there is no such function.
    */
-  tl::Variant *var (const std::string &name);
+  TL_NODISCARD tl::Variant *var (const std::string &name);
 
   /**
    *  @brief Parse an expression from the extractor
@@ -488,7 +489,7 @@ public:
    *  @param ex The extractor from which to parse the expression
    *  @param top If true, an expression is parsed at top level (as eval does). If false, the exression is parsed at 'atomic' level (as the string interpolation after the '$' does.
    */
-  Expression parse (tl::Extractor &ex, bool top = true)
+  TL_NODISCARD Expression parse (tl::Extractor &ex, bool top = true)
   {
     Expression expr;
     parse (expr, ex, top);
@@ -510,7 +511,7 @@ public:
    *  @param s The string from which to parse the expression
    *  @param top If true, an expression is parsed at top level (as eval does). If false, the exression is parsed at 'atomic' level (as the string interpolation after the '$' does.
    */
-  Expression parse (const std::string &s, bool top = true)
+  TL_NODISCARD Expression parse (const std::string &s, bool top = true)
   {
     Expression expr;
     parse (expr, s, top);
@@ -524,7 +525,7 @@ public:
    *  @param top If true, an expression is parsed at top level (as eval does). If false, the exression is parsed at 'atomic' level (as the string interpolation after the '$' does.
    *  @return An expression string that can be used later to construct an Expression from using the parse method
    */
-  static std::string parse_expr (tl::Extractor &ex, bool top = true);
+  TL_NODISCARD static std::string parse_expr (tl::Extractor &ex, bool top = true);
 
   /**
    *  @brief A convenience method to evaluate an expression (by string) in this context

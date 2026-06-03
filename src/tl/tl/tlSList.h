@@ -158,7 +158,7 @@ public:
     }
   }
 
-  slist (slist<T> &&other)
+  slist (slist<T> &&other) noexcept
     : mp_first (0), mp_last (0), m_size (0)
   {
     std::swap (mp_first, other.mp_first);
@@ -177,7 +177,7 @@ public:
     return *this;
   }
 
-  slist<T> &operator= (slist<T> &&other)
+  slist<T> &operator= (slist<T> &&other) noexcept
   {
     clear ();
     std::swap (mp_first, other.mp_first);

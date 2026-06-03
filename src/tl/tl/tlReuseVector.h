@@ -546,7 +546,7 @@ public:
    *
    *  See operator= for a description of the copy operation.
    */
-  reuse_vector (reuse_vector &&d)
+  reuse_vector (reuse_vector &&d) noexcept
   {
     mp_start = d.mp_start; d.mp_start = 0;
     mp_finish = d.mp_finish; d.mp_finish = 0;
@@ -584,7 +584,7 @@ public:
   /**
    *  @brief Assignment (move)
    */
-  reuse_vector &operator= (reuse_vector &&d)
+  reuse_vector &operator= (reuse_vector &&d) noexcept
   {
     if (&d != this) {
       mp_start = d.mp_start; d.mp_start = 0;

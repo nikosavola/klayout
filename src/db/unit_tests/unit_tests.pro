@@ -49,6 +49,7 @@ SOURCES = \
   dbLayoutVsSchematicTests.cc \
   dbLayoutQueryTests.cc \
   dbPolygonToolsTests.cc \
+  dbGPUBackendTests.cc \
   dbTechnologyTests.cc \
   dbStreamLayerTests.cc \
   dbVectorTests.cc \

@@ -104,6 +104,7 @@ HEADERS = \
     tlVector.h \
     tlCommon.h \
     tlCxxFeatures.h \
+    tlConcepts.h \
     tlMath.h \
     tlCpp.h \
     tlFileUtils.h \

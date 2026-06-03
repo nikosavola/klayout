@@ -123,4 +123,27 @@
 #  define TL_NODISCARD
 #endif
 
+//  std::string_view availability (C++17). The default Qt5 build still compiles
+//  at C++11, so string_view is only exposed where the standard library provides
+//  it. Read-only "view" parameters in hot paths (parsers, formatters) should be
+//  written as:
+//
+//    #if TL_HAS_STRING_VIEW
+//      void f (tl::string_view s);
+//    #else
+//      void f (const std::string &s);
+//    #endif
+//
+//  so the C++11 build keeps the owning-reference overload.
+#if defined(__cpp_lib_string_view) || (defined(__cplusplus) && __cplusplus >= 201703L)
+#  define TL_HAS_STRING_VIEW 1
+#  include <string_view>
+namespace tl
+{
+  using string_view = std::string_view;
+}
+#else
+#  define TL_HAS_STRING_VIEW 0
+#endif
+
 #endif

@@ -204,19 +204,17 @@ msvc {
   #     -Wno-reserved-user-defined-literal \
   #
 
-  # C++ standard selection. Higher standards imply the lower ones, so the
-  # corresponding HAVE_CPP* defines are activated cumulatively. This lets
-  # modernization steps gate new-standard features behind feature-test macros
-  # while the default build keeps working at C++17 (or C++11 with Qt<6).
+  # C++ standard selection. The -cpp20 / -cpp23 / -cpp26 build options select
+  # the -std= flag (higher standards imply the lower ones). No HAVE_CPP* defines
+  # are emitted: the code infers available features directly from __cplusplus and
+  # the standard __cpp_* / __cpp_lib_* feature-test macros (see tlCxxFeatures.h),
+  # so the standard chosen here is the single source of truth.
   equals(HAVE_CPP26, "1") {
     QMAKE_CXXFLAGS += -std=c++26
-    DEFINES += HAVE_CPP26 HAVE_CPP23 HAVE_CPP20
   } else:equals(HAVE_CPP23, "1") {
     QMAKE_CXXFLAGS += -std=c++23
-    DEFINES += HAVE_CPP23 HAVE_CPP20
   } else:equals(HAVE_CPP20, "1") {
     QMAKE_CXXFLAGS += -std=c++20
-    DEFINES += HAVE_CPP20
   } else {
     lessThan(QT_MAJOR_VERSION, 6) {
       # because we use unordered_map/unordered_set:

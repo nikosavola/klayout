@@ -6,11 +6,14 @@ This directory tracks the staged C++11 → C++17/20/23/26 modernization effort.
 
 - **The default build must not break.** The Qt6 build is C++17, but the Qt5
   build still compiles at **C++11**, so any C++17+ feature in shared code is
-  guarded and opt-in. The build floor and the cumulative `-cpp20` / `-cpp23` /
-  `-cpp26` switches live in `build.sh` and `src/klayout.pri`.
-- **Central feature detection:** `src/tl/tl/tlCxxFeatures.h` combines the
-  `HAVE_CPP*` build defines with the standard `__cpp_lib_*` feature-test macros
-  into `TL_CXX20/23/26`, `TL_HAS_CONCEPTS/SPAN/SPACESHIP/STD_FORMAT/EXPECTED/`
+  guarded and opt-in. The `-cpp20` / `-cpp23` / `-cpp26` switches in `build.sh`
+  / `src/klayout.pri` only select the `-std=` flag; they emit no `HAVE_CPP*`
+  define.
+- **Central feature detection:** `src/tl/tl/tlCxxFeatures.h` infers everything
+  from the compiler itself - `__cplusplus` for the standard level and the
+  standard `__cpp_*` / `__cpp_lib_*` feature-test macros for individual features
+  - with no separately injected `HAVE_CPP*` define. It exposes
+  `TL_CXX20/23/26`, `TL_HAS_CONCEPTS/SPAN/SPACESHIP/STD_FORMAT/EXPECTED/`
   `MDSPAN/GENERATOR/STRING_VIEW`, and the helpers `TL_NODISCARD`,
   `TL_IF_CONSTEXPR`.
 - **One commit per phase / sub-phase**, each verified by a targeted standalone

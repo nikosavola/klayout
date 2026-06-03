@@ -27,20 +27,21 @@
  *  @brief Central place for C++ standard / feature detection
  *
  *  This header gives the code base a single, consistent way to gate code on
- *  the available C++ standard. It combines two sources of truth:
+ *  the available C++ standard. It infers everything from what the compiler
+ *  actually offers - there is no separately injected HAVE_CPP* define:
  *
- *    - The build-time HAVE_CPP20 / HAVE_CPP23 / HAVE_CPP26 defines that are
- *      activated from build.sh (see "-cpp20", "-cpp23", "-cpp26"). These are
- *      cumulative: enabling C++23 also defines HAVE_CPP20, etc.
+ *    - The language-standard level is read from __cplusplus (which reflects the
+ *      -std= the compiler was invoked with). See TL_CXX20 / TL_CXX23 / TL_CXX26.
  *
- *    - The standard feature-test macros (e.g. __cpp_lib_optional,
- *      __cpp_concepts, __cpp_lib_expected). These describe what the actual
- *      compiler/standard library supports, independent of the requested
- *      standard.
+ *    - Individual library/language features are detected via the standard
+ *      feature-test macros (e.g. __cpp_concepts, __cpp_lib_expected,
+ *      __cpp_lib_span). These describe exactly what the actual compiler /
+ *      standard library supports. See the TL_HAS_* helpers.
  *
- *  Modernization steps should prefer the TL_CXX* convenience macros below so
- *  that the default C++17 build keeps compiling unchanged and newer-standard
- *  features stay strictly opt-in.
+ *  Modernization steps should prefer the TL_CXX* / TL_HAS_* convenience macros
+ *  below so that the default C++17 build keeps compiling unchanged and
+ *  newer-standard features stay strictly opt-in (enabled simply by building with
+ *  a newer -std=, e.g. via build.sh's -cpp20 / -cpp23 / -cpp26 options).
  */
 
 //  Provide __cpp_* feature-test macros where available (since C++20 these are
@@ -51,9 +52,9 @@
 #  endif
 #endif
 
-//  Language-standard level. __cplusplus is the most portable signal; the
-//  HAVE_CPP* defines are an explicit override coming from the build system.
-#if defined(HAVE_CPP20) || (defined(__cplusplus) && __cplusplus >= 202002L)
+//  Language-standard level, inferred from __cplusplus (the most portable signal;
+//  it reflects the -std= the compiler was invoked with).
+#if defined(__cplusplus) && __cplusplus >= 202002L
 #  define TL_CXX20 1
 #else
 #  define TL_CXX20 0
@@ -63,13 +64,13 @@
 //  intermediate __cplusplus value (e.g. GCC reports 202100L for -std=c++23
 //  until the standard is finalized), so anything strictly greater than the
 //  previous standard's value is treated as that standard.
-#if defined(HAVE_CPP23) || (defined(__cplusplus) && __cplusplus > 202002L)
+#if defined(__cplusplus) && __cplusplus > 202002L
 #  define TL_CXX23 1
 #else
 #  define TL_CXX23 0
 #endif
 
-#if defined(HAVE_CPP26) || (defined(__cplusplus) && __cplusplus > 202302L)
+#if defined(__cplusplus) && __cplusplus > 202302L
 #  define TL_CXX26 1
 #else
 #  define TL_CXX26 0

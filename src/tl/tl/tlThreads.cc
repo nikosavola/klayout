@@ -49,9 +49,9 @@ namespace tl
 // -------------------------------------------------------------------------------
 //  WaitCondition implementation
 
-#if defined(HAVE_CPP20) || !defined(HAVE_QT) || defined(HAVE_PTHREADS)
+#if defined(__cpp_lib_atomic_wait) || !defined(HAVE_QT) || defined(HAVE_PTHREADS)
 
-#if defined(HAVE_CPP20)
+#if defined(__cpp_lib_atomic_wait)
 
 class WaitConditionPrivate
 {

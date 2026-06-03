@@ -102,7 +102,7 @@ private:
  *  available.
  */
 
-#if defined(HAVE_QT) && !defined(HAVE_PTHREADS) && !defined(HAVE_CPP20)
+#if defined(HAVE_QT) && !defined(HAVE_PTHREADS) && !defined(__cpp_lib_atomic_wait)
 
 class TL_PUBLIC WaitCondition
   : public QWaitCondition

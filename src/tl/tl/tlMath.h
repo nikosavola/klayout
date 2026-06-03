@@ -35,7 +35,7 @@ namespace tl
  *  @brief A generic less operator
  */
 template <class T>
-inline bool less (T a, T b)
+inline constexpr bool less (T a, T b)
 {
   return a < b;
 }
@@ -44,7 +44,7 @@ inline bool less (T a, T b)
  *  @brief A generic equal operator
  */
 template <class T>
-inline bool equal (T a, T b)
+inline constexpr bool equal (T a, T b)
 {
   return a == b;
 }
@@ -53,7 +53,7 @@ inline bool equal (T a, T b)
  *  @brief A generalization of the modulo operator
  */
 template <class T>
-inline T modulo (T a, T b)
+inline constexpr T modulo (T a, T b)
 {
   return a % b;
 }
@@ -63,7 +63,7 @@ inline T modulo (T a, T b)
  *  This implementation uses an uncertainty value of 1e-10
  *  which is suitable for values in the order of 1.
  */
-const double epsilon = 1e-10;
+constexpr double epsilon = 1e-10;
 
 /**
  *  @brief A specialization for double values

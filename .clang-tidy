@@ -1,0 +1,29 @@
+---
+# KLayout clang-tidy configuration
+# Start with targeted checks and expand gradually as issues are fixed.
+
+Checks: >
+  -*,
+  bugprone-*,
+  -bugprone-easily-swappable-parameters,
+  -bugprone-narrowing-conversions,
+  modernize-use-nullptr,
+  modernize-use-override,
+  modernize-use-emplace,
+  modernize-redundant-void-arg,
+  performance-*,
+  -performance-no-int-to-ptr,
+  readability-redundant-string-cstr,
+  readability-container-size-empty,
+  cppcoreguidelines-pro-type-reinterpret-cast
+
+WarningsAsErrors: ''
+
+HeaderFilterRegex: 'src/(tl|db|gsi|drc|lvs|ext|edt|ant|rdb|img|lym|lib|lay)/'
+
+CheckOptions:
+  - key: modernize-use-nullptr.NullMacros
+    value: 'NULL'
+  - key: performance-move-const-arg.CheckTriviallyCopyableMove
+    value: 'false'
+...

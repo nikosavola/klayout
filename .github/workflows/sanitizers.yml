@@ -1,0 +1,87 @@
+---
+name: Sanitizers & Code Quality
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  sanitizers:
+    name: "ASan + UBSan (Linux)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            qtbase5-dev qttools5-dev libqt5svg5-dev libqt5xmlpatterns5-dev \
+            qt5-qmake qtmultimedia5-dev libqt5designer5 \
+            libz-dev libpng-dev libexpat1-dev libcurl4-openssl-dev \
+            ruby ruby-dev python3-dev
+
+      - name: Build with ASan + UBSan
+        env:
+          KLAYOUT_USE_ASAN: "1"
+          KLAYOUT_USE_UBSAN: "1"
+        run: |
+          ./build.sh -noruby -nopython -without-qtbinding \
+            -build build-sanitizers -bin inst-sanitizers
+
+      - name: Run unit tests under sanitizers
+        env:
+          ASAN_OPTIONS: "detect_leaks=1:halt_on_error=0:print_stacktrace=1"
+          UBSAN_OPTIONS: "print_stacktrace=1:halt_on_error=0"
+        run: |
+          cd build-sanitizers
+          if [ -x ./ut_runner ]; then
+            ./ut_runner -a tl
+          fi
+
+  coverage:
+    name: "Code Coverage (Linux)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            qtbase5-dev qttools5-dev libqt5svg5-dev libqt5xmlpatterns5-dev \
+            qt5-qmake qtmultimedia5-dev libqt5designer5 \
+            libz-dev libpng-dev libexpat1-dev libcurl4-openssl-dev \
+            ruby ruby-dev python3-dev \
+            lcov
+
+      - name: Build with gcov
+        run: |
+          ./build.sh -noruby -nopython -without-qtbinding \
+            -build build-coverage -bin inst-coverage -option gcov
+
+      - name: Run unit tests
+        run: |
+          cd build-coverage
+          if [ -x ./ut_runner ]; then
+            ./ut_runner -a tl -a db
+          fi
+
+      - name: Collect coverage
+        run: |
+          lcov --capture --directory build-coverage --output-file coverage.info \
+            --ignore-errors mismatch
+          lcov --remove coverage.info '/usr/*' '*/qt5/*' '*/qt6/*' \
+            --output-file coverage.info
+          lcov --list coverage.info
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: coverage.info
+          fail_ci_if_error: false

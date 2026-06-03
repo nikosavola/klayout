@@ -189,6 +189,33 @@ msvc {
     QMAKE_LFLAGS += --coverage
   }
 
+  # Compiler hardening flags for release builds (Linux/GCC/Clang)
+  CONFIG(release, debug|release) {
+    !win32 {
+      QMAKE_CXXFLAGS_RELEASE += -fstack-protector-strong -D_FORTIFY_SOURCE=2
+      QMAKE_LFLAGS += -Wl,-z,relro -Wl,-z,now
+    }
+  }
+
+  # Sanitizer support (opt-in via environment variables)
+  USE_ASAN = $$system(echo $$(KLAYOUT_USE_ASAN))
+  equals(USE_ASAN, "1") {
+    QMAKE_CXXFLAGS += -fsanitize=address -fno-omit-frame-pointer
+    QMAKE_LFLAGS += -fsanitize=address
+  }
+
+  USE_UBSAN = $$system(echo $$(KLAYOUT_USE_UBSAN))
+  equals(USE_UBSAN, "1") {
+    QMAKE_CXXFLAGS += -fsanitize=undefined -fno-omit-frame-pointer
+    QMAKE_LFLAGS += -fsanitize=undefined
+  }
+
+  USE_TSAN = $$system(echo $$(KLAYOUT_USE_TSAN))
+  equals(USE_TSAN, "1") {
+    QMAKE_CXXFLAGS += -fsanitize=thread -fno-omit-frame-pointer
+    QMAKE_LFLAGS += -fsanitize=thread
+  }
+
   QMAKE_CXXFLAGS_WARN_ON += \
       -pedantic \
       -Woverloaded-virtual \

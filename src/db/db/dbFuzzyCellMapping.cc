@@ -435,7 +435,7 @@ FuzzyCellMapping::create (const db::Layout &layout_a, db::cell_index_type cell_i
       tl::info << "";
     }
 
-    if (cmin.size () > 0) {
+    if (! cmin.empty ()) {
 
 #if 0 // debugging
       if (std::string (layout_a.cell_name (m->first)) != std::string (layout_b.cell_name (cmin [0]))) {
@@ -455,7 +455,7 @@ FuzzyCellMapping::create (const db::Layout &layout_a, db::cell_index_type cell_i
     } else {
 
       if (tl::verbosity () >= 30) {
-        if (cmin.size () == 0) {
+        if (cmin.empty ()) {
           tl::info << "Cell mapping - no match found for " << layout_a.cell_name (m->first);
         } else {
           tl::info << "Cell mapping - multiple matches found for " << layout_a.cell_name (m->first) << ": " << tl::noendl;

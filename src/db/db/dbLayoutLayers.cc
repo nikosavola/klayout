@@ -233,7 +233,7 @@ LayoutLayers::insert_special_layer (unsigned int index, const LayerProperties &p
 unsigned int 
 LayoutLayers::do_insert_layer (bool special) 
 {
-  if (m_free_indices.size () > 0) {
+  if (! m_free_indices.empty ()) {
     unsigned int i = m_free_indices.back ();
     m_free_indices.pop_back ();
     m_layer_states [i] = special ? Special : Normal;

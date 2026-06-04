@@ -824,7 +824,7 @@ size_t split_cluster (const local_cluster<T> &cl, double max_area_ratio, Iter &o
     }
   }
 
-  if (a.size () == 0 || b.size () == 0) {
+  if (a.empty () || b.empty ()) {
     //  give up to prevent infinite recursion
     return 0;
   }

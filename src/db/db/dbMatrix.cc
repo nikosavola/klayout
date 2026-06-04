@@ -475,7 +475,7 @@ adjust_matrix (Matrix2d &matrix, db::DVector &disp, const std::vector <db::DPoin
     flags = MatrixAdjustFlags::Shear;
   }
 
-  if (landmarks_before.size () == 0) {
+  if (landmarks_before.empty ()) {
     flags = MatrixAdjustFlags::None;
   } else if (landmarks_before.size () == 1) {
     flags = std::min (MatrixAdjustFlags::Displacement, flags);
@@ -634,7 +634,7 @@ adjust_matrix (Matrix3d &matrix, const std::vector <db::DPoint> &landmarks_befor
     flags = MatrixAdjustFlags::Perspective;
   }
 
-  if (landmarks_before.size () == 0) {
+  if (landmarks_before.empty ()) {
     flags = MatrixAdjustFlags::None;
   } else if (landmarks_before.size () == 1) {
     flags = std::min (MatrixAdjustFlags::Displacement, flags);

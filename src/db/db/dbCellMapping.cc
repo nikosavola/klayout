@@ -743,7 +743,7 @@ CellMapping::create_from_geometry (const db::Layout &layout_a, db::cell_index_ty
         std::set<db::cell_index_type> callers;
         layout_a.cell (cand->first).collect_caller_cells (callers, cc_a.selection (), -1);
 
-        for (std::set<db::cell_index_type>::const_iterator c = callers.begin (); c != callers.end () && refined_cand.size () > 0; ++c) {
+        for (std::set<db::cell_index_type>::const_iterator c = callers.begin (); c != callers.end () && ! refined_cand.empty (); ++c) {
 
           if (*c != cell_index_a) {
 
@@ -777,12 +777,12 @@ CellMapping::create_from_geometry (const db::Layout &layout_a, db::cell_index_ty
 
         }
 
-        if (refined_cand.size () > 0) {
+        if (! refined_cand.empty ()) {
 
           std::set<db::cell_index_type> called;
           layout_a.cell (cand->first).collect_called_cells (called);
 
-          for (std::set<db::cell_index_type>::const_iterator c = called.begin (); c != called.end () && refined_cand.size () > 0; ++c) {
+          for (std::set<db::cell_index_type>::const_iterator c = called.begin (); c != called.end () && ! refined_cand.empty (); ++c) {
 
             const std::vector<db::cell_index_type> &others = candidates.find (*c)->second;
             if (others.size () == 1) {
@@ -905,7 +905,7 @@ CellMapping::create_from_geometry (const db::Layout &layout_a, db::cell_index_ty
 
     for (std::map <db::cell_index_type, std::vector<db::cell_index_type> >::iterator cand = candidates.begin (); cand != candidates.end (); ++cand) {
       ++total;
-      if (cand->second.size () == 0) {
+      if (cand->second.empty ()) {
         ++not_mapped;
       } else if (cand->second.size () == 1) {
         ++unique;
@@ -972,7 +972,7 @@ CellMapping::create_from_geometry (const db::Layout &layout_a, db::cell_index_ty
 
     for (std::map <db::cell_index_type, std::vector<db::cell_index_type> >::iterator cand = candidates.begin (); cand != candidates.end (); ++cand) {
       ++total;
-      if (cand->second.size () == 0) {
+      if (cand->second.empty ()) {
         if (tl::verbosity () >= 50) {
           tl::info << "Unmapped cell: " << layout_a.cell_name (cand->first);
         }

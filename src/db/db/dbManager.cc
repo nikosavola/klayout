@@ -77,7 +77,7 @@ Manager::release_object (ident_t id)
 Manager::ident_t 
 Manager::next_id (db::Object *obj)
 {
-  if (m_unused_ids.size () > 0) {
+  if (! m_unused_ids.empty ()) {
     ident_t id = m_unused_ids.back ();
     m_unused_ids.pop_back ();
     m_id_table [id] = obj;

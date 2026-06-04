@@ -913,7 +913,7 @@ static void read_pins (tl::Extractor &ex, db::Circuit *circuit, std::map<std::st
 
   if (circuit->pin_count () < org_pins.size ()) {
     ex.error (tl::to_string (tr ("Circuit defines less pins that subcircuit")));
-  } else if (org_pins.size () > 0 && circuit->pin_count () > org_pins.size ()) {
+  } else if (! org_pins.empty () && circuit->pin_count () > org_pins.size ()) {
     ex.error (tl::to_string (tr ("Circuit defines more pins that subcircuit")));
   }
 }

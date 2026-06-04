@@ -114,7 +114,7 @@ NetlistSpiceReaderExpressionParser::eval_func (const std::string &name, const st
 
   if (f != 0) {
 
-    if (params.size () < 1 || ! params.front ().can_convert_to_double ()) {
+    if (params.empty () || ! params.front ().can_convert_to_double ()) {
       return tl::Variant ();
     } else {
       return tl::Variant ((*f) (params.front ().to_double ()));
@@ -138,7 +138,7 @@ NetlistSpiceReaderExpressionParser::eval_func (const std::string &name, const st
 
   } else if (name == "MIN") {
 
-    if (params.size () < 1) {
+    if (params.empty ()) {
       return tl::Variant ();
     }
 
@@ -152,7 +152,7 @@ NetlistSpiceReaderExpressionParser::eval_func (const std::string &name, const st
 
   } else if (name == "MAX") {
 
-    if (params.size () < 1) {
+    if (params.empty ()) {
       return tl::Variant ();
     }
 

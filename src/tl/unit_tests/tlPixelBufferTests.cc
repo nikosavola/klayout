@@ -654,3 +654,45 @@ TEST(13)
 }
 
 #endif
+
+#if TL_HAS_MDSPAN
+
+//  Phase 5.2: 2D mdspan view over the pixel buffer (C++23)
+TEST(MdSpanView)
+{
+  tl::PixelBuffer img (4, 3);   //  width 4, height 3
+  img.fill (0u);
+
+  auto m = img.as_mdspan ();
+
+  //  extents are (height, width), row-major
+  EXPECT_EQ (m.extent (0), size_t (img.height ()));
+  EXPECT_EQ (m.extent (1), size_t (img.width ()));
+
+  //  write through the mdspan ...
+  for (size_t r = 0; r < m.extent (0); ++r) {
+    for (size_t c = 0; c < m.extent (1); ++c) {
+      m[r, c] = tl::color_t (r * 10 + c);
+    }
+  }
+
+  //  ... and read back via scan_line (must match: [r, c] is row r, column c)
+  for (unsigned int r = 0; r < img.height (); ++r) {
+    for (unsigned int c = 0; c < img.width (); ++c) {
+      EXPECT_EQ (img.scan_line (r)[c], tl::color_t (r * 10 + c));
+    }
+  }
+
+  //  the const view sees the same values
+  //  (note: the multidim subscript is assigned to a local first, because the
+  //  comma in cm[r, c] would otherwise be parsed as an EXPECT_EQ argument
+  //  separator)
+  const tl::PixelBuffer &cimg = img;
+  auto cm = cimg.as_mdspan ();
+  tl::color_t v23 = cm[2, 3];
+  EXPECT_EQ (v23, tl::color_t (2 * 10 + 3));
+  tl::color_t v00 = cm[0, 0];
+  EXPECT_EQ (v00, tl::color_t (0));
+}
+
+#endif

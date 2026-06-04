@@ -1145,3 +1145,55 @@ TEST(11_HasShapesTouchingWithHier)
   EXPECT_EQ (a.has_shapes_touching (l1, db::Box (300, 100, 310, 110)), true);
   EXPECT_EQ (a.has_shapes_touching (l1, db::Box (300, 400, 310, 410)), false);
 }
+
+#if TL_HAS_GENERATOR
+
+//  Phase 5.3: std::generator-based cell and shape traversal (C++23)
+TEST(GeneratorTraversal)
+{
+  db::Layout ly;
+  unsigned int l1 = ly.insert_layer (db::LayerProperties (1, 0));
+
+  db::Cell &top = ly.cell (ly.add_cell ("TOP"));
+  db::Cell &a = ly.cell (ly.add_cell ("A"));
+  db::Cell &b = ly.cell (ly.add_cell ("B"));
+
+  top.insert (db::CellInstArray (a.cell_index (), db::Trans ()));
+  top.insert (db::CellInstArray (b.cell_index (), db::Trans (db::Vector (100, 0))));
+
+  //  child cells via db::each_child_cell must equal those from begin_child_cells ()
+  std::set<db::cell_index_type> from_generator;
+  for (auto ci : db::each_child_cell (top)) {
+    from_generator.insert (ci);
+  }
+
+  std::set<db::cell_index_type> from_iterator;
+  for (db::Cell::child_cell_iterator cc = top.begin_child_cells (); ! cc.at_end (); ++cc) {
+    from_iterator.insert (*cc);
+  }
+
+  EXPECT_EQ (from_generator == from_iterator, true);
+  EXPECT_EQ (from_generator.find (a.cell_index ()) != from_generator.end (), true);
+  EXPECT_EQ (from_generator.find (b.cell_index ()) != from_generator.end (), true);
+
+  //  shapes via db::each_shape must match the classic Shapes iterator
+  top.shapes (l1).insert (db::Box (0, 0, 100, 200));
+  top.shapes (l1).insert (db::Box (10, 20, 30, 40));
+  top.shapes (l1).insert (db::Box (-5, -5, 5, 5));
+
+  size_t n_generator = 0;
+  for (auto sh : db::each_shape (top.shapes (l1), db::ShapeIterator::All)) {
+    (void) sh;
+    ++n_generator;
+  }
+
+  size_t n_iterator = 0;
+  for (db::Shapes::shape_iterator s = top.shapes (l1).begin (db::ShapeIterator::All); ! s.at_end (); ++s) {
+    ++n_iterator;
+  }
+
+  EXPECT_EQ (n_generator, n_iterator);
+  EXPECT_EQ (n_generator, size_t (3));
+}
+
+#endif

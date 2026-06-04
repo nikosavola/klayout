@@ -25,30 +25,34 @@ This directory tracks the staged C++11 → C++17/20/23/26 modernization effort.
 
 ## Status by phase
 
-| Phase | Item | What was done | Build impact |
-| --- | --- | --- | --- |
-| 1.3 | tl::Variant vs std::variant | Assessment: keep tl::Variant; std::variant only for new closed unions | doc only |
-| 1.4 | std::string_view | Guarded `tl::string_view` alias + parsing benchmark | C++17+ opt-in |
-| 1.5 | structured bindings / if constexpr | `TL_IF_CONSTEXPR` macro + guarded patterns | C++11-safe macro |
-| 2.1 | NULL → nullptr | Replaced across the tl library (105 sites) | C++11-safe |
-| 2.2 | override | ShapeCollection hierarchy + `.clang-tidy` for the rest | C++11-safe |
-| 2.3 | C-style → modern casts | tlGit.cc / tlHttpStreamCurl.cc | C++11-safe |
-| 2.4 | [[nodiscard]] | Pure factory/lookup fns in tlExpression.h via `TL_NODISCARD` | C++11-safe |
-| 2.5 | smart pointers / RAII | DataMappingLookupTable arrays → std::vector | C++11-safe |
-| 3.1 | range-based for | 8 loops in dbLayout.cc | C++11-safe |
-| 3.2 | constexpr | tlMath.h integer helpers + epsilon | C++11-safe |
-| 3.3 | move semantics | noexcept on slist / reuse_vector moves | C++11-safe |
-| 3.4 | scoped_lock / shared_mutex | `Mutex::try_lock` + guarded `tl::ScopedLock` / `tl::SharedMutex` | C++17+ opt-in |
-| 4.1 | concepts | `tlConcepts.h` (Coordinate, Iterable, Serializable, …) | C++20 opt-in |
-| 4.2 | std::span | Guarded `tl::span` alias | C++20 opt-in |
-| 4.3 | operator<=> | Custom (order-preserving) spaceship on db::point | C++20 opt-in |
-| 4.4 | coroutine iterators | Assessment (exploratory) | doc only |
-| 4.5 | std::format | Guarded `tl::format` wrapper (not replacing tl::sprintf) | C++20 opt-in |
-| 5.1 | std::expected | Guarded `tl::expected` alias + feature-detection fix | C++23 opt-in |
-| 5.2 | std::mdspan | Guarded `tl::mdspan` alias + DRC guidance | C++23 (GCC14+) |
-| 5.3 | std::generator | Guarded `tl::generator` alias + guidance | C++23 (GCC14+) |
-| 5.4 | pattern matching | Monitor P2688 | doc only |
-| 5.5 | contracts | `tl_precondition` / `tl_postcondition` markers + plan | C++11-safe |
+Each feature is first given an enabling helper (macro/alias) and then *applied*
+at real call sites; the "Applied at" column records the concrete usage (verified
+by per-TU compiles at C++11/17/20/23).
+
+| Phase | Item | Helper | Applied at | Build impact |
+| --- | --- | --- | --- | --- |
+| 1.3 | tl::Variant vs std::variant | — | Assessment doc (keep tl::Variant) | doc only |
+| 1.4 | std::string_view | `tl::string_view` + benchmark | `tl::edit_distance` args | C++17+ opt-in |
+| 1.5 | structured bindings / if constexpr | `TL_IF_CONSTEXPR` | `tl::to_string` SFINAE→`if constexpr`; `long_uint::operator T` | C++11-safe |
+| 2.1 | NULL → nullptr | — | tl library (105 sites) | C++11-safe |
+| 2.2 | override | `.clang-tidy` | ShapeCollection hierarchy | C++11-safe |
+| 2.3 | C-style → modern casts | — | tlGit.cc / tlHttpStreamCurl.cc | C++11-safe |
+| 2.4 | [[nodiscard]] | `TL_NODISCARD` | pure factory/lookup fns in tlExpression.h | C++11-safe |
+| 2.5 | smart pointers / RAII | — | DataMappingLookupTable arrays → std::vector | C++11-safe |
+| 3.1 | range-based for | — | 9 loops in dbLayout.cc | C++11-safe |
+| 3.2 | constexpr | — | tlMath.h integer helpers + epsilon | C++11-safe |
+| 3.3 | move semantics | — | noexcept on slist / reuse_vector moves | C++11-safe |
+| 3.4 | scoped_lock / shared_mutex | `Mutex::try_lock`, `tl::ScopedLock`, `tl::SharedMutex` | capability only — no multi-mutex site exists to convert (single-mutex MutexLocker is correct) | C++17+ opt-in |
+| 4.1 | concepts | `tlConcepts.h` | `tl::gcd` / `tl::lcm` constrained to `tl::Coordinate` | C++20 opt-in |
+| 4.2 | std::span | `tl::span` | `tl::to_string(span<…>)` byte-buffer overloads | C++20 opt-in |
+| 4.3 | operator<=> | — | order-preserving `<=>` on db::point and db::vector | C++20 opt-in |
+| 4.4 | coroutine iterators | — | Assessment (exploratory) | doc only |
+| 4.5 | std::format | `tl::format` | octal escapes in to_quoted_string/escape_string | C++20 opt-in |
+| 5.1 | std::expected | `tl::expected` | `tl::try_from_string<T>` parse wrapper | C++23 opt-in |
+| 5.2 | std::mdspan | `tl::mdspan` | capability only — `<mdspan>` needs GCC14+/Clang17+, not in this toolchain so usage is unverifiable here | C++23 (GCC14+) |
+| 5.3 | std::generator | `tl::generator` | capability only — `<generator>` needs GCC14+/Clang18+, unverifiable here | C++23 (GCC14+) |
+| 5.4 | pattern matching | — | Monitor P2688 (no compiler support) | doc only |
+| 5.5 | contracts | `tl_precondition` / `tl_postcondition` | 15 argument-check asserts in db::Layout | C++11-safe |
 
 ## Running the test suite
 

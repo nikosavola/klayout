@@ -25,7 +25,7 @@
 #include "tlString.h"
 #include "tlMath.h"
 
-#include <ctype.h>
+#include <cctype>
 #include <algorithm>
 
 namespace tl

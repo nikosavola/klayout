@@ -31,7 +31,7 @@
 #include <memory>
 #include <iostream>
 #include <locale.h>
-#include <stdio.h>
+#include <cstdio>
 #if !defined(_WIN32)
 # include <langinfo.h>
 #endif

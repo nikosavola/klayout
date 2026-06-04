@@ -23,7 +23,7 @@
 #include "tlDeferredExecution.h"
 #include "tlAssert.h"
 
-#include <stdio.h>
+#include <cstdio>
 
 #if defined(HAVE_QT)
 #  include "tlDeferredExecutionQt.h"

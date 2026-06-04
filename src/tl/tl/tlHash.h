@@ -32,7 +32,7 @@
 #include <vector>
 #include <list>
 #include <functional>
-#include <stdint.h>
+#include <cstdint>
 
 //  for std::hash of QString and QByteArray
 #if defined(HAVE_QT)

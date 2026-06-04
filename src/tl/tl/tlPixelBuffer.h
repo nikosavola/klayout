@@ -30,7 +30,7 @@
 #include "tlException.h"
 #include "tlCxxFeatures.h"
 
-#include <string.h>
+#include <cstring>
 #include <cstdint>
 #include <cstddef>
 

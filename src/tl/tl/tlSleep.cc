@@ -32,7 +32,7 @@
 #  include <sys/select.h>
 #endif
 
-#include <stdio.h>
+#include <cstdio>
 
 namespace tl
 {

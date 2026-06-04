@@ -20,12 +20,12 @@
 
 */
 
-#include <stddef.h>
-#include <ctype.h>
+#include <cstddef>
+#include <cctype>
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <stdio.h>
+#include <cstdio>
 #include <errno.h>
 #include <zlib.h>
 #ifdef _WIN32 

@@ -25,7 +25,7 @@
 #include "tlString.h"
 #include "tlEnv.h"
 
-#include <stdio.h>
+#include <cstdio>
 #if !defined(_MSC_VER)
 #  include <unistd.h>
 #endif

@@ -26,7 +26,7 @@
 #include "tlThreads.h"
 
 #include <string>
-#include <string.h>
+#include <cstring>
 
 #ifdef _WIN32
 #  include <windows.h>

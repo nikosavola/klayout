@@ -25,7 +25,7 @@
 #ifndef HDR_tlStableVector
 #define HDR_tlStableVector
 
-#include <stddef.h>
+#include <cstddef>
 #include <vector>
 #include <iterator>
 

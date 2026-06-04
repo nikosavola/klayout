@@ -26,7 +26,7 @@
 #include "tlString.h"
 #include "tlHash.h"
 
-#include <string.h>
+#include <cstring>
 #include <limits>
 #include <cmath>
 

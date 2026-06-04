@@ -26,7 +26,7 @@
 #include "tlAssert.h"
 #include "tlThreads.h"
 
-#include <stdio.h>
+#include <cstdio>
 #include <math.h>
 
 namespace tl

@@ -27,7 +27,7 @@
 #include "tlAssert.h"
 
 #include <memory>
-#include <stdio.h>
+#include <cstdio>
 
 namespace tl
 {

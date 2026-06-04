@@ -31,7 +31,7 @@
 #include <sstream>
 #include <typeinfo>
 #include <stdexcept>
-#include <stdint.h>
+#include <cstdint>
 #include <stdarg.h>
 
 #include "tlException.h"

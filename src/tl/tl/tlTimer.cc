@@ -39,7 +39,7 @@
 #  include <unistd.h>
 #endif
 
-#include <stdio.h>
+#include <cstdio>
 
 namespace tl
 {

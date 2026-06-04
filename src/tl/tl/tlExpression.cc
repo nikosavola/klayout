@@ -35,8 +35,8 @@
 #include <algorithm>
 #define _USE_MATH_DEFINES // for MSVC
 #include <math.h>
-#include <string.h>
-#include <ctype.h>
+#include <cstring>
+#include <cctype>
 
 //  Suggestions for further functions:
 //  - provide date/time function

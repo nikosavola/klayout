@@ -25,7 +25,7 @@
 
 #include "tlCommon.h"
 
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 
 #if defined(HAVE_QT)

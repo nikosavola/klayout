@@ -27,8 +27,8 @@
 #include "tlCommon.h"
 
 #include <string>
-#include <stdint.h>
-#include <time.h>
+#include <cstdint>
+#include <ctime>
 
 class QDateTime;
 

@@ -287,8 +287,8 @@ private:
   void set_database (Database *database);
 
   //  no copying, no default ctor
-  Category (const Category &d);
-  Category &operator= (const Category &d);
+  Category (const Category &d) = delete;
+  Category &operator= (const Category &d) = delete;
 };
 
 /**
@@ -1447,8 +1447,8 @@ private:
   References ();
 
   //  no copying, no default ctor
-  References (const References &d);
-  References &operator= (const References &d);
+  References (const References &d) = delete;
+  References &operator= (const References &d) = delete;
 };
 
 /**

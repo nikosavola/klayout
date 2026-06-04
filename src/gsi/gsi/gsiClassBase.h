@@ -650,8 +650,8 @@ private:
   static class_collection *mp_new_class_collection;
 
   //  No copying
-  ClassBase (const ClassBase &other);
-  ClassBase &operator= (const ClassBase &other);
+  ClassBase (const ClassBase &other) = delete;
+  ClassBase &operator= (const ClassBase &other) = delete;
 };
 
 /**

@@ -38,6 +38,7 @@
 #include "tlTypeTraits.h"
 #include "tlVector.h"
 #include "tlAlgorithm.h"
+#include "tlCxxFeatures.h"
 #include "gsi.h"
 
 #include <map>
@@ -1269,6 +1270,50 @@ mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const 
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }
+
+#if TL_HAS_GENERATOR
+/**
+ *  @brief Lazily yields the child cell indices of a cell (C++23)
+ *
+ *  This is the std::generator-based equivalent of the begin_child_cells() /
+ *  at_end() iterator loop, so the traversal reads as an ordinary range:
+ *
+ *    for (auto ci : db::each_child_cell (cell)) {
+ *      ... use ci ...
+ *    }
+ *
+ *  The generator is lazy and single-pass; the cell (and its layout) must outlive
+ *  the iteration.
+ */
+inline tl::generator<db::cell_index_type>
+each_child_cell (const db::Cell &cell)
+{
+  for (Cell::child_cell_iterator cc = cell.begin_child_cells (); ! cc.at_end (); ++cc) {
+    co_yield *cc;
+  }
+}
+
+/**
+ *  @brief Lazily yields the shapes of a shape container (C++23)
+ *
+ *  std::generator-based equivalent of the Shapes::begin(flags) / at_end()
+ *  iterator loop:
+ *
+ *    for (auto shape : db::each_shape (cell.shapes (layer), db::ShapeIterator::All)) {
+ *      ... use shape ...
+ *    }
+ *
+ *  The generator is lazy and single-pass; the Shapes container must outlive the
+ *  iteration.
+ */
+inline tl::generator<db::Shape>
+each_shape (const db::Shapes &shapes, unsigned int flags)
+{
+  for (Shapes::shape_iterator s = shapes.begin (flags); ! s.at_end (); ++s) {
+    co_yield *s;
+  }
+}
+#endif
 
 } // namespace db
 

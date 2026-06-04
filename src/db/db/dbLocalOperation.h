@@ -83,12 +83,12 @@ public:
   /**
    *  @brief Constructor
    */
-  local_operation () { }
+  local_operation () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~local_operation () { }
+  virtual ~local_operation () = default;
 
   /**
    *  @brief Computes the results from a given set of interacting shapes

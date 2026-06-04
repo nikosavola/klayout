@@ -104,8 +104,8 @@ merge_layouts (db::Layout &target, const db::Layout &source, const db::ICplxTran
 class DB_PUBLIC ShapesTransformer
 {
 public:
-  ShapesTransformer () { }
-  virtual ~ShapesTransformer () { }
+  ShapesTransformer () = default;
+  virtual ~ShapesTransformer () = default;
   virtual void insert_transformed (db::Shapes &into, const db::Shapes &from, const db::ICplxTrans &trans) const = 0;
 };
 

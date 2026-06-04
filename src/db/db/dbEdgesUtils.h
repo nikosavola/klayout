@@ -328,7 +328,7 @@ struct DB_PUBLIC AllEdgesMustMatchFilter
   /**
    *  @brief Constructor
    */
-  AllEdgesMustMatchFilter () { }
+  AllEdgesMustMatchFilter () = default;
 
   virtual bool selected_set (const std::unordered_set<db::EdgeWithProperties> &edges) const
   {

@@ -50,9 +50,9 @@ public:
   /**
    *  @brief Constructor
    */
-  EdgeFilterBase () { }
+  EdgeFilterBase () = default;
 
-  virtual ~EdgeFilterBase () { }
+  virtual ~EdgeFilterBase () = default;
 
   /**
    *  @brief Filters the edge
@@ -96,12 +96,12 @@ public:
   /**
    *  @brief Constructor
    */
-  edge_processor () { }
+  edge_processor () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~edge_processor () { }
+  virtual ~edge_processor () = default;
 
   /**
    *  @brief Performs the actual processing

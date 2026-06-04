@@ -1219,7 +1219,7 @@ public:
     : CompoundRegionMultiInputOperationNode (input), m_min_coherence (min_coherence), m_min_wc (min_wc)
   { }
 
-  ~CompoundRegionMergeOperationNode () { }
+  ~CompoundRegionMergeOperationNode () = default;
 
   virtual ResultType result_type () const { return Region; }
 

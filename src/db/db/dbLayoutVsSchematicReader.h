@@ -47,8 +47,8 @@ class Region;
 class DB_PUBLIC LayoutVsSchematicReaderBase
 {
 public:
-  LayoutVsSchematicReaderBase () { }
-  virtual ~LayoutVsSchematicReaderBase () { }
+  LayoutVsSchematicReaderBase () = default;
+  virtual ~LayoutVsSchematicReaderBase () = default;
 
   void read (db::LayoutVsSchematic *lvs)
   {

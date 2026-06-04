@@ -71,8 +71,8 @@ class Region;
 class DB_PUBLIC LayoutToNetlistReaderBase
 {
 public:
-  LayoutToNetlistReaderBase () { }
-  virtual ~LayoutToNetlistReaderBase () { }
+  LayoutToNetlistReaderBase () = default;
+  virtual ~LayoutToNetlistReaderBase () = default;
 
   void read (db::LayoutToNetlist *l2n)
   {

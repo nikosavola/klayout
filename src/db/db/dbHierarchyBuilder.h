@@ -53,8 +53,8 @@ int DB_PUBLIC compare_iterators_with_respect_to_target_hierarchy (const db::Recu
 class DB_PUBLIC HierarchyBuilderShapeReceiver
 {
 public:
-  HierarchyBuilderShapeReceiver () { }
-  virtual ~HierarchyBuilderShapeReceiver () { }
+  HierarchyBuilderShapeReceiver () = default;
+  virtual ~HierarchyBuilderShapeReceiver () = default;
 
   virtual void push (const db::Shape &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &region, const db::RecursiveShapeReceiver::box_tree_type *complex_region, db::Shapes *target) = 0;
   virtual void push (const db::Box &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &region, const db::RecursiveShapeReceiver::box_tree_type *complex_region, db::Shapes *target) = 0;
@@ -68,7 +68,7 @@ class DB_PUBLIC HierarchyBuilderShapeInserter
   : public HierarchyBuilderShapeReceiver
 {
 public:
-  HierarchyBuilderShapeInserter () { }
+  HierarchyBuilderShapeInserter () = default;
 
   virtual void push (const db::Shape &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target)
   {

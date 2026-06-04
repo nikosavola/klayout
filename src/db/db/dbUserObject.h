@@ -61,7 +61,7 @@ class DB_PUBLIC_TEMPLATE user_object_base
 public:
   using coord_type = C;
 
-  virtual ~user_object_base () { }
+  virtual ~user_object_base () = default;
 
   /**
    *  @brief Compare with another object
@@ -470,8 +470,8 @@ template <class C>
 class DB_PUBLIC_TEMPLATE user_object_factory_base
 {
 public:
-  user_object_factory_base () { }
-  virtual ~user_object_factory_base () { }
+  user_object_factory_base () = default;
+  virtual ~user_object_factory_base () = default;
   virtual const char *class_name () const = 0;
   virtual user_object_base<C> *create () const = 0;
 };

@@ -54,12 +54,12 @@ public:
   /**
    *  @brief Constructor
    */
-  shape_collection_processor () { }
+  shape_collection_processor () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~shape_collection_processor () { }
+  virtual ~shape_collection_processor () = default;
 
   /**
    *  @brief Performs the actual processing with properties

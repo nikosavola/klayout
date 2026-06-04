@@ -56,7 +56,7 @@ public:
   typedef Value &reference;
   using difference_type = typename Iter::difference_type;
 
-  dereferencing_iterator () { }
+  dereferencing_iterator () = default;
   dereferencing_iterator (const dereferencing_iterator &d) : Iter (d) { }
   dereferencing_iterator (const Iter &d) : Iter (d) { }
   dereferencing_iterator &operator= (const dereferencing_iterator &d)

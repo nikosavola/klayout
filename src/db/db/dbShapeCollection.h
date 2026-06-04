@@ -81,7 +81,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual ~ShapeCollectionDelegateBase () { }
+  virtual ~ShapeCollectionDelegateBase () = default;
 
   virtual DeepShapeCollectionDelegateBase *deep () { return 0; }
 
@@ -118,7 +118,7 @@ class DB_PUBLIC ShapeCollection
   : public gsi::ObjectBase
 {
 public:
-  ShapeCollection () { }
+  ShapeCollection () = default;
   ~ShapeCollection () override { }
 
   virtual ShapeCollectionDelegateBase *get_delegate () const = 0;

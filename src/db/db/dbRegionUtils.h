@@ -173,7 +173,7 @@ struct DB_PUBLIC AllMustMatchFilter
   /**
    *  @brief Constructor
    */
-  AllMustMatchFilter () { }
+  AllMustMatchFilter () = default;
 
   virtual bool selected_set (const std::unordered_set<db::PolygonRefWithProperties> &polygons) const
   {

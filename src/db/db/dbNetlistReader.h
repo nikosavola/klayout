@@ -44,8 +44,8 @@ class Netlist;
 class DB_PUBLIC NetlistReader
 {
 public:
-  NetlistReader () { }
-  virtual ~NetlistReader () { }
+  NetlistReader () = default;
+  virtual ~NetlistReader () = default;
 
   virtual void read (tl::InputStream &stream, db::Netlist &netlist) = 0;
 };

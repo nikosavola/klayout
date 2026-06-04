@@ -40,8 +40,8 @@ class DB_PUBLIC generic_shape_iterator_delegate_base
 public:
   using value_type = T;
 
-  generic_shape_iterator_delegate_base () { }
-  virtual ~generic_shape_iterator_delegate_base () { }
+  generic_shape_iterator_delegate_base () = default;
+  virtual ~generic_shape_iterator_delegate_base () = default;
 
 protected:
   friend class generic_shape_iterator<T>;

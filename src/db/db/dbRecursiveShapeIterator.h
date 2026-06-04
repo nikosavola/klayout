@@ -948,12 +948,12 @@ public:
   /**
    *  @brief Constructor
    */
-  RecursiveShapeReceiver () { }
+  RecursiveShapeReceiver () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~RecursiveShapeReceiver () { }
+  virtual ~RecursiveShapeReceiver () = default;
 
   /**
    *  @brief Returns true, if the receivers wants the full hierarchy and not just non-empty cells

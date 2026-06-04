@@ -321,8 +321,8 @@ class DB_PUBLIC DeviceParameterCompareDelegate
   : public gsi::ObjectBase, public tl::Object
 {
 public:
-  DeviceParameterCompareDelegate () { }
-  virtual ~DeviceParameterCompareDelegate () { }
+  DeviceParameterCompareDelegate () = default;
+  virtual ~DeviceParameterCompareDelegate () = default;
 
   virtual bool less (const db::Device &a, const db::Device &b) const = 0;
 };
@@ -383,8 +383,8 @@ class DB_PUBLIC DeviceCombiner
   : public gsi::ObjectBase, public tl::Object
 {
 public:
-  DeviceCombiner () { }
-  virtual ~DeviceCombiner () { }
+  DeviceCombiner () = default;
+  virtual ~DeviceCombiner () = default;
 
   /**
    *  @brief Combines two devices
@@ -845,7 +845,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual ~DeviceClassTemplateBase () { }
+  virtual ~DeviceClassTemplateBase () = default;
 
   const std::string &name () const
   {

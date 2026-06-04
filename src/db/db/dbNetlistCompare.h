@@ -48,8 +48,8 @@ class DeviceEquivalenceTracker;
 class DB_PUBLIC NetlistCompareLogger
 {
 public:
-  NetlistCompareLogger () { }
-  virtual ~NetlistCompareLogger () { }
+  NetlistCompareLogger () = default;
+  virtual ~NetlistCompareLogger () = default;
 
   /**
    *  @brief Begin logging for netlist a and b

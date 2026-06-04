@@ -85,7 +85,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~FilterBase () { }
+  virtual ~FilterBase () = default;
 
   /**
    *  @brief Create the state object for this filter
@@ -319,7 +319,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~FilterStateBase () { }
+  virtual ~FilterStateBase () = default;
 
   /**
    *  @brief Initializes the filter state object

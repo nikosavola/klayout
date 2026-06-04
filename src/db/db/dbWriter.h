@@ -49,12 +49,12 @@ public:
   /**
    *  @brief Constructor
    */
-  WriterBase () { }
+  WriterBase () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~WriterBase () { }
+  virtual ~WriterBase () = default;
 
   /**
    *  @brief Actually write the layout

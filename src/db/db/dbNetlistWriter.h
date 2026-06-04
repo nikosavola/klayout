@@ -44,8 +44,8 @@ class Netlist;
 class DB_PUBLIC NetlistWriter
 {
 public:
-  NetlistWriter () { }
-  virtual ~NetlistWriter () { }
+  NetlistWriter () = default;
+  virtual ~NetlistWriter () = default;
 
   virtual void write (tl::OutputStream &stream, const db::Netlist &netlist, const std::string &description = std::string ()) = 0;
 };

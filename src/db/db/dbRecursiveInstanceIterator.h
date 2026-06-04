@@ -627,12 +627,12 @@ public:
   /**
    *  @brief Constructor
    */
-  RecursiveInstanceReceiver () { }
+  RecursiveInstanceReceiver () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~RecursiveInstanceReceiver () { }
+  virtual ~RecursiveInstanceReceiver () = default;
 
   /**
    *  @brief Called once when the iterator begins pushing

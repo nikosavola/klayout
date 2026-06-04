@@ -46,8 +46,8 @@ namespace db
 class DB_PUBLIC FormatSpecificWriterOptions
 {
 public:
-  FormatSpecificWriterOptions () { }  
-  virtual ~FormatSpecificWriterOptions () { }  //  to enable RTTI
+  FormatSpecificWriterOptions () = default;
+  virtual ~FormatSpecificWriterOptions () = default;  //  to enable RTTI
 
   virtual FormatSpecificWriterOptions *clone () const = 0;
   virtual const std::string &format_name () const = 0;

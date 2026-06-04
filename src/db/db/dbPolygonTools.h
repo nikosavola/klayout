@@ -78,7 +78,7 @@ template <class Polygon>
 class DB_PUBLIC cut_polygon_receiver_base
 {
 public:
-  virtual ~cut_polygon_receiver_base () { }
+  virtual ~cut_polygon_receiver_base () = default;
   virtual void put (const Polygon &) = 0;
 };
 

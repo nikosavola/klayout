@@ -57,8 +57,8 @@ class DB_PUBLIC EdgePairFilterBase
 public:
   using shape_type = db::EdgePair;
 
-  EdgePairFilterBase () { }
-  virtual ~EdgePairFilterBase () { }
+  EdgePairFilterBase () = default;
+  virtual ~EdgePairFilterBase () = default;
 
   virtual bool selected (const db::EdgePair &edge_pair, db::properties_id_type prop_id) const = 0;
   virtual const TransformationReducer *vars () const = 0;

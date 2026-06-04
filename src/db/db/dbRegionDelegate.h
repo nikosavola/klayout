@@ -62,9 +62,9 @@ public:
   /**
    *  @brief Constructor
    */
-  PolygonFilterBase () { }
+  PolygonFilterBase () = default;
 
-  virtual ~PolygonFilterBase () { }
+  virtual ~PolygonFilterBase () = default;
 
   /**
    *  @brief Filters the polygon

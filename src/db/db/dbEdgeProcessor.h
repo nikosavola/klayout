@@ -61,7 +61,7 @@ public:
   /** 
    *  @brief Destructor
    */
-  virtual ~EdgeSink () { }
+  virtual ~EdgeSink () = default;
 
   /**
    *  @brief Start event
@@ -260,8 +260,8 @@ class DB_PUBLIC EdgeEvaluatorBase
 public:
   using property_type = size_t;
 
-  EdgeEvaluatorBase () { }
-  virtual ~EdgeEvaluatorBase () { }
+  EdgeEvaluatorBase () = default;
+  virtual ~EdgeEvaluatorBase () = default;
 
   virtual void reset () { }
   virtual void reserve (size_t /*n*/) { }

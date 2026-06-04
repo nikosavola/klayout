@@ -1453,7 +1453,7 @@ private:
 class DB_PUBLIC CircuitCallback
 {
 public:
-  CircuitCallback () { }
+  CircuitCallback () = default;
 
   /**
    *  @brief This method is called whenever a circuit is entered when descending.

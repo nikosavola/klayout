@@ -297,12 +297,12 @@ public:
   /**
    *  @brief Constructor
    */
-  SimplePolygonSink () { }
+  SimplePolygonSink () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~SimplePolygonSink () { }
+  virtual ~SimplePolygonSink () = default;
 
   /**
    *  @brief Deliver a simple polygon
@@ -473,12 +473,12 @@ public:
   /**
    *  @brief Constructor
    */
-  PolygonSink () { }
+  PolygonSink () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~PolygonSink () { }
+  virtual ~PolygonSink () = default;
 
   /**
    *  @brief Deliver a polygons

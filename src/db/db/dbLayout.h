@@ -406,7 +406,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~ImportLayerMapping () { }
+  virtual ~ImportLayerMapping () = default;
 
   /**
    *  @brief Perform the mapping, i.e. deliver a layer index for a given LayerProperties information

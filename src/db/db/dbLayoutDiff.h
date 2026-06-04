@@ -94,7 +94,7 @@ const unsigned int f_ignore_duplicates = 0x1000;
 class DB_PUBLIC DifferenceReceiver
 {
 public:
-  virtual ~DifferenceReceiver () { }
+  virtual ~DifferenceReceiver () = default;
 
   virtual void dbu_differs (double /*dbu_a*/, double /*dbu_b*/) { }
   virtual void layout_meta_info_differs (const std::string & /*name*/, const tl::Variant & /*value_a*/, const tl::Variant & /*value_b*/) { }

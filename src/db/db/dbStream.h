@@ -57,12 +57,12 @@ public:
   /**
    *  @brief Constructor
    */
-  StreamFormatDeclaration () { }
+  StreamFormatDeclaration () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~StreamFormatDeclaration () { }
+  virtual ~StreamFormatDeclaration () = default;
 
   /**
    *  @brief Obtain the format name

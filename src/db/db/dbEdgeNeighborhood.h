@@ -54,7 +54,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~EdgeNeighborhoodVisitor () { }
+  virtual ~EdgeNeighborhoodVisitor () = default;
 
   /**
    *  @brief Configure the polygon output

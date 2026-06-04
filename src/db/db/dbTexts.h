@@ -56,8 +56,8 @@ class DB_PUBLIC TextFilterBase
 public:
   using shape_type = db::Text;
 
-  TextFilterBase () { }
-  virtual ~TextFilterBase () { }
+  TextFilterBase () = default;
+  virtual ~TextFilterBase () = default;
 
   virtual bool selected (const db::Text &text, db::properties_id_type prop_id) const = 0;
   virtual const TransformationReducer *vars () const = 0;

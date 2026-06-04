@@ -158,7 +158,7 @@ class DB_PUBLIC CornerDetectorCore
 {
 public:
   CornerDetectorCore (double angle_start, bool include_angle_start, double angle_end, bool include_angle_end, bool inverse, bool absolute);
-  virtual ~CornerDetectorCore () { }
+  virtual ~CornerDetectorCore () = default;
 
   void detect_corners (const db::Polygon &poly, const CornerPointDelivery &delivery) const;
   void detect_corners (const db::PolygonWithProperties &poly, const CornerPointDelivery &delivery) const;

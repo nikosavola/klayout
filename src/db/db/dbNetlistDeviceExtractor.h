@@ -435,7 +435,7 @@ public:
 private:
   struct DeviceCellKey
   {
-    DeviceCellKey () { }
+    DeviceCellKey () = default;
 
     bool operator== (const DeviceCellKey &other) const
     {

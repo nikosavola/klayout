@@ -47,8 +47,8 @@ namespace db
 class DB_PUBLIC TransformationReducer
 {
 public:
-  TransformationReducer () { }
-  virtual ~TransformationReducer () { }
+  TransformationReducer () = default;
+  virtual ~TransformationReducer () = default;
 
   virtual db::Trans reduce_trans (const db::Trans &trans) const { return reduce (trans); }
   virtual db::ICplxTrans reduce_trans (const db::ICplxTrans &trans) const { return reduce (trans); }

@@ -118,7 +118,7 @@ bool bs_boxes_overlap (const Box &b1, const Box &b2, typename Box::coord_type en
 template <class Obj, class Prop>
 struct box_scanner_receiver
 {
-  virtual ~box_scanner_receiver () { }
+  virtual ~box_scanner_receiver () = default;
 
   /**
    *  @brief Indicates that the given object is no longer used

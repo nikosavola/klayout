@@ -716,12 +716,12 @@ public:
   /**
    *  @brief Default constructor
    */
-  StringAdaptor () { }
+  StringAdaptor () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~StringAdaptor () { }
+  virtual ~StringAdaptor () = default;
 
   /**
    *  @brief Returns the size of the string
@@ -1256,12 +1256,12 @@ public:
   /**
    *  @brief Default constructor
    */
-  ByteArrayAdaptor () { }
+  ByteArrayAdaptor () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~ByteArrayAdaptor () { }
+  virtual ~ByteArrayAdaptor () = default;
 
   /**
    *  @brief Returns the size of the string
@@ -1534,12 +1534,12 @@ public:
   /**
    *  @brief Default constructor
    */
-  VariantAdaptor () { }
+  VariantAdaptor () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~VariantAdaptor () { }
+  virtual ~VariantAdaptor () = default;
 
   /**
    *  @brief Gets the tl::Variant representing this variant
@@ -1899,12 +1899,12 @@ public:
   /**
    *  @brief Default constructor
    */
-  VectorAdaptorIterator () { }
+  VectorAdaptorIterator () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~VectorAdaptorIterator () { }
+  virtual ~VectorAdaptorIterator () = default;
 
   /**
    *  @brief Gets the currently pointed member
@@ -1935,12 +1935,12 @@ public:
   /**
    *  @brief Default constructor
    */
-  VectorAdaptor () { }
+  VectorAdaptor () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~VectorAdaptor () { }
+  virtual ~VectorAdaptor () = default;
 
   /**
    *  @brief Returns the size of the array
@@ -2174,12 +2174,12 @@ public:
   /**
    *  @brief Default constructor
    */
-  MapAdaptorIterator () { }
+  MapAdaptorIterator () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~MapAdaptorIterator () { }
+  virtual ~MapAdaptorIterator () = default;
 
   /**
    *  @brief Gets the currently pointed key and value
@@ -2210,12 +2210,12 @@ public:
   /**
    *  @brief Default constructor
    */
-  MapAdaptor () { }
+  MapAdaptor () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~MapAdaptor () { }
+  virtual ~MapAdaptor () = default;
 
   /**
    *  @brief Returns the size of the map

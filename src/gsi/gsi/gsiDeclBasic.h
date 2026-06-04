@@ -45,7 +45,7 @@ public:
   /**
    *  @brief Constructor: create a "nil" object
    */
-  Value () { }
+  Value () = default;
 
   /**
    *  @brief Constructor: create an object with a value

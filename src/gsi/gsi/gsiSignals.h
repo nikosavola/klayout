@@ -131,12 +131,12 @@ public:
   /**
    *  @brief Constructor
    */
-  SignalHandler () { }
+  SignalHandler () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~SignalHandler () { }
+  virtual ~SignalHandler () = default;
 
   /**
    *  @brief Provides the implementation for the call of the signal
@@ -246,7 +246,7 @@ class GSI_PUBLIC QtSignalAdaptorBase
 Q_OBJECT
 
 public:
-  QtSignalAdaptorBase () { }
+  QtSignalAdaptorBase () = default;
 
 public slots:
   void generic ()

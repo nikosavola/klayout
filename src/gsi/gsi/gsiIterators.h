@@ -99,7 +99,7 @@ struct address_of<const X * &, const X *>
 class IterAdaptorAbstractBase
 {
 public:
-  virtual ~IterAdaptorAbstractBase () { }
+  virtual ~IterAdaptorAbstractBase () = default;
 
   virtual void get (SerialArgs &w) const = 0;
   virtual size_t serial_size () const = 0;

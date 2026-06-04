@@ -309,8 +309,8 @@ template <class X> struct _assign<X, true> { static void call (void *dest, const
 class SubClassTesterBase
 {
 public:
-  SubClassTesterBase () { }
-  virtual ~SubClassTesterBase () { }
+  SubClassTesterBase () = default;
+  virtual ~SubClassTesterBase () = default;
 
   virtual bool can_upcast (const void *p) const = 0;
 };

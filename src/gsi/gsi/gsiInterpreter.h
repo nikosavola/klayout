@@ -55,12 +55,12 @@ public:
   /**
    *  @brief Constructor
    */
-  Console () { }
+  Console () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~Console () { }
+  virtual ~Console () = default;
 
   /**
    *  @brief Writes the given string to the console using the given stream
@@ -96,8 +96,8 @@ public:
 class GSI_PUBLIC StackTraceProvider
 {
 public:
-  StackTraceProvider () { }
-  virtual ~StackTraceProvider () { }
+  StackTraceProvider () = default;
+  virtual ~StackTraceProvider () = default;
   virtual std::vector<tl::BacktraceElement> stack_trace () const = 0;
   virtual int stack_depth () const = 0;
   virtual size_t scope_index () const = 0;
@@ -116,12 +116,12 @@ public:
   /**
    *  @brief The constructor
    */
-  ExecutionHandler () { }
+  ExecutionHandler () = default;
 
   /**
    *  @brief The destructor 
    */
-  virtual ~ExecutionHandler () { }
+  virtual ~ExecutionHandler () = default;
 
   /**
    *  @brief Indicates the start of the execution of a block of code

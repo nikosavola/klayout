@@ -45,12 +45,12 @@ public:
   /**
    *  @brief Constructor
    */
-  FormatDeclaration () { }
+  FormatDeclaration () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~FormatDeclaration () { }
+  virtual ~FormatDeclaration () = default;
 
   /**
    *  @brief Obtain the format name
@@ -101,8 +101,8 @@ public:
 class RDB_PUBLIC ReaderBase
 {
 public:
-  ReaderBase () { }
-  virtual ~ReaderBase () { }
+  ReaderBase () = default;
+  virtual ~ReaderBase () = default;
 
   virtual void read (Database &db) = 0;
   virtual const char *format () const = 0;

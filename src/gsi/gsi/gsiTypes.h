@@ -1152,7 +1152,7 @@ public:
     : m_name (name), m_init_doc (init_doc), m_has_default (has_default) 
   { }
   
-  virtual ~ArgSpecBase () { }
+  virtual ~ArgSpecBase () = default;
   
   const std::string &name () const 
   { 

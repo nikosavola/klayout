@@ -37,8 +37,8 @@ namespace gsi
 struct GSI_PUBLIC Callee
   : public tl::Object
 {
-  Callee () { }
-  virtual ~Callee () { }
+  Callee () = default;
+  virtual ~Callee () = default;
 
   virtual void call (int id, SerialArgs &args, SerialArgs &ret) const = 0;
   virtual bool can_call () const { return true; }

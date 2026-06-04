@@ -868,8 +868,8 @@ private:
   using layout_map_type = std::map<std::pair<db::RecursiveShapeIterator, std::pair<size_t, db::ICplxTrans> >, unsigned int, RecursiveShapeIteratorCompareForTargetHierarchy>;
 
   //  no copying
-  DeepShapeStore (const DeepShapeStore &);
-  DeepShapeStore &operator= (const DeepShapeStore &);
+  DeepShapeStore (const DeepShapeStore &) = delete;
+  DeepShapeStore &operator= (const DeepShapeStore &) = delete;
 
   std::vector<LayoutHolder *> m_layouts;
   std::map<size_t, std::pair<unsigned int, unsigned int> > m_layers_for_flat;

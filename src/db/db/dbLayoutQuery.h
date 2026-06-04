@@ -561,8 +561,8 @@ private:
   std::map <std::string, unsigned int> m_property_ids_by_name;
 
   //  no copying currently (requires a clone method for the filter object)
-  LayoutQuery (const LayoutQuery &d);
-  LayoutQuery &operator= (const LayoutQuery &d);
+  LayoutQuery (const LayoutQuery &d) = delete;
+  LayoutQuery &operator= (const LayoutQuery &d) = delete;
 };
 
 /**
@@ -686,8 +686,8 @@ private:
   void init ();
 
   //  no copying currently (requires a clone method for the state object)
-  LayoutQueryIterator (const LayoutQueryIterator &i);
-  LayoutQueryIterator &operator= (const LayoutQueryIterator &i);
+  LayoutQueryIterator (const LayoutQueryIterator &i) = delete;
+  LayoutQueryIterator &operator= (const LayoutQueryIterator &i) = delete;
 };
 
 }

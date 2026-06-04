@@ -383,8 +383,8 @@ private:
   std::string m_description;
 
   //  no copying.
-  Transaction (const Transaction &);
-  Transaction &operator= (const Transaction &);
+  Transaction (const Transaction &) = delete;
+  Transaction &operator= (const Transaction &) = delete;
 };
 
 } // namespace db

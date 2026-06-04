@@ -483,8 +483,8 @@ private:
   std::map<DeviceCellKey, std::pair<db::cell_index_type, db::DeviceAbstract *> > m_device_cells;
 
   //  no copying
-  NetlistDeviceExtractor (const NetlistDeviceExtractor &);
-  NetlistDeviceExtractor &operator= (const NetlistDeviceExtractor &);
+  NetlistDeviceExtractor (const NetlistDeviceExtractor &) = delete;
+  NetlistDeviceExtractor &operator= (const NetlistDeviceExtractor &) = delete;
 
   void extract_without_initialize (db::Layout &layout, db::Cell &cell, hier_clusters_type &clusters, const std::vector<unsigned int> &layers, double device_scaling, const std::set<cell_index_type> *breakout_cells);
   void push_new_devices (const Vector &disp_cache);

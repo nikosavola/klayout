@@ -295,8 +295,8 @@ public:
 
 private:
   //  No copying
-  NetlistCrossReference (const db::NetlistCrossReference &);
-  NetlistCrossReference &operator= (const db::NetlistCrossReference &);
+  NetlistCrossReference (const db::NetlistCrossReference &) = delete;
+  NetlistCrossReference &operator= (const db::NetlistCrossReference &) = delete;
 
   tl::weak_ptr<db::Netlist> mp_netlist_a, mp_netlist_b;
   std::vector<std::pair<const db::Circuit *, const db::Circuit *> > m_circuits;

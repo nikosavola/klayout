@@ -179,8 +179,8 @@ public:
 
 private:
   //  no copying
-  LayoutVsSchematic (const db::LayoutVsSchematic &other);
-  LayoutVsSchematic &operator= (const db::LayoutVsSchematic &other);
+  LayoutVsSchematic (const db::LayoutVsSchematic &other) = delete;
+  LayoutVsSchematic &operator= (const db::LayoutVsSchematic &other) = delete;
 
   tl::shared_ptr<db::Netlist> mp_reference_netlist;
   tl::shared_ptr<db::NetlistCrossReference> mp_cross_ref;

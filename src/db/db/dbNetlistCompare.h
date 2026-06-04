@@ -160,8 +160,8 @@ public:
 
 private:
   //  No copying
-  NetlistCompareLogger (const NetlistCompareLogger &);
-  NetlistCompareLogger &operator= (const NetlistCompareLogger &);
+  NetlistCompareLogger (const NetlistCompareLogger &) = delete;
+  NetlistCompareLogger &operator= (const NetlistCompareLogger &) = delete;
 };
 
 /**
@@ -374,8 +374,8 @@ public:
 
 private:
   //  No copying
-  NetlistComparer (const NetlistComparer &);
-  NetlistComparer &operator= (const NetlistComparer &);
+  NetlistComparer (const NetlistComparer &) = delete;
+  NetlistComparer &operator= (const NetlistComparer &) = delete;
 
 protected:
   bool compare_impl (const db::Netlist *a, const db::Netlist *b) const;

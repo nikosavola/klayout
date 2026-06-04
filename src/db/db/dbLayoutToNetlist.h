@@ -1211,8 +1211,8 @@ public:
 
 private:
   //  no copying
-  LayoutToNetlist (const db::LayoutToNetlist &other);
-  LayoutToNetlist &operator= (const db::LayoutToNetlist &other);
+  LayoutToNetlist (const db::LayoutToNetlist &other) = delete;
+  LayoutToNetlist &operator= (const db::LayoutToNetlist &other) = delete;
 
   std::string m_description;
   std::string m_name;

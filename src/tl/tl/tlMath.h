@@ -25,6 +25,7 @@
 #define HDR_tlMath
 
 #include "tlAssert.h"
+#include "tlConcepts.h"
 
 #include <cmath>
 
@@ -92,8 +93,15 @@ inline double modulo (double a, double b)
 
 /**
  *  @brief Compute the greatest common divider of two numbers using the euclidian method
+ *
+ *  Works for integer and (via the double modulo/equal specializations) floating
+ *  point types - hence the tl::Coordinate constraint on C++20 builds.
  */
+#if TL_HAS_CONCEPTS
+template <tl::Coordinate T>
+#else
 template <class T>
+#endif
 inline
 T gcd (T a, T b)
 {
@@ -108,7 +116,11 @@ T gcd (T a, T b)
 /**
  *  @brief Compute the lowest common multiple of two numbers using the euclidian method
  */
+#if TL_HAS_CONCEPTS
+template <tl::Coordinate T>
+#else
 template <class T>
+#endif
 inline
 T lcm (T a, T b)
 {

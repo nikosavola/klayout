@@ -187,7 +187,7 @@ template <class Obj>
 struct XMLObjTag
 {
   XMLObjTag() { }
-  typedef Obj obj;
+  using obj = Obj;
 };
 
 /**
@@ -480,8 +480,8 @@ private:
 class TL_PUBLIC XMLElementList 
 {
 public:
-  typedef std::list <XMLElementProxy> children_list;
-  typedef children_list::const_iterator iterator;
+  using children_list = std::list <XMLElementProxy>;
+  using iterator = children_list::const_iterator;
 
   XMLElementList ()
   {
@@ -604,7 +604,7 @@ private:
 class TL_PUBLIC XMLElementBase
 {
 public:
-  typedef XMLElementList::iterator iterator;
+  using iterator = XMLElementList::iterator;
 
   XMLElementBase (const std::string &name, const XMLElementList &children)
     : m_name (name), mp_children (new XMLElementList (children)), m_owns_child_list (true)
@@ -750,7 +750,7 @@ public:
     while (! r.at_end ()) {
       XMLElementBase::write_indent (os, indent);
       os << "<" << this->name () << ">\n";
-      typedef typename Read::tag read_tag_type;
+      using read_tag_type = typename Read::tag;
       read_tag_type read_tag;
       write_obj (r (), os, indent, read_tag, objs);
       XMLElementBase::write_indent (os, indent);
@@ -856,7 +856,7 @@ public:
     while (! r.at_end ()) {
       XMLElementBase::write_indent (os, indent);
       os << "<" << this->name () << ">\n";
-      typedef typename Read::tag read_tag_type;
+      using read_tag_type = typename Read::tag;
       read_tag_type read_tag;
       write_obj (r (), os, indent, read_tag, objs);
       XMLElementBase::write_indent (os, indent);
@@ -1266,7 +1266,7 @@ private:
 template <class Value, class Parent>
 struct XMLMemberDummyReadAdaptor
 {
-  typedef pass_by_ref_tag tag;
+  using tag = pass_by_ref_tag;
 
   XMLMemberDummyReadAdaptor ()
   {
@@ -1297,7 +1297,7 @@ struct XMLMemberDummyReadAdaptor
 template <class Value, class Parent>
 struct XMLMemberReadAdaptor
 {
-  typedef pass_by_ref_tag tag;
+  using tag = pass_by_ref_tag;
 
   XMLMemberReadAdaptor (Value Parent::*member)
     : mp_member (member), mp_owner (0), m_done (false)
@@ -1335,7 +1335,7 @@ private:
 template <class Value, class Parent>
 struct XMLMemberAccRefReadAdaptor
 {
-  typedef pass_by_ref_tag tag;
+  using tag = pass_by_ref_tag;
 
   XMLMemberAccRefReadAdaptor (const Value &(Parent::*member) () const)
     : mp_member (member), mp_owner (0), m_done (false)
@@ -1373,7 +1373,7 @@ private:
 template <class Value, class Parent>
 struct XMLMemberAccReadAdaptor
 {
-  typedef pass_by_value_tag tag;
+  using tag = pass_by_value_tag;
 
   XMLMemberAccReadAdaptor (Value (Parent::*member) () const)
     : mp_member (member), mp_owner (0), m_done (false)
@@ -1411,7 +1411,7 @@ private:
 template <class Value, class Iter, class Parent>
 struct XMLMemberIterReadAdaptor
 {
-  typedef pass_by_ref_tag tag;
+  using tag = pass_by_ref_tag;
 
   XMLMemberIterReadAdaptor (Iter (Parent::*begin) () const, Iter (Parent::*end) () const)
     : mp_begin (begin), mp_end (end)

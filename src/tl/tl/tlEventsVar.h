@@ -165,14 +165,14 @@ template <_TMPLARGS>
 class TL_PUBLIC_TEMPLATE event<_TMPLARGLISTP>
 {
 public:
-  typedef event_function_base<_TMPLARGLISTP> func;
-  typedef std::vector<std::pair<tl::weak_ptr<tl::Object>, tl::shared_ptr<func> > > receivers;
+  using func = event_function_base<_TMPLARGLISTP>;
+  using receivers = std::vector<std::pair<tl::weak_ptr<tl::Object>, tl::shared_ptr<func> > >;
 #if _COUNT == 0
   //  NOTE: for gcc 4.4.7 (and may others), event is not a template in this case and
   //  typename must not be given.
-  typedef receivers::iterator receivers_iterator;
+  using receivers_iterator = receivers::iterator;
 #else
-  typedef typename receivers::iterator receivers_iterator;
+  using receivers_iterator = typename receivers::iterator;
 #endif
 
   event ()

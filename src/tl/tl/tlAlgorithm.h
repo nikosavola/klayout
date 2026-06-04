@@ -142,7 +142,7 @@ namespace tl
   inline void
   __unguarded_insertion_sort(_RandomAccessIter __first, _RandomAccessIter __last)
   {
-    typedef typename std::iterator_traits<_RandomAccessIter>::value_type _ValueType;
+    using _ValueType = typename std::iterator_traits<_RandomAccessIter>::value_type;
 
     for (_RandomAccessIter __i = __first; __i != __last; ++__i)
       tl::__unguarded_linear_insert(__i, _ValueType(*__i));
@@ -153,7 +153,7 @@ namespace tl
   __unguarded_insertion_sort(_RandomAccessIter __first, _RandomAccessIter __last,
                              _Compare __comp)
   {
-    typedef typename std::iterator_traits<_RandomAccessIter>::value_type _ValueType;
+    using _ValueType = typename std::iterator_traits<_RandomAccessIter>::value_type;
 
     for (_RandomAccessIter __i = __first; __i != __last; ++__i)
       tl::__unguarded_linear_insert(__i, _ValueType(*__i), __comp);
@@ -238,8 +238,8 @@ namespace tl
   inline void 
   push_heap(_RandomAccessIterator __first, _RandomAccessIterator __last)
   {
-    typedef typename std::iterator_traits<_RandomAccessIterator>::value_type _ValueType;
-    typedef typename std::iterator_traits<_RandomAccessIterator>::difference_type _DistanceType;
+    using _ValueType = typename std::iterator_traits<_RandomAccessIterator>::value_type;
+    using _DistanceType = typename std::iterator_traits<_RandomAccessIterator>::difference_type;
 
     tl::__push_heap(__first, _DistanceType((__last - __first) - 1), _DistanceType(0), 
         _ValueType(*(__last - 1)));
@@ -265,8 +265,8 @@ namespace tl
   push_heap(_RandomAccessIterator __first, _RandomAccessIterator __last,
             _Compare __comp)
   {
-    typedef typename std::iterator_traits<_RandomAccessIterator>::value_type _ValueType;
-    typedef typename std::iterator_traits<_RandomAccessIterator>::difference_type _DistanceType;
+    using _ValueType = typename std::iterator_traits<_RandomAccessIterator>::value_type;
+    using _DistanceType = typename std::iterator_traits<_RandomAccessIterator>::difference_type;
 
     tl::__push_heap(__first, _DistanceType((__last - __first) - 1), _DistanceType(0), 
         _ValueType(*(__last - 1)), __comp);
@@ -298,7 +298,7 @@ namespace tl
   __pop_heap(_RandomAccessIterator __first, _RandomAccessIterator __last,
              _RandomAccessIterator __result, const _Tp &__v)
   {
-    typedef typename std::iterator_traits<_RandomAccessIterator>::difference_type _Distance;
+    using _Distance = typename std::iterator_traits<_RandomAccessIterator>::difference_type;
     *__result = *__first;
     tl::__adjust_heap(__first, _Distance(0), _Distance(__last - __first), __v);
   }
@@ -307,7 +307,7 @@ namespace tl
   inline void
   pop_heap(_RandomAccessIterator __first, _RandomAccessIterator __last)
   {
-    typedef typename std::iterator_traits<_RandomAccessIterator>::value_type _ValueType;
+    using _ValueType = typename std::iterator_traits<_RandomAccessIterator>::value_type;
     tl::__pop_heap(__first, __last - 1, __last - 1, _ValueType(*(__last - 1)));
   }
 
@@ -338,7 +338,7 @@ namespace tl
   __pop_heap(_RandomAccessIterator __first, _RandomAccessIterator __last, 
              _RandomAccessIterator __result, const _Tp &__v, _Compare __comp)
   {
-    typedef typename std::iterator_traits<_RandomAccessIterator>::difference_type _Distance;
+    using _Distance = typename std::iterator_traits<_RandomAccessIterator>::difference_type;
     *__result = *__first;
     tl::__adjust_heap(__first, _Distance(0), _Distance(__last - __first), 
           __v, __comp);
@@ -349,7 +349,7 @@ namespace tl
   pop_heap(_RandomAccessIterator __first,
            _RandomAccessIterator __last, _Compare __comp)
   {
-    typedef typename std::iterator_traits<_RandomAccessIterator>::value_type _ValueType;
+    using _ValueType = typename std::iterator_traits<_RandomAccessIterator>::value_type;
     tl::__pop_heap(__first, __last - 1, __last - 1, _ValueType(*(__last - 1)), __comp);
   }
 
@@ -357,8 +357,8 @@ namespace tl
   void 
   make_heap(_RandomAccessIterator __first, _RandomAccessIterator __last)
   {
-    typedef typename std::iterator_traits<_RandomAccessIterator>::value_type _ValueType;
-    typedef typename std::iterator_traits<_RandomAccessIterator>::difference_type _DistanceType;
+    using _ValueType = typename std::iterator_traits<_RandomAccessIterator>::value_type;
+    using _DistanceType = typename std::iterator_traits<_RandomAccessIterator>::difference_type;
 
     if (__last - __first < 2) return;
     _DistanceType __len = __last - __first;
@@ -376,8 +376,8 @@ namespace tl
   make_heap(_RandomAccessIterator __first, _RandomAccessIterator __last,
             _Compare __comp)
   {
-    typedef typename std::iterator_traits<_RandomAccessIterator>::value_type _ValueType;
-    typedef typename std::iterator_traits<_RandomAccessIterator>::difference_type _DistanceType;
+    using _ValueType = typename std::iterator_traits<_RandomAccessIterator>::value_type;
+    using _DistanceType = typename std::iterator_traits<_RandomAccessIterator>::difference_type;
 
     if (__last - __first < 2) return;
     _DistanceType __len = __last - __first;
@@ -415,7 +415,7 @@ namespace tl
                _RandomAccessIter __middle,
                _RandomAccessIter __last)
   {
-    typedef typename std::iterator_traits<_RandomAccessIter>::value_type _ValueType;
+    using _ValueType = typename std::iterator_traits<_RandomAccessIter>::value_type;
 
     tl::make_heap(__first, __middle);
     for (_RandomAccessIter __i = __middle; __i < __last; ++__i)
@@ -431,7 +431,7 @@ namespace tl
                _RandomAccessIter __last,
                _Compare __comp)
   {
-    typedef typename std::iterator_traits<_RandomAccessIter>::value_type _ValueType;
+    using _ValueType = typename std::iterator_traits<_RandomAccessIter>::value_type;
 
     tl::make_heap(__first, __middle, __comp);
     for (_RandomAccessIter __i = __middle; __i < __last; ++__i)
@@ -445,7 +445,7 @@ namespace tl
   __introsort_loop(_RandomAccessIter __first, _RandomAccessIter __last,
                    _Size __depth_limit)
   {
-    typedef typename std::iterator_traits<_RandomAccessIter>::value_type _ValueType;
+    using _ValueType = typename std::iterator_traits<_RandomAccessIter>::value_type;
 
     while (__last - __first > tl::_M_threshold) {
       if (__depth_limit == 0) {
@@ -468,7 +468,7 @@ namespace tl
   __introsort_loop(_RandomAccessIter __first, _RandomAccessIter __last,
                    _Size __depth_limit, _Compare __comp)
   {
-    typedef typename std::iterator_traits<_RandomAccessIter>::value_type _ValueType;
+    using _ValueType = typename std::iterator_traits<_RandomAccessIter>::value_type;
 
     while (__last - __first > tl::_M_threshold) {
       if (__depth_limit == 0) {
@@ -552,7 +552,7 @@ namespace tl
               _RandomAccessIter __nth,
               _RandomAccessIter __last)
   {
-    typedef typename std::iterator_traits<_RandomAccessIter>::value_type _ValueType;
+    using _ValueType = typename std::iterator_traits<_RandomAccessIter>::value_type;
 
     while (__last - __first > 3) {
       _RandomAccessIter __cut =
@@ -591,7 +591,7 @@ namespace tl
               _RandomAccessIter __last,
               _Compare __comp)
   {
-    typedef typename std::iterator_traits<_RandomAccessIter>::value_type _ValueType;
+    using _ValueType = typename std::iterator_traits<_RandomAccessIter>::value_type;
 
     while (__last - __first > 3) {
       _RandomAccessIter __cut =

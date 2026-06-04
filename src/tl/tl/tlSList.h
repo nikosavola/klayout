@@ -64,12 +64,12 @@ template <class T>
 class slist_iterator
 {
 public:
-  typedef slist_node_type<T> node_type;
-  typedef std::forward_iterator_tag iterator_category;
-  typedef T value_type;
+  using node_type = slist_node_type<T>;
+  using iterator_category = std::forward_iterator_tag;
+  using value_type = T;
   typedef T &reference;
   typedef T *pointer;
-  typedef void difference_type;
+  using difference_type = void;
 
   slist_iterator (node_type *p = 0) : mp_p (p) { }
   slist_iterator operator++ () { mp_p = mp_p->next; return *this; }
@@ -97,12 +97,12 @@ template <class T>
 class slist_const_iterator
 {
 public:
-  typedef slist_node_type<T> node_type;
-  typedef std::forward_iterator_tag iterator_category;
-  typedef const T value_type;
+  using node_type = slist_node_type<T>;
+  using iterator_category = std::forward_iterator_tag;
+  using value_type = const T;
   typedef const T &reference;
   typedef const T *pointer;
-  typedef void difference_type;
+  using difference_type = void;
 
   slist_const_iterator (slist_iterator<T> i) : mp_p (i.mp_p) { }
   slist_const_iterator (const node_type *p = 0) : mp_p (p) { }
@@ -130,10 +130,10 @@ template <class T>
 class slist
 {
 public:
-  typedef slist_node_type<T> node_type;
-  typedef T value_type;
-  typedef slist_const_iterator<T> const_iterator;
-  typedef slist_iterator<T> iterator;
+  using node_type = slist_node_type<T>;
+  using value_type = T;
+  using const_iterator = slist_const_iterator<T>;
+  using iterator = slist_iterator<T>;
 
   slist ()
     : mp_first (0), mp_last (0), m_size (0)

@@ -37,11 +37,11 @@ template <class Tree, class Cmp>
 class kd_tree_it
 {
 public:
-  typedef typename Tree::value_type value_type;
-  typedef typename Tree::object_type object_type;
-  typedef typename Tree::value_picker_type value_picker_type;
-  typedef typename Tree::difference_type difference_type;
-  typedef typename Tree::size_type size_type;
+  using value_type = typename Tree::value_type;
+  using object_type = typename Tree::object_type;
+  using value_picker_type = typename Tree::value_picker_type;
+  using difference_type = typename Tree::difference_type;
+  using size_type = typename Tree::size_type;
 
   kd_tree_it (const Tree &t, value_picker_type p, const Cmp &c) 
     : m_j (1), m_n (t.size ()), m_l (0), 
@@ -247,14 +247,14 @@ template <class Cont>
 class kd_n_it
 {
 public:
-  typedef typename Cont::iterator it_type;
-  typedef typename Cont::difference_type difference_type;
-  typedef typename Cont::size_type size_type;
-  typedef typename std::iterator_traits<it_type> it_traits;
-  typedef typename it_traits::value_type value_type;
-  typedef typename it_traits::iterator_category iterator_category;
-  typedef typename it_traits::pointer pointer;
-  typedef typename it_traits::reference reference;
+  using it_type = typename Cont::iterator;
+  using difference_type = typename Cont::difference_type;
+  using size_type = typename Cont::size_type;
+  using it_traits = typename std::iterator_traits<it_type>;
+  using value_type = typename it_traits::value_type;
+  using iterator_category = typename it_traits::iterator_category;
+  using pointer = typename it_traits::pointer;
+  using reference = typename it_traits::reference;
 
   kd_n_it (size_type step, const it_type &begin, difference_type index)
     : m_begin (begin), m_step (step), m_index (index)
@@ -367,18 +367,18 @@ template <class Obj, class Val, class ValPicker, class Cmp, class ObjV = std::ve
 class kd_tree 
 {
 public:
-  typedef tl::kd_tree<Obj, Val, ValPicker, Cmp, ObjV, ValV> tree_type;
-  typedef Val value_type;
-  typedef Obj object_type;
-  typedef ValPicker value_picker_type;
-  typedef Cmp compare_type;
-  typedef ObjV obj_vector_type;
-  typedef ValV bound_vector_type;
-  typedef tl::kd_n_it<obj_vector_type> kd_n_it;
-  typedef typename obj_vector_type::const_iterator const_iterator;
-  typedef typename obj_vector_type::iterator iterator;
-  typedef typename obj_vector_type::difference_type difference_type;
-  typedef typename obj_vector_type::size_type size_type;
+  using tree_type = tl::kd_tree<Obj, Val, ValPicker, Cmp, ObjV, ValV>;
+  using value_type = Val;
+  using object_type = Obj;
+  using value_picker_type = ValPicker;
+  using compare_type = Cmp;
+  using obj_vector_type = ObjV;
+  using bound_vector_type = ValV;
+  using kd_n_it = tl::kd_n_it<obj_vector_type>;
+  using const_iterator = typename obj_vector_type::const_iterator;
+  using iterator = typename obj_vector_type::iterator;
+  using difference_type = typename obj_vector_type::difference_type;
+  using size_type = typename obj_vector_type::size_type;
 
   /**
    *  @brief Constructs an empty KD tree object

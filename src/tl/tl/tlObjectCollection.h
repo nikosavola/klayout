@@ -44,11 +44,11 @@ template <class T, class Holder, bool Shared>
 class weak_or_shared_collection_iterator
 {
 public:
-  typedef T value_type;
+  using value_type = T;
   typedef T &reference;
   typedef T *pointer;
-  typedef std::bidirectional_iterator_tag iterator_category;
-  typedef std::ptrdiff_t difference_type;
+  using iterator_category = std::bidirectional_iterator_tag;
+  using difference_type = std::ptrdiff_t;
 
   /**
    *  @brief Default constructor
@@ -204,9 +204,9 @@ public:
     }
   };
 
-  typedef weak_or_shared_collection_iterator<T, holder_type, Shared> iterator;
-  typedef weak_or_shared_collection_iterator<const T, holder_type, Shared> const_iterator;
-  typedef T value_type;
+  using iterator = weak_or_shared_collection_iterator<T, holder_type, Shared>;
+  using const_iterator = weak_or_shared_collection_iterator<const T, holder_type, Shared>;
+  using value_type = T;
   typedef T &reference;
   typedef T *pointer;
 

@@ -84,7 +84,7 @@ template <class T> bool test_extractor_impl (tl::Extractor &, T &) { throw Extra
 class TL_PUBLIC string
 {
 public:
-  typedef std::allocator<char> allocator_t;
+  using allocator_t = std::allocator<char>;
 
   /**
    *  @brief The default constructor

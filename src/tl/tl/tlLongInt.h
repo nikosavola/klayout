@@ -50,7 +50,7 @@ class long_uint
 public:
   enum { bits = sizeof (B) * 8 };
 
-  typedef B basic_type;
+  using basic_type = B;
 
   /**
    *  @brief Default constructor

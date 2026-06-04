@@ -41,7 +41,7 @@ template <class T, size_t N>
 class fixed_vector 
 {
 public:
-  typedef T value_type;
+  using value_type = T;
   typedef T *iterator;
   typedef const T *const_iterator;
 

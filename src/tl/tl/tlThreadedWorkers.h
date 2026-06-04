@@ -458,7 +458,7 @@ private:
 class TL_PUBLIC Boss
 {
 public: 
-  typedef std::set<JobBase *>::iterator iterator;
+  using iterator = std::set<JobBase *>::iterator;
 
   /**
    *  @brief The default ctor

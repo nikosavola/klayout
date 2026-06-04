@@ -269,7 +269,7 @@ private:
 class TL_PUBLIC ProgressAdaptor
 {
 public:
-  typedef tl::list<tl::Progress>::iterator iterator;
+  using iterator = tl::list<tl::Progress>::iterator;
 
   ProgressAdaptor ();
   virtual ~ProgressAdaptor ();

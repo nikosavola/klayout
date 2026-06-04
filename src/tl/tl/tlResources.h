@@ -32,7 +32,7 @@
 namespace tl
 {
 
-typedef size_t resource_id_type;
+using resource_id_type = size_t;
 
 /**
  *  @brief A facility for retrieving resource data similar to Qt resources

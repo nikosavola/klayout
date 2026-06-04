@@ -116,8 +116,8 @@ template <class C>
 class list_iterator
 {
 public:
-  typedef std::bidirectional_iterator_tag category;
-  typedef C value_type;
+  using category = std::bidirectional_iterator_tag;
+  using value_type = C;
   typedef C &reference;
   typedef C *pointer;
 
@@ -163,8 +163,8 @@ template <class C>
 class reverse_list_iterator
 {
 public:
-  typedef std::bidirectional_iterator_tag category;
-  typedef C value_type;
+  using category = std::bidirectional_iterator_tag;
+  using value_type = C;
   typedef C &reference;
   typedef C *pointer;
 
@@ -207,12 +207,12 @@ template <class C>
 class list_impl<C, false>
 {
 public:
-  typedef list_iterator<C> iterator;
-  typedef list_iterator<const C> const_iterator;
-  typedef reverse_list_iterator<C> reverse_iterator;
-  typedef reverse_list_iterator<const C> const_reverse_iterator;
+  using iterator = list_iterator<C>;
+  using const_iterator = list_iterator<const C>;
+  using reverse_iterator = reverse_list_iterator<C>;
+  using const_reverse_iterator = reverse_list_iterator<const C>;
 
-  typedef C value_type;
+  using value_type = C;
 
   list_impl () : m_head (), m_back ()
   {
@@ -463,10 +463,10 @@ class list_impl<C, true>
   : public list_impl<C, false>
 {
 public:
-  typedef typename list_impl<C, false>::iterator iterator;
-  typedef typename list_impl<C, false>::const_iterator const_iterator;
-  typedef typename list_impl<C, false>::reverse_iterator reverse_iterator;
-  typedef typename list_impl<C, false>::const_reverse_iterator const_reverse_iterator;
+  using iterator = typename list_impl<C, false>::iterator;
+  using const_iterator = typename list_impl<C, false>::const_iterator;
+  using reverse_iterator = typename list_impl<C, false>::reverse_iterator;
+  using const_reverse_iterator = typename list_impl<C, false>::const_reverse_iterator;
 
   using list_impl<C, false>::insert;
   using list_impl<C, false>::push_back;
@@ -575,10 +575,10 @@ class list
   : public list_impl<C, CanCopy>
 {
 public:
-  typedef typename list_impl<C, CanCopy>::iterator iterator;
-  typedef typename list_impl<C, CanCopy>::const_iterator const_iterator;
-  typedef typename list_impl<C, CanCopy>::reverse_iterator reverse_iterator;
-  typedef typename list_impl<C, CanCopy>::const_reverse_iterator const_reverse_iterator;
+  using iterator = typename list_impl<C, CanCopy>::iterator;
+  using const_iterator = typename list_impl<C, CanCopy>::const_iterator;
+  using reverse_iterator = typename list_impl<C, CanCopy>::reverse_iterator;
+  using const_reverse_iterator = typename list_impl<C, CanCopy>::const_reverse_iterator;
 
   using list_impl<C, CanCopy>::first;
   using list_impl<C, CanCopy>::last;

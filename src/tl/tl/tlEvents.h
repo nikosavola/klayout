@@ -120,7 +120,7 @@ template <class T, class D, class A1 = void, class A2 = void, class A3 = void, c
 template <class T, class A1 = void, class A2 = void, class A3 = void, class A4 = void, class A5 = void> class TL_PUBLIC_TEMPLATE generic_event_function;
 template <class T, class D, class A1 = void, class A2 = void, class A3 = void, class A4 = void, class A5 = void> class TL_PUBLIC_TEMPLATE generic_event_function_with_data;
 template <class A1 = void, class A2 = void, class A3 = void, class A4 = void, class A5 = void> class TL_PUBLIC_TEMPLATE event;
-typedef event<> Event;
+using Event = event<>;
 
 #define  _COUNT 0
 #define _TMPLARGS

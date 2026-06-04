@@ -269,13 +269,13 @@ inline void invert_presence (bool &t)
 template <class T>
 struct type_without_const_ref
 {
-  typedef T inner_type;
+  using inner_type = T;
 };
 
 template <class T>
 struct type_without_const_ref<const T &>
 {
-  typedef T inner_type;
+  using inner_type = T;
 };
 
 /**
@@ -344,7 +344,7 @@ class arg_method_setter
   : public ArgBase
 {
 public:
-  typedef typename type_without_const_ref<T>::inner_type inner_type;
+  using inner_type = typename type_without_const_ref<T>::inner_type;
 
   arg_method_setter (const std::string &option, C *object, void (C::*setter)(T), const std::string &brief_doc, const std::string &long_doc)
     : ArgBase (option, brief_doc, long_doc), m_value (), mp_object (object), mp_setter (setter)

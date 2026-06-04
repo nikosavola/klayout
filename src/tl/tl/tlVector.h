@@ -48,7 +48,7 @@ class vector
   : public std::vector<T>
 {
 public:
-  typedef std::vector<T> base;
+  using base = std::vector<T>;
 
   /**
    *  @brief Default constructor: creates an empty vector

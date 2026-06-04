@@ -51,7 +51,7 @@ TL_PUBLIC void current_utc_time (struct timespec *ts);
 class TL_PUBLIC Timer
 {
 public:
-  typedef int64_t timer_t;
+  using timer_t = int64_t;
 
   Timer ();
   
@@ -175,9 +175,9 @@ private:
 class TL_PUBLIC Clock 
 {
 public:
-  typedef int64_t timer_t;
+  using timer_t = int64_t;
 
-  typedef unsigned long clock_value;
+  using clock_value = unsigned long;
 
   /**
    *  @brief Default constructor: construct a clock object pointing to an arbitrary value

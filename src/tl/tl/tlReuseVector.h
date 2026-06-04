@@ -48,12 +48,12 @@ template <class Value, bool trivial_relocate>
 class reuse_vector_iterator
 {
 public:
-  typedef size_t size_type;
-  typedef Value value_type;
+  using size_type = size_t;
+  using value_type = Value;
   typedef value_type *pointer; 
   typedef value_type &reference;   //  operator* returns a value
-  typedef std::forward_iterator_tag iterator_category;
-  typedef size_type difference_type;
+  using iterator_category = std::forward_iterator_tag;
+  using difference_type = size_type;
 
   /**
    *  @brief The default constructor
@@ -207,12 +207,12 @@ template <class Value, bool trivial_relocate>
 class reuse_vector_const_iterator
 {
 public:
-  typedef size_t size_type;
-  typedef Value value_type;
+  using size_type = size_t;
+  using value_type = Value;
   typedef const value_type *pointer; 
   typedef const value_type &reference;   //  operator* returns a value
-  typedef std::forward_iterator_tag iterator_category;
-  typedef size_type difference_type;
+  using iterator_category = std::forward_iterator_tag;
+  using difference_type = size_type;
 
   /**
    *  @brief The default constructor
@@ -375,7 +375,7 @@ private:
 class ReuseData
 {
 public:
-  typedef size_t size_type;
+  using size_type = size_t;
 
   ReuseData ()
     : m_first_used (0), m_last_used (0), m_next_free (0), m_size (0)
@@ -501,10 +501,10 @@ template <class Value, bool trivial_relocate = false>
 class reuse_vector
 {
 public:
-  typedef Value value_type;
-  typedef size_t size_type;
-  typedef reuse_vector_iterator<value_type, trivial_relocate> iterator;
-  typedef reuse_vector_const_iterator<value_type, trivial_relocate> const_iterator;
+  using value_type = Value;
+  using size_type = size_t;
+  using iterator = reuse_vector_iterator<value_type, trivial_relocate>;
+  using const_iterator = reuse_vector_const_iterator<value_type, trivial_relocate>;
 
   /**
    *  @brief Default constructor

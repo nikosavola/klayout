@@ -55,16 +55,16 @@ template <class X>
 class stable_vector
 {
 public:
-  typedef X value_type;
+  using value_type = X;
 
   class iterator;
 
   class const_iterator 
   {
   public:
-    typedef std::random_access_iterator_tag iterator_category;
-    typedef ptrdiff_t difference_type;
-    typedef X value_type;
+    using iterator_category = std::random_access_iterator_tag;
+    using difference_type = ptrdiff_t;
+    using value_type = X;
     typedef const X &reference;
     typedef const X *pointer;
 
@@ -194,9 +194,9 @@ public:
   class iterator 
   {
   public:
-    typedef std::random_access_iterator_tag iterator_category;
-    typedef ptrdiff_t difference_type;
-    typedef X value_type;
+    using iterator_category = std::random_access_iterator_tag;
+    using difference_type = ptrdiff_t;
+    using value_type = X;
     typedef X &reference;
     typedef X *pointer;
 
@@ -317,9 +317,9 @@ public:
   class stable_const_iterator 
   {
   public:
-    typedef std::random_access_iterator_tag iterator_category;
-    typedef ptrdiff_t difference_type;
-    typedef X value_type;
+    using iterator_category = std::random_access_iterator_tag;
+    using difference_type = ptrdiff_t;
+    using value_type = X;
     typedef const X &reference;
     typedef const X *pointer;
 
@@ -457,9 +457,9 @@ public:
   class stable_iterator 
   {
   public:
-    typedef std::random_access_iterator_tag iterator_category;
-    typedef ptrdiff_t difference_type;
-    typedef X value_type;
+    using iterator_category = std::random_access_iterator_tag;
+    using difference_type = ptrdiff_t;
+    using value_type = X;
     typedef X &reference;
     typedef X *pointer;
 

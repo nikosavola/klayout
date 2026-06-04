@@ -103,8 +103,8 @@ class TL_PUBLIC WebDAVObject
   : public WebDAVItem
 {
 public:
-  typedef std::vector<WebDAVItem> container;
-  typedef container::const_iterator iterator;
+  using container = std::vector<WebDAVItem>;
+  using iterator = container::const_iterator;
 
   /**
    *  @brief Open a stream with the given URL

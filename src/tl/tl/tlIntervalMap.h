@@ -51,11 +51,11 @@ template <class I, class T>
 class interval_map
 {
 public:
-  typedef std::pair<I, I> index_pair;
-  typedef std::pair<index_pair, T> index_value_pair;
-  typedef std::vector<index_value_pair> index_map;
-  typedef typename index_map::const_iterator const_iterator;
-  typedef typename index_map::iterator iterator;
+  using index_pair = std::pair<I, I>;
+  using index_value_pair = std::pair<index_pair, T>;
+  using index_map = std::vector<index_value_pair>;
+  using const_iterator = typename index_map::const_iterator;
+  using iterator = typename index_map::iterator;
 
   /**
    *  @brief Add values/intervals from the sequence [from,to)

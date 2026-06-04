@@ -189,11 +189,11 @@ public:
     t_user_ref
   };
 
-  typedef std::vector<tl::Variant>::const_iterator const_iterator;
-  typedef std::vector<tl::Variant>::iterator iterator;
-  typedef std::map<tl::Variant, tl::Variant> array_type;
-  typedef array_type::const_iterator const_array_iterator;
-  typedef array_type::iterator array_iterator;
+  using const_iterator = std::vector<tl::Variant>::const_iterator;
+  using iterator = std::vector<tl::Variant>::iterator;
+  using array_type = std::map<tl::Variant, tl::Variant>;
+  using const_array_iterator = array_type::const_iterator;
+  using array_iterator = array_type::iterator;
 
   /**
    *  @brief Initialize the Variant with "nil"

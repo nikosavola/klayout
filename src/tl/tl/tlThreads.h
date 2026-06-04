@@ -189,7 +189,7 @@ using ScopedLock = std::scoped_lock<Mutexes...>;
 #if TL_CXX17
 using SharedMutex = std::shared_mutex;
 #else
-typedef Mutex SharedMutex;
+using SharedMutex = Mutex;
 #endif
 
 /**

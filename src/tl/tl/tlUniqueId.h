@@ -30,7 +30,7 @@
 namespace tl
 {
 
-typedef uint64_t id_type;
+using id_type = uint64_t;
 
 /**
  *  @brief An object delivering a unique ID per object

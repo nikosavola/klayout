@@ -67,9 +67,9 @@ template <class I>
 class interval_set
 {
 public:
-  typedef std::pair<I, I> index_pair;
-  typedef std::vector<index_pair> index_set;
-  typedef typename index_set::const_iterator const_iterator;
+  using index_pair = std::pair<I, I>;
+  using index_set = std::vector<index_pair>;
+  using const_iterator = typename index_set::const_iterator;
 
   /**
    *  @brief Add intervals from the sequence [from,to)

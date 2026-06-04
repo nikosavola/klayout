@@ -79,9 +79,9 @@ template <class T>
 class equivalence_clusters
 {
 public:
-  typedef size_t cluster_id_type;
-  typedef T attribute_type;
-  typedef typename std::vector<typename std::map<T, size_t>::iterator>::const_iterator cluster_iterator;
+  using cluster_id_type = size_t;
+  using attribute_type = T;
+  using cluster_iterator = typename std::vector<typename std::map<T, size_t>::iterator>::const_iterator;
 
   /**
    *  @brief Creates an empty equivalence cluster

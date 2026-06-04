@@ -48,13 +48,13 @@ struct boolean_value;
 template <>
 struct boolean_value<true>
 {
-  typedef true_tag value;
+  using value = true_tag;
 };
 
 template <>
 struct boolean_value<false>
 {
-  typedef false_tag value;
+  using value = false_tag;
 };
 
 /**
@@ -171,25 +171,25 @@ struct result_of_method;
 template <class R, class Obj, class A1>
 struct result_of_method<R (Obj::*) (A1) const>
 {
-  typedef R type;
+  using type = R;
 };
 
 template <class R, class Obj, class A1, class A2>
 struct result_of_method<R (Obj::*) (A1, A2) const>
 {
-  typedef R type;
+  using type = R;
 };
 
 template <class R, class Obj, class A1, class A2, class A3>
 struct result_of_method<R (Obj::*) (A1, A2, A3) const>
 {
-  typedef R type;
+  using type = R;
 };
 
 template <class R, class Obj, class A1, class A2, class A3, class A4>
 struct result_of_method<R (Obj::*) (A1, A2, A3, A4) const>
 {
-  typedef R type;
+  using type = R;
 };
 
 }

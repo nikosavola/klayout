@@ -38,7 +38,7 @@ namespace tl
 /**
  *  @brief The basic color type for a RGB triplet
  */
-typedef uint32_t color_t;
+using color_t = uint32_t;
 
 /**
  *  @brief Gets the color components from a color_t

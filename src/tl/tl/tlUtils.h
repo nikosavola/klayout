@@ -40,9 +40,9 @@ template <class Iter>
 class iterator_pair
 {
 public:
-  typedef typename std::iterator_traits<Iter> it_traits;
-  typedef typename it_traits::value_type value_type;
-  typedef Iter iter_type;
+  using it_traits = typename std::iterator_traits<Iter>;
+  using value_type = typename it_traits::value_type;
+  using iter_type = Iter;
 
   /**
    *  @brief Default constructor
@@ -129,7 +129,7 @@ template <class Value>
 class ident_map 
 {
 public:
-  typedef Value value_type;
+  using value_type = Value;
 
   ident_map ()
   { }
@@ -151,7 +151,7 @@ template <class Value>
 class const_map 
 {
 public:
-  typedef Value value_type;
+  using value_type = Value;
 
   const_map (const Value &v) 
     : m_value (v)
@@ -178,7 +178,7 @@ template <class Value, class Assoc>
 class assoc_map 
 {
 public:
-  typedef Value value_type;
+  using value_type = Value;
 
   assoc_map (const Assoc &assoc)
     : m_assoc (assoc)
@@ -252,13 +252,13 @@ template <bool> struct type_from_value;
 template <>
 struct type_from_value<true>
 {
-  typedef True value;
+  using value = True;
 };
 
 template <>
 struct type_from_value<false>
 {
-  typedef False value;
+  using value = False;
 };
 
 /**
@@ -273,7 +273,7 @@ inline bool value_from_type (False) { return false; }
 template <class A, class B>
 struct is_equal_type
 {
-  typedef False value;
+  using value = False;
   operator bool () const { return false; }
 };
 
@@ -283,7 +283,7 @@ struct is_equal_type
 template <class A>
 struct is_equal_type<A, A>
 {
-  typedef True value;
+  using value = True;
   operator bool () const { return true; }
 };
 
@@ -299,7 +299,7 @@ private:
   static D *m_d;
 
 public:
-  typedef typename type_from_value<sizeof(m_check(m_d)) == sizeof(long)>::value value;
+  using value = typename type_from_value<sizeof(m_check(m_d)) == sizeof(long)>::value;
   inline operator bool () const { return sizeof(m_check(m_d)) == sizeof(long); }
 };
 
@@ -332,31 +332,31 @@ T *try_static_cast (S *s)
 template <class X>
 struct get_inner_type
 {
-  typedef X result;
+  using result = X;
 };
 
 template <class X>
 struct get_inner_type<const X *>
 {
-  typedef X result;
+  using result = X;
 };
 
 template <class X>
 struct get_inner_type<const X &>
 {
-  typedef X result;
+  using result = X;
 };
 
 template <class X>
 struct get_inner_type<X *>
 {
-  typedef X result;
+  using result = X;
 };
 
 template <class X>
 struct get_inner_type<X &>
 {
-  typedef X result;
+  using result = X;
 };
 
 /**

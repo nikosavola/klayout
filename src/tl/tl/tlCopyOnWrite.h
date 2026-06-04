@@ -113,7 +113,7 @@ class copy_on_write_ptr
   : public CopyOnWritePtrBase
 {
 public:
-  typedef X value_type;
+  using value_type = X;
 
   copy_on_write_ptr ()
     : mp_holder (0)

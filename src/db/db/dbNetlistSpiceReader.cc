@@ -21,6 +21,7 @@
 */
 
 #include "dbNetlistSpiceReader.h"
+#include "tlUtils.h"
 #include "dbNetlistSpiceReaderExpressionParser.h"
 #include "dbNetlistSpiceReaderDelegate.h"
 #include "dbNetlist.h"
@@ -363,7 +364,7 @@ public:
 
   bool is_top_circuit (const std::string &name) const
   {
-    return m_called_circuits.find (name) == m_called_circuits.end ();
+    return ! tl::contains (m_called_circuits, name);
   }
 
   const SpiceCachedCircuit *anonymous_top_level_circuit () const
@@ -682,7 +683,7 @@ SpiceCircuitDict::read_card ()
 
     while (! NetlistSpiceReader::at_eol (ex)) {
       std::string n = mp_delegate->translate_net_name (read_name (ex, mp_netlist));
-      if (m_global_net_names.find (n) == m_global_net_names.end ()) {
+      if (! tl::contains (m_global_net_names, n)) {
         m_global_nets.push_back (n);
         m_global_net_names.insert (n);
       }

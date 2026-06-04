@@ -22,6 +22,7 @@
 
 
 #include "dbInit.h"
+#include "tlUtils.h"
 #include "dbPlugin.h"
 #include "tlException.h"
 #include "tlLog.h"
@@ -147,7 +148,7 @@ void init (const std::vector<std::string> &_paths)
     for (std::vector<std::string>::const_iterator im = inst_modules.begin (); im != inst_modules.end (); ++im) {
 
       std::string imp = tl::combine_path (pp, *im);
-      if (modules.find (*im) == modules.end ()) {
+      if (! tl::contains (modules, *im)) {
         try {
           s_plugins.push_back (load_plugin (imp));
           modules.insert (*im);

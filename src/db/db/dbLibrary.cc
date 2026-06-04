@@ -22,6 +22,7 @@
 
 
 #include "dbLibrary.h"
+#include "tlUtils.h"
 #include "dbLibraryProxy.h"
 #include "dbPCellDeclaration.h"
 #include "dbPCellVariant.h"
@@ -59,7 +60,7 @@ Library::~Library ()
 bool
 Library::is_for_technology (const std::string &name) const
 {
-  return (! m_technologies.empty () && name == "*") || m_technologies.find (name) != m_technologies.end ();
+  return (! m_technologies.empty () && name == "*") || tl::contains (m_technologies, name);
 }
 
 bool

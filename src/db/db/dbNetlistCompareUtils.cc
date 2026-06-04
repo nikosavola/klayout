@@ -21,6 +21,7 @@
 */
 
 #include "dbNetlistCompareUtils.h"
+#include "tlUtils.h"
 #include "dbNetlist.h"
 #include "dbNetlistDeviceClasses.h"
 
@@ -285,13 +286,13 @@ CircuitMapper::map_pin (size_t this_pin, size_t other_pin)
 bool
 CircuitMapper::has_other_pin_for_this_pin (size_t this_pin) const
 {
-  return m_pin_map.find (this_pin) != m_pin_map.end ();
+  return tl::contains (m_pin_map, this_pin);
 }
 
 bool
 CircuitMapper::has_this_pin_for_other_pin (size_t other_pin) const
 {
-  return m_rev_pin_map.find (other_pin) != m_rev_pin_map.end ();
+  return tl::contains (m_rev_pin_map, other_pin);
 }
 
 size_t
@@ -408,7 +409,7 @@ template <class Obj>
 bool
 generic_categorizer<Obj>::has_cat_for (const Obj *cls)
 {
-  return m_cat_by_ptr.find (cls) != m_cat_by_ptr.end ();
+  return tl::contains (m_cat_by_ptr, cls);
 }
 
 template <class Obj>
@@ -489,7 +490,7 @@ DeviceCategorizer::set_strict_device_category (size_t cat)
 bool
 DeviceCategorizer::is_strict_device_category (size_t cat) const
 {
-  return m_strict_device_categories.find (cat) != m_strict_device_categories.end ();
+  return tl::contains (m_strict_device_categories, cat);
 }
 
 // --------------------------------------------------------------------------------------------------------------------

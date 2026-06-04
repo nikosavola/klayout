@@ -22,6 +22,7 @@
 
 
 #include "dbSaveLayoutOptions.h"
+#include "tlUtils.h"
 #include "dbStream.h"
 #include "tlClassRegistry.h"
 #include "tlStream.h"
@@ -350,7 +351,7 @@ collect_called_cells_unskipped (db::cell_index_type ci, const db::Layout &layout
   }
 
   for (auto cc = c.begin_child_cells (); ! cc.at_end (); ++cc) {
-    if (called.find (*cc) == called.end () && layout.is_valid_cell_index (*cc)) {
+    if (! tl::contains (called, *cc) && layout.is_valid_cell_index (*cc)) {
       called.insert (*cc);
       collect_called_cells_unskipped (*cc, layout, called);
     }
@@ -413,7 +414,7 @@ SaveLayoutOptions::get_cells (const db::Layout &layout, std::set <db::cell_index
 
     for (std::set <db::cell_index_type>::const_iterator c = m_cells.begin (); c != m_cells.end (); ++c) {
       cells.insert (*c);
-      if (m_implied_children.find (*c) != m_implied_children.end ()) {
+      if (tl::contains (m_implied_children, *c)) {
         if (has_context) {
           collect_called_cells_unskipped (*c, layout, cells);
         } else {
@@ -446,7 +447,7 @@ SaveLayoutOptions::get_cells (const db::Layout &layout, std::set <db::cell_index
         bool is_top_cell = true;
 
         for (db::Cell::parent_cell_iterator p = cref.begin_parent_cells (); p != cref.end_parent_cells () && is_top_cell; ++p) {
-          if (cells.find (*p) != cells.end ()) {
+          if (tl::contains (cells, *p)) {
             is_top_cell = false;
           }
         }
@@ -469,7 +470,7 @@ SaveLayoutOptions::get_cells (const db::Layout &layout, std::set <db::cell_index
         ++c;
         bool is_empty = true;
         for (db::Cell::child_cell_iterator cc = cell->begin_child_cells (); ! cc.at_end () && is_empty; ++cc) {
-          if (empty_cells.find (*cc) == empty_cells.end ()) {
+          if (! tl::contains (empty_cells, *cc)) {
             is_empty = false;
           }
         }

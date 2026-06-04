@@ -21,6 +21,7 @@
 */
 
 #include "dbCommon.h"
+#include "tlUtils.h"
 #include "dbLayoutToNetlist.h"
 #include "dbDeepRegion.h"
 #include "dbDeepTexts.h"
@@ -547,7 +548,7 @@ void LayoutToNetlist::check_must_connect (const db::Circuit &c, const std::vecto
   unique_nets.reserve (nets.size ());
   std::set<const db::Net *> seen;
   for (auto n = nets.begin (); n != nets.end (); ++n) {
-    if (seen.find (*n) == seen.end ()) {
+    if (! tl::contains (seen, *n)) {
       seen.insert (*n);
       unique_nets.push_back (*n);
     }
@@ -746,7 +747,7 @@ void LayoutToNetlist::check_must_connect_impl (const db::Circuit &c, const std::
       size_t i = 0;
       for (auto n = nets.begin (); n != nets.end (); ++n, ++i) {
 
-        if (seen.find (*n) != seen.end ()) {
+        if (tl::contains (seen, *n)) {
           continue;
         }
         seen.insert (*n);
@@ -974,7 +975,7 @@ std::string LayoutToNetlist::make_new_name (const std::string &stem)
     name += std::string ("$");
     name += tl::to_string (n - m);
 
-    if (m_named_dls.find (name) == m_named_dls.end ()) {
+    if (! tl::contains (m_named_dls, name)) {
       n -= m;
     }
 
@@ -1090,7 +1091,7 @@ unsigned int LayoutToNetlist::register_layer (const ShapeCollection &collection,
     throw tl::Exception (tl::to_string (tr ("The layer is already registered")));
   }
 
-  if (! n_in.empty () && m_named_dls.find (n_in) != m_named_dls.end ()) {
+  if (! n_in.empty () && tl::contains (m_named_dls, n_in)) {
     throw tl::Exception (tl::to_string (tr ("Layer name is already used: ")) + n_in);
   }
 
@@ -1172,7 +1173,7 @@ db::CellMapping LayoutToNetlist::make_cell_mapping_into (db::Layout &layout, db:
     for (std::vector<const db::Net *>::const_iterator n = nets->begin (); n != nets->end (); ++n) {
       const db::Net *net = *n;
       db::cell_index_type net_cell = net->circuit ()->cell_index ();
-      if (net_cells.find (net_cell) == net_cells.end ()) {
+      if (! tl::contains (net_cells, net_cell)) {
         net_cells.insert (net_cell);
         internal_layout()->cell (net_cell).collect_caller_cells (net_cells);
       }

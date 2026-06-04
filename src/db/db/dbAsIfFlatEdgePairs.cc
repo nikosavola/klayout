@@ -22,6 +22,7 @@
 
 
 #include "dbAsIfFlatEdgePairs.h"
+#include "tlUtils.h"
 #include "dbFlatEdgePairs.h"
 #include "dbFlatRegion.h"
 #include "dbFlatEdges.h"
@@ -102,7 +103,7 @@ AsIfFlatEdgePairs::in (const EdgePairs &other, bool invert) const
   std::unique_ptr<FlatEdgePairs> new_edge_pairs (new FlatEdgePairs ());
 
   for (EdgePairsIterator o (begin ()); ! o.at_end (); ++o) {
-    if ((op.find (*o) == op.end ()) == invert) {
+    if ((! tl::contains (op, *o)) == invert) {
       new_edge_pairs->insert (*o);
     }
   }

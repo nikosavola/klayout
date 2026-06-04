@@ -21,6 +21,7 @@
 */
 
 #include "dbRecursiveInstanceIterator.h"
+#include "tlUtils.h"
 #include "dbRegion.h"
 #include "dbEdgeProcessor.h"
 #include "tlProgress.h"
@@ -746,9 +747,9 @@ bool
 RecursiveInstanceIterator::is_child_inactive (db::cell_index_type new_child) const
 {
   bool inactive = is_inactive ();
-  if (! m_start.empty () && m_start.find (new_child) != m_start.end ()) {
+  if (! m_start.empty () && tl::contains (m_start, new_child)) {
     inactive = false;
-  } else if (! m_stop.empty () && m_stop.find (new_child) != m_stop.end ()) {
+  } else if (! m_stop.empty () && tl::contains (m_stop, new_child)) {
     inactive = true;
   }
   return inactive;

@@ -21,6 +21,7 @@
 */
 
 #include "dbTestSupport.h"
+#include "tlUtils.h"
 #include "dbCommonReader.h"
 #include "dbStreamLayers.h"
 #include "dbReader.h"
@@ -401,13 +402,13 @@ bool do_compare (const Container &cont, const std::string &string)
     tl::error << "  b = '" << cs.to_string () << "'";
     tl::error << "In list a, but not in b:";
     for (typename std::set<Shape>::const_iterator i = a.begin (); i != a.end (); ++i) {
-      if (b.find (*i) == b.end ()) {
+      if (! tl::contains (b, *i)) {
         tl::error << "  " << i->to_string ();
       }
     }
     tl::error << "In list b, but not in a:";
     for (typename std::set<Shape>::const_iterator i = b.begin (); i != b.end (); ++i) {
-      if (a.find (*i) == a.end ()) {
+      if (! tl::contains (a, *i)) {
         tl::error << "  " << i->to_string ();
       }
     }

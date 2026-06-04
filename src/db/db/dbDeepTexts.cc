@@ -22,6 +22,7 @@
 
 
 #include "dbDeepTexts.h"
+#include "tlUtils.h"
 #include "dbCellGraphUtils.h"
 #include "dbDeepEdges.h"
 #include "dbDeepRegion.h"
@@ -674,7 +675,7 @@ public:
 
       for (shape_interactions<db::TextRef, db::PolygonRef>::iterator i = interactions.begin (); i != interactions.end (); ++i) {
         const db::TextRef &subject = interactions.subject_shape (i->first);
-        if (interacting.find (subject) == interacting.end ()) {
+        if (! tl::contains (interacting, subject)) {
           result.insert (subject);
         }
       }

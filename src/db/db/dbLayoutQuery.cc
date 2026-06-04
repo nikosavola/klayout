@@ -22,6 +22,7 @@
 
 
 #include "dbLayoutQuery.h"
+#include "tlUtils.h"
 #include "dbCellGraphUtils.h"
 #include "dbStreamLayers.h"
 #include "dbInstElement.h"
@@ -356,7 +357,7 @@ public:
           break;
         }
 
-      } while (m_ignored.find (m_s) != m_ignored.end ());
+      } while (tl::contains (m_ignored, m_s));
 
     }  
   }
@@ -818,7 +819,7 @@ public:
               break;
             }
 
-          } while (m_ignored.find (m_i) != m_ignored.end ());
+          } while (tl::contains (m_ignored, m_i));
 
           if (m_inst != m_inst_end) {
             m_array_iter = (*m_inst)->begin ();
@@ -2415,7 +2416,7 @@ LayoutQueryIterator::dump () const
 void 
 LayoutQueryIterator::collect (FilterStateBase *state, std::set<FilterStateBase *> &states)
 {
-  if (states.find (state) == states.end ()) {
+  if (! tl::contains (states, state)) {
     states.insert (state);
     for (std::vector<FilterStateBase *>::const_iterator s = state->followers ().begin (); s != state->followers ().end (); ++s) {
       if (*s) {
@@ -3201,7 +3202,7 @@ FilterBracket::dump (unsigned int l) const
       todo.pop_front ();
 
       for (std::vector<FilterBase *>::const_iterator c = f->followers ().begin (); c != f->followers ().end (); ++c) {
-        if (ids.find (*c) == ids.end ()) {
+        if (! tl::contains (ids, *c)) {
           ids.insert (std::make_pair (*c, id++));
           filters.push_back (*c);
           todo.push_back (*c);
@@ -3296,7 +3297,7 @@ FilterStateObjectives::request_cell (db::cell_index_type ci)
 bool
 FilterStateObjectives::wants_cell (db::cell_index_type ci) const
 {
-  return m_wants_all_cells || m_wants_cells.find (ci) != m_wants_cells.end ();
+  return m_wants_all_cells || tl::contains (m_wants_cells, ci);
 }
 
 // --------------------------------------------------------------------------------

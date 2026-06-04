@@ -22,6 +22,7 @@
 
 
 #include "dbLayoutUtils.h"
+#include "tlUtils.h"
 #include "dbCellVariants.h"
 #include "dbPolygonTools.h"
 #include "tlProgress.h"
@@ -113,7 +114,7 @@ merge_layouts (db::Layout &target,
   //  identify all new cells and create new ones
   std::map<db::cell_index_type, db::cell_index_type> new_cell_mapping;
   for (std::set<db::cell_index_type>::const_iterator c = all_cells_to_copy.begin (); c != all_cells_to_copy.end (); ++c) {
-    if (cell_mapping.find (*c) == cell_mapping.end ()) {
+    if (! tl::contains (cell_mapping, *c)) {
       new_cell_mapping.insert (std::make_pair (*c, target.add_cell (source, *c)));
     }
   }

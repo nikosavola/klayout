@@ -22,6 +22,7 @@
 
 
 #include "dbDeepShapeStore.h"
+#include "tlUtils.h"
 #include "dbCellMapping.h"
 #include "dbLayoutUtils.h"
 #include "dbRegion.h"
@@ -1222,7 +1223,7 @@ DeepShapeStore::cell_mapping_to_original (unsigned int layout_index, db::Layout 
         cm->second.map (m->second, m->first.original_cell);
       } else {
         for (HierarchyBuilder::cell_map_type::const_iterator n = m; n != mm; ++n) {
-          tl_assert (cm_skipped_variants.find (n->second) == cm_skipped_variants.end ());
+          tl_assert (! tl::contains (cm_skipped_variants, n->second));
           cm_skipped_variants [n->second] = n->first;
         }
       }
@@ -1356,11 +1357,11 @@ DeepShapeStore::cell_mapping_to_original (unsigned int layout_index, db::Layout 
       while (more) {
         more = false;
         for (auto v = vars.begin (); v != vars.end (); ++v) {
-          if (cells_to_delete.find (*v) == cells_to_delete.end ()) {
+          if (! tl::contains (cells_to_delete, *v)) {
             const db::Cell &vc = into_layout->cell (*v);
             bool used = false;
             for (auto p = vc.begin_parent_cells (); p != vc.end_parent_cells () && ! used; ++p) {
-              used = (cells_to_delete.find (*p) == cells_to_delete.end ());
+              used = (! tl::contains (cells_to_delete, *p));
             }
             if (! used) {
               cells_to_delete.insert (*v);

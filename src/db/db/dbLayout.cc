@@ -22,6 +22,7 @@
 
 
 #include "dbLayout.h"
+#include "tlUtils.h"
 #include "dbMemStatistics.h"
 #include "dbTrans.h"
 #include "dbTechnology.h"
@@ -873,7 +874,7 @@ Layout::prop_id (db::properties_id_type id)
 bool 
 Layout::has_cell (const char *name)
 {
-  return m_cell_map.find (name) != m_cell_map.end ();
+  return tl::contains (m_cell_map, name);
 }
 
 std::pair<bool, cell_index_type> 
@@ -1225,10 +1226,10 @@ Layout::do_prune_cell_or_subcell (cell_index_type id, int levels, bool subcells)
   //  From these cells erase all cells that have parents outside the subtree of our cell.
   //  Make sure this is done recursively by doing this top-down.
   for (top_down_iterator c = begin_top_down (); c != end_top_down (); ++c) {
-    if (*c != id && called.find (*c) != called.end ()) {
+    if (*c != id && tl::contains (called, *c)) {
       db::Cell &ccref = cell (*c);
       for (db::Cell::parent_cell_iterator pc = ccref.begin_parent_cells (); pc != ccref.end_parent_cells (); ++pc) {
-        if (*pc != id && called.find (*pc) == called.end ()) {
+        if (*pc != id && ! tl::contains (called, *pc)) {
           //  we have a parent outside the subset considered currently (either the cell was never in or
           //  it was removed itself already): remove this cell from the set of valid subcells.
           called.erase (*c);
@@ -1273,10 +1274,10 @@ Layout::do_prune_cells_or_subcells (const std::set<cell_index_type> &ids, int le
   //  From these cells erase all cells that have parents outside the subtree of our cell.
   //  Make sure this is done recursively by doing this top-down.
   for (top_down_iterator c = begin_top_down (); c != end_top_down (); ++c) {
-    if (called.find (*c) != called.end () && ids.find (*c) == ids.end ()) {
+    if (tl::contains (called, *c) && ! tl::contains (ids, *c)) {
       db::Cell &ccref = cell (*c);
       for (db::Cell::parent_cell_iterator pc = ccref.begin_parent_cells (); pc != ccref.end_parent_cells (); ++pc) {
-        if (called.find (*pc) == called.end ()) {
+        if (! tl::contains (called, *pc)) {
           //  we have a parent outside the subset considered currently (either the cell was never in or
           //  it was removed itself already): remove this cell from the set of valid subcells.
           called.erase (*c);
@@ -1290,7 +1291,7 @@ Layout::do_prune_cells_or_subcells (const std::set<cell_index_type> &ids, int le
   std::vector <cell_index_type> cells_to_delete;
   cells_to_delete.reserve (called.size ());
   for (bottom_up_iterator c = begin_bottom_up (); c != end_bottom_up (); ++c) {
-    if (called.find (*c) != called.end () && (!subcells || ids.find (*c) == ids.end ())) {
+    if (tl::contains (called, *c) && (!subcells || ! tl::contains (ids, *c))) {
       cells_to_delete.push_back (*c);
     }
   }
@@ -1321,7 +1322,7 @@ Layout::delete_cell_rec (cell_index_type id)
   std::vector <cell_index_type> cells_to_delete;
   cells_to_delete.reserve (called.size ());
   for (bottom_up_iterator c = begin_bottom_up (); c != end_bottom_up (); ++c) {
-    if (called.find (*c) != called.end ()) {
+    if (tl::contains (called, *c)) {
       cells_to_delete.push_back (*c);
     }
   }
@@ -1395,7 +1396,7 @@ Layout::take_cell (cell_index_type ci)
 std::string 
 Layout::uniquify_cell_name (const char *name) const
 {
-  if (name != 0 && m_cell_map.find (name) == m_cell_map.end ()) {
+  if (name != 0 && ! tl::contains (m_cell_map, name)) {
     return std::string (name);
   } else {
 
@@ -1751,7 +1752,7 @@ Layout::cells_to_cleanup (const std::set<db::cell_index_type> &keep_always) cons
     }
 
     for (auto c = begin_top_down (); c != end_top_cells (); ++c) {
-      if (cell (*c).is_proxy () && keep.find (*c) == keep.end () && keep_always.find (*c) == keep_always.end ()) {
+      if (cell (*c).is_proxy () && ! tl::contains (keep, *c) && ! tl::contains (keep_always, *c)) {
         to_clean.insert (*c);
       }
     }
@@ -1781,10 +1782,10 @@ Layout::cells_to_cleanup (const std::set<db::cell_index_type> &keep_always) cons
     //  From these cells erase all cells that have parents outside the subtree of our cell.
     //  Make sure this is done recursively by doing this top-down.
     for (auto c = begin_top_down (); c != end_top_down (); ++c) {
-      if (called.find (*c) != called.end ()) {
+      if (tl::contains (called, *c)) {
         const db::Cell &ccref = cell (*c);
         for (db::Cell::parent_cell_iterator pc = ccref.begin_parent_cells (); pc != ccref.end_parent_cells (); ++pc) {
-          if (to_clean.find (*pc) == to_clean.end () && called.find (*pc) == called.end ()) {
+          if (! tl::contains (to_clean, *pc) && ! tl::contains (called, *pc)) {
             //  we have a parent outside the subset considered currently (either the cell was never in or
             //  it was removed itself already): remove this cell from the set of valid subcells.
             called.erase (*c);
@@ -1838,7 +1839,7 @@ Layout::cleanup (const std::set<db::cell_index_type> &keep)
         auto cc = c0;
         ++cc;
         while (cc != c) {
-          if (keep.find (cc->second) == keep.end ()) {
+          if (! tl::contains (keep, cc->second)) {
             if (tl::verbosity () >= 30) {
               tl::info << "Joining lib proxy " << cell_name (cc->second) << " into " << cell_name (c0->second);
             }
@@ -1865,7 +1866,7 @@ Layout::cleanup (const std::set<db::cell_index_type> &keep)
         auto cc = c0;
         ++cc;
         while (cc != c) {
-          if (keep.find (cc->second) == keep.end ()) {
+          if (! tl::contains (keep, cc->second)) {
             if (tl::verbosity () >= 30) {
               tl::info << "Joining cold proxy " << cell_name (cc->second) << " into " << cell_name (c0->second);
             }
@@ -2091,7 +2092,7 @@ Layout::do_update ()
         for (bottom_up_iterator c = m_top_down_list.rbegin (); c != m_top_down_list.rend (); ++c) {
           ++*pr;
           cell_type &cp (cell (*c));
-          if (cp.is_shape_bbox_dirty () || dirty_parents.find (*c) != dirty_parents.end ()) {
+          if (cp.is_shape_bbox_dirty () || tl::contains (dirty_parents, *c)) {
             if (cp.update_bbox (layers)) {
               //  the bounding box has changed - need to insert parents into "dirty parents" list
               //  NOTE: using "instances" instead of the cell directly avoids a recursive update call
@@ -2128,7 +2129,7 @@ Layout::do_update ()
       for (bottom_up_iterator c = m_top_down_list.rbegin (); c != m_top_down_list.rend (); ++c) {
         ++*pr;
         cell_type &cp (cell (*c));
-        bool force_sort_inst_tree = dirty_parents.find (*c) != dirty_parents.end ();
+        bool force_sort_inst_tree = tl::contains (dirty_parents, *c);
         if (hier_dirty () || force_sort_inst_tree) {
           cp.sort_inst_tree (force_sort_inst_tree);
         }
@@ -2245,7 +2246,7 @@ Layout::meta_info (meta_info_name_id_type name_id) const
 bool
 Layout::has_meta_info (meta_info_name_id_type name_id) const
 {
-  return m_meta_info.find (name_id) != m_meta_info.end ();
+  return tl::contains (m_meta_info, name_id);
 }
 
 void
@@ -2330,7 +2331,7 @@ Layout::has_meta_info (db::cell_index_type ci, meta_info_name_id_type name_id) c
 {
   auto c = m_meta_info_by_cell.find (ci);
   if (c != m_meta_info_by_cell.end ()) {
-    return c->second.find (name_id) != c->second.end ();
+    return tl::contains (c->second, name_id);
   } else {
     return false;
   }

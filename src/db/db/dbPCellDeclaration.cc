@@ -23,6 +23,7 @@
 
 
 #include "dbPCellDeclaration.h"
+#include "tlUtils.h"
 
 namespace db
 {
@@ -84,7 +85,7 @@ ParameterStates::parameter (const std::string &name) const
 bool
 ParameterStates::has_parameter (const std::string &name) const
 {
-  return m_states.find (name) != m_states.end ();
+  return tl::contains (m_states, name);
 }
 
 bool

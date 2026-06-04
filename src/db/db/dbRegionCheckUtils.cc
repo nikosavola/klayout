@@ -22,6 +22,7 @@
 
 
 #include "dbRegionCheckUtils.h"
+#include "tlUtils.h"
 #include "dbPolygonTools.h"
 #include "dbEdgeBoolean.h"
 #include "tlSelect.h"
@@ -554,7 +555,7 @@ region_to_edge_interaction_filter_base<PolygonType, EdgeType, OutputType>::add (
   const OutputType *o = 0;
   tl::select (o, p, e);
 
-  if (m_get_all || (m_seen.find (o) == m_seen.end ()) != m_inverse) {
+  if (m_get_all || (! tl::contains (m_seen, o)) != m_inverse) {
 
     //  A polygon and an edge interact if the edge is either inside completely
     //  of at least one edge of the polygon intersects with the edge
@@ -626,7 +627,7 @@ region_to_text_interaction_filter_base<PolygonType, TextType, OutputType>::add (
   const OutputType *o = 0;
   tl::select (o, p, t);
 
-  if (m_get_all || (m_seen.find (o) == m_seen.end ()) != m_inverse) {
+  if (m_get_all || (! tl::contains (m_seen, o)) != m_inverse) {
 
     //  A polygon and an text interact if the text is either inside completely
     //  of at least one text of the polygon intersects with the text

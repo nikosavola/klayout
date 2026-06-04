@@ -23,6 +23,7 @@
 
 
 #include "dbEdgeProcessor.h"
+#include "tlUtils.h"
 #include "dbPolygonGenerators.h"
 #include "dbLayout.h"
 #include "tlTimer.h"
@@ -780,7 +781,7 @@ InteractionDetector::finish ()
     //  these are the ones where secondaries overlap and stick to the outside.
     std::set<property_type> primaries_to_delete;
     for (std::set<std::pair<property_type, property_type> >::iterator i = m_interactions.begin (); i != m_interactions.end (); ++i) {
-      if (m_non_interactions.find (i->second) != m_non_interactions.end ()) {
+      if (tl::contains (m_non_interactions, i->second)) {
         primaries_to_delete.insert (i->first);
       }
     }
@@ -788,7 +789,7 @@ InteractionDetector::finish ()
     for (std::set<std::pair<property_type, property_type> >::iterator i = m_interactions.begin (); i != m_interactions.end (); ) {
       std::set<std::pair<property_type, property_type> >::iterator ii = i;
       ++ii;
-      if (primaries_to_delete.find (i->first) != primaries_to_delete.end ()) {
+      if (tl::contains (primaries_to_delete, i->first)) {
         m_interactions.erase (i);
       }
       i = ii;
@@ -800,7 +801,7 @@ InteractionDetector::finish ()
     for (std::set<std::pair<property_type, property_type> >::iterator i = m_interactions.begin (); i != m_interactions.end (); ) {
       std::set<std::pair<property_type, property_type> >::iterator ii = i;
       ++ii;
-      if (m_non_interactions.find (i->second) != m_non_interactions.end ()) {
+      if (tl::contains (m_non_interactions, i->second)) {
         m_interactions.erase (i);
       }
       i = ii;

@@ -22,6 +22,7 @@
 
 
 #include "dbClipboardData.h"
+#include "tlUtils.h"
 
 namespace db
 {
@@ -108,7 +109,7 @@ ClipboardData::add (const db::Layout &layout, const db::Cell &cell, unsigned int
 {
   //  if the cell already exists and is stored in the right mode, do nothing
   std::map <db::cell_index_type, db::cell_index_type>::const_iterator cm = m_cell_index_map.find (cell.cell_index ());
-  if (cm != m_cell_index_map.end () && ! (m_incomplete_cells.find (cm->second) != m_incomplete_cells.end () && mode >= 1)) {
+  if (cm != m_cell_index_map.end () && ! (tl::contains (m_incomplete_cells, cm->second) && mode >= 1)) {
     return cm->second;
   }
 
@@ -279,7 +280,7 @@ ClipboardData::do_insert (db::Layout &layout, const db::ICplxTrans *trans, db::C
       for (db::Cell::const_iterator inst = c->begin (); ! inst.at_end (); ++inst) {
 
         db::cell_index_type inst_cell = cell_map.find (inst->cell_index ())->second;
-        if (callers.find (inst_cell) == callers.end ()) {
+        if (! tl::contains (callers, inst_cell)) {
 
           tl::const_map<db::cell_index_type> im (inst_cell);
           db::Instance new_inst = t.insert (*inst, im);

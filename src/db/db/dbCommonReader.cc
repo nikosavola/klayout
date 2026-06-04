@@ -23,6 +23,7 @@
 
 
 #include "dbCommonReader.h"
+#include "tlUtils.h"
 #include "dbColdProxy.h"
 #include "dbStream.h"
 #include "tlXMLParser.h"
@@ -72,7 +73,7 @@ CommonReaderBase::make_cell (db::Layout &layout, const std::string &cn)
 bool
 CommonReaderBase::has_cell (const std::string &cn) const
 {
-  return m_name_map.find (cn) != m_name_map.end ();
+  return tl::contains (m_name_map, cn);
 }
 
 std::pair<bool, db::cell_index_type>
@@ -117,7 +118,7 @@ CommonReaderBase::make_cell (db::Layout &layout, size_t id)
 bool
 CommonReaderBase::has_cell (size_t id) const
 {
-  return m_id_map.find (id) != m_id_map.end ();
+  return tl::contains (m_id_map, id);
 }
 
 std::pair<bool, db::cell_index_type>
@@ -157,7 +158,7 @@ CommonReaderBase::rename_cell (db::Layout &layout, size_t id, const std::string 
 
     //  picking a different name on name clash (issue #2088)
     std::string cn_new = cn + "_id$" + tl::to_string (id);
-    for (size_t i = 0; m_name_map.find (cn_new) != m_name_map.end (); ++i) {
+    for (size_t i = 0; tl::contains (m_name_map, cn_new); ++i) {
       cn_new = cn + "_id$" + tl::to_string (id) + "$" + tl::to_string (i);
     }
 
@@ -271,7 +272,7 @@ CommonReaderBase::merge_cell (db::Layout &layout, db::cell_index_type target_cel
     std::vector<bool> selected;
     for (db::Cell::const_iterator i = src_cell.begin (); ! i.at_end (); ++i) {
       //  NOTE: cell indexed may be invalid because we delete subcells without update()
-      selected.push_back (layout.is_valid_cell_index (i->cell_index ()) && current.find (*i) == current.end ());
+      selected.push_back (layout.is_valid_cell_index (i->cell_index ()) && ! tl::contains (current, *i));
     }
     auto s = selected.begin ();
     for (db::Cell::const_iterator i = src_cell.begin (); ! i.at_end (); ++i, ++s) {
@@ -461,7 +462,7 @@ CommonReaderBase::finish (db::Layout &layout)
 
     if (i->first.size () > 1) {
 
-      bool discard_layer = i->first.find (i->second) == i->first.end ();
+      bool discard_layer = ! tl::contains (i->first, i->second);
 
       for (std::set<unsigned int>::const_iterator l = i->first.begin (); l != i->first.end (); ++l) {
 

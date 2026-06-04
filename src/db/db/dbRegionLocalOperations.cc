@@ -22,6 +22,7 @@
 
 
 #include "dbRegionLocalOperations.h"
+#include "tlUtils.h"
 #include "dbRegionUtils.h"
 #include "dbLocalOperationUtils.h"
 #include "dbHierProcessor.h"
@@ -407,7 +408,7 @@ check_local_operation_base<TS, TI>::compute_results (db::Layout *layout, db::Cel
       n = 1;
 
       for (auto i = intruders.begin (); i != intruders.end (); ++i) {
-        if (subjects_hash.find (**i) == subjects_hash.end ()) {
+        if (! tl::contains (subjects_hash, **i)) {
           if (! take_all) {
             poly_check.enter (**i, n, common_box);
           } else {
@@ -1112,7 +1113,7 @@ void contained_local_operation<TS, TI, TR>::do_compute_local (db::Layout * /*lay
 
   for (typename shape_interactions<TS, TI>::iterator i = interactions.begin (); i != interactions.end (); ++i) {
     const TS &subject = interactions.subject_shape (i->first);
-    if (others.find (subject) != others.end ()) {
+    if (tl::contains (others, subject)) {
       if (m_output_mode == Positive || m_output_mode == PositiveAndNegative) {
         results [0].insert (subject);
       }
@@ -1213,7 +1214,7 @@ void pull_local_operation<TS, TI, TR>::do_compute_local (db::Layout * /*layout*/
 
   n = 1;
   for (typename std::set<TI>::const_iterator o = others.begin (); o != others.end (); ++o, ++n) {
-    if (selected.find (n) != selected.end ()) {
+    if (tl::contains (selected, n)) {
       result.insert (*o);
     }
   }
@@ -1652,7 +1653,7 @@ bool_and_or_not_local_operation<TS, TI, TR>::do_compute_local (db::Layout *layou
   for (auto i = interactions.begin (); i != interactions.end (); ++i) {
 
     const TR &subject = interactions.subject_shape (i->first);
-    if (others.find (subject) != others.end ()) {
+    if (tl::contains (others, subject)) {
 
       //  shortcut (and: keep, not: drop)
       //  Note that we still normalize and split the polygon, so we get a uniform
@@ -1779,7 +1780,7 @@ bool_and_or_not_local_operation_with_properties<TS, TI, TR>::do_compute_local (d
     for (auto s = p2s->second.first.begin (); s != p2s->second.first.end (); ++s) {
 
       const TS &subject = *s;
-      if (others.find (subject) != others.end ()) {
+      if (tl::contains (others, subject)) {
         if (m_is_and) {
           result.insert (db::object_with_properties<TR> (subject, prop_id));
         }
@@ -1854,7 +1855,7 @@ two_bool_and_not_local_operation<TS, TI, TR>::do_compute_local (db::Layout *layo
   for (auto i = interactions.begin (); i != interactions.end (); ++i) {
 
     const TS &subject = interactions.subject_shape (i->first);
-    if (others.find (subject) != others.end ()) {
+    if (tl::contains (others, subject)) {
       result0.insert (subject);
     } else if (i->second.empty ()) {
       //  shortcut (not: keep, and: drop)
@@ -1967,7 +1968,7 @@ two_bool_and_not_local_operation_with_properties<TS, TI, TR>::do_compute_local (
     for (auto s = p2s->second.first.begin (); s != p2s->second.first.end (); ++s) {
 
       const TR &subject = *s;
-      if (others.find (subject) != others.end ()) {
+      if (tl::contains (others, subject)) {
         result0.insert (db::object_with_properties<TR> (subject, prop_id));
       } else if (others.empty ()) {
         //  shortcut (not: keep, and: drop)
@@ -2215,7 +2216,7 @@ SelfOverlapMergeLocalOperation::do_compute_local (db::Layout *layout, db::Cell *
 
   for (shape_interactions<db::PolygonRef, db::PolygonRef>::iterator i = interactions.begin (); i != interactions.end (); ++i) {
 
-    if (seen.find (i->first) == seen.end ()) {
+    if (! tl::contains (seen, i->first)) {
       seen.insert (i->first);
       const db::PolygonRef &subject = interactions.subject_shape (i->first);
       for (db::PolygonRef::polygon_edge_iterator e = subject.begin_edge (); ! e.at_end(); ++e) {
@@ -2227,7 +2228,7 @@ SelfOverlapMergeLocalOperation::do_compute_local (db::Layout *layout, db::Cell *
     for (db::shape_interactions<db::PolygonRef, db::PolygonRef>::iterator2 o = i->second.begin (); o != i->second.end (); ++o) {
       //  don't take the same (really the same, not an identical one) shape twice - the interaction
       //  set does not take care to list just one copy of the same item on the intruder side.
-      if (seen.find (*o) == seen.end ()) {
+      if (! tl::contains (seen, *o)) {
         seen.insert (*o);
         const db::PolygonRef &intruder = interactions.intruder_shape (*o).second;
         for (db::PolygonRef::polygon_edge_iterator e = intruder.begin_edge (); ! e.at_end(); ++e) {

@@ -22,6 +22,7 @@
 
 
 #include "dbAsIfFlatRegion.h"
+#include "tlUtils.h"
 #include "tlMath.h"
 #include "dbFlatRegion.h"
 #include "dbFlatEdgePairs.h"
@@ -699,7 +700,7 @@ AsIfFlatRegion::in_and_out_generic (const Region &other, InteractingOutputMode o
   std::unique_ptr<FlatRegion> new_region (new FlatRegion (false));
 
   for (RegionIterator o (begin_merged ()); ! o.at_end (); ++o) {
-    if (op.find (*o) != op.end ()) {
+    if (tl::contains (op, *o)) {
       if (output_mode == Positive || output_mode == PositiveAndNegative) {
         oph.results () [0]->insert (*o);
       }

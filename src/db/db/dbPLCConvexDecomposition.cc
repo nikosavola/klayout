@@ -22,6 +22,7 @@
 
 
 #include "dbPLCConvexDecomposition.h"
+#include "tlUtils.h"
 #include "tlMath.h"
 #include "dbPLCTriangulation.h"
 #include "tlLog.h"
@@ -372,7 +373,7 @@ ConvexDecomposition::hertel_mehlhorn_decomposition (Triangulation &tris, const C
 
       const Vertex *v0 = *i;
       auto ie = v0->begin_edges ();
-      for ( ; ie != v0->end_edges () && essential_edges.find (*ie) == essential_edges.end (); ++ie)
+      for ( ; ie != v0->end_edges () && ! tl::contains (essential_edges, *ie); ++ie)
         ;
       tl_assert (ie != v0->end_edges ());
       const Edge *e = *ie;
@@ -389,7 +390,7 @@ ConvexDecomposition::hertel_mehlhorn_decomposition (Triangulation &tris, const C
           tl_assert (t != 0);
           enn = t->next_edge (enn, v0);
           tl_assert (enn != 0);
-        } while (enn != en && essential_edges.find (enn) == essential_edges.end ());
+        } while (enn != en && ! tl::contains (essential_edges, enn));
 
         db::DEdge e1 (*en->other (v0), *v0);
         db::DEdge e2 (*v0, *enn->other (v0));
@@ -461,9 +462,9 @@ ConvexDecomposition::hertel_mehlhorn_decomposition (Triangulation &tris, const C
             ivs.insert (e->v2 ());
           }
 
-          if (! qq || qq->is_outside () || essential_edges.find (e) != essential_edges.end ()) {
+          if (! qq || qq->is_outside () || tl::contains (essential_edges, e)) {
             edges.insert (const_cast<Edge *> (e));  //  TODO: ugly const_cast
-          } else if (left_triangles.find (qq) != left_triangles.end ()) {
+          } else if (tl::contains (left_triangles, qq)) {
             next_queue.push_back (qq);
           }
         }

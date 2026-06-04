@@ -22,6 +22,7 @@
 
 
 #include "dbPropertiesRepository.h"
+#include "tlUtils.h"
 #include "dbLayoutStateModel.h"
 #include "tlException.h"
 #include "tlString.h"
@@ -169,13 +170,13 @@ bool
 PropertiesSet::has_value (const tl::Variant &name) const
 {
   db::property_names_id_type nid = db::property_names_id (name);
-  return m_map.find (nid) != m_map.end ();
+  return tl::contains (m_map, nid);
 }
 
 bool
 PropertiesSet::has_value (db::property_names_id_type nid) const
 {
-  return m_map.find (nid) != m_map.end ();
+  return tl::contains (m_map, nid);
 }
 
 const tl::Variant &
@@ -672,7 +673,7 @@ PropertiesTranslator::make_filter (const std::set<tl::Variant> &keys, db::Proper
     db::PropertiesSet new_props;
 
     for (auto p = props.begin (); p != props.end (); ++p) {
-      if (names_selected.find (p->first) != names_selected.end ()) {
+      if (tl::contains (names_selected, p->first)) {
         new_props.insert_by_id (p->first, p->second);
       }
     }

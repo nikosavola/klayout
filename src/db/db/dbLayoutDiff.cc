@@ -22,6 +22,7 @@
 
 
 #include "dbLayoutDiff.h"
+#include "tlUtils.h"
 #include "dbLayout.h"
 #include "dbCellMapping.h"
 #include "dbFuzzyCellMapping.h"
@@ -822,7 +823,7 @@ do_compare_layouts (const db::Layout &a, const db::Cell *top_a, const db::Layout
 
         //  Employ exact name matching to unused cells as last resort.
         std::map <std::string, db::cell_index_type>::const_iterator ca = cells_a.find (cb->first);
-        if (ca == cells_a.end () || mapped.find (ca->second) != mapped.end ()) {
+        if (ca == cells_a.end () || tl::contains (mapped, ca->second)) {
 
           differs = true;
           if (flags & layout_diff::f_silent) {
@@ -863,7 +864,7 @@ do_compare_layouts (const db::Layout &a, const db::Cell *top_a, const db::Layout
     }
 
     for (std::map <std::string, db::cell_index_type>::const_iterator ca = cells_a.begin (); ca != cells_a.end (); ++ca) {
-      if (mapped.find (ca->second) == mapped.end ()) {
+      if (! tl::contains (mapped, ca->second)) {
         differs = true;
         if (flags & layout_diff::f_silent) {
           return false;
@@ -1027,12 +1028,12 @@ do_compare_layouts (const db::Layout &a, const db::Cell *top_a, const db::Layout
       bool is_valid_a = false, is_valid_b = false;
       unsigned int layer_a = 0, layer_b = 0;
 
-      if (layers_a.find (*cl) != layers_a.end ()) { 
+      if (tl::contains (layers_a, *cl)) { 
         layer_a = layers_a.find (*cl)->second;
         is_valid_a = true;
       }
       
-      if (layers_b.find (*cl) != layers_b.end ()) {
+      if (tl::contains (layers_b, *cl)) {
         layer_b = layers_b.find (*cl)->second;
         is_valid_b = true;
       }

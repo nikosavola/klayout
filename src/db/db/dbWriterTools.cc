@@ -125,7 +125,7 @@ WriterCellNameMap::insert (db::cell_index_type id, const std::string &cell_name)
     cn_mapped.erase (cn_mapped.begin () + m_max_cellname_length, cn_mapped.end ());
   }
 
-  if (m_cell_names.find (cn_mapped) != m_cell_names.end ()) {
+  if (tl::contains (m_cell_names, cn_mapped)) {
 
     std::string cn_mapped_mod;
 
@@ -139,7 +139,7 @@ WriterCellNameMap::insert (db::cell_index_type id, const std::string &cell_name)
 
         cn_mapped_mod.assign (cn_mapped.begin (), cn_mapped.begin () + std::min (cn_mapped.size (), m_max_cellname_length - pf.size ()));
         cn_mapped_mod += pf;
-        if (m_cell_names.find (cn_mapped_mod) == m_cell_names.end ()) {
+        if (! tl::contains (m_cell_names, cn_mapped_mod)) {
           break;
         }
 
@@ -160,7 +160,7 @@ WriterCellNameMap::insert (db::cell_index_type id, const std::string &cell_name)
 
       cn_mapped_mod.assign (cn_mapped.begin (), cn_mapped.begin () + std::min (cn_mapped.size (), m_max_cellname_length - pf.size ()));
       cn_mapped_mod += pf;
-      if (m_cell_names.find (cn_mapped_mod) == m_cell_names.end ()) {
+      if (! tl::contains (m_cell_names, cn_mapped_mod)) {
         n -= m;
       }
 
@@ -176,7 +176,7 @@ WriterCellNameMap::insert (db::cell_index_type id, const std::string &cell_name)
     cn_mapped.erase (cn_mapped.begin () + std::min (cn_mapped.size (), m_max_cellname_length - pf.size ()), cn_mapped.end ());
     cn_mapped += pf;
 
-    tl_assert (m_cell_names.find (cn_mapped) == m_cell_names.end ());
+    tl_assert (! tl::contains (m_cell_names, cn_mapped));
 
   }
 

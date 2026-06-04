@@ -22,6 +22,7 @@
 
 
 #include "dbAsIfFlatEdges.h"
+#include "tlUtils.h"
 #include "dbFlatEdges.h"
 #include "dbFlatEdgePairs.h"
 #include "dbFlatRegion.h"
@@ -522,7 +523,7 @@ AsIfFlatEdges::in (const Edges &other, bool invert) const
   std::unique_ptr<FlatEdges> new_region (new FlatEdges (false));
 
   for (EdgesIterator o (begin_merged ()); ! o.at_end (); ++o) {
-    if ((op.find (*o) == op.end ()) == invert) {
+    if ((! tl::contains (op, *o)) == invert) {
       new_region->insert (*o);
     }
   }
@@ -548,7 +549,7 @@ AsIfFlatEdges::in_and_out (const Edges &other) const
   std::unique_ptr<FlatEdges> out (new FlatEdges (false));
 
   for (EdgesIterator o (begin_merged ()); ! o.at_end (); ++o) {
-    if (op.find (*o) != op.end ()) {
+    if (tl::contains (op, *o)) {
       in->insert (*o);
     } else {
       out->insert (*o);

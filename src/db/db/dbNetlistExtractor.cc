@@ -21,6 +21,7 @@
 */
 
 #include "dbNetlistExtractor.h"
+#include "tlUtils.h"
 #include "dbDeepShapeStore.h"
 #include "dbNetlistDeviceExtractor.h"
 #include "dbShapeRepository.h"
@@ -118,7 +119,7 @@ build_net_name_equivalence_for_explicit_connections (const db::Layout *layout, c
     for (auto i = with_name.begin (); i != with_name.end (); ++i) {
       const db::PropertiesSet &props = db::properties (*i);
       std::string nn = props.value (net_name_id).to_string ();
-      if (nets_to_join.find (nn) != nets_to_join.end ()) {
+      if (tl::contains (nets_to_join, nn)) {
         prop_by_name [nn].insert (db::prop_id_to_attr (*i));
       }
     }
@@ -127,7 +128,7 @@ build_net_name_equivalence_for_explicit_connections (const db::Layout *layout, c
   //  include pseudo-attributes for global nets to implement "join_with" for global nets
   for (size_t gid = 0; gid < conn.global_nets (); ++gid) {
     const std::string &gn = conn.global_net_name (gid);
-    if (nets_to_join.find (gn) != nets_to_join.end ()) {
+    if (tl::contains (nets_to_join, gn)) {
       prop_by_name [gn].insert (db::global_net_id_to_attr (gid));
     }
   }
@@ -135,7 +136,7 @@ build_net_name_equivalence_for_explicit_connections (const db::Layout *layout, c
   const db::repository<db::Text> &text_repository = layout->shape_repository ().repository (db::object_tag<db::Text> ());
   for (db::repository<db::Text>::iterator t = text_repository.begin (); t != text_repository.end (); ++t) {
     std::string nn = t->string ();
-    if (nets_to_join.find (nn) != nets_to_join.end ()) {
+    if (tl::contains (nets_to_join, nn)) {
       prop_by_name [nn].insert (db::text_ref_to_attr (t.operator-> ()));
     }
   }
@@ -236,7 +237,7 @@ NetlistExtractor::extract_nets (const db::DeepShapeStore &dss, unsigned int layo
       //  in case of "include floating subcircuits" check whether we have a child cell which has a circuit attached in this case
       if (include_floating_subcircuits ()) {
         for (db::Cell::child_cell_iterator cc = cell.begin_child_cells (); ! any_good && ! cc.at_end (); ++cc) {
-          any_good = (circuits.find (*cc) != circuits.end ());
+          any_good = (tl::contains (circuits, *cc));
         }
       }
 
@@ -367,7 +368,7 @@ NetlistExtractor::assign_net_names (db::Net *net, const std::set<std::string> &n
 static void
 collect_soft_connected_clusters (size_t from_id, const NetlistExtractor::connected_clusters_type &clusters, std::set<size_t> &ids)
 {
-  if (ids.find (from_id) != ids.end ()) {
+  if (tl::contains (ids, from_id)) {
     return;
   }
 

@@ -21,6 +21,7 @@
 */
 
 #include "dbHierNetworkProcessor.h"
+#include "tlUtils.h"
 #include "dbShape.h"
 #include "dbShapes.h"
 #include "dbInstElement.h"
@@ -357,7 +358,7 @@ bool Connectivity::interacts (const std::set<unsigned int> &la, const std::set<u
   for (std::set<unsigned int>::const_iterator i = la.begin (); i != la.end (); ++i) {
     db::Connectivity::layer_iterator je = end_connected (*i);
     for (db::Connectivity::layer_iterator j = begin_connected (*i); j != je; ++j) {
-      if (lb.find (j->first) != lb.end ()) {
+      if (tl::contains (lb, j->first)) {
         return true;
       }
     }
@@ -1668,7 +1669,7 @@ connected_clusters<T>::join_cluster_with (typename local_cluster<T>::id_type id,
       //  Join while removing duplicates
       std::set<connections_type::value_type> in_target (target.begin (), target.end ());
       for (auto j = to_join.begin (); j != to_join.end (); ++j) {
-        if (in_target.find (*j) == in_target.end ()) {
+        if (! tl::contains (in_target, *j)) {
           target.push_back (*j);
         }
       }
@@ -1679,7 +1680,7 @@ connected_clusters<T>::join_cluster_with (typename local_cluster<T>::id_type id,
 
   }
 
-  if (m_connected_clusters.find (with_id) != m_connected_clusters.end ()) {
+  if (tl::contains (m_connected_clusters, with_id)) {
     m_connected_clusters.insert (id);
     m_connected_clusters.erase (with_id);
   }
@@ -1728,7 +1729,7 @@ connected_clusters<T>::join_clusters_with (typename local_cluster<T>::id_type id
         }
 
         for (auto j = to_join.begin (); j != to_join.end (); ++j) {
-          if (target_set.find (*j) == target_set.end ()) {
+          if (! tl::contains (target_set, *j)) {
             target.push_back (*j);
             target_set.insert (*j);
           }
@@ -1740,7 +1741,7 @@ connected_clusters<T>::join_clusters_with (typename local_cluster<T>::id_type id
 
     }
 
-    if (m_connected_clusters.find (*w) != m_connected_clusters.end ()) {
+    if (tl::contains (m_connected_clusters, *w)) {
       m_connected_clusters.insert (id);
       m_connected_clusters.erase (*w);
     }
@@ -2605,7 +2606,7 @@ private:
 
     for (auto i = m_cm2join_sets.begin (); i != m_cm2join_sets.end (); ++i) {
       for (auto j = i->begin(); j != i->end(); ++j) {
-        tl_assert(m_cm2join_map.find (*j) != m_cm2join_map.end ());
+        tl_assert(tl::contains (m_cm2join_map, *j));
         tl_assert(m_cm2join_map[*j] == i);
       }
     }
@@ -2897,12 +2898,12 @@ hier_clusters<T>::do_build (cell_clusters_box_converter<T> &cbc, const db::Layou
     std::vector<db::cell_index_type> todo;
     for (db::Layout::bottom_up_const_iterator c = layout.begin_bottom_up (); c != layout.end_bottom_up (); ++c) {
 
-      if (called.find (*c) != called.end ()) {
+      if (tl::contains (called, *c)) {
 
         bool all_available = true;
         const db::Cell &cell = layout.cell (*c);
         for (db::Cell::child_cell_iterator cc = cell.begin_child_cells (); ! cc.at_end () && all_available; ++cc) {
-          all_available = (done.find (*cc) != done.end ());
+          all_available = (tl::contains (done, *cc));
         }
 
         if (all_available) {
@@ -3510,7 +3511,7 @@ incoming_cluster_connections<T>::has_incoming (db::cell_index_type ci, size_t cl
   }
 
   tl_assert (i != m_incoming.end ());
-  return (i->second.find (cluster_id) != i->second.end ());
+  return (tl::contains (i->second, cluster_id));
 }
 
 template <class T>
@@ -3542,7 +3543,7 @@ incoming_cluster_connections<T>::ensure_computed (db::cell_index_type ci) const
 
   const db::Cell &cell = mp_layout->cell (ci);
   for (db::Cell::parent_cell_iterator pc = cell.begin_parent_cells (); pc != cell.end_parent_cells (); ++pc) {
-    if (m_called_cells.find (*pc) != m_called_cells.end ()) {
+    if (tl::contains (m_called_cells, *pc)) {
       ensure_computed_parent (*pc);
     }
   }

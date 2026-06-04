@@ -22,6 +22,7 @@
 
 
 #include "dbAsIfFlatTexts.h"
+#include "tlUtils.h"
 #include "dbFlatTexts.h"
 #include "dbFlatRegion.h"
 #include "dbFlatEdges.h"
@@ -100,7 +101,7 @@ AsIfFlatTexts::in (const Texts &other, bool invert) const
   std::unique_ptr<FlatTexts> new_texts (new FlatTexts ());
 
   for (TextsIterator o (begin ()); ! o.at_end (); ++o) {
-    if ((op.find (*o) == op.end ()) == invert) {
+    if ((! tl::contains (op, *o)) == invert) {
       new_texts->insert (*o);
     }
   }
@@ -436,7 +437,7 @@ AsIfFlatTexts::selected_interacting_generic (const Region &other, bool inverse) 
     scanner.process (filter, 1, db::box_convert<db::Text> (), db::box_convert<db::Polygon> ());
 
     for (TextsIterator o (begin ()); ! o.at_end (); ++o) {
-      if (interacting.find (*o) == interacting.end ()) {
+      if (! tl::contains (interacting, *o)) {
         output->insert (*o);
       }
     }

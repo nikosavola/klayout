@@ -21,6 +21,7 @@
 */
 
 #include "dbNetlistDeviceClasses.h"
+#include "tlUtils.h"
 #include "tlClassRegistry.h"
 #include "tlTimer.h"
 #include "tlLog.h"
@@ -785,7 +786,7 @@ DeviceClassMOS3Transistor::join_split_gates (db::Circuit *circuit) const
           }
           tl_assert (other_device);
 
-          if (seen_nets.find (nn) != seen_nets.end ()) {
+          if (tl::contains (seen_nets, nn)) {
             nn = 0;
             break;
           }

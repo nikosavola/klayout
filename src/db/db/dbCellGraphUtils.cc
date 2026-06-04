@@ -22,6 +22,7 @@
 
 
 #include "dbCellGraphUtils.h"
+#include "tlUtils.h"
 
 namespace db
 {
@@ -49,7 +50,7 @@ CellCounter::weight (db::cell_index_type ci)
 
   if (c != m_cache.end ()) {
     return c->second;
-  } else if (! m_selection.empty () && m_selection.find (ci) == m_selection.end ()) {
+  } else if (! m_selection.empty () && ! tl::contains (m_selection, ci)) {
     return 0;
   } else {
 

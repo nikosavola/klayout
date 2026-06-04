@@ -22,6 +22,7 @@
 
 
 #include "dbOriginalLayerRegion.h"
+#include "tlUtils.h"
 #include "dbFlatRegion.h"
 #include "dbFlatEdges.h"
 #include "dbRegion.h"
@@ -241,7 +242,7 @@ OriginalLayerRegion::count () const
 
     db::CellCounter cc (&layout);
     for (db::Layout::top_down_const_iterator c = layout.begin_top_down (); c != layout.end_top_down (); ++c) {
-      if (cells.find (*c) == cells.end ()) {
+      if (! tl::contains (cells, *c)) {
         continue;
       }
       size_t nn = 0;
@@ -283,7 +284,7 @@ OriginalLayerRegion::hier_count () const
     cells.insert (iter.top_cell ()->cell_index ());
 
     for (db::Layout::top_down_const_iterator c = layout.begin_top_down (); c != layout.end_top_down (); ++c) {
-      if (cells.find (*c) == cells.end ()) {
+      if (! tl::contains (cells, *c)) {
         continue;
       }
       if (iter.multiple_layers ()) {

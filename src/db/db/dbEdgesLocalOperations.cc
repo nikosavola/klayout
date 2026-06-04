@@ -21,6 +21,7 @@
 */
 
 #include "dbEdgesLocalOperations.h"
+#include "tlUtils.h"
 #include "dbHierProcessor.h"
 #include "dbLocalOperationUtils.h"
 
@@ -85,7 +86,7 @@ EdgeBoolAndOrNotLocalOperation::do_compute_local (db::Layout * /*layout*/, db::C
   for (shape_interactions<db::Edge, db::Edge>::iterator i = interactions.begin (); i != interactions.end (); ++i) {
 
     const db::Edge &subject = interactions.subject_shape (i->first);
-    if (others.find (subject) != others.end ()) {
+    if (tl::contains (others, subject)) {
       if (is_and) {
         result.insert (subject);
       }
@@ -255,7 +256,7 @@ void Edge2EdgeInteractingLocalOperation::do_compute_local (db::Layout * /*layout
     for (shape_interactions<db::Edge, db::Edge>::iterator i = interactions.begin (); i != interactions.end (); ++i) {
 
       const db::Edge &subject = interactions.subject_shape (i->first);
-      if (interacting.find (subject) == interacting.end ()) {
+      if (! tl::contains (interacting, subject)) {
         if (m_output_mode != Both) {
           result.insert (subject);
         } else {
@@ -412,7 +413,7 @@ void edge_to_polygon_interacting_local_operation<TI>::do_compute_local (db::Layo
 
       const db::Edge &subject = interactions.subject_shape (i->first);
 
-      if (interacting.find (subject) == interacting.end ()) {
+      if (! tl::contains (interacting, subject)) {
         if (m_output_mode != Both) {
           result.insert (subject);
         } else {

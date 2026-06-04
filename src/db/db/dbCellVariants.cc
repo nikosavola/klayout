@@ -238,7 +238,7 @@ VariantsCollectorBase::collect (Layout *layout, db::cell_index_type initial_cell
 
   for (db::Layout::top_down_const_iterator c = layout->begin_top_down (); c != layout->end_top_down (); ++c) {
 
-    if (m_called.find (*c) == m_called.end ()) {
+    if (! tl::contains (m_called, *c)) {
       continue;
     }
 
@@ -292,7 +292,7 @@ VariantsCollectorBase::separate_variants (std::map<db::cell_index_type, std::map
 
   for (db::Layout::bottom_up_const_iterator c = mp_layout->begin_bottom_up (); c != mp_layout->end_bottom_up (); ++c) {
 
-    if (m_called.find (*c) == m_called.end ()) {
+    if (! tl::contains (m_called, *c)) {
       continue;
     }
 
@@ -409,7 +409,7 @@ VariantsCollectorBase::commit_shapes (unsigned int layer, std::map<db::cell_inde
 
   for (db::Layout::bottom_up_const_iterator c = mp_layout->begin_bottom_up (); c != mp_layout->end_bottom_up (); ++c) {
 
-    if (m_called.find (*c) == m_called.end ()) {
+    if (! tl::contains (m_called, *c)) {
       continue;
     }
 
@@ -517,7 +517,7 @@ static std::set<db::ICplxTrans> s_once (make_once ());
 const std::set<db::ICplxTrans> &
 VariantsCollectorBase::variants (db::cell_index_type ci) const
 {
-  if (m_called.find (ci) == m_called.end ()) {
+  if (! tl::contains (m_called, ci)) {
     static std::set<db::ICplxTrans> empty;
     return empty;
   }
@@ -759,7 +759,7 @@ VariantStatistics::collect (const db::Layout *layout, db::cell_index_type initia
 
   for (db::Layout::top_down_const_iterator c = layout->begin_top_down (); c != layout->end_top_down (); ++c) {
 
-    if (called.find (*c) == called.end ()) {
+    if (! tl::contains (called, *c)) {
       continue;
     }
 

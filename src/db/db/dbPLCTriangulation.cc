@@ -22,6 +22,7 @@
 
 
 #include "dbPLCTriangulation.h"
+#include "tlUtils.h"
 #include "tlLog.h"
 #include "tlTimer.h"
 
@@ -988,7 +989,7 @@ Triangulation::fill_concave_corners (const std::vector<Edge *> &edges)
 
     std::vector<Vertex *>::iterator wp = points.begin ();
     for (auto p = points.begin (); p != points.end (); ++p) {
-      if (to_remove.find (*p) == to_remove.end ()) {
+      if (! tl::contains (to_remove, *p)) {
         *wp++ = *p;
       }
     }

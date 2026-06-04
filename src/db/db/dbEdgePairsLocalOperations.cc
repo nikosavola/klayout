@@ -21,6 +21,7 @@
 */
 
 #include "dbEdgePairsLocalOperations.h"
+#include "tlUtils.h"
 #include "dbHierProcessor.h"
 #include "dbLocalOperationUtils.h"
 
@@ -81,7 +82,7 @@ void EdgePair2EdgeInteractingLocalOperation::do_compute_local (db::Layout * /*la
 
       const db::EdgePair &subject = interactions.subject_shape (i->first);
 
-      if (interacting.find (subject) == interacting.end ()) {
+      if (! tl::contains (interacting, subject)) {
         if (m_output_mode != Both) {
           result.insert (subject);
         } else {
@@ -231,7 +232,7 @@ void edge_pair_to_polygon_interacting_local_operation<TI>::do_compute_local (db:
 
       const db::EdgePair &subject = interactions.subject_shape (i->first);
 
-      if (interacting.find (subject) == interacting.end ()) {
+      if (! tl::contains (interacting, subject)) {
         if (m_output_mode != Both) {
           result.insert (subject);
         } else {

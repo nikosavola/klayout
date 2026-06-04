@@ -363,15 +363,20 @@ struct get_inner_type<X &>
  *  @brief Membership test for associative containers
  *
  *  Returns true if the container holds the given key. On C++20 this uses the
- *  container's member contains() (which expresses the intent directly and can
- *  avoid constructing an iterator); on C++11/14/17 it falls back to the
- *  classic find() != end() form.
+ *  container's member contains() when it provides one (expressing the intent
+ *  directly and potentially avoiding an iterator), falling back to find() !=
+ *  end() for containers that have no contains() (e.g. custom containers) and on
+ *  C++11/14/17.
  */
 template <class Container, class Key>
 inline bool contains (const Container &c, const Key &k)
 {
 #if TL_CXX20
-  return c.contains (k);
+  if constexpr (requires { c.contains (k); }) {
+    return c.contains (k);
+  } else {
+    return c.find (k) != c.end ();
+  }
 #else
   return c.find (k) != c.end ();
 #endif

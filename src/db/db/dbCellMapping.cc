@@ -22,6 +22,7 @@
 
 
 #include "dbLayout.h"
+#include "tlUtils.h"
 #include "dbCellGraphUtils.h"
 #include "dbCellMapping.h"
 #include "dbLayoutUtils.h"
@@ -160,7 +161,7 @@ public:
     std::map<db::cell_index_type, db::ICplxTrans>::const_iterator r = m_repr.find (cell_b);
     if (r != m_repr.end ()) {
       m_repr_set = true;
-      if (m_trans.find (r->second) == m_trans.end ()) {
+      if (! tl::contains (m_trans, r->second)) {
         return false;
       }
     }
@@ -379,7 +380,7 @@ private:
 
     std::set<db::cell_index_type> selected_parents;
     for (auto p = fc.begin_parent_cells (); p != fc.end_parent_cells (); ++p) {
-      if (selection.find (*p) != selection.end ()) {
+      if (tl::contains (selection, *p)) {
         selected_parents.insert (*p);
       }
     }
@@ -387,7 +388,7 @@ private:
     for (auto p = fc.begin_parent_insts (); ! p.at_end (); ++p) {
 
       db::cell_index_type parent_cell = p->parent_cell_index ();
-      if (selected_parents.find (parent_cell) != selected_parents.end ()) {
+      if (tl::contains (selected_parents, parent_cell)) {
 
         const db::CellInstArray &inst = *p->basic_child_inst ();
         for (auto a = inst.begin (); ! a.at_end (); ++a) {
@@ -519,7 +520,7 @@ CellMapping::do_create_missing_mapping (db::Layout &layout_a, const db::Layout &
   }
 
   for (std::set<db::cell_index_type>::const_iterator b = called_b.begin (); b != called_b.end (); ++b) {
-    if (m_b2a_mapping.find (*b) == m_b2a_mapping.end ()
+    if (! tl::contains (m_b2a_mapping, *b)
         && (! exclude_cells || exclude_cells->find (*b) == exclude_cells->end ())
         && (! include_cells || include_cells->find (*b) != include_cells->end ())) {
 
@@ -645,7 +646,7 @@ CellMapping::create_from_geometry (const db::Layout &layout_a, db::cell_index_ty
           std::map <db::cell_index_type, unsigned int>::const_iterator bg = b_group_of_cell.find (bb->second);
           if (bg != b_group_of_cell.end ()) {
 
-            if (groups_taken.find (bg->second) == groups_taken.end ()) {
+            if (! tl::contains (groups_taken, bg->second)) {
               if (cmp.compare (a->second, bb->second)) {
                 new_candidates [a->second] = b_group [bg->second];
                 groups_taken.insert (bg->second);
@@ -755,7 +756,7 @@ CellMapping::create_from_geometry (const db::Layout &layout_a, db::cell_index_ty
 
               std::vector<db::cell_index_type>::iterator cout = refined_cand.begin ();
               for (std::vector<db::cell_index_type>::const_iterator cc = refined_cand.begin (); cc != refined_cand.end (); ++cc) {
-                if (cross_cone_b.find (*cc) != cross_cone_b.end ()) {
+                if (tl::contains (cross_cone_b, *cc)) {
                   *cout++ = *cc;
                 }
               }
@@ -792,7 +793,7 @@ CellMapping::create_from_geometry (const db::Layout &layout_a, db::cell_index_ty
 
               std::vector<db::cell_index_type>::iterator cout = refined_cand.begin ();
               for (std::vector<db::cell_index_type>::const_iterator cc = refined_cand.begin (); cc != refined_cand.end (); ++cc) {
-                if (cross_cone_b.find (*cc) != cross_cone_b.end ()) {
+                if (tl::contains (cross_cone_b, *cc)) {
                   *cout++ = *cc;
                 }
               }
@@ -940,7 +941,7 @@ CellMapping::create_from_geometry (const db::Layout &layout_a, db::cell_index_ty
 
       for (std::vector<db::cell_index_type>::const_iterator c = cand->second.begin (); c != cand->second.end (); ++c) {
 
-        if (m_b2a_mapping.find (*c) == m_b2a_mapping.end ()) {
+        if (! tl::contains (m_b2a_mapping, *c)) {
 
           int ed = tl::edit_distance (cn_a, layout_b.cell_name (*c));
           if (ed < min_ed) {

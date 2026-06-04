@@ -22,6 +22,7 @@
 
 
 #include "dbHierProcessor.h"
+#include "tlUtils.h"
 #include "dbBoxScanner.h"
 #include "dbRecursiveShapeIterator.h"
 #include "dbBoxConvert.h"
@@ -161,14 +162,14 @@ template <class TS, class TI>
 bool
 shape_interactions<TS, TI>::has_intruder_shape_id (unsigned int id) const
 {
-  return m_intruder_shapes.find (id) != m_intruder_shapes.end ();
+  return tl::contains (m_intruder_shapes, id);
 }
 
 template <class TS, class TI>
 bool
 shape_interactions<TS, TI>::has_subject_shape_id (unsigned int id) const
 {
-  return m_subject_shapes.find (id) != m_subject_shapes.end ();
+  return tl::contains (m_subject_shapes, id);
 }
 
 template <class TS, class TI>
@@ -725,7 +726,7 @@ local_processor_result_computation_task<TS, TI, TR>::perform ()
     for (typename db::local_processor_cell_contexts<TS, TI, TR>::contexts_per_cell_type::iterator pcc = mp_contexts->context_map ().begin (); pcc != mp_contexts->context_map ().end (); ++pcc) {
       for (typename db::local_processor_cell_contexts<TS, TI, TR>::iterator i = pcc->second.begin (); i != pcc->second.end (); ++i) {
         for (typename db::local_processor_cell_context<TS, TI, TR>::drop_iterator j = i->second.begin_drops (); j != i->second.end_drops (); ++j) {
-          if (td.find (j->parent_context) != td.end ()) {
+          if (tl::contains (td, j->parent_context)) {
             tl_assert (false);
           }
         }
@@ -1195,7 +1196,7 @@ local_processor<TS, TI, TR>::compute_results (local_processor_contexts<TS, TI, T
         typename local_processor_contexts<TS, TI, TR>::iterator cpc = contexts.context_map ().find (&mp_subject_layout->cell (*bu));
         if (cpc != contexts.context_map ().end ()) {
 
-          if (later.find (*bu) == later.end ()) {
+          if (! tl::contains (later, *bu)) {
 
             rc_job->schedule (new local_processor_result_computation_task<TS, TI, TR> (this, contexts, cpc->first, &cpc->second, op, output_layers));
             any = true;

@@ -21,6 +21,7 @@
 */
 
 #include "dbRecursiveShapeIterator.h"
+#include "tlUtils.h"
 #include "dbHierarchyBuilder.h"
 #include "dbClip.h"
 #include "dbRegion.h"
@@ -316,7 +317,7 @@ HierarchyBuilder::enter_cell (const RecursiveShapeIterator * /*iter*/, const db:
 
   m_cells_seen.insert (m_cm_entry->first);
 
-  bool new_cell = (m_cells_to_be_filled.find (m_cm_entry->second) != m_cells_to_be_filled.end ());
+  bool new_cell = (tl::contains (m_cells_to_be_filled, m_cm_entry->second));
   if (new_cell) {
     m_cells_to_be_filled.erase (m_cm_entry->second);
   }
@@ -449,7 +450,7 @@ HierarchyBuilder::new_inst (const RecursiveShapeIterator *iter, const db::CellIn
     }
 
     //  To see the cell once, use NI_single. If we did see the cell already, skip the whole instance array.
-    return (! skip_shapes && m_cells_seen.find (key) == m_cells_seen.end ()) ? NI_single : NI_skip;
+    return (! skip_shapes && ! tl::contains (m_cells_seen, key)) ? NI_single : NI_skip;
 
   } else {
 
@@ -490,7 +491,7 @@ HierarchyBuilder::new_inst_member (const RecursiveShapeIterator *iter, const db:
       }
     }
 
-    return ! skip_shapes && m_cells_seen.find (key) == m_cells_seen.end ();
+    return ! skip_shapes && ! tl::contains (m_cells_seen, key);
 
   }
 }

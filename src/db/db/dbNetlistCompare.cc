@@ -21,6 +21,7 @@
 */
 
 #include "dbNetlistCompare.h"
+#include "tlUtils.h"
 #include "dbNetlistCompareUtils.h"
 #include "dbNetlistCompareGraph.h"
 #include "dbNetlistCompareCore.h"
@@ -237,7 +238,7 @@ NetlistComparer::get_net_identity (const db::Circuit *ca, const db::Circuit *cb)
       --i;
       const Net *main_net = i->first.first ? i->first.first : i->first.second;
       const Net *other_net = i->first.first ? i->first.second : i->first.first;
-      if (seen.find (main_net) == seen.end () && (! other_net || seen.find (other_net) == seen.end ())) {
+      if (! tl::contains (seen, main_net) && (! other_net || ! tl::contains (seen, other_net))) {
         net_identity.push_back (*i);
         seen.insert (main_net);
         if (other_net) {
@@ -487,7 +488,7 @@ NetlistComparer::all_subcircuits_verified (const db::Circuit *c, const std::set<
 {
   for (db::Circuit::const_subcircuit_iterator sc = c->begin_subcircuits (); sc != c->end_subcircuits (); ++sc) {
     const db::Circuit *cr = sc->circuit_ref ();
-    if (is_valid_circuit (cr) && verified_circuits.find (cr) == verified_circuits.end ()) {
+    if (is_valid_circuit (cr) && ! tl::contains (verified_circuits, cr)) {
       return false;
     }
   }
@@ -501,7 +502,7 @@ static std::vector<std::string> unverified_names (const db::Circuit *c, const st
   std::set<const db::Circuit *> seen;
   for (db::Circuit::const_subcircuit_iterator sc = c->begin_subcircuits (); sc != c->end_subcircuits (); ++sc) {
     const db::Circuit *cr = sc->circuit_ref ();
-    if (is_valid_circuit (cr) && seen.find (cr) == seen.end () && verified_circuits.find (cr) == verified_circuits.end ()) {
+    if (is_valid_circuit (cr) && ! tl::contains (seen, cr) && ! tl::contains (verified_circuits, cr)) {
       seen.insert (cr);
       names.push_back (cr->name ());
     }
@@ -833,7 +834,7 @@ public:
 
     for (db::NetGraph::node_iterator n = g.begin (); n != g.end (); ++n) {
       std::pair<subcircuit_signature_t, device_signature_t> key (subcircuit_signature (*n), device_signature (*n));
-      if (signatures.find (key) == signatures.end ()) {
+      if (! tl::contains (signatures, key)) {
         signatures.insert (key);
       } else {
         m_redundant.insert (n->net ());
@@ -1919,7 +1920,7 @@ static bool derive_symmetry_groups (const db::NetGraph &graph, const tl::equival
     const NetGraphNode &n = graph.node (*g);
     for (NetGraphNode::edge_iterator e = n.begin (); e != n.end () && has_candidate; ++e) {
 
-      if (considered_nodes.find (e->second.first) != considered_nodes.end ()) {
+      if (tl::contains (considered_nodes, e->second.first)) {
         continue;
       }
 
@@ -2038,7 +2039,7 @@ NetlistComparer::join_symmetric_nets (db::Circuit *circuit)
   for (std::vector<NodeEdgePair>::const_iterator np = nodes.begin (); np != nodes.end (); ++np) {
 
     size_t node_id = graph.node_index_for_net (np[0].node->net ());
-    if (visited.find (node_id) != visited.end ()) {
+    if (tl::contains (visited, node_id)) {
       continue;
     }
 

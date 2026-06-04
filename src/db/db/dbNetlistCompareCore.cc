@@ -21,6 +21,7 @@
 */
 
 #include "dbNetlistCompareCore.h"
+#include "tlUtils.h"
 #include "dbNetlistCompareUtils.h"
 #include "dbNetlistCompare.h"
 #include "dbDevice.h"
@@ -1411,7 +1412,7 @@ analyze_nodes_for_close_matches (const std::multimap<size_t, const NetGraphNode 
 
       for ( ; k != nodes_by_edges2.end () && j->first + k->first < i->first + max_fuzz_count + max_edges_split && tries > 0; ++k) {
 
-        if (seen.find (k->second) != seen.end ()) {
+        if (tl::contains (seen, k->second)) {
           continue;
         }
 

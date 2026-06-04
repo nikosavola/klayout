@@ -54,6 +54,39 @@ by per-TU compiles at C++11/17/20/23).
 | 5.4 | pattern matching | — | Monitor P2688 (no compiler support) | doc only |
 | 5.5 | contracts | `tl_precondition` / `tl_postcondition` | 15 argument-check asserts in db::Layout | C++11-safe |
 
+## Additional mechanical cleanups (beyond the original plan)
+
+A second wave of mechanical modernizations was applied across the
+compile-verifiable modules (`tl`, `db`, `gsi`, `rdb`). Each is a separate commit
+and was verified by recompiling the affected module(s) — the full `db` sweep is
+all 239 TUs.
+
+| Cleanup | tl | db | gsi/rdb | clang-tidy check |
+| --- | --- | --- | --- | --- |
+| `typedef` → `using` | ✓ (179) | ✓ (1580) | ✓ (198) | modernize-use-using |
+| empty `{}` → `= default` | ✓ | ✓ (81) | ✓ (34) | modernize-use-equals-default |
+| non-copyable → `= delete` | ✓ | ✓ (10) | ✓ (3) | modernize-use-equals-delete |
+| `<xxx.h>` → `<cxxx>` | ✓ | ✓ | rdb ✓ | modernize-deprecated-headers |
+| `size()==0` → `empty()` | ✓ | ✓ (12 files) | — | readability-container-size-empty |
+| `push_back(make_pair)` → `emplace_back` | ✓ | ✓ (110) | — | modernize-use-emplace |
+| `find()!=end()` → `tl::contains` | ✓ | ✓ (145) | — | (C++20 contains) |
+| `M_PI` → `tl::pi` | ✓ | ✓ (28) | — | — |
+
+Two cleanups were **deliberately not applied by script**:
+
+- **`auto` for iterators** (modernize-use-auto): applied to `tl` only. A blanket
+  regex pass over `db` corrupted iterator types containing `*`
+  (`std::set<X *>::const_iterator`) and was reverted — this transform genuinely
+  needs clang-tidy's AST, not a regex, at scale.
+- **`enum` → `enum class`**: only the single file-local `CurlCredentialManager::Mode`
+  was converted. It is API-breaking (scoped names, no implicit int), so it is not
+  applied to public enums like `tl::Variant::type` or the many db enums.
+
+Both remaining items, plus finishing the mechanical cleanups across the
+Qt-dependent modules (`lay`, `laybasic`, `layview`, …) that cannot be compiled in
+this sandbox, are best driven by `run-clang-tidy -fix` against a real
+`compile_commands.json` using the repo `.clang-tidy`.
+
 ## Verification status
 
 Most changes were verified with standalone `g++ -fsyntax-only` / `static_assert`

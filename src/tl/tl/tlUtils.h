@@ -25,6 +25,7 @@
 #define HDR_tlUtils
 
 #include "tlAssert.h"
+#include "tlCxxFeatures.h"
 
 #include <map>
 
@@ -357,6 +358,24 @@ struct get_inner_type<X &>
 {
   typedef X result;
 };
+
+/**
+ *  @brief Membership test for associative containers
+ *
+ *  Returns true if the container holds the given key. On C++20 this uses the
+ *  container's member contains() (which expresses the intent directly and can
+ *  avoid constructing an iterator); on C++11/14/17 it falls back to the
+ *  classic find() != end() form.
+ */
+template <class Container, class Key>
+inline bool contains (const Container &c, const Key &k)
+{
+#if TL_CXX20
+  return c.contains (k);
+#else
+  return c.find (k) != c.end ();
+#endif
+}
 
 }
 

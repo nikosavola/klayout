@@ -25,6 +25,7 @@
 #include "tlFileSystemWatcher.h"
 #include "tlString.h"
 #include "tlTimer.h"
+#include "tlUtils.h"
 #include "tlLog.h"
 
 #include <QFileInfo>
@@ -167,7 +168,7 @@ FileSystemWatcher::timeout ()
     QFileInfo fi (tl::to_qstring (m_iter->first));
     if (! fi.exists ()) {
 
-      if (m_files_removed.find (m_iter->first) == m_files_removed.end ()) {
+      if (! tl::contains (m_files_removed, m_iter->first)) {
         files_removed.push_back (m_iter->first);
         m_files_removed.insert (m_iter->first);
       }

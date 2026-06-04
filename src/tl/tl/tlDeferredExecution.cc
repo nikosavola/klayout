@@ -22,6 +22,7 @@
 
 #include "tlDeferredExecution.h"
 #include "tlAssert.h"
+#include "tlUtils.h"
 
 #include <cstdio>
 
@@ -172,7 +173,7 @@ DeferredMethodScheduler::do_execute ()
 
     m_lock.lock ();
     //  during execution a method may be unqueued - make sure this is not executed
-    still_valid = (m_unqueued.find (*m) == m_unqueued.end ());
+    still_valid = ! tl::contains (m_unqueued, *m);
     m_lock.unlock ();
 
     if (still_valid) {

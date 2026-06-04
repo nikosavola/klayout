@@ -25,6 +25,7 @@
 #define HDR_tlLongInt
 
 #include "tlCommon.h"
+#include "tlCxxFeatures.h"
 
 #include <algorithm>
 
@@ -96,7 +97,10 @@ public:
     unsigned int tbits = sizeof (T) * 8;
     T t = 0;
 
-    if (tbits <= bits) {
+    //  sizeof (T) * 8 and bits are both compile-time constants, so on C++17+
+    //  this branch is resolved at compile time (TL_IF_CONSTEXPR -> if constexpr);
+    //  on C++11 it degrades to a plain if with identical behaviour.
+    TL_IF_CONSTEXPR (sizeof (T) * 8 <= bits) {
       t = T (b[0]);
     } else {
       unsigned int i = sizeof (T) / sizeof (B);

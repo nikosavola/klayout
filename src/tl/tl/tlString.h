@@ -297,7 +297,23 @@ TL_PUBLIC std::string to_local (const std::string &s);
 template <class T, bool> struct __redirect_to_string;
 template <class T> struct __redirect_to_string<T, true> { static std::string to_string (const T &t) { return t.to_string (); } };
 template <class T> struct __redirect_to_string<T, false> { static std::string to_string  (const T &) { throw StringConversionException (typeid (T)); } };
-template <class T> inline std::string to_string (const T &o) { return __redirect_to_string<T, tl::has_to_string<T>::value>::to_string (o); }
+
+//  Dispatch to T::to_string() if T has one, else throw. On C++17+ this is a
+//  direct "if constexpr" (the dead branch is discarded, so no .to_string() is
+//  required on types that lack it); on C++11/14 it falls back to the
+//  __redirect_to_string tag-dispatch helper above, which achieves the same SFINAE.
+template <class T> inline std::string to_string (const T &o)
+{
+#if defined(__cpp_if_constexpr)
+  if constexpr (tl::has_to_string<T>::value) {
+    return o.to_string ();
+  } else {
+    throw StringConversionException (typeid (T));
+  }
+#else
+  return __redirect_to_string<T, tl::has_to_string<T>::value>::to_string (o);
+#endif
+}
 
 template <> inline std::string to_string (const double &d) { return to_string (d, 12); }
 template <> inline std::string to_string (const float &d) { return to_string (d, 6); }

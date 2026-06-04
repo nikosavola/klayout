@@ -23,6 +23,7 @@
 
 #include "tlExpression.h"
 #include "tlInternational.h"
+#include "tlMath.h"
 #include "tlString.h"
 #include "tlGlobPattern.h"
 #include "tlFileUtils.h"
@@ -3099,8 +3100,8 @@ std::map <std::string, tl::Variant> EvalStaticConstant::ms_constants;
 // ----------------------------------------------------------------------------
 //  Implementation of the constant table
 
-static EvalStaticConstant c1 ("M_PI", tl::Variant (M_PI));
-static EvalStaticConstant c2 ("M_E", tl::Variant (M_E));
+static EvalStaticConstant c1 ("M_PI", tl::Variant (tl::pi));
+static EvalStaticConstant c2 ("M_E", tl::Variant (tl::e));
 
 // ----------------------------------------------------------------------------
 //  Implementation of Expression

@@ -28,9 +28,38 @@
 #include "tlConcepts.h"
 
 #include <cmath>
+#if defined(__cpp_lib_math_constants)
+#  include <numbers>
+#endif
 
 namespace tl
 {
+
+/**
+ *  @brief The mathematical constant pi
+ *
+ *  Uses std::numbers::pi on C++20 (where the standard math constants are
+ *  available), falling back to a literal otherwise. This avoids the
+ *  non-standard M_PI macro (which is not guaranteed by <cmath> and needs
+ *  _USE_MATH_DEFINES on some platforms).
+ */
+#if defined(__cpp_lib_math_constants)
+constexpr double pi = std::numbers::pi;
+#else
+constexpr double pi = 3.14159265358979323846;
+#endif
+
+/**
+ *  @brief Euler's number e
+ *
+ *  Uses std::numbers::e on C++20, falling back to a literal otherwise (avoids
+ *  the non-standard M_E macro).
+ */
+#if defined(__cpp_lib_math_constants)
+constexpr double e = std::numbers::e;
+#else
+constexpr double e = 2.71828182845904523536;
+#endif
 
 /**
  *  @brief A generic less operator

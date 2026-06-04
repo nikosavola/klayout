@@ -115,7 +115,7 @@ CombinedDataMapping::generate_table (std::vector< std::pair<double, double> > &t
   mp_o->generate_table (to);
   tl_assert (to.size () >= 2);
 
-  table.push_back (std::make_pair (ti.front ().first, interpolate (to, ti.front ().second)));
+  table.emplace_back (ti.front ().first, interpolate (to, ti.front ().second));
 
   for (std::vector< std::pair<double, double> >::const_iterator t = ti.begin () + 1; t != ti.end (); ++t) {
 
@@ -131,7 +131,7 @@ CombinedDataMapping::generate_table (std::vector< std::pair<double, double> > &t
       double y = tt1->first;
       double x = x1 + (y - y1) * (x2 - x1) / (y2 - y1);
 
-      table.push_back (std::make_pair (x, tt1->second));
+      table.emplace_back (x, tt1->second);
 
       ++tt1;
 
@@ -143,13 +143,13 @@ CombinedDataMapping::generate_table (std::vector< std::pair<double, double> > &t
       double y = tt2->first;
       double x = x1 + (y - y1) * (x2 - x1) / (y2 - y1);
 
-      table.push_back (std::make_pair (x, tt2->second));
+      table.emplace_back (x, tt2->second);
 
       ++tt2;
 
     }
 
-    table.push_back (std::make_pair (x2, interpolate (to, tt1, y2)));
+    table.emplace_back (x2, interpolate (to, tt1, y2));
 
   }
 
@@ -234,8 +234,8 @@ LinearCombinationDataMapping::generate_table (std::vector< std::pair<double, dou
 {
   if (!mp_a) {
 
-    table.push_back (std::make_pair (xmin (), m_c));
-    table.push_back (std::make_pair (xmax (), m_c));
+    table.emplace_back (xmin (), m_c);
+    table.emplace_back (xmax (), m_c);
 
   } else if (!mp_b) {
 
@@ -263,19 +263,19 @@ LinearCombinationDataMapping::generate_table (std::vector< std::pair<double, dou
     while (a != ta.end () || b != tb.end ()) {
       
       if (a == ta.end ()) {
-        table.push_back (std::make_pair (b->first, m_c + m_ca * ta.back ().second + m_cb * b->second));
+        table.emplace_back (b->first, m_c + m_ca * ta.back ().second + m_cb * b->second);
         ++b;
       } else if (b == tb.end ()) {
-        table.push_back (std::make_pair (a->first, m_c + m_ca * a->second + m_cb * tb.back ().second));
+        table.emplace_back (a->first, m_c + m_ca * a->second + m_cb * tb.back ().second);
         ++a;
       } else if (a->first < b->first - epsilon) {
-        table.push_back (std::make_pair (a->first, m_c + m_ca * a->second + m_cb * interpolate (tb, b, a->first)));
+        table.emplace_back (a->first, m_c + m_ca * a->second + m_cb * interpolate (tb, b, a->first));
         ++a;
       } else if (a->first > b->first + epsilon) {
-        table.push_back (std::make_pair (b->first, m_c + m_ca * interpolate (ta, a, b->first) + m_cb * b->second));
+        table.emplace_back (b->first, m_c + m_ca * interpolate (ta, a, b->first) + m_cb * b->second);
         ++b;
       } else {
-        table.push_back (std::make_pair (0.5 * (a->first + b->first), m_c + m_ca * a->second + m_cb * b->second));
+        table.emplace_back (0.5 * (a->first + b->first), m_c + m_ca * a->second + m_cb * b->second);
         ++a;
         ++b;
       }

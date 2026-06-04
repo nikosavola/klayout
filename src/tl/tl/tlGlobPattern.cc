@@ -317,9 +317,9 @@ public:
   void add_interval (uint32_t c1, uint32_t c2)
   {
     if (m_cs) {
-      m_intervals.push_back (std::make_pair (c1, c2));
+      m_intervals.emplace_back (c1, c2);
     } else {
-      m_intervals.push_back (std::make_pair (utf32_downcase (c1), utf32_downcase (c2)));
+      m_intervals.emplace_back (utf32_downcase (c1), utf32_downcase (c2));
     }
   }
 

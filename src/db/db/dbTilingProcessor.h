@@ -636,6 +636,34 @@ public:
   }
 
   /**
+   *  @brief Gets a value indicating whether MPI (MPICH) support was compiled in
+   *
+   *  If this method returns true, the tiling processor can distribute tiles
+   *  across MPI ranks when the application is launched under "mpiexec". See
+   *  \mpi_rank and \mpi_size.
+   */
+  static bool mpi_available ();
+
+  /**
+   *  @brief Gets the MPI rank of the current process
+   *
+   *  Returns 0 if MPI is not active (not built or not launched under mpiexec).
+   *
+   *  When the tiling processor runs under MPI, the tiles are distributed across
+   *  the ranks and the results are gathered onto rank 0. Only rank 0 holds the
+   *  complete output, so scripts should guard output handling (e.g. saving a
+   *  layout) with "TilingProcessor::mpi_rank == 0".
+   */
+  static int mpi_rank ();
+
+  /**
+   *  @brief Gets the number of MPI ranks
+   *
+   *  Returns 1 if MPI is not active.
+   */
+  static int mpi_size ();
+
+  /**
    *  @brief Queue a script for execution with "execute"
    *
    *  Multiple scripts can be installed. They will be executed in parallel (if the number 
@@ -705,6 +733,17 @@ private:
   std::vector<std::string> m_scripts;
   tl::Eval m_top_eval;
   static tl::Mutex s_output_lock;
+
+  //  MPI distribution state (only used when running under MPI with >1 rank).
+  //  On non-root ranks, output delivered through "put" is serialized into
+  //  m_mpi_buffer instead of being handed to the receivers, then gathered onto
+  //  rank 0 and replayed there. This keeps receiver semantics identical to the
+  //  single-process case regardless of the receiver type.
+  bool m_mpi_worker_mode;
+  size_t m_mpi_record_count;
+  std::string m_mpi_buffer;
+
+  void mpi_gather_and_replay ();
 };
 
 }

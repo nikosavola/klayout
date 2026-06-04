@@ -230,6 +230,25 @@ msvc {
     DEFINES += _OPENMP
   }
 
+  equals(HAVE_MPI, "1") {
+    isEmpty(MPICXX) {
+      MPICXX = mpicxx
+    }
+    #  Query the MPICH compiler wrapper for its include and link flags so the
+    #  build adapts to wherever MPICH is installed. The wrapper prints a full
+    #  compiler invocation; we keep only -I (for compilation) and -L/-l (for
+    #  linking) and drop the compiler name and unrelated flags.
+    MPI_COMPILE_INFO = $$system($$MPICXX -compile-info)
+    MPI_LINK_INFO = $$system($$MPICXX -link-info)
+    for (flag, MPI_COMPILE_INFO) {
+      contains(flag, ^-I.*): QMAKE_CXXFLAGS += $$flag
+    }
+    for (flag, MPI_LINK_INFO) {
+      contains(flag, ^-[Ll].*): LIBS += $$flag
+    }
+    DEFINES += HAVE_MPI
+  }
+
   win32 {
 
     QMAKE_LFLAGS += -Wl,--exclude-all-symbols

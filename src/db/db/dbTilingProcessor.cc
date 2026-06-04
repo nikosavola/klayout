@@ -22,17 +22,173 @@
 
 
 #include "dbTilingProcessor.h"
+#include "dbBinarySerialize.h"
 
 #include "tlExpression.h"
 #include "tlProgress.h"
 #include "tlThreadedWorkers.h"
 #include "tlThreads.h"
+#include "tlBinaryStream.h"
+#include "tlStream.h"
+#include "tlString.h"
+#include "tlMPI.h"
 #include "gsiDecl.h"
 
 #include <cmath>
 
 namespace db
 {
+
+// ----------------------------------------------------------------------------------
+//  Serialization of tiling processor output payloads for MPI transport
+//
+//  The output of a tile is a tl::Variant holding one of the geometry types the
+//  receivers understand (see insert_var in the header) or - for custom receivers
+//  - a plain scalar value. To transfer these between MPI ranks we serialize a
+//  small type tag followed by the geometry. Anything that is not one of the
+//  known geometry types falls back to tl::Variant's native binary serialization,
+//  which covers scalars, strings and lists.
+
+namespace
+{
+
+enum OutputPayloadTag
+{
+  pt_other = 0,
+  pt_region,
+  pt_edges,
+  pt_edge_pairs,
+  pt_texts,
+  pt_polygon,
+  pt_simple_polygon,
+  pt_box,
+  pt_path,
+  pt_text,
+  pt_edge,
+  pt_edge_pair
+};
+
+template <class Coll>
+void write_collection (tl::BinaryOutputStream &os, const Coll &coll)
+{
+  //  Two passes: one to count, one to write. This avoids relying on a size()
+  //  method whose semantics (merged vs. raw) might differ from iteration.
+  uint64_t n = 0;
+  for (typename Coll::const_iterator i = coll.begin (); ! i.at_end (); ++i) {
+    ++n;
+  }
+  os << n;
+  for (typename Coll::const_iterator i = coll.begin (); ! i.at_end (); ++i) {
+    os << *i;
+  }
+}
+
+void
+serialize_output_payload (tl::BinaryOutputStream &os, const tl::Variant &obj)
+{
+  if (obj.is_user<db::Region> ()) {
+    os << (uint8_t) pt_region;
+    write_collection (os, obj.to_user<db::Region> ());
+  } else if (obj.is_user<db::Edges> ()) {
+    os << (uint8_t) pt_edges;
+    write_collection (os, obj.to_user<db::Edges> ());
+  } else if (obj.is_user<db::EdgePairs> ()) {
+    os << (uint8_t) pt_edge_pairs;
+    write_collection (os, obj.to_user<db::EdgePairs> ());
+  } else if (obj.is_user<db::Texts> ()) {
+    os << (uint8_t) pt_texts;
+    write_collection (os, obj.to_user<db::Texts> ());
+  } else if (obj.is_user<db::Polygon> ()) {
+    os << (uint8_t) pt_polygon << obj.to_user<db::Polygon> ();
+  } else if (obj.is_user<db::SimplePolygon> ()) {
+    os << (uint8_t) pt_simple_polygon << obj.to_user<db::SimplePolygon> ();
+  } else if (obj.is_user<db::Box> ()) {
+    os << (uint8_t) pt_box << obj.to_user<db::Box> ();
+  } else if (obj.is_user<db::Path> ()) {
+    os << (uint8_t) pt_path << obj.to_user<db::Path> ();
+  } else if (obj.is_user<db::Text> ()) {
+    os << (uint8_t) pt_text << obj.to_user<db::Text> ();
+  } else if (obj.is_user<db::Edge> ()) {
+    os << (uint8_t) pt_edge << obj.to_user<db::Edge> ();
+  } else if (obj.is_user<db::EdgePair> ()) {
+    os << (uint8_t) pt_edge_pair << obj.to_user<db::EdgePair> ();
+  } else {
+    //  Not a geometry type: serialize as a parsable string (scalars, strings,
+    //  lists, ...). This also covers the nil case. We deliberately serialize the
+    //  concrete std::string rather than streaming the variant directly, so the
+    //  length-prefixed string framing is unambiguous on read-back.
+    os << (uint8_t) pt_other;
+    os << obj.to_parsable_string ();
+  }
+}
+
+template <class Coll, class Shape>
+tl::Variant
+read_collection (tl::BinaryInputStream &is)
+{
+  uint64_t n = 0;
+  is >> n;
+  Coll coll;
+  Shape s;
+  while (n-- > 0) {
+    is >> s;
+    coll.insert (s);
+  }
+  return tl::Variant (coll);
+}
+
+template <class Shape>
+tl::Variant
+read_shape (tl::BinaryInputStream &is)
+{
+  Shape s;
+  is >> s;
+  return tl::Variant (s);
+}
+
+tl::Variant
+deserialize_output_payload (tl::BinaryInputStream &is)
+{
+  uint8_t tag = 0;
+  is >> tag;
+
+  switch (tag) {
+  case pt_region:
+    return read_collection<db::Region, db::Polygon> (is);
+  case pt_edges:
+    return read_collection<db::Edges, db::Edge> (is);
+  case pt_edge_pairs:
+    return read_collection<db::EdgePairs, db::EdgePair> (is);
+  case pt_texts:
+    return read_collection<db::Texts, db::Text> (is);
+  case pt_polygon:
+    return read_shape<db::Polygon> (is);
+  case pt_simple_polygon:
+    return read_shape<db::SimplePolygon> (is);
+  case pt_box:
+    return read_shape<db::Box> (is);
+  case pt_path:
+    return read_shape<db::Path> (is);
+  case pt_text:
+    return read_shape<db::Text> (is);
+  case pt_edge:
+    return read_shape<db::Edge> (is);
+  case pt_edge_pair:
+    return read_shape<db::EdgePair> (is);
+  case pt_other:
+  default:
+    {
+      std::string s;
+      is >> s;
+      tl::Variant v;
+      tl::Extractor ex (s.c_str ());
+      ex.read (v);
+      return v;
+    }
+  }
+}
+
+}
 
 /**
  *  @brief A helper class for the generic implementation of the layout insert functionality
@@ -662,9 +818,28 @@ TilingProcessor::TilingProcessor ()
     m_tile_origin_given (false),
     m_tile_bx (0.0), m_tile_by (0.0),
     m_threads (0), m_dbu (0.001), m_dbu_specific (0.001), m_dbu_specific_set (false),
-    m_scale_to_dbu (true)
+    m_scale_to_dbu (true),
+    m_mpi_worker_mode (false), m_mpi_record_count (0)
 {
   //  .. nothing yet ..
+}
+
+bool
+TilingProcessor::mpi_available ()
+{
+  return tl::mpi::available ();
+}
+
+int
+TilingProcessor::mpi_rank ()
+{
+  return tl::mpi::rank ();
+}
+
+int
+TilingProcessor::mpi_size ()
+{
+  return tl::mpi::size ();
 }
 
 void 
@@ -866,12 +1041,52 @@ TilingProcessor::put (size_t ix, size_t iy, const db::Box &tile, const std::vect
     throw tl::Exception (tl::to_string (tr ("Invalid handle (first argument) in _output function call")));
   }
 
-  m_outputs[index].receiver->put (ix, iy, tile, m_outputs[index].id, args[1], dbu (), m_outputs[index].trans, clip);
+  if (m_mpi_worker_mode) {
+
+    //  Under MPI, non-root ranks do not deliver to the receivers directly.
+    //  Instead each output call is serialized and later gathered onto rank 0
+    //  where it is replayed through the receivers (see mpi_gather_and_replay).
+    //  The s_output_lock acquired above also guards the buffer against the
+    //  concurrent worker threads of this rank.
+    tl::OutputMemoryStream mem;
+    {
+      tl::BinaryOutputStream os (mem);
+      os << (uint32_t) index << (uint64_t) ix << (uint64_t) iy;
+      os << tile;
+      os << (uint8_t) (clip ? 1 : 0);
+      serialize_output_payload (os, args[1]);
+    }
+    m_mpi_buffer.append (mem.data (), mem.size ());
+    ++m_mpi_record_count;
+
+  } else {
+
+    m_outputs[index].receiver->put (ix, iy, tile, m_outputs[index].id, args[1], dbu (), m_outputs[index].trans, clip);
+
+  }
 }
 
 void  
 TilingProcessor::execute (const std::string &desc)
 {
+  //  Initialize MPI lazily. When launched under "mpiexec" with more than one
+  //  rank, the tiles are distributed across the ranks and the output is gathered
+  //  onto rank 0. When run as a single process (or built without MPI) this is a
+  //  no-op and execution proceeds exactly as before.
+  //
+  //  NOTE: this assumes all ranks see identical inputs and an identical tiling
+  //  plan (SPMD), so that the work partitioning and the collectives below stay
+  //  in lock-step. Running under MPI with diverging inputs across ranks is not
+  //  supported.
+  tl::mpi::ensure_initialized ();
+  bool mpi_parallel = tl::mpi::is_parallel ();
+  int mpi_nranks = mpi_parallel ? tl::mpi::size () : 1;
+  int mpi_myrank = mpi_parallel ? tl::mpi::rank () : 0;
+
+  m_mpi_worker_mode = mpi_parallel && mpi_myrank != 0;
+  m_mpi_record_count = 0;
+  m_mpi_buffer.clear ();
+
   db::DBox tot_box = m_frame;
 
   if (tot_box.empty ()) {
@@ -950,7 +1165,11 @@ TilingProcessor::execute (const std::string &desc)
       b = dbu () * floor (0.5 + (tot_box.center ().y () - ntiles_h * 0.5 * tile_height) / dbu () + 1e-10);
     }
 
-    //  create the TilingProcessor tasks
+    //  create the TilingProcessor tasks. Under MPI the tasks (tile x script) are
+    //  distributed round-robin across the ranks by their global index, so every
+    //  rank only processes its share. Without MPI mpi_nranks is 1 and all tasks
+    //  are scheduled here as before.
+    size_t mpi_gidx = 0;
     for (size_t ix = 0; ix < ntiles_w; ++ix) {
 
       for (size_t iy = 0; iy < ntiles_h; ++iy) {
@@ -961,8 +1180,10 @@ TilingProcessor::execute (const std::string &desc)
         std::string tile_desc = tl::sprintf ("%d/%d,%d/%d", ix + 1, ntiles_w, iy + 1, ntiles_h);
 
         size_t si = 0;
-        for (std::vector <std::string>::const_iterator s = m_scripts.begin (); s != m_scripts.end (); ++s, ++si) {
-          job.schedule (new TilingProcessorTask (tile_desc, ix, iy, clip_box, region, *s, si));
+        for (std::vector <std::string>::const_iterator s = m_scripts.begin (); s != m_scripts.end (); ++s, ++si, ++mpi_gidx) {
+          if (int (mpi_gidx % size_t (mpi_nranks)) == mpi_myrank) {
+            job.schedule (new TilingProcessorTask (tile_desc, ix, iy, clip_box, region, *s, si));
+          }
         }
 
       }
@@ -974,20 +1195,31 @@ TilingProcessor::execute (const std::string &desc)
     ntiles_w = ntiles_h = 0;
 
     size_t si = 0;
-    for (std::vector <std::string>::const_iterator s = m_scripts.begin (); s != m_scripts.end (); ++s, ++si) {
-      job.schedule (new TilingProcessorTask ("all", 0, 0, db::DBox (), db::DBox (), *s, si));
+    size_t mpi_gidx = 0;
+    for (std::vector <std::string>::const_iterator s = m_scripts.begin (); s != m_scripts.end (); ++s, ++si, ++mpi_gidx) {
+      if (int (mpi_gidx % size_t (mpi_nranks)) == mpi_myrank) {
+        job.schedule (new TilingProcessorTask ("all", 0, 0, db::DBox (), db::DBox (), *s, si));
+      }
     }
 
   }
+
+  bool mpi_aborted = false;
+  bool mpi_synced = false;
 
   try {
 
     try {
 
-      for (std::vector<OutputSpec>::iterator o = m_outputs.begin (); o != m_outputs.end (); ++o) {
-        if (o->receiver) {
-          o->receiver->set_processor (this);
-          o->receiver->begin (ntiles_w, ntiles_h, db::DPoint (l, b), tile_width, tile_height, frame);
+      //  On non-root MPI ranks the receivers are not driven directly (their
+      //  output is buffered and gathered onto rank 0), so begin/finish - which
+      //  may have side effects for custom receivers - are issued on rank 0 only.
+      if (! m_mpi_worker_mode) {
+        for (std::vector<OutputSpec>::iterator o = m_outputs.begin (); o != m_outputs.end (); ++o) {
+          if (o->receiver) {
+            o->receiver->set_processor (this);
+            o->receiver->begin (ntiles_w, ntiles_h, db::DPoint (l, b), tile_width, tile_height, frame);
+          }
         }
       }
 
@@ -998,18 +1230,56 @@ TilingProcessor::execute (const std::string &desc)
         job.wait (100);
       }
 
-      for (std::vector<OutputSpec>::iterator o = m_outputs.begin (); o != m_outputs.end (); ++o) {
-        if (o->receiver) {
-          o->receiver->finish (!job.has_error ());
-          o->receiver->set_processor (0);
+      if (mpi_parallel) {
+
+        //  Agree on the global error state across all ranks. Every rank reaches
+        //  exactly one "any" call (here on the success path or in the catch
+        //  handler below) so the collective always matches up.
+        mpi_aborted = tl::mpi::any (job.has_error ());
+        mpi_synced = true;
+
+        if (! mpi_aborted) {
+          //  collective: non-root ranks send their buffered output, rank 0
+          //  receives it and replays it through the receivers
+          mpi_gather_and_replay ();
         }
+
+        if (! m_mpi_worker_mode) {
+          for (std::vector<OutputSpec>::iterator o = m_outputs.begin (); o != m_outputs.end (); ++o) {
+            if (o->receiver) {
+              o->receiver->finish (! mpi_aborted);
+              o->receiver->set_processor (0);
+            }
+          }
+        }
+
+      } else {
+
+        for (std::vector<OutputSpec>::iterator o = m_outputs.begin (); o != m_outputs.end (); ++o) {
+          if (o->receiver) {
+            o->receiver->finish (!job.has_error ());
+            o->receiver->set_processor (0);
+          }
+        }
+
       }
 
     } catch (...) {
-      for (std::vector<OutputSpec>::iterator o = m_outputs.begin (); o != m_outputs.end (); ++o) {
-        if (o->receiver) {
-          o->receiver->finish (false);
-          o->receiver->set_processor (0);
+      //  If this rank fails before it has reached the "any" synchronization
+      //  point, signal the failure to the other ranks so none of them is left
+      //  waiting for a collective that will never come. If we have already
+      //  synced (e.g. the gather or replay itself failed) we must not call it
+      //  again - the peers have moved on.
+      if (mpi_parallel && ! mpi_synced) {
+        tl::mpi::any (true);
+        mpi_synced = true;
+      }
+      if (! m_mpi_worker_mode) {
+        for (std::vector<OutputSpec>::iterator o = m_outputs.begin (); o != m_outputs.end (); ++o) {
+          if (o->receiver) {
+            o->receiver->finish (false);
+            o->receiver->set_processor (0);
+          }
         }
       }
       throw;
@@ -1023,8 +1293,75 @@ TilingProcessor::execute (const std::string &desc)
     throw ex;
   }
 
-  if (job.has_error ()) {
+  if (mpi_parallel) {
+    if (mpi_aborted) {
+      throw tl::Exception (tl::to_string (tr ("Errors occurred during processing on at least one MPI rank")));
+    }
+  } else if (job.has_error ()) {
     throw tl::Exception (tl::to_string (tr ("Errors occurred during processing. First error message says:\n")) + job.error_messages ().front ());
+  }
+}
+
+void
+TilingProcessor::mpi_gather_and_replay ()
+{
+  //  Build this rank's message: a record count followed by the buffered output
+  //  records. Rank 0 has delivered its own tiles directly, so its buffer is
+  //  empty (count 0).
+  std::string msg;
+  {
+    tl::OutputMemoryStream mem;
+    {
+      tl::BinaryOutputStream os (mem);
+      os << (uint64_t) m_mpi_record_count;
+    }
+    msg.assign (mem.data (), mem.size ());
+  }
+  msg += m_mpi_buffer;
+
+  //  collective: gathers every rank's message onto rank 0
+  std::vector<std::string> all = tl::mpi::gather_to_root (msg);
+
+  if (! tl::mpi::is_root ()) {
+    return;
+  }
+
+  //  Replay the records from the non-root ranks through the receivers, exactly
+  //  as TilingProcessor::put would have on a single process.
+  for (size_t r = 1; r < all.size (); ++r) {
+
+    const std::string &buf = all[r];
+    if (buf.empty ()) {
+      continue;
+    }
+
+    tl::InputMemoryStream ism (buf.c_str (), buf.size ());
+    tl::InputStream is (ism);
+    tl::BinaryInputStream bis (is);
+
+    uint64_t count = 0;
+    bis >> count;
+
+    for (uint64_t k = 0; k < count; ++k) {
+
+      uint32_t index = 0;
+      uint64_t ix = 0, iy = 0;
+      bis >> index >> ix >> iy;
+
+      db::Box tile;
+      bis >> tile;
+
+      uint8_t clip_flag = 0;
+      bis >> clip_flag;
+
+      tl::Variant payload = deserialize_output_payload (bis);
+
+      if (index < m_outputs.size () && m_outputs[index].receiver) {
+        m_outputs[index].receiver->put (size_t (ix), size_t (iy), tile, m_outputs[index].id, payload, dbu (), m_outputs[index].trans, clip_flag != 0);
+      }
+
+    }
+
   }
 }
 

@@ -27,6 +27,7 @@ SOURCES = \
     tlInclude.cc \
     tlInternational.cc \
     tlLog.cc \
+    tlMPI.cc \
     tlObject.cc \
     tlProgress.cc \
     tlPixelBuffer.cc \
@@ -84,6 +85,7 @@ HEADERS = \
     tlIntervalSet.h \
     tlKDTree.h \
     tlLog.h \
+    tlMPI.h \
     tlObject.h \
     tlObjectCollection.h \
     tlProgress.h \

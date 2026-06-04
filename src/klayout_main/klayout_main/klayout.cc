@@ -30,6 +30,7 @@
 #include "tlException.h"
 #include "tlLog.h"
 #include "tlStaticObjects.h"
+#include "tlMPI.h"
 #include "rba.h"
 #include "pya.h"
 #include "gsiExternalMain.h"
@@ -103,6 +104,10 @@ extern "C"
 int WINAPI 
 WinMain(HINSTANCE /*hInstance*/, HINSTANCE /*prevInstance*/, LPSTR /*lpCmdLine*/, int /*nShowCmd*/)
 {
+  //  Initialize MPI as early as possible (see the note in main below). This is
+  //  a no-op when built without MPI support.
+  tl::mpi::ensure_initialized ();
+
   int argCount = 0;
   LPWSTR *szArgList = CommandLineToArgvW(GetCommandLineW(), &argCount);
 
@@ -139,6 +144,14 @@ WinMain(HINSTANCE /*hInstance*/, HINSTANCE /*prevInstance*/, LPSTR /*lpCmdLine*/
 int
 main(int a_argc, const char **a_argv)
 {
+  //  Initialize MPI as early as possible. MPICH's process manager (Hydra/PMI)
+  //  hands the rank topology to the process through the environment, which must
+  //  be read by MPI_Init before later startup steps have a chance to modify it.
+  //  Initializing here ensures the ranks form a single world; without it each
+  //  process would fall back to a singleton (size 1) world. This is a no-op when
+  //  built without MPI support.
+  tl::mpi::ensure_initialized ();
+
   char **argv = new char *[a_argc];
   for (int i = 0; i < a_argc; i++) {
     tl::string aa = tl::system_to_string (a_argv[i]);

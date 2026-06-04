@@ -43,6 +43,8 @@ HAVE_GIT2=1
 HAVE_LSTREAM=1
 HAVE_CPP20=0
 HAVE_OPENMP=0
+HAVE_MPI=0
+MPICXX="mpicxx"
 
 RUBYINCLUDE=""
 RUBYINCLUDE2=""
@@ -106,6 +108,13 @@ while [ "$*" != "" ]; do
     ;;
   -with-openmp)
     HAVE_OPENMP=1
+    ;;
+  -with-mpi)
+    HAVE_MPI=1
+    ;;
+  -mpicxx)
+    shift
+    MPICXX="$1"
     ;;
   -without-qt-uitools)
     HAVE_QT_UITOOLS=0
@@ -260,6 +269,8 @@ while [ "$*" != "" ]; do
     echo "  -without-qtbinding    Don't create Qt bindings for ruby scripts"
     echo "  -without-qt-uitools   Don't include uitools in Qt binding"
     echo "  -with-openmp          Enable OpenMP parallelization for hierarchical processing"
+    echo "  -with-mpi             Enable MPI (MPICH) distributed tiling processor backend"
+    echo "  -mpicxx <wrapper>     MPI C++ compiler wrapper to query flags from [default: mpicxx]"
     echo "  -with-64bit-coord     Use long (64bit) coordinates - EXPERIMENTAL FEATURE"
     echo "                          (only available for gcc>=4.4 for 64bit build)"
     echo "  -without-64bit-coord  Don't use long (64bit) coordinates [default]"
@@ -607,6 +618,7 @@ echo "      HAVE_EXPAT=$HAVE_EXPAT"
 echo "      HAVE_GIT2=$HAVE_GIT2"
 echo "      HAVE_LSTREAM=$HAVE_LSTREAM"
 echo "      HAVE_OPENMP=$HAVE_OPENMP"
+echo "      HAVE_MPI=$HAVE_MPI"
 echo "      RPATH=$RPATH"
 
 mkdir -p $BUILD
@@ -683,6 +695,8 @@ qmake_options=(
   HAVE_LSTREAM="$HAVE_LSTREAM"
   HAVE_CPP20="$HAVE_CPP20"
   HAVE_OPENMP="$HAVE_OPENMP"
+  HAVE_MPI="$HAVE_MPI"
+  MPICXX="$MPICXX"
   PREFIX="$BIN"
   RPATH="$RPATH"
   KLAYOUT_VERSION="$KLAYOUT_VERSION"

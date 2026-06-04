@@ -886,6 +886,30 @@ template <class T> inline void from_string (const std::string &s, T &t)
   ex.read (t);
 }
 
+#if TL_HAS_EXPECTED
+/**
+ *  @brief Parse a value from a string, returning std::expected (C++23)
+ *
+ *  This is a monadic, exception-free wrapper around the throwing from_string
+ *  above: on success it holds the parsed value, on failure the tl::Exception
+ *  message. Example:
+ *
+ *    if (auto v = tl::try_from_string<int> (s)) { use (*v); }
+ *    else { report (v.error ()); }
+ */
+template <class T>
+tl::expected<T, std::string> try_from_string (const std::string &s)
+{
+  try {
+    T v;
+    from_string (s, v);
+    return v;
+  } catch (tl::Exception &ex) {
+    return tl::unexpected<std::string> (ex.msg ());
+  }
+}
+#endif
+
 TL_PUBLIC std::string sprintf (const char *fmt, const std::vector<tl::Variant> &a, unsigned int a0 = 0);
 TL_PUBLIC std::string sprintf (const std::string &fmt, const std::vector<tl::Variant> &a, unsigned int a0 = 0);
 

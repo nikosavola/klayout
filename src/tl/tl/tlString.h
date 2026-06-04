@@ -291,6 +291,12 @@ TL_PUBLIC std::string to_string (double d, int prec);
 TL_PUBLIC std::string to_string (float d, int prec);
 TL_PUBLIC std::string to_string (const unsigned char *cp, int length);
 TL_PUBLIC std::string to_string (const char *cp, int length);
+#if TL_HAS_SPAN
+//  span-based overloads (C++20): the byte buffer carries its own length, so the
+//  (pointer, length) pair cannot get out of sync at the call site.
+inline std::string to_string (tl::span<const char> s) { return to_string (s.data (), int (s.size ())); }
+inline std::string to_string (tl::span<const unsigned char> s) { return to_string (s.data (), int (s.size ())); }
+#endif
 TL_PUBLIC std::string to_string_from_local (const char *cp);
 TL_PUBLIC std::string to_local (const std::string &s);
 

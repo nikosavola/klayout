@@ -509,7 +509,7 @@ CellMapping::do_create_missing_mapping (db::Layout &layout_a, const db::Layout &
   for (std::vector<db::cell_index_type>::const_iterator b = cell_index_b.begin (); b != cell_index_b.end (); ++b) {
     auto m = m_b2a_mapping.find (*b);
     tl_assert (m != m_b2a_mapping.end ());
-    all_a2b.push_back (std::make_pair (m->second, *b));
+    all_a2b.emplace_back (m->second, *b);
   }
 
   std::set<db::cell_index_type> called_b;
@@ -526,7 +526,7 @@ CellMapping::do_create_missing_mapping (db::Layout &layout_a, const db::Layout &
       db::cell_index_type new_cell = layout_a.add_cell (layout_b, *b);
       new_cells.push_back (new_cell);
       new_cells_b.push_back (*b);
-      all_a2b.push_back (std::make_pair (new_cell, *b));
+      all_a2b.emplace_back (new_cell, *b);
 
       if (mapped_pairs) {
         mapped_pairs->push_back (std::make_pair (*b, new_cell));

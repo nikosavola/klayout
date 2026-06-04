@@ -1890,8 +1890,8 @@ two_bool_and_not_local_operation<TS, TI, TR>::do_compute_local (db::Layout *layo
     ep.set_base_verbosity (50);
 
     std::vector<std::pair<db::EdgeSink *, db::EdgeEvaluatorBase *> > procs;
-    procs.push_back (std::make_pair (&pg0, &op0));
-    procs.push_back (std::make_pair (&pg1, &op1));
+    procs.emplace_back (&pg0, &op0);
+    procs.emplace_back (&pg1, &op1);
     ep.process (procs);
 
   }
@@ -2006,8 +2006,8 @@ two_bool_and_not_local_operation_with_properties<TS, TI, TR>::do_compute_local (
       ep.set_base_verbosity (50);
 
       std::vector<std::pair<db::EdgeSink *, db::EdgeEvaluatorBase *> > procs;
-      procs.push_back (std::make_pair (&pg0, &op0));
-      procs.push_back (std::make_pair (&pg1, &op1));
+      procs.emplace_back (&pg0, &op0);
+      procs.emplace_back (&pg1, &op1);
       ep.process (procs);
 
       for (auto r = result0_wo_props.begin (); r != result0_wo_props.end (); ++r) {

@@ -544,7 +544,7 @@ compute_device_key (const db::Device &device, const db::NetGraph &g, bool strict
     size_t terminal_id = strict ? t->id () : translate_terminal_id (t->id (), &device);
     const db::Net *net = device.net_for_terminal (t->id ());
     size_t net_id = g.node_index_for_net (net);
-    k.push_back (std::make_pair (terminal_id, net_id));
+    k.emplace_back (terminal_id, net_id);
   }
 
   return k;
@@ -611,7 +611,7 @@ compute_subcircuit_key (const db::SubCircuit &subcircuit, const db::NetGraph &g,
 
       const db::Net *net = subcircuit.net_for_pin (this_pin_id);
       size_t net_id = g.node_index_for_net (net);
-      k.push_back (std::make_pair (pin_id, net_id));
+      k.emplace_back (pin_id, net_id);
 
     }
 
@@ -1469,7 +1469,7 @@ NetlistComparer::do_device_assignment (const db::Circuit *c1, const db::NetGraph
 
     if (! mapped) {
       if (mp_logger) {
-        unmatched_a.push_back (std::make_pair (k, std::make_pair (d.operator-> (), device_cat)));
+        unmatched_a.emplace_back (k, std::make_pair (d.operator-> (), device_cat));
       }
       good = false;
     } else {
@@ -1532,7 +1532,7 @@ NetlistComparer::do_device_assignment (const db::Circuit *c1, const db::NetGraph
       if (! mapped || dm == device_map.end () || dm->first != k) {
 
         if (mp_logger) {
-          unmatched_b.push_back (std::make_pair (k, std::make_pair (d.operator-> (), device_cat)));
+          unmatched_b.emplace_back (k, std::make_pair (d.operator-> (), device_cat));
         }
         good = false;
 
@@ -1760,7 +1760,7 @@ NetlistComparer::do_subcircuit_assignment (const db::Circuit *c1, const db::NetG
       if (! mapped || scm == subcircuit_map.end () || scm->first != k) {
 
         if (mp_logger) {
-          unmatched_b.push_back (std::make_pair (k, sc.operator-> ()));
+          unmatched_b.emplace_back (k, sc.operator-> ());
         }
         good = false;
 
@@ -1823,7 +1823,7 @@ NetlistComparer::do_subcircuit_assignment (const db::Circuit *c1, const db::NetG
 
   for (std::multimap<std::vector<std::pair<size_t, size_t> >, std::pair<const db::SubCircuit *, size_t> >::const_iterator scm = subcircuit_map.begin (); scm != subcircuit_map.end (); ++scm) {
     if (mp_logger) {
-      unmatched_a.push_back (std::make_pair (scm->first, scm->second.first));
+      unmatched_a.emplace_back (scm->first, scm->second.first);
     }
     good = false;
   }

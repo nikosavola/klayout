@@ -346,7 +346,7 @@ NetlistCrossReference::gen_end_netlist (const db::Netlist *, const db::Netlist *
 void
 NetlistCrossReference::establish_pair (const db::Circuit *a, const db::Circuit *b)
 {
-  m_circuits.push_back (std::make_pair (a, b));
+  m_circuits.emplace_back (a, b);
   m_per_circuit_data.push_back (PerCircuitData ());
   mp_per_circuit_data = & m_per_circuit_data.back ();
   m_data_refs [a] = mp_per_circuit_data;
@@ -474,27 +474,27 @@ static void init_data_from_single (const db::Net *net, NetlistCrossReference::Pe
   data.pins.reserve (net->pin_count ());
   for (db::Net::const_pin_iterator i = net->begin_pins (); i != net->end_pins (); ++i) {
     if (! first) {
-      data.pins.push_back (std::make_pair ((const db::NetPinRef *) 0, i.operator-> ()));
+      data.pins.emplace_back ((const db::NetPinRef *) 0, i.operator-> ());
     } else {
-      data.pins.push_back (std::make_pair (i.operator-> (), (const db::NetPinRef *) 0));
+      data.pins.emplace_back (i.operator-> (), (const db::NetPinRef *) 0);
     }
   }
 
   data.subcircuit_pins.reserve (net->subcircuit_pin_count ());
   for (db::Net::const_subcircuit_pin_iterator i = net->begin_subcircuit_pins (); i != net->end_subcircuit_pins (); ++i) {
     if (! first) {
-      data.subcircuit_pins.push_back (std::make_pair ((const db::NetSubcircuitPinRef *) 0, i.operator-> ()));
+      data.subcircuit_pins.emplace_back ((const db::NetSubcircuitPinRef *) 0, i.operator-> ());
     } else {
-      data.subcircuit_pins.push_back (std::make_pair (i.operator-> (), (const db::NetSubcircuitPinRef *) 0));
+      data.subcircuit_pins.emplace_back (i.operator-> (), (const db::NetSubcircuitPinRef *) 0);
     }
   }
 
   data.terminals.reserve (net->terminal_count ());
   for (db::Net::const_terminal_iterator i = net->begin_terminals (); i != net->end_terminals (); ++i) {
     if (! first) {
-      data.terminals.push_back (std::make_pair ((const db::NetTerminalRef *) 0, i.operator-> ()));
+      data.terminals.emplace_back ((const db::NetTerminalRef *) 0, i.operator-> ());
     } else {
-      data.terminals.push_back (std::make_pair (i.operator-> (), (const db::NetTerminalRef *) 0));
+      data.terminals.emplace_back (i.operator-> (), (const db::NetTerminalRef *) 0);
     }
   }
 }
@@ -543,11 +543,11 @@ NetlistCrossReference::build_terminal_refs (const std::pair<const db::Net *, con
 
     }
 
-    data.terminals.push_back (std::make_pair (a->second, pb));
+    data.terminals.emplace_back (a->second, pb);
   }
 
   for (std::map<std::pair<const db::Device *, size_t>, const db::NetTerminalRef *>::const_iterator b = d2t_b.begin (); b != d2t_b.end (); ++b) {
-    data.terminals.push_back (std::make_pair ((const db::NetTerminalRef *) 0, b->second));
+    data.terminals.emplace_back ((const db::NetTerminalRef *) 0, b->second);
   }
 
   std::stable_sort (data.terminals.begin (), data.terminals.end (), SortNetTerminals ());
@@ -584,12 +584,12 @@ NetlistCrossReference::build_pin_refs (const std::pair<const db::Net *, const db
 
     }
 
-    data.pins.push_back (std::make_pair (a->second, prb));
+    data.pins.emplace_back (a->second, prb);
 
   }
 
   for (std::map<const Pin *, const db::NetPinRef *>::const_iterator b = p2r_b.begin (); b != p2r_b.end (); ++b) {
-    data.pins.push_back (std::make_pair ((const db::NetPinRef *) 0, b->second));
+    data.pins.emplace_back ((const db::NetPinRef *) 0, b->second);
   }
 
   std::stable_sort (data.pins.begin (), data.pins.end (), SortNetPins ());
@@ -647,12 +647,12 @@ NetlistCrossReference::build_subcircuit_pin_refs (const std::pair<const db::Net 
 
     }
 
-    data.subcircuit_pins.push_back (std::make_pair (a->second, pb));
+    data.subcircuit_pins.emplace_back (a->second, pb);
 
   }
 
   for (std::map<std::pair<const db::SubCircuit *, size_t>, const db::NetSubcircuitPinRef *>::const_iterator b = s2t_b.begin (); b != s2t_b.end (); ++b) {
-    data.subcircuit_pins.push_back (std::make_pair ((const db::NetSubcircuitPinRef *) 0, b->second));
+    data.subcircuit_pins.emplace_back ((const db::NetSubcircuitPinRef *) 0, b->second);
   }
 
   std::stable_sort (data.subcircuit_pins.begin (), data.subcircuit_pins.end (), SortNetSubCircuitPins ());

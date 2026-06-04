@@ -199,7 +199,7 @@ spline_interpolation (const std::vector<std::pair<P, double> > &control_points, 
   cp.reserve (control_points.size ());
 
   for (size_t i = 0; i < control_points.size (); ++i) {
-    cp.push_back (std::make_pair (db::DPoint (control_points [i].first), control_points [i].second));
+    cp.emplace_back (db::DPoint (control_points [i].first), control_points [i].second);
   }
 
   std::list<db::DPoint> result = do_spline_interpolation (cp, degree, knots, relative_accuracy, absolute_accuracy);
@@ -227,9 +227,9 @@ spline_interpolation (const std::vector<P> &control_points, const std::vector<do
 
   for (size_t i = 0; i < control_points.size (); ++i) {
     if (i >= weights.size ()) {
-      cp.push_back (std::make_pair (control_points [i], 1.0));
+      cp.emplace_back (control_points [i], 1.0);
     } else {
-      cp.push_back (std::make_pair (control_points [i], weights [i]));
+      cp.emplace_back (control_points [i], weights [i]);
     }
   }
 
@@ -244,7 +244,7 @@ spline_interpolation (const std::vector<P> &control_points, int degree, const st
   cp.reserve (control_points.size ());
 
   for (size_t i = 0; i < control_points.size (); ++i) {
-    cp.push_back (std::make_pair (control_points [i], 1.0));
+    cp.emplace_back (control_points [i], 1.0);
   }
 
   return spline_interpolation (cp, degree, knots, relative_accuracy, absolute_accuracy);

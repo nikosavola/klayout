@@ -227,7 +227,7 @@ struct CutPoints
     if (strong_cutpoints) {
       cut_points.push_back (p);
     } else {
-      attractors.push_back (std::make_pair (p, next));
+      attractors.emplace_back (p, next);
     }
   }
 
@@ -1490,7 +1490,7 @@ get_intersections_per_band_any (std::vector <CutPoints> &cutpoints, std::vector 
 #endif
                 c2->make_cutpoints (cutpoints)->add (c1->p1 (), &cutpoints, true);
               } else {
-                p1_weak.push_back (std::make_pair (c1.operator-> (), c2.operator-> ()));
+                p1_weak.emplace_back (c1.operator-> (), c2.operator-> ());
               }
             }
 
@@ -1584,7 +1584,7 @@ void
 EdgeProcessor::process (db::EdgeSink &es, EdgeEvaluatorBase &op)
 {
   std::vector<std::pair<db::EdgeSink *, db::EdgeEvaluatorBase *> > procs;
-  procs.push_back (std::make_pair (&es, &op));
+  procs.emplace_back (&es, &op);
   process (procs);
 }
 
@@ -1592,7 +1592,7 @@ void
 EdgeProcessor::redo (db::EdgeSink &es, EdgeEvaluatorBase &op)
 {
   std::vector<std::pair<db::EdgeSink *, db::EdgeEvaluatorBase *> > procs;
-  procs.push_back (std::make_pair (&es, &op));
+  procs.emplace_back (&es, &op);
   redo (procs);
 }
 

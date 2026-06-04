@@ -153,10 +153,10 @@ clip_poly (const P &poly, const db::Box &box, Sink &psink, bool resolve_holes)
 
     for (std::vector <db::Edge>::const_iterator e = edges.begin (); e != edges.end (); ++e) {
       if (e->p1 ().y () == y) {
-        coord_values.push_back (std::make_pair (e->p1 ().x (), -1));
+        coord_values.emplace_back (e->p1 ().x (), -1);
       }
       if (e->p2 ().y () == y) {
-        coord_values.push_back (std::make_pair (e->p2 ().x (), 1));
+        coord_values.emplace_back (e->p2 ().x (), 1);
       }
     }
 
@@ -213,10 +213,10 @@ clip_poly (const P &poly, const db::Box &box, Sink &psink, bool resolve_holes)
 
     for (std::vector <db::Edge>::const_iterator e = edges.begin (); e != edges.end (); ++e) {
       if (e->p1 ().x () == x) {
-        coord_values.push_back (std::make_pair (e->p1 ().y (), -1));
+        coord_values.emplace_back (e->p1 ().y (), -1);
       }
       if (e->p2 ().x () == x) {
-        coord_values.push_back (std::make_pair (e->p2 ().y (), 1));
+        coord_values.emplace_back (e->p2 ().y (), 1);
       }
     }
 

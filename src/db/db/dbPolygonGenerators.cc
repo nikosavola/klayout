@@ -1229,7 +1229,7 @@ TrapezoidGenerator::put (const db::Edge &e)
   if (e.dy () != 0) {
     //  create a new edge entry: the first edge will be the original (used for snapping) and
     //  the second the working edge (used for trapezoid generation)
-    m_new_edges.push_back (std::make_pair (e, e));
+    m_new_edges.emplace_back (e, e);
   }
 }
 

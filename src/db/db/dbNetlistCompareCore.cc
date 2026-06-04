@@ -78,7 +78,7 @@ public:
         }
         if (n1 == 1 && n2 == 1) {
           //  unique mapping - one device of one category
-          mapped.push_back (std::make_pair (i10->second, i20->second));
+          mapped.emplace_back (i10->second, i20->second);
         }
       }
 
@@ -299,22 +299,22 @@ private:
 
   void keep (NetGraph *g1, size_t n1)
   {
-    m_to_undo.push_back (std::make_pair (g1, n1));
+    m_to_undo.emplace_back (g1, n1);
   }
 
   void keep_for_unknown (NetGraph *g1, size_t n1)
   {
-    m_to_undo_to_unknown.push_back (std::make_pair (g1, n1));
+    m_to_undo_to_unknown.emplace_back (g1, n1);
   }
 
   void keep (DeviceEquivalenceTracker *dt, const db::Device *a, const db::Device *b)
   {
-    m_to_undo_devices.push_back (std::make_pair (dt, std::make_pair (a, b)));
+    m_to_undo_devices.emplace_back (dt, std::make_pair (a, b));
   }
 
   void keep (SubCircuitEquivalenceTracker *dt, const db::SubCircuit *a, const db::SubCircuit *b)
   {
-    m_to_undo_subcircuits.push_back (std::make_pair (dt, std::make_pair (a, b)));
+    m_to_undo_subcircuits.emplace_back (dt, std::make_pair (a, b));
   }
 };
 
@@ -920,7 +920,7 @@ NetlistCompareCore::derive_node_identities_from_ambiguity_group (const NodeRange
           if (any) {
             pairs.pop_back ();
           }
-          pairs.push_back (std::make_pair (i1->node, i2->node));
+          pairs.emplace_back (i1->node, i2->node);
           to_remove = ii2;
           node_count = 1;
           any = true;
@@ -955,7 +955,7 @@ NetlistCompareCore::derive_node_identities_from_ambiguity_group (const NodeRange
 
               //  identified a new pair
               node_count = bt_count + 1;
-              pairs.push_back (std::make_pair (i1->node, i2->node));
+              pairs.emplace_back (i1->node, i2->node);
               to_remove = ii2;
               need_rerun = true;
               any = true;

@@ -182,7 +182,7 @@ static db::Region antenna_check3 (db::LayoutToNetlist *l2n, const db::Region &po
 
     if (d->is_user<db::Region> ()) {
 
-      diode_pairs.push_back (std::make_pair (& d->to_user<db::Region> (), 0.0));
+      diode_pairs.emplace_back (& d->to_user<db::Region> (), 0.0);
 
     } else if (d->is_list ()) {
 
@@ -197,7 +197,7 @@ static db::Region antenna_check3 (db::LayoutToNetlist *l2n, const db::Region &po
         throw tl::Exception (tl::to_string (tr ("Diode layer specifications of 'antenna' method require list of diode layer/ratio pairs (e.g. '[ [ diode_layer, 10.0 ], ... ]') - second element isn't a number")));
       }
 
-      diode_pairs.push_back (std::make_pair (& list [0].to_user<db::Region> (), list [1].to_double ()));
+      diode_pairs.emplace_back (& list [0].to_user<db::Region> (), list [1].to_double ());
 
     }
 

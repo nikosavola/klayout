@@ -321,7 +321,7 @@ ConvexDecomposition::hertel_mehlhorn_decomposition (Triangulation &tris, const C
         double angle = atan2 (db::vprod (v1, v2), db::sprod (v1, v2));
 
         e = (en == cc->outgoing) ? 0 : en;
-        angles_and_edges.push_back (std::make_pair (angle, e));
+        angles_and_edges.emplace_back (angle, e);
 
       }
 

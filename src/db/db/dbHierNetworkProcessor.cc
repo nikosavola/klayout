@@ -1185,8 +1185,8 @@ struct cluster_building_receiver
           typename std::list<cluster_value>::iterator c1 = --m_clusters.end ();
           m_clusters.push_back (cluster_value ());
           typename std::list<cluster_value>::iterator c2 = --m_clusters.end ();
-          c1->first.push_back (std::make_pair (s1, p1));
-          c2->first.push_back (std::make_pair (s2, p2));
+          c1->first.emplace_back (s1, p1);
+          c2->first.emplace_back (s2, p2);
 
           m_shape_to_clusters.insert (std::make_pair (s1, c1));
           m_shape_to_clusters.insert (std::make_pair (s2, c2));
@@ -1197,8 +1197,8 @@ struct cluster_building_receiver
 
           m_clusters.push_back (cluster_value ());
           typename std::list<cluster_value>::iterator c = --m_clusters.end ();
-          c->first.push_back (std::make_pair (s1, p1));
-          c->first.push_back (std::make_pair (s2, p2));
+          c->first.emplace_back (s1, p1);
+          c->first.emplace_back (s2, p2);
 
           m_shape_to_clusters.insert (std::make_pair (s1, c));
           m_shape_to_clusters.insert (std::make_pair (s2, c));
@@ -1212,14 +1212,14 @@ struct cluster_building_receiver
           m_clusters.push_back (cluster_value ());
           typename std::list<cluster_value>::iterator c1 = --m_clusters.end ();
 
-          c1->first.push_back (std::make_pair (s1, p1));
+          c1->first.emplace_back (s1, p1);
           m_shape_to_clusters.insert (std::make_pair (s1, c1));
 
           register_soft_connection (c1, ic2->second, soft);
 
         } else {
 
-          ic2->second->first.push_back (std::make_pair (s1, p1));
+          ic2->second->first.emplace_back (s1, p1);
           m_shape_to_clusters.insert (std::make_pair (s1, ic2->second));
 
         }
@@ -1233,14 +1233,14 @@ struct cluster_building_receiver
         m_clusters.push_back (cluster_value ());
         typename std::list<cluster_value>::iterator c2 = --m_clusters.end ();
 
-        c2->first.push_back (std::make_pair (s2, p2));
+        c2->first.emplace_back (s2, p2);
         m_shape_to_clusters.insert (std::make_pair (s2, c2));
 
         register_soft_connection (ic1->second, c2, soft);
 
       } else {
 
-        ic1->second->first.push_back (std::make_pair (s2, p2));
+        ic1->second->first.emplace_back (s2, p2);
         m_shape_to_clusters.insert (std::make_pair (s2, ic1->second));
 
       }
@@ -1274,7 +1274,7 @@ struct cluster_building_receiver
 
       m_clusters.push_back (cluster_value ());
       typename std::list<cluster_value>::iterator c = --m_clusters.end ();
-      c->first.push_back (std::make_pair (s, p));
+      c->first.emplace_back (s, p);
 
       ic = m_shape_to_clusters.insert (std::make_pair (s, c)).first;
 
@@ -3402,7 +3402,7 @@ void recursive_cluster_shape_iterator<T>::down (db::cell_index_type ci, typename
   }
 
   m_cell_index_stack.push_back (ci);
-  m_conn_iter_stack.push_back (std::make_pair (conn.begin (), conn.end ()));
+  m_conn_iter_stack.emplace_back (conn.begin (), conn.end ());
 
   const local_cluster<T> &cluster = mp_hc->clusters_per_cell (cell_index ()).cluster_by_id (cluster_id ());
   m_shape_iter = cluster.begin (m_layer);
@@ -3479,7 +3479,7 @@ void recursive_cluster_iterator<T>::down (db::cell_index_type ci, typename db::l
   const typename connected_clusters<T>::connections_type &conn = clusters.connections_for_cluster (id);
 
   m_cell_index_stack.push_back (ci);
-  m_conn_iter_stack.push_back (std::make_pair (conn.begin (), conn.end ()));
+  m_conn_iter_stack.emplace_back (conn.begin (), conn.end ());
 }
 
 //  explicit instantiations

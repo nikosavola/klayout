@@ -588,7 +588,7 @@ private:
     if (intruder_cell.bbox (m_intruder_layer).area () < area_ratio_for_recursion * cbox.area ()
         || ! intruder_cell.shapes (m_intruder_layer).begin_touching (tbox2, ShapeIterator::All).at_end ()) {
 
-      interactions.push_back (std::make_pair (intruder_cell.cell_index (), tn21));
+      interactions.emplace_back (intruder_cell.cell_index (), tn21);
       return;
 
     }

@@ -261,7 +261,7 @@ Library::remap_to (db::Library *other, db::Layout *original_layout)
           db::Cell *lib_cell = &original_layout->cell (lib_proxy->library_cell_index ());
           db::PCellVariant *lib_pcell = dynamic_cast <db::PCellVariant *> (lib_cell);
           if (lib_pcell) {
-            pcells_to_map.push_back (std::make_pair (lib_proxy, lib_pcell));
+            pcells_to_map.emplace_back (lib_proxy, lib_pcell);
           } else {
             lib_cells_to_map.push_back (lib_proxy);
           }

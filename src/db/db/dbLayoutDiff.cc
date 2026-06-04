@@ -590,7 +590,7 @@ collect_polygons (const db::Layout & /*l*/, const db::Cell *c, unsigned int laye
     if (! (flags & layout_diff::f_no_properties)) {
       prop_id = s->prop_id ();
     }
-    shapes.push_back (std::make_pair (db::Polygon (), prop_id));
+    shapes.emplace_back (db::Polygon (), prop_id);
     s->polygon (shapes.back ().first);
   }
 }
@@ -605,7 +605,7 @@ collect_edges (const db::Layout & /*l*/, const db::Cell *c, unsigned int layer, 
     if (! (flags & layout_diff::f_no_properties)) {
       prop_id = s->prop_id ();
     }
-    shapes.push_back (std::make_pair (db::Edge (), prop_id));
+    shapes.emplace_back (db::Edge (), prop_id);
     s->edge (shapes.back ().first);
   }
 }
@@ -620,7 +620,7 @@ collect_edge_pairs (const db::Layout & /*l*/, const db::Cell *c, unsigned int la
     if (! (flags & layout_diff::f_no_properties)) {
       prop_id = s->prop_id ();
     }
-    shapes.push_back (std::make_pair (db::EdgePair (), prop_id));
+    shapes.emplace_back (db::EdgePair (), prop_id);
     s->edge_pair (shapes.back ().first);
   }
 }
@@ -635,7 +635,7 @@ collect_boxes (const db::Layout &, const db::Cell *c, unsigned int layer, unsign
     if (! (flags & layout_diff::f_no_properties)) {
       prop_id = s->prop_id ();
     }
-    shapes.push_back (std::make_pair (db::Box (), prop_id));
+    shapes.emplace_back (db::Box (), prop_id);
     s->box (shapes.back ().first);
   }
 }
@@ -651,7 +651,7 @@ collect_texts (const db::Layout &, const db::Cell *c, unsigned int layer, unsign
     if (! (flags & layout_diff::f_no_properties)) {
       prop_id = s->prop_id ();
     }
-    shapes.push_back (std::make_pair (db::Text (), prop_id));
+    shapes.emplace_back (db::Text (), prop_id);
     s->text (shapes.back ().first);
     //  force the text string to be a real string rather than a potential reference
     //  to a string repository entry - only this way we can compare strings from different
@@ -684,7 +684,7 @@ collect_paths (const db::Layout &, const db::Cell *c, unsigned int layer, unsign
     if (! (flags & layout_diff::f_no_properties)) {
       prop_id = s->prop_id ();
     }
-    shapes.push_back (std::make_pair (db::Path (), prop_id));
+    shapes.emplace_back (db::Path (), prop_id);
     s->path (shapes.back ().first);
   }
 }

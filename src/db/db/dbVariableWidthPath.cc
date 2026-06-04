@@ -78,7 +78,7 @@ variable_width_path<C>::init ()
       if (last_set) {
         m_widths.back ().second = j->second;
       } else {
-        m_widths.push_back (std::make_pair (w0, j->second));
+        m_widths.emplace_back (w0, j->second);
       }
 
     } else {
@@ -98,7 +98,7 @@ variable_width_path<C>::init ()
       for (size_t ii = i; ii <= j->first; ++ii) {
         if (! last_set) {
           width_type ww = db::coord_traits<C>::rounded (w0 + (w - w0) * (l / ll));
-          m_widths.push_back (std::make_pair (ww, ww));
+          m_widths.emplace_back (ww, ww);
         }
         last_set = false;
         if (ii < j->first) {
@@ -118,7 +118,7 @@ variable_width_path<C>::init ()
   //  the last point)
   while (m_points.size () > m_widths.size ()) {
     if (! last_set) {
-      m_widths.push_back (std::make_pair (w, w));
+      m_widths.emplace_back (w, w);
     }
     last_set = false;
   }

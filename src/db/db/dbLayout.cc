@@ -720,7 +720,7 @@ Layout::set_technology_name (const std::string &tech)
         db::Cell *lib_cell = &lib->layout ().cell (lib_proxy->library_cell_index ());
         db::PCellVariant *lib_pcell = dynamic_cast <db::PCellVariant *> (lib_cell);
         if (lib_pcell) {
-          pcells_to_map.push_back (std::make_pair (lib_proxy, lib_pcell));
+          pcells_to_map.emplace_back (lib_proxy, lib_pcell);
         } else {
           lib_cells_to_map.push_back (lib_proxy);
         }
@@ -2611,7 +2611,7 @@ Layout::replace_instances_of (cell_index_type src_cell_index, cell_index_type ta
   //  replace all instances of the new cell with the original one
   std::vector<std::pair<db::cell_index_type, db::Instance> > parents;
   for (db::Cell::parent_inst_iterator pi = cell (src_cell_index).begin_parent_insts (); ! pi.at_end (); ++pi) {
-    parents.push_back (std::make_pair (pi->parent_cell_index (), pi->child_inst ()));
+    parents.emplace_back (pi->parent_cell_index (), pi->child_inst ());
   }
 
   for (std::vector<std::pair<db::cell_index_type, db::Instance> >::const_iterator p = parents.begin (); p != parents.end (); ++p) {

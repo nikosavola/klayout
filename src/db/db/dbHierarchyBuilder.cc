@@ -292,7 +292,7 @@ HierarchyBuilder::begin (const RecursiveShapeIterator *iter)
   //  We can do so as the recursive shape iterator will always deliver all instances
   //  and not a partial set of instances.
   m_cm_new_entry = new_top.begin ().at_end ();
-  m_cell_stack.push_back (std::make_pair (m_cm_new_entry, std::vector<db::Cell *> ()));
+  m_cell_stack.emplace_back (m_cm_new_entry, std::vector<db::Cell *> ());
   m_cell_stack.back ().second.push_back (&new_top);
 }
 
@@ -321,7 +321,7 @@ HierarchyBuilder::enter_cell (const RecursiveShapeIterator * /*iter*/, const db:
     m_cells_to_be_filled.erase (m_cm_entry->second);
   }
 
-  m_cell_stack.push_back (std::make_pair (new_cell, std::vector<db::Cell *> ()));
+  m_cell_stack.emplace_back (new_cell, std::vector<db::Cell *> ());
 
   original_target_to_variants_map_type::const_iterator v = m_original_targets_to_variants_map.find (m_cm_entry->second);
   if (v != m_original_targets_to_variants_map.end ()) {

@@ -402,7 +402,7 @@ local_processor_cell_contexts<TS, TI, TR>::compute_results (const local_processo
   std::vector<std::pair<const context_key_type *, db::local_processor_cell_context<TS, TI, TR> *> > sorted_contexts;
   sorted_contexts.reserve (m_contexts.size ());
   for (typename std::unordered_map<context_key_type, db::local_processor_cell_context<TS, TI, TR> >::iterator c = m_contexts.begin (); c != m_contexts.end (); ++c) {
-    sorted_contexts.push_back (std::make_pair (&c->first, &c->second));
+    sorted_contexts.emplace_back (&c->first, &c->second);
   }
 
   std::sort (sorted_contexts.begin (), sorted_contexts.end (), context_sorter<TS, TI, TR> ());

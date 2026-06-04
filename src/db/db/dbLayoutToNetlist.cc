@@ -404,7 +404,7 @@ void LayoutToNetlist::join_net_names (const tl::GlobPattern &gp)
 
 void LayoutToNetlist::join_net_names (const tl::GlobPattern &cell, const tl::GlobPattern &gp)
 {
-  m_joined_net_names_per_cell.push_back (std::make_pair (cell, gp));
+  m_joined_net_names_per_cell.emplace_back (cell, gp);
 }
 
 void LayoutToNetlist::clear_join_nets ()
@@ -420,7 +420,7 @@ void LayoutToNetlist::join_nets (const std::set<std::string> &jn)
 
 void LayoutToNetlist::join_nets (const tl::GlobPattern &cell, const std::set<std::string> &gp)
 {
-  m_joined_nets_per_cell.push_back (std::make_pair (cell, gp));
+  m_joined_nets_per_cell.emplace_back (cell, gp);
 }
 
 #if defined(HAVE_DEBUG)
@@ -1915,30 +1915,30 @@ create_antenna_values (double agate, db::Polygon::area_type agate_int, double ga
   std::vector<std::pair<std::string, tl::Variant> > values;
 
   if (fabs (gate_area_factor - 1.0) <= db::epsilon && fabs (gate_perimeter_factor) <= db::epsilon) {
-    values.push_back (std::make_pair ("agate", agate));
+    values.emplace_back ("agate", agate);
   } else {
     if (fabs (gate_area_factor) > db::epsilon) {
-      values.push_back (std::make_pair ("agate", agate_int * dbu * dbu));
-      values.push_back (std::make_pair ("agate_factor", gate_area_factor));
+      values.emplace_back ("agate", agate_int * dbu * dbu);
+      values.emplace_back ("agate_factor", gate_area_factor);
     }
     if (fabs (gate_perimeter_factor) > db::epsilon) {
-      values.push_back (std::make_pair ("pgate", pgate_int * dbu));
-      values.push_back (std::make_pair ("pgate_factor", gate_perimeter_factor));
+      values.emplace_back ("pgate", pgate_int * dbu);
+      values.emplace_back ("pgate_factor", gate_perimeter_factor);
     }
-    values.push_back (std::make_pair ("agate_eff", agate));
+    values.emplace_back ("agate_eff", agate);
   }
   if (fabs (metal_area_factor - 1.0) <= db::epsilon && fabs (metal_perimeter_factor) <= db::epsilon) {
-    values.push_back (std::make_pair ("ametal", ametal));
+    values.emplace_back ("ametal", ametal);
   } else {
     if (fabs (metal_area_factor) > db::epsilon) {
-      values.push_back (std::make_pair ("ametal", ametal_int * dbu * dbu));
-      values.push_back (std::make_pair ("ametal_factor", metal_area_factor));
+      values.emplace_back ("ametal", ametal_int * dbu * dbu);
+      values.emplace_back ("ametal_factor", metal_area_factor);
     }
     if (fabs (metal_perimeter_factor) > db::epsilon) {
-      values.push_back (std::make_pair ("pmetal", pmetal_int * dbu));
-      values.push_back (std::make_pair ("pmetal_factor", metal_perimeter_factor));
+      values.emplace_back ("pmetal", pmetal_int * dbu);
+      values.emplace_back ("pmetal_factor", metal_perimeter_factor);
     }
-    values.push_back (std::make_pair ("ametal_eff", ametal));
+    values.emplace_back ("ametal_eff", ametal);
   }
   if (! adiodes_int.empty ()) {
     std::vector<tl::Variant> v;
@@ -1946,7 +1946,7 @@ create_antenna_values (double agate, db::Polygon::area_type agate_int, double ga
     for (auto d = adiodes_int.begin (); d != adiodes_int.end (); ++d) {
       v.push_back (*d * dbu * dbu);
     }
-    values.push_back (std::make_pair ("adiodes", tl::Variant (v)));
+    values.emplace_back ("adiodes", tl::Variant (v));
   }
   if (! diodes.empty ()) {
     std::vector<tl::Variant> v;
@@ -1954,15 +1954,15 @@ create_antenna_values (double agate, db::Polygon::area_type agate_int, double ga
     for (auto d = diodes.begin (); d != diodes.end (); ++d) {
       v.push_back (d->second);
     }
-    values.push_back (std::make_pair ("diode_factors", tl::Variant (v)));
+    values.emplace_back ("diode_factors", tl::Variant (v));
   }
-  values.push_back (std::make_pair ("ratio", ametal / agate));
+  values.emplace_back ("ratio", ametal / agate);
   if (ratio > db::epsilon) {
     if (fabs (r / ratio - 1.0) < db::epsilon) {
-      values.push_back (std::make_pair ("max_ratio", ratio));
+      values.emplace_back ("max_ratio", ratio);
     } else {
-      values.push_back (std::make_pair ("max_ratio_eff", r));
-      values.push_back (std::make_pair ("max_ratio", ratio));
+      values.emplace_back ("max_ratio_eff", r);
+      values.emplace_back ("max_ratio", ratio);
     }
   }
   return values;

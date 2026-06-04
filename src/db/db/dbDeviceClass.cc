@@ -93,12 +93,12 @@ EqualDeviceParameters::EqualDeviceParameters ()
 
 EqualDeviceParameters::EqualDeviceParameters (size_t parameter_id, bool ignore)
 {
-  m_compare_set.push_back (std::make_pair (parameter_id, std::make_pair (ignore ? -1.0 : 0.0, 0.0)));
+  m_compare_set.emplace_back (parameter_id, std::make_pair (ignore ? -1.0 : 0.0, 0.0));
 }
 
 EqualDeviceParameters::EqualDeviceParameters (size_t parameter_id, double absolute, double relative)
 {
-  m_compare_set.push_back (std::make_pair (parameter_id, std::make_pair (std::max (0.0, absolute), std::max (0.0, relative))));
+  m_compare_set.emplace_back (parameter_id, std::make_pair (std::max (0.0, absolute), std::max (0.0, relative)));
 }
 
 std::string EqualDeviceParameters::to_string () const

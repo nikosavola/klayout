@@ -401,7 +401,7 @@ Manager::queue (db::Object *object, db::Op *op)
       op->set_done (true);
     }
 
-    m_current->first.push_back (std::make_pair (object->id (), op));
+    m_current->first.emplace_back (object->id (), op);
 
   }
 }

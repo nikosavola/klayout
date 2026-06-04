@@ -42,7 +42,7 @@ void NetlistExtractor::set_joined_net_names (const std::list<tl::GlobPattern>  &
 
 void NetlistExtractor::set_joined_net_names (const std::string &cellname, const std::list<tl::GlobPattern> &jnn)
 {
-  m_joined_net_names_per_cell.push_back (std::make_pair (cellname, jnn));
+  m_joined_net_names_per_cell.emplace_back (cellname, jnn);
 }
 
 void NetlistExtractor::set_joined_nets (const std::list<std::set<std::string> > &jnn)
@@ -52,7 +52,7 @@ void NetlistExtractor::set_joined_nets (const std::list<std::set<std::string> > 
 
 void NetlistExtractor::set_joined_nets (const std::string &cell_name, const std::list<std::set<std::string> > &jnn)
 {
-  m_joined_nets_per_cell.push_back (std::make_pair (cell_name, jnn));
+  m_joined_nets_per_cell.emplace_back (cell_name, jnn);
 }
 
 void NetlistExtractor::set_include_floating_subcircuits (bool f)

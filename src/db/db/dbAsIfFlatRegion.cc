@@ -437,7 +437,7 @@ void AsIfFlatRegion::merge_polygons_to (db::Shapes &output, bool min_coherence, 
 
     db::AddressablePolygonDelivery addressable_polygons (begin ());
     while (! addressable_polygons.at_end ()) {
-      polygons_by_prop_id.push_back (std::make_pair (addressable_polygons.prop_id (), addressable_polygons.operator-> ()));
+      polygons_by_prop_id.emplace_back (addressable_polygons.prop_id (), addressable_polygons.operator-> ());
       addressable_polygons.inc ();
     }
 
@@ -1784,8 +1784,8 @@ AsIfFlatRegion::andnot_with (const Region &other, PropertyConstraint property_co
     db::PolygonGenerator pg2 (pc2, false /*don't resolve holes*/, min_coherence ());
 
     std::vector<std::pair<db::EdgeSink *, db::EdgeEvaluatorBase *> > procs;
-    procs.push_back (std::make_pair (&pg1, &op1));
-    procs.push_back (std::make_pair (&pg2, &op2));
+    procs.emplace_back (&pg1, &op1);
+    procs.emplace_back (&pg2, &op2);
     ep.process (procs);
 
     return std::make_pair (new_region1.release (), new_region2.release ());

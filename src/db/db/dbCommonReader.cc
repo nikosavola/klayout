@@ -401,7 +401,7 @@ CommonReaderBase::finish (db::Layout &layout)
       //  NOTE: proxy cells are never resolved. "RenameCell" is a plain and simple case.
       //  Ghost cells are merged rendering the new cell a non-ghost cell.
       if (c2n.first && (m_cc_resolution != RenameCell || layout.cell (ci_org).is_ghost_cell () || layout.cell (ci_new).is_ghost_cell ()) && ! layout.cell (ci_org).is_proxy ()) {
-        cells_with_conflict.push_back (std::make_pair (ci_new, ci_org));
+        cells_with_conflict.emplace_back (ci_new, ci_org);
       } else {
         layout.rename_cell (ci_new, layout.uniquify_cell_name (i->second.c_str ()).c_str ());
       }

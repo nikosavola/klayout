@@ -252,7 +252,7 @@ SaveLayoutOptions::get_valid_layers (const db::Layout &layout, std::vector <std:
       if (layout.is_valid_layer (l)) {
         const db::LayerProperties &prop = layout.get_properties (l);
         if (! prop.is_null ()) {
-          all_layers.push_back (std::make_pair (l, prop));
+          all_layers.emplace_back (l, prop);
         }
       }
     }
@@ -268,7 +268,7 @@ SaveLayoutOptions::get_valid_layers (const db::Layout &layout, std::vector <std:
           if (! ll->second.is_null ()) {
             all_layers.push_back (*ll);
           } else if (! prop.is_null ()) {
-            all_layers.push_back (std::make_pair (ll->first, prop));
+            all_layers.emplace_back (ll->first, prop);
           }
         }
       }

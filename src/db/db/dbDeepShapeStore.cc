@@ -1261,7 +1261,7 @@ DeepShapeStore::cell_mapping_to_original (unsigned int layout_index, db::Layout 
 
         //  create the variant clone in the original layout too
         VariantsCollectorBase::copy_shapes (*into_layout, np->second, icm->second.original_cell);
-        new_variants.push_back (std::make_pair (np->second, icm->second.original_cell));
+        new_variants.emplace_back (np->second, icm->second.original_cell);
 
         //  forget the original cell (now separated into variants) and map the variants back into the
         //  DSS layout

@@ -1279,7 +1279,7 @@ Triangulation::constrain (const std::vector<std::vector<Vertex *> > &contours)
         vv = c->begin ();
       }
       db::DEdge e (**v, **vv);
-      resolved_edges.push_back (std::make_pair (e, std::vector<Edge *> ()));
+      resolved_edges.emplace_back (e, std::vector<Edge *> ());
       resolved_edges.back ().second = ensure_edge (*v, *vv);
     }
   }

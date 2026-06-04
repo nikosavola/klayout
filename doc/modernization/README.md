@@ -42,22 +42,36 @@ by per-TU compiles at C++11/17/20/23).
 | 3.1 | range-based for | — | 9 loops in dbLayout.cc | C++11-safe |
 | 3.2 | constexpr | — | tlMath.h integer helpers + epsilon | C++11-safe |
 | 3.3 | move semantics | — | noexcept on slist / reuse_vector moves | C++11-safe |
-| 3.4 | scoped_lock / shared_mutex | `Mutex::try_lock`, `tl::ScopedLock`, `tl::SharedMutex` | capability only — no multi-mutex site exists to convert (single-mutex MutexLocker is correct) | C++17+ opt-in |
+| 3.4 | scoped_lock / shared_mutex | `Mutex::try_lock`, `tl::ScopedLock`, `tl::SharedMutex`, `tl::SharedLocker`/`UniqueLocker` | reader-writer locks in `PropertiesFilter` cache + `PropertiesRepository` lookups (scoped_lock: no multi-mutex site exists) | C++17+ opt-in |
 | 4.1 | concepts | `tlConcepts.h` | `tl::gcd` / `tl::lcm` constrained to `tl::Coordinate` | C++20 opt-in |
 | 4.2 | std::span | `tl::span` | `tl::to_string(span<…>)` byte-buffer overloads | C++20 opt-in |
 | 4.3 | operator<=> | — | order-preserving `<=>` on db::point and db::vector | C++20 opt-in |
 | 4.4 | coroutine iterators | — | Assessment (exploratory) | doc only |
 | 4.5 | std::format | `tl::format` | octal escapes in to_quoted_string/escape_string | C++20 opt-in |
 | 5.1 | std::expected | `tl::expected` | `tl::try_from_string<T>` parse wrapper | C++23 opt-in |
-| 5.2 | std::mdspan | `tl::mdspan` | capability only — `<mdspan>` needs GCC14+/Clang17+, not in this toolchain so usage is unverifiable here | C++23 (GCC14+) |
-| 5.3 | std::generator | `tl::generator` | capability only — `<generator>` needs GCC14+/Clang18+, unverifiable here | C++23 (GCC14+) |
+| 5.2 | std::mdspan | `tl::mdspan` | `PixelBuffer::as_mdspan()` 2D view (active path unverified — needs GCC14+/Clang17+) | C++23 (GCC14+) |
+| 5.3 | std::generator | `tl::generator` | `db::each_child_cell` / `db::each_shape` (active path unverified — needs GCC14+/Clang18+) | C++23 (GCC14+) |
 | 5.4 | pattern matching | — | Monitor P2688 (no compiler support) | doc only |
 | 5.5 | contracts | `tl_precondition` / `tl_postcondition` | 15 argument-check asserts in db::Layout | C++11-safe |
+
+## Verification status
+
+Most changes were verified with standalone `g++ -fsyntax-only` / `static_assert`
+checks against the affected translation units at C++11/17/20/23.
+
+Two features could **not** have their active path compiled in this toolchain
+(GCC 13 ships no `<mdspan>` or `<generator>`), so only their *inert* path (the
+default build with the feature guarded off) was verified here:
+
+- **5.2** `PixelBuffer::as_mdspan()` — written to the `std::mdspan` spec.
+- **5.3** `db::each_child_cell` / `db::each_shape` — written to the
+  `std::generator` spec.
+
+These need to be compiled and tested on an mdspan/generator-capable compiler
+(GCC 14+/Clang 17–18+ with `-std=c++23`).
 
 ## Running the test suite
 
 The plan calls for `unit_tests/` to be run after each phase. That requires a
-configured qmake build (`./build.sh`), which is outside this sandbox; each
-change here was instead verified with standalone `g++ -fsyntax-only` /
-`static_assert` checks against the affected translation units at C++11/17/20/23.
-Run the full `unit_tests` suite in a configured build before merging.
+configured qmake build (`./build.sh`), which is outside this sandbox. Run the
+full `unit_tests` suite in a configured build before merging.

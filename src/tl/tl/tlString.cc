@@ -619,7 +619,11 @@ to_string (const bool &b)
 }
 
 int
+#if TL_HAS_STRING_VIEW
+edit_distance (tl::string_view a, tl::string_view b)
+#else
 edit_distance (const std::string &a, const std::string &b)
+#endif
 {
   std::vector<int> row0, row1;
   row0.resize (a.size () + 1, 0);

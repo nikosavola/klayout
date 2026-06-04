@@ -383,8 +383,17 @@ TL_PUBLIC std::string unescape_string (const std::string &value);
  *  @brief Levenshtein distance
  *
  *  This function computes the edit distance ("Levenshtein distance") between two strings.
- */  
+ *
+ *  The arguments are read-only, so on C++17+ they are taken as tl::string_view
+ *  (no allocation when called with substrings or string literals); on C++11 they
+ *  fall back to const std::string &. std::string arguments work unchanged either
+ *  way.
+ */
+#if TL_HAS_STRING_VIEW
+TL_PUBLIC int edit_distance (tl::string_view a, tl::string_view b);
+#else
 TL_PUBLIC int edit_distance (const std::string &a, const std::string &b);
+#endif
 
 /**
  *  @brief Convert to a word or quoted string 

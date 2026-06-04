@@ -118,7 +118,7 @@ class CurlCredentialManager
 {
 public:
 
-  enum Mode {
+  enum class Mode {
     UseAsIs,
     Inquire,
     ForceInquire
@@ -134,7 +134,7 @@ public:
   {
     std::string server = server_from_url (url);
 
-    if (mode != ForceInquire) {
+    if (mode != Mode::ForceInquire) {
 
       std::map<std::pair<std::string, std::string>, std::pair<std::string, std::string> >::const_iterator c = m_credentials.find (std::make_pair (server, realm));
       if (c != m_credentials.end ()) {
@@ -143,7 +143,7 @@ public:
 
     }
 
-    if (mode != UseAsIs && mp_provider.get ()) {
+    if (mode != Mode::UseAsIs && mp_provider.get ()) {
 
       std::string user, password;
       if (! mp_provider->user_password (url, realm, m_proxy, attempt, user, password)) {
@@ -151,7 +151,7 @@ public:
       }
 
       set_credentials (server, realm, user, password);
-      return user_password (url, realm, attempt, CurlCredentialManager::UseAsIs);
+      return user_password (url, realm, attempt, CurlCredentialManager::Mode::UseAsIs);
 
     } else {
       return 0;
@@ -1011,7 +1011,7 @@ void CurlConnection::finished (int status)
     try {
 
       //  Note: on the second attempt use ForceInquire, so we don't reuse the wrong credentials
-      CurlCredentialManager::Mode mode = m_authenticated == 0 ? CurlCredentialManager::Inquire : CurlCredentialManager::ForceInquire;
+      CurlCredentialManager::Mode mode = m_authenticated == 0 ? CurlCredentialManager::Mode::Inquire : CurlCredentialManager::Mode::ForceInquire;
 
       if (proxy_auth) {
         pwd = CurlNetworkManager::instance ()->proxy_credentials ().user_password (m_url, realm, m_authenticated + 1, mode);

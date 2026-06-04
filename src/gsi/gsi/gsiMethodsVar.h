@@ -403,9 +403,9 @@ class _NAME(MethodPtrIter)
   : public MethodSpecificBase <X>
 {
 public:
-  typedef R value_type;
-  typedef IterAdaptorAbstractBase iter_adaptor_base_type;
-  typedef IterPtrAdaptor<value_type> iter_adaptor_type;
+  using value_type = R;
+  using iter_adaptor_base_type = IterAdaptorAbstractBase;
+  using iter_adaptor_type = IterPtrAdaptor<value_type>;
 
   _NAME(MethodPtrIter) (const std::string &name, R *(X::*b) (_FUNCARGLIST), R *(X::*e) (_FUNCARGLIST), const std::string &doc)
     : MethodSpecificBase <X> (name, doc, false, false, 0), m_b (b), m_e (e)
@@ -452,9 +452,9 @@ class _NAME(MethodPtrConstIter)
   : public MethodSpecificBase <X>
 {
 public:
-  typedef R value_type;
-  typedef IterAdaptorAbstractBase iter_adaptor_base_type;
-  typedef ConstIterPtrAdaptor<value_type> iter_adaptor_type;
+  using value_type = R;
+  using iter_adaptor_base_type = IterAdaptorAbstractBase;
+  using iter_adaptor_type = ConstIterPtrAdaptor<value_type>;
 
   _NAME(MethodPtrConstIter) (const std::string &name, R const *(X::*b) (_FUNCARGLIST), R const *(X::*e) (_FUNCARGLIST), const std::string &doc)
     : MethodSpecificBase <X> (name, doc, false, false, 0), m_b (b), m_e (e)
@@ -501,9 +501,9 @@ class _NAME(ConstMethodPtrIter)
   : public MethodSpecificBase <X>
 {
 public:
-  typedef R value_type;
-  typedef IterAdaptorAbstractBase iter_adaptor_base_type;
-  typedef IterPtrAdaptor<value_type> iter_adaptor_type;
+  using value_type = R;
+  using iter_adaptor_base_type = IterAdaptorAbstractBase;
+  using iter_adaptor_type = IterPtrAdaptor<value_type>;
 
   _NAME(ConstMethodPtrIter) (const std::string &name, R *(X::*b) (_FUNCARGLIST) const, R *(X::*e) (_FUNCARGLIST) const, const std::string &doc)
     : MethodSpecificBase <X> (name, doc, true, false, 0), m_b (b), m_e (e)
@@ -550,9 +550,9 @@ class _NAME(ConstMethodPtrConstIter)
   : public MethodSpecificBase <X>
 {
 public:
-  typedef R value_type;
-  typedef IterAdaptorAbstractBase iter_adaptor_base_type;
-  typedef ConstIterPtrAdaptor<value_type> iter_adaptor_type;
+  using value_type = R;
+  using iter_adaptor_base_type = IterAdaptorAbstractBase;
+  using iter_adaptor_type = ConstIterPtrAdaptor<value_type>;
 
   _NAME(ConstMethodPtrConstIter) (const std::string &name, R const *(X::*b) (_FUNCARGLIST) const, R const *(X::*e) (_FUNCARGLIST) const, const std::string &doc)
     : MethodSpecificBase <X> (name, doc, true, false, 0), m_b (b), m_e (e)
@@ -599,9 +599,9 @@ class _NAME(ExtMethodPtrIter)
   : public MethodSpecificBase <X>
 {
 public:
-  typedef R value_type;
-  typedef IterAdaptorAbstractBase iter_adaptor_base_type;
-  typedef IterPtrAdaptor<value_type> iter_adaptor_type;
+  using value_type = R;
+  using iter_adaptor_base_type = IterAdaptorAbstractBase;
+  using iter_adaptor_type = IterPtrAdaptor<value_type>;
 
   _NAME(ExtMethodPtrIter) (const std::string &name, R *(*xb) (X * _COMMA _FUNCARGLIST), R *(*xe) (X * _COMMA _FUNCARGLIST), const std::string &doc)
     : MethodSpecificBase <X> (name, doc, is_const_x<X>::value (), false, 0), m_xb (xb), m_xe (xe)
@@ -648,9 +648,9 @@ class _NAME(ExtMethodPtrConstIter)
   : public MethodSpecificBase <X>
 {
 public:
-  typedef R value_type;
-  typedef IterAdaptorAbstractBase iter_adaptor_base_type;
-  typedef ConstIterPtrAdaptor<value_type> iter_adaptor_type;
+  using value_type = R;
+  using iter_adaptor_base_type = IterAdaptorAbstractBase;
+  using iter_adaptor_type = ConstIterPtrAdaptor<value_type>;
 
   _NAME(ExtMethodPtrConstIter) (const std::string &name, R const *(*xb) (X * _COMMA _FUNCARGLIST), R const *(*xe) (X * _COMMA _FUNCARGLIST), const std::string &doc)
     : MethodSpecificBase <X> (name, doc, is_const_x<X>::value (), false, 0), m_xb (xb), m_xe (xe)
@@ -697,9 +697,9 @@ class _NAME(StaticMethodPtrIter)
   : public StaticMethodBase
 {
 public:
-  typedef R value_type;
-  typedef IterAdaptorAbstractBase iter_adaptor_base_type;
-  typedef IterPtrAdaptor<value_type> iter_adaptor_type;
+  using value_type = R;
+  using iter_adaptor_base_type = IterAdaptorAbstractBase;
+  using iter_adaptor_type = IterPtrAdaptor<value_type>;
 
   _NAME(StaticMethodPtrIter) (const std::string &name, R *(*b) (_FUNCARGLIST), R *(*e) (_FUNCARGLIST), const std::string &doc)
     : StaticMethodBase (name, doc), m_b (b), m_e (e)
@@ -746,9 +746,9 @@ class _NAME(StaticMethodPtrConstIter)
   : public StaticMethodBase
 {
 public:
-  typedef R value_type;
-  typedef IterAdaptorAbstractBase iter_adaptor_base_type;
-  typedef ConstIterPtrAdaptor<value_type> iter_adaptor_type;
+  using value_type = R;
+  using iter_adaptor_base_type = IterAdaptorAbstractBase;
+  using iter_adaptor_type = ConstIterPtrAdaptor<value_type>;
 
   _NAME(StaticMethodPtrConstIter) (const std::string &name, R const *(*b) (_FUNCARGLIST), R const *(*e) (_FUNCARGLIST), const std::string &doc)
     : StaticMethodBase (name, doc), m_b (b), m_e (e)
@@ -797,8 +797,8 @@ class _NAME(MethodBiIter)
   : public MethodSpecificBase <X>
 {
 public:
-  typedef IterAdaptorAbstractBase iter_adaptor_base_type;
-  typedef IterAdaptor<I> iter_adaptor_type;
+  using iter_adaptor_base_type = IterAdaptorAbstractBase;
+  using iter_adaptor_type = IterAdaptor<I>;
 
   _NAME(MethodBiIter) (const std::string &name, I (X::*b) (_FUNCARGLIST), I (X::*e) (_FUNCARGLIST), const std::string &doc)
     : MethodSpecificBase <X> (name, doc, false, false, 0), m_b (b), m_e (e)
@@ -845,8 +845,8 @@ class _NAME(ConstMethodBiIter)
   : public MethodSpecificBase <X>
 {
 public:
-  typedef IterAdaptorAbstractBase iter_adaptor_base_type;
-  typedef IterAdaptor<I> iter_adaptor_type;
+  using iter_adaptor_base_type = IterAdaptorAbstractBase;
+  using iter_adaptor_type = IterAdaptor<I>;
 
   _NAME(ConstMethodBiIter) (const std::string &name, I (X::*b) (_FUNCARGLIST) const, I (X::*e) (_FUNCARGLIST) const, const std::string &doc)
     : MethodSpecificBase <X> (name, doc, true, false, 0), m_b (b), m_e (e)
@@ -893,8 +893,8 @@ class _NAME(ExtMethodBiIter)
   : public MethodSpecificBase <X>
 {
 public:
-  typedef IterAdaptorAbstractBase iter_adaptor_base_type;
-  typedef IterAdaptor<I> iter_adaptor_type;
+  using iter_adaptor_base_type = IterAdaptorAbstractBase;
+  using iter_adaptor_type = IterAdaptor<I>;
 
   _NAME(ExtMethodBiIter) (const std::string &name, I (*xb) (X * _COMMA _FUNCARGLIST), I (*xe) (X * _COMMA _FUNCARGLIST), const std::string &doc)
     : MethodSpecificBase <X> (name, doc, is_const_x<X>::value (), false, 0), m_xb (xb), m_xe (xe)
@@ -943,8 +943,8 @@ class _NAME(StaticMethodBiIter)
   : public StaticMethodBase
 {
 public:
-  typedef IterAdaptorAbstractBase iter_adaptor_base_type;
-  typedef IterAdaptor<I> iter_adaptor_type;
+  using iter_adaptor_base_type = IterAdaptorAbstractBase;
+  using iter_adaptor_type = IterAdaptor<I>;
 
   _NAME(StaticMethodBiIter) (const std::string &name, I (*b) (_FUNCARGLIST), I (*e) (_FUNCARGLIST), const std::string &doc)
     : StaticMethodBase (name, doc), m_b (b), m_e (e)
@@ -993,8 +993,8 @@ class _NAME(MethodFreeIter)
   : public MethodSpecificBase <X>
 {
 public:
-  typedef IterAdaptorAbstractBase iter_adaptor_base_type;
-  typedef FreeIterAdaptor<I> iter_adaptor_type;
+  using iter_adaptor_base_type = IterAdaptorAbstractBase;
+  using iter_adaptor_type = FreeIterAdaptor<I>;
 
   _NAME(MethodFreeIter) (const std::string &name, I (X::*i) (_FUNCARGLIST), const std::string &doc)
     : MethodSpecificBase <X> (name, doc, false, false, 0), m_i (i)
@@ -1040,8 +1040,8 @@ class _NAME(ConstMethodFreeIter)
   : public MethodSpecificBase <X>
 {
 public:
-  typedef IterAdaptorAbstractBase iter_adaptor_base_type;
-  typedef FreeIterAdaptor<I> iter_adaptor_type;
+  using iter_adaptor_base_type = IterAdaptorAbstractBase;
+  using iter_adaptor_type = FreeIterAdaptor<I>;
 
   _NAME(ConstMethodFreeIter) (const std::string &name, I (X::*i) (_FUNCARGLIST) const, const std::string &doc)
     : MethodSpecificBase <X> (name, doc, true, false, 0), m_i (i)
@@ -1087,8 +1087,8 @@ class _NAME(ExtMethodFreeIter)
   : public MethodSpecificBase <X>
 {
 public:
-  typedef IterAdaptorAbstractBase iter_adaptor_base_type;
-  typedef FreeIterAdaptor<I> iter_adaptor_type;
+  using iter_adaptor_base_type = IterAdaptorAbstractBase;
+  using iter_adaptor_type = FreeIterAdaptor<I>;
 
   _NAME(ExtMethodFreeIter) (const std::string &name, I (*xi) (X * _COMMA _FUNCARGLIST), const std::string &doc)
     : MethodSpecificBase <X> (name, doc, is_const_x<X>::value (), false, 0), m_xi (xi)
@@ -1134,8 +1134,8 @@ class _NAME(StaticMethodFreeIter)
   : public StaticMethodBase
 {
 public:
-  typedef IterAdaptorAbstractBase iter_adaptor_base_type;
-  typedef FreeIterAdaptor<I> iter_adaptor_type;
+  using iter_adaptor_base_type = IterAdaptorAbstractBase;
+  using iter_adaptor_type = FreeIterAdaptor<I>;
 
   _NAME(StaticMethodFreeIter) (const std::string &name, I (*i) (_FUNCARGLIST), const std::string &doc)
     : StaticMethodBase (name, doc), m_i (i)

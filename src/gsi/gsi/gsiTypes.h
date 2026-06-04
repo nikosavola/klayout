@@ -178,12 +178,12 @@ enum BasicType
 
 struct type_tag_base
 { 
-  typedef tl::false_tag is_pod;
-  typedef tl::false_tag is_npod;
-  typedef tl::false_tag is_ref;
-  typedef tl::false_tag is_cref;
-  typedef tl::false_tag is_ptr;
-  typedef tl::false_tag is_cptr;
+  using is_pod = tl::false_tag;
+  using is_npod = tl::false_tag;
+  using is_ref = tl::false_tag;
+  using is_cref = tl::false_tag;
+  using is_ptr = tl::false_tag;
+  using is_cptr = tl::false_tag;
 };
 
 struct adaptor_category_tag { };
@@ -359,10 +359,10 @@ template <class X> struct type_traits;
 template <>
 struct type_traits<void>
 {
-  typedef void_tag tag;
-  typedef void value_type;
-  typedef void inner_type;
-  typedef void inner_k_type;
+  using tag = void_tag;
+  using value_type = void;
+  using inner_type = void;
+  using inner_k_type = void;
 
   static bool is_pod () { return false; }
   static bool is_npod () { return false; }
@@ -409,10 +409,10 @@ inline size_t compute_size (const npod_ptr_tag &)     { return item_size<void *>
 template <class T, class V, enum BasicType TC> 
 struct generic_type_traits 
 {
-  typedef T tag;
-  typedef V value_type;
-  typedef void inner_type;
-  typedef void inner_k_type;
+  using tag = T;
+  using value_type = V;
+  using inner_type = void;
+  using inner_k_type = void;
 
   static bool is_pod () { return tl::value_of (typename T::is_pod ()); }
   static bool is_npod () { return tl::value_of (typename T::is_npod ()); }
@@ -735,105 +735,105 @@ template <>
 struct type_traits<QStringList>
   : generic_type_traits<vector_tag, VectorAdaptor, T_vector>
 {
-  typedef QString inner_type;
+  using inner_type = QString;
 };
 
 template <>
 struct type_traits<const QStringList &>
   : generic_type_traits<vector_cref_tag, VectorAdaptor, T_vector>
 {
-  typedef QString inner_type;
+  using inner_type = QString;
 };
 
 template <>
 struct type_traits<QStringList &>
   : generic_type_traits<vector_ref_tag, VectorAdaptor, T_vector>
 {
-  typedef QString inner_type;
+  using inner_type = QString;
 };
 
 template <>
 struct type_traits<const QStringList *>
   : generic_type_traits<vector_cptr_tag, VectorAdaptor, T_vector>
 {
-  typedef QString inner_type;
+  using inner_type = QString;
 };
 
 template <>
 struct type_traits<QStringList *>
   : generic_type_traits<vector_ptr_tag, VectorAdaptor, T_vector>
 {
-  typedef QString inner_type;
+  using inner_type = QString;
 };
 
 template <class X>
 struct type_traits< QList<X> >
   : generic_type_traits<vector_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< const QList<X> & >
   : generic_type_traits<vector_cref_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< QList<X> & >
   : generic_type_traits<vector_ref_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< const QList<X> * >
   : generic_type_traits<vector_cptr_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< QList<X> * >
   : generic_type_traits<vector_ptr_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< QSet<X> >
   : generic_type_traits<vector_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< const QSet<X> & >
   : generic_type_traits<vector_cref_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< QSet<X> & >
   : generic_type_traits<vector_ref_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< const QSet<X> * >
   : generic_type_traits<vector_cptr_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< QSet<X> * >
   : generic_type_traits<vector_ptr_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 #if QT_VERSION < 0x60000
@@ -841,35 +841,35 @@ template <class X>
 struct type_traits< QVector<X> >
   : generic_type_traits<vector_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< const QVector<X> & >
   : generic_type_traits<vector_cref_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< QVector<X> & >
   : generic_type_traits<vector_ref_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< const QVector<X> * >
   : generic_type_traits<vector_cptr_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< QVector<X> * >
   : generic_type_traits<vector_ptr_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 #endif
 
@@ -877,80 +877,80 @@ template <class X, class Y>
 struct type_traits< QHash<X, Y> >
   : generic_type_traits<map_tag, MapAdaptor, T_map>
 {
-  typedef X inner_k_type;
-  typedef Y inner_type;
+  using inner_k_type = X;
+  using inner_type = Y;
 };
 
 template <class X, class Y>
 struct type_traits< const QHash<X, Y> & >
   : generic_type_traits<map_cref_tag, MapAdaptor, T_map>
 {
-  typedef X inner_k_type;
-  typedef Y inner_type;
+  using inner_k_type = X;
+  using inner_type = Y;
 };
 
 template <class X, class Y>
 struct type_traits< QHash<X, Y> & >
   : generic_type_traits<map_ref_tag, MapAdaptor, T_map>
 {
-  typedef X inner_k_type;
-  typedef Y inner_type;
+  using inner_k_type = X;
+  using inner_type = Y;
 };
 
 template <class X, class Y>
 struct type_traits< const QHash<X, Y> * >
   : generic_type_traits<map_cptr_tag, MapAdaptor, T_map>
 {
-  typedef X inner_k_type;
-  typedef Y inner_type;
+  using inner_k_type = X;
+  using inner_type = Y;
 };
 
 template <class X, class Y>
 struct type_traits< QHash<X, Y> * >
   : generic_type_traits<map_ptr_tag, MapAdaptor, T_map>
 {
-  typedef X inner_k_type;
-  typedef Y inner_type;
+  using inner_k_type = X;
+  using inner_type = Y;
 };
 
 template <class X, class Y>
 struct type_traits< QMap<X, Y> >
   : generic_type_traits<map_tag, MapAdaptor, T_map>
 {
-  typedef X inner_k_type;
-  typedef Y inner_type;
+  using inner_k_type = X;
+  using inner_type = Y;
 };
 
 template <class X, class Y>
 struct type_traits< const QMap<X, Y> & >
   : generic_type_traits<map_cref_tag, MapAdaptor, T_map>
 {
-  typedef X inner_k_type;
-  typedef Y inner_type;
+  using inner_k_type = X;
+  using inner_type = Y;
 };
 
 template <class X, class Y>
 struct type_traits< QMap<X, Y> & >
   : generic_type_traits<map_ref_tag, MapAdaptor, T_map>
 {
-  typedef X inner_k_type;
-  typedef Y inner_type;
+  using inner_k_type = X;
+  using inner_type = Y;
 };
 
 template <class X, class Y>
 struct type_traits< const QMap<X, Y> * >
   : generic_type_traits<map_cptr_tag, MapAdaptor, T_map>
 {
-  typedef X inner_k_type;
-  typedef Y inner_type;
+  using inner_k_type = X;
+  using inner_type = Y;
 };
 
 template <class X, class Y>
 struct type_traits< QMap<X, Y> * >
   : generic_type_traits<map_ptr_tag, MapAdaptor, T_map>
 {
-  typedef X inner_k_type;
-  typedef Y inner_type;
+  using inner_k_type = X;
+  using inner_type = Y;
 };
 
 #endif
@@ -959,138 +959,138 @@ template <class X>
 struct type_traits< std::set<X> >
   : generic_type_traits<vector_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< const std::set<X> & >
   : generic_type_traits<vector_cref_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< std::set<X> & >
   : generic_type_traits<vector_ref_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< const std::set<X> * >
   : generic_type_traits<vector_cptr_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< std::vector<X> >
   : generic_type_traits<vector_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< const std::vector<X> & >
   : generic_type_traits<vector_cref_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< std::vector<X> & >
   : generic_type_traits<vector_ref_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< const std::vector<X> * >
   : generic_type_traits<vector_cptr_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< std::vector<X> * >
   : generic_type_traits<vector_ptr_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< std::list<X> >
   : generic_type_traits<vector_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< const std::list<X> & >
   : generic_type_traits<vector_cref_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< std::list<X> & >
   : generic_type_traits<vector_ref_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< const std::list<X> * >
   : generic_type_traits<vector_cptr_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X>
 struct type_traits< std::list<X> * >
   : generic_type_traits<vector_ptr_tag, VectorAdaptor, T_vector>
 {
-  typedef X inner_type;
+  using inner_type = X;
 };
 
 template <class X, class Y>
 struct type_traits< std::map<X, Y> >
   : generic_type_traits<map_tag, MapAdaptor, T_map>
 {
-  typedef X inner_k_type;
-  typedef Y inner_type;
+  using inner_k_type = X;
+  using inner_type = Y;
 };
 
 template <class X, class Y>
 struct type_traits< const std::map<X, Y> & >
   : generic_type_traits<map_cref_tag, MapAdaptor, T_map>
 {
-  typedef X inner_k_type;
-  typedef Y inner_type;
+  using inner_k_type = X;
+  using inner_type = Y;
 };
 
 template <class X, class Y>
 struct type_traits< std::map<X, Y> & >
   : generic_type_traits<map_ref_tag, MapAdaptor, T_map>
 {
-  typedef X inner_k_type;
-  typedef Y inner_type;
+  using inner_k_type = X;
+  using inner_type = Y;
 };
 
 template <class X, class Y>
 struct type_traits< const std::map<X, Y> * >
   : generic_type_traits<map_cptr_tag, MapAdaptor, T_map>
 {
-  typedef X inner_k_type;
-  typedef Y inner_type;
+  using inner_k_type = X;
+  using inner_type = Y;
 };
 
 template <class X, class Y>
 struct type_traits< std::map<X, Y> * >
   : generic_type_traits<map_ptr_tag, MapAdaptor, T_map>
 {
-  typedef X inner_k_type;
-  typedef Y inner_type;
+  using inner_k_type = X;
+  using inner_type = Y;
 };
 
 template <class I>
@@ -1192,7 +1192,7 @@ class ArgSpec<void>
   : public ArgSpecBase
 {
 public:
-  typedef void init_type;
+  using init_type = void;
 
   ArgSpec () 
     : ArgSpecBase (std::string (), false)
@@ -1379,7 +1379,7 @@ class ArgSpec
   : public ArgSpecImpl<T, std::is_copy_constructible<T>::value && std::is_default_constructible<T>::value>
 {
 public:
-  typedef ArgSpecImpl<T, std::is_copy_constructible<T>::value && std::is_default_constructible<T>::value> Base;
+  using Base = ArgSpecImpl<T, std::is_copy_constructible<T>::value && std::is_default_constructible<T>::value>;
 
   ArgSpec () 
     : Base ()
@@ -1416,7 +1416,7 @@ class ArgSpec<const T &>
   : public ArgSpecImpl<T, std::is_copy_constructible<T>::value && std::is_default_constructible<T>::value>
 {
 public:
-  typedef ArgSpecImpl<T, std::is_copy_constructible<T>::value && std::is_default_constructible<T>::value> Base;
+  using Base = ArgSpecImpl<T, std::is_copy_constructible<T>::value && std::is_default_constructible<T>::value>;
 
   ArgSpec ()
     : Base ()
@@ -1453,7 +1453,7 @@ class ArgSpec<T &>
   : public ArgSpecImpl<T, std::is_copy_constructible<T>::value && std::is_default_constructible<T>::value>
 {
 public:
-  typedef ArgSpecImpl<T, std::is_copy_constructible<T>::value && std::is_default_constructible<T>::value> Base;
+  using Base = ArgSpecImpl<T, std::is_copy_constructible<T>::value && std::is_default_constructible<T>::value>;
   typedef T &init_type;
 
   ArgSpec () 
@@ -1517,9 +1517,9 @@ struct arg_default_return_value_preference { };
 //  All of these modes can be used for arguments (in callbacks) or for
 //  return values. So we provide aliases to make their names clearer.
 
-typedef arg_pass_ownership return_new_object;
-typedef arg_make_copy return_copy;
-typedef arg_make_reference return_reference;
+using return_new_object = arg_pass_ownership;
+using return_copy = arg_make_copy;
+using return_reference = arg_make_reference;
 
 /**
  *  @brief A function computing the "prefer_copy" value
@@ -1992,12 +1992,12 @@ inline void ArgType::check_type (const ArgType &a) const
 
 template <class X>
 struct non_const_x {
-  typedef X nc_x;
+  using nc_x = X;
 };
 
 template <class X>
 struct non_const_x<const X> {
-  typedef X nc_x;
+  using nc_x = X;
 };
 
 // ---------------------------------------------------------------------------------

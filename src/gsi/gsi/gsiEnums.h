@@ -140,7 +140,7 @@ template <class E>
 class EnumSpecs
 {
 public:
-  typedef typename std::vector<EnumSpec<E> >::const_iterator iterator;
+  using iterator = typename std::vector<EnumSpec<E> >::const_iterator;
 
   EnumSpecs (const std::string &estr, E evalue, const std::string &doc)
   {
@@ -463,9 +463,9 @@ class QFlagsClass
 {
 public:
 #if QT_VERSION >= 0x050000
-  typedef typename QFlags<E>::Int int_repr;
+  using int_repr = typename QFlags<E>::Int;
 #else
-  typedef int int_repr;
+  using int_repr = int;
 #endif
 
   QFlagsClass (const std::string &module, const std::string &name, const std::string &doc = std::string ())

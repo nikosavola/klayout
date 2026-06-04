@@ -191,8 +191,8 @@ class IterAdaptor
   : public IterAdaptorAbstractBase
 {
 public:
-  typedef std::iterator_traits<I> it;
-  typedef typename it::reference reference;
+  using it = std::iterator_traits<I>;
+  using reference = typename it::reference;
   
   IterAdaptor (const I &b, const I &e) 
     : m_b (b), m_e (e)
@@ -232,8 +232,8 @@ class FreeIterAdaptor
   : public IterAdaptorAbstractBase
 {
 public:
-  typedef std::iterator_traits<I> it;
-  typedef typename it::reference reference;
+  using it = std::iterator_traits<I>;
+  using reference = typename it::reference;
   
   FreeIterAdaptor (const I &i) 
     : m_i (i)

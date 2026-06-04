@@ -77,9 +77,9 @@ class GSI_PUBLIC ClassBase
   : public tl::Object
 {
 public:
-  typedef tl::weak_collection<ClassBase> class_collection;
-  typedef class_collection::const_iterator class_iterator;
-  typedef Methods::iterator method_iterator;
+  using class_collection = tl::weak_collection<ClassBase>;
+  using class_iterator = class_collection::const_iterator;
+  using method_iterator = Methods::iterator;
   
   /**
    *  @brief Constructor

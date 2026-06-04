@@ -69,7 +69,7 @@ struct IncompatibleReturnTypeException
 class GSI_PUBLIC MethodBase 
 {
 public:
-  typedef std::vector<ArgType>::const_iterator argument_iterator;
+  using argument_iterator = std::vector<ArgType>::const_iterator;
 
   /**
    *  @brief Declares a method as a special one
@@ -106,7 +106,7 @@ public:
     bool is_getter : 1;
   };
 
-  typedef std::vector<MethodSynonym>::const_iterator synonym_iterator;
+  using synonym_iterator = std::vector<MethodSynonym>::const_iterator;
 
   /**
    *  @brief Creates a method with the given name string, documentation and const and static flag
@@ -620,7 +620,7 @@ private:
 class GSI_PUBLIC Methods
 {
 public:
-  typedef std::vector<MethodBase *>::const_iterator iterator;
+  using iterator = std::vector<MethodBase *>::const_iterator;
 
   Methods ();
   explicit Methods (MethodBase *m);
@@ -684,7 +684,7 @@ public:
 
   virtual void set_callback (void *v, const Callback &cb) const
   {
-    typedef typename non_const_x<X>::nc_x nc_x;
+    using nc_x = typename non_const_x<X>::nc_x;
     nc_x *x = (nc_x *)v;
     x->*m_cb = cb;
   }

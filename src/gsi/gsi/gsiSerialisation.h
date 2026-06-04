@@ -451,7 +451,7 @@ private:
   template <class X>
   X read_impl (const ref_tag &, tl::Heap &, const ArgSpecBase *as)
   {
-    typedef typename type_traits<X>::value_type value_type;
+    using value_type = typename type_traits<X>::value_type;
     check_data (as);
     value_type *r = *((value_type **)mp_read);
     mp_read += item_size<value_type *> ();
@@ -465,7 +465,7 @@ private:
   X read_impl (const pod_cref_tag &, tl::Heap &, const ArgSpecBase *as)
   {
     //  X is actually an (const X &)
-    typedef typename type_traits<X>::value_type value_type;
+    using value_type = typename type_traits<X>::value_type;
     check_data (as);
     const value_type *r = ((const value_type *)mp_read);
     mp_read += item_size<value_type> ();
@@ -476,7 +476,7 @@ private:
   X read_impl (const npod_cref_tag &, tl::Heap &, const ArgSpecBase *as)
   {
     //  X is actually an (const X &)
-    typedef typename type_traits<X>::value_type value_type;
+    using value_type = typename type_traits<X>::value_type;
     check_data (as);
     const value_type *r = *((const value_type **)mp_read);
     mp_read += item_size<const value_type *> ();
@@ -490,7 +490,7 @@ private:
   X read_impl (const x_cref_tag &, tl::Heap &, const ArgSpecBase *as)
   {
     //  X is actually an (const X &)
-    typedef typename type_traits<X>::value_type value_type;
+    using value_type = typename type_traits<X>::value_type;
     check_data (as);
     const value_type *r = *((const value_type **)mp_read);
     mp_read += item_size<const value_type *> ();
@@ -504,7 +504,7 @@ private:
   X read_impl (const ptr_tag &, tl::Heap &, const ArgSpecBase *as)
   {
     //  X is actually an (X *)
-    typedef typename type_traits<X>::value_type value_type;
+    using value_type = typename type_traits<X>::value_type;
     check_data (as);
     value_type * const &r = *((value_type **)mp_read);
     mp_read += item_size<value_type *> ();
@@ -564,7 +564,7 @@ private:
   template <class X>
   X read_impl (const adaptor_cref_tag &, tl::Heap &heap, const ArgSpecBase *as)
   {
-    typedef typename tl::get_inner_type<X>::result x_type;
+    using x_type = typename tl::get_inner_type<X>::result;
 
     check_data (as);
 
@@ -585,7 +585,7 @@ private:
   template <class X>
   X read_impl (const adaptor_ref_tag &, tl::Heap &heap, const ArgSpecBase *as)
   {
-    typedef typename tl::get_inner_type<X>::result x_type;
+    using x_type = typename tl::get_inner_type<X>::result;
 
     check_data (as);
 
@@ -603,7 +603,7 @@ private:
   template <class X>
   X read_impl (const adaptor_cptr_tag &, tl::Heap &heap, const ArgSpecBase *as)
   {
-    typedef typename tl::get_inner_type<X>::result x_type;
+    using x_type = typename tl::get_inner_type<X>::result;
 
     check_data (as);
 
@@ -628,7 +628,7 @@ private:
   template <class X>
   X read_impl (const adaptor_ptr_tag &, tl::Heap &heap, const ArgSpecBase *as)
   {
-    typedef typename tl::get_inner_type<X>::result x_type;
+    using x_type = typename tl::get_inner_type<X>::result;
 
     check_data (as);
 
@@ -1208,7 +1208,7 @@ class GSI_PUBLIC StringAdaptorImpl<const char *>
   : public StringAdaptorImplCCP<const char *>
 {
 public:
-  typedef char char_type;
+  using char_type = char;
   StringAdaptorImpl (const char_type **s) : StringAdaptorImplCCP<const char_type *> (s) { }
   StringAdaptorImpl (const char_type * const *s) : StringAdaptorImplCCP<const char_type *> (s) { }
   StringAdaptorImpl (const char_type *s) : StringAdaptorImplCCP<const char_type *> (s) { }
@@ -1222,7 +1222,7 @@ class GSI_PUBLIC StringAdaptorImpl<const unsigned char *>
   : public StringAdaptorImplCCP<const unsigned char *>
 {
 public:
-  typedef unsigned char char_type;
+  using char_type = unsigned char;
   StringAdaptorImpl (const char_type **s) : StringAdaptorImplCCP<const char_type *> (s) { }
   StringAdaptorImpl (const char_type * const *s) : StringAdaptorImplCCP<const char_type *> (s) { }
   StringAdaptorImpl (const char_type *s) : StringAdaptorImplCCP<const char_type *> (s) { }
@@ -1236,7 +1236,7 @@ class GSI_PUBLIC StringAdaptorImpl<const signed char *>
   : public StringAdaptorImplCCP<const signed char *>
 {
 public:
-  typedef signed char char_type;
+  using char_type = signed char;
   StringAdaptorImpl (const char_type **s) : StringAdaptorImplCCP<const char_type *> (s) { }
   StringAdaptorImpl (const char_type * const *s) : StringAdaptorImplCCP<const char_type *> (s) { }
   StringAdaptorImpl (const char_type *s) : StringAdaptorImplCCP<const char_type *> (s) { }
@@ -2001,7 +2001,7 @@ class GSI_PUBLIC_TEMPLATE VectorAdaptorIteratorImpl
   : public VectorAdaptorIterator
 {
 public:
-  typedef typename Cont::value_type value_type;
+  using value_type = typename Cont::value_type;
 
   VectorAdaptorIteratorImpl (const Cont &v)
     : m_b (v.begin ()), m_e (v.end ())
@@ -2082,7 +2082,7 @@ class GSI_PUBLIC_TEMPLATE VectorAdaptorImpl
   : public VectorAdaptor
 {
 public:
-  typedef typename Cont::value_type value_type;
+  using value_type = typename Cont::value_type;
 
   VectorAdaptorImpl (Cont *v) 
     : mp_v (v), m_is_const (false) 
@@ -2275,9 +2275,9 @@ public:
 template <class Cont>
 struct map_access 
 {
-  typedef typename Cont::key_type key_type;
-  typedef typename Cont::mapped_type value_type;
-  typedef typename Cont::const_iterator const_iterator;
+  using key_type = typename Cont::key_type;
+  using value_type = typename Cont::mapped_type;
+  using const_iterator = typename Cont::const_iterator;
 
   static void insert (Cont &c, const key_type &k, const value_type &v)
   {
@@ -2303,10 +2303,10 @@ struct map_access
 template <class X, class Y>
 struct map_access<QMap<X, Y> >
 {
-  typedef QMap<X, Y> cont;
-  typedef typename cont::key_type key_type;
-  typedef typename cont::mapped_type value_type;
-  typedef typename cont::const_iterator const_iterator;
+  using cont = QMap<X, Y>;
+  using key_type = typename cont::key_type;
+  using value_type = typename cont::mapped_type;
+  using const_iterator = typename cont::const_iterator;
 
   static void insert (cont &c, const key_type &k, const value_type &v)
   {
@@ -2330,10 +2330,10 @@ struct map_access<QMap<X, Y> >
 template <class X, class Y>
 struct map_access<QHash<X, Y> >
 {
-  typedef QHash<X, Y> cont;
-  typedef typename cont::key_type key_type;
-  typedef typename cont::mapped_type value_type;
-  typedef typename cont::const_iterator const_iterator;
+  using cont = QHash<X, Y>;
+  using key_type = typename cont::key_type;
+  using value_type = typename cont::mapped_type;
+  using const_iterator = typename cont::const_iterator;
 
   static void insert (cont &c, const key_type &k, const value_type &v)
   {
@@ -2361,8 +2361,8 @@ class GSI_PUBLIC_TEMPLATE MapAdaptorIteratorImpl
   : public MapAdaptorIterator
 {
 public:
-  typedef typename Cont::key_type key_type;
-  typedef typename Cont::mapped_type value_type;
+  using key_type = typename Cont::key_type;
+  using value_type = typename Cont::mapped_type;
 
   MapAdaptorIteratorImpl (const Cont &v)
     : m_b (v.begin ()), m_e (v.end ())
@@ -2397,8 +2397,8 @@ class GSI_PUBLIC_TEMPLATE MapAdaptorImpl
   : public MapAdaptor
 {
 public:
-  typedef typename Cont::key_type key_type;
-  typedef typename Cont::mapped_type value_type;
+  using key_type = typename Cont::key_type;
+  using value_type = typename Cont::mapped_type;
 
   MapAdaptorImpl (Cont *m) 
     : mp_m (m), m_is_const (false) 

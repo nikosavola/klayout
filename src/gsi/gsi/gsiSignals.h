@@ -842,7 +842,7 @@ class EventSignalImpl<X, E, empty_list_t>
   : public Signal
 {
 public:
-  typedef E event_type;
+  using event_type = E;
 
   EventSignalImpl (event_type (X::*event), const std::string &name, const std::string &doc)
     : Signal (name, doc), mp_event (event)
@@ -891,7 +891,7 @@ class EventSignalImpl<X, E, type_pair_t<H, T> >
   : public EventSignalImpl<X, E, T>
 {
 public:
-  typedef E event_type;
+  using event_type = E;
 
   EventSignalImpl (event_type (X::*event), const std::string &name, const std::string &doc)
     : EventSignalImpl<X, E, T> (event, name, doc)
@@ -940,7 +940,7 @@ class EventSignalFuncImpl<X, E, empty_list_t>
   : public Signal
 {
 public:
-  typedef E event_type;
+  using event_type = E;
 
   EventSignalFuncImpl (event_type &(*event) (X *), const std::string &name, const std::string &doc)
     : Signal (name, doc), mp_event (event)
@@ -989,7 +989,7 @@ class EventSignalFuncImpl<X, E, type_pair_t<H, T> >
   : public EventSignalFuncImpl<X, E, T>
 {
 public:
-  typedef E event_type;
+  using event_type = E;
 
   EventSignalFuncImpl (event_type &(*event) (X *), const std::string &name, const std::string &doc)
     : EventSignalFuncImpl<X, E, T> (event, name, doc)

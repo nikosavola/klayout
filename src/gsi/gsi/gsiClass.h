@@ -445,7 +445,7 @@ struct NoAdaptorTag { };
 template <class X, class Adapted>
 struct adaptor_type_info
 {
-  typedef Adapted final_type;
+  using final_type = Adapted;
 
   static const std::type_info *type_info ()
   {
@@ -478,7 +478,7 @@ struct adaptor_type_info
 template <class X>
 struct adaptor_type_info<X, NoAdaptorTag>
 {
-  typedef X final_type;
+  using final_type = X;
 
   static const std::type_info *type_info () 
   {
@@ -521,7 +521,7 @@ class GSI_PUBLIC_TEMPLATE Class
   : public ClassBase
 {
 public:
-  typedef typename adaptor_type_info<X, Adapted>::final_type final_type;
+  using final_type = typename adaptor_type_info<X, Adapted>::final_type;
 
   Class (const std::string &module, const std::string &name, const Methods &mm, const std::string &doc = std::string (), bool do_register = true)
     : ClassBase (doc, mm, do_register)

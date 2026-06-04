@@ -57,7 +57,7 @@ namespace db
 namespace rdb
 {
 
-typedef size_t id_type;
+using id_type = size_t;
 
 class References;
 class Categories;
@@ -300,8 +300,8 @@ private:
 class RDB_PUBLIC Categories 
 {
 public:
-  typedef tl::shared_collection<Category>::const_iterator const_iterator;
-  typedef tl::shared_collection<Category>::iterator iterator;
+  using const_iterator = tl::shared_collection<Category>::const_iterator;
+  using iterator = tl::shared_collection<Category>::iterator;
 
   /**
    *  @brief Constructor with a database reference
@@ -662,8 +662,8 @@ private:
 class RDB_PUBLIC Values
 {
 public:
-  typedef std::list<ValueWrapper>::const_iterator const_iterator;
-  typedef std::list<ValueWrapper>::iterator iterator;
+  using const_iterator = std::list<ValueWrapper>::const_iterator;
+  using iterator = std::list<ValueWrapper>::iterator;
 
   /**
    *  @brief The default constructor
@@ -1145,8 +1145,8 @@ public:
 class RDB_PUBLIC Items
 {
 public:
-  typedef std::list<Item>::const_iterator const_iterator;
-  typedef std::list<Item>::iterator iterator;
+  using const_iterator = std::list<Item>::const_iterator;
+  using iterator = std::list<Item>::iterator;
 
   /**
    *  @brief Construct an item list with a database reference
@@ -1365,8 +1365,8 @@ private:
 class RDB_PUBLIC References
 {
 public:
-  typedef std::vector<Reference>::const_iterator const_iterator;
-  typedef std::vector<Reference>::iterator iterator;
+  using const_iterator = std::vector<Reference>::const_iterator;
+  using iterator = std::vector<Reference>::iterator;
 
   /**
    *  @brief Create a References object for a cell
@@ -1461,8 +1461,8 @@ class RDB_PUBLIC Cell
   : public tl::Object
 {
 public:
-  typedef std::vector<Reference> references_list_type;
-  typedef std::vector<Reference>::const_iterator reference_iterator;
+  using references_list_type = std::vector<Reference>;
+  using reference_iterator = std::vector<Reference>::const_iterator;
 
   /**
    *  @brief The default constructor
@@ -1698,8 +1698,8 @@ private:
 class RDB_PUBLIC Cells
 {
 public:
-  typedef tl::shared_collection<Cell>::const_iterator const_iterator;
-  typedef tl::shared_collection<Cell>::iterator iterator;
+  using const_iterator = tl::shared_collection<Cell>::const_iterator;
+  using iterator = tl::shared_collection<Cell>::iterator;
 
   /**
    *  @brief The default Constructor
@@ -1927,8 +1927,8 @@ private:
 class RDB_PUBLIC Tags
 {
 public:
-  typedef std::vector <rdb::Tag> tag_list_type;
-  typedef tag_list_type::const_iterator const_iterator;
+  using tag_list_type = std::vector <rdb::Tag>;
+  using const_iterator = tag_list_type::const_iterator;
 
   /**
    *  @brief Default constructor for the tags list 
@@ -2012,12 +2012,12 @@ class RDB_PUBLIC Database
     public tl::Object
 {
 public:
-  typedef Items::const_iterator const_item_iterator;
-  typedef Items::iterator item_iterator;
-  typedef std::list<ItemRef>::const_iterator const_item_ref_iterator;
-  typedef std::list<ItemRef>::iterator item_ref_iterator;
-  typedef Cells::const_iterator const_cell_iterator;
-  typedef Cells::iterator cell_iterator;
+  using const_item_iterator = Items::const_iterator;
+  using item_iterator = Items::iterator;
+  using const_item_ref_iterator = std::list<ItemRef>::const_iterator;
+  using item_ref_iterator = std::list<ItemRef>::iterator;
+  using const_cell_iterator = Cells::const_iterator;
+  using cell_iterator = Cells::iterator;
 
   /**
    *  @brief Default constructor

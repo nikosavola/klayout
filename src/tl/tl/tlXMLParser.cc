@@ -990,7 +990,7 @@ XMLStructureHandler::start_element (const std::string &uri, const std::string &l
   const XMLElementBase *new_element = 0;
   const XMLElementBase *parent = 0;
 
-  if (m_stack.size () == 0) {
+  if (m_stack.empty ()) {
     if (! mp_root->check_name (uri, lname, qname)) {
       throw tl::XMLException (tl::to_string (tr ("Root element must be ")) + mp_root->name ());
     }
@@ -1026,7 +1026,7 @@ XMLStructureHandler::end_element (const std::string &uri, const std::string &lna
 
   if (! element) {
     //  inside unknown element
-  } else if (m_stack.size () == 0) {
+  } else if (m_stack.empty ()) {
     element->finish (0, *mp_state, uri, lname, qname);
   } else {
     element->finish (m_stack.back (), *mp_state, uri, lname, qname);

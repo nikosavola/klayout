@@ -319,7 +319,7 @@ public:
 
     } else if (method == "size") {
       
-      if (args.size () != 0 || kwargs) {
+      if (! args.empty () || kwargs) {
         throw EvalError (tl::to_string (tr ("'size' method does not accept an argument")), context);
       }
 
@@ -356,7 +356,7 @@ public:
 
     } else if (method == "size") {
       
-      if (args.size () != 0 || kwargs) {
+      if (! args.empty () || kwargs) {
         throw EvalError (tl::to_string (tr ("'size' method does not accept an argument")), context);
       }
 
@@ -364,7 +364,7 @@ public:
     
     } else if (method == "keys") {
 
-      if (args.size () != 0 || kwargs) {
+      if (! args.empty () || kwargs) {
         throw EvalError (tl::to_string (tr ("'keys' method does not accept an argument")), context);
       }
 
@@ -375,7 +375,7 @@ public:
 
     } else if (method == "values") {
 
-      if (args.size () != 0 || kwargs) {
+      if (! args.empty () || kwargs) {
         throw EvalError (tl::to_string (tr ("'keys' method does not accept an argument")), context);
       }
 
@@ -2802,7 +2802,7 @@ split_f (const ExpressionParserContext &context, tl::Variant &out, const std::ve
 static void
 true_f (const ExpressionParserContext &context, tl::Variant &out, const std::vector <tl::Variant> &vv)
 {
-  if (vv.size () != 0) {
+  if (! vv.empty ()) {
     throw EvalError (tl::to_string (tr ("'true' function must not have arguments")), context);
   }
 
@@ -2812,7 +2812,7 @@ true_f (const ExpressionParserContext &context, tl::Variant &out, const std::vec
 static void
 false_f (const ExpressionParserContext &context, tl::Variant &out, const std::vector <tl::Variant> &vv)
 {
-  if (vv.size () != 0) {
+  if (! vv.empty ()) {
     throw EvalError (tl::to_string (tr ("'false' function must not have arguments")), context);
   }
 
@@ -2822,7 +2822,7 @@ false_f (const ExpressionParserContext &context, tl::Variant &out, const std::ve
 static void
 nil_f (const ExpressionParserContext &context, tl::Variant &out, const std::vector <tl::Variant> &vv)
 {
-  if (vv.size () != 0) {
+  if (! vv.empty ()) {
     throw EvalError (tl::to_string (tr ("'nil' function must not have arguments")), context);
   }
 
@@ -2937,7 +2937,7 @@ combine_f (const ExpressionParserContext &context, tl::Variant &out, const std::
 static void
 sprintf_f (const ExpressionParserContext &context, tl::Variant &out, const std::vector <tl::Variant> &vv)
 {
-  if (vv.size () < 1) {
+  if (vv.empty ()) {
     throw EvalError (tl::to_string (tr ("'sprintf' function expects at least one argument")), context);
   }
 
@@ -2947,7 +2947,7 @@ sprintf_f (const ExpressionParserContext &context, tl::Variant &out, const std::
 static void
 printf_f (const ExpressionParserContext &context, tl::Variant &, const std::vector <tl::Variant> &vv)
 {
-  if (vv.size () < 1) {
+  if (vv.empty ()) {
     throw EvalError (tl::to_string (tr ("'printf' function expects at least one argument")), context);
   }
 

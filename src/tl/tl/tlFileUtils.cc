@@ -290,7 +290,7 @@ std::string combine_path (const std::string &p1, const std::string &p2, bool alw
 std::string dirname (const std::string &s)
 {
   std::vector<std::string> parts = split_path (s, true /*keep last part*/);
-  if (parts.size () > 0) {
+  if (! parts.empty ()) {
     parts.pop_back ();
   }
 
@@ -304,7 +304,7 @@ std::string dirname (const std::string &s)
 std::string filename (const std::string &s)
 {
   std::vector<std::string> parts = split_path (s, true /*keep last part*/);
-  if (parts.size () > 0) {
+  if (! parts.empty ()) {
     return trimmed_part (parts.back ());
   } else {
     return std::string ();
@@ -314,7 +314,7 @@ std::string filename (const std::string &s)
 std::string basename (const std::string &s)
 {
   std::vector<std::string> fnp = split_filename (filename (s));
-  if (fnp.size () > 0) {
+  if (! fnp.empty ()) {
     return fnp.front ();
   } else {
     return std::string ();
@@ -324,7 +324,7 @@ std::string basename (const std::string &s)
 std::string complete_basename (const std::string &s)
 {
   std::vector<std::string> fnp = split_filename (filename (s));
-  if (fnp.size () > 0) {
+  if (! fnp.empty ()) {
     fnp.pop_back ();
     return tl::join (fnp, ".");
   } else {
@@ -335,7 +335,7 @@ std::string complete_basename (const std::string &s)
 std::string extension (const std::string &s)
 {
   std::vector<std::string> fnp = split_filename (filename (s));
-  if (fnp.size () > 0) {
+  if (! fnp.empty ()) {
     fnp.erase (fnp.begin ());
   }
   return tl::join (fnp, ".");
@@ -689,7 +689,7 @@ mv_dir_recursive (const std::string &source, const std::string &target)
 std::string absolute_path (const std::string &s)
 {
   std::vector<std::string> parts = split_path (absolute_file_path (s));
-  if (parts.size () > 0) {
+  if (! parts.empty ()) {
     parts.pop_back ();
   }
 
@@ -763,7 +763,7 @@ static std::pair<std::string, bool> absolute_path_of_existing (const std::string
 bool is_absolute (const std::string &s)
 {
   //  ~ paths are always absolute, because the home directory is
-  if (s.size () > 0 && s[0] == '~') {
+  if (! s.empty () && s[0] == '~') {
     return true;
   }
 
@@ -780,7 +780,7 @@ bool is_absolute (const std::string &s)
 std::string absolute_file_path (const std::string &s)
 {
   //  ~ paths are always absolute, because the home directory is
-  if (s.size () > 0 && s[0] == '~') {
+  if (! s.empty () && s[0] == '~') {
     return get_home_path () + std::string (s, 1);
   }
 

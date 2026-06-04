@@ -363,7 +363,7 @@ DataMappingLookupTable::update_table (double xmin, double xmax, double delta_y, 
     mp_dm->generate_table (table);
   }
 
-  if (table.size () < 1) {
+  if (table.empty ()) {
 
     //  TODO: should mimic a linear behaviour by observing delta_y
     m_dxinv = 1.0 / (xmax - xmin);

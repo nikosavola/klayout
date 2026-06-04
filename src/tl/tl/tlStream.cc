@@ -353,7 +353,7 @@ InputStream::InputStream (const std::string &abstract_path_in, bool allow_explic
 #if defined(HAVE_QT)
 
     QResource res (tl::to_qstring (abstract_path));
-    if (res.size () == 0) {
+    if (res.empty ()) {
       throw tl::Exception (tl::to_string (tr ("Resource not found: ")) + abstract_path);
     }
 

@@ -30,8 +30,12 @@
 #include "dbTypes.h"
 #include "tlString.h"
 #include "tlTypeTraits.h"
+#include "tlCxxFeatures.h"
 
 #include <string>
+#if TL_HAS_SPACESHIP
+#  include <compare>
+#endif
 
 namespace db {
 
@@ -218,6 +222,23 @@ public:
   {
     return m_y < p.m_y || (m_y == p.m_y && m_x < p.m_x);
   }
+
+#if TL_HAS_SPACESHIP
+  /**
+   *  @brief Three-way comparison operator (C++20)
+   *
+   *  Mirrors operator< (y first, then x) rather than using a defaulted
+   *  comparison, which would compare in member order (x first) and change the
+   *  established sorting order. Supplies >, <=, >= for free.
+   */
+  auto operator<=> (const vector<C> &p) const
+  {
+    if (auto c = (m_y <=> p.m_y); c != 0) {
+      return c;
+    }
+    return m_x <=> p.m_x;
+  }
+#endif
 
   /**
    *  @brief Equality test operator

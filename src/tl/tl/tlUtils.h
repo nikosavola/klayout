@@ -211,7 +211,7 @@ struct map_map
 template <class Value> 
 struct func_delegate_base
 {
-  virtual ~func_delegate_base () { }
+  virtual ~func_delegate_base () = default;
   virtual Value operator () (const Value &v) { return v; }
 };
 

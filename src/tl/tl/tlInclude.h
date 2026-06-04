@@ -43,8 +43,8 @@ class InputStream;
 class TL_PUBLIC IncludeFileResolver
 {
 public:
-  IncludeFileResolver () { }
-  virtual ~IncludeFileResolver () { }
+  IncludeFileResolver () = default;
+  virtual ~IncludeFileResolver () = default;
 
   virtual std::string get_text (const std::string &path) const = 0;
 };

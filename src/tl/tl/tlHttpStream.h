@@ -40,8 +40,8 @@ class TL_PUBLIC HttpCredentialProvider
   : public tl::Object
 {
 public:
-  HttpCredentialProvider () { }
-  virtual ~HttpCredentialProvider () { }
+  HttpCredentialProvider () = default;
+  virtual ~HttpCredentialProvider () = default;
 
   /**
    *  @brief Gets the user name and password for the given URL and authentication realm
@@ -69,8 +69,8 @@ public:
 class TL_PUBLIC InputHttpStreamCallback
 {
 public:
-  InputHttpStreamCallback () { }
-  virtual ~InputHttpStreamCallback () { }
+  InputHttpStreamCallback () = default;
+  virtual ~InputHttpStreamCallback () = default;
 
   virtual void wait_for_input () { }
 };

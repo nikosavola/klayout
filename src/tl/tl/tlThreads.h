@@ -70,7 +70,7 @@ public:
 class TL_PUBLIC Mutex
 {
 public:
-  Mutex () { }
+  Mutex () = default;
 
   void lock ()
   {
@@ -319,7 +319,7 @@ class TL_PUBLIC ThreadStorageHolderBase
 {
 public:
   ThreadStorageHolderBase (void *obj) : mp_obj (obj) { }
-  virtual ~ThreadStorageHolderBase () { }
+  virtual ~ThreadStorageHolderBase () = default;
 
 protected:
   void *obj () { return mp_obj; }

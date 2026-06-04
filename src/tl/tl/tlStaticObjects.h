@@ -37,7 +37,7 @@ namespace tl
 class StaticObjectReferenceBase
 {
 public:
-  virtual ~StaticObjectReferenceBase () { };
+  virtual ~StaticObjectReferenceBase () = default;;
 
   virtual void clear() = 0;
 };

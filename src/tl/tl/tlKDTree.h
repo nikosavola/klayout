@@ -383,7 +383,7 @@ public:
   /**
    *  @brief Constructs an empty KD tree object
    */
-  kd_tree () { }
+  kd_tree () = default;
 
   /**
    *  @brief Returns the number of elements in the KD tree

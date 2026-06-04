@@ -136,7 +136,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~Recipe () { }
+  virtual ~Recipe () = default;
 
   /**
    *  @brief Gets the recipes name (a unique identifier)

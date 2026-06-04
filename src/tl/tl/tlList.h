@@ -475,7 +475,7 @@ public:
   using list_impl<C, false>::push_front;
   using list_impl<C, false>::pop_front;
 
-  list_impl () { }
+  list_impl () = default;
 
   list_impl (const list_impl &other)
     : list_impl<C, false> ()
@@ -585,7 +585,7 @@ public:
   using list_impl<C, CanCopy>::head;
   using list_impl<C, CanCopy>::back;
 
-  list () { }
+  list () = default;
   list (const list &other) : list_impl<C, CanCopy> (other) { }
 
   list &operator= (const list &other)

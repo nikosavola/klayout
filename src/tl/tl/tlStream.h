@@ -61,8 +61,8 @@ extern TL_PUBLIC bool match_filename_to_format (const std::string &fn, const std
 class TL_PUBLIC InputStreamBase
 {
 public:
-  InputStreamBase () { }
-  virtual ~InputStreamBase () { }
+  InputStreamBase () = default;
+  virtual ~InputStreamBase () = default;
 
   /** 
    *  @brief Read a block of n bytes
@@ -815,8 +815,8 @@ private:
 class TL_PUBLIC OutputStreamBase
 {
 public:
-  OutputStreamBase () { }
-  virtual ~OutputStreamBase () { }
+  OutputStreamBase () = default;
+  virtual ~OutputStreamBase () = default;
 
   /**
    *  @brief Write a block a n bytes

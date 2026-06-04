@@ -36,7 +36,7 @@ class TL_PUBLIC_TEMPLATE event_function_base<_TMPLARGLISTP>
 {
 public:
   event_function_base () : tl::Object () { }
-  virtual ~event_function_base () { }
+  virtual ~event_function_base () = default;
   virtual void call (_JOIN(tl::Object *object, _CALLARGLIST)) = 0;
   virtual bool equals (const event_function_base<_TMPLARGLISTP> &other) = 0;
 };

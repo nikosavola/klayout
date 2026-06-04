@@ -283,7 +283,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~TestBase () { }
+  virtual ~TestBase () = default;
 
   /**
    *  @brief Actually runs the test

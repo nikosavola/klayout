@@ -46,12 +46,12 @@ public:
   /**
    *  @brief The constructor
    */
-  DataMappingBase () { }
+  DataMappingBase () = default;
 
   /**
    *  @brief The destructor
    */
-  virtual ~DataMappingBase () { }
+  virtual ~DataMappingBase () = default;
 
   /**
    *  @brief Get the minimum x value for the data mapping
@@ -100,7 +100,7 @@ public:
   /**
    *  @brief The destructor
    */
-  virtual ~TableDataMapping () { }
+  virtual ~TableDataMapping () = default;
 
   /**
    *  @brief Get the minimum x value for the data mapping

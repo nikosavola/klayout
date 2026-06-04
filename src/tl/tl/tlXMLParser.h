@@ -135,8 +135,8 @@ private:
 class TL_PUBLIC XMLReaderProxyBase
 {
 public:
-  XMLReaderProxyBase () { }
-  virtual ~XMLReaderProxyBase () { }
+  XMLReaderProxyBase () = default;
+  virtual ~XMLReaderProxyBase () = default;
   virtual void release () = 0;
   virtual void detach () = 0;
 };
@@ -154,7 +154,7 @@ public:
     : mp_obj (obj), m_owns_obj (owns_obj) 
   { }
 
-  virtual ~XMLReaderProxy () { }
+  virtual ~XMLReaderProxy () = default;
 
   virtual void release () 
   {
@@ -380,11 +380,11 @@ public:
 class TL_PUBLIC XMLElementBase;
 
 struct pass_by_value_tag { 
-  pass_by_value_tag () { } 
+  pass_by_value_tag () = default;
 };
 
 struct pass_by_ref_tag { 
-  pass_by_ref_tag () { } 
+  pass_by_ref_tag () = default;
 };
 
 /**

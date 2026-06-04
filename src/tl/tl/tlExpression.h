@@ -246,12 +246,12 @@ public:
    *
    *  @param test_function_name The name of the function which will be created and which tests if the variant is of the given type.
    */
-  EvalClass () { }
+  EvalClass () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~EvalClass () { }
+  virtual ~EvalClass () = default;
     
   /** 
    *  @brief Execute the method with the given name on the object
@@ -276,12 +276,12 @@ public:
   /**
    *  @brief Constructor
    */
-  EvalFunction () { }
+  EvalFunction () = default;
 
   /**
    *  @brief Destructor
    */
-  virtual ~EvalFunction () { }
+  virtual ~EvalFunction () = default;
 
   /**
    *  @brief Specifies whether keyword parameters are supported

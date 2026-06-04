@@ -124,7 +124,7 @@ public:
     init (fmt, a);
   }
 
-  virtual ~Exception () { }
+  virtual ~Exception () = default;
 
   /**
    *  @brief Gets the full message text

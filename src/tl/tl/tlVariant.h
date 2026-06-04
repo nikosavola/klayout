@@ -70,8 +70,8 @@ template <class T> bool test_extractor_impl (tl::Extractor &, T &);
 class TL_PUBLIC VariantUserClassBase
 {
 public:
-  VariantUserClassBase () { }
-  virtual ~VariantUserClassBase () { }
+  VariantUserClassBase () = default;
+  virtual ~VariantUserClassBase () = default;
 
   virtual void *create () const = 0;
   virtual void destroy (void *) const = 0;
@@ -117,7 +117,7 @@ class TL_PUBLIC_TEMPLATE VariantUserClass
   : public VariantUserClassBase
 {
 public:
-  VariantUserClass () { }
+  VariantUserClass () = default;
 
   T *get (void *ptr) const { return reinterpret_cast<T *> (ptr); }
   const T *get (const void *ptr) const { return reinterpret_cast<const T *> (ptr); }

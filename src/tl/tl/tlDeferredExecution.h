@@ -47,7 +47,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual ~DeferredMethodBase () { }
+  virtual ~DeferredMethodBase () = default;
   virtual void execute () = 0;
 
 private:

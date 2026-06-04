@@ -516,7 +516,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~Extractor () { }
+  virtual ~Extractor () = default;
 
   /**
    *  @brief Read an unsigned integer

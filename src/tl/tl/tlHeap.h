@@ -39,7 +39,7 @@ namespace tl
 class HeapObjectBase 
 {
 public:
-  virtual ~HeapObjectBase () { }
+  virtual ~HeapObjectBase () = default;
 };
 
 /**

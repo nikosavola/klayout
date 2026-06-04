@@ -46,14 +46,24 @@ PropertiesFilter::PropertiesFilter (const tl::Variant &name, const tl::GlobPatte
 bool
 PropertiesFilter::prop_selected (db::properties_id_type prop_id) const
 {
-  tl::MutexLocker locker (&m_lock);
-
-  auto c = m_cache.find (prop_id);
-  if (c != m_cache.end ()) {
-    return c->second;
+  //  Fast path: a shared (read) lock lets concurrent readers hit the cache in
+  //  parallel (on C++17+; an exclusive lock on C++11).
+  {
+    tl::SharedLocker read_lock (m_lock);
+    auto c = m_cache.find (prop_id);
+    if (c != m_cache.end ()) {
+      return c->second;
+    }
   }
 
+  //  Cache miss: prop_selected_impl is a pure, const computation, so it is safe
+  //  to run without holding the lock. Several threads may compute the same
+  //  result concurrently on the first miss; that is harmless (the value is
+  //  deterministic and the insert below is idempotent).
   bool res = prop_selected_impl (prop_id);
+
+  //  Only the insert needs the exclusive (write) lock.
+  tl::UniqueLocker write_lock (m_lock);
   m_cache.insert (std::make_pair (prop_id, res));
   return res;
 }

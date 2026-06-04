@@ -171,23 +171,85 @@ private:
 template <class... Mutexes>
 using ScopedLock = std::scoped_lock<Mutexes...>;
 
-/**
- *  @brief A reader-writer mutex (C++17 and later)
- *
- *  tl::SharedMutex aliases std::shared_mutex for reader-writer patterns where
- *  many concurrent readers are common and writes are rare. Use it with
- *  std::shared_lock for the read side and std::unique_lock / tl::ScopedLock for
- *  the write side:
- *
- *    tl::SharedMutex rw;
- *    { std::shared_lock<tl::SharedMutex> r (rw); ... read ... }
- *    { std::unique_lock<tl::SharedMutex> w (rw); ... write ... }
- *
- *  Only available with C++17 or newer.
- */
-using SharedMutex = std::shared_mutex;
-
 #endif
+
+/**
+ *  @brief A reader-writer mutex
+ *
+ *  On C++17 and later this is std::shared_mutex, which allows many concurrent
+ *  readers but exclusive writers - ideal for read-mostly data (lookup tables,
+ *  memoization caches). On C++11 there is no shared mutex, so it degrades to an
+ *  ordinary exclusive Mutex; the SharedLocker below then simply takes an
+ *  exclusive lock, which is still correct (just without reader parallelism).
+ *
+ *  Because the type is defined on every standard, members can be declared as
+ *  tl::SharedMutex unconditionally and the read/write distinction is expressed
+ *  through tl::SharedLocker / tl::UniqueLocker instead of #if at every call site.
+ */
+#if TL_CXX17
+using SharedMutex = std::shared_mutex;
+#else
+typedef Mutex SharedMutex;
+#endif
+
+/**
+ *  @brief RAII reader (shared) lock for a tl::SharedMutex
+ *
+ *  Takes a shared lock on C++17+ (concurrent readers allowed); takes an ordinary
+ *  exclusive lock on C++11.
+ */
+class TL_PUBLIC SharedLocker
+{
+public:
+  SharedLocker (SharedMutex &m) : mp_mutex (&m)
+  {
+#if TL_CXX17
+    mp_mutex->lock_shared ();
+#else
+    mp_mutex->lock ();
+#endif
+  }
+
+  ~SharedLocker ()
+  {
+#if TL_CXX17
+    mp_mutex->unlock_shared ();
+#else
+    mp_mutex->unlock ();
+#endif
+  }
+
+private:
+  SharedMutex *mp_mutex;
+
+  SharedLocker (const SharedLocker &);
+  SharedLocker &operator= (const SharedLocker &);
+};
+
+/**
+ *  @brief RAII writer (exclusive) lock for a tl::SharedMutex
+ *
+ *  Takes an exclusive lock on every standard.
+ */
+class TL_PUBLIC UniqueLocker
+{
+public:
+  UniqueLocker (SharedMutex &m) : mp_mutex (&m)
+  {
+    mp_mutex->lock ();
+  }
+
+  ~UniqueLocker ()
+  {
+    mp_mutex->unlock ();
+  }
+
+private:
+  SharedMutex *mp_mutex;
+
+  UniqueLocker (const UniqueLocker &);
+  UniqueLocker &operator= (const UniqueLocker &);
+};
 
 /**
  *  @brief A thread implementation

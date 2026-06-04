@@ -380,7 +380,7 @@ PropertiesRepository::PropertiesRepository ()
 std::pair<bool, property_names_id_type>
 PropertiesRepository::get_id_of_name (const tl::Variant &name) const
 {
-  tl::MutexLocker locker (&m_lock);
+  tl::SharedLocker locker (m_lock);
 
   std::set<const tl::Variant *>::const_iterator pi = m_propnames.find (&name);
   if (pi == m_propnames.end ()) {
@@ -393,7 +393,7 @@ PropertiesRepository::get_id_of_name (const tl::Variant &name) const
 std::pair<bool, property_values_id_type>
 PropertiesRepository::get_id_of_value (const tl::Variant &value) const
 {
-  tl::MutexLocker locker (&m_lock);
+  tl::SharedLocker locker (m_lock);
 
   std::set<const tl::Variant *>::const_iterator pi = m_propvalues.find (&value);
   if (pi == m_propvalues.end ()) {
@@ -406,7 +406,7 @@ PropertiesRepository::get_id_of_value (const tl::Variant &value) const
 property_names_id_type
 PropertiesRepository::prop_name_id (const tl::Variant &name)
 {
-  tl::MutexLocker locker (&m_lock);
+  tl::UniqueLocker locker (m_lock);
 
   std::set<const tl::Variant *>::const_iterator pi = m_propnames.find (&name);
   if (pi == m_propnames.end ()) {
@@ -422,7 +422,7 @@ PropertiesRepository::prop_name_id (const tl::Variant &name)
 property_values_id_type
 PropertiesRepository::prop_value_id (const tl::Variant &value)
 {
-  tl::MutexLocker locker (&m_lock);
+  tl::UniqueLocker locker (m_lock);
 
   std::set<const tl::Variant *>::const_iterator pi = m_propvalues.find (&value);
   if (pi == m_propvalues.end ()) {
@@ -446,7 +446,7 @@ PropertiesRepository::properties_id (const PropertiesSet &props)
   properties_id_type pid;
 
   {
-    tl::MutexLocker locker (&m_lock);
+    tl::UniqueLocker locker (m_lock);
 
     std::set <const PropertiesSet *>::const_iterator pi = m_properties.find (&props);
     if (pi == m_properties.end ()) {
@@ -476,7 +476,7 @@ PropertiesRepository::is_valid_properties_id (properties_id_type id) const
     return true;
   }
 
-  tl::MutexLocker locker (&m_lock);
+  tl::SharedLocker locker (m_lock);
   for (auto i = m_properties.begin (); i != m_properties.end (); ++i) {
     if (properties_id_type (*i) == id) {
       return true;
@@ -488,7 +488,7 @@ PropertiesRepository::is_valid_properties_id (properties_id_type id) const
 bool
 PropertiesRepository::is_valid_property_names_id (property_names_id_type id) const
 {
-  tl::MutexLocker locker (&m_lock);
+  tl::SharedLocker locker (m_lock);
   for (auto i = m_propnames.begin (); i != m_propnames.end (); ++i) {
     if (property_names_id_type (*i) == id) {
       return true;
@@ -500,7 +500,7 @@ PropertiesRepository::is_valid_property_names_id (property_names_id_type id) con
 bool
 PropertiesRepository::is_valid_property_values_id (property_values_id_type id) const
 {
-  tl::MutexLocker locker (&m_lock);
+  tl::SharedLocker locker (m_lock);
   for (auto i = m_propvalues.begin (); i != m_propvalues.end (); ++i) {
     if (property_names_id_type (*i) == id) {
       return true;
@@ -512,7 +512,7 @@ PropertiesRepository::is_valid_property_values_id (property_values_id_type id) c
 PropertiesRepository::properties_id_set
 PropertiesRepository::properties_ids_by_name (db::property_names_id_type name_id) const
 {
-  tl::MutexLocker locker (&m_lock);
+  tl::SharedLocker locker (m_lock);
 
   auto ni = m_properties_by_name_table.find (name_id);
   if (ni == m_properties_by_name_table.end ()) {
@@ -525,7 +525,7 @@ PropertiesRepository::properties_ids_by_name (db::property_names_id_type name_id
 PropertiesRepository::properties_id_set
 PropertiesRepository::properties_ids_by_value (db::property_values_id_type value_id) const
 {
-  tl::MutexLocker locker (&m_lock);
+  tl::SharedLocker locker (m_lock);
 
   auto vi = m_properties_by_value_table.find (value_id);
   if (vi == m_properties_by_value_table.end ()) {
@@ -538,7 +538,7 @@ PropertiesRepository::properties_ids_by_value (db::property_values_id_type value
 PropertiesRepository::properties_id_set
 PropertiesRepository::properties_ids_by_name_value (db::property_names_id_type name_id, db::property_values_id_type value_id) const
 {
-  tl::MutexLocker locker (&m_lock);
+  tl::SharedLocker locker (m_lock);
 
   auto ni = m_properties_by_name_table.find (name_id);
   if (ni == m_properties_by_name_table.end ()) {

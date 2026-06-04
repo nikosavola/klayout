@@ -490,7 +490,11 @@ private:
   std::map <property_names_id_type, properties_id_set> m_properties_by_name_table;
   std::map <property_values_id_type, properties_id_set> m_properties_by_value_table;
 
-  mutable tl::Mutex m_lock;
+  //  Reader-writer lock: the const lookup/validation methods take a shared
+  //  (read) lock so they can run concurrently; the mutating registration
+  //  methods take an exclusive (write) lock. Degrades to an exclusive Mutex on
+  //  C++11.
+  mutable tl::SharedMutex m_lock;
 };
 
 /**

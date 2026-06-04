@@ -61,7 +61,10 @@ private:
   bool m_exact;
   bool m_glob;
   bool m_inverse;
-  mutable tl::Mutex m_lock;
+  //  Reader-writer lock for the memoization cache (m_cache): lookups vastly
+  //  outnumber the one-time inserts, so concurrent readers proceed in parallel
+  //  on C++17+ (and it degrades to an exclusive Mutex on C++11).
+  mutable tl::SharedMutex m_lock;
 };
 
 template <class PolygonFilter>

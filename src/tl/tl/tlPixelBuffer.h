@@ -28,9 +28,11 @@
 #include "tlCopyOnWrite.h"
 #include "tlStream.h"
 #include "tlException.h"
+#include "tlCxxFeatures.h"
 
 #include <string.h>
 #include <cstdint>
+#include <cstddef>
 
 #if defined(HAVE_QT)
 #  include <QImage>
@@ -199,6 +201,35 @@ public:
    *  @brief Gets the data pointer (const version)
    */
   const tl::color_t *data () const;
+
+#if TL_HAS_MDSPAN
+  /**
+   *  @brief Gets a 2D (row, column) mdspan view over the pixels (C++23)
+   *
+   *  The view has extents (height, width) in row-major (layout_right) order,
+   *  matching scan_line(): element [r, c] is the pixel at column c of row r.
+   *  The rows are contiguous (stride == width * sizeof (color_t)), so the
+   *  default layout applies directly to data (). The view is non-owning - the
+   *  PixelBuffer must outlive it. Example:
+   *
+   *    auto img = buf.as_mdspan ();
+   *    for (std::size_t r = 0; r < img.extent (0); ++r)
+   *      for (std::size_t c = 0; c < img.extent (1); ++c)
+   *        img[r, c] = recolor (img[r, c]);
+   */
+  tl::mdspan<tl::color_t, tl::dextents<std::size_t, 2> > as_mdspan ()
+  {
+    return tl::mdspan<tl::color_t, tl::dextents<std::size_t, 2> > (data (), m_height, m_width);
+  }
+
+  /**
+   *  @brief Gets a 2D (row, column) mdspan view over the pixels (const, C++23)
+   */
+  tl::mdspan<const tl::color_t, tl::dextents<std::size_t, 2> > as_mdspan () const
+  {
+    return tl::mdspan<const tl::color_t, tl::dextents<std::size_t, 2> > (data (), m_height, m_width);
+  }
+#endif
 
 #if defined(HAVE_QT)
   /**

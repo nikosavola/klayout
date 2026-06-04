@@ -25,7 +25,7 @@
 #include "tlClassRegistry.h"
 #include "tlXMLParser.h"
 
-#include <string.h>
+#include <cstring>
 
 namespace db
 {

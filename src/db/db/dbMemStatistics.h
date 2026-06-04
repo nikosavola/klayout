@@ -28,7 +28,7 @@
 #include "dbCommon.h"
 #include "tlObjectCollection.h"
 
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <vector>
 #include <map>

@@ -24,10 +24,10 @@
 #ifndef HDR_dbTypes
 #define HDR_dbTypes
 
-#include <stdint.h>
+#include <cstdint>
 #define _USE_MATH_DEFINES // for MSVC
 #include <math.h>
-#include <stdio.h>
+#include <cstdio>
 #include <algorithm>
 
 namespace db {

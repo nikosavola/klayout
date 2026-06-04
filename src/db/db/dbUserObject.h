@@ -37,7 +37,7 @@
 #include "tlClassRegistry.h"
 
 #include <string>
-#include <string.h>
+#include <cstring>
 
 namespace db {
 

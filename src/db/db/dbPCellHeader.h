@@ -30,7 +30,7 @@
 #include "dbPCellDeclaration.h"
 #include "tlVariant.h"
 
-#include <string.h>
+#include <cstring>
 
 namespace db
 {

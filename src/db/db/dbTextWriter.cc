@@ -28,8 +28,8 @@
 #include "dbTextWriter.h"
 #include "dbText.h"
 
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 #include <errno.h>
 
 namespace db

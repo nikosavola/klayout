@@ -31,7 +31,7 @@
 #include <set>
 #include <string>
 #include <limits>
-#include <string.h>
+#include <cstring>
 
 namespace db
 {

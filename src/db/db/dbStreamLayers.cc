@@ -27,7 +27,7 @@
 #include "tlException.h"
 #include "tlString.h"
 
-#include <stdio.h>
+#include <cstdio>
 #include <set>
 #include <sstream>
 

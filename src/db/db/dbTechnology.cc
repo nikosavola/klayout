@@ -26,7 +26,7 @@
 #include "tlFileUtils.h"
 #include "tlExpression.h"
 
-#include <stdio.h>
+#include <cstdio>
 
 namespace db
 {

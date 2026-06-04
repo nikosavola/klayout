@@ -666,9 +666,13 @@ to_quoted_string (const std::string &s)
     } else if (*c == '\t') {
       r += "\\t";
     } else if (! safe_isprint (*c) || (unsigned char) *c >= 0x80) {
+#if TL_HAS_STD_FORMAT
+      r += tl::format ("\\{:03o}", (unsigned int) (unsigned char) *c);
+#else
       char b [20];
       ::sprintf (b, "\\%03o", int ((unsigned char) *c));
       r += b;
+#endif
     } else {
       r += *c;
     }
@@ -692,9 +696,13 @@ escape_string (const std::string &s)
     } else if (*c == '\t') {
       r += "\\t";
     } else if (! safe_isprint (*c)) {
+#if TL_HAS_STD_FORMAT
+      r += tl::format ("\\{:03o}", (unsigned int) (unsigned char) *c);
+#else
       char b [20];
       ::sprintf (b, "\\%03o", int ((unsigned char) *c));
       r += b;
+#endif
     } else {
       r += *c;
     }

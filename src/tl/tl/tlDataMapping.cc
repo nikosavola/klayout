@@ -67,7 +67,7 @@ interpolate (const std::vector< std::pair<double, double> > &v, std::vector< std
 inline double 
 interpolate (const std::vector< std::pair<double, double> > &v, double x)
 {
-  std::vector< std::pair<double, double> >::const_iterator i = std::lower_bound (v.begin (), v.end (), std::make_pair (x, 0.0), compare_first_double_of_pair ());
+  auto i = std::lower_bound (v.begin (), v.end (), std::make_pair (x, 0.0), compare_first_double_of_pair ());
   return interpolate (v, i, x);
 }
 
@@ -117,13 +117,13 @@ CombinedDataMapping::generate_table (std::vector< std::pair<double, double> > &t
 
   table.emplace_back (ti.front ().first, interpolate (to, ti.front ().second));
 
-  for (std::vector< std::pair<double, double> >::const_iterator t = ti.begin () + 1; t != ti.end (); ++t) {
+  for (auto t = ti.begin () + 1; t != ti.end (); ++t) {
 
     double x1 = t[-1].first, x2 = t->first;
     double y1 = t[-1].second, y2 = t->second;
 
-    std::vector< std::pair<double, double> >::const_iterator tt1 = std::lower_bound (to.begin (), to.end (), std::make_pair (y1, 0.0), compare_first_double_of_pair ());
-    std::vector< std::pair<double, double> >::const_iterator tt2 = std::lower_bound (to.begin (), to.end (), std::make_pair (y2, 0.0), compare_first_double_of_pair ());
+    auto tt1 = std::lower_bound (to.begin (), to.end (), std::make_pair (y1, 0.0), compare_first_double_of_pair ());
+    auto tt2 = std::lower_bound (to.begin (), to.end (), std::make_pair (y2, 0.0), compare_first_double_of_pair ());
 
     while (tt1 < tt2) {
 
@@ -155,9 +155,9 @@ CombinedDataMapping::generate_table (std::vector< std::pair<double, double> > &t
 
   //  sweep table and remove similar x values
   double epsilon = (table.back ().first - table.front ().first) * 1e-6;
-  std::vector< std::pair<double, double> >::iterator tw = table.begin ();
+  auto tw = table.begin ();
 
-  for (std::vector< std::pair<double, double> >::const_iterator t = table.begin (); t != table.end (); ++t) {
+  for (auto t = table.begin (); t != table.end (); ++t) {
     if (t + 1 != table.end () && t->first + epsilon > t[1].first) {
       *tw = std::make_pair (0.5 * (t->first + t[1].first), 0.5 * (t->second + t[1].second));
       ++t;
@@ -241,7 +241,7 @@ LinearCombinationDataMapping::generate_table (std::vector< std::pair<double, dou
 
     mp_a->generate_table (table);
 
-    for (std::vector< std::pair<double, double> >::iterator t = table.begin (); t != table.end (); ++t) {
+    for (auto t = table.begin (); t != table.end (); ++t) {
       t->second = m_c + m_ca * t->second;
     }
 
@@ -255,8 +255,8 @@ LinearCombinationDataMapping::generate_table (std::vector< std::pair<double, dou
     mp_b->generate_table (tb);
     tl_assert (tb.size () >= 2);
 
-    std::vector< std::pair<double, double> >::const_iterator a = ta.begin (); 
-    std::vector< std::pair<double, double> >::const_iterator b = tb.begin (); 
+    auto a = ta.begin (); 
+    auto b = tb.begin (); 
 
     double epsilon = (xmax () - xmin ()) * 1e-6;
 
@@ -310,7 +310,7 @@ void
 TableDataMapping::dump () const
 {
   tl::info << "TableDataMapping(xmin=" << m_xmin << ", xmax=" << m_xmax << ",";
-  for (std::vector< std::pair<double, double> >::const_iterator p = m_table.begin (); p != m_table.end (); ++p) {
+  for (auto p = m_table.begin (); p != m_table.end (); ++p) {
     tl::info << p->first << ":" << p->second << ";" << tl::noendl;
   }
   tl::info << "";
@@ -388,7 +388,7 @@ DataMappingLookupTable::update_table (double xmin, double xmax, double delta_y, 
 
     double delta_x = xmax - xmin;
 
-    for (std::vector< std::pair<double, double> >::const_iterator t = table.begin () + 1; t != table.end (); ++t) {
+    for (auto t = table.begin () + 1; t != table.end (); ++t) {
 
       double dx = fabs (t->first - t[-1].first);
       double dy = fabs (t->second - t[-1].second);
@@ -409,7 +409,7 @@ DataMappingLookupTable::update_table (double xmin, double xmax, double delta_y, 
     m_y.resize (nsteps + 1); // plus one for safety
     m_size = nsteps;
 
-    std::vector< std::pair<double, double> >::const_iterator t = table.begin ();
+    auto t = table.begin ();
     size_t i = 0;
     double x;
     for ( ; i < nsteps; ++i) {

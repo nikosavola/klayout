@@ -133,8 +133,8 @@ private:
   void set_as_text (bool f);
 
   //  No copying currently
-  BinaryOutputStream (const BinaryOutputStream &);
-  BinaryOutputStream &operator= (const BinaryOutputStream &);
+  BinaryOutputStream (const BinaryOutputStream &) = delete;
+  BinaryOutputStream &operator= (const BinaryOutputStream &) = delete;
 };
 
 // ---------------------------------------------------------------------------------
@@ -198,8 +198,8 @@ private:
   InputStream &m_stream;
 
   //  no copying
-  BinaryInputStream (const BinaryInputStream &);
-  BinaryInputStream &operator= (const BinaryInputStream &);
+  BinaryInputStream (const BinaryInputStream &) = delete;
+  BinaryInputStream &operator= (const BinaryInputStream &) = delete;
 };
 
 }

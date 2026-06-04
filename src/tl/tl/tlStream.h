@@ -175,8 +175,8 @@ public:
 
 private:
   //  no copying
-  InputMemoryStream (const InputMemoryStream &);
-  InputMemoryStream &operator= (const InputMemoryStream &);
+  InputMemoryStream (const InputMemoryStream &) = delete;
+  InputMemoryStream &operator= (const InputMemoryStream &) = delete;
 
   const char *mp_data;
   size_t m_length;
@@ -234,8 +234,8 @@ public:
 
 private:
   //  no copying
-  InputZLibFile (const InputZLibFile &);
-  InputZLibFile &operator= (const InputZLibFile &);
+  InputZLibFile (const InputZLibFile &) = delete;
+  InputZLibFile &operator= (const InputZLibFile &) = delete;
 
   std::string m_source;
   ZLibFilePrivate *mp_d;
@@ -286,8 +286,8 @@ public:
 
 private:
   //  no copying
-  InputFile (const InputFile &d);
-  InputFile &operator= (const InputFile &d);
+  InputFile (const InputFile &d) = delete;
+  InputFile &operator= (const InputFile &d) = delete;
 
   std::string m_source;
   int m_fd;
@@ -369,8 +369,8 @@ public:
 
 private:
   //  No copying
-  InputPipe (const InputPipe &);
-  InputPipe &operator= (const InputPipe &);
+  InputPipe (const InputPipe &) = delete;
+  InputPipe &operator= (const InputPipe &) = delete;
 
   FILE *m_file;
   std::string m_source;
@@ -626,8 +626,8 @@ private:
   bool m_stop_after_inflate;
 
   //  No copying currently
-  InputStream (const InputStream &);
-  InputStream &operator= (const InputStream &);
+  InputStream (const InputStream &) = delete;
+  InputStream &operator= (const InputStream &) = delete;
 };
 
 /**
@@ -799,8 +799,8 @@ private:
   InputStream &m_stream;
 
   //  no copying
-  TextInputStream (const TextInputStream &);
-  TextInputStream &operator= (const TextInputStream &);
+  TextInputStream (const TextInputStream &) = delete;
+  TextInputStream &operator= (const TextInputStream &) = delete;
 };
 
 // ---------------------------------------------------------------------------------
@@ -864,8 +864,8 @@ public:
 
 private:
   //  No copying
-  OutputStreamBase (const OutputStreamBase &);
-  OutputStreamBase &operator= (const OutputStreamBase &);
+  OutputStreamBase (const OutputStreamBase &) = delete;
+  OutputStreamBase &operator= (const OutputStreamBase &) = delete;
 };
 
 /**
@@ -921,8 +921,8 @@ public:
 
 private:
   //  No copying
-  OutputMemoryStream (const OutputMemoryStream &);
-  OutputMemoryStream &operator= (const OutputMemoryStream &);
+  OutputMemoryStream (const OutputMemoryStream &) = delete;
+  OutputMemoryStream &operator= (const OutputMemoryStream &) = delete;
 
   std::vector<char> m_buffer;
 };
@@ -984,8 +984,8 @@ public:
 
 private:
   //  No copying
-  OutputStringStream (const OutputStringStream &);
-  OutputStringStream &operator= (const OutputStringStream &);
+  OutputStringStream (const OutputStringStream &) = delete;
+  OutputStringStream &operator= (const OutputStringStream &) = delete;
 
   std::ostringstream m_stream;
 };
@@ -1123,8 +1123,8 @@ protected:
 
 private:
   //  No copying
-  OutputZLibFile (const OutputZLibFile &);
-  OutputZLibFile &operator= (const OutputZLibFile &);
+  OutputZLibFile (const OutputZLibFile &) = delete;
+  OutputZLibFile &operator= (const OutputZLibFile &) = delete;
 
   ZLibFilePrivate *mp_d;
 };
@@ -1183,8 +1183,8 @@ protected:
 
 private:
   //  No copying
-  OutputFile (const OutputFile &);
-  OutputFile &operator= (const OutputFile &);
+  OutputFile (const OutputFile &) = delete;
+  OutputFile &operator= (const OutputFile &) = delete;
 
   int m_fd;
 };
@@ -1228,8 +1228,8 @@ public:
 
 private:
   //  No copying
-  OutputPipe (const OutputPipe &);
-  OutputPipe &operator= (const OutputPipe &);
+  OutputPipe (const OutputPipe &) = delete;
+  OutputPipe &operator= (const OutputPipe &) = delete;
 
   FILE *m_file;
   std::string m_source;
@@ -1470,8 +1470,8 @@ private:
   std::string m_path;
 
   //  No copying currently
-  OutputStream (const OutputStream &);
-  OutputStream &operator= (const OutputStream &);
+  OutputStream (const OutputStream &) = delete;
+  OutputStream &operator= (const OutputStream &) = delete;
 };
 
 }

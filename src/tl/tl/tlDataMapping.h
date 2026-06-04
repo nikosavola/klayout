@@ -360,8 +360,8 @@ private:
   DataMappingBase *mp_dm;
 
   //  no copy ctor
-  DataMappingLookupTable (const DataMappingLookupTable &d);
-  DataMappingLookupTable &operator= (const DataMappingLookupTable &d);
+  DataMappingLookupTable (const DataMappingLookupTable &d) = delete;
+  DataMappingLookupTable &operator= (const DataMappingLookupTable &d) = delete;
 
   void release ();
 };

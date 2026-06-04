@@ -86,6 +86,7 @@ SOURCES = \
   dbPolygonNeighborhood.cc \
   dbPolygonTools.cc \
   dbPolygonGenerators.cc \
+  dbGPUBackend.cc \
   dbPropertiesFilter.cc \
   dbPropertiesRepository.cc \
   dbQuadTree.cc \
@@ -333,6 +334,8 @@ HEADERS = \
   dbPolygonNeighborhood.h \
   dbPolygonTools.h \
   dbPolygonGenerators.h \
+  dbGPUBackend.h \
+  dbGPUDispatch.h \
   dbPropertiesFilter.h \
   dbPropertiesRepository.h \
   dbPropertyConstraint.h \

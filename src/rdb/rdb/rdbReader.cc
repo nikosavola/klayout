@@ -24,7 +24,7 @@
 #include "rdb.h"
 #include "rdbReader.h"
 
-#include <string.h>
+#include <cstring>
 
 namespace rdb
 {

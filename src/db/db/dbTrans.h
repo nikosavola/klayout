@@ -25,6 +25,7 @@
 #define HDR_dbTrans
 
 #include "dbCommon.h"
+#include "tlMath.h"
 
 #include "dbPoint.h"
 #include "dbVector.h"
@@ -1682,7 +1683,7 @@ public:
   {
     tl_assert (mag > 0.0);
     m_mag = mirrx ? -mag : mag;
-    rot *= M_PI / 180.0;
+    rot *= tl::pi / 180.0;
     m_sin = sin (rot);
     m_cos = cos (rot);
   }
@@ -1701,7 +1702,7 @@ public:
     tl_assert (! m.has_perspective ());
     std::pair<double, double> mag = m.mag2 ();
     tl_assert (fabs (mag.first - mag.second) < 1e-10);
-    double rot = m.angle () * M_PI / 180.0;
+    double rot = m.angle () * tl::pi / 180.0;
     m_mag = m.is_mirror () ? -mag.first : mag.first;
     m_sin = sin (rot);
     m_cos = cos (rot);
@@ -1724,7 +1725,7 @@ public:
     tl_assert (! m.has_shear ());
     std::pair<double, double> mag = m.mag2 ();
     tl_assert (fabs (mag.first - mag.second) < 1e-10);
-    double rot = m.angle () * M_PI / 180.0;
+    double rot = m.angle () * tl::pi / 180.0;
     m_mag = m.is_mirror () ? -mag.first : mag.first;
     m_sin = sin (rot);
     m_cos = cos (rot);
@@ -1959,7 +1960,7 @@ public:
    */
   double angle () const
   {
-    double a = atan2 (m_sin, m_cos) * (180.0 / M_PI);
+    double a = atan2 (m_sin, m_cos) * (180.0 / tl::pi);
     if (a < -eps_f ()) {
       a += 360.0;
     } else if (a <= eps_f ()) {
@@ -1973,7 +1974,7 @@ public:
    */
   void angle (double rot)
   {
-    rot *= M_PI / 180.0;
+    rot *= tl::pi / 180.0;
     m_sin = sin (rot);
     m_cos = cos (rot);
   }

@@ -22,6 +22,7 @@
 
 
 #include "gsiDecl.h"
+#include "tlMath.h"
 #include "gsiDeclDbPropertiesSupport.h"
 #include "dbPoint.h"
 #include "dbPolygon.h"
@@ -348,7 +349,7 @@ struct simple_polygon_defs
     std::vector<point_type> pts;
     pts.reserve (npoints);
 
-    double da = M_PI * 2.0 / npoints;
+    double da = tl::pi * 2.0 / npoints;
     for (int i = 0; i < npoints; ++i) {
       double x = box.center ().x () - box.width () * 0.5 * cos (da * i);
       double y = box.center ().y () + box.height () * 0.5 * sin (da * i);
@@ -1203,7 +1204,7 @@ struct polygon_defs
     std::vector<point_type> pts;
     pts.reserve (npoints);
 
-    double da = M_PI * 2.0 / npoints;
+    double da = tl::pi * 2.0 / npoints;
     for (int i = 0; i < npoints; ++i) {
       double x = box.center ().x () - box.width () * 0.5 * cos (da * i);
       double y = box.center ().y () + box.height () * 0.5 * sin (da * i);

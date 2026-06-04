@@ -22,6 +22,7 @@
 
 
 #include "dbPath.h"
+#include "tlMath.h"
 
 namespace db
 {
@@ -53,7 +54,7 @@ path<C>::perimeter () const
   double l;
   if (m_width < 0) {
     //  correction for round path ends. Uses the average radius approximation for the ellipse ends.
-    l = M_PI * 0.5 * (sqrt (m_bgn_ext * m_bgn_ext / 2.0 + m_width * m_width / 8.0) + sqrt (m_end_ext * m_end_ext / 2.0 + m_width * m_width / 8.0));
+    l = tl::pi * 0.5 * (sqrt (m_bgn_ext * m_bgn_ext / 2.0 + m_width * m_width / 8.0) + sqrt (m_end_ext * m_end_ext / 2.0 + m_width * m_width / 8.0));
   } else {
     l = m_bgn_ext + m_end_ext + m_width;
   }
@@ -79,7 +80,7 @@ path<C>::area () const
   area_type l = m_bgn_ext + m_end_ext;
   if (m_width < 0) {
     //  correction for round path ends
-    l = area_type (l * (4.0 - M_PI));
+    l = area_type (l * (4.0 - tl::pi));
   }
 
   typename pointlist_type::const_iterator p = m_points.begin (); 
@@ -227,7 +228,7 @@ void path<C>::create_shifted_points (C start, C end, C width, bool forward, Iter
     //  or, in round mode, approximated by a set of segments 
     if (ncircle > 2) {
 
-      double a0 = M_PI / (2.0 * ncircle);
+      double a0 = tl::pi / (2.0 * ncircle);
 
       double cd = cos(a0);
       double sd = sin(a0);
@@ -292,7 +293,7 @@ void path<C>::create_shifted_points (C start, C end, C width, bool forward, Iter
       //  or, in round mode, approximated by a set of segments 
       if (ncircle > 2) {
 
-        double a0 = M_PI / (2.0 * ncircle);
+        double a0 = tl::pi / (2.0 * ncircle);
 
         double cd = cos(a0);
         double sd = sin(a0);
@@ -323,7 +324,7 @@ void path<C>::create_shifted_points (C start, C end, C width, bool forward, Iter
       //  or, in round mode, approximated by a set of segments 
       if (ncircle > 2) {
 
-        double a0 = M_PI / (2.0 * ncircle);
+        double a0 = tl::pi / (2.0 * ncircle);
 
         double cd = cos(a0);
         double sd = sin(a0);
@@ -500,8 +501,8 @@ round_path_corners (const db::DPath &input, double r, int n, double accuracy)
           double xc = (*pp).x () + rs * s1.x () - ract * s1.y ();
           double yc = (*pp).y () + rs * s1.y () + ract * s1.x ();
 
-          double ac = M_PI - fabs (a);
-          int npts = std::max (2, (int) floor (0.5 + n * ac / (2.0 * M_PI)));
+          double ac = tl::pi - fabs (a);
+          int npts = std::max (2, (int) floor (0.5 + n * ac / (2.0 * tl::pi)));
 
           double x, y;
           db::DPoint dp;

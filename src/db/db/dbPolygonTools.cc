@@ -22,6 +22,7 @@
 
 
 #include "dbCommon.h"
+#include "tlMath.h"
 
 #include "dbPolygonTools.h"
 #include "dbPolygonGenerators.h"
@@ -1332,7 +1333,7 @@ do_extract_rad_from_contour (typename db::polygon<C>::polygon_contour_iterator f
     return false;
 
   } else {
-    n = (unsigned int) floor (2.0 * M_PI / (da_sum / n_corners) + 0.5);
+    n = (unsigned int) floor (2.0 * tl::pi / (da_sum / n_corners) + 0.5);
     if (ni_corners > 0) {
       rinner = floor ((rxi_sum / ni_corners * 0.5) + 0.5) * 2;
     } 
@@ -1517,7 +1518,7 @@ do_compute_rounded_contour (typename db::polygon<C>::polygon_contour_iterator fr
       }
       db::DPoint pr = q0 - n1 * r;
 
-      double ares = (2.0 * M_PI) / double (n);
+      double ares = (2.0 * tl::pi) / double (n);
       unsigned int nseg = (unsigned int) floor (a / ares + 0.5);
       if (nseg == 0) {
         new_pts.push_back (p1);

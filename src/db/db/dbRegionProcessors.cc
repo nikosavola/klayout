@@ -21,6 +21,7 @@
 */
 
 #include "dbRegionProcessors.h"
+#include "tlMath.h"
 #include "dbPolygon.h"
 #include "dbPolygonGenerators.h"
 
@@ -419,12 +420,12 @@ static void create_edge_segment_euclidian (std::vector<db::Point> &points, const
     db::DVector dn (n);
     double amax;
     if (db::vprod_sign (dnn, dn) == 0) {
-      amax = db::sprod_sign (dnn, dn) < 0 ? M_PI : 0.0;
+      amax = db::sprod_sign (dnn, dn) < 0 ? tl::pi : 0.0;
     } else {
       amax = atan2 (db::vprod (dnn, dn), db::sprod (dnn, dn));
     }
 
-    double da = M_PI * 2.0 / n_circle;
+    double da = tl::pi * 2.0 / n_circle;
     double f2 = f / cos (0.5 * da);
 
     int na = int (floor (amax / da + db::epsilon));

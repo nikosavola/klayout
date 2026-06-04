@@ -22,6 +22,7 @@
 
 
 #include "dbMatrix.h"
+#include "tlMath.h"
 #include "dbTrans.h"
 #include "tlString.h"
 
@@ -83,14 +84,14 @@ matrix_2d<C>::angle () const
     sin_a = -sin_a;
   }
 
-  return 180.0 * atan2 (sin_a, cos_a) / M_PI;
+  return 180.0 * atan2 (sin_a, cos_a) / tl::pi;
 }
 
 template <class C>
 matrix_2d<C>
 matrix_2d<C>::rotation (double a)
 {
-  a *= M_PI / 180.0;
+  a *= tl::pi / 180.0;
   return Matrix2d (cos (a), -sin (a), sin (a), cos (a));
 }
 
@@ -128,14 +129,14 @@ matrix_2d<C>::shear_angle () const
     fsin_a = -fsin_a;
   }
 
-  return 180.0 * atan2 (fsin_a, fcos_a) / M_PI;
+  return 180.0 * atan2 (fsin_a, fcos_a) / tl::pi;
 }
 
 template <class C>
 matrix_2d<C>
 matrix_2d<C>::shear (double a)
 {
-  a *= M_PI / 180.0;
+  a *= tl::pi / 180.0;
   double cos_a = cos (a);
   double sin_a = sin (a);
   double f = 1.0 / sqrt (cos_a * cos_a - sin_a * sin_a);
@@ -308,7 +309,7 @@ matrix_3d<C>::perspective_tilt_x (double z) const
 {
   db::vector<C> d = disp ();
   db::matrix_3d<C> m = db::matrix_3d<C>::disp (-d) * *this;
-  return 180 * atan (z * (m.m ()[2][0] * m.m ()[1][1] - m.m ()[2][1] * m.m ()[1][0]) / (m.m ()[0][0] * m.m ()[1][1] - m.m ()[0][1] * m.m ()[1][0])) / M_PI;
+  return 180 * atan (z * (m.m ()[2][0] * m.m ()[1][1] - m.m ()[2][1] * m.m ()[1][0]) / (m.m ()[0][0] * m.m ()[1][1] - m.m ()[0][1] * m.m ()[1][0])) / tl::pi;
 }
 
 template <class C>
@@ -317,7 +318,7 @@ matrix_3d<C>::perspective_tilt_y (double z) const
 {
   db::vector<C> d = disp ();
   db::matrix_3d<C> m = db::matrix_3d<C>::disp (-d) * *this;
-  return 180 * atan (z * (m.m ()[2][1] * m.m ()[0][0] - m.m ()[2][0] * m.m ()[0][1]) / (m.m ()[0][0] * m.m ()[1][1] - m.m ()[0][1] * m.m ()[1][0])) / M_PI;
+  return 180 * atan (z * (m.m ()[2][1] * m.m ()[0][0] - m.m ()[2][0] * m.m ()[0][1]) / (m.m ()[0][0] * m.m ()[1][1] - m.m ()[0][1] * m.m ()[1][0])) / tl::pi;
 }
 
 template <class C>
@@ -331,8 +332,8 @@ template <class C>
 matrix_3d<C>
 matrix_3d<C>::perspective (double tx, double ty, double z)
 {
-  tx *= M_PI / 180.0;
-  ty *= M_PI / 180.0;
+  tx *= tl::pi / 180.0;
+  ty *= tl::pi / 180.0;
   return matrix_3d<C> (1.0, 0.0, 0.0, 1.0, 0.0, 0.0, tan (tx) / z, tan (ty) / z);
 }
 

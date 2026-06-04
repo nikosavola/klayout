@@ -22,6 +22,7 @@
 
 
 #include "dbAsIfFlatRegion.h"
+#include "tlMath.h"
 #include "dbFlatRegion.h"
 #include "dbFlatEdgePairs.h"
 #include "dbFlatEdges.h"
@@ -1021,8 +1022,8 @@ template <class Trans>
 void
 AsIfFlatRegion::produce_markers_for_angle_check (const db::Polygon &poly, const Trans &tr, double min, double max, bool inverse, db::Shapes &shapes)
 {
-  double cos_min = cos (std::max (0.0, std::min (360.0, min)) / 180.0 * M_PI);
-  double cos_max = cos (std::max (0.0, std::min (360.0, max)) / 180.0 * M_PI);
+  double cos_min = cos (std::max (0.0, std::min (360.0, min)) / 180.0 * tl::pi);
+  double cos_max = cos (std::max (0.0, std::min (360.0, max)) / 180.0 * tl::pi);
   bool gt180_min = min > 180.0;
   bool gt180_max = max > 180.0;
 

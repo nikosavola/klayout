@@ -22,6 +22,7 @@
 
 
 #include "dbPLCConvexDecomposition.h"
+#include "tlMath.h"
 #include "dbPLCTriangulation.h"
 #include "tlLog.h"
 #include "tlTimer.h"
@@ -339,7 +340,7 @@ ConvexDecomposition::hertel_mehlhorn_decomposition (Triangulation &tris, const C
         angles_and_edges_list::iterator ii = *i;
         angles_and_edges_list::iterator iin = ii;
         ++iin;
-        if (ii->first + iin->first < (split_edges ? M_PI + db::epsilon : M_PI - db::epsilon)) {
+        if (ii->first + iin->first < (split_edges ? tl::pi + db::epsilon : tl::pi - db::epsilon)) {
           //  not an essential edge -> remove
           iin->first += ii->first;
           angles_and_edges.erase (ii);

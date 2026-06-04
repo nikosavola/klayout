@@ -22,6 +22,7 @@
 
 
 #include "dbCommon.h"
+#include "tlMath.h"
 
 #include "dbEdgePairRelations.h"
 
@@ -443,7 +444,7 @@ void
 EdgeRelationFilter::set_ignore_angle (double a)
 {
   m_ignore_angle = a;
-  m_ignore_angle_cos = cos (m_ignore_angle * M_PI / 180.0);
+  m_ignore_angle_cos = cos (m_ignore_angle * tl::pi / 180.0);
 }
 
 bool 

@@ -210,7 +210,7 @@ msvc {
   } else {
     lessThan(QT_MAJOR_VERSION, 6) {
       # because we use unordered_map/unordered_set:
-      QMAKE_CXXFLAGS += -std=c++11
+      QMAKE_CXXFLAGS += -std=c++17
     } else {
       QMAKE_CXXFLAGS += -std=c++17
     }

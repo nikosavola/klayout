@@ -1,3 +1,10 @@
+#include <version>
+#if defined(__cpp_lib_execution)
+#include <execution>
+#define PARALLEL_EXEC_POLICY std::execution::par,
+#else
+#define PARALLEL_EXEC_POLICY
+#endif
 
 /*
 
@@ -29,12 +36,6 @@
 #include "tlProgress.h"
 #include "gsi.h"
 
-#if defined(__cpp_lib_execution)
-#include <execution>
-#define PARALLEL_EXEC_POLICY std::execution::par,
-#else
-#define PARALLEL_EXEC_POLICY
-#endif
 
 #include <vector>
 #include <deque>

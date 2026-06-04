@@ -890,7 +890,7 @@ Layout::cell_by_name (const char *name) const
 const char *
 Layout::cell_name (cell_index_type index) const
 {
-  tl_assert (index < m_cell_names.size ());
+  tl_precondition (index < m_cell_names.size ());
   return m_cell_names [index];
 }
 
@@ -1544,7 +1544,7 @@ Layout::rename_cell (cell_index_type id, const char *name)
     name = anonymous_name;
   }
 
-  tl_assert (id < m_cell_names.size ());
+  tl_precondition (id < m_cell_names.size ());
 
   if (strcmp (m_cell_names [id], name) != 0) {
 
@@ -2373,8 +2373,8 @@ Layout::copy_meta_info (const db::Layout &other, const db::CellMapping &cm)
 void
 Layout::swap_layers (unsigned int a, unsigned int b)
 {
-  tl_assert (m_layers.layer_state (a) != LayoutLayers::Free);
-  tl_assert (m_layers.layer_state (b) != LayoutLayers::Free);
+  tl_precondition (m_layers.layer_state (a) != LayoutLayers::Free);
+  tl_precondition (m_layers.layer_state (b) != LayoutLayers::Free);
 
   //  clear the shapes
   for (iterator c = begin (); c != end (); ++c) {
@@ -2385,8 +2385,8 @@ Layout::swap_layers (unsigned int a, unsigned int b)
 void 
 Layout::move_layer (unsigned int src, unsigned int dest)
 {
-  tl_assert (m_layers.layer_state (src) != LayoutLayers::Free);
-  tl_assert (m_layers.layer_state (dest) != LayoutLayers::Free);
+  tl_precondition (m_layers.layer_state (src) != LayoutLayers::Free);
+  tl_precondition (m_layers.layer_state (dest) != LayoutLayers::Free);
 
   //  move the shapes
   for (iterator c = begin (); c != end (); ++c) {
@@ -2397,8 +2397,8 @@ Layout::move_layer (unsigned int src, unsigned int dest)
 void
 Layout::move_layer (unsigned int src, unsigned int dest, unsigned int flags)
 {
-  tl_assert (m_layers.layer_state (src) != LayoutLayers::Free);
-  tl_assert (m_layers.layer_state (dest) != LayoutLayers::Free);
+  tl_precondition (m_layers.layer_state (src) != LayoutLayers::Free);
+  tl_precondition (m_layers.layer_state (dest) != LayoutLayers::Free);
 
   //  move the shapes
   for (iterator c = begin (); c != end (); ++c) {
@@ -2409,8 +2409,8 @@ Layout::move_layer (unsigned int src, unsigned int dest, unsigned int flags)
 void
 Layout::copy_layer (unsigned int src, unsigned int dest)
 {
-  tl_assert (m_layers.layer_state (src) != LayoutLayers::Free);
-  tl_assert (m_layers.layer_state (dest) != LayoutLayers::Free);
+  tl_precondition (m_layers.layer_state (src) != LayoutLayers::Free);
+  tl_precondition (m_layers.layer_state (dest) != LayoutLayers::Free);
 
   //  copy the shapes
   for (iterator c = begin (); c != end (); ++c) {
@@ -2421,8 +2421,8 @@ Layout::copy_layer (unsigned int src, unsigned int dest)
 void
 Layout::copy_layer (unsigned int src, unsigned int dest, unsigned int flags)
 {
-  tl_assert (m_layers.layer_state (src) != LayoutLayers::Free);
-  tl_assert (m_layers.layer_state (dest) != LayoutLayers::Free);
+  tl_precondition (m_layers.layer_state (src) != LayoutLayers::Free);
+  tl_precondition (m_layers.layer_state (dest) != LayoutLayers::Free);
 
   //  copy the shapes
   for (iterator c = begin (); c != end (); ++c) {
@@ -2433,7 +2433,7 @@ Layout::copy_layer (unsigned int src, unsigned int dest, unsigned int flags)
 void
 Layout::clear_layer (unsigned int n)
 {
-  tl_assert (m_layers.layer_state (n) != LayoutLayers::Free);
+  tl_precondition (m_layers.layer_state (n) != LayoutLayers::Free);
 
   //  clear the shapes
   for (iterator c = begin (); c != end (); ++c) {
@@ -2444,7 +2444,7 @@ Layout::clear_layer (unsigned int n)
 void
 Layout::clear_layer (unsigned int n, unsigned int flags)
 {
-  tl_assert (m_layers.layer_state (n) != LayoutLayers::Free);
+  tl_precondition (m_layers.layer_state (n) != LayoutLayers::Free);
 
   //  clear the shapes
   for (iterator c = begin (); c != end (); ++c) {
@@ -2455,7 +2455,7 @@ Layout::clear_layer (unsigned int n, unsigned int flags)
 void
 Layout::delete_layer (unsigned int n)
 {
-  tl_assert (m_layers.layer_state (n) != LayoutLayers::Free);
+  tl_precondition (m_layers.layer_state (n) != LayoutLayers::Free);
 
   if (manager () && manager ()->transacting ()) {
     manager ()->queue (this, new InsertRemoveLayerOp (n, m_layers.get_properties (n), false /*delete*/));

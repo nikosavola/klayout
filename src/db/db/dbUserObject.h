@@ -59,7 +59,7 @@ template <class C>
 class DB_PUBLIC_TEMPLATE user_object_base
 {
 public:
-  typedef C coord_type;
+  using coord_type = C;
 
   virtual ~user_object_base () { }
 
@@ -168,11 +168,11 @@ template <class C>
 class user_object
 {
 public:
-  typedef C coord_type;
-  typedef db::box<C> box_type;
-  typedef db::point<C> point_type;
-  typedef db::vector<C> vector_type;
-  typedef db::object_tag< user_object<C> > tag;
+  using coord_type = C;
+  using box_type = db::box<C>;
+  using point_type = db::point<C>;
+  using vector_type = db::vector<C>;
+  using tag = db::object_tag< user_object<C> >;
 
   /**
    *  @brief The default constructor.
@@ -446,22 +446,22 @@ private:
 /**
  *  @brief The standard user object base class typedef
  */
-typedef user_object_base<db::Coord>  UserObjectBase;
+using UserObjectBase = user_object_base<db::Coord> ;
 
 /**
  *  @brief The double coordinate user object base class typedef
  */
-typedef user_object_base<db::DCoord> DUserObjectBase;
+using DUserObjectBase = user_object_base<db::DCoord>;
 
 /**
  *  @brief The standard user object typedef
  */
-typedef user_object<db::Coord>  UserObject;
+using UserObject = user_object<db::Coord> ;
 
 /**
  *  @brief The double coordinate user object typedef
  */
-typedef user_object<db::DCoord> DUserObject;
+using DUserObject = user_object<db::DCoord>;
 
 /**
  *  @brief The base object of a factory-instantiable object
@@ -547,22 +547,22 @@ inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int
 /**
  *  @brief typedef for a factory object for integer coordinate user objects
  */
-typedef user_object_factory<db::Coord> UserObjectFactory;
+using UserObjectFactory = user_object_factory<db::Coord>;
 
 /**
  *  @brief typedef for a factory object for integer coordinate user objects
  */
-typedef tl::RegisteredClass<user_object_factory_base<db::Coord> > UserObjectDeclaration;
+using UserObjectDeclaration = tl::RegisteredClass<user_object_factory_base<db::Coord> >;
 
 /**
  *  @brief typedef for a factory object for double coordinate user objects
  */
-typedef user_object_factory<db::DCoord> DUserObjectFactory;
+using DUserObjectFactory = user_object_factory<db::DCoord>;
 
 /**
  *  @brief typedef for a factory object for double coordinate user objects
  */
-typedef tl::RegisteredClass<user_object_factory_base<db::DCoord> > DUserObjectDeclaration;
+using DUserObjectDeclaration = tl::RegisteredClass<user_object_factory_base<db::DCoord> >;
 
 } // namespace db
 

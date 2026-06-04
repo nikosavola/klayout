@@ -45,9 +45,9 @@ template <class Box, class Obj, class BoxConv, class Vector>
 class box_tree_picker 
 {
 public:
-  typedef Box box_type;
-  typedef Vector object_vector_type;
-  typedef typename object_vector_type::const_iterator const_iterator;
+  using box_type = Box;
+  using object_vector_type = Vector;
+  using const_iterator = typename object_vector_type::const_iterator;
 
   box_tree_picker ()
   { }
@@ -104,9 +104,9 @@ template <class Obj, class Box, class BoxConv, class Vector>
 class box_tree_cached_picker 
 {
 public:
-  typedef Box box_type;
-  typedef Vector object_vector_type;
-  typedef typename object_vector_type::const_iterator const_iterator;
+  using box_type = Box;
+  using object_vector_type = Vector;
+  using const_iterator = typename object_vector_type::const_iterator;
 
   box_tree_cached_picker ()
   { }
@@ -164,9 +164,9 @@ template <class Tree>
 class box_tree_node
 {
 public:
-  typedef typename Tree::point_type point_type;
-  typedef typename Tree::coord_type coord_type;
-  typedef typename Tree::box_type box_type;
+  using point_type = typename Tree::point_type;
+  using coord_type = typename Tree::coord_type;
+  using box_type = typename Tree::box_type;
 
   box_tree_node (box_tree_node *parent, const point_type &center, const box_type &qbox, unsigned int quad)
   {
@@ -339,14 +339,14 @@ template <class Tree>
 class box_tree_flat_it
 {
 public:
-  typedef typename Tree::object_type object_type;
-  typedef typename Tree::point_type point_type;
-  typedef typename Tree::coord_type coord_type;
-  typedef typename Tree::box_type box_type;
-  typedef typename Tree::const_iterator const_iterator;
-  typedef typename Tree::box_tree_picker_type value_picker_type;
-  typedef typename Tree::size_type size_type;
-  typedef object_type value_type;
+  using object_type = typename Tree::object_type;
+  using point_type = typename Tree::point_type;
+  using coord_type = typename Tree::coord_type;
+  using box_type = typename Tree::box_type;
+  using const_iterator = typename Tree::const_iterator;
+  using value_picker_type = typename Tree::box_tree_picker_type;
+  using size_type = typename Tree::size_type;
+  using value_type = object_type;
 
   box_tree_flat_it ()
     : mp_tree (0)
@@ -416,16 +416,16 @@ template <class Tree, class Cmp>
 class box_tree_it
 {
 public:
-  typedef typename Tree::object_type object_type;
-  typedef typename Tree::point_type point_type;
-  typedef typename Tree::coord_type coord_type;
-  typedef typename Tree::box_type box_type;
-  typedef typename Tree::element element;
-  typedef typename Tree::const_iterator const_iterator;
-  typedef typename Tree::box_tree_picker_type value_picker_type;
-  typedef typename Tree::size_type size_type;
-  typedef object_type value_type;
-  typedef db::box_tree_node<Tree> box_tree_node;
+  using object_type = typename Tree::object_type;
+  using point_type = typename Tree::point_type;
+  using coord_type = typename Tree::coord_type;
+  using box_type = typename Tree::box_type;
+  using element = typename Tree::element;
+  using const_iterator = typename Tree::const_iterator;
+  using value_picker_type = typename Tree::box_tree_picker_type;
+  using size_type = typename Tree::size_type;
+  using value_type = object_type;
+  using box_tree_node = db::box_tree_node<Tree>;
 
   box_tree_it ()
     : mp_tree (0), m_picker (), m_compare () 
@@ -674,7 +674,7 @@ template <class Box, class Obj, class BoxConv, class BoxPred>
 class box_tree_sel
 {
 public:
-  typedef typename Box::coord_type coord_type;
+  using coord_type = typename Box::coord_type;
 
   box_tree_sel ()
     : m_b (), m_bpred (), m_conv ()
@@ -721,26 +721,26 @@ template <class Box, class Obj, class BoxConv, size_t min_bin = 100, size_t min_
 class box_tree 
 {
 public:
-  typedef Box box_type;
-  typedef BoxConv box_conv_type;
-  typedef typename Box::coord_type coord_type;
-  typedef Obj object_type;
-  typedef db::point<coord_type> point_type;
-  typedef tl::reuse_vector<object_type> obj_vector_type;
-  typedef size_t size_type;
-  typedef typename obj_vector_type::const_iterator const_iterator;
-  typedef typename obj_vector_type::iterator iterator;
-  typedef size_type element;
-  typedef tl::vector<element> element_vector_type;
-  typedef typename element_vector_type::iterator element_iterator;
-  typedef box_tree<box_type, object_type, box_conv_type, min_bin, min_quads> box_tree_type;
-  typedef db::box_tree_node<box_tree_type> box_tree_node;
-  typedef box_tree_sel<box_type, object_type, box_conv_type, db::boxes_overlap<box_type> > box_tree_sel_overlap_type;
-  typedef box_tree_sel<box_type, object_type, box_conv_type, db::boxes_touch<box_type> > box_tree_sel_touch_type;
-  typedef box_tree_it<box_tree_type, box_tree_sel_touch_type> touching_iterator;
-  typedef box_tree_it<box_tree_type, box_tree_sel_overlap_type> overlapping_iterator;
-  typedef box_tree_flat_it<box_tree_type> flat_iterator;
-  typedef box_tree_picker<Box, Obj, BoxConv, obj_vector_type> box_tree_picker_type;
+  using box_type = Box;
+  using box_conv_type = BoxConv;
+  using coord_type = typename Box::coord_type;
+  using object_type = Obj;
+  using point_type = db::point<coord_type>;
+  using obj_vector_type = tl::reuse_vector<object_type>;
+  using size_type = size_t;
+  using const_iterator = typename obj_vector_type::const_iterator;
+  using iterator = typename obj_vector_type::iterator;
+  using element = size_type;
+  using element_vector_type = tl::vector<element>;
+  using element_iterator = typename element_vector_type::iterator;
+  using box_tree_type = box_tree<box_type, object_type, box_conv_type, min_bin, min_quads>;
+  using box_tree_node = db::box_tree_node<box_tree_type>;
+  using box_tree_sel_overlap_type = box_tree_sel<box_type, object_type, box_conv_type, db::boxes_overlap<box_type> >;
+  using box_tree_sel_touch_type = box_tree_sel<box_type, object_type, box_conv_type, db::boxes_touch<box_type> >;
+  using touching_iterator = box_tree_it<box_tree_type, box_tree_sel_touch_type>;
+  using overlapping_iterator = box_tree_it<box_tree_type, box_tree_sel_overlap_type>;
+  using flat_iterator = box_tree_flat_it<box_tree_type>;
+  using box_tree_picker_type = box_tree_picker<Box, Obj, BoxConv, obj_vector_type>;
 
   /**
    *  @brief Creates a empty box tree object 
@@ -1370,13 +1370,13 @@ template <class Tree>
 class unstable_box_tree_flat_it
 {
 public:
-  typedef typename Tree::object_type object_type;
-  typedef typename Tree::point_type point_type;
-  typedef typename Tree::coord_type coord_type;
-  typedef typename Tree::box_type box_type;
-  typedef typename Tree::const_iterator const_iterator;
-  typedef typename Tree::box_tree_picker_type value_picker_type;
-  typedef typename Tree::size_type size_type;
+  using object_type = typename Tree::object_type;
+  using point_type = typename Tree::point_type;
+  using coord_type = typename Tree::coord_type;
+  using box_type = typename Tree::box_type;
+  using const_iterator = typename Tree::const_iterator;
+  using value_picker_type = typename Tree::box_tree_picker_type;
+  using size_type = typename Tree::size_type;
 
   unstable_box_tree_flat_it ()
     : mp_tree (0)
@@ -1441,14 +1441,14 @@ template <class Tree, class Cmp>
 class unstable_box_tree_it
 {
 public:
-  typedef typename Tree::object_type object_type;
-  typedef typename Tree::point_type point_type;
-  typedef typename Tree::coord_type coord_type;
-  typedef typename Tree::box_type box_type;
-  typedef typename Tree::const_iterator const_iterator;
-  typedef typename Tree::box_tree_picker_type value_picker_type;
-  typedef typename Tree::size_type size_type;
-  typedef db::box_tree_node<Tree> box_tree_node;
+  using object_type = typename Tree::object_type;
+  using point_type = typename Tree::point_type;
+  using coord_type = typename Tree::coord_type;
+  using box_type = typename Tree::box_type;
+  using const_iterator = typename Tree::const_iterator;
+  using value_picker_type = typename Tree::box_tree_picker_type;
+  using size_type = typename Tree::size_type;
+  using box_tree_node = db::box_tree_node<Tree>;
 
   unstable_box_tree_it ()
     : mp_tree (0), m_picker (), m_compare () 
@@ -1719,24 +1719,24 @@ template <class Box, class Obj, class BoxConv, size_t min_bin = 100, size_t min_
 class unstable_box_tree 
 {
 public:
-  typedef Box box_type;
-  typedef BoxConv box_conv_type;
-  typedef Obj object_type;
-  typedef typename box_type::coord_type coord_type;
-  typedef db::point<coord_type> point_type;
-  typedef tl::vector<object_type> obj_vector_type;
-  typedef typename obj_vector_type::iterator obj_iterator;
-  typedef size_t size_type;
-  typedef typename obj_vector_type::const_iterator const_iterator;
-  typedef typename obj_vector_type::iterator iterator;
-  typedef unstable_box_tree<box_type, object_type, box_conv_type, min_bin, min_quads> box_tree_type;
-  typedef db::box_tree_node<box_tree_type> box_tree_node;
-  typedef box_tree_sel<box_type, object_type, box_conv_type, db::boxes_overlap<box_type> > box_tree_sel_overlap_type;
-  typedef box_tree_sel<box_type, object_type, box_conv_type, db::boxes_touch<box_type> > box_tree_sel_touch_type;
-  typedef unstable_box_tree_flat_it<box_tree_type> flat_iterator;
-  typedef unstable_box_tree_it<box_tree_type, box_tree_sel_touch_type> touching_iterator;
-  typedef unstable_box_tree_it<box_tree_type, box_tree_sel_overlap_type> overlapping_iterator;
-  typedef box_tree_picker<box_type, object_type, box_conv_type, obj_vector_type> box_tree_picker_type;
+  using box_type = Box;
+  using box_conv_type = BoxConv;
+  using object_type = Obj;
+  using coord_type = typename box_type::coord_type;
+  using point_type = db::point<coord_type>;
+  using obj_vector_type = tl::vector<object_type>;
+  using obj_iterator = typename obj_vector_type::iterator;
+  using size_type = size_t;
+  using const_iterator = typename obj_vector_type::const_iterator;
+  using iterator = typename obj_vector_type::iterator;
+  using box_tree_type = unstable_box_tree<box_type, object_type, box_conv_type, min_bin, min_quads>;
+  using box_tree_node = db::box_tree_node<box_tree_type>;
+  using box_tree_sel_overlap_type = box_tree_sel<box_type, object_type, box_conv_type, db::boxes_overlap<box_type> >;
+  using box_tree_sel_touch_type = box_tree_sel<box_type, object_type, box_conv_type, db::boxes_touch<box_type> >;
+  using flat_iterator = unstable_box_tree_flat_it<box_tree_type>;
+  using touching_iterator = unstable_box_tree_it<box_tree_type, box_tree_sel_touch_type>;
+  using overlapping_iterator = unstable_box_tree_it<box_tree_type, box_tree_sel_overlap_type>;
+  using box_tree_picker_type = box_tree_picker<box_type, object_type, box_conv_type, obj_vector_type>;
 
   /**
    *  @brief Creates a empty box tree object 

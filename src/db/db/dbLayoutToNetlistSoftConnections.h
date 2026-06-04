@@ -134,10 +134,10 @@ private:
 class DB_PUBLIC SoftConnectionNetGraph
 {
 public:
-  typedef std::set<size_t> pin_set;
-  typedef pin_set::const_iterator pin_iterator;
-  typedef std::map<size_t, SoftConnectionPinDir> dir_map;
-  typedef dir_map::const_iterator dir_map_iterator;
+  using pin_set = std::set<size_t>;
+  using pin_iterator = pin_set::const_iterator;
+  using dir_map = std::map<size_t, SoftConnectionPinDir>;
+  using dir_map_iterator = dir_map::const_iterator;
 
   SoftConnectionNetGraph ();
 
@@ -216,8 +216,8 @@ private:
 class DB_PUBLIC SoftConnectionCircuitInfo
 {
 public:
-  typedef std::list<SoftConnectionNetGraph> net_graph_list;
-  typedef net_graph_list::const_iterator net_graph_list_iterator;
+  using net_graph_list = std::list<SoftConnectionNetGraph>;
+  using net_graph_list_iterator = net_graph_list::const_iterator;
 
   /**
    *  @brief Constructor

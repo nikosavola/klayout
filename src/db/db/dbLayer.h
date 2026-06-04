@@ -46,13 +46,13 @@ struct box_tree_typedef { };
 template <class Box, class Sh, class BoxConvert>
 struct box_tree_typedef<Box, Sh, BoxConvert, stable_layer_tag> 
 { 
-  typedef db::box_tree<Box, Sh, BoxConvert> box_tree_type;  
+  using box_tree_type = db::box_tree<Box, Sh, BoxConvert>;  
 };
 
 template <class Box, class Sh, class BoxConvert>
 struct box_tree_typedef<Box, Sh, BoxConvert, unstable_layer_tag> 
 { 
-  typedef db::unstable_box_tree<Box, Sh, BoxConvert> box_tree_type;  
+  using box_tree_type = db::unstable_box_tree<Box, Sh, BoxConvert>;  
 };
 
 template <class ConstIter, class NonConstIter>
@@ -80,15 +80,15 @@ void to_non_const_box_tree_iter (const ConstIter &ci, NonConstIter &nci, unstabl
 template <class Sh, class StableTag>
 struct layer 
 {
-  typedef db::box_convert<Sh> box_convert;
-  typedef typename Sh::coord_type coord_type;
-  typedef typename db::box<coord_type> box_type;
-  typedef typename box_tree_typedef<box_type, Sh, box_convert, StableTag>::box_tree_type box_tree_type;
-  typedef typename box_tree_type::flat_iterator flat_iterator;
-  typedef typename box_tree_type::const_iterator iterator;
-  typedef typename box_tree_type::iterator non_const_iterator;
-  typedef typename box_tree_type::touching_iterator touching_iterator;
-  typedef typename box_tree_type::overlapping_iterator overlapping_iterator;
+  using box_convert = db::box_convert<Sh>;
+  using coord_type = typename Sh::coord_type;
+  using box_type = typename db::box<coord_type>;
+  using box_tree_type = typename box_tree_typedef<box_type, Sh, box_convert, StableTag>::box_tree_type;
+  using flat_iterator = typename box_tree_type::flat_iterator;
+  using iterator = typename box_tree_type::const_iterator;
+  using non_const_iterator = typename box_tree_type::iterator;
+  using touching_iterator = typename box_tree_type::touching_iterator;
+  using overlapping_iterator = typename box_tree_type::overlapping_iterator;
 
   /**
    *  @brief Default ctor: creates an empty layer object

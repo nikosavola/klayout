@@ -61,15 +61,15 @@ template <class Path, class Tr>
 class path_point_iterator
 {
 public:
-  typedef typename Path::pointlist_type pointlist_type;
-  typedef typename pointlist_type::value_type point_type;
-  typedef typename point_type::coord_type coord_type;
+  using pointlist_type = typename Path::pointlist_type;
+  using point_type = typename pointlist_type::value_type;
+  using coord_type = typename point_type::coord_type;
   typedef void pointer;           //  no operator->
   typedef point_type reference;   //  operator* returns a value
-  typedef point_type value_type;
-  typedef std::bidirectional_iterator_tag iterator_category;
-  typedef size_t difference_type;
-  typedef Tr trans_type;
+  using value_type = point_type;
+  using iterator_category = std::bidirectional_iterator_tag;
+  using difference_type = size_t;
+  using trans_type = Tr;
 
   /** 
    *  @brief The default constructor 
@@ -213,18 +213,18 @@ template <class C>
 class DB_PUBLIC path
 {
 public:
-  typedef C coord_type;
-  typedef db::simple_trans<coord_type> trans_type;
-  typedef db::point<coord_type> point_type;
-  typedef db::vector<coord_type> vector_type;
-  typedef db::box<coord_type> box_type;
-  typedef db::coord_traits<coord_type> coord_traits;
-  typedef typename coord_traits::distance_type distance_type; 
-  typedef typename coord_traits::perimeter_type perimeter_type; 
-  typedef typename coord_traits::area_type area_type; 
-  typedef object_tag< path<C> > tag;
-  typedef tl::vector<point_type> pointlist_type;
-  typedef db::path_point_iterator<path <C>, db::unit_trans<C> > iterator;
+  using coord_type = C;
+  using trans_type = db::simple_trans<coord_type>;
+  using point_type = db::point<coord_type>;
+  using vector_type = db::vector<coord_type>;
+  using box_type = db::box<coord_type>;
+  using coord_traits = db::coord_traits<coord_type>;
+  using distance_type = typename coord_traits::distance_type; 
+  using perimeter_type = typename coord_traits::perimeter_type; 
+  using area_type = typename coord_traits::area_type; 
+  using tag = object_tag< path<C> >;
+  using pointlist_type = tl::vector<point_type>;
+  using iterator = db::path_point_iterator<path <C>, db::unit_trans<C> >;
 
   /**
    *  @brief The default constructor.
@@ -604,7 +604,7 @@ public:
   template <class Tr>
   path<typename Tr::target_coord_type> transformed (const Tr &t) const
   {
-    typedef typename Tr::target_coord_type target_coord_type;
+    using target_coord_type = typename Tr::target_coord_type;
     path<target_coord_type> res;
 
     if (m_width < 0) {
@@ -973,12 +973,12 @@ operator<< (std::ostream &os, const path<C> &p)
 /**
  *  @brief The standard path typedef
  */
-typedef path<db::Coord> Path;
+using Path = path<db::Coord>;
 
 /**
  *  @brief The double coordinate path typedef
  */
-typedef path<db::DCoord> DPath;
+using DPath = path<db::DCoord>;
 
 /** 
  *  @brief A path reference
@@ -991,14 +991,14 @@ template <class Path, class Trans>
 struct path_ref
   : public shape_ref<Path, Trans>
 {
-  typedef typename Path::coord_type coord_type;
-  typedef typename Path::point_type point_type;
-  typedef typename Path::box_type box_type;
-  typedef Trans trans_type;
-  typedef Path path_type;
-  typedef db::path_point_iterator<Path, trans_type> iterator;
-  typedef db::generic_repository<coord_type> repository_type;
-  typedef db::object_tag< path_ref<Path, Trans> > tag;
+  using coord_type = typename Path::coord_type;
+  using point_type = typename Path::point_type;
+  using box_type = typename Path::box_type;
+  using trans_type = Trans;
+  using path_type = Path;
+  using iterator = db::path_point_iterator<Path, trans_type>;
+  using repository_type = db::generic_repository<coord_type>;
+  using tag = db::object_tag< path_ref<Path, Trans> >;
 
   /**
    *  @brief The default constructor.
@@ -1110,22 +1110,22 @@ operator* (const TargetTr &t, const path_ref<Path, Tr> &p)
 /**
  *  @brief The path reference typedef
  */
-typedef path_ref<Path, Disp> PathRef;
+using PathRef = path_ref<Path, Disp>;
 
 /**
  *  @brief The path reference typedef for double coordinates
  */
-typedef path_ref<DPath, DDisp> DPathRef;
+using DPathRef = path_ref<DPath, DDisp>;
 
 /**
  *  @brief The path reference (without transformation) typedef
  */
-typedef path_ref<Path, UnitTrans> PathPtr;
+using PathPtr = path_ref<Path, UnitTrans>;
 
 /**
  *  @brief The path reference (without transformation) typedef for double coordinates
  */
-typedef path_ref<DPath, DUnitTrans> DPathPtr;
+using DPathPtr = path_ref<DPath, DUnitTrans>;
 
 /**
  *  @brief Rounds the path by smoothing the corners with a circle approximation

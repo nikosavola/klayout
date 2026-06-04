@@ -275,9 +275,9 @@ public:
   };
 
 
-  typedef std::map<CellMapKey, db::cell_index_type> cell_map_type;
-  typedef std::map<db::cell_index_type, std::vector<db::cell_index_type> > original_target_to_variants_map_type;
-  typedef std::map<db::cell_index_type, db::cell_index_type> variant_to_original_target_map_type;
+  using cell_map_type = std::map<CellMapKey, db::cell_index_type>;
+  using original_target_to_variants_map_type = std::map<db::cell_index_type, std::vector<db::cell_index_type> >;
+  using variant_to_original_target_map_type = std::map<db::cell_index_type, db::cell_index_type>;
 
   HierarchyBuilder (db::Layout *target, unsigned int target_layer, const db::ICplxTrans &trans = db::ICplxTrans (), HierarchyBuilderShapeReceiver *pipe = 0);
   HierarchyBuilder (db::Layout *target, const db::ICplxTrans &trans = db::ICplxTrans (), HierarchyBuilderShapeReceiver *pipe = 0);

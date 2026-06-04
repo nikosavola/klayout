@@ -40,10 +40,10 @@ class DB_PUBLIC PolygonNeighborhoodVisitor
   : public gsi::ObjectBase, public tl::Object
 {
 public:
-  typedef std::pair<double, double> position_interval_type;
-  typedef unsigned int input_key_type;
-  typedef std::vector<db::PolygonWithProperties> neighbor_shapes_type;
-  typedef std::map<input_key_type, neighbor_shapes_type> neighbors_type;
+  using position_interval_type = std::pair<double, double>;
+  using input_key_type = unsigned int;
+  using neighbor_shapes_type = std::vector<db::PolygonWithProperties>;
+  using neighbors_type = std::map<input_key_type, neighbor_shapes_type>;
 
   /**
    *  @brief Constructor

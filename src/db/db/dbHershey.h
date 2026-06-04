@@ -66,8 +66,8 @@ class DB_PUBLIC_TEMPLATE hershey_edge_iterator
   : private basic_hershey_edge_iterator
 {
 public:
-  typedef C coord_type;
-  typedef db::coord_traits<C> coord_traits;
+  using coord_type = C;
+  using coord_traits = db::coord_traits<C>;
 
   /**
    *  @brief Standard constructor of the hershey edge iterator
@@ -125,9 +125,9 @@ private:
 template <class C>
 struct DB_PUBLIC_TEMPLATE hershey
 {
-  typedef C coord_type;
-  typedef db::coord_traits<C> coord_traits;
-  typedef hershey_edge_iterator<C> edge_iterator;
+  using coord_type = C;
+  using coord_traits = db::coord_traits<C>;
+  using edge_iterator = hershey_edge_iterator<C>;
 
   /** 
    *  @brief Default constructor
@@ -301,13 +301,13 @@ private:
  *  @brief Standard typedef for db::Coord
  */
 
-typedef db::hershey<db::Coord> Hershey;
+using Hershey = db::hershey<db::Coord>;
 
 /**
  *  @brief Standard typedef for db::DCoord
  */
 
-typedef db::hershey<db::DCoord> DHershey;
+using DHershey = db::hershey<db::DCoord>;
 
 }
 

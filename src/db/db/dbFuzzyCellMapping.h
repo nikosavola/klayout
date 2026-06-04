@@ -38,7 +38,7 @@ class Layout;
 class DB_PUBLIC FuzzyCellMapping
 {
 public:
-  typedef std::map <db::cell_index_type, db::cell_index_type>::const_iterator iterator;
+  using iterator = std::map <db::cell_index_type, db::cell_index_type>::const_iterator;
 
   /**
    *  @brief Constructor - creates an empty mapping

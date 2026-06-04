@@ -54,17 +54,17 @@ class DB_PUBLIC RecursiveShapeIterator
   : public gsi::ObjectBase
 {
 public:
-  typedef db::Layout layout_type;
-  typedef db::Box box_type;
-  typedef db::Region region_type;
-  typedef db::Cell cell_type;
-  typedef db::Cell::touching_iterator inst_iterator;
-  typedef db::CellInstArray::iterator inst_array_iterator;
-  typedef db::ShapeIterator shape_iterator;
-  typedef db::Shape shape_type;
-  typedef db::Shapes shapes_type;
-  typedef db::ICplxTrans cplx_trans_type;
-  typedef db::box_tree<db::Box, db::Box, db::box_convert<db::Box>, 20, 20> box_tree_type;
+  using layout_type = db::Layout;
+  using box_type = db::Box;
+  using region_type = db::Region;
+  using cell_type = db::Cell;
+  using inst_iterator = db::Cell::touching_iterator;
+  using inst_array_iterator = db::CellInstArray::iterator;
+  using shape_iterator = db::ShapeIterator;
+  using shape_type = db::Shape;
+  using shapes_type = db::Shapes;
+  using cplx_trans_type = db::ICplxTrans;
+  using box_tree_type = db::box_tree<db::Box, db::Box, db::box_convert<db::Box>, 20, 20>;
 
   /**
    *  @brief Default constructor
@@ -938,7 +938,7 @@ private:
 class DB_PUBLIC RecursiveShapeReceiver
 {
 public:
-  typedef RecursiveShapeIterator::box_tree_type box_tree_type;
+  using box_tree_type = RecursiveShapeIterator::box_tree_type;
 
   /**
    *  @brief See new_inst for details.

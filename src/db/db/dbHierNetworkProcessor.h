@@ -60,12 +60,12 @@ class DeepLayer;
 class DB_PUBLIC Connectivity
 {
 public:
-  typedef std::set<unsigned int> all_layers_type;
-  typedef all_layers_type::const_iterator all_layer_iterator;
-  typedef std::map<unsigned int, int> layers_type;
-  typedef layers_type::const_iterator layer_iterator;
-  typedef std::map<unsigned int, int> global_nets_type;
-  typedef global_nets_type::const_iterator global_nets_iterator;
+  using all_layers_type = std::set<unsigned int>;
+  using all_layer_iterator = all_layers_type::const_iterator;
+  using layers_type = std::map<unsigned int, int>;
+  using layer_iterator = layers_type::const_iterator;
+  using global_nets_type = std::map<unsigned int, int>;
+  using global_nets_iterator = global_nets_type::const_iterator;
 
   /**
    *  @brief Specifies the edge connectivity mode
@@ -272,22 +272,22 @@ template <class T>
 class DB_PUBLIC_TEMPLATE local_cluster
 {
 public:
-  typedef size_t id_type;
-  typedef typename T::box_type box_type;
-  typedef db::unstable_box_tree<box_type, T, db::box_convert<T> > tree_type;
-  typedef typename tree_type::flat_iterator shape_iterator;
-  typedef size_t attr_id;
-  typedef size_t global_net_id;
-  typedef std::set<global_net_id> global_nets;
-  typedef global_nets::const_iterator global_nets_iterator;
+  using id_type = size_t;
+  using box_type = typename T::box_type;
+  using tree_type = db::unstable_box_tree<box_type, T, db::box_convert<T> >;
+  using shape_iterator = typename tree_type::flat_iterator;
+  using attr_id = size_t;
+  using global_net_id = size_t;
+  using global_nets = std::set<global_net_id>;
+  using global_nets_iterator = global_nets::const_iterator;
 
   struct AttrCompare
   {
     bool operator() (attr_id a, attr_id b) const;
   };
 
-  typedef std::set<attr_id, AttrCompare> attr_set;
-  typedef typename attr_set::const_iterator attr_iterator;
+  using attr_set = std::set<attr_id, AttrCompare>;
+  using attr_iterator = typename attr_set::const_iterator;
 
   /**
    *  @brief Creates an empty cluster
@@ -503,8 +503,8 @@ inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int
 template <class T>
 struct DB_PUBLIC_TEMPLATE local_cluster_box_convert
 {
-  typedef typename local_cluster<T>::box_type box_type;
-  typedef typename db::simple_bbox_tag complexity;
+  using box_type = typename local_cluster<T>::box_type;
+  using complexity = typename db::simple_bbox_tag;
 
   box_type operator() (const local_cluster<T> &c) const
   {
@@ -523,13 +523,13 @@ template <class T>
 class DB_PUBLIC_TEMPLATE local_clusters
 {
 public:
-  typedef typename local_cluster<T>::id_type id_type;
-  typedef typename local_cluster<T>::box_type box_type;
-  typedef typename local_cluster<T>::attr_id attr_id;
-  typedef db::box_tree<box_type, local_cluster<T>, local_cluster_box_convert<T> > tree_type;
-  typedef typename tree_type::touching_iterator touching_iterator;
-  typedef typename tree_type::const_iterator const_iterator;
-  typedef typename tree_type::iterator iterator;
+  using id_type = typename local_cluster<T>::id_type;
+  using box_type = typename local_cluster<T>::box_type;
+  using attr_id = typename local_cluster<T>::attr_id;
+  using tree_type = db::box_tree<box_type, local_cluster<T>, local_cluster_box_convert<T> >;
+  using touching_iterator = typename tree_type::touching_iterator;
+  using const_iterator = typename tree_type::const_iterator;
+  using iterator = typename tree_type::iterator;
 
   /**
    *  @brief Creates an empty collection
@@ -927,11 +927,11 @@ struct ClusterInstancePair
   int soft;
 };
 
-typedef std::list<ClusterInstancePair> cluster_instance_pair_list_type;
+using cluster_instance_pair_list_type = std::list<ClusterInstancePair>;
 
 struct ClusterIDPair
 {
-  typedef size_t id_type;
+  using id_type = size_t;
 
   ClusterIDPair (id_type _a, id_type _b, int _soft)
     : a (_a), b (_b), soft (_soft)
@@ -1180,7 +1180,7 @@ template <class T>
 class DB_PUBLIC_TEMPLATE connected_clusters_iterator
 {
 public:
-  typedef typename local_cluster<T>::id_type value_type;
+  using value_type = typename local_cluster<T>::id_type;
 
   connected_clusters_iterator (const connected_clusters<T> &c);
 
@@ -1210,7 +1210,7 @@ public:
 
 private:
   typename local_clusters<T>::const_iterator m_lc_iter;
-  typedef tl::slist<ClusterInstance> connections_type;
+  using connections_type = tl::slist<ClusterInstance>;
   typename std::map<typename local_cluster<T>::id_type, connections_type>::const_iterator m_x_iter, m_x_iter_end;
 };
 
@@ -1229,11 +1229,11 @@ class DB_PUBLIC_TEMPLATE connected_clusters
   : public local_clusters<T>
 {
 public:
-  typedef typename local_clusters<T>::id_type id_type;
-  typedef tl::slist<ClusterInstance> connections_type;
-  typedef typename local_clusters<T>::box_type box_type;
-  typedef connected_clusters_iterator<T> all_iterator;
-  typedef typename std::map<typename local_cluster<T>::id_type, connections_type>::const_iterator connections_iterator;
+  using id_type = typename local_clusters<T>::id_type;
+  using connections_type = tl::slist<ClusterInstance>;
+  using box_type = typename local_clusters<T>::box_type;
+  using all_iterator = connected_clusters_iterator<T>;
+  using connections_iterator = typename std::map<typename local_cluster<T>::id_type, connections_type>::const_iterator;
 
   /**
    *  @brief Constructor
@@ -1368,9 +1368,9 @@ class DB_PUBLIC_TEMPLATE hier_clusters
   : public tl::Object
 {
 public:
-  typedef typename local_cluster<T>::box_type box_type;
+  using box_type = typename local_cluster<T>::box_type;
 
-  typedef instance_interaction_cache<InstanceToInstanceInteraction, cluster_instance_pair_list_type> instance_interaction_cache_type;
+  using instance_interaction_cache_type = instance_interaction_cache<InstanceToInstanceInteraction, cluster_instance_pair_list_type>;
 
   /**
    *  @brief Creates an empty set of clusters
@@ -1476,7 +1476,7 @@ template <class T>
 class DB_PUBLIC_TEMPLATE recursive_cluster_shape_iterator
 {
 public:
-  typedef T value_type;
+  using value_type = T;
   typedef const T &reference;
   typedef const T *pointer;
 
@@ -1555,7 +1555,7 @@ public:
   void skip_cell ();
 
 private:
-  typedef typename db::connected_clusters<T>::connections_type connections_type;
+  using connections_type = typename db::connected_clusters<T>::connections_type;
 
   const hier_clusters<T> *mp_hc;
   std::vector<db::ICplxTrans> m_trans_stack;
@@ -1626,7 +1626,7 @@ public:
   recursive_cluster_iterator &operator++ ();
 
 private:
-  typedef typename db::connected_clusters<T>::connections_type connections_type;
+  using connections_type = typename db::connected_clusters<T>::connections_type;
 
   const hier_clusters<T> *mp_hc;
   std::vector<db::cell_index_type> m_cell_index_stack;
@@ -1718,7 +1718,7 @@ template <class T>
 class incoming_cluster_connections
 {
 public:
-  typedef std::list<IncomingClusterInstance> incoming_connections;
+  using incoming_connections = std::list<IncomingClusterInstance>;
 
   incoming_cluster_connections (const db::Layout &layout, const db::Cell &cell, const hier_clusters<T> &hc);
 

@@ -57,7 +57,7 @@ class Net;
 class DB_PUBLIC PolygonFilterBase
 {
 public:
-  typedef db::Polygon shape_type;
+  using shape_type = db::Polygon;
 
   /**
    *  @brief Constructor
@@ -108,14 +108,14 @@ public:
   virtual bool wants_variants () const = 0;
 };
 
-typedef shape_collection_processor<db::Polygon, db::Polygon> PolygonProcessorBase;
-typedef shape_collection_processor<db::Polygon, db::Edge> PolygonToEdgeProcessorBase;
-typedef shape_collection_processor<db::Polygon, db::EdgePair> PolygonToEdgePairProcessorBase;
+using PolygonProcessorBase = shape_collection_processor<db::Polygon, db::Polygon>;
+using PolygonToEdgeProcessorBase = shape_collection_processor<db::Polygon, db::Edge>;
+using PolygonToEdgePairProcessorBase = shape_collection_processor<db::Polygon, db::EdgePair>;
 
 /**
  *  @brief The region iterator delegate
  */
-typedef db::generic_shape_iterator_delegate_base <db::Polygon> RegionIteratorDelegate;
+using RegionIteratorDelegate = db::generic_shape_iterator_delegate_base <db::Polygon>;
 
 /**
  *  @brief The delegate for the actual region implementation
@@ -124,15 +124,15 @@ class DB_PUBLIC RegionDelegate
   : public db::ShapeCollectionDelegateBase
 {
 public:
-  typedef db::Coord coord_type;
-  typedef db::coord_traits<db::Coord> coord_traits;
-  typedef db::Polygon polygon_type;
-  typedef db::Vector vector_type;
-  typedef db::Point point_type;
-  typedef db::Box box_type;
-  typedef coord_traits::distance_type distance_type;
-  typedef coord_traits::perimeter_type perimeter_type;
-  typedef coord_traits::area_type area_type;
+  using coord_type = db::Coord;
+  using coord_traits = db::coord_traits<db::Coord>;
+  using polygon_type = db::Polygon;
+  using vector_type = db::Vector;
+  using point_type = db::Point;
+  using box_type = db::Box;
+  using distance_type = coord_traits::distance_type;
+  using perimeter_type = coord_traits::perimeter_type;
+  using area_type = coord_traits::area_type;
 
   RegionDelegate ();
   virtual ~RegionDelegate ();

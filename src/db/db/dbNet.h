@@ -384,15 +384,15 @@ class DB_PUBLIC Net
   : public db::NetlistObject
 {
 public:
-  typedef std::list<NetTerminalRef> terminal_list;
-  typedef terminal_list::const_iterator const_terminal_iterator;
-  typedef terminal_list::iterator terminal_iterator;
-  typedef std::list<NetPinRef> pin_list;
-  typedef pin_list::const_iterator const_pin_iterator;
-  typedef pin_list::iterator pin_iterator;
-  typedef std::list<NetSubcircuitPinRef> subcircuit_pin_list;
-  typedef subcircuit_pin_list::const_iterator const_subcircuit_pin_iterator;
-  typedef subcircuit_pin_list::iterator subcircuit_pin_iterator;
+  using terminal_list = std::list<NetTerminalRef>;
+  using const_terminal_iterator = terminal_list::const_iterator;
+  using terminal_iterator = terminal_list::iterator;
+  using pin_list = std::list<NetPinRef>;
+  using const_pin_iterator = pin_list::const_iterator;
+  using pin_iterator = pin_list::iterator;
+  using subcircuit_pin_list = std::list<NetSubcircuitPinRef>;
+  using const_subcircuit_pin_iterator = subcircuit_pin_list::const_iterator;
+  using subcircuit_pin_iterator = subcircuit_pin_list::iterator;
 
   /**
    *  @brief Constructor

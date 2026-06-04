@@ -177,7 +177,7 @@ private:
   std::unordered_set<db::PolygonWithProperties> *mp_polygons;
 };
 
-typedef polygon_ref_generator<db::PolygonRef> PolygonRefGenerator;
+using PolygonRefGenerator = polygon_ref_generator<db::PolygonRef>;
 
 template <class T>
 class DB_PUBLIC polygon_ref_generator_with_properties;
@@ -238,7 +238,7 @@ private:
   db::properties_id_type m_prop_id;
 };
 
-typedef polygon_ref_generator<db::PolygonRef> PolygonRefGenerator;
+using PolygonRefGenerator = polygon_ref_generator<db::PolygonRef>;
 
 template <class Container>
 class DB_PUBLIC edge_to_edge_set_generator
@@ -288,7 +288,7 @@ private:
   EdgeSink *mp_chained;
 };
 
-typedef edge_to_edge_set_generator<std::unordered_set<db::Edge> > EdgeToEdgeSetGenerator;
+using EdgeToEdgeSetGenerator = edge_to_edge_set_generator<std::unordered_set<db::Edge> >;
 
 class DB_PUBLIC PolygonRefToShapesGenerator
   : public PolygonSink
@@ -339,7 +339,7 @@ template <class T, class Container>
 class DB_PUBLIC property_injector
 {
 public:
-  typedef typename Container::const_iterator const_iterator;
+  using const_iterator = typename Container::const_iterator;
 
   property_injector (Container *container, db::properties_id_type prop_id)
     : mp_container (container), m_prop_id (prop_id)

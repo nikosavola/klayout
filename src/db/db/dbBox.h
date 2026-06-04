@@ -74,14 +74,14 @@ inline int64_t box_world_max<int64_t> () { return (int64_t (1) << 53); }
 template <class C, class R>
 struct DB_PUBLIC_TEMPLATE box
 {
-  typedef C coord_type;
-  typedef box<C, R> box_type;
-  typedef point<C> point_type;
-  typedef vector<C> vector_type;
-  typedef typename coord_traits<C>::area_type area_type;
-  typedef typename coord_traits<C>::distance_type distance_type;
-  typedef typename coord_traits<C>::perimeter_type perimeter_type;
-  typedef object_tag< box<C, R> > tag;
+  using coord_type = C;
+  using box_type = box<C, R>;
+  using point_type = point<C>;
+  using vector_type = vector<C>;
+  using area_type = typename coord_traits<C>::area_type;
+  using distance_type = typename coord_traits<C>::distance_type;
+  using perimeter_type = typename coord_traits<C>::perimeter_type;
+  using tag = object_tag< box<C, R> >;
 
   /**
    *  @brief Empty box constructor
@@ -1504,17 +1504,17 @@ private:
 /**
  *  @brief The standard short integer coordinate box
  */
-typedef box<db::Coord, db::coord_traits<db::Coord>::short_coord_type> ShortBox;
+using ShortBox = box<db::Coord, db::coord_traits<db::Coord>::short_coord_type>;
 
 /**
  *  @brief The standard integer coordinate box
  */
-typedef box<db::Coord> Box;
+using Box = box<db::Coord>;
 
 /**
  *  @brief The double coordinate box
  */
-typedef box<db::DCoord> DBox;
+using DBox = box<db::DCoord>;
 
 } // namespace db
 

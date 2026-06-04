@@ -132,7 +132,7 @@ template <class T> bool shape_flags_with_props ()   { return shape_flags_traits<
 template <class T>
 struct DB_PUBLIC shape_to_object_impl
 {
-  typedef T value_type;
+  using value_type = T;
 
   void set (const db::Shape &) { }
   const value_type *get (const db::Shape &s) const { return s.basic_ptr (typename T::tag ()); }
@@ -141,7 +141,7 @@ struct DB_PUBLIC shape_to_object_impl
 template <class T>
 struct DB_PUBLIC shape_to_object_impl<db::object_with_properties<T> >
 {
-  typedef db::object_with_properties<T> value_type;
+  using value_type = db::object_with_properties<T>;
 
   void set (const db::Shape &s)
   {
@@ -166,7 +166,7 @@ private:
 template <>
 struct DB_PUBLIC shape_to_object_impl<db::Polygon>
 {
-  typedef db::Polygon value_type;
+  using value_type = db::Polygon;
 
   void set (const db::Shape &s) { s.polygon (m_shape); }
   const value_type *get (const db::Shape &) const { return &m_shape; }
@@ -178,7 +178,7 @@ private:
 template <>
 struct DB_PUBLIC shape_to_object_impl<db::PolygonWithProperties>
 {
-  typedef db::PolygonWithProperties value_type;
+  using value_type = db::PolygonWithProperties;
 
   void set (const db::Shape &s)
   {
@@ -198,7 +198,7 @@ private:
 template <>
 struct DB_PUBLIC shape_to_object_impl<db::SimplePolygon>
 {
-  typedef db::SimplePolygon value_type;
+  using value_type = db::SimplePolygon;
 
   void set (const db::Shape &s) { s.simple_polygon (m_shape); }
   const value_type *get (const db::Shape &) const { return &m_shape; }
@@ -210,7 +210,7 @@ private:
 template <>
 struct DB_PUBLIC shape_to_object_impl<db::SimplePolygonWithProperties>
 {
-  typedef db::SimplePolygonWithProperties value_type;
+  using value_type = db::SimplePolygonWithProperties;
 
   void set (const db::Shape &s)
   {
@@ -230,7 +230,7 @@ private:
 template <>
 struct DB_PUBLIC shape_to_object_impl<db::Path>
 {
-  typedef db::Path value_type;
+  using value_type = db::Path;
 
   void set (const db::Shape &s) { s.path (m_shape); }
   const value_type *get (const db::Shape &) const { return &m_shape; }
@@ -242,7 +242,7 @@ private:
 template <>
 struct DB_PUBLIC shape_to_object_impl<db::PathWithProperties>
 {
-  typedef db::PathWithProperties value_type;
+  using value_type = db::PathWithProperties;
 
   void set (const db::Shape &s)
   {
@@ -262,7 +262,7 @@ private:
 template <>
 struct DB_PUBLIC shape_to_object_impl<db::Text>
 {
-  typedef db::Text value_type;
+  using value_type = db::Text;
 
   void set (const db::Shape &s) { s.text (m_shape); }
   const value_type *get (const db::Shape &) const { return &m_shape; }
@@ -274,7 +274,7 @@ private:
 template <>
 struct DB_PUBLIC shape_to_object_impl<db::TextWithProperties>
 {
-  typedef db::TextWithProperties value_type;
+  using value_type = db::TextWithProperties;
 
   void set (const db::Shape &s)
   {
@@ -294,7 +294,7 @@ private:
 template <>
 struct DB_PUBLIC shape_to_object_impl<db::Box>
 {
-  typedef db::Box value_type;
+  using value_type = db::Box;
 
   void set (const db::Shape &s) { s.box (m_shape); }
   const value_type *get (const db::Shape *) const { return &m_shape; }
@@ -306,7 +306,7 @@ private:
 template <>
 struct DB_PUBLIC shape_to_object_impl<db::BoxWithProperties>
 {
-  typedef db::BoxWithProperties value_type;
+  using value_type = db::BoxWithProperties;
 
   void set (const db::Shape &s)
   {
@@ -344,7 +344,7 @@ struct DB_PUBLIC shape_to_object
 template <class T>
 struct addressable_object_from_shape
 {
-  typedef T value_type;
+  using value_type = T;
 
   const T *operator () (const db::Shape &shape)
   {
@@ -356,7 +356,7 @@ struct addressable_object_from_shape
 template <class T>
 struct addressable_object_from_shape<db::object_with_properties<T> >
 {
-  typedef db::object_with_properties<T> value_type;
+  using value_type = db::object_with_properties<T>;
 
   const db::object_with_properties<T> *operator () (const db::Shape &shape)
   {
@@ -377,7 +377,7 @@ private:
 template <>
 struct addressable_object_from_shape<db::Box>
 {
-  typedef db::Box value_type;
+  using value_type = db::Box;
 
   const value_type *operator () (const db::Shape &shape)
   {
@@ -397,7 +397,7 @@ private:
 template <>
 struct addressable_object_from_shape<db::BoxWithProperties>
 {
-  typedef db::BoxWithProperties value_type;
+  using value_type = db::BoxWithProperties;
 
   const value_type *operator () (const db::Shape &shape)
   {
@@ -418,7 +418,7 @@ private:
 template <>
 struct addressable_object_from_shape<db::Polygon>
 {
-  typedef db::Polygon value_type;
+  using value_type = db::Polygon;
 
   const value_type *operator () (const db::Shape &shape)
   {
@@ -438,7 +438,7 @@ private:
 template <>
 struct addressable_object_from_shape<db::PolygonWithProperties>
 {
-  typedef db::PolygonWithProperties value_type;
+  using value_type = db::PolygonWithProperties;
 
   const value_type *operator () (const db::Shape &shape)
   {
@@ -459,7 +459,7 @@ private:
 template <>
 struct addressable_object_from_shape<db::SimplePolygon>
 {
-  typedef db::SimplePolygon value_type;
+  using value_type = db::SimplePolygon;
 
   const value_type *operator () (const db::Shape &shape)
   {
@@ -479,7 +479,7 @@ private:
 template <>
 struct addressable_object_from_shape<db::SimplePolygonWithProperties>
 {
-  typedef db::SimplePolygonWithProperties value_type;
+  using value_type = db::SimplePolygonWithProperties;
 
   const value_type *operator () (const db::Shape &shape)
   {
@@ -500,7 +500,7 @@ private:
 template <>
 struct addressable_object_from_shape<db::Path>
 {
-  typedef db::Path value_type;
+  using value_type = db::Path;
 
   const value_type *operator () (const db::Shape &shape)
   {
@@ -520,7 +520,7 @@ private:
 template <>
 struct addressable_object_from_shape<db::PathWithProperties>
 {
-  typedef db::PathWithProperties value_type;
+  using value_type = db::PathWithProperties;
 
   const value_type *operator () (const db::Shape &shape)
   {
@@ -541,7 +541,7 @@ private:
 template <>
 struct addressable_object_from_shape<db::Edge>
 {
-  typedef db::Edge value_type;
+  using value_type = db::Edge;
 
   const value_type *operator () (const db::Shape &shape)
   {
@@ -561,7 +561,7 @@ private:
 template <>
 struct addressable_object_from_shape<db::EdgeWithProperties>
 {
-  typedef db::EdgeWithProperties value_type;
+  using value_type = db::EdgeWithProperties;
 
   const value_type *operator () (const db::Shape &shape)
   {
@@ -582,7 +582,7 @@ private:
 template <>
 struct addressable_object_from_shape<db::EdgePair>
 {
-  typedef db::EdgePair value_type;
+  using value_type = db::EdgePair;
 
   const value_type *operator () (const db::Shape &shape)
   {
@@ -602,7 +602,7 @@ private:
 template <>
 struct addressable_object_from_shape<db::EdgePairWithProperties>
 {
-  typedef db::EdgePairWithProperties value_type;
+  using value_type = db::EdgePairWithProperties;
 
   const value_type *operator () (const db::Shape &shape)
   {
@@ -623,7 +623,7 @@ private:
 template <>
 struct addressable_object_from_shape<db::Text>
 {
-  typedef db::Text value_type;
+  using value_type = db::Text;
 
   const value_type *operator () (const db::Shape &shape)
   {
@@ -643,7 +643,7 @@ private:
 template <>
 struct addressable_object_from_shape<db::TextWithProperties>
 {
-  typedef db::TextWithProperties value_type;
+  using value_type = db::TextWithProperties;
 
   const value_type *operator () (const db::Shape &shape)
   {

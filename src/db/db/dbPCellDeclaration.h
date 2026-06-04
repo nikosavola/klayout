@@ -36,7 +36,7 @@
 namespace db
 {
 
-typedef std::vector<tl::Variant> pcell_parameters_type;
+using pcell_parameters_type = std::vector<tl::Variant>;
     
 /**
  *  @brief A declaration for one PCell parameter

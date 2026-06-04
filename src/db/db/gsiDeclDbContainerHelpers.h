@@ -249,8 +249,8 @@ class shape_processor_base
   : public ProcessorBase
 {
 public:
-  typedef typename ProcessorBase::shape_type shape_type;
-  typedef typename ProcessorBase::result_type result_type;
+  using shape_type = typename ProcessorBase::shape_type;
+  using result_type = typename ProcessorBase::result_type;
 
   shape_processor_base ()
   {
@@ -442,8 +442,8 @@ class shape_processor_impl
   : public shape_processor_base<ProcessorBase>
 {
 public:
-  typedef typename ProcessorBase::shape_type shape_type;
-  typedef typename ProcessorBase::result_type result_type;
+  using shape_type = typename ProcessorBase::shape_type;
+  using result_type = typename ProcessorBase::result_type;
 
   shape_processor_impl ()
     : shape_processor_base<ProcessorBase> ()

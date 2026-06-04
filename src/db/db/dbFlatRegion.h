@@ -36,7 +36,7 @@ namespace db {
 /**
  *  @brief An iterator delegate for the flat region
  */
-typedef generic_shapes_iterator_delegate<db::Polygon> FlatRegionIterator;
+using FlatRegionIterator = generic_shapes_iterator_delegate<db::Polygon>;
 
 /**
  *  @brief A flat, polygon-set delegate
@@ -45,11 +45,11 @@ class DB_PUBLIC FlatRegion
   : public MutableRegion
 {
 public:
-  typedef db::Polygon value_type;
-  typedef db::layer<db::Polygon, db::unstable_layer_tag> polygon_layer_type;
-  typedef polygon_layer_type::iterator polygon_iterator_type;
-  typedef db::layer<db::PolygonWithProperties, db::unstable_layer_tag> polygon_layer_wp_type;
-  typedef polygon_layer_wp_type::iterator polygon_iterator_wp_type;
+  using value_type = db::Polygon;
+  using polygon_layer_type = db::layer<db::Polygon, db::unstable_layer_tag>;
+  using polygon_iterator_type = polygon_layer_type::iterator;
+  using polygon_layer_wp_type = db::layer<db::PolygonWithProperties, db::unstable_layer_tag>;
+  using polygon_iterator_wp_type = polygon_layer_wp_type::iterator;
 
   FlatRegion (double area_ratio = 0.0, size_t max_vertex_count = 0);
   FlatRegion (const db::Shapes &polygons, bool is_merged = false, double area_ratio = 0.0, size_t max_vertex_count = 0);

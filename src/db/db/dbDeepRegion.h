@@ -38,8 +38,8 @@ class DB_PUBLIC DeepRegion
   : public MutableRegion, public DeepShapeCollectionDelegateBase
 {
 public:
-  typedef db::layer<db::Polygon, db::unstable_layer_tag> polygon_layer_type;
-  typedef polygon_layer_type::iterator polygon_iterator_type;
+  using polygon_layer_type = db::layer<db::Polygon, db::unstable_layer_tag>;
+  using polygon_iterator_type = polygon_layer_type::iterator;
 
   DeepRegion ();
   DeepRegion (const db::Region &other, DeepShapeStore &dss);

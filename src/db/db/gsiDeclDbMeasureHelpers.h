@@ -95,8 +95,8 @@ class property_computation_processor
   : public gsi::shape_processor_base<ProcessorBase>
 {
 public:
-  typedef typename ProcessorBase::shape_type shape_type;
-  typedef typename ProcessorBase::result_type result_type;
+  using shape_type = typename ProcessorBase::shape_type;
+  using result_type = typename ProcessorBase::result_type;
 
   property_computation_processor (const Container *container, const std::map<tl::Variant, std::string> &expressions, bool copy_properties, double dbu, const std::map<std::string, tl::Variant> &variables)
     : m_eval (dbu, true /*with_put*/), m_copy_properties (copy_properties), m_expression_strings (expressions)
@@ -180,7 +180,7 @@ class expression_filter
   : public FilterBase
 {
 public:
-  typedef typename FilterBase::shape_type shape_type;
+  using shape_type = typename FilterBase::shape_type;
 
   expression_filter (const std::string &expression, bool inverse, double dbu, const std::map<std::string, tl::Variant> &variables)
     : m_eval (dbu, false /*without put func*/), m_inverse (inverse), m_expression_string (expression)

@@ -57,8 +57,8 @@ class DB_PUBLIC PolygonGenerator
   : public EdgeSink
 {
 public:
-  typedef std::list <PGPoint> open_map_type;
-  typedef open_map_type::iterator open_map_iterator_type;
+  using open_map_type = std::list <PGPoint>;
+  using open_map_iterator_type = open_map_type::iterator;
 
   /**
    *  @brief Constructor
@@ -204,8 +204,8 @@ class DB_PUBLIC TrapezoidGenerator
   : public EdgeSink
 {
 public:
-  typedef std::vector <std::pair<db::Edge, db::Edge> > edge_map_type;
-  typedef edge_map_type::iterator edge_map_type_iterator;
+  using edge_map_type = std::vector <std::pair<db::Edge, db::Edge> >;
+  using edge_map_type_iterator = edge_map_type::iterator;
 
   /**
    *  @brief Constructor

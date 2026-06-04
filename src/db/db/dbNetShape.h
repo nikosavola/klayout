@@ -46,10 +46,10 @@ class DB_PUBLIC NetShape
 public:
   enum shape_type { None, Text, Polygon };
 
-  typedef db::Point point_type;
-  typedef db::Box box_type;
-  typedef db::Coord coord_type;
-  typedef db::Disp trans_type;
+  using point_type = db::Point;
+  using box_type = db::Box;
+  using coord_type = db::Coord;
+  using trans_type = db::Disp;
 
   /**
    *  @brief Default constructor
@@ -165,9 +165,9 @@ public:
 template <>
 struct box_convert<db::NetShape>
 {
-  typedef db::NetShape::box_type box_type;
-  typedef db::NetShape::coord_type coord_type;
-  typedef db::complex_bbox_tag complexity;
+  using box_type = db::NetShape::box_type;
+  using coord_type = db::NetShape::coord_type;
+  using complexity = db::complex_bbox_tag;
 
   box_type operator() (const db::NetShape &net_shape) const
   {
@@ -178,7 +178,7 @@ struct box_convert<db::NetShape>
 template <>
 struct addressable_object_from_shape<db::NetShape>
 {
-  typedef db::NetShape value_type;
+  using value_type = db::NetShape;
 
   const value_type *operator () (const db::Shape &shape)
   {

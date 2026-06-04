@@ -76,26 +76,26 @@ class DB_PUBLIC Cell
     public gsi::ObjectBase
 {
 public:
-  typedef db::Box box_type;
-  typedef std::map<unsigned int, box_type> box_map;
-  typedef box_type::coord_type coord_type;
-  typedef db::CellInst cell_inst_type;
-  typedef db::simple_trans<coord_type> array_trans;
-  typedef db::array<cell_inst_type, array_trans> cell_inst_array_type;
-  typedef db::Shapes shapes_type;
-  typedef db::Shapes::shape_iterator shape_iterator;
-  typedef std::map<unsigned int, shapes_type> shapes_map;
-  typedef db::Instances instances_type;
-  typedef db::Instance instance_type;
-  typedef instances_type::touching_iterator touching_iterator;
-  typedef instances_type::overlapping_iterator overlapping_iterator;
-  typedef instances_type::const_iterator const_iterator;
-  typedef instances_type::parent_inst_type parent_inst_type;
-  typedef instances_type::parent_inst_iterator parent_inst_iterator;
-  typedef instances_type::parent_cell_iterator parent_cell_iterator;
-  typedef instances_type::child_cell_iterator child_cell_iterator;
-  typedef instances_type::basic_inst_type basic_inst_type;
-  typedef instances_type::sorted_inst_iterator sorted_inst_iterator;
+  using box_type = db::Box;
+  using box_map = std::map<unsigned int, box_type>;
+  using coord_type = box_type::coord_type;
+  using cell_inst_type = db::CellInst;
+  using array_trans = db::simple_trans<coord_type>;
+  using cell_inst_array_type = db::array<cell_inst_type, array_trans>;
+  using shapes_type = db::Shapes;
+  using shape_iterator = db::Shapes::shape_iterator;
+  using shapes_map = std::map<unsigned int, shapes_type>;
+  using instances_type = db::Instances;
+  using instance_type = db::Instance;
+  using touching_iterator = instances_type::touching_iterator;
+  using overlapping_iterator = instances_type::overlapping_iterator;
+  using const_iterator = instances_type::const_iterator;
+  using parent_inst_type = instances_type::parent_inst_type;
+  using parent_inst_iterator = instances_type::parent_inst_iterator;
+  using parent_cell_iterator = instances_type::parent_cell_iterator;
+  using child_cell_iterator = instances_type::child_cell_iterator;
+  using basic_inst_type = instances_type::basic_inst_type;
+  using sorted_inst_iterator = instances_type::sorted_inst_iterator;
 
   friend class db::Layout;
   friend class db::Library;

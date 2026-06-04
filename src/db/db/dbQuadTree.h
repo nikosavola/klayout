@@ -37,11 +37,11 @@ template <class T, class BC, size_t thr, class CMP>
 class quad_tree_node
 {
 public:
-  typedef typename BC::box_type box_type;
-  typedef typename box_type::point_type point_type;
-  typedef typename box_type::vector_type vector_type;
-  typedef std::vector<T> objects_vector;
-  typedef db::coord_traits<typename box_type::coord_type> coord_traits;
+  using box_type = typename BC::box_type;
+  using point_type = typename box_type::point_type;
+  using vector_type = typename box_type::vector_type;
+  using objects_vector = std::vector<T>;
+  using coord_traits = db::coord_traits<typename box_type::coord_type>;
 
   quad_tree_node (const point_type &center)
     : m_center (center)
@@ -434,8 +434,8 @@ template <class T, class BC, size_t thr, class CMP, class S>
 class quad_tree_iterator
 {
 public:
-  typedef quad_tree_node<T, BC, thr, CMP> quad_tree_node_type;
-  typedef typename BC::box_type box_type;
+  using quad_tree_node_type = quad_tree_node<T, BC, thr, CMP>;
+  using box_type = typename BC::box_type;
 
   quad_tree_iterator ()
     : m_s (), m_i (0)
@@ -533,7 +533,7 @@ template <class T, class BC>
 class quad_tree_always_sel
 {
 public:
-  typedef typename BC::box_type box_type;
+  using box_type = typename BC::box_type;
 
   bool select (const T &) const
   {
@@ -553,7 +553,7 @@ template <class T, class BC>
 class quad_tree_touching_sel
 {
 public:
-  typedef typename BC::box_type box_type;
+  using box_type = typename BC::box_type;
 
   quad_tree_touching_sel ()
   {
@@ -587,7 +587,7 @@ template <class T, class BC>
 class quad_tree_overlapping_sel
 {
 public:
-  typedef typename BC::box_type box_type;
+  using box_type = typename BC::box_type;
 
   quad_tree_overlapping_sel ()
   {
@@ -645,14 +645,14 @@ template <class T, class BC, size_t thr = 10, class CMP = quad_tree_default_cmp<
 class quad_tree
 {
 public:
-  typedef quad_tree_node<T, BC, thr, CMP> quad_tree_node_type;
-  typedef quad_tree_iterator<T, BC, thr, CMP, quad_tree_always_sel<T, BC> > quad_tree_flat_iterator;
-  typedef quad_tree_iterator<T, BC, thr, CMP, quad_tree_touching_sel<T, BC> > quad_tree_touching_iterator;
-  typedef quad_tree_iterator<T, BC, thr, CMP, quad_tree_overlapping_sel<T, BC> > quad_tree_overlapping_iterator;
-  typedef typename BC::box_type box_type;
-  typedef typename box_type::point_type point_type;
-  typedef typename box_type::vector_type vector_type;
-  typedef std::vector<T> objects_vector;
+  using quad_tree_node_type = quad_tree_node<T, BC, thr, CMP>;
+  using quad_tree_flat_iterator = quad_tree_iterator<T, BC, thr, CMP, quad_tree_always_sel<T, BC> >;
+  using quad_tree_touching_iterator = quad_tree_iterator<T, BC, thr, CMP, quad_tree_touching_sel<T, BC> >;
+  using quad_tree_overlapping_iterator = quad_tree_iterator<T, BC, thr, CMP, quad_tree_overlapping_sel<T, BC> >;
+  using box_type = typename BC::box_type;
+  using point_type = typename box_type::point_type;
+  using vector_type = typename box_type::vector_type;
+  using objects_vector = std::vector<T>;
 
   /**
    *  @brief Default constructor

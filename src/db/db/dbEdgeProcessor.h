@@ -258,7 +258,7 @@ private:
 class DB_PUBLIC EdgeEvaluatorBase
 {
 public:
-  typedef size_t property_type;
+  using property_type = size_t;
 
   EdgeEvaluatorBase () { }
   virtual ~EdgeEvaluatorBase () { }
@@ -287,8 +287,8 @@ class DB_PUBLIC InteractionDetector
   : public EdgeEvaluatorBase
 {
 public:
-  typedef std::set<std::pair<property_type, property_type> > interactions_type;
-  typedef interactions_type::const_iterator iterator;
+  using interactions_type = std::set<std::pair<property_type, property_type> >;
+  using iterator = interactions_type::const_iterator;
 
   /**
    *  @brief Constructor
@@ -655,7 +655,7 @@ private:
 class DB_PUBLIC EdgeProcessor
 {
 public:
-  typedef size_t property_type;
+  using property_type = size_t;
 
   /**
    *  @brief Default constructor

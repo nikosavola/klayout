@@ -44,8 +44,8 @@ class DeepShapeStore;
 class TransformationReducer;
 class EdgeFilterBase;
 
-typedef generic_shape_iterator<EdgePair> EdgePairsIterator;
-typedef addressable_shape_delivery<EdgePair> AddressableEdgePairDelivery;
+using EdgePairsIterator = generic_shape_iterator<EdgePair>;
+using AddressableEdgePairDelivery = addressable_shape_delivery<EdgePair>;
 
 class EdgePairs;
 
@@ -55,7 +55,7 @@ class EdgePairs;
 class DB_PUBLIC EdgePairFilterBase
 {
 public:
-  typedef db::EdgePair shape_type;
+  using shape_type = db::EdgePair;
 
   EdgePairFilterBase () { }
   virtual ~EdgePairFilterBase () { }
@@ -81,14 +81,14 @@ class DB_PUBLIC EdgePairs
   : public db::ShapeCollection
 {
 public:
-  typedef db::Coord coord_type;
-  typedef db::coord_traits<db::Coord> coord_traits;
-  typedef db::EdgePair edge_pair_type;
-  typedef db::Vector vector_type;
-  typedef db::Point point_type;
-  typedef db::Box box_type;
-  typedef coord_traits::distance_type distance_type;
-  typedef EdgePairsIterator const_iterator;
+  using coord_type = db::Coord;
+  using coord_traits = db::coord_traits<db::Coord>;
+  using edge_pair_type = db::EdgePair;
+  using vector_type = db::Vector;
+  using point_type = db::Point;
+  using box_type = db::Box;
+  using distance_type = coord_traits::distance_type;
+  using const_iterator = EdgePairsIterator;
 
   /**
    *  @brief Default constructor

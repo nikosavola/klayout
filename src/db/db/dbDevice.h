@@ -99,8 +99,8 @@ class DB_PUBLIC Device
   : public db::NetlistObject
 {
 public:
-  typedef std::vector<std::pair<size_t, size_t> > global_connections;
-  typedef global_connections::const_iterator global_connections_iterator;
+  using global_connections = std::vector<std::pair<size_t, size_t> >;
+  using global_connections_iterator = global_connections::const_iterator;
 
   /**
    *  @brief Default constructor

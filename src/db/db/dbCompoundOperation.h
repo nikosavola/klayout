@@ -314,28 +314,28 @@ struct compound_operation_type_traits;
 template <>
 struct compound_operation_type_traits<db::PolygonRefWithProperties>
 {
-  typedef db::Region container_type;
+  using container_type = db::Region;
   static CompoundRegionOperationNode::ResultType type () { return CompoundRegionOperationNode::Region; }
 };
 
 template <>
 struct compound_operation_type_traits<db::PolygonWithProperties>
 {
-  typedef db::Region container_type;
+  using container_type = db::Region;
   static CompoundRegionOperationNode::ResultType type () { return CompoundRegionOperationNode::Region; }
 };
 
 template <>
 struct compound_operation_type_traits<db::EdgeWithProperties>
 {
-  typedef db::Edges container_type;
+  using container_type = db::Edges;
   static CompoundRegionOperationNode::ResultType type () { return CompoundRegionOperationNode::Edges; }
 };
 
 template <>
 struct compound_operation_type_traits<db::EdgePairWithProperties>
 {
-  typedef db::EdgePairs container_type;
+  using container_type = db::EdgePairs;
   static CompoundRegionOperationNode::ResultType type () { return CompoundRegionOperationNode::EdgePairs; }
 };
 
@@ -778,7 +778,7 @@ public:
   virtual void do_compute_local (CompoundRegionOperationCache * /*cache*/, db::Layout * /*layout*/, db::Cell * /*cell*/, const shape_interactions<db::PolygonRefWithProperties, db::PolygonRefWithProperties> & /*interactions*/, std::vector<std::unordered_set<db::EdgePairWithProperties> > & /*results*/,    const db::LocalProcessorBase * /*proc*/) const { }
 
 private:
-  typedef db::interacting_local_operation<db::PolygonWithProperties, db::PolygonWithProperties, db::PolygonWithProperties> op_type;
+  using op_type = db::interacting_local_operation<db::PolygonWithProperties, db::PolygonWithProperties, db::PolygonWithProperties>;
   op_type m_op;
 };
 

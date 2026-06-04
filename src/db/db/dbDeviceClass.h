@@ -408,7 +408,7 @@ class DB_PUBLIC DeviceClass
   : public gsi::ObjectBase, public tl::Object, public tl::UniqueId
 {
 public:
-  typedef size_t terminal_id_type;
+  using terminal_id_type = size_t;
 
   /**
    *  @brief Constructor

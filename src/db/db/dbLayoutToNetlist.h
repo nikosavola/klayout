@@ -79,8 +79,8 @@ class DB_PUBLIC LayoutToNetlist
   : public gsi::ObjectBase, public db::NetlistManipulationCallbacks
 {
 public:
-  typedef std::map<unsigned int, std::string>::const_iterator layer_iterator;
-  typedef std::vector<db::LogEntryData> log_entries_type;
+  using layer_iterator = std::map<unsigned int, std::string>::const_iterator;
+  using log_entries_type = std::vector<db::LogEntryData>;
 
   /**
    *  @brief The constructor
@@ -1405,7 +1405,7 @@ private:
     size_t cluster_id;
   };
 
-  typedef std::map<CellReuseTableKey, std::pair<db::cell_index_type, bool> > cell_reuse_table_type;
+  using cell_reuse_table_type = std::map<CellReuseTableKey, std::pair<db::cell_index_type, bool> >;
 
   tl::weak_ptr<db::Layout> mp_target;
   db::CellMapping m_cmap;

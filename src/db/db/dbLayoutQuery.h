@@ -268,7 +268,7 @@ private:
 struct DB_PUBLIC FilterStateObjectives
 {
 public:
-  typedef std::set<db::cell_index_type>::const_iterator cell_iterator;
+  using cell_iterator = std::set<db::cell_index_type>::const_iterator;
 
   FilterStateObjectives ();
 

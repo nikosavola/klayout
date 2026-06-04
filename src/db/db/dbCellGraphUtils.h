@@ -47,9 +47,9 @@ namespace db
 class DB_PUBLIC CellCounter 
 {
 public:
-  typedef std::map <db::cell_index_type, size_t> cache_t;
-  typedef std::set <db::cell_index_type> selection_t;
-  typedef selection_t::const_iterator selection_iterator;
+  using cache_t = std::map <db::cell_index_type, size_t>;
+  using selection_t = std::set <db::cell_index_type>;
+  using selection_iterator = selection_t::const_iterator;
 
   /** 
    *  @brief Instantiate a counter object with a reference to the given cell graph
@@ -143,9 +143,9 @@ template <class Value>
 class InstanceStatistics 
 {
 public:
-  typedef std::map <db::cell_index_type, Value> cache_t;
-  typedef std::set <db::cell_index_type> selection_t;
-  typedef selection_t::const_iterator selection_iterator;
+  using cache_t = std::map <db::cell_index_type, Value>;
+  using selection_t = std::set <db::cell_index_type>;
+  using selection_iterator = selection_t::const_iterator;
 
   /** 
    *  @brief Instantiate a counter object with a reference to the given cell graph

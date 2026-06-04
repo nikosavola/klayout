@@ -91,20 +91,20 @@ template <class C>
 class DB_PUBLIC polygon_contour
 {
 public:
-  typedef C coord_type;
-  typedef size_t size_type;
-  typedef db::coord_traits<coord_type> coord_traits;
-  typedef typename coord_traits::distance_type distance_type; 
-  typedef typename coord_traits::perimeter_type perimeter_type; 
-  typedef typename coord_traits::area_type area_type; 
-  typedef db::point<C> point_type;
-  typedef db::vector<C> vector_type;
-  typedef point_type value_type;
-  typedef db::box<C> box_type;
-  typedef db::simple_trans<C> trans_type;
-  typedef tl::vector<point_type> container_type;
-  typedef typename container_type::const_iterator const_iterator;
-  typedef polygon_contour_iterator<polygon_contour, db::unit_trans<C> > simple_iterator;
+  using coord_type = C;
+  using size_type = size_t;
+  using coord_traits = db::coord_traits<coord_type>;
+  using distance_type = typename coord_traits::distance_type; 
+  using perimeter_type = typename coord_traits::perimeter_type; 
+  using area_type = typename coord_traits::area_type; 
+  using point_type = db::point<C>;
+  using vector_type = db::vector<C>;
+  using value_type = point_type;
+  using box_type = db::box<C>;
+  using trans_type = db::simple_trans<C>;
+  using container_type = tl::vector<point_type>;
+  using const_iterator = typename container_type::const_iterator;
+  using simple_iterator = polygon_contour_iterator<polygon_contour, db::unit_trans<C> >;
 
 private:
   /**
@@ -702,7 +702,7 @@ public:
   polygon_contour<typename Tr::target_coord_type> transformed (const Tr &t, bool compress = default_compression<typename Tr::target_coord_type> (), bool remove_reflected = false) const
   {
     //  construct the transformed polygon
-    typedef polygon_contour_iterator<polygon_contour<C>, db::unit_trans<C> > iter;
+    using iter = polygon_contour_iterator<polygon_contour<C>, db::unit_trans<C> >;
     return polygon_contour<typename Tr::target_coord_type> (iter (this, 0), iter (this, size ()), t, is_hole (), compress, true, remove_reflected);
   }
 
@@ -1127,15 +1127,15 @@ template <class Contour, class Tr>
 class polygon_contour_iterator
 {
 public:
-  typedef Contour contour_type;
-  typedef typename contour_type::value_type point_type;
-  typedef typename contour_type::value_type value_type;
-  typedef void pointer;
-  typedef value_type reference; 
-  typedef typename point_type::coord_type coord_type;
-  typedef std::bidirectional_iterator_tag iterator_category;
-  typedef Tr trans_type;
-  typedef ptrdiff_t difference_type;
+  using contour_type = Contour;
+  using point_type = typename contour_type::value_type;
+  using value_type = typename contour_type::value_type;
+  using pointer = void;
+  using reference = value_type; 
+  using coord_type = typename point_type::coord_type;
+  using iterator_category = std::bidirectional_iterator_tag;
+  using trans_type = Tr;
+  using difference_type = ptrdiff_t;
 
   /** 
    *  @brief The default constructor 
@@ -1306,17 +1306,17 @@ template <class P, class Tr>
 class polygon_edge_iterator
 {
 public:
-  typedef P polygon_type;
-  typedef typename polygon_type::coord_type coord_type;
-  typedef typename polygon_type::contour_type contour_type;
-  typedef db::edge<coord_type> edge_type;
-  typedef edge_type value_type;
-  typedef db::point<coord_type> point_type;
-  typedef Tr trans_type;
+  using polygon_type = P;
+  using coord_type = typename polygon_type::coord_type;
+  using contour_type = typename polygon_type::contour_type;
+  using edge_type = db::edge<coord_type>;
+  using value_type = edge_type;
+  using point_type = db::point<coord_type>;
+  using trans_type = Tr;
   typedef void pointer;           //  no operator->
   typedef edge_type reference;    //  operator* returns a value
-  typedef std::bidirectional_iterator_tag iterator_category;
-  typedef void difference_type;
+  using iterator_category = std::bidirectional_iterator_tag;
+  using difference_type = void;
 
   /** 
    *  @brief The default constructor 
@@ -1475,21 +1475,21 @@ template <class C>
 class DB_PUBLIC_TEMPLATE polygon
 {
 public:
-  typedef C coord_type;
-  typedef db::edge<coord_type> edge_type;
-  typedef db::simple_trans<coord_type> trans_type;
-  typedef db::point<coord_type> point_type;
-  typedef db::vector<coord_type> vector_type;
-  typedef db::box<coord_type> box_type;
-  typedef db::coord_traits<coord_type> coord_traits;
-  typedef typename coord_traits::distance_type distance_type; 
-  typedef typename coord_traits::perimeter_type perimeter_type; 
-  typedef typename coord_traits::area_type area_type; 
-  typedef polygon_contour<C> contour_type;
-  typedef tl::vector<contour_type> contour_list_type;
-  typedef db::polygon_edge_iterator< polygon<C>, db::unit_trans<C> > polygon_edge_iterator;
-  typedef db::polygon_contour_iterator< contour_type, db::unit_trans<C> > polygon_contour_iterator;
-  typedef db::object_tag< polygon<C> > tag;
+  using coord_type = C;
+  using edge_type = db::edge<coord_type>;
+  using trans_type = db::simple_trans<coord_type>;
+  using point_type = db::point<coord_type>;
+  using vector_type = db::vector<coord_type>;
+  using box_type = db::box<coord_type>;
+  using coord_traits = db::coord_traits<coord_type>;
+  using distance_type = typename coord_traits::distance_type; 
+  using perimeter_type = typename coord_traits::perimeter_type; 
+  using area_type = typename coord_traits::area_type; 
+  using contour_type = polygon_contour<C>;
+  using contour_list_type = tl::vector<contour_type>;
+  using polygon_edge_iterator = db::polygon_edge_iterator< polygon<C>, db::unit_trans<C> >;
+  using polygon_contour_iterator = db::polygon_contour_iterator< contour_type, db::unit_trans<C> >;
+  using tag = db::object_tag< polygon<C> >;
 
 
   /**
@@ -1940,7 +1940,7 @@ public:
   template <class Tr>
   polygon<typename Tr::target_coord_type> transformed_ext (const Tr &t, bool compress = default_compression<typename Tr::target_coord_type> (), bool remove_reflected = false) const
   {
-    typedef typename Tr::target_coord_type target_coord_type;
+    using target_coord_type = typename Tr::target_coord_type;
     polygon<target_coord_type> poly;
 
     //  transform the contours and add as new ones
@@ -2580,21 +2580,21 @@ template <class C>
 class DB_PUBLIC_TEMPLATE simple_polygon
 {
 public:
-  typedef C coord_type;
-  typedef db::edge<coord_type> edge_type;
-  typedef db::simple_trans<coord_type> trans_type;
-  typedef db::point<coord_type> point_type;
-  typedef db::vector<coord_type> vector_type;
-  typedef db::box<coord_type> box_type;
-  typedef db::coord_traits<coord_type> coord_traits;
-  typedef typename coord_traits::distance_type distance_type; 
-  typedef typename coord_traits::perimeter_type perimeter_type; 
-  typedef typename coord_traits::area_type area_type; 
-  typedef polygon_contour<C> contour_type;
-  typedef tl::vector<contour_type> contour_list_type;
-  typedef db::polygon_edge_iterator< simple_polygon<C>, db::unit_trans<C> > polygon_edge_iterator;
-  typedef db::polygon_contour_iterator< contour_type, db::unit_trans<C> > polygon_contour_iterator;
-  typedef db::object_tag< simple_polygon<C> > tag;
+  using coord_type = C;
+  using edge_type = db::edge<coord_type>;
+  using trans_type = db::simple_trans<coord_type>;
+  using point_type = db::point<coord_type>;
+  using vector_type = db::vector<coord_type>;
+  using box_type = db::box<coord_type>;
+  using coord_traits = db::coord_traits<coord_type>;
+  using distance_type = typename coord_traits::distance_type; 
+  using perimeter_type = typename coord_traits::perimeter_type; 
+  using area_type = typename coord_traits::area_type; 
+  using contour_type = polygon_contour<C>;
+  using contour_list_type = tl::vector<contour_type>;
+  using polygon_edge_iterator = db::polygon_edge_iterator< simple_polygon<C>, db::unit_trans<C> >;
+  using polygon_contour_iterator = db::polygon_contour_iterator< contour_type, db::unit_trans<C> >;
+  using tag = db::object_tag< simple_polygon<C> >;
 
   /**
    *  @brief The default constructor.
@@ -2868,7 +2868,7 @@ public:
   template <class Tr>
   simple_polygon<typename Tr::target_coord_type> transformed_ext (const Tr &t, bool compress = default_compression<typename Tr::target_coord_type> (), bool remove_reflected = false) const
   {
-    typedef typename Tr::target_coord_type target_coord_type;
+    using target_coord_type = typename Tr::target_coord_type;
     simple_polygon<target_coord_type> poly;
 
     //  transform the contours and add as new ones
@@ -3350,19 +3350,19 @@ class polygon_ref
   : public shape_ref<Poly, Trans>
 {
 public:
-  typedef typename Poly::coord_type coord_type;
-  typedef typename Poly::point_type point_type;
-  typedef typename Poly::box_type box_type;
-  typedef typename Poly::edge_type edge_type;
-  typedef Trans trans_type;
-  typedef Poly polygon_type;
-  typedef db::polygon_edge_iterator<Poly, trans_type> polygon_edge_iterator;
-  typedef db::polygon_contour_iterator<typename polygon_type::contour_type, trans_type> polygon_contour_iterator;
-  typedef db::generic_repository<coord_type> repository_type;
-  typedef typename Poly::distance_type distance_type;
-  typedef typename Poly::perimeter_type perimeter_type; 
-  typedef typename Poly::area_type area_type;
-  typedef db::object_tag< polygon_ref<Poly, Trans> > tag;
+  using coord_type = typename Poly::coord_type;
+  using point_type = typename Poly::point_type;
+  using box_type = typename Poly::box_type;
+  using edge_type = typename Poly::edge_type;
+  using trans_type = Trans;
+  using polygon_type = Poly;
+  using polygon_edge_iterator = db::polygon_edge_iterator<Poly, trans_type>;
+  using polygon_contour_iterator = db::polygon_contour_iterator<typename polygon_type::contour_type, trans_type>;
+  using repository_type = db::generic_repository<coord_type>;
+  using distance_type = typename Poly::distance_type;
+  using perimeter_type = typename Poly::perimeter_type; 
+  using area_type = typename Poly::area_type;
+  using tag = db::object_tag< polygon_ref<Poly, Trans> >;
 
   /**
    *  @brief The default constructor.
@@ -3711,62 +3711,62 @@ operator<< (std::ostream &os, const simple_polygon<C> &p)
 /**
  *  @brief The standard polygon typedef
  */
-typedef polygon<db::Coord> Polygon;
+using Polygon = polygon<db::Coord>;
 
 /**
  *  @brief The double coordinate polygon typedef
  */
-typedef polygon<db::DCoord> DPolygon;
+using DPolygon = polygon<db::DCoord>;
 
 /**
  *  @brief The simple polygon typedef
  */
-typedef simple_polygon<db::Coord> SimplePolygon;
+using SimplePolygon = simple_polygon<db::Coord>;
 
 /**
  *  @brief The double coordinate simple polygon typedef
  */
-typedef simple_polygon<db::DCoord> DSimplePolygon;
+using DSimplePolygon = simple_polygon<db::DCoord>;
 
 /**
  *  @brief The standard polygon reference typedef
  */
-typedef polygon_ref<Polygon, Disp> PolygonRef;
+using PolygonRef = polygon_ref<Polygon, Disp>;
 
 /**
  *  @brief The double coordinate polygon reference typedef
  */
-typedef polygon_ref<DPolygon, DDisp> DPolygonRef;
+using DPolygonRef = polygon_ref<DPolygon, DDisp>;
 
 /**
  *  @brief The simple polygon reference typedef
  */
-typedef polygon_ref<SimplePolygon, Disp> SimplePolygonRef;
+using SimplePolygonRef = polygon_ref<SimplePolygon, Disp>;
 
 /**
  *  @brief The double coordinate simple polygon reference typedef
  */
-typedef polygon_ref<DSimplePolygon, DDisp> DSimplePolygonRef;
+using DSimplePolygonRef = polygon_ref<DSimplePolygon, DDisp>;
 
 /**
  *  @brief The standard polygon reference (without transformation) typedef
  */
-typedef polygon_ref<Polygon, UnitTrans> PolygonPtr;
+using PolygonPtr = polygon_ref<Polygon, UnitTrans>;
 
 /**
  *  @brief The double coordinate polygon reference (without transformation) typedef
  */
-typedef polygon_ref<DPolygon, DUnitTrans> DPolygonPtr;
+using DPolygonPtr = polygon_ref<DPolygon, DUnitTrans>;
 
 /**
  *  @brief The simple polygon reference (without transformation) typedef
  */
-typedef polygon_ref<SimplePolygon, UnitTrans> SimplePolygonPtr;
+using SimplePolygonPtr = polygon_ref<SimplePolygon, UnitTrans>;
 
 /**
  *  @brief The double coordinate simple polygon reference (without transformation) typedef
  */
-typedef polygon_ref<DSimplePolygon, DUnitTrans> DSimplePolygonPtr;
+using DSimplePolygonPtr = polygon_ref<DSimplePolygon, DUnitTrans>;
 
 /**
  *  @brief Collect memory statistics

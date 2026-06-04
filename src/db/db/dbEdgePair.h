@@ -53,18 +53,18 @@ template <class C>
 class DB_PUBLIC_TEMPLATE edge_pair
 {
 public:
-  typedef C coord_type;
-  typedef db::edge<C> edge_type;
-  typedef db::box<C> box_type;
-  typedef db::point<C> point_type;
-  typedef db::vector<C> vector_type;
-  typedef db::polygon<C> polygon_type;
-  typedef db::simple_polygon<C> simple_polygon_type;
-  typedef db::coord_traits<C> coord_traits;
-  typedef typename coord_traits::distance_type distance_type; 
-  typedef typename coord_traits::area_type area_type; 
-  typedef typename coord_traits::perimeter_type perimeter_type;
-  typedef db::object_tag< edge_pair<C> > tag;
+  using coord_type = C;
+  using edge_type = db::edge<C>;
+  using box_type = db::box<C>;
+  using point_type = db::point<C>;
+  using vector_type = db::vector<C>;
+  using polygon_type = db::polygon<C>;
+  using simple_polygon_type = db::simple_polygon<C>;
+  using coord_traits = db::coord_traits<C>;
+  using distance_type = typename coord_traits::distance_type; 
+  using area_type = typename coord_traits::area_type; 
+  using perimeter_type = typename coord_traits::perimeter_type;
+  using tag = db::object_tag< edge_pair<C> >;
 
   /**
    *  @brief The default constructor.
@@ -624,12 +624,12 @@ operator<< (std::ostream &os, const edge_pair<C> &e)
 /**
  *  @brief The standard edge pair typedef
  */
-typedef edge_pair<db::Coord>  EdgePair;
+using EdgePair = edge_pair<db::Coord> ;
 
 /**
  *  @brief The double coordinate edge pair typedef
  */
-typedef edge_pair<db::DCoord> DEdgePair;
+using DEdgePair = edge_pair<db::DCoord>;
 
 } // namespace db
 

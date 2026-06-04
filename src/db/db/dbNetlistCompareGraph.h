@@ -143,7 +143,7 @@ private:
 class DB_PUBLIC NetGraphNode
 {
 public:
-  typedef std::pair<std::vector<Transition>, std::pair<size_t, const db::Net *> > edge_type;
+  using edge_type = std::pair<std::vector<Transition>, std::pair<size_t, const db::Net *> >;
 
   static void swap_edges (edge_type &e1, edge_type &e2)
   {
@@ -159,7 +159,7 @@ public:
     }
   };
 
-  typedef std::vector<edge_type>::const_iterator edge_iterator;
+  using edge_iterator = std::vector<edge_type>::const_iterator;
 
   NetGraphNode ()
     : mp_net (0), m_other_net_index (invalid_id)
@@ -354,7 +354,7 @@ namespace db
 class DB_PUBLIC NetGraph
 {
 public:
-  typedef std::vector<NetGraphNode>::const_iterator node_iterator;
+  using node_iterator = std::vector<NetGraphNode>::const_iterator;
 
   NetGraph ();
 

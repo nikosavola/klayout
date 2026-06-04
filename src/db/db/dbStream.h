@@ -158,7 +158,7 @@ template <class OPT, class HOST>
 class StreamOptionsReadAdaptor
 {
 public:
-  typedef tl::pass_by_ref_tag tag;
+  using tag = tl::pass_by_ref_tag;
 
   StreamOptionsReadAdaptor ()
     : mp_options (0), m_done (false)

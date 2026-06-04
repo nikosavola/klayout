@@ -73,9 +73,9 @@ class DeviceAbstract;
 class DB_PUBLIC NetlistExtractor
 {
 public:
-  typedef db::hier_clusters<db::NetShape> hier_clusters_type;
-  typedef db::connected_clusters<db::NetShape> connected_clusters_type;
-  typedef db::local_cluster<db::NetShape> local_cluster_type;
+  using hier_clusters_type = db::hier_clusters<db::NetShape>;
+  using connected_clusters_type = db::connected_clusters<db::NetShape>;
+  using local_cluster_type = db::local_cluster<db::NetShape>;
 
   /**
    *  @brief NetExtractor constructor

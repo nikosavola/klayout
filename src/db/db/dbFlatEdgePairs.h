@@ -36,7 +36,7 @@ namespace db {
 /**
  *  @brief An iterator delegate for the flat edge pair set
  */
-typedef generic_shapes_iterator_delegate<db::EdgePair> FlatEdgePairsIterator;
+using FlatEdgePairsIterator = generic_shapes_iterator_delegate<db::EdgePair>;
 
 /**
  *  @brief The delegate for the actual edge pair set implementation
@@ -45,8 +45,8 @@ class DB_PUBLIC FlatEdgePairs
   : public MutableEdgePairs
 {
 public:
-  typedef db::layer<db::EdgePair, db::unstable_layer_tag> edge_pair_layer_type;
-  typedef edge_pair_layer_type::iterator edge_pair_iterator_type;
+  using edge_pair_layer_type = db::layer<db::EdgePair, db::unstable_layer_tag>;
+  using edge_pair_iterator_type = edge_pair_layer_type::iterator;
 
   FlatEdgePairs ();
   FlatEdgePairs (const db::Shapes &edges);

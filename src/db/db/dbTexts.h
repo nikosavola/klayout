@@ -43,8 +43,8 @@ class Region;
 class DeepShapeStore;
 class TransformationReducer;
 
-typedef generic_shape_iterator<Text> TextsIterator;
-typedef addressable_shape_delivery<Text> AddressableTextDelivery;
+using TextsIterator = generic_shape_iterator<Text>;
+using AddressableTextDelivery = addressable_shape_delivery<Text>;
 
 class Texts;
 
@@ -54,7 +54,7 @@ class Texts;
 class DB_PUBLIC TextFilterBase
 {
 public:
-  typedef db::Text shape_type;
+  using shape_type = db::Text;
 
   TextFilterBase () { }
   virtual ~TextFilterBase () { }
@@ -77,14 +77,14 @@ class DB_PUBLIC Texts
   : public db::ShapeCollection
 {
 public:
-  typedef db::Coord coord_type;
-  typedef db::coord_traits<db::Coord> coord_traits;
-  typedef db::Text edge_pair_type;
-  typedef db::Vector vector_type;
-  typedef db::Point point_type;
-  typedef db::Box box_type;
-  typedef coord_traits::distance_type distance_type;
-  typedef TextsIterator const_iterator;
+  using coord_type = db::Coord;
+  using coord_traits = db::coord_traits<db::Coord>;
+  using edge_pair_type = db::Text;
+  using vector_type = db::Vector;
+  using point_type = db::Point;
+  using box_type = db::Box;
+  using distance_type = coord_traits::distance_type;
+  using const_iterator = TextsIterator;
 
   /**
    *  @brief Default constructor

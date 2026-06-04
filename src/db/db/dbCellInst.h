@@ -43,11 +43,11 @@ class Layout;
 class DB_PUBLIC CellInst
 {
 public:
-  typedef db::Layout layout_type;
-  typedef db::Box box_type;
-  typedef Box::coord_type coord_type;
+  using layout_type = db::Layout;
+  using box_type = db::Box;
+  using coord_type = Box::coord_type;
 
-  typedef db::object_tag<db::CellInst> tag;
+  using tag = db::object_tag<db::CellInst>;
 
   /**
    *  @brief Default ctor

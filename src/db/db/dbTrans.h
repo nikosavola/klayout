@@ -54,9 +54,9 @@ template <class C> class DB_PUBLIC_TEMPLATE fixpoint_trans;
 template <class C>
 struct default_trans
 {
-  typedef C coord_type;
-  typedef C target_coord_type;
-  typedef vector<C> displacement_type;
+  using coord_type = C;
+  using target_coord_type = C;
+  using displacement_type = vector<C>;
 
   /**
    *  @brief Mirror predicate
@@ -136,11 +136,11 @@ template <class C>
 struct unit_trans
   : public default_trans<C>
 {
-  typedef C coord_type;
-  typedef C target_coord_type;
-  typedef typename coord_traits<C>::distance_type distance_type;
-  typedef vector<C> displacement_type;
-  typedef unit_trans inverse_trans;
+  using coord_type = C;
+  using target_coord_type = C;
+  using distance_type = typename coord_traits<C>::distance_type;
+  using displacement_type = vector<C>;
+  using inverse_trans = unit_trans;
 
   /**
    *  @brief The default constructor (unity transformation)
@@ -361,11 +361,11 @@ class fixpoint_trans
   : public default_trans<C>
 {
 public:
-  typedef C coord_type;
-  typedef C target_coord_type;
-  typedef typename coord_traits<C>::distance_type distance_type;
-  typedef vector<C> displacement_type;
-  typedef fixpoint_trans inverse_trans;
+  using coord_type = C;
+  using target_coord_type = C;
+  using distance_type = typename coord_traits<C>::distance_type;
+  using displacement_type = vector<C>;
+  using inverse_trans = fixpoint_trans;
 
   /**
    *  @brief The default constructor (unity transformation)
@@ -766,11 +766,11 @@ class disp_trans
   : public default_trans<C>
 {
 public:
-  typedef C coord_type;
-  typedef C target_coord_type;
-  typedef typename coord_traits<C>::distance_type distance_type;
-  typedef vector<C> displacement_type;
-  typedef disp_trans<C> inverse_trans;
+  using coord_type = C;
+  using target_coord_type = C;
+  using distance_type = typename coord_traits<C>::distance_type;
+  using displacement_type = vector<C>;
+  using inverse_trans = disp_trans<C>;
 
   /**
    *  @brief The default constructor (unity transformation)
@@ -1121,11 +1121,11 @@ class DB_PUBLIC_TEMPLATE simple_trans
   : public fixpoint_trans<C>
 {
 public:
-  typedef C coord_type;
-  typedef C target_coord_type;
-  typedef typename coord_traits<C>::distance_type distance_type;
-  typedef vector<C> displacement_type;
-  typedef simple_trans<C> inverse_trans;
+  using coord_type = C;
+  using target_coord_type = C;
+  using distance_type = typename coord_traits<C>::distance_type;
+  using displacement_type = vector<C>;
+  using inverse_trans = simple_trans<C>;
 
   /**
    *  @brief The default constructor (unity transformation)
@@ -1552,13 +1552,13 @@ template <class I, class F, class R>
 class DB_PUBLIC_TEMPLATE complex_trans
 {
 public:
-  typedef I coord_type;
-  typedef F target_coord_type;
-  typedef typename coord_traits<I>::distance_type distance_type;
-  typedef typename coord_traits<F>::distance_type target_distance_type;
-  typedef vector<F> displacement_type;
-  typedef complex_trans<F, I, R> inverse_trans;
-  typedef epsilon_f<R> eps_f;
+  using coord_type = I;
+  using target_coord_type = F;
+  using distance_type = typename coord_traits<I>::distance_type;
+  using target_distance_type = typename coord_traits<F>::distance_type;
+  using displacement_type = vector<F>;
+  using inverse_trans = complex_trans<F, I, R>;
+  using eps_f = epsilon_f<R>;
 
   /**
    *  @brief The default constructor (unity transformation)
@@ -2346,9 +2346,9 @@ operator<< (std::ostream &os, const complex_trans<I, F, R> &t)
 template <class T1, class T2>
 struct combined_trans
 {
-  typedef typename T2::coord_type coord_type;
-  typedef typename T1::target_coord_type target_coord_type;
-  typedef combined_trans<typename T2::inverse_trans, typename T1::inverse_trans> inverse_trans;
+  using coord_type = typename T2::coord_type;
+  using target_coord_type = typename T1::target_coord_type;
+  using inverse_trans = combined_trans<typename T2::inverse_trans, typename T1::inverse_trans>;
 
   /**
    *  @brief Default constructor
@@ -2397,7 +2397,7 @@ struct combined_trans
   template <class C>
   point<target_coord_type> operator() (const point<C> &p) const
   {
-    typedef typename T2::target_coord_type intern_coord_type;
+    using intern_coord_type = typename T2::target_coord_type;
     point<intern_coord_type> q = t2.operator() (p);
     return t1.operator() (q);
   }
@@ -2414,7 +2414,7 @@ struct combined_trans
   template <class C>
   vector<target_coord_type> operator() (const vector<C> &p) const
   {
-    typedef typename T2::target_coord_type intern_coord_type;
+    using intern_coord_type = typename T2::target_coord_type;
     vector<intern_coord_type> q = t2.operator() (p);
     return t1.operator() (q);
   }
@@ -2431,7 +2431,7 @@ struct combined_trans
   template <class C>
   target_coord_type ctrans (C p) const
   {
-    typedef typename T2::target_coord_type intern_coord_type;
+    using intern_coord_type = typename T2::target_coord_type;
     intern_coord_type q = t2.ctrans (p);
     return t1.ctrans (q);
   }
@@ -2522,52 +2522,52 @@ operator<< (std::ostream &os, const combined_trans<T1, T2> &t)
 /**
  *  @brief The standard unit transformation
  */
-typedef unit_trans<db::Coord> UnitTrans;
+using UnitTrans = unit_trans<db::Coord>;
 
 /**
  *  @brief The standard unit transformation for double coordinates
  */
-typedef unit_trans<db::DCoord> DUnitTrans;
+using DUnitTrans = unit_trans<db::DCoord>;
 
 /**
  *  @brief The standard fixpoint transformation
  */
-typedef fixpoint_trans<db::Coord> FTrans;
+using FTrans = fixpoint_trans<db::Coord>;
 
 /**
  *  @brief The standard fixpoint transformation for double types
  */
-typedef fixpoint_trans<db::DCoord> DFTrans;
+using DFTrans = fixpoint_trans<db::DCoord>;
 
 /**
  *  @brief The standard displacement transformation
  */
-typedef disp_trans<db::Coord> Disp;
+using Disp = disp_trans<db::Coord>;
 
 /**
  *  @brief The double coordinate displacement transformation
  */
-typedef disp_trans<db::DCoord> DDisp;
+using DDisp = disp_trans<db::DCoord>;
 
 /**
  *  @brief The standard transformation
  */
-typedef simple_trans<db::Coord> Trans;
+using Trans = simple_trans<db::Coord>;
 
 /**
  *  @brief The double coordinate transformation
  */
-typedef simple_trans<db::DCoord> DTrans;
+using DTrans = simple_trans<db::DCoord>;
 
 /**
  *  @brief The standard complex transformation that converts integer to integer coordinates
  */
-typedef complex_trans<db::Coord, db::Coord> ICplxTrans;
+using ICplxTrans = complex_trans<db::Coord, db::Coord>;
 
 /**
  *  @brief The standard complex transformation
  */
-typedef complex_trans<db::Coord, db::DCoord> CplxTrans;
+using CplxTrans = complex_trans<db::Coord, db::DCoord>;
 
 /**
  *  @brief Specialization: concatenation of CplxTrans
@@ -2584,7 +2584,7 @@ inline CplxTrans operator* (const CplxTrans &a, const CplxTrans &b)
 /**
  *  @brief The inverse of the standard complex transformation
  */
-typedef complex_trans<db::DCoord, db::Coord> VCplxTrans;
+using VCplxTrans = complex_trans<db::DCoord, db::Coord>;
 
 /**
  *  @brief Specialization: concatenation of VCplxTrans
@@ -2601,7 +2601,7 @@ inline VCplxTrans operator* (const VCplxTrans &a, const VCplxTrans &b)
 /**
  *  @brief The double coordinate complex transformation
  */
-typedef complex_trans<db::DCoord, db::DCoord> DCplxTrans;
+using DCplxTrans = complex_trans<db::DCoord, db::DCoord>;
 
 /**
  *  @brief Transformation operator

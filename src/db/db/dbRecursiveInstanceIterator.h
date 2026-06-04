@@ -55,19 +55,19 @@ class RecursiveInstanceReceiver;
 class DB_PUBLIC RecursiveInstanceIterator
 {
 public:
-  typedef db::Layout layout_type;
-  typedef db::Box box_type;
-  typedef db::Region region_type;
-  typedef db::Cell cell_type;
-  typedef db::Cell::touching_iterator inst_iterator;
-  typedef db::CellInstArray::iterator inst_array_iterator;
-  typedef db::Instances::overlapping_iterator overlapping_instance_iterator;
-  typedef db::Instances::touching_iterator touching_instance_iterator;
-  typedef db::Instance instance_type;
-  typedef db::InstElement instance_element_type;
-  typedef db::ICplxTrans cplx_trans_type;
-  typedef instance_element_type value_type;
-  typedef db::box_tree<db::Box, db::Box, db::box_convert<db::Box>, 20, 20> box_tree_type;
+  using layout_type = db::Layout;
+  using box_type = db::Box;
+  using region_type = db::Region;
+  using cell_type = db::Cell;
+  using inst_iterator = db::Cell::touching_iterator;
+  using inst_array_iterator = db::CellInstArray::iterator;
+  using overlapping_instance_iterator = db::Instances::overlapping_iterator;
+  using touching_instance_iterator = db::Instances::touching_iterator;
+  using instance_type = db::Instance;
+  using instance_element_type = db::InstElement;
+  using cplx_trans_type = db::ICplxTrans;
+  using value_type = instance_element_type;
+  using box_tree_type = db::box_tree<db::Box, db::Box, db::box_convert<db::Box>, 20, 20>;
 
   /**
    *  @brief Default constructor
@@ -617,7 +617,7 @@ private:
 class DB_PUBLIC RecursiveInstanceReceiver
 {
 public:
-  typedef RecursiveInstanceIterator::box_tree_type box_tree_type;
+  using box_tree_type = RecursiveInstanceIterator::box_tree_type;
 
   /**
    *  @brief See new_inst for details.

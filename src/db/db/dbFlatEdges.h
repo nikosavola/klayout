@@ -37,7 +37,7 @@ namespace db {
 /**
  *  @brief An iterator delegate for the flat edge set
  */
-typedef generic_shapes_iterator_delegate<db::Edge> FlatEdgesIterator;
+using FlatEdgesIterator = generic_shapes_iterator_delegate<db::Edge>;
 
 /**
  *  @brief A flat, edge-set delegate
@@ -46,12 +46,12 @@ class DB_PUBLIC FlatEdges
   : public MutableEdges
 {
 public:
-  typedef db::Edge value_type;
+  using value_type = db::Edge;
 
-  typedef db::layer<db::Edge, db::unstable_layer_tag> edge_layer_type;
-  typedef edge_layer_type::iterator edge_iterator_type;
-  typedef db::layer<db::EdgeWithProperties, db::unstable_layer_tag> edge_layer_wp_type;
-  typedef edge_layer_wp_type::iterator edge_iterator_wp_type;
+  using edge_layer_type = db::layer<db::Edge, db::unstable_layer_tag>;
+  using edge_iterator_type = edge_layer_type::iterator;
+  using edge_layer_wp_type = db::layer<db::EdgeWithProperties, db::unstable_layer_tag>;
+  using edge_iterator_wp_type = edge_layer_wp_type::iterator;
 
   FlatEdges ();
   FlatEdges (const db::Shapes &edges, bool is_merged);

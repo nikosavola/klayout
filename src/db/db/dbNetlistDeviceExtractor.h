@@ -87,12 +87,12 @@ class DB_PUBLIC NetlistDeviceExtractor
   : public gsi::ObjectBase, public tl::Object
 {
 public:
-  typedef std::list<db::LogEntryData> log_entry_list;
-  typedef log_entry_list::const_iterator log_entry_iterator;
-  typedef std::vector<db::NetlistDeviceExtractorLayerDefinition> layer_definitions;
-  typedef layer_definitions::const_iterator layer_definitions_iterator;
-  typedef std::map<std::string, db::ShapeCollection *> input_layers;
-  typedef db::hier_clusters<db::NetShape> hier_clusters_type;
+  using log_entry_list = std::list<db::LogEntryData>;
+  using log_entry_iterator = log_entry_list::const_iterator;
+  using layer_definitions = std::vector<db::NetlistDeviceExtractorLayerDefinition>;
+  using layer_definitions_iterator = layer_definitions::const_iterator;
+  using input_layers = std::map<std::string, db::ShapeCollection *>;
+  using hier_clusters_type = db::hier_clusters<db::NetShape>;
 
   /**
    *  @brief Constructor
@@ -463,8 +463,8 @@ private:
     std::map<size_t, double> parameters;
   };
 
-  typedef std::map<unsigned int, std::vector<db::NetShape> > geometry_per_layer_type;
-  typedef std::map<size_t, geometry_per_layer_type> geometry_per_terminal_type;
+  using geometry_per_layer_type = std::map<unsigned int, std::vector<db::NetShape> >;
+  using geometry_per_terminal_type = std::map<size_t, geometry_per_layer_type>;
 
   tl::weak_ptr<db::Netlist> m_netlist;
   db::Layout *mp_layout;

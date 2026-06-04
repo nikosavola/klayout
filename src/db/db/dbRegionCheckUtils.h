@@ -318,8 +318,8 @@ template <class PolygonType>
 class DB_PUBLIC poly2poly_check
 {
 public:
-  typedef typename PolygonType::box_type box_type;
-  typedef typename PolygonType::edge_type edge_type;
+  using box_type = typename PolygonType::box_type;
+  using edge_type = typename PolygonType::edge_type;
 
   poly2poly_check (Edge2EdgeCheckBase &output);
   poly2poly_check ();

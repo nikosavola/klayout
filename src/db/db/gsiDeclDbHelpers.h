@@ -36,11 +36,11 @@ namespace gsi
     : private db::LayoutLocker
   {
   public:
-    typedef typename I::value_type value_type;
-    typedef typename I::reference reference;
-    typedef typename I::pointer pointer;
-    typedef typename I::difference_type difference_type;
-    typedef typename I::iterator_category iterator_category;
+    using value_type = typename I::value_type;
+    using reference = typename I::reference;
+    using pointer = typename I::pointer;
+    using difference_type = typename I::difference_type;
+    using iterator_category = typename I::iterator_category;
 
     layout_locking_iterator2 (const db::Layout *layout, const I &b, const I &e) : db::LayoutLocker (const_cast<db::Layout *> (layout)), m_b (b), m_e (e) {}
     bool at_end () const { return m_b == m_e; }
@@ -61,11 +61,11 @@ namespace gsi
     : private db::LayoutLocker
   {
   public:
-    typedef typename I::value_type value_type;
-    typedef typename I::reference reference;
-    typedef typename I::pointer pointer;
-    typedef typename I::difference_type difference_type;
-    typedef typename I::iterator_category iterator_category;
+    using value_type = typename I::value_type;
+    using reference = typename I::reference;
+    using pointer = typename I::pointer;
+    using difference_type = typename I::difference_type;
+    using iterator_category = typename I::iterator_category;
 
     layout_locking_iterator1 (const db::Layout *layout, const I &i) : db::LayoutLocker (const_cast<db::Layout *> (layout)), m_i (i) { }
     bool at_end () const { return m_i.at_end (); }

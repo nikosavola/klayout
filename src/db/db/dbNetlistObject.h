@@ -40,8 +40,8 @@ class DB_PUBLIC NetlistObject
   : public tl::Object
 {
 public:
-  typedef std::map<tl::Variant, tl::Variant> property_table;
-  typedef property_table::const_iterator property_iterator;
+  using property_table = std::map<tl::Variant, tl::Variant>;
+  using property_iterator = property_table::const_iterator;
 
   /**
    *  @brief Default constructor

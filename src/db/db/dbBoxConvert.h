@@ -84,10 +84,10 @@ struct box_convert
 template <class Sh, bool AllowEmpty>
 struct box_convert< db::object_with_properties<Sh>, AllowEmpty >
 {
-  typedef db::box_convert<Sh> base_convert;
+  using base_convert = db::box_convert<Sh>;
 
-  typedef typename base_convert::complexity complexity;
-  typedef typename base_convert::box_type box_type;
+  using complexity = typename base_convert::complexity;
+  using box_type = typename base_convert::box_type;
 
   box_type operator() (const db::object_with_properties<Sh> &s) const
   {
@@ -108,10 +108,10 @@ struct box_convert< db::object_with_properties<Sh>, AllowEmpty >
 template <class C, bool AllowEmpty>
 struct box_convert< db::text<C>, AllowEmpty >
 {
-  typedef db::text<C> text_type;
-  typedef db::box<C> box_type;
+  using text_type = db::text<C>;
+  using box_type = db::box<C>;
 
-  typedef simple_bbox_tag complexity;
+  using complexity = simple_bbox_tag;
 
   box_type operator() (const text_type &t) const
   {
@@ -130,11 +130,11 @@ struct box_convert< db::text<C>, AllowEmpty >
 template <class Text, class Trans, bool AllowEmpty>
 struct box_convert< db::text_ref<Text, Trans>, AllowEmpty >
 {
-  typedef db::text_ref<Text, Trans> text_ref_type;
-  typedef typename Text::coord_type coord_type;
-  typedef db::box<coord_type> box_type;
+  using text_ref_type = db::text_ref<Text, Trans>;
+  using coord_type = typename Text::coord_type;
+  using box_type = db::box<coord_type>;
 
-  typedef simple_bbox_tag complexity;
+  using complexity = simple_bbox_tag;
 
   box_type operator() (const text_ref_type &t) const
   {
@@ -153,12 +153,12 @@ struct box_convert< db::text_ref<Text, Trans>, AllowEmpty >
 template <class Text, class Trans, class ArrayTrans, bool AllowEmpty>
 struct box_convert< db::array< db::text_ref<Text, Trans>, ArrayTrans>, AllowEmpty >
 {
-  typedef db::text_ref<Text, Trans> text_ref_type;
-  typedef db::array<text_ref_type, ArrayTrans> text_ref_array_type;
-  typedef typename Text::coord_type coord_type;
-  typedef db::box<coord_type> box_type;
+  using text_ref_type = db::text_ref<Text, Trans>;
+  using text_ref_array_type = db::array<text_ref_type, ArrayTrans>;
+  using coord_type = typename Text::coord_type;
+  using box_type = db::box<coord_type>;
 
-  typedef simple_bbox_tag complexity;
+  using complexity = simple_bbox_tag;
 
   box_type operator() (const text_ref_array_type &t) const
   {
@@ -177,10 +177,10 @@ struct box_convert< db::array< db::text_ref<Text, Trans>, ArrayTrans>, AllowEmpt
 template <class C, bool AllowEmpty>
 struct box_convert < db::path<C>, AllowEmpty >
 {
-  typedef db::path <C> path_type;
-  typedef db::box <C> box_type;
+  using path_type = db::path <C>;
+  using box_type = db::box <C>;
 
-  typedef complex_bbox_tag complexity;
+  using complexity = complex_bbox_tag;
 
   box_type operator() (const path_type &p) const
   {
@@ -198,11 +198,11 @@ struct box_convert < db::path<C>, AllowEmpty >
 template <class Path, class Trans, bool AllowEmpty>
 struct box_convert < db::path_ref<Path, Trans>, AllowEmpty >
 {
-  typedef db::path_ref <Path, Trans> path_ref_type;
-  typedef typename Path::coord_type coord_type;
-  typedef db::box <coord_type> box_type;
+  using path_ref_type = db::path_ref <Path, Trans>;
+  using coord_type = typename Path::coord_type;
+  using box_type = db::box <coord_type>;
 
-  typedef complex_bbox_tag complexity;
+  using complexity = complex_bbox_tag;
 
   box_type operator() (const path_ref_type &p) const
   {
@@ -220,12 +220,12 @@ struct box_convert < db::path_ref<Path, Trans>, AllowEmpty >
 template <class Path, class Trans, class ArrayTrans, bool AllowEmpty>
 struct box_convert < db::array< db::path_ref<Path, Trans>, ArrayTrans >, AllowEmpty >
 {
-  typedef db::path_ref <Path, Trans> path_ref_type;
-  typedef db::array<path_ref_type, ArrayTrans> path_ref_array_type;
-  typedef typename Path::coord_type coord_type;
-  typedef db::box <coord_type> box_type;
+  using path_ref_type = db::path_ref <Path, Trans>;
+  using path_ref_array_type = db::array<path_ref_type, ArrayTrans>;
+  using coord_type = typename Path::coord_type;
+  using box_type = db::box <coord_type>;
 
-  typedef complex_bbox_tag complexity;
+  using complexity = complex_bbox_tag;
 
   box_type operator() (const path_ref_array_type &p) const
   {
@@ -244,10 +244,10 @@ struct box_convert < db::array< db::path_ref<Path, Trans>, ArrayTrans >, AllowEm
 template <class C, bool AllowEmpty>
 struct box_convert< db::polygon<C>, AllowEmpty >
 {
-  typedef db::polygon<C> polygon_type;
-  typedef db::box<C> box_type;
+  using polygon_type = db::polygon<C>;
+  using box_type = db::box<C>;
 
-  typedef simple_bbox_tag complexity;
+  using complexity = simple_bbox_tag;
 
   const box_type &operator() (const polygon_type &p) const
   {
@@ -265,10 +265,10 @@ struct box_convert< db::polygon<C>, AllowEmpty >
 template <class C, bool AllowEmpty>
 struct box_convert< db::simple_polygon<C>, AllowEmpty >
 {
-  typedef db::simple_polygon<C> simple_polygon_type;
-  typedef db::box<C> box_type;
+  using simple_polygon_type = db::simple_polygon<C>;
+  using box_type = db::box<C>;
 
-  typedef simple_bbox_tag complexity;
+  using complexity = simple_bbox_tag;
 
   const box_type &operator() (const simple_polygon_type &p) const
   {
@@ -286,11 +286,11 @@ struct box_convert< db::simple_polygon<C>, AllowEmpty >
 template <class Poly, class Trans, bool AllowEmpty>
 struct box_convert< db::polygon_ref<Poly, Trans>, AllowEmpty >
 {
-  typedef db::polygon_ref<Poly, Trans> polygon_ref_type;
-  typedef typename Poly::coord_type coord_type;
-  typedef db::box<coord_type> box_type;
+  using polygon_ref_type = db::polygon_ref<Poly, Trans>;
+  using coord_type = typename Poly::coord_type;
+  using box_type = db::box<coord_type>;
 
-  typedef simple_bbox_tag complexity;
+  using complexity = simple_bbox_tag;
 
   box_type operator() (const polygon_ref_type &p) const
   {
@@ -308,12 +308,12 @@ struct box_convert< db::polygon_ref<Poly, Trans>, AllowEmpty >
 template <class Poly, class Trans, class ArrayTrans, bool AllowEmpty>
 struct box_convert< db::array< db::polygon_ref<Poly, Trans>, ArrayTrans >, AllowEmpty >
 {
-  typedef db::polygon_ref<Poly, Trans> polygon_ref_type;
-  typedef db::array<polygon_ref_type, ArrayTrans> polygon_ref_array_type;
-  typedef typename Poly::coord_type coord_type;
-  typedef db::box<coord_type> box_type;
+  using polygon_ref_type = db::polygon_ref<Poly, Trans>;
+  using polygon_ref_array_type = db::array<polygon_ref_type, ArrayTrans>;
+  using coord_type = typename Poly::coord_type;
+  using box_type = db::box<coord_type>;
 
-  typedef simple_bbox_tag complexity;
+  using complexity = simple_bbox_tag;
 
   box_type operator() (const polygon_ref_array_type &p) const
   {
@@ -332,10 +332,10 @@ struct box_convert< db::array< db::polygon_ref<Poly, Trans>, ArrayTrans >, Allow
 template <class C, bool AllowEmpty>
 struct box_convert< db::point<C>, AllowEmpty >
 {
-  typedef db::point<C> point_type;
-  typedef db::box<C> box_type;
+  using point_type = db::point<C>;
+  using box_type = db::box<C>;
 
-  typedef simple_bbox_tag complexity;
+  using complexity = simple_bbox_tag;
 
   box_type operator() (const point_type &p) const
   {
@@ -353,11 +353,11 @@ struct box_convert< db::point<C>, AllowEmpty >
 template <class C, bool AllowEmpty>
 struct box_convert< db::vector<C>, AllowEmpty >
 {
-  typedef db::vector<C> vector_type;
-  typedef db::point<C> point_type;
-  typedef db::box<C> box_type;
+  using vector_type = db::vector<C>;
+  using point_type = db::point<C>;
+  using box_type = db::box<C>;
 
-  typedef simple_bbox_tag complexity;
+  using complexity = simple_bbox_tag;
 
   box_type operator() (const vector_type &p) const
   {
@@ -376,10 +376,10 @@ struct box_convert< db::vector<C>, AllowEmpty >
 template <class C, bool AllowEmpty>
 struct box_convert< db::edge_pair<C>, AllowEmpty >
 {
-  typedef db::edge_pair<C> edge_pair_type;
-  typedef db::box<C> box_type;
+  using edge_pair_type = db::edge_pair<C>;
+  using box_type = db::box<C>;
 
-  typedef simple_bbox_tag complexity;
+  using complexity = simple_bbox_tag;
 
   box_type operator() (const edge_pair_type &e) const
   {
@@ -398,10 +398,10 @@ struct box_convert< db::edge_pair<C>, AllowEmpty >
 template <class C, bool AllowEmpty>
 struct box_convert< db::edge<C>, AllowEmpty >
 {
-  typedef db::edge<C> edge_type;
-  typedef db::box<C> box_type;
+  using edge_type = db::edge<C>;
+  using box_type = db::box<C>;
 
-  typedef simple_bbox_tag complexity;
+  using complexity = simple_bbox_tag;
 
   box_type operator() (const edge_type &e) const
   {
@@ -417,10 +417,10 @@ struct box_convert< db::edge<C>, AllowEmpty >
 template <class C, bool AllowEmpty>
 struct box_convert< db::user_object<C>, AllowEmpty >
 {
-  typedef db::user_object<C> user_object_type;
-  typedef db::box<C> box_type;
+  using user_object_type = db::user_object<C>;
+  using box_type = db::box<C>;
 
-  typedef complex_bbox_tag complexity;
+  using complexity = complex_bbox_tag;
 
   box_type operator() (const user_object_type &r) const
   {
@@ -438,9 +438,9 @@ struct box_convert< db::user_object<C>, AllowEmpty >
 template <class C, bool AllowEmpty>
 struct box_convert <db::box <C>, AllowEmpty >
 {
-  typedef db::box <C> box_type;
+  using box_type = db::box <C>;
 
-  typedef simple_bbox_tag complexity;
+  using complexity = simple_bbox_tag;
 
   const box_type &operator() (const box_type &b) const
   {
@@ -456,11 +456,11 @@ struct box_convert <db::box <C>, AllowEmpty >
 template <class C, class ArrayTrans, bool AllowEmpty>
 struct box_convert< db::array< db::box<C>, ArrayTrans >, AllowEmpty >
 {
-  typedef C coord_type;
-  typedef db::box<coord_type> box_type;
-  typedef db::array<box_type, ArrayTrans> box_array_type;
+  using coord_type = C;
+  using box_type = db::box<coord_type>;
+  using box_array_type = db::array<box_type, ArrayTrans>;
 
-  typedef simple_bbox_tag complexity;
+  using complexity = simple_bbox_tag;
 
   box_type operator() (const box_array_type &a) const
   {
@@ -479,9 +479,9 @@ struct box_convert< db::array< db::box<C>, ArrayTrans >, AllowEmpty >
 template <class C, class R, bool AllowEmpty>
 struct box_convert <db::box <C, R>, AllowEmpty >
 {
-  typedef db::box <C> box_type;
+  using box_type = db::box <C>;
 
-  typedef simple_bbox_tag complexity;
+  using complexity = simple_bbox_tag;
 
   box_type operator() (const db::box<C, R> &b) const
   {
@@ -497,10 +497,10 @@ struct box_convert <db::box <C, R>, AllowEmpty >
 template <class C, class R, class ArrayTrans, bool AllowEmpty>
 struct box_convert< db::array< db::box<C, R>, ArrayTrans >, AllowEmpty >
 {
-  typedef db::box<C> box_type;
-  typedef db::array< db::box<C, R>, ArrayTrans> box_array_type;
+  using box_type = db::box<C>;
+  using box_array_type = db::array< db::box<C, R>, ArrayTrans>;
 
-  typedef simple_bbox_tag complexity;
+  using complexity = simple_bbox_tag;
 
   box_type operator() (const box_array_type &a) const
   {
@@ -524,10 +524,10 @@ DB_PUBLIC db::Box cell_box_convert_impl (const db::Cell &c, int layer, bool allo
 template <bool AllowEmpty>
 struct DB_PUBLIC box_convert <db::Cell, AllowEmpty>
 {
-  typedef db::Cell cell_type;
-  typedef db::Box box_type;
+  using cell_type = db::Cell;
+  using box_type = db::Box;
 
-  typedef complex_bbox_tag complexity;
+  using complexity = complex_bbox_tag;
 
   box_convert ()
     : m_layer (-1)
@@ -562,11 +562,11 @@ DB_PUBLIC db::Box cellinst_box_convert_impl (const db::CellInst &inst, const db:
 template <bool AllowEmpty>
 struct box_convert <db::CellInst, AllowEmpty>
 {
-  typedef db::CellInst cell_inst_type;
-  typedef db::Layout layout_type;
-  typedef db::Box box_type;
+  using cell_inst_type = db::CellInst;
+  using layout_type = db::Layout;
+  using box_type = db::Box;
 
-  typedef complex_bbox_tag complexity;
+  using complexity = complex_bbox_tag;
 
   box_convert ()
     : mp_layout (0), m_layer (-1)
@@ -604,11 +604,11 @@ private:
 template <class ArrayTrans, bool AllowEmpty>
 struct box_convert <db::array <db::CellInst, ArrayTrans>, AllowEmpty>
 {
-  typedef db::CellInst cell_inst_type;
-  typedef db::Layout layout_type;
-  typedef db::Box box_type;
+  using cell_inst_type = db::CellInst;
+  using layout_type = db::Layout;
+  using box_type = db::Box;
 
-  typedef complex_bbox_tag complexity;
+  using complexity = complex_bbox_tag;
 
   box_convert ()
     : m_bc ()
@@ -639,12 +639,12 @@ private:
 template <class ArrayTrans, bool AllowEmpty>
 struct box_convert< db::object_with_properties< db::array <db::CellInst, ArrayTrans> >, AllowEmpty>
 {
-  typedef db::array <db::CellInst, ArrayTrans> cell_inst_array;
-  typedef db::box_convert<cell_inst_array, AllowEmpty> base_convert;
-  typedef db::Layout layout_type;
+  using cell_inst_array = db::array <db::CellInst, ArrayTrans>;
+  using base_convert = db::box_convert<cell_inst_array, AllowEmpty>;
+  using layout_type = db::Layout;
 
-  typedef typename base_convert::complexity complexity;
-  typedef typename base_convert::box_type box_type;
+  using complexity = typename base_convert::complexity;
+  using box_type = typename base_convert::box_type;
 
   box_convert ()
     : bconvert ()

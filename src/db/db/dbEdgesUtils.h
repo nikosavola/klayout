@@ -53,7 +53,7 @@ class PolygonSink;
 struct DB_PUBLIC EdgeLengthFilter
   : public EdgeFilterBase
 {
-  typedef db::Edge::distance_type length_type;
+  using length_type = db::Edge::distance_type;
 
   /**
    *  @brief Constructor
@@ -613,7 +613,7 @@ private:
 struct JoinEdgesCluster
   : public db::cluster<db::Edge, size_t>
 {
-  typedef db::Edge::coord_type coord_type;
+  using coord_type = db::Edge::coord_type;
 
   JoinEdgesCluster (db::PolygonSink *output, coord_type ext_b, coord_type ext_e, coord_type ext_o, coord_type ext_i);
   void finish ();

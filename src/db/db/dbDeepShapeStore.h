@@ -865,7 +865,7 @@ private:
 
   void issue_variants (unsigned int layout, const std::map<db::cell_index_type, std::map<db::ICplxTrans, db::cell_index_type> > &var_map);
 
-  typedef std::map<std::pair<db::RecursiveShapeIterator, std::pair<size_t, db::ICplxTrans> >, unsigned int, RecursiveShapeIteratorCompareForTargetHierarchy> layout_map_type;
+  using layout_map_type = std::map<std::pair<db::RecursiveShapeIterator, std::pair<size_t, db::ICplxTrans> >, unsigned int, RecursiveShapeIteratorCompareForTargetHierarchy>;
 
   //  no copying
   DeepShapeStore (const DeepShapeStore &);

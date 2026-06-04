@@ -76,7 +76,7 @@ class VariantsCollectorBase;
 class HierarchyBuilder;
 
 template <class Coord> class generic_repository;
-typedef generic_repository<db::Coord> GenericRepository;
+using GenericRepository = generic_repository<db::Coord>;
 
 /**
  *  @brief The cell iterator
@@ -87,12 +87,12 @@ template <class C>
 class DB_PUBLIC_TEMPLATE cell_list_iterator
 {
 public:
-  typedef C cell_type;
-  typedef cell_type value_type;
+  using cell_type = C;
+  using value_type = cell_type;
   typedef cell_type *pointer; 
   typedef cell_type &reference; 
-  typedef std::bidirectional_iterator_tag iterator_category;
-  typedef void difference_type;
+  using iterator_category = std::bidirectional_iterator_tag;
+  using difference_type = void;
 
   /**
    *  @brief Default constructor
@@ -171,12 +171,12 @@ template <class C>
 class cell_list_const_iterator
 {
 public:
-  typedef C cell_type;
-  typedef const cell_type value_type;
+  using cell_type = C;
+  using value_type = const cell_type;
   typedef const cell_type *pointer; 
   typedef const cell_type &reference; 
-  typedef std::bidirectional_iterator_tag iterator_category;
-  typedef void difference_type;
+  using iterator_category = std::bidirectional_iterator_tag;
+  using difference_type = void;
 
   /**
    *  @brief Default constructor
@@ -260,9 +260,9 @@ template <class C>
 class cell_list
 {
 public:
-  typedef C cell_type;
-  typedef cell_list_iterator<cell_type> iterator;
-  typedef cell_list_const_iterator<cell_type> const_iterator;
+  using cell_type = C;
+  using iterator = cell_list_iterator<cell_type>;
+  using const_iterator = cell_list_const_iterator<cell_type>;
 
   /**
    *  @brief The default constructor
@@ -453,32 +453,32 @@ class DB_PUBLIC Layout
     public tl::UniqueId
 {
 public:
-  typedef db::Box box_type;
-  typedef db::CellInst cell_inst_type;
-  typedef db::Cell cell_type;
-  typedef db::cell_list<cell_type> cell_list;
-  typedef db::PCellVariant pcell_variant_type;
-  typedef db::PCellHeader pcell_header_type;
-  typedef db::PCellDeclaration pcell_declaration_type;
-  typedef db::LibraryProxy lib_proxy_type;
-  typedef cell_list::iterator iterator;
-  typedef cell_list::const_iterator const_iterator;
-  typedef tl::vector<db::cell_index_type> cell_index_vector;
-  typedef cell_index_vector::reverse_iterator bottom_up_iterator;
-  typedef cell_index_vector::const_reverse_iterator bottom_up_const_iterator;
-  typedef cell_index_vector::iterator top_down_iterator;
-  typedef cell_index_vector::const_iterator top_down_const_iterator;
-  typedef tl::vector<cell_type *> cell_ptr_vector;
-  typedef db::properties_id_type properties_id_type;
-  typedef db::pcell_id_type pcell_id_type;
-  typedef std::map<std::string, pcell_id_type> pcell_name_map;
-  typedef pcell_name_map::const_iterator pcell_iterator;
-  typedef std::multimap<std::pair<lib_id_type, cell_index_type>, cell_index_type> lib_proxy_map;
-  typedef std::multimap<db::LayoutOrCellContextInfo, cell_index_type> cold_proxy_map;
-  typedef LayerIterator layer_iterator;
-  typedef size_t meta_info_name_id_type;
-  typedef std::map<meta_info_name_id_type, MetaInfo> meta_info_map;
-  typedef meta_info_map::const_iterator meta_info_iterator;
+  using box_type = db::Box;
+  using cell_inst_type = db::CellInst;
+  using cell_type = db::Cell;
+  using cell_list = db::cell_list<cell_type>;
+  using pcell_variant_type = db::PCellVariant;
+  using pcell_header_type = db::PCellHeader;
+  using pcell_declaration_type = db::PCellDeclaration;
+  using lib_proxy_type = db::LibraryProxy;
+  using iterator = cell_list::iterator;
+  using const_iterator = cell_list::const_iterator;
+  using cell_index_vector = tl::vector<db::cell_index_type>;
+  using bottom_up_iterator = cell_index_vector::reverse_iterator;
+  using bottom_up_const_iterator = cell_index_vector::const_reverse_iterator;
+  using top_down_iterator = cell_index_vector::iterator;
+  using top_down_const_iterator = cell_index_vector::const_iterator;
+  using cell_ptr_vector = tl::vector<cell_type *>;
+  using properties_id_type = db::properties_id_type;
+  using pcell_id_type = db::pcell_id_type;
+  using pcell_name_map = std::map<std::string, pcell_id_type>;
+  using pcell_iterator = pcell_name_map::const_iterator;
+  using lib_proxy_map = std::multimap<std::pair<lib_id_type, cell_index_type>, cell_index_type>;
+  using cold_proxy_map = std::multimap<db::LayoutOrCellContextInfo, cell_index_type>;
+  using layer_iterator = LayerIterator;
+  using meta_info_name_id_type = size_t;
+  using meta_info_map = std::map<meta_info_name_id_type, MetaInfo>;
+  using meta_info_iterator = meta_info_map::const_iterator;
 
   /**
    *  @brief A helper functor to compare "const char *" by the content
@@ -490,7 +490,7 @@ public:
     }
   };
 
-  typedef std::map<const char *, cell_index_type, name_cmp_f> cell_map_type;
+  using cell_map_type = std::map<const char *, cell_index_type, name_cmp_f>;
 
   /**
    *  @brief Standard constructor

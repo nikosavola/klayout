@@ -49,7 +49,7 @@ class SubCircuitMapperForTargetNode;
 class DB_PUBLIC NetlistCompareCore
 {
 public:
-  typedef std::vector<NetGraphNode>::const_iterator node_iterator;
+  using node_iterator = std::vector<NetGraphNode>::const_iterator;
 
   NetlistCompareCore (NetGraph *graph, NetGraph *other_graph);
 

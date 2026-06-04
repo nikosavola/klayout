@@ -47,7 +47,7 @@ class DB_PUBLIC SubCircuit
   : public db::NetlistObject
 {
 public:
-  typedef tl::vector<const Net *> connected_net_list;
+  using connected_net_list = tl::vector<const Net *>;
 
   /**
    *  @brief Default constructor

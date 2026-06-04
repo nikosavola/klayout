@@ -47,7 +47,7 @@ class Layout;
 class DB_PUBLIC LayerMapping
 {
 public:
-  typedef std::map <unsigned int, unsigned int>::const_iterator iterator;
+  using iterator = std::map <unsigned int, unsigned int>::const_iterator;
 
   /**
    *  @brief Constructor - creates an empty mapping

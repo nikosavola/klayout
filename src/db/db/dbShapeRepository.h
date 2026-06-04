@@ -54,9 +54,9 @@ template <class Sh>
 class repository
 {
 public:
-  typedef typename Sh::coord_type coord_type;
-  typedef std::set<Sh> set_type;
-  typedef typename set_type::const_iterator iterator;
+  using coord_type = typename Sh::coord_type;
+  using set_type = std::set<Sh>;
+  using iterator = typename set_type::const_iterator;
 
   /** 
    *  @brief The standard constructor
@@ -133,7 +133,7 @@ template <class C>
 class generic_repository
 {
 public:
-  typedef C coord_type;
+  using coord_type = C;
 
   /**
    *  @brief Return the repository by tag 
@@ -203,7 +203,7 @@ inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int
 /**
  *  @brief Standard repository typedef
  */
-typedef db::generic_repository<db::Coord> GenericRepository;
+using GenericRepository = db::generic_repository<db::Coord>;
 
 /** 
  *  @brief A generic shape reference
@@ -215,12 +215,12 @@ typedef db::generic_repository<db::Coord> GenericRepository;
 template <class Sh, class Trans>
 struct shape_ref
 {
-  typedef Sh shape_type;
-  typedef typename Sh::coord_type coord_type;
-  typedef typename Sh::vector_type vector_type;
-  typedef Trans trans_type;
-  typedef db::generic_repository<coord_type> repository_type;
-  typedef db::object_tag<shape_ref<Sh, Trans> > tag;
+  using shape_type = Sh;
+  using coord_type = typename Sh::coord_type;
+  using vector_type = typename Sh::vector_type;
+  using trans_type = Trans;
+  using repository_type = db::generic_repository<coord_type>;
+  using tag = db::object_tag<shape_ref<Sh, Trans> >;
 
   /**
    *  @brief The default constructor.

@@ -168,13 +168,13 @@ namespace lvs_std_format
 
   template <> struct DB_PUBLIC keys<true> : public l2n_std_format::keys<true>, public ShortKeys
   {
-    typedef l2n_std_format::keys<true> l2n_keys;
+    using l2n_keys = l2n_std_format::keys<true>;
     inline static bool is_short () { return true; }
   };
 
   template <> struct DB_PUBLIC keys<false> : public l2n_std_format::keys<false>, public LongKeys
   {
-    typedef l2n_std_format::keys<false> l2n_keys;
+    using l2n_keys = l2n_std_format::keys<false>;
     inline static bool is_short () { return false; }
   };
 }

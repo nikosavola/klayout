@@ -84,9 +84,9 @@ class DB_PUBLIC Vertex
   : public db::DPoint
 {
 public:
-  typedef std::list<Edge *> edges_type;
-  typedef edges_type::const_iterator edges_iterator;
-  typedef edges_type::iterator edges_iterator_non_const;
+  using edges_type = std::list<Edge *>;
+  using edges_iterator = edges_type::const_iterator;
+  using edges_iterator_non_const = edges_type::iterator;
 
   Vertex (const Vertex &v);
   Vertex &operator= (const Vertex &v);
@@ -200,7 +200,7 @@ public:
   class PolygonIterator
   {
   public:
-    typedef Polygon value_type;
+    using value_type = Polygon;
     typedef Polygon &reference;
     typedef Polygon *pointer;
 
@@ -819,8 +819,8 @@ class DB_PUBLIC Graph
   : public tl::Object
 {
 public:
-  typedef tl::list<Polygon> polygons_type;
-  typedef polygons_type::const_iterator polygon_iterator;
+  using polygons_type = tl::list<Polygon>;
+  using polygon_iterator = polygons_type::const_iterator;
 
   Graph ();
   ~Graph ();

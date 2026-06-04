@@ -46,15 +46,15 @@ const double fepsilon = 1e-6;
  *  @brief The standard integer coordinate type
  */
 #if defined(HAVE_64BIT_COORD)
-typedef int64_t Coord;
+using Coord = int64_t;
 #else
-typedef int32_t Coord;
+using Coord = int32_t;
 #endif
 
 /** 
  *  @brief The standard floating-point coordinate type
  */
-typedef double DCoord;
+using DCoord = double;
 
 /**
  *  @brief Coordinate types traits (for integer types)
@@ -73,22 +73,22 @@ struct generic_coord_traits
   /** 
    *  @brief The coordinate type itself 
    */
-  typedef C coord_type;
+  using coord_type = C;
 
   /**
    *  @brief The associated area type
    */
-  typedef A area_type;
+  using area_type = A;
 
   /**
    *  @brief The associated distance type
    */
-  typedef D distance_type;
+  using distance_type = D;
 
   /**
    *  @brief The associated perimeter type
    */
-  typedef P perimeter_type;
+  using perimeter_type = P;
 
   /**
    *  @brief The "short" coordinate type
@@ -96,7 +96,7 @@ struct generic_coord_traits
    *  This is a special type mainly used to represent "short" boxes (i.e. small ones) with 
    *  a small memory footprint. It is used mainly for 32bit coordinates and mask data.
    */
-  typedef S short_coord_type;
+  using short_coord_type = S;
 
   /**
    *  @brief The precision (resolution) of the coordinate type
@@ -400,11 +400,11 @@ struct coord_traits<int64_t>
 template <>
 struct coord_traits<double>
 {
-  typedef double coord_type;
-  typedef double area_type;
-  typedef double distance_type;
-  typedef double perimeter_type;
-  typedef float short_coord_type;
+  using coord_type = double;
+  using area_type = double;
+  using distance_type = double;
+  using perimeter_type = double;
+  using short_coord_type = float;
 
   static double prec ()                       { return 1e-5; }
   static double prec_distance ()              { return 1e-5; }
@@ -577,32 +577,32 @@ struct epsilon_f<float>
 /**
  *  @brief The type of a cell index
  */
-typedef unsigned int cell_index_type;
+using cell_index_type = unsigned int;
 
 /**
  *  @brief The type of a properties id
  */
-typedef size_t properties_id_type;
+using properties_id_type = size_t;
 
 /**
  *  @brief The type of a properties name id
  */
-typedef size_t property_names_id_type;
+using property_names_id_type = size_t;
 
 /**
  *  @brief The type of a properties value id
  */
-typedef size_t property_values_id_type;
+using property_values_id_type = size_t;
 
 /**
  *  @brief The type of the PCell id
  */
-typedef unsigned int pcell_id_type;
+using pcell_id_type = unsigned int;
 
 /**
  *  @brief The type of the library id
  */
-typedef size_t lib_id_type;
+using lib_id_type = size_t;
 
 } // namespace db
 

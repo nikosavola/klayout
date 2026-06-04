@@ -54,14 +54,14 @@ template <class C>
 class DB_PUBLIC point
 {
 public:
-  typedef C coord_type;
-  typedef db::coord_traits<C> coord_traits;
-  typedef db::vector<C> vector_type;
-  typedef typename coord_traits::distance_type distance_type; 
-  typedef typename coord_traits::area_type area_type; 
-  typedef db::object_tag< point<C> > tag;
-  typedef db::box<C> box_type;
-  typedef db::point<C> point_type;
+  using coord_type = C;
+  using coord_traits = db::coord_traits<C>;
+  using vector_type = db::vector<C>;
+  using distance_type = typename coord_traits::distance_type; 
+  using area_type = typename coord_traits::area_type; 
+  using tag = db::object_tag< point<C> >;
+  using box_type = db::box<C>;
+  using point_type = db::point<C>;
 
   /** 
    *  @brief Default constructor
@@ -638,17 +638,17 @@ operator<< (std::ostream &os, const point<C> &p)
 /**
  *  @brief The short integer point
  */
-typedef point <short> ShortPoint;
+using ShortPoint = point <short>;
 
 /**
  *  @brief The standard point
  */
-typedef point <db::Coord> Point;
+using Point = point <db::Coord>;
 
 /**
  *  @brief The standard double coordinate point
  */
-typedef point <db::DCoord> DPoint;
+using DPoint = point <db::DCoord>;
 
 /**
  *  @brief A generic conversion operator from double point to any type

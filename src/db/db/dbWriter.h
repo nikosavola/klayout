@@ -69,8 +69,8 @@ public:
 class DB_PUBLIC Writer
 {
 public:
-  typedef std::vector<MetaInfo> meta_info;
-  typedef meta_info::const_iterator meta_info_iterator;
+  using meta_info = std::vector<MetaInfo>;
+  using meta_info_iterator = meta_info::const_iterator;
 
   /**
    *  @brief The constructor

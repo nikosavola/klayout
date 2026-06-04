@@ -35,7 +35,7 @@ namespace db {
 /**
  *  @brief An iterator delegate for the flat text set
  */
-typedef generic_shapes_iterator_delegate<db::Text> FlatTextsIterator;
+using FlatTextsIterator = generic_shapes_iterator_delegate<db::Text>;
 
 /**
  *  @brief The delegate for the actual text set implementation
@@ -44,10 +44,10 @@ class DB_PUBLIC FlatTexts
   : public MutableTexts
 {
 public:
-  typedef db::Text value_type;
+  using value_type = db::Text;
 
-  typedef db::layer<db::Text, db::unstable_layer_tag> text_layer_type;
-  typedef text_layer_type::iterator text_iterator_type;
+  using text_layer_type = db::layer<db::Text, db::unstable_layer_tag>;
+  using text_iterator_type = text_layer_type::iterator;
 
   FlatTexts ();
   FlatTexts (const db::Shapes &texts);

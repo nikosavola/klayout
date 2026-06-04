@@ -48,12 +48,12 @@ template <class Inst, class ET> class InstOp;
 /**
  *  @brief A standard typedef for a cell instance array
  */
-typedef db::array <db::CellInst, db::Trans> CellInstArray;
+using CellInstArray = db::array <db::CellInst, db::Trans>;
 
 /**
  *  @brief A standard typedef for a cell instance array in micron units
  */
-typedef db::array <db::CellInst, db::DTrans> DCellInstArray;
+using DCellInstArray = db::array <db::CellInst, db::DTrans>;
 
 /**
  *  @brief A classification type for editable mode types and concepts
@@ -74,26 +74,26 @@ struct instances_editable_traits;
 template <>
 struct instances_editable_traits<InstancesEditableTag> 
 { 
-  typedef tl::true_tag is_editable;
+  using is_editable = tl::true_tag;
 
   template <class Tag> 
   struct tree_traits
   {
-    typedef db::box_tree<typename Tag::object_type::box_type, typename Tag::object_type, db::box_convert<typename Tag::object_type, false> > tree_type;
-    typedef typename tree_type::iterator tree_iter;
+    using tree_type = db::box_tree<typename Tag::object_type::box_type, typename Tag::object_type, db::box_convert<typename Tag::object_type, false> >;
+    using tree_iter = typename tree_type::iterator;
   };
 };
 
 template <>
 struct instances_editable_traits<InstancesNonEditableTag> 
 {
-  typedef tl::false_tag is_editable;
+  using is_editable = tl::false_tag;
 
   template <class Tag> 
   struct tree_traits
   {
-    typedef db::unstable_box_tree<typename Tag::object_type::box_type, typename Tag::object_type, db::box_convert<typename Tag::object_type, false> > tree_type;
-    typedef typename tree_type::iterator tree_iter;
+    using tree_type = db::unstable_box_tree<typename Tag::object_type::box_type, typename Tag::object_type, db::box_convert<typename Tag::object_type, false> >;
+    using tree_iter = typename tree_type::iterator;
   };
 };
 
@@ -107,14 +107,14 @@ struct instances_editable_traits<InstancesNonEditableTag>
 class DB_PUBLIC Instance
 {
 public:
-  typedef db::Layout layout_type;
-  typedef db::CellInst cell_inst_type;
-  typedef db::Coord coord_type;
-  typedef db::Box box_type;
-  typedef db::CellInstArray cell_inst_array_type;
-  typedef db::object_with_properties<cell_inst_array_type> cell_inst_wp_array_type;
-  typedef tl::reuse_vector<cell_inst_array_type>::const_iterator cell_inst_array_iterator_type;
-  typedef tl::reuse_vector<cell_inst_wp_array_type>::const_iterator cell_inst_wp_array_iterator_type;
+  using layout_type = db::Layout;
+  using cell_inst_type = db::CellInst;
+  using coord_type = db::Coord;
+  using box_type = db::Box;
+  using cell_inst_array_type = db::CellInstArray;
+  using cell_inst_wp_array_type = db::object_with_properties<cell_inst_array_type>;
+  using cell_inst_array_iterator_type = tl::reuse_vector<cell_inst_array_type>::const_iterator;
+  using cell_inst_wp_array_iterator_type = tl::reuse_vector<cell_inst_wp_array_type>::const_iterator;
 
   enum object_type {
     TNull,
@@ -524,24 +524,24 @@ template <class IterTraits>
 class DB_PUBLIC instance_iterator
 {
 public:
-  typedef db::Layout layout_type;
-  typedef db::CellInst cell_inst_type;
-  typedef cell_inst_type::coord_type coord_type;
-  typedef db::CellInstArray basic_inst_type;
-  typedef basic_inst_type cell_inst_array_type;
-  typedef db::object_with_properties<cell_inst_array_type> cell_inst_wp_array_type;
-  typedef db::Instance value_type;
-  typedef db::Instances instances_type;
-  typedef typename IterTraits::iter_type iter_type;
-  typedef typename IterTraits::iter_wp_type iter_wp_type;
-  typedef typename IterTraits::stable_iter_type stable_iter_type;
-  typedef typename IterTraits::stable_iter_wp_type stable_iter_wp_type;
-  typedef typename IterTraits::stable_unsorted_iter_type stable_unsorted_iter_type;
-  typedef typename IterTraits::stable_unsorted_iter_wp_type stable_unsorted_iter_wp_type;
+  using layout_type = db::Layout;
+  using cell_inst_type = db::CellInst;
+  using coord_type = cell_inst_type::coord_type;
+  using basic_inst_type = db::CellInstArray;
+  using cell_inst_array_type = basic_inst_type;
+  using cell_inst_wp_array_type = db::object_with_properties<cell_inst_array_type>;
+  using value_type = db::Instance;
+  using instances_type = db::Instances;
+  using iter_type = typename IterTraits::iter_type;
+  using iter_wp_type = typename IterTraits::iter_wp_type;
+  using stable_iter_type = typename IterTraits::stable_iter_type;
+  using stable_iter_wp_type = typename IterTraits::stable_iter_wp_type;
+  using stable_unsorted_iter_type = typename IterTraits::stable_unsorted_iter_type;
+  using stable_unsorted_iter_wp_type = typename IterTraits::stable_unsorted_iter_wp_type;
   typedef const value_type *pointer;
   typedef value_type reference;   //  operator* returns a value
-  typedef std::forward_iterator_tag iterator_category;
-  typedef void difference_type;
+  using iterator_category = std::forward_iterator_tag;
+  using difference_type = void;
 
   enum object_type {
     TNull,
@@ -790,27 +790,27 @@ private:
 
 struct DB_PUBLIC NormalInstanceIteratorTraits
 {
-  typedef db::Layout layout_type;
-  typedef db::Box box_type;
-  typedef box_type::coord_type coord_type;
-  typedef db::CellInst cell_inst_type;
-  typedef db::CellInstArray cell_inst_array_type;
-  typedef db::object_with_properties<cell_inst_array_type> cell_inst_wp_array_type;
-  typedef db::box_convert<cell_inst_array_type, false> cell_inst_array_box_converter;
-  typedef db::box_convert<cell_inst_wp_array_type, false> cell_inst_wp_array_box_converter;
-  typedef db::unstable_box_tree<box_type, cell_inst_array_type, cell_inst_array_box_converter> cell_inst_tree_type;
-  typedef db::unstable_box_tree<box_type, cell_inst_wp_array_type, cell_inst_wp_array_box_converter> cell_inst_wp_tree_type;
-  typedef db::box_tree<box_type, cell_inst_array_type, cell_inst_array_box_converter> stable_cell_inst_tree_type;
-  typedef db::box_tree<box_type, cell_inst_wp_array_type, cell_inst_wp_array_box_converter> stable_cell_inst_wp_tree_type;
-  typedef db::Instances instances_type;
-  typedef db::Instance instance_type;
+  using layout_type = db::Layout;
+  using box_type = db::Box;
+  using coord_type = box_type::coord_type;
+  using cell_inst_type = db::CellInst;
+  using cell_inst_array_type = db::CellInstArray;
+  using cell_inst_wp_array_type = db::object_with_properties<cell_inst_array_type>;
+  using cell_inst_array_box_converter = db::box_convert<cell_inst_array_type, false>;
+  using cell_inst_wp_array_box_converter = db::box_convert<cell_inst_wp_array_type, false>;
+  using cell_inst_tree_type = db::unstable_box_tree<box_type, cell_inst_array_type, cell_inst_array_box_converter>;
+  using cell_inst_wp_tree_type = db::unstable_box_tree<box_type, cell_inst_wp_array_type, cell_inst_wp_array_box_converter>;
+  using stable_cell_inst_tree_type = db::box_tree<box_type, cell_inst_array_type, cell_inst_array_box_converter>;
+  using stable_cell_inst_wp_tree_type = db::box_tree<box_type, cell_inst_wp_array_type, cell_inst_wp_array_box_converter>;
+  using instances_type = db::Instances;
+  using instance_type = db::Instance;
 
-  typedef tl::iterator_pair<cell_inst_tree_type::const_iterator> iter_type;
-  typedef tl::iterator_pair<cell_inst_wp_tree_type::const_iterator> iter_wp_type;
-  typedef stable_cell_inst_tree_type::flat_iterator stable_iter_type;
-  typedef stable_cell_inst_wp_tree_type::flat_iterator stable_iter_wp_type;
-  typedef tl::iterator_pair<stable_cell_inst_tree_type::const_iterator> stable_unsorted_iter_type;
-  typedef tl::iterator_pair<stable_cell_inst_wp_tree_type::const_iterator> stable_unsorted_iter_wp_type;
+  using iter_type = tl::iterator_pair<cell_inst_tree_type::const_iterator>;
+  using iter_wp_type = tl::iterator_pair<cell_inst_wp_tree_type::const_iterator>;
+  using stable_iter_type = stable_cell_inst_tree_type::flat_iterator;
+  using stable_iter_wp_type = stable_cell_inst_wp_tree_type::flat_iterator;
+  using stable_unsorted_iter_type = tl::iterator_pair<stable_cell_inst_tree_type::const_iterator>;
+  using stable_unsorted_iter_wp_type = tl::iterator_pair<stable_cell_inst_wp_tree_type::const_iterator>;
 
   NormalInstanceIteratorTraits ();
   NormalInstanceIteratorTraits (const instances_type *insts);
@@ -837,27 +837,27 @@ public:
 
 struct DB_PUBLIC TouchingInstanceIteratorTraits
 {
-  typedef db::Layout layout_type;
-  typedef db::Box box_type;
-  typedef box_type::coord_type coord_type;
-  typedef db::CellInst cell_inst_type;
-  typedef db::CellInstArray cell_inst_array_type;
-  typedef db::object_with_properties<cell_inst_array_type> cell_inst_wp_array_type;
-  typedef db::box_convert<cell_inst_array_type, false> cell_inst_array_box_converter;
-  typedef db::box_convert<cell_inst_wp_array_type, false> cell_inst_wp_array_box_converter;
-  typedef db::unstable_box_tree<box_type, cell_inst_array_type, cell_inst_array_box_converter> cell_inst_tree_type;
-  typedef db::unstable_box_tree<box_type, cell_inst_wp_array_type, cell_inst_wp_array_box_converter> cell_inst_wp_tree_type;
-  typedef db::box_tree<box_type, cell_inst_array_type, cell_inst_array_box_converter> stable_cell_inst_tree_type;
-  typedef db::box_tree<box_type, cell_inst_wp_array_type, cell_inst_wp_array_box_converter> stable_cell_inst_wp_tree_type;
-  typedef db::Instances instances_type;
-  typedef db::Instance instance_type;
+  using layout_type = db::Layout;
+  using box_type = db::Box;
+  using coord_type = box_type::coord_type;
+  using cell_inst_type = db::CellInst;
+  using cell_inst_array_type = db::CellInstArray;
+  using cell_inst_wp_array_type = db::object_with_properties<cell_inst_array_type>;
+  using cell_inst_array_box_converter = db::box_convert<cell_inst_array_type, false>;
+  using cell_inst_wp_array_box_converter = db::box_convert<cell_inst_wp_array_type, false>;
+  using cell_inst_tree_type = db::unstable_box_tree<box_type, cell_inst_array_type, cell_inst_array_box_converter>;
+  using cell_inst_wp_tree_type = db::unstable_box_tree<box_type, cell_inst_wp_array_type, cell_inst_wp_array_box_converter>;
+  using stable_cell_inst_tree_type = db::box_tree<box_type, cell_inst_array_type, cell_inst_array_box_converter>;
+  using stable_cell_inst_wp_tree_type = db::box_tree<box_type, cell_inst_wp_array_type, cell_inst_wp_array_box_converter>;
+  using instances_type = db::Instances;
+  using instance_type = db::Instance;
 
-  typedef cell_inst_tree_type::touching_iterator iter_type;
-  typedef cell_inst_wp_tree_type::touching_iterator iter_wp_type;
-  typedef stable_cell_inst_tree_type::touching_iterator stable_iter_type;
-  typedef stable_cell_inst_wp_tree_type::touching_iterator stable_iter_wp_type;
-  typedef stable_iter_type stable_unsorted_iter_type;
-  typedef stable_iter_wp_type stable_unsorted_iter_wp_type;
+  using iter_type = cell_inst_tree_type::touching_iterator;
+  using iter_wp_type = cell_inst_wp_tree_type::touching_iterator;
+  using stable_iter_type = stable_cell_inst_tree_type::touching_iterator;
+  using stable_iter_wp_type = stable_cell_inst_wp_tree_type::touching_iterator;
+  using stable_unsorted_iter_type = stable_iter_type;
+  using stable_unsorted_iter_wp_type = stable_iter_wp_type;
 
   TouchingInstanceIteratorTraits ();
   TouchingInstanceIteratorTraits (const instances_type *insts, const box_type &box, const layout_type *layout);
@@ -890,27 +890,27 @@ private:
 
 struct DB_PUBLIC OverlappingInstanceIteratorTraits
 {
-  typedef db::Layout layout_type;
-  typedef db::Box box_type;
-  typedef box_type::coord_type coord_type;
-  typedef db::CellInst cell_inst_type;
-  typedef db::CellInstArray cell_inst_array_type;
-  typedef db::object_with_properties<cell_inst_array_type> cell_inst_wp_array_type;
-  typedef db::box_convert<cell_inst_array_type, false> cell_inst_array_box_converter;
-  typedef db::box_convert<cell_inst_wp_array_type, false> cell_inst_wp_array_box_converter;
-  typedef db::unstable_box_tree<box_type, cell_inst_array_type, cell_inst_array_box_converter> cell_inst_tree_type;
-  typedef db::unstable_box_tree<box_type, cell_inst_wp_array_type, cell_inst_wp_array_box_converter> cell_inst_wp_tree_type;
-  typedef db::box_tree<box_type, cell_inst_array_type, cell_inst_array_box_converter> stable_cell_inst_tree_type;
-  typedef db::box_tree<box_type, cell_inst_wp_array_type, cell_inst_wp_array_box_converter> stable_cell_inst_wp_tree_type;
-  typedef db::Instances instances_type;
-  typedef db::Instance instance_type;
+  using layout_type = db::Layout;
+  using box_type = db::Box;
+  using coord_type = box_type::coord_type;
+  using cell_inst_type = db::CellInst;
+  using cell_inst_array_type = db::CellInstArray;
+  using cell_inst_wp_array_type = db::object_with_properties<cell_inst_array_type>;
+  using cell_inst_array_box_converter = db::box_convert<cell_inst_array_type, false>;
+  using cell_inst_wp_array_box_converter = db::box_convert<cell_inst_wp_array_type, false>;
+  using cell_inst_tree_type = db::unstable_box_tree<box_type, cell_inst_array_type, cell_inst_array_box_converter>;
+  using cell_inst_wp_tree_type = db::unstable_box_tree<box_type, cell_inst_wp_array_type, cell_inst_wp_array_box_converter>;
+  using stable_cell_inst_tree_type = db::box_tree<box_type, cell_inst_array_type, cell_inst_array_box_converter>;
+  using stable_cell_inst_wp_tree_type = db::box_tree<box_type, cell_inst_wp_array_type, cell_inst_wp_array_box_converter>;
+  using instances_type = db::Instances;
+  using instance_type = db::Instance;
 
-  typedef cell_inst_tree_type::overlapping_iterator iter_type;
-  typedef cell_inst_wp_tree_type::overlapping_iterator iter_wp_type;
-  typedef stable_cell_inst_tree_type::overlapping_iterator stable_iter_type;
-  typedef stable_cell_inst_wp_tree_type::overlapping_iterator stable_iter_wp_type;
-  typedef stable_iter_type stable_unsorted_iter_type;
-  typedef stable_iter_wp_type stable_unsorted_iter_wp_type;
+  using iter_type = cell_inst_tree_type::overlapping_iterator;
+  using iter_wp_type = cell_inst_wp_tree_type::overlapping_iterator;
+  using stable_iter_type = stable_cell_inst_tree_type::overlapping_iterator;
+  using stable_iter_wp_type = stable_cell_inst_wp_tree_type::overlapping_iterator;
+  using stable_unsorted_iter_type = stable_iter_type;
+  using stable_unsorted_iter_wp_type = stable_iter_wp_type;
 
   OverlappingInstanceIteratorTraits ();
   OverlappingInstanceIteratorTraits (const instances_type *insts, const box_type &box, const layout_type *layout);
@@ -946,16 +946,16 @@ private:
 class DB_PUBLIC ChildCellIterator
 {
 public: 
-  typedef db::Layout layout_type;
-  typedef db::CellInst cell_inst_type;
-  typedef cell_index_type value_type;
-  typedef db::Instances instances_type;
-  typedef db::CellInstArray basic_inst_type;
-  typedef tl::vector<const basic_inst_type *>::const_iterator inst_iterator_type;
+  using layout_type = db::Layout;
+  using cell_inst_type = db::CellInst;
+  using value_type = cell_index_type;
+  using instances_type = db::Instances;
+  using basic_inst_type = db::CellInstArray;
+  using inst_iterator_type = tl::vector<const basic_inst_type *>::const_iterator;
   typedef void pointer;                //  no operator->
   typedef cell_index_type reference;   //  operator* returns a value
-  typedef std::forward_iterator_tag iterator_category;
-  typedef void difference_type;
+  using iterator_category = std::forward_iterator_tag;
+  using difference_type = void;
 
   /**
    *  @brief Default ctor
@@ -1082,14 +1082,14 @@ class DB_PUBLIC ParentInstRep
   : public ParentInst
 {
 public: 
-  typedef db::Layout layout_type;
-  typedef db::Cell cell_type;
-  typedef db::Box box_type;
-  typedef box_type::coord_type coord_type;
-  typedef db::CellInst cell_inst_type;
-  typedef db::CellInstArray basic_inst_type;
-  typedef basic_inst_type cell_inst_array_type;
-  typedef instance_iterator<NormalInstanceIteratorTraits> const_iterator;
+  using layout_type = db::Layout;
+  using cell_type = db::Cell;
+  using box_type = db::Box;
+  using coord_type = box_type::coord_type;
+  using cell_inst_type = db::CellInst;
+  using basic_inst_type = db::CellInstArray;
+  using cell_inst_array_type = basic_inst_type;
+  using const_iterator = instance_iterator<NormalInstanceIteratorTraits>;
 
   /**
    *  @brief The default ctor
@@ -1150,14 +1150,14 @@ private:
 class DB_PUBLIC ParentInstIterator
 {
 public: 
-  typedef db::Layout layout_type;
-  typedef ParentInst parent_inst_type;
-  typedef db::Cell cell_type;
-  typedef ParentInstRep value_type;
+  using layout_type = db::Layout;
+  using parent_inst_type = ParentInst;
+  using cell_type = db::Cell;
+  using value_type = ParentInstRep;
   typedef const value_type *pointer; 
   typedef value_type reference;   //  operator* returns a value
-  typedef std::forward_iterator_tag iterator_category;
-  typedef void difference_type;
+  using iterator_category = std::forward_iterator_tag;
+  using difference_type = void;
 
   /**
    *  @brief Default ctor
@@ -1247,13 +1247,13 @@ private:
 class DB_PUBLIC ParentCellIterator
 {
 public: 
-  typedef db::Layout layout_type;
-  typedef ParentInst parent_inst_type;
-  typedef cell_index_type value_type;
+  using layout_type = db::Layout;
+  using parent_inst_type = ParentInst;
+  using value_type = cell_index_type;
   typedef void pointer;           //  no operator->
   typedef value_type reference;   //  operator* returns a value
-  typedef std::forward_iterator_tag iterator_category;
-  typedef void difference_type;
+  using iterator_category = std::forward_iterator_tag;
+  using difference_type = void;
 
   /**
    *  @brief Default ctor
@@ -1323,32 +1323,32 @@ private:
 class DB_PUBLIC Instances 
 {
 public:
-  typedef db::Layout layout_type;
-  typedef db::Cell cell_type;
-  typedef db::Box box_type;
-  typedef box_type::coord_type coord_type;
-  typedef db::CellInst cell_inst_type;
-  typedef db::CellInstArray basic_inst_type;
-  typedef basic_inst_type cell_inst_array_type;
-  typedef db::object_with_properties<cell_inst_array_type> cell_inst_wp_array_type;
+  using layout_type = db::Layout;
+  using cell_type = db::Cell;
+  using box_type = db::Box;
+  using coord_type = box_type::coord_type;
+  using cell_inst_type = db::CellInst;
+  using basic_inst_type = db::CellInstArray;
+  using cell_inst_array_type = basic_inst_type;
+  using cell_inst_wp_array_type = db::object_with_properties<cell_inst_array_type>;
   //  the second parameter for box_convert tells it to use a single point for empty cells.
-  typedef db::box_convert<cell_inst_array_type, false> cell_inst_array_box_converter;
-  typedef db::box_convert<cell_inst_wp_array_type, false> cell_inst_wp_array_box_converter;
-  typedef db::box_tree<box_type, cell_inst_array_type, cell_inst_array_box_converter> stable_cell_inst_tree_type;
-  typedef db::box_tree<box_type, cell_inst_wp_array_type, cell_inst_wp_array_box_converter> stable_cell_inst_wp_tree_type;
-  typedef db::unstable_box_tree<box_type, cell_inst_array_type, cell_inst_array_box_converter> cell_inst_tree_type;
-  typedef db::unstable_box_tree<box_type, cell_inst_wp_array_type, cell_inst_wp_array_box_converter> cell_inst_wp_tree_type;
-  typedef instance_iterator<NormalInstanceIteratorTraits> const_iterator;
-  typedef instance_iterator<OverlappingInstanceIteratorTraits> overlapping_iterator;
-  typedef instance_iterator<TouchingInstanceIteratorTraits> touching_iterator;
-  typedef db::ParentInst parent_inst_type;
-  typedef db::ParentInstIterator parent_inst_iterator;
-  typedef db::ParentCellIterator parent_cell_iterator;
-  typedef db::ChildCellIterator child_cell_iterator;
-  typedef tl::vector<parent_inst_type> parent_inst_vector;
-  typedef tl::vector<const basic_inst_type *> sorted_inst_vector;
-  typedef sorted_inst_vector::const_iterator sorted_inst_iterator;
-  typedef db::Instance instance_type;
+  using cell_inst_array_box_converter = db::box_convert<cell_inst_array_type, false>;
+  using cell_inst_wp_array_box_converter = db::box_convert<cell_inst_wp_array_type, false>;
+  using stable_cell_inst_tree_type = db::box_tree<box_type, cell_inst_array_type, cell_inst_array_box_converter>;
+  using stable_cell_inst_wp_tree_type = db::box_tree<box_type, cell_inst_wp_array_type, cell_inst_wp_array_box_converter>;
+  using cell_inst_tree_type = db::unstable_box_tree<box_type, cell_inst_array_type, cell_inst_array_box_converter>;
+  using cell_inst_wp_tree_type = db::unstable_box_tree<box_type, cell_inst_wp_array_type, cell_inst_wp_array_box_converter>;
+  using const_iterator = instance_iterator<NormalInstanceIteratorTraits>;
+  using overlapping_iterator = instance_iterator<OverlappingInstanceIteratorTraits>;
+  using touching_iterator = instance_iterator<TouchingInstanceIteratorTraits>;
+  using parent_inst_type = db::ParentInst;
+  using parent_inst_iterator = db::ParentInstIterator;
+  using parent_cell_iterator = db::ParentCellIterator;
+  using child_cell_iterator = db::ChildCellIterator;
+  using parent_inst_vector = tl::vector<parent_inst_type>;
+  using sorted_inst_vector = tl::vector<const basic_inst_type *>;
+  using sorted_inst_iterator = sorted_inst_vector::const_iterator;
+  using instance_type = db::Instance;
 
   /**
    *  @brief Default constructor

@@ -123,7 +123,7 @@ private:
 class DB_PUBLIC Clipboard
 {
 public:
-  typedef std::vector <const ClipboardObject *>::const_iterator iterator;
+  using iterator = std::vector <const ClipboardObject *>::const_iterator;
 
   /**
    *  @brief The singleton instance

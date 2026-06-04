@@ -60,11 +60,11 @@ template <class TS, class TI>
 class DB_PUBLIC shape_interactions
 {
 public:
-  typedef std::unordered_map<unsigned int, std::vector<unsigned int> > container;
-  typedef container::const_iterator iterator;
-  typedef container::value_type::second_type::const_iterator iterator2;
-  typedef typename std::unordered_map<unsigned int, TS>::const_iterator subject_iterator;
-  typedef typename std::unordered_map<unsigned int, std::pair<unsigned int, TI> >::const_iterator intruder_iterator;
+  using container = std::unordered_map<unsigned int, std::vector<unsigned int> >;
+  using iterator = container::const_iterator;
+  using iterator2 = container::value_type::second_type::const_iterator;
+  using subject_iterator = typename std::unordered_map<unsigned int, TS>::const_iterator;
+  using intruder_iterator = typename std::unordered_map<unsigned int, std::pair<unsigned int, TI> >::const_iterator;
 
   shape_interactions ();
 
@@ -160,8 +160,8 @@ template <class TS, class TI, class TR>
 class DB_PUBLIC local_processor_cell_context
 {
 public:
-  typedef std::pair<const db::Cell *, db::ICplxTrans> parent_inst_type;
-  typedef typename std::vector<local_processor_cell_drop<TS, TI, TR> >::const_iterator drop_iterator;
+  using parent_inst_type = std::pair<const db::Cell *, db::ICplxTrans>;
+  using drop_iterator = typename std::vector<local_processor_cell_drop<TS, TI, TR> >::const_iterator;
 
   local_processor_cell_context ();
   local_processor_cell_context (const local_processor_cell_context &other);
@@ -218,9 +218,9 @@ template <class TS, class TI, class TR>
 class DB_PUBLIC local_processor_cell_contexts
 {
 public:
-  typedef std::pair<std::set<CellInstArray>, std::map<unsigned int, std::set<TI> > > context_key_type;
-  typedef std::unordered_map<context_key_type, db::local_processor_cell_context<TS, TI, TR> > context_map_type;
-  typedef typename context_map_type::const_iterator iterator;
+  using context_key_type = std::pair<std::set<CellInstArray>, std::map<unsigned int, std::set<TI> > >;
+  using context_map_type = std::unordered_map<context_key_type, db::local_processor_cell_context<TS, TI, TR> >;
+  using iterator = typename context_map_type::const_iterator;
 
   local_processor_cell_contexts ();
   local_processor_cell_contexts (const db::Cell *intruder_cell);
@@ -264,8 +264,8 @@ template <class TS, class TI, class TR>
 class DB_PUBLIC local_processor_contexts
 {
 public:
-  typedef std::unordered_map<db::Cell *, local_processor_cell_contexts<TS, TI, TR> > contexts_per_cell_type;
-  typedef typename contexts_per_cell_type::iterator iterator;
+  using contexts_per_cell_type = std::unordered_map<db::Cell *, local_processor_cell_contexts<TS, TI, TR> >;
+  using iterator = typename contexts_per_cell_type::iterator;
 
   local_processor_contexts ()
     : m_subject_layer (0), m_intruder_layers ()

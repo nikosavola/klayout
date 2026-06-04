@@ -41,9 +41,9 @@ namespace db
 template <class Sh> 
 struct shape_traits 
 {
-  typedef tl::False can_deref;
-  typedef tl::False is_array;
-  typedef tl::False has_properties;
+  using can_deref = tl::False;
+  using is_array = tl::False;
+  using has_properties = tl::False;
 };
 
 /**
@@ -52,10 +52,10 @@ struct shape_traits
 template <class InnerSh>
 struct shape_traits<db::object_with_properties<InnerSh> >
 {
-  typedef shape_traits<InnerSh> inner_traits;
-  typedef typename inner_traits::can_deref can_deref;
-  typedef typename inner_traits::is_array is_array;
-  typedef tl::True has_properties;
+  using inner_traits = shape_traits<InnerSh>;
+  using can_deref = typename inner_traits::can_deref;
+  using is_array = typename inner_traits::is_array;
+  using has_properties = tl::True;
 };
 
 /**
@@ -64,10 +64,10 @@ struct shape_traits<db::object_with_properties<InnerSh> >
 template <class InnerSh, class ATrans>
 struct shape_traits<db::array<InnerSh, ATrans> >
 {
-  typedef shape_traits<InnerSh> inner_traits;
-  typedef typename inner_traits::can_deref can_deref;
-  typedef tl::True is_array;
-  typedef tl::False has_properties;
+  using inner_traits = shape_traits<InnerSh>;
+  using can_deref = typename inner_traits::can_deref;
+  using is_array = tl::True;
+  using has_properties = tl::False;
 };
 
 /**
@@ -76,9 +76,9 @@ struct shape_traits<db::array<InnerSh, ATrans> >
 template <class InnerSh, class RTrans>
 struct shape_traits<db::shape_ref<InnerSh, RTrans> >
 {
-  typedef tl::True can_deref;
-  typedef tl::False is_array;
-  typedef tl::False has_properties;
+  using can_deref = tl::True;
+  using is_array = tl::False;
+  using has_properties = tl::False;
 };
 
 /**
@@ -93,9 +93,9 @@ class layer_class
   : public LayerBase
 {
 public:
-  typedef db::layer<Sh, StableTag> layer_type;
-  typedef LayerBase::box_type box_type;
-  typedef LayerBase::coord_type coord_type;
+  using layer_type = db::layer<Sh, StableTag>;
+  using box_type = LayerBase::box_type;
+  using coord_type = LayerBase::coord_type;
 
   layer_class ()
     : LayerBase (), m_layer () 

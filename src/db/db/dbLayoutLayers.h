@@ -92,7 +92,7 @@ private:
 class DB_PUBLIC LayoutLayers
 {
 public:
-  typedef LayerIterator layer_iterator;
+  using layer_iterator = LayerIterator;
   enum LayerState { Normal, Free, Special };
 
   /**

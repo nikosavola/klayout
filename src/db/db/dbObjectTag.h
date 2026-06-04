@@ -40,7 +40,7 @@ namespace db
 template <class Obj>
 struct object_tag
 {
-  typedef Obj object_type;
+  using object_type = Obj;
 };
 
 }

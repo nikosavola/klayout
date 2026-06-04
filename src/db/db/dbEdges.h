@@ -39,8 +39,8 @@ class MutableEdges;
 class EmptyEdges;
 class DeepShapeStore;
 
-typedef generic_shape_iterator<db::Edge> EdgesIterator;
-typedef addressable_shape_delivery<Edge> AddressableEdgeDelivery;
+using EdgesIterator = generic_shape_iterator<db::Edge>;
+using AddressableEdgeDelivery = addressable_shape_delivery<Edge>;
 
 class Edges;
 
@@ -62,15 +62,15 @@ class DB_PUBLIC Edges
   : public db::ShapeCollection
 {
 public:
-  typedef db::Coord coord_type;
-  typedef db::coord_traits<db::Coord> coord_traits;
-  typedef db::Edge edge_type;
-  typedef db::Vector vector_type;
-  typedef db::Point point_type;
-  typedef db::Box box_type;
-  typedef coord_traits::distance_type length_type;
-  typedef coord_traits::distance_type distance_type;
-  typedef EdgesIterator const_iterator;
+  using coord_type = db::Coord;
+  using coord_traits = db::coord_traits<db::Coord>;
+  using edge_type = db::Edge;
+  using vector_type = db::Vector;
+  using point_type = db::Point;
+  using box_type = db::Box;
+  using length_type = coord_traits::distance_type;
+  using distance_type = coord_traits::distance_type;
+  using const_iterator = EdgesIterator;
 
   /**
    *  @brief Default constructor

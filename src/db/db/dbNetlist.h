@@ -61,19 +61,19 @@ class DB_PUBLIC Netlist
   : public gsi::ObjectBase, public tl::Object
 {
 public:
-  typedef tl::shared_collection<Circuit> circuit_list;
-  typedef circuit_list::const_iterator const_circuit_iterator;
-  typedef circuit_list::iterator circuit_iterator;
-  typedef tl::shared_collection<DeviceClass> device_class_list;
-  typedef device_class_list::const_iterator const_device_class_iterator;
-  typedef device_class_list::iterator device_class_iterator;
-  typedef tl::shared_collection<DeviceAbstract> device_abstract_list;
-  typedef device_abstract_list::const_iterator const_abstract_model_iterator;
-  typedef device_abstract_list::iterator device_abstract_iterator;
-  typedef dereferencing_iterator<tl::vector<Circuit *>::iterator, Circuit> top_down_circuit_iterator;
-  typedef dereferencing_iterator<tl::vector<const Circuit *>::const_iterator, const Circuit>  const_top_down_circuit_iterator;
-  typedef dereferencing_iterator<tl::vector<Circuit *>::reverse_iterator, Circuit> bottom_up_circuit_iterator;
-  typedef dereferencing_iterator<tl::vector<const Circuit *>::const_reverse_iterator, const Circuit> const_bottom_up_circuit_iterator;
+  using circuit_list = tl::shared_collection<Circuit>;
+  using const_circuit_iterator = circuit_list::const_iterator;
+  using circuit_iterator = circuit_list::iterator;
+  using device_class_list = tl::shared_collection<DeviceClass>;
+  using const_device_class_iterator = device_class_list::const_iterator;
+  using device_class_iterator = device_class_list::iterator;
+  using device_abstract_list = tl::shared_collection<DeviceAbstract>;
+  using const_abstract_model_iterator = device_abstract_list::const_iterator;
+  using device_abstract_iterator = device_abstract_list::iterator;
+  using top_down_circuit_iterator = dereferencing_iterator<tl::vector<Circuit *>::iterator, Circuit>;
+  using const_top_down_circuit_iterator = dereferencing_iterator<tl::vector<const Circuit *>::const_iterator, const Circuit> ;
+  using bottom_up_circuit_iterator = dereferencing_iterator<tl::vector<Circuit *>::reverse_iterator, Circuit>;
+  using const_bottom_up_circuit_iterator = dereferencing_iterator<tl::vector<const Circuit *>::const_reverse_iterator, const Circuit>;
 
   /**
    *  @brief Constructor

@@ -48,7 +48,7 @@ struct bs_side_compare_func
   : std::binary_function<std::pair<const Obj *, Prop>, std::pair<const Obj *, Prop>, bool>
 #endif
 {
-  typedef typename BoxConvertAdaptor::box_type box_type;
+  using box_type = typename BoxConvertAdaptor::box_type;
 
   bs_side_compare_func (const BoxConvertAdaptor &bc)
     : m_bc (bc)
@@ -75,8 +75,8 @@ struct bs_side_compare_vs_const_func
         : std::unary_function<std::pair<const Obj *, Prop>, bool>
 #endif
 {
-  typedef typename BoxConvertAdaptor::box_type box_type;
-  typedef typename box_type::coord_type coord_type;
+  using box_type = typename BoxConvertAdaptor::box_type;
+  using coord_type = typename box_type::coord_type;
 
   bs_side_compare_vs_const_func (const BoxConvertAdaptor &bc, coord_type c)
     : m_bc (bc), m_c (c)
@@ -181,15 +181,15 @@ template <class Obj, class Prop>
 class box_scanner 
 {
 public:
-  typedef Obj object_type;
-  typedef Prop property_type;
-  typedef std::vector<std::pair<const Obj *, Prop> > container_type;
-  typedef typename container_type::iterator iterator_type;
+  using object_type = Obj;
+  using property_type = Prop;
+  using container_type = std::vector<std::pair<const Obj *, Prop> >;
+  using iterator_type = typename container_type::iterator;
 
   template <class BoxConvert>
   struct box_convert_adaptor_take_first
   {
-    typedef typename BoxConvert::box_type box_type;
+    using box_type = typename BoxConvert::box_type;
 
     box_convert_adaptor_take_first (const BoxConvert &bc)
       : m_bc (bc)
@@ -206,7 +206,7 @@ public:
 
   struct BoxConvertAdaptorTakeSecond
   {
-    typedef Prop box_type;
+    using box_type = Prop;
 
     const box_type &operator() (const std::pair<const Obj *, Prop> &p) const
     {
@@ -346,12 +346,12 @@ private:
   template <class Rec, class BoxConvertAdaptor>
   bool do_process (Rec &rec, typename BoxConvertAdaptor::box_type::coord_type enl, const BoxConvertAdaptor &bc = BoxConvertAdaptor ())
   {
-    typedef typename BoxConvertAdaptor::box_type box_type;
-    typedef typename box_type::coord_type coord_type;
-    typedef bs_side_compare_func<BoxConvertAdaptor, Obj, Prop, box_bottom<Box> > bottom_side_compare_func;
-    typedef bs_side_compare_func<BoxConvertAdaptor, Obj, Prop, box_left<Box> > left_side_compare_func;
-    typedef bs_side_compare_vs_const_func<BoxConvertAdaptor, Obj, Prop, box_top<Box> > below_func;
-    typedef bs_side_compare_vs_const_func<BoxConvertAdaptor, Obj, Prop, box_right<Box> > left_func;
+    using box_type = typename BoxConvertAdaptor::box_type;
+    using coord_type = typename box_type::coord_type;
+    using bottom_side_compare_func = bs_side_compare_func<BoxConvertAdaptor, Obj, Prop, box_bottom<Box> >;
+    using left_side_compare_func = bs_side_compare_func<BoxConvertAdaptor, Obj, Prop, box_left<Box> >;
+    using below_func = bs_side_compare_vs_const_func<BoxConvertAdaptor, Obj, Prop, box_top<Box> >;
+    using left_func = bs_side_compare_vs_const_func<BoxConvertAdaptor, Obj, Prop, box_right<Box> >;
 
     //  sort out the entries with an empty bbox (we must not put that into sort)
 
@@ -574,17 +574,17 @@ template <class Obj1, class Prop1, class Obj2, class Prop2>
 class box_scanner2
 {
 public:
-  typedef Obj1 object_type1;
-  typedef Obj2 object_type2;
-  typedef std::vector<std::pair<const Obj1 *, Prop1> > container_type1;
-  typedef std::vector<std::pair<const Obj2 *, Prop2> > container_type2;
-  typedef typename container_type1::iterator iterator_type1;
-  typedef typename container_type2::iterator iterator_type2;
+  using object_type1 = Obj1;
+  using object_type2 = Obj2;
+  using container_type1 = std::vector<std::pair<const Obj1 *, Prop1> >;
+  using container_type2 = std::vector<std::pair<const Obj2 *, Prop2> >;
+  using iterator_type1 = typename container_type1::iterator;
+  using iterator_type2 = typename container_type2::iterator;
 
   template <class BoxConvert>
   struct box_convert_adaptor_take_first1
   {
-    typedef typename BoxConvert::box_type box_type;
+    using box_type = typename BoxConvert::box_type;
 
     box_convert_adaptor_take_first1 (const BoxConvert &bc)
       : m_bc (bc)
@@ -602,7 +602,7 @@ public:
   template <class BoxConvert>
   struct box_convert_adaptor_take_first2
   {
-    typedef typename BoxConvert::box_type box_type;
+    using box_type = typename BoxConvert::box_type;
 
     box_convert_adaptor_take_first2 (const BoxConvert &bc)
       : m_bc (bc)
@@ -619,7 +619,7 @@ public:
 
   struct BoxConvertAdaptorTakeSecond1
   {
-    typedef Prop1 box_type;
+    using box_type = Prop1;
 
     const box_type &operator() (const std::pair<const Obj1 *, Prop1> &p) const
     {
@@ -629,7 +629,7 @@ public:
 
   struct BoxConvertAdaptorTakeSecond2
   {
-    typedef Prop2 box_type;
+    using box_type = Prop2;
 
     const box_type &operator() (const std::pair<const Obj2 *, Prop2> &p) const
     {
@@ -813,15 +813,15 @@ private:
   bool do_process (Rec &rec, typename BoxConvertAdaptor1::box_type::coord_type enl, const BoxConvertAdaptor1 &bc1 = BoxConvertAdaptor1 (), const BoxConvertAdaptor2 &bc2 = BoxConvertAdaptor2 ())
   {
     typedef typename BoxConvertAdaptor1::box_type box_type; //  must be same as BoxConvert2::box_type
-    typedef typename box_type::coord_type coord_type;
-    typedef bs_side_compare_func<BoxConvertAdaptor1, Obj1, Prop1, box_bottom<Box> > bottom_side_compare_func1;
-    typedef bs_side_compare_func<BoxConvertAdaptor1, Obj1, Prop1, box_left<Box> > left_side_compare_func1;
-    typedef bs_side_compare_vs_const_func<BoxConvertAdaptor1, Obj1, Prop1, box_top<Box> > below_func1;
-    typedef bs_side_compare_vs_const_func<BoxConvertAdaptor1, Obj1, Prop1, box_right<Box> > left_func1;
-    typedef bs_side_compare_func<BoxConvertAdaptor2, Obj2, Prop2, box_bottom<Box> > bottom_side_compare_func2;
-    typedef bs_side_compare_func<BoxConvertAdaptor2, Obj2, Prop2, box_left<Box> > left_side_compare_func2;
-    typedef bs_side_compare_vs_const_func<BoxConvertAdaptor2, Obj2, Prop2, box_top<Box> > below_func2;
-    typedef bs_side_compare_vs_const_func<BoxConvertAdaptor2, Obj2, Prop2, box_right<Box> > left_func2;
+    using coord_type = typename box_type::coord_type;
+    using bottom_side_compare_func1 = bs_side_compare_func<BoxConvertAdaptor1, Obj1, Prop1, box_bottom<Box> >;
+    using left_side_compare_func1 = bs_side_compare_func<BoxConvertAdaptor1, Obj1, Prop1, box_left<Box> >;
+    using below_func1 = bs_side_compare_vs_const_func<BoxConvertAdaptor1, Obj1, Prop1, box_top<Box> >;
+    using left_func1 = bs_side_compare_vs_const_func<BoxConvertAdaptor1, Obj1, Prop1, box_right<Box> >;
+    using bottom_side_compare_func2 = bs_side_compare_func<BoxConvertAdaptor2, Obj2, Prop2, box_bottom<Box> >;
+    using left_side_compare_func2 = bs_side_compare_func<BoxConvertAdaptor2, Obj2, Prop2, box_left<Box> >;
+    using below_func2 = bs_side_compare_vs_const_func<BoxConvertAdaptor2, Obj2, Prop2, box_top<Box> >;
+    using left_func2 = bs_side_compare_vs_const_func<BoxConvertAdaptor2, Obj2, Prop2, box_right<Box> >;
 
     //  sort out the entries with an empty bbox (we must not put that into sort)
 
@@ -1065,7 +1065,7 @@ template <class Obj, class Prop>
 class cluster
 {
 public:
-  typedef typename std::vector<std::pair<const Obj *, Prop> >::const_iterator iterator;
+  using iterator = typename std::vector<std::pair<const Obj *, Prop> >::const_iterator;
 
   /**
    *  @brief Adds an object to the cluster
@@ -1160,14 +1160,14 @@ class cluster_collector
   : public box_scanner_receiver<Obj, Prop>
 {
 public:
-  typedef Obj object_type;
-  typedef Prop property_type;
-  typedef Cluster cluster_type;
-  typedef std::list<std::pair<size_t, Cluster> > cl_type;
-  typedef typename std::list<std::pair<size_t, Cluster> >::iterator cl_iterator_type;
-  typedef std::pair<const Obj *, Prop> om_key_type;
-  typedef std::map<om_key_type, cl_iterator_type> om_type;
-  typedef typename om_type::iterator om_iterator_type;
+  using object_type = Obj;
+  using property_type = Prop;
+  using cluster_type = Cluster;
+  using cl_type = std::list<std::pair<size_t, Cluster> >;
+  using cl_iterator_type = typename std::list<std::pair<size_t, Cluster> >::iterator;
+  using om_key_type = std::pair<const Obj *, Prop>;
+  using om_type = std::map<om_key_type, cl_iterator_type>;
+  using om_iterator_type = typename om_type::iterator;
 
   /**
    *  @brief The constructor 

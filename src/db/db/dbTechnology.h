@@ -55,8 +55,8 @@ class DB_PUBLIC Technologies
   : public tl::Object
 {
 public:
-  typedef tl::stable_vector<Technology>::const_iterator const_iterator;
-  typedef tl::stable_vector<Technology>::iterator iterator;
+  using const_iterator = tl::stable_vector<Technology>::const_iterator;
+  using iterator = tl::stable_vector<Technology>::iterator;
 
   /**
    *  @brief The constructor
@@ -806,7 +806,7 @@ template <class TC>
 class TechnologyComponentReadAdaptor 
 {
 public:
-  typedef tl::pass_by_ref_tag tag;
+  using tag = tl::pass_by_ref_tag;
 
   TechnologyComponentReadAdaptor (const std::string &name)
     : m_name (name), mp_t (0), m_done (false)

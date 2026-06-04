@@ -104,7 +104,7 @@ public:
 
 protected:
   friend class l2n_std_reader::Brace;
-  typedef l2n_std_reader::Brace Brace;
+  using Brace = l2n_std_reader::Brace;
 
   void read_netlist (Netlist *netlist, db::LayoutToNetlist *l2n, Brace *nested = 0, std::map<const db::Circuit *, ObjectMap> *map_per_circuit = 0);
   static size_t terminal_id (const db::DeviceClass *device_class, const std::string &tname);

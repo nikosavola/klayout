@@ -49,10 +49,10 @@ template <class C>
 class DB_PUBLIC variable_width_path
 {
 public:
-  typedef db::point<C> point_type;
-  typedef db::simple_polygon<C> simple_polygon_type;
-  typedef C width_type;
-  typedef std::pair<size_t, width_type> width_spec_type;
+  using point_type = db::point<C>;
+  using simple_polygon_type = db::simple_polygon<C>;
+  using width_type = C;
+  using width_spec_type = std::pair<size_t, width_type>;
 
   /**
    *  @brief Constructor from a set of points and width specifications
@@ -109,12 +109,12 @@ private:
 /**
  *  @brief The integer-type variable-width path
  */
-typedef variable_width_path<db::Coord> VariableWidthPath;
+using VariableWidthPath = variable_width_path<db::Coord>;
 
 /**
  *  @brief The float-type variable-width path
  */
-typedef variable_width_path<db::DCoord> DVariableWidthPath;
+using DVariableWidthPath = variable_width_path<db::DCoord>;
 
 }
 

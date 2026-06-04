@@ -43,7 +43,7 @@ namespace db {
 struct DB_PUBLIC RegionPerimeterFilter
   : public PolygonFilterBase
 {
-  typedef db::coord_traits<db::Coord>::perimeter_type perimeter_type;
+  using perimeter_type = db::coord_traits<db::Coord>::perimeter_type;
 
   /**
    *  @brief Constructor
@@ -109,7 +109,7 @@ private:
 struct DB_PUBLIC RegionAreaFilter
   : public PolygonFilterBase
 {
-  typedef db::Polygon::area_type area_type;
+  using area_type = db::Polygon::area_type;
 
   /**
    *  @brief Constructor
@@ -350,7 +350,7 @@ private:
 struct DB_PUBLIC RegionBBoxFilter
   : public AllMustMatchFilter
 {
-  typedef db::Box::distance_type value_type;
+  using value_type = db::Box::distance_type;
 
   /**
    *  @brief The parameters available

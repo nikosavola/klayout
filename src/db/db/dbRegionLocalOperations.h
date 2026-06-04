@@ -115,7 +115,7 @@ enum OppositeFilter
 struct DB_PUBLIC RegionCheckOptions
   : public EdgesCheckOptions
 {
-  typedef db::coord_traits<db::Coord>::distance_type distance_type;
+  using distance_type = db::coord_traits<db::Coord>::distance_type;
 
   /**
    *  @brief Constructor
@@ -240,7 +240,7 @@ private:
   db::MagnificationReducer m_vars;
 };
 
-typedef check_local_operation<db::PolygonRef, db::PolygonRef> CheckLocalOperation;
+using CheckLocalOperation = check_local_operation<db::PolygonRef, db::PolygonRef>;
 
 enum InteractingOutputMode {
   None = 0, Positive = 1, Negative = 2, PositiveAndNegative = 3
@@ -266,7 +266,7 @@ private:
   bool m_other_is_merged;
 };
 
-typedef interacting_local_operation<db::PolygonRef, db::PolygonRef, db::PolygonRef> InteractingLocalOperation;
+using InteractingLocalOperation = interacting_local_operation<db::PolygonRef, db::PolygonRef, db::PolygonRef>;
 
 template <class TS, class TI, class TR>
 class pull_local_operation
@@ -285,7 +285,7 @@ private:
   bool m_touching;
 };
 
-typedef pull_local_operation<db::PolygonRef, db::PolygonRef, db::PolygonRef> PullLocalOperation;
+using PullLocalOperation = pull_local_operation<db::PolygonRef, db::PolygonRef, db::PolygonRef>;
 
 template <class TS, class TI, class TR>
 class interacting_with_edge_local_operation
@@ -305,7 +305,7 @@ private:
   bool m_other_is_merged;
 };
 
-typedef interacting_with_edge_local_operation<db::PolygonRef, db::Edge, db::PolygonRef> InteractingWithEdgeLocalOperation;
+using InteractingWithEdgeLocalOperation = interacting_with_edge_local_operation<db::PolygonRef, db::Edge, db::PolygonRef>;
 
 template <class TS, class TI, class TR>
 class pull_with_edge_local_operation
@@ -320,7 +320,7 @@ public:
   virtual std::string description () const;
 };
 
-typedef pull_with_edge_local_operation<db::PolygonRef, db::Edge, db::Edge> PullWithEdgeLocalOperation;
+using PullWithEdgeLocalOperation = pull_with_edge_local_operation<db::PolygonRef, db::Edge, db::Edge>;
 
 template <class TS, class TI, class TR>
 class interacting_with_text_local_operation
@@ -339,7 +339,7 @@ private:
   size_t m_min_count, m_max_count;
 };
 
-typedef interacting_with_text_local_operation<db::PolygonRef, db::TextRef, db::PolygonRef> InteractingWithTextLocalOperation;
+using InteractingWithTextLocalOperation = interacting_with_text_local_operation<db::PolygonRef, db::TextRef, db::PolygonRef>;
 
 template <class TS, class TI, class TR>
 class pull_with_text_local_operation
@@ -354,7 +354,7 @@ public:
   virtual std::string description () const;
 };
 
-typedef pull_with_text_local_operation<db::PolygonRef, db::TextRef, db::TextRef> PullWithTextLocalOperation;
+using PullWithTextLocalOperation = pull_with_text_local_operation<db::PolygonRef, db::TextRef, db::TextRef>;
 
 template <class TS, class TI, class TR>
 class contained_local_operation
@@ -372,9 +372,9 @@ private:
   InteractingOutputMode m_output_mode;
 };
 
-typedef contained_local_operation<db::PolygonRef, db::PolygonRef, db::PolygonRef> ContainedLocalOperation;
+using ContainedLocalOperation = contained_local_operation<db::PolygonRef, db::PolygonRef, db::PolygonRef>;
 //  the implementation is type-agnostic and can be used for edges too
-typedef contained_local_operation<db::Edge, db::Edge, db::Edge> ContainedEdgesLocalOperation;
+using ContainedEdgesLocalOperation = contained_local_operation<db::Edge, db::Edge, db::Edge>;
 
 /**
  *  @brief Implements a boolean AND or NOT operation
@@ -395,7 +395,7 @@ private:
   bool m_is_and;
 };
 
-typedef bool_and_or_not_local_operation<db::PolygonRef, db::PolygonRef, db::PolygonRef> BoolAndOrNotLocalOperation;
+using BoolAndOrNotLocalOperation = bool_and_or_not_local_operation<db::PolygonRef, db::PolygonRef, db::PolygonRef>;
 
 /**
  *  @brief Implements a boolean AND or NOT operation with property handling
@@ -416,7 +416,7 @@ private:
   db::PropertyConstraint m_property_constraint;
 };
 
-typedef bool_and_or_not_local_operation_with_properties<db::PolygonRef, db::PolygonRef, db::PolygonRef> BoolAndOrNotLocalOperationWithProperties;
+using BoolAndOrNotLocalOperationWithProperties = bool_and_or_not_local_operation_with_properties<db::PolygonRef, db::PolygonRef, db::PolygonRef>;
 
 /**
  *  @brief Implements a boolean AND plus NOT operation
@@ -436,7 +436,7 @@ public:
   virtual std::string description () const;
 };
 
-typedef two_bool_and_not_local_operation<db::PolygonRef, db::PolygonRef, db::PolygonRef> TwoBoolAndNotLocalOperation;
+using TwoBoolAndNotLocalOperation = two_bool_and_not_local_operation<db::PolygonRef, db::PolygonRef, db::PolygonRef>;
 
 /**
  *  @brief Implements a boolean AND plus NOT operation
@@ -458,7 +458,7 @@ private:
   db::PropertyConstraint m_property_constraint;
 };
 
-typedef two_bool_and_not_local_operation_with_properties<db::PolygonRef, db::PolygonRef, db::PolygonRef> TwoBoolAndNotLocalOperationWithProperties;
+using TwoBoolAndNotLocalOperationWithProperties = two_bool_and_not_local_operation_with_properties<db::PolygonRef, db::PolygonRef, db::PolygonRef>;
 
 /**
  *  @brief Implements "sized_inside"

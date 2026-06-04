@@ -39,9 +39,9 @@ class RegionDelegate;
 class EdgesDelegate;
 class Layout;
 
-typedef shape_collection_processor<db::EdgePair, db::EdgePair> EdgePairProcessorBase;
-typedef shape_collection_processor<db::EdgePair, db::Polygon> EdgePairToPolygonProcessorBase;
-typedef shape_collection_processor<db::EdgePair, db::Edge> EdgePairToEdgeProcessorBase;
+using EdgePairProcessorBase = shape_collection_processor<db::EdgePair, db::EdgePair>;
+using EdgePairToPolygonProcessorBase = shape_collection_processor<db::EdgePair, db::Polygon>;
+using EdgePairToEdgeProcessorBase = shape_collection_processor<db::EdgePair, db::Edge>;
 
 class DB_PUBLIC
 EdgePairToPolygonProcessor
@@ -143,7 +143,7 @@ public:
 /**
  *  @brief The edge pair set iterator delegate
  */
-typedef db::generic_shape_iterator_delegate_base <db::EdgePair> EdgePairsIteratorDelegate;
+using EdgePairsIteratorDelegate = db::generic_shape_iterator_delegate_base <db::EdgePair>;
 
 /**
  *  @brief The delegate for the actual edge set implementation
@@ -152,12 +152,12 @@ class DB_PUBLIC EdgePairsDelegate
   : public ShapeCollectionDelegateBase
 {
 public:
-  typedef db::Coord coord_type;
-  typedef db::coord_traits<db::Coord> coord_traits;
-  typedef db::EdgePair edge_pair_type;
-  typedef db::Vector vector_type;
-  typedef db::Point point_type;
-  typedef db::Box box_type;
+  using coord_type = db::Coord;
+  using coord_traits = db::coord_traits<db::Coord>;
+  using edge_pair_type = db::EdgePair;
+  using vector_type = db::Vector;
+  using point_type = db::Point;
+  using box_type = db::Box;
 
   EdgePairsDelegate ();
   virtual ~EdgePairsDelegate ();

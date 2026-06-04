@@ -51,7 +51,7 @@ enum Severity {
 class DB_PUBLIC LogEntryData
 {
 public:
-  typedef size_t string_id_type;
+  using string_id_type = size_t;
 
   /**
    *  @brief Creates a log entry

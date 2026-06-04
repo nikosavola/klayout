@@ -84,7 +84,7 @@ template <class OutputContainer>
 struct EdgeBooleanCluster 
   : public db::cluster<db::Edge, size_t>
 {
-  typedef db::Edge::coord_type coord_type;
+  using coord_type = db::Edge::coord_type;
 
   EdgeBooleanCluster (OutputContainer *output, std::set<db::Point> *dots, EdgeBoolOp op)
     : mp_output (output), mp_output2 (0), mp_dots (dots), mp_dots2 (0), m_op (op)
@@ -411,7 +411,7 @@ struct EdgeBooleanClusterCollector
   struct PointInserter
     : public std::iterator<std::output_iterator_tag, void, void, void, void>
   {
-    typedef db::Point value_type;
+    using value_type = db::Point;
 
     PointInserter (OutputContainer *output)
       : mp_output (output)
@@ -507,7 +507,7 @@ public:
     }
   };
 
-  typedef Iterator const_iterator;
+  using const_iterator = Iterator;
 
   ShapesToOutputContainerAdaptor ()
     : mp_shapes (0), m_prop_id (0)

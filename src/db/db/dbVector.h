@@ -52,11 +52,11 @@ template <class C>
 class DB_PUBLIC vector
 {
 public:
-  typedef C coord_type;
-  typedef db::coord_traits<C> coord_traits;
-  typedef db::point<C> point_type;
-  typedef typename coord_traits::distance_type distance_type; 
-  typedef typename coord_traits::area_type area_type; 
+  using coord_type = C;
+  using coord_traits = db::coord_traits<C>;
+  using point_type = db::point<C>;
+  using distance_type = typename coord_traits::distance_type; 
+  using area_type = typename coord_traits::area_type; 
 
   /** 
    *  @brief Default constructor
@@ -540,17 +540,17 @@ operator<< (std::ostream &os, const vector<C> &p)
 /**
  *  @brief The short integer vector
  */
-typedef vector <short> ShortVector;
+using ShortVector = vector <short>;
 
 /**
  *  @brief The standard vector
  */
-typedef vector <db::Coord> Vector;
+using Vector = vector <db::Coord>;
 
 /**
  *  @brief The standard double coordinate vector
  */
-typedef vector <db::DCoord> DVector;
+using DVector = vector <db::DCoord>;
 
 /**
  *  @brief Convenience wrappers for coord_traits functions: vector product: 0->p x 0->q

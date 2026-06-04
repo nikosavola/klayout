@@ -76,13 +76,13 @@ class object_with_properties
   : public Obj
 {
 public:
-  typedef Obj object_type;
+  using object_type = Obj;
 
-  typedef typename Obj::box_type box_type;
-  typedef typename Obj::coord_type coord_type;
-  typedef typename Obj::point_type point_type;
+  using box_type = typename Obj::box_type;
+  using coord_type = typename Obj::coord_type;
+  using point_type = typename Obj::point_type;
 
-  typedef db::object_tag< object_with_properties<Obj> > tag;
+  using tag = db::object_tag< object_with_properties<Obj> >;
 
   /**
    *  @brief The default constructor
@@ -279,39 +279,39 @@ private:
   properties_id_type m_id;
 };
 
-typedef object_with_properties<Polygon> PolygonWithProperties;
-typedef object_with_properties<DPolygon> DPolygonWithProperties;
-typedef object_with_properties<SimplePolygon> SimplePolygonWithProperties;
-typedef object_with_properties<DSimplePolygon> DSimplePolygonWithProperties;
-typedef object_with_properties<PolygonRef> PolygonRefWithProperties;
-typedef object_with_properties<DPolygonRef> DPolygonRefWithProperties;
-typedef object_with_properties<SimplePolygonRef> SimplePolygonRefWithProperties;
-typedef object_with_properties<DSimplePolygonRef> DSimplePolygonRefWithProperties;
+using PolygonWithProperties = object_with_properties<Polygon>;
+using DPolygonWithProperties = object_with_properties<DPolygon>;
+using SimplePolygonWithProperties = object_with_properties<SimplePolygon>;
+using DSimplePolygonWithProperties = object_with_properties<DSimplePolygon>;
+using PolygonRefWithProperties = object_with_properties<PolygonRef>;
+using DPolygonRefWithProperties = object_with_properties<DPolygonRef>;
+using SimplePolygonRefWithProperties = object_with_properties<SimplePolygonRef>;
+using DSimplePolygonRefWithProperties = object_with_properties<DSimplePolygonRef>;
 
-typedef object_with_properties<Path> PathWithProperties;
-typedef object_with_properties<DPath> DPathWithProperties;
-typedef object_with_properties<PathRef> PathRefWithProperties;
-typedef object_with_properties<DPathRef> DPathRefWithProperties;
+using PathWithProperties = object_with_properties<Path>;
+using DPathWithProperties = object_with_properties<DPath>;
+using PathRefWithProperties = object_with_properties<PathRef>;
+using DPathRefWithProperties = object_with_properties<DPathRef>;
 
-typedef object_with_properties<Point> PointWithProperties;
-typedef object_with_properties<DPoint> DPointWithProperties;
+using PointWithProperties = object_with_properties<Point>;
+using DPointWithProperties = object_with_properties<DPoint>;
 
-typedef object_with_properties<Edge> EdgeWithProperties;
-typedef object_with_properties<DEdge> DEdgeWithProperties;
+using EdgeWithProperties = object_with_properties<Edge>;
+using DEdgeWithProperties = object_with_properties<DEdge>;
 
-typedef object_with_properties<EdgePair> EdgePairWithProperties;
-typedef object_with_properties<DEdgePair> DEdgePairWithProperties;
+using EdgePairWithProperties = object_with_properties<EdgePair>;
+using DEdgePairWithProperties = object_with_properties<DEdgePair>;
 
-typedef object_with_properties<Text> TextWithProperties;
-typedef object_with_properties<DText> DTextWithProperties;
-typedef object_with_properties<TextRef> TextRefWithProperties;
-typedef object_with_properties<DTextRef> DTextRefWithProperties;
+using TextWithProperties = object_with_properties<Text>;
+using DTextWithProperties = object_with_properties<DText>;
+using TextRefWithProperties = object_with_properties<TextRef>;
+using DTextRefWithProperties = object_with_properties<DTextRef>;
 
-typedef object_with_properties<Box> BoxWithProperties;
-typedef object_with_properties<DBox> DBoxWithProperties;
+using BoxWithProperties = object_with_properties<Box>;
+using DBoxWithProperties = object_with_properties<DBox>;
 
-typedef object_with_properties<db::array<db::CellInst, db::Trans> > CellInstArrayWithProperties;
-typedef object_with_properties<db::array<db::CellInst, db::DTrans> > DCellInstArrayWithProperties;
+using CellInstArrayWithProperties = object_with_properties<db::array<db::CellInst, db::Trans> >;
+using DCellInstArrayWithProperties = object_with_properties<db::array<db::CellInst, db::DTrans> >;
 
 /**
  *  @brief Binary * operator (transformation)

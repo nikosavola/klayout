@@ -54,7 +54,7 @@ struct DB_PUBLIC_TEMPLATE dereferencing_iterator
 public:
   typedef Value *pointer;
   typedef Value &reference;
-  typedef typename Iter::difference_type difference_type;
+  using difference_type = typename Iter::difference_type;
 
   dereferencing_iterator () { }
   dereferencing_iterator (const dereferencing_iterator &d) : Iter (d) { }
@@ -90,24 +90,24 @@ class DB_PUBLIC Circuit
   : public db::NetlistObject, public gsi::ObjectBase
 {
 public:
-  typedef std::list<Pin> pin_list;
-  typedef pin_list::const_iterator const_pin_iterator;
-  typedef pin_list::iterator pin_iterator;
-  typedef tl::shared_collection<Device> device_list;
-  typedef device_list::const_iterator const_device_iterator;
-  typedef device_list::iterator device_iterator;
-  typedef tl::shared_collection<Net> net_list;
-  typedef net_list::const_iterator const_net_iterator;
-  typedef net_list::iterator net_iterator;
-  typedef tl::shared_collection<SubCircuit> subcircuit_list;
-  typedef subcircuit_list::const_iterator const_subcircuit_iterator;
-  typedef subcircuit_list::iterator subcircuit_iterator;
-  typedef tl::weak_collection<SubCircuit>::const_iterator const_refs_iterator;
-  typedef tl::weak_collection<SubCircuit>::iterator refs_iterator;
-  typedef dereferencing_iterator<tl::vector<Circuit *>::const_iterator, Circuit> child_circuit_iterator;
-  typedef dereferencing_iterator<tl::vector<const Circuit *>::const_iterator, const Circuit> const_child_circuit_iterator;
-  typedef dereferencing_iterator<tl::vector<Circuit *>::const_iterator, Circuit> parent_circuit_iterator;
-  typedef dereferencing_iterator<tl::vector<const Circuit *>::const_iterator, const Circuit> const_parent_circuit_iterator;
+  using pin_list = std::list<Pin>;
+  using const_pin_iterator = pin_list::const_iterator;
+  using pin_iterator = pin_list::iterator;
+  using device_list = tl::shared_collection<Device>;
+  using const_device_iterator = device_list::const_iterator;
+  using device_iterator = device_list::iterator;
+  using net_list = tl::shared_collection<Net>;
+  using const_net_iterator = net_list::const_iterator;
+  using net_iterator = net_list::iterator;
+  using subcircuit_list = tl::shared_collection<SubCircuit>;
+  using const_subcircuit_iterator = subcircuit_list::const_iterator;
+  using subcircuit_iterator = subcircuit_list::iterator;
+  using const_refs_iterator = tl::weak_collection<SubCircuit>::const_iterator;
+  using refs_iterator = tl::weak_collection<SubCircuit>::iterator;
+  using child_circuit_iterator = dereferencing_iterator<tl::vector<Circuit *>::const_iterator, Circuit>;
+  using const_child_circuit_iterator = dereferencing_iterator<tl::vector<const Circuit *>::const_iterator, const Circuit>;
+  using parent_circuit_iterator = dereferencing_iterator<tl::vector<Circuit *>::const_iterator, Circuit>;
+  using const_parent_circuit_iterator = dereferencing_iterator<tl::vector<const Circuit *>::const_iterator, const Circuit>;
 
   /**
    *  @brief Constructor

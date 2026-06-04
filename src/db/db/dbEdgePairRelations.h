@@ -134,7 +134,7 @@ enum zero_distance_mode {
  */
 struct DB_PUBLIC EdgesCheckOptions
 {
-  typedef db::coord_traits<db::Coord>::distance_type distance_type;
+  using distance_type = db::coord_traits<db::Coord>::distance_type;
 
   /**
    *  @brief Constructor
@@ -211,7 +211,7 @@ struct DB_PUBLIC EdgesCheckOptions
  */
 struct DB_PUBLIC EdgeRelationFilter
 {
-  typedef db::Edge::distance_type distance_type;
+  using distance_type = db::Edge::distance_type;
 
   /**
    *  Constructs an edge relation filter

@@ -142,8 +142,8 @@ inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int
 class DB_PUBLIC StringRepository
 {
 public:
-  typedef std::set<StringRef *> string_refs_type;
-  typedef string_refs_type::const_iterator iterator;
+  using string_refs_type = std::set<StringRef *>;
+  using iterator = string_refs_type::const_iterator;
 
   /**
    *  @brief Constructor
@@ -212,13 +212,13 @@ template <class C>
 class DB_PUBLIC text
 {
 public:
-  typedef C coord_type;
-  typedef db::coord_traits<C> coord_traits;
-  typedef db::point<C> point_type;
-  typedef db::vector<C> vector_type;
-  typedef db::box<C> box_type;
-  typedef db::simple_trans<C> trans_type;
-  typedef db::object_tag< text<C> > tag;
+  using coord_type = C;
+  using coord_traits = db::coord_traits<C>;
+  using point_type = db::point<C>;
+  using vector_type = db::vector<C>;
+  using box_type = db::box<C>;
+  using trans_type = db::simple_trans<C>;
+  using tag = db::object_tag< text<C> >;
   
   /**
    *  @brief The standard constructor without a text
@@ -613,7 +613,7 @@ public:
   template <class Tr>
   text<C> &transform (const Tr &t)
   {
-    typedef typename Tr::target_coord_type target_coord_type;
+    using target_coord_type = typename Tr::target_coord_type;
     fixpoint_trans<coord_type> fp (t);
     m_trans = simple_trans<target_coord_type> ((fp * m_trans.fp_trans ()).rot (), t (point_type () + m_trans.disp ()) - point<target_coord_type> ());
     m_size = t.ctrans (m_size);
@@ -634,7 +634,7 @@ public:
   template <class Tr>
   text<typename Tr::target_coord_type> transformed (const Tr &t) const
   {
-    typedef typename Tr::target_coord_type target_coord_type;
+    using target_coord_type = typename Tr::target_coord_type;
     fixpoint_trans<coord_type> fp (t);
     size_t p = (size_t) mp_ptr;
     if (p & 1) {
@@ -865,12 +865,12 @@ operator<< (std::ostream &os, const text<C> &s)
 /**
  *  @brief The standard text typedef
  */
-typedef text<db::Coord> Text;
+using Text = text<db::Coord>;
 
 /**
  *  @brief The double coordinate text typedef
  */
-typedef text<db::DCoord> DText;
+using DText = text<db::DCoord>;
 
 /** 
  *  @brief A text reference
@@ -883,13 +883,13 @@ template <class Text, class Trans>
 struct text_ref
   : public shape_ref<Text, Trans>
 {
-  typedef typename Text::coord_type coord_type;
-  typedef typename Text::box_type box_type;
-  typedef typename Text::point_type point_type;
-  typedef Trans trans_type;
-  typedef Text text_type;
-  typedef db::generic_repository<coord_type> repository_type;
-  typedef db::object_tag< text_ref<Text, Trans> > tag;
+  using coord_type = typename Text::coord_type;
+  using box_type = typename Text::box_type;
+  using point_type = typename Text::point_type;
+  using trans_type = Trans;
+  using text_type = Text;
+  using repository_type = db::generic_repository<coord_type>;
+  using tag = db::object_tag< text_ref<Text, Trans> >;
 
   /**
    *  @brief The default constructor.
@@ -992,22 +992,22 @@ operator* (const text<C> &t, double s)
 /**
  *  @brief The text reference typedef
  */
-typedef text_ref<Text, Disp> TextRef;
+using TextRef = text_ref<Text, Disp>;
 
 /**
  *  @brief The text reference typedef for double coordinates
  */
-typedef text_ref<DText, DDisp> DTextRef;
+using DTextRef = text_ref<DText, DDisp>;
 
 /**
  *  @brief The text reference (without transformation) typedef
  */
-typedef text_ref<Text, UnitTrans> TextPtr;
+using TextPtr = text_ref<Text, UnitTrans>;
 
 /**
  *  @brief The text reference (without transformation) typedef for double coordinates
  */
-typedef text_ref<DText, DUnitTrans> DTextPtr;
+using DTextPtr = text_ref<DText, DUnitTrans>;
 
 /**
  *  @brief Collect memory usage

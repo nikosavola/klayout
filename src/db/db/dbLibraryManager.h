@@ -52,8 +52,8 @@ class Library;
 class DB_PUBLIC LibraryManager
 {
 public:
-  typedef std::multimap <std::string, lib_id_type> lib_name_map;
-  typedef lib_name_map::const_iterator iterator;
+  using lib_name_map = std::multimap <std::string, lib_id_type>;
+  using iterator = lib_name_map::const_iterator;
 
   /** 
    *  @brief The singleton instance

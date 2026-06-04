@@ -50,9 +50,9 @@ template <class P>
 class inside_poly_test 
 {
 public:
-  typedef typename P::point_type point_type;
-  typedef typename P::coord_type coord_type;
-  typedef typename db::edge<coord_type> edge_type;
+  using point_type = typename P::point_type;
+  using coord_type = typename P::coord_type;
+  using edge_type = typename db::edge<coord_type>;
 
   /**
    *  @brief Constructor
@@ -182,10 +182,10 @@ bool interact_pb (const Polygon &poly, const Box &box)
 template <class Polygon1, class Polygon2>
 bool interact_pp (const Polygon1 &poly1, const Polygon2 &poly2)
 {
-  typedef typename Polygon1::coord_type coord_type;
-  typedef typename Polygon1::polygon_edge_iterator edge_iterator1;
-  typedef typename Polygon2::polygon_edge_iterator edge_iterator2;
-  typedef db::edge<coord_type> edge_type;
+  using coord_type = typename Polygon1::coord_type;
+  using edge_iterator1 = typename Polygon1::polygon_edge_iterator;
+  using edge_iterator2 = typename Polygon2::polygon_edge_iterator;
+  using edge_type = db::edge<coord_type>;
 
   if (! poly1.box ().touches (poly2.box ())) {
     return false;
@@ -369,7 +369,7 @@ bool interact_pe (const Polygon &poly, const Edge &edge)
 template <class Polygon, class Text>
 bool interact_pt (const Polygon &poly, const Text &text)
 {
-  typedef typename Text::point_type point_type;
+  using point_type = typename Text::point_type;
   point_type p;
   p += text.trans ().disp ();
   return (poly.box ().contains (p) && db::inside_poly (poly.begin_edge (), p) >= 0);
@@ -512,10 +512,10 @@ template <class C>
 class DB_PUBLIC area_map
 {
 public:
-  typedef typename db::coord_traits<C>::area_type area_type;
-  typedef db::point<C> point_type;
-  typedef db::vector<C> vector_type;
-  typedef db::box<C> box_type;
+  using area_type = typename db::coord_traits<C>::area_type;
+  using point_type = db::point<C>;
+  using vector_type = db::vector<C>;
+  using box_type = db::box<C>;
 
   /**
    *  @brief Constructor
@@ -657,8 +657,8 @@ private:
   size_t m_nx, m_ny;
 };
 
-typedef area_map<db::Coord> AreaMap;
-typedef area_map<db::DCoord> DAreaMap;
+using AreaMap = area_map<db::Coord>;
+using DAreaMap = area_map<db::DCoord>;
 
 /**
  *  @brief Rasterize the polygon into the given area map

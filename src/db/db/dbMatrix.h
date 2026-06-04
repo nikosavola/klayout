@@ -49,10 +49,10 @@ public:
   /**
    *  @brief typedefs for compatibility with the other transformations
    */
-  typedef C target_coord_type;
-  typedef C coord_type;
-  typedef db::point<C> displacement_type;
-  typedef matrix_2d<C> inverse_trans;
+  using target_coord_type = C;
+  using coord_type = C;
+  using displacement_type = db::point<C>;
+  using inverse_trans = matrix_2d<C>;
 
   /**
    *  @brief Default ctor
@@ -478,8 +478,8 @@ private:
   double m_m11, m_m12, m_m21, m_m22;
 };
 
-typedef matrix_2d<db::DCoord> Matrix2d;
-typedef matrix_2d<db::Coord> IMatrix2d;
+using Matrix2d = matrix_2d<db::DCoord>;
+using IMatrix2d = matrix_2d<db::Coord>;
 
 /**
  *  @brief A class representing a 3d matrix, mainly to represent a rotation, shear or perspective transformation of 2d vectors
@@ -491,10 +491,10 @@ public:
   /**
    *  @brief typedefs for compatibility with the other transformations
    */
-  typedef C target_coord_type;
-  typedef C coord_type;
-  typedef db::point<C> displacement_type;
-  typedef matrix_3d<C> inverse_trans;
+  using target_coord_type = C;
+  using coord_type = C;
+  using displacement_type = db::point<C>;
+  using inverse_trans = matrix_3d<C>;
 
   /**
    *  @brief Default ctor
@@ -1019,8 +1019,8 @@ private:
   }
 };
 
-typedef matrix_3d<db::DCoord> Matrix3d;
-typedef matrix_3d<db::Coord> IMatrix3d;
+using Matrix3d = matrix_3d<db::DCoord>;
+using IMatrix3d = matrix_3d<db::Coord>;
 
 /**
  *  @brief Some adjustment flags 

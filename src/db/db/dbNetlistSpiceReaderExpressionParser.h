@@ -43,7 +43,7 @@ namespace db
 class DB_PUBLIC NetlistSpiceReaderExpressionParser
 {
 public:
-  typedef std::map<std::string, tl::Variant> variables_type;
+  using variables_type = std::map<std::string, tl::Variant>;
 
   NetlistSpiceReaderExpressionParser (const variables_type *vars, double def_scale = 1.0);
   NetlistSpiceReaderExpressionParser (const variables_type *vars1, const variables_type *vars2, double def_scale = 1.0);

@@ -45,7 +45,7 @@ namespace db {
 class DB_PUBLIC EdgeFilterBase
 {
 public:
-  typedef db::Edge shape_type;
+  using shape_type = db::Edge;
 
   /**
    *  @brief Constructor
@@ -140,9 +140,9 @@ public:
   virtual bool wants_variants () const = 0;
 };
 
-typedef shape_collection_processor<db::Edge, db::Edge> EdgeProcessorBase;
-typedef shape_collection_processor<db::Edge, db::Polygon> EdgeToPolygonProcessorBase;
-typedef shape_collection_processor<db::Edge, db::EdgePair> EdgeToEdgePairProcessorBase;
+using EdgeProcessorBase = shape_collection_processor<db::Edge, db::Edge>;
+using EdgeToPolygonProcessorBase = shape_collection_processor<db::Edge, db::Polygon>;
+using EdgeToEdgePairProcessorBase = shape_collection_processor<db::Edge, db::EdgePair>;
 
 class RecursiveShapeIterator;
 class EdgeFilterBase;
@@ -152,7 +152,7 @@ class RegionDelegate;
 /**
  *  @brief The edge set iterator delegate
  */
-typedef db::generic_shape_iterator_delegate_base <db::Edge> EdgesIteratorDelegate;
+using EdgesIteratorDelegate = db::generic_shape_iterator_delegate_base <db::Edge>;
 
 /**
  *  @brief The delegate for the actual edge set implementation
@@ -161,14 +161,14 @@ class DB_PUBLIC EdgesDelegate
   : public ShapeCollectionDelegateBase
 {
 public:
-  typedef db::Coord coord_type;
-  typedef db::coord_traits<db::Coord> coord_traits;
-  typedef db::Edge edge_type;
-  typedef db::Vector vector_type;
-  typedef db::Point point_type;
-  typedef db::Box box_type;
-  typedef coord_traits::distance_type distance_type;
-  typedef coord_traits::distance_type length_type;
+  using coord_type = db::Coord;
+  using coord_traits = db::coord_traits<db::Coord>;
+  using edge_type = db::Edge;
+  using vector_type = db::Vector;
+  using point_type = db::Point;
+  using box_type = db::Box;
+  using distance_type = coord_traits::distance_type;
+  using length_type = coord_traits::distance_type;
 
   EdgesDelegate ();
   virtual ~EdgesDelegate ();

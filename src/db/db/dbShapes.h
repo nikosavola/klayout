@@ -46,7 +46,7 @@ template <class Obj, class Trans> struct array;
 template <class Shape> class object_with_properties;
 template <class Coord> class generic_polygon_edge_iterator;
 template <class Coord> class generic_repository;
-typedef generic_repository<db::Coord> GenericRepository;
+using GenericRepository = generic_repository<db::Coord>;
 class ArrayRepository;
 
 /**
@@ -64,48 +64,48 @@ class ArrayRepository;
 class DB_PUBLIC ShapeIterator
 {
 public:
-  typedef db::Coord coord_type;
-  typedef db::polygon<coord_type> polygon_type;
-  typedef db::simple_polygon<coord_type> simple_polygon_type;
-  typedef db::disp_trans<coord_type> disp_type;
-  typedef db::unit_trans<coord_type> unit_trans_type;
-  typedef db::polygon_ref<polygon_type, disp_type> polygon_ref_type;
-  typedef db::polygon_ref<simple_polygon_type, disp_type> simple_polygon_ref_type;
-  typedef db::polygon_ref<polygon_type, unit_trans_type> polygon_ptr_type;
-  typedef db::array<polygon_ptr_type, disp_type> polygon_ptr_array_type;
-  typedef polygon_ptr_array_type::iterator polygon_ptr_array_iterator_type;
-  typedef db::polygon_ref<simple_polygon_type, unit_trans_type> simple_polygon_ptr_type;
-  typedef db::array<simple_polygon_ptr_type, disp_type> simple_polygon_ptr_array_type;
-  typedef simple_polygon_ptr_array_type::iterator simple_polygon_ptr_array_iterator_type;
-  typedef db::path<coord_type> path_type;
-  typedef db::path_ref<path_type, disp_type> path_ref_type;
-  typedef db::path_ref<path_type, unit_trans_type> path_ptr_type;
-  typedef db::array<path_ptr_type, disp_type> path_ptr_array_type;
-  typedef path_ptr_array_type::iterator path_ptr_array_iterator_type;
-  typedef db::edge<coord_type> edge_type;
-  typedef db::edge_pair<coord_type> edge_pair_type;
-  typedef db::text<coord_type> text_type;
-  typedef db::text_ref<text_type, disp_type> text_ref_type;
-  typedef db::text_ref<text_type, unit_trans_type> text_ptr_type;
-  typedef db::array<text_ptr_type, disp_type> text_ptr_array_type;
-  typedef text_ptr_array_type::iterator text_ptr_array_iterator_type;
-  typedef db::box<coord_type> box_type;
-  typedef db::array<box_type, unit_trans_type> box_array_type;
-  typedef box_array_type::iterator box_array_iterator_type;
-  typedef db::box<coord_type, db::coord_traits<coord_type>::short_coord_type> short_box_type;
-  typedef db::array<short_box_type, unit_trans_type> short_box_array_type;
-  typedef short_box_array_type::iterator short_box_array_iterator_type;
-  typedef db::point<coord_type> point_type;
-  typedef db::vector<coord_type> vector_type;
-  typedef db::user_object<coord_type> user_object_type;
-  typedef db::Shape shape_type;
-  typedef db::Shapes shapes_type;
-  typedef std::set<properties_id_type> property_selector;
-  typedef shape_type value_type;
+  using coord_type = db::Coord;
+  using polygon_type = db::polygon<coord_type>;
+  using simple_polygon_type = db::simple_polygon<coord_type>;
+  using disp_type = db::disp_trans<coord_type>;
+  using unit_trans_type = db::unit_trans<coord_type>;
+  using polygon_ref_type = db::polygon_ref<polygon_type, disp_type>;
+  using simple_polygon_ref_type = db::polygon_ref<simple_polygon_type, disp_type>;
+  using polygon_ptr_type = db::polygon_ref<polygon_type, unit_trans_type>;
+  using polygon_ptr_array_type = db::array<polygon_ptr_type, disp_type>;
+  using polygon_ptr_array_iterator_type = polygon_ptr_array_type::iterator;
+  using simple_polygon_ptr_type = db::polygon_ref<simple_polygon_type, unit_trans_type>;
+  using simple_polygon_ptr_array_type = db::array<simple_polygon_ptr_type, disp_type>;
+  using simple_polygon_ptr_array_iterator_type = simple_polygon_ptr_array_type::iterator;
+  using path_type = db::path<coord_type>;
+  using path_ref_type = db::path_ref<path_type, disp_type>;
+  using path_ptr_type = db::path_ref<path_type, unit_trans_type>;
+  using path_ptr_array_type = db::array<path_ptr_type, disp_type>;
+  using path_ptr_array_iterator_type = path_ptr_array_type::iterator;
+  using edge_type = db::edge<coord_type>;
+  using edge_pair_type = db::edge_pair<coord_type>;
+  using text_type = db::text<coord_type>;
+  using text_ref_type = db::text_ref<text_type, disp_type>;
+  using text_ptr_type = db::text_ref<text_type, unit_trans_type>;
+  using text_ptr_array_type = db::array<text_ptr_type, disp_type>;
+  using text_ptr_array_iterator_type = text_ptr_array_type::iterator;
+  using box_type = db::box<coord_type>;
+  using box_array_type = db::array<box_type, unit_trans_type>;
+  using box_array_iterator_type = box_array_type::iterator;
+  using short_box_type = db::box<coord_type, db::coord_traits<coord_type>::short_coord_type>;
+  using short_box_array_type = db::array<short_box_type, unit_trans_type>;
+  using short_box_array_iterator_type = short_box_array_type::iterator;
+  using point_type = db::point<coord_type>;
+  using vector_type = db::vector<coord_type>;
+  using user_object_type = db::user_object<coord_type>;
+  using shape_type = db::Shape;
+  using shapes_type = db::Shapes;
+  using property_selector = std::set<properties_id_type>;
+  using value_type = shape_type;
   typedef const shape_type *pointer; 
   typedef shape_type reference;   //  operator* returns a value
-  typedef std::forward_iterator_tag iterator_category;
-  typedef void difference_type;
+  using iterator_category = std::forward_iterator_tag;
+  using difference_type = void;
 
   struct NoRegionTag { };
   struct TouchingRegionTag { };
@@ -476,9 +476,9 @@ private:
 class DB_PUBLIC LayerBase 
 {
 public:
-  typedef tl::func_delegate_base <db::properties_id_type> pm_delegate_type;
-  typedef db::Box box_type;
-  typedef db::Coord coord_type;
+  using pm_delegate_type = tl::func_delegate_base <db::properties_id_type>;
+  using box_type = db::Box;
+  using coord_type = db::Coord;
 
   LayerBase ();
   virtual ~LayerBase ();
@@ -527,13 +527,13 @@ class DB_PUBLIC Shapes
   : public db::Object
 {
 public:
-  typedef db::Coord coord_type;
-  typedef db::ShapeIterator shape_iterator;
-  typedef db::unit_trans<coord_type> unit_trans_type;
-  typedef db::box<coord_type> box_type;
-  typedef db::generic_repository<coord_type> repository_type;
-  typedef db::Shape shape_type;
-  typedef db::generic_polygon_edge_iterator<coord_type> polygon_edge_iterator;
+  using coord_type = db::Coord;
+  using shape_iterator = db::ShapeIterator;
+  using unit_trans_type = db::unit_trans<coord_type>;
+  using box_type = db::box<coord_type>;
+  using repository_type = db::generic_repository<coord_type>;
+  using shape_type = db::Shape;
+  using polygon_edge_iterator = db::generic_polygon_edge_iterator<coord_type>;
 
   /**
    *  @brief Default ctor: create an empty collection of shapes without external references
@@ -929,7 +929,7 @@ public:
   template <class Iter>
   void insert (Iter from, Iter to)
   {
-    typedef typename std::iterator_traits <Iter>::value_type value_type;
+    using value_type = typename std::iterator_traits <Iter>::value_type;
     if (manager () && manager ()->transacting ()) {
       check_is_editable_for_undo_redo ();
       if (is_editable ()) {
@@ -1669,7 +1669,7 @@ private:
   template <class ResType, class Array>
   void insert_array_typeof (const ResType &, const db::object_with_properties<Array> &arr)
   {
-    typedef db::object_with_properties<ResType> res_wp_type;
+    using res_wp_type = db::object_with_properties<ResType>;
 
     //  expand arrays in editable mode
     invalidate_state ();  //  HINT: must come before the change is done!

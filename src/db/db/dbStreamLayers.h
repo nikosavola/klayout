@@ -57,7 +57,7 @@ public:
 /**
  *  @brief The basic layer/datatype type
  */
-typedef int ld_type;
+using ld_type = int;
 
 /**
  *  @brief Some definitions to declare wildcard and relative datatypes or layers
@@ -188,11 +188,11 @@ class DB_PUBLIC LayerMap
   : public gsi::ObjectBase
 {
 public:
-  typedef tl::interval_map<ld_type, std::set<unsigned int> > datatype_map;
-  typedef tl::interval_map<ld_type, datatype_map> ld_map;
-  typedef ld_map::const_iterator const_iterator_layers;
-  typedef datatype_map::const_iterator const_iterator_datatypes;
-  typedef std::map<std::string, std::set<unsigned int> >::const_iterator const_iterator_names;
+  using datatype_map = tl::interval_map<ld_type, std::set<unsigned int> >;
+  using ld_map = tl::interval_map<ld_type, datatype_map>;
+  using const_iterator_layers = ld_map::const_iterator;
+  using const_iterator_datatypes = datatype_map::const_iterator;
+  using const_iterator_names = std::map<std::string, std::set<unsigned int> >::const_iterator;
 
   /**
    *  @brief The constructor for an empty map

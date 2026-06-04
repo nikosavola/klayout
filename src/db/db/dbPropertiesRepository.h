@@ -89,9 +89,9 @@ struct ComparePropertiesIds
 class DB_PUBLIC PropertiesSet
 {
 public:
-  typedef std::multimap<db::property_names_id_type, db::property_values_id_type> map_type;
-  typedef map_type::const_iterator iterator;
-  typedef map_type::iterator non_const_iterator;
+  using map_type = std::multimap<db::property_names_id_type, db::property_values_id_type>;
+  using iterator = map_type::const_iterator;
+  using non_const_iterator = map_type::iterator;
 
   /**
    *  @brief The default constructor
@@ -332,7 +332,7 @@ DB_PUBLIC db::properties_id_type properties_id (const std::map<tl::Variant, tl::
 class DB_PUBLIC PropertiesRepository
 {
 public:
-  typedef std::set <properties_id_type> properties_id_set;
+  using properties_id_set = std::set <properties_id_type>;
 
   /**
    *  @brief Default constructor

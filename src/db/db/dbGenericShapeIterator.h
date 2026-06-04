@@ -38,7 +38,7 @@ template <class T>
 class DB_PUBLIC generic_shape_iterator_delegate_base
 {
 public:
-  typedef T value_type;
+  using value_type = T;
 
   generic_shape_iterator_delegate_base () { }
   virtual ~generic_shape_iterator_delegate_base () { }
@@ -62,7 +62,7 @@ class DB_PUBLIC generic_shape_iterator_delegate2
   : public generic_shape_iterator_delegate_base<typename Iter::value_type>
 {
 public:
-  typedef typename Iter::value_type value_type;
+  using value_type = typename Iter::value_type;
 
   generic_shape_iterator_delegate2 (const Iter &from, const Iter &to)
     : m_iter (from), m_from (from), m_to (to)
@@ -123,7 +123,7 @@ class DB_PUBLIC generic_shape_iterator_delegate1
   : public generic_shape_iterator_delegate_base<typename Iter::value_type>
 {
 public:
-  typedef typename Iter::value_type value_type;
+  using value_type = typename Iter::value_type;
 
   generic_shape_iterator_delegate1 (const Iter &from)
     : m_iter (from), m_from (from)
@@ -282,12 +282,12 @@ template <class T>
 class DB_PUBLIC generic_shape_iterator
 {
 public:
-  typedef T value_type;
+  using value_type = T;
   typedef const value_type &reference;
-  typedef const db::object_with_properties<value_type> with_properties_type;
+  using with_properties_type = const db::object_with_properties<value_type>;
   typedef const value_type *pointer;
-  typedef std::forward_iterator_tag iterator_category;
-  typedef void difference_type;
+  using iterator_category = std::forward_iterator_tag;
+  using difference_type = void;
 
   template <class Iter>
   generic_shape_iterator (const Iter &from, const Iter &to)
@@ -534,7 +534,7 @@ template <class Iter>
 class DB_PUBLIC addressable_shape_delivery_impl
 {
 public:
-  typedef typename Iter::value_type value_type;
+  using value_type = typename Iter::value_type;
 
   addressable_shape_delivery_impl ()
     : m_iter (), m_iterator_is_addressable (false)
@@ -593,7 +593,7 @@ class DB_PUBLIC addressable_shape_delivery
   : public addressable_shape_delivery_impl<db::generic_shape_iterator<T> >
 {
 public:
-  typedef db::generic_shape_iterator<T> iter_type;
+  using iter_type = db::generic_shape_iterator<T>;
 
   addressable_shape_delivery ()
     : addressable_shape_delivery_impl<iter_type> ()
@@ -615,7 +615,7 @@ class DB_PUBLIC unaddressable_shape_delivery
   : public addressable_shape_delivery_impl<db::generic_shape_iterator<T> >
 {
 public:
-  typedef db::generic_shape_iterator<T> iter_type;
+  using iter_type = db::generic_shape_iterator<T>;
 
   unaddressable_shape_delivery ()
     : addressable_shape_delivery_impl<iter_type> ()

@@ -64,14 +64,14 @@ template <class C>
 class DB_PUBLIC_TEMPLATE edge
 {
 public:
-  typedef C coord_type;
-  typedef db::box<C> box_type;
-  typedef db::point<C> point_type;
-  typedef db::vector<C> vector_type;
-  typedef db::coord_traits<C> coord_traits;
-  typedef typename coord_traits::distance_type distance_type; 
-  typedef typename coord_traits::area_type area_type; 
-  typedef db::object_tag< edge<C> > tag;
+  using coord_type = C;
+  using box_type = db::box<C>;
+  using point_type = db::point<C>;
+  using vector_type = db::vector<C>;
+  using coord_traits = db::coord_traits<C>;
+  using distance_type = typename coord_traits::distance_type; 
+  using area_type = typename coord_traits::area_type; 
+  using tag = db::object_tag< edge<C> >;
 
   /**
    *  @brief The default constructor.
@@ -1240,12 +1240,12 @@ operator<< (std::ostream &os, const edge<C> &e)
 /**
  *  @brief The standard edge typedef
  */
-typedef edge<db::Coord>  Edge;
+using Edge = edge<db::Coord> ;
 
 /**
  *  @brief The double coordinate edge typedef
  */
-typedef edge<db::DCoord> DEdge;
+using DEdge = edge<db::DCoord>;
 
 /**
  *  @brief Convenience wrappers for coord_traits functions: vector product: p x q

@@ -40,7 +40,7 @@ namespace db
 template <class T>
 struct id_attribute
 {
-  typedef size_t attr_type;
+  using attr_type = size_t;
   size_t operator() (const T *t) const { return t->id (); }
   bool has (const T * /*t*/) const { return true; }
 };
@@ -51,7 +51,7 @@ struct id_attribute
 template <class T>
 struct cluster_id_attribute
 {
-  typedef size_t attr_type;
+  using attr_type = size_t;
   attr_type operator() (const T *t) const { return t->cluster_id (); }
   bool has (const T * /*t*/) const { return true; }
 };
@@ -62,7 +62,7 @@ struct cluster_id_attribute
 template <class T>
 struct cell_index_attribute
 {
-  typedef db::cell_index_type attr_type;
+  using attr_type = db::cell_index_type;
   attr_type operator() (const T *t) const { return t->cell_index (); }
   bool has (const T * /*t*/) const { return true; }
 };
@@ -73,7 +73,7 @@ struct cell_index_attribute
 template <class T>
 struct name_attribute
 {
-  typedef std::string attr_type;
+  using attr_type = std::string;
   const attr_type &operator() (const T *t) const { return t->name (); }
   bool has (const T *t) const { return ! t->name ().empty (); }
 };
@@ -85,8 +85,8 @@ template <class T, class I, class ATTR>
 class object_by_attr
 {
 public:
-  typedef typename ATTR::attr_type attr_type;
-  typedef typename I::value_type value_type;
+  using attr_type = typename ATTR::attr_type;
+  using value_type = typename I::value_type;
 
   object_by_attr (T *self, I (T::*bi) (), I (T::*ei) ()) : mp_self (self), m_bi (bi), m_ei (ei), m_valid (false)
   {

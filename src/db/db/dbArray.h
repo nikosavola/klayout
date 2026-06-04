@@ -53,11 +53,11 @@ template <class C, bool AllowEmpty = true> struct box_convert;
 template <class Coord>
 struct basic_array_iterator 
 {
-  typedef Coord coord_type;
-  typedef db::point<coord_type> point_type;
-  typedef db::vector<coord_type> vector_type;
-  typedef db::disp_trans<coord_type> disp_type;
-  typedef db::box<coord_type> box_type;
+  using coord_type = Coord;
+  using point_type = db::point<coord_type>;
+  using vector_type = db::vector<coord_type>;
+  using disp_type = db::disp_trans<coord_type>;
+  using box_type = db::box<coord_type>;
 
   virtual ~basic_array_iterator ()
   { 
@@ -142,15 +142,15 @@ template <class Coord>
 struct basic_array
   : public ArrayBase
 {
-  typedef Coord coord_type;
-  typedef db::box <coord_type> box_type;
-  typedef db::point <coord_type> point_type;
-  typedef db::vector <coord_type> vector_type;
-  typedef db::complex_trans <coord_type, coord_type> complex_trans_type;
-  typedef db::simple_trans <coord_type> simple_trans_type;
-  typedef db::unit_trans <coord_type> unit_trans_type;
-  typedef db::disp_trans <coord_type> disp_trans_type;
-  typedef db::disp_trans<coord_type> disp_type;
+  using coord_type = Coord;
+  using box_type = db::box <coord_type>;
+  using point_type = db::point <coord_type>;
+  using vector_type = db::vector <coord_type>;
+  using complex_trans_type = db::complex_trans <coord_type, coord_type>;
+  using simple_trans_type = db::simple_trans <coord_type>;
+  using unit_trans_type = db::unit_trans <coord_type>;
+  using disp_trans_type = db::disp_trans <coord_type>;
+  using disp_type = db::disp_trans<coord_type>;
 
   basic_array ()
   {
@@ -247,8 +247,8 @@ struct array_base_ptr_cmp_f
 class DB_PUBLIC ArrayRepository
 {
 public:
-  typedef std::set<ArrayBase *, array_base_ptr_cmp_f> basic_repository;
-  typedef std::vector<basic_repository> repositories;
+  using basic_repository = std::set<ArrayBase *, array_base_ptr_cmp_f>;
+  using repositories = std::vector<basic_repository>;
 
   ArrayRepository ();
 
@@ -312,11 +312,11 @@ template <class Coord>
 struct regular_array_iterator
   : public basic_array_iterator <Coord>
 {
-  typedef typename basic_array_iterator<Coord>::coord_type coord_type;
-  typedef typename basic_array_iterator<Coord>::point_type point_type;
-  typedef typename basic_array_iterator<Coord>::vector_type vector_type;
-  typedef typename basic_array_iterator<Coord>::box_type box_type;
-  typedef typename basic_array_iterator<Coord>::disp_type disp_type;
+  using coord_type = typename basic_array_iterator<Coord>::coord_type;
+  using point_type = typename basic_array_iterator<Coord>::point_type;
+  using vector_type = typename basic_array_iterator<Coord>::vector_type;
+  using box_type = typename basic_array_iterator<Coord>::box_type;
+  using disp_type = typename basic_array_iterator<Coord>::disp_type;
 
   regular_array_iterator (const vector_type &a, const vector_type &b, unsigned long amin, unsigned long amax, unsigned long bmin, unsigned long bmax)
     : m_a (a), m_b (b),
@@ -386,13 +386,13 @@ template <class Coord>
 struct regular_array 
   : public basic_array <Coord>
 {
-  typedef typename basic_array<Coord>::point_type point_type;
-  typedef typename basic_array<Coord>::vector_type vector_type;
-  typedef typename basic_array<Coord>::box_type box_type;
-  typedef typename basic_array<Coord>::coord_type coord_type;
-  typedef typename basic_array<Coord>::disp_type disp_type;
-  typedef typename basic_array<Coord>::simple_trans_type simple_trans_type;
-  typedef typename basic_array<Coord>::complex_trans_type complex_trans_type;
+  using point_type = typename basic_array<Coord>::point_type;
+  using vector_type = typename basic_array<Coord>::vector_type;
+  using box_type = typename basic_array<Coord>::box_type;
+  using coord_type = typename basic_array<Coord>::coord_type;
+  using disp_type = typename basic_array<Coord>::disp_type;
+  using simple_trans_type = typename basic_array<Coord>::simple_trans_type;
+  using complex_trans_type = typename basic_array<Coord>::complex_trans_type;
 
   regular_array (const vector_type &a, const vector_type &b, unsigned long amax, unsigned long bmax)
     : m_a (a), m_b (b), m_amax (amax), m_bmax (bmax)
@@ -680,13 +680,13 @@ template <class Coord>
 struct regular_complex_array 
   : public regular_array<Coord>
 {
-  typedef typename basic_array<Coord>::point_type point_type;
-  typedef typename basic_array<Coord>::vector_type vector_type;
-  typedef typename basic_array<Coord>::box_type box_type;
-  typedef typename basic_array<Coord>::coord_type coord_type;
-  typedef typename basic_array<Coord>::disp_type disp_type;
-  typedef typename basic_array<Coord>::simple_trans_type simple_trans_type;
-  typedef typename basic_array<Coord>::complex_trans_type complex_trans_type;
+  using point_type = typename basic_array<Coord>::point_type;
+  using vector_type = typename basic_array<Coord>::vector_type;
+  using box_type = typename basic_array<Coord>::box_type;
+  using coord_type = typename basic_array<Coord>::coord_type;
+  using disp_type = typename basic_array<Coord>::disp_type;
+  using simple_trans_type = typename basic_array<Coord>::simple_trans_type;
+  using complex_trans_type = typename basic_array<Coord>::complex_trans_type;
 
   regular_complex_array (double acos, double mag, const vector_type &a, const vector_type &b, unsigned long amax, unsigned long bmax)
     : regular_array<Coord> (a, b, amax, bmax), m_acos (acos), m_mag (mag)
@@ -796,15 +796,15 @@ template <class Coord>
 struct iterated_array_iterator
   : public basic_array_iterator <Coord>
 {
-  typedef typename basic_array_iterator<Coord>::coord_type coord_type;
-  typedef typename basic_array_iterator<Coord>::point_type point_type;
-  typedef typename basic_array_iterator<Coord>::vector_type vector_type;
-  typedef typename basic_array_iterator<Coord>::box_type box_type;
-  typedef typename basic_array_iterator<Coord>::disp_type disp_type;
-  typedef box_convert<vector_type> box_convert_type;
-  typedef unstable_box_tree <box_type, vector_type, box_convert_type> box_tree_type;
-  typedef typename box_tree_type::const_iterator box_tree_const_iterator;
-  typedef typename box_tree_type::touching_iterator box_tree_touching_iterator;
+  using coord_type = typename basic_array_iterator<Coord>::coord_type;
+  using point_type = typename basic_array_iterator<Coord>::point_type;
+  using vector_type = typename basic_array_iterator<Coord>::vector_type;
+  using box_type = typename basic_array_iterator<Coord>::box_type;
+  using disp_type = typename basic_array_iterator<Coord>::disp_type;
+  using box_convert_type = box_convert<vector_type>;
+  using box_tree_type = unstable_box_tree <box_type, vector_type, box_convert_type>;
+  using box_tree_const_iterator = typename box_tree_type::const_iterator;
+  using box_tree_touching_iterator = typename box_tree_type::touching_iterator;
 
   iterated_array_iterator (box_tree_const_iterator from, box_tree_const_iterator to)
     : m_normal (true)
@@ -883,18 +883,18 @@ template <class Coord>
 struct iterated_array 
   : public basic_array <Coord>
 {
-  typedef typename basic_array<Coord>::point_type point_type;
-  typedef typename basic_array<Coord>::vector_type vector_type;
-  typedef typename basic_array<Coord>::box_type box_type;
-  typedef typename basic_array<Coord>::coord_type coord_type;
-  typedef typename basic_array<Coord>::disp_type disp_type;
-  typedef typename basic_array<Coord>::simple_trans_type simple_trans_type;
-  typedef typename basic_array<Coord>::complex_trans_type complex_trans_type;
-  typedef box_convert<vector_type> box_convert_type;
-  typedef unstable_box_tree <box_type, vector_type, box_convert_type> box_tree_type;
-  typedef typename box_tree_type::const_iterator const_iterator;
-  typedef typename box_tree_type::iterator iterator;
-  typedef typename box_tree_type::touching_iterator touching_iterator;
+  using point_type = typename basic_array<Coord>::point_type;
+  using vector_type = typename basic_array<Coord>::vector_type;
+  using box_type = typename basic_array<Coord>::box_type;
+  using coord_type = typename basic_array<Coord>::coord_type;
+  using disp_type = typename basic_array<Coord>::disp_type;
+  using simple_trans_type = typename basic_array<Coord>::simple_trans_type;
+  using complex_trans_type = typename basic_array<Coord>::complex_trans_type;
+  using box_convert_type = box_convert<vector_type>;
+  using box_tree_type = unstable_box_tree <box_type, vector_type, box_convert_type>;
+  using const_iterator = typename box_tree_type::const_iterator;
+  using iterator = typename box_tree_type::iterator;
+  using touching_iterator = typename box_tree_type::touching_iterator;
 
   iterated_array ()
   { 
@@ -1116,13 +1116,13 @@ template <class Coord>
 struct iterated_complex_array 
   : public iterated_array<Coord>
 {
-  typedef typename basic_array<Coord>::point_type point_type;
-  typedef typename basic_array<Coord>::vector_type vector_type;
-  typedef typename basic_array<Coord>::box_type box_type;
-  typedef typename basic_array<Coord>::coord_type coord_type;
-  typedef typename basic_array<Coord>::disp_type disp_type;
-  typedef typename basic_array<Coord>::simple_trans_type simple_trans_type;
-  typedef typename basic_array<Coord>::complex_trans_type complex_trans_type;
+  using point_type = typename basic_array<Coord>::point_type;
+  using vector_type = typename basic_array<Coord>::vector_type;
+  using box_type = typename basic_array<Coord>::box_type;
+  using coord_type = typename basic_array<Coord>::coord_type;
+  using disp_type = typename basic_array<Coord>::disp_type;
+  using simple_trans_type = typename basic_array<Coord>::simple_trans_type;
+  using complex_trans_type = typename basic_array<Coord>::complex_trans_type;
 
   iterated_complex_array (double acos, double mag)
     : iterated_array<Coord> (), m_acos (acos), m_mag (mag)
@@ -1237,12 +1237,12 @@ template <class Coord>
 struct single_complex_inst 
   : public basic_array <Coord>
 {
-  typedef typename basic_array<Coord>::point_type point_type;
-  typedef typename basic_array<Coord>::box_type box_type;
-  typedef typename basic_array<Coord>::coord_type coord_type;
-  typedef typename basic_array<Coord>::disp_type disp_type;
-  typedef typename basic_array<Coord>::complex_trans_type complex_trans_type;
-  typedef typename basic_array<Coord>::simple_trans_type simple_trans_type;
+  using point_type = typename basic_array<Coord>::point_type;
+  using box_type = typename basic_array<Coord>::box_type;
+  using coord_type = typename basic_array<Coord>::coord_type;
+  using disp_type = typename basic_array<Coord>::disp_type;
+  using complex_trans_type = typename basic_array<Coord>::complex_trans_type;
+  using simple_trans_type = typename basic_array<Coord>::simple_trans_type;
 
   single_complex_inst (double acos, double mag)
     : m_acos (acos), m_mag (mag)
@@ -1353,19 +1353,19 @@ private:
 template <class C, class T>
 struct compute_result_trans
 {
-  typedef T result_trans;
+  using result_trans = T;
 };
 
 template <class C>
 struct compute_result_trans<C, unit_trans<C> >
 {
-  typedef disp_trans<C> result_trans;
+  using result_trans = disp_trans<C>;
 };
 
 template <class C>
 struct compute_result_trans<C, fixpoint_trans<C> >
 {
-  typedef disp_trans<C> result_trans;
+  using result_trans = disp_trans<C>;
 };
 
 /** 
@@ -1381,19 +1381,19 @@ struct compute_result_trans<C, fixpoint_trans<C> >
 template <class Coord, class Trans>
 struct array_iterator
 {
-  typedef Coord coord_type;
-  typedef db::point <coord_type> point_type;
-  typedef db::vector <coord_type> vector_type;
-  typedef db::complex_trans <coord_type, coord_type> complex_trans_type;
-  typedef Trans trans_type;
-  typedef typename compute_result_trans<coord_type, trans_type>::result_trans result_type;
+  using coord_type = Coord;
+  using point_type = db::point <coord_type>;
+  using vector_type = db::vector <coord_type>;
+  using complex_trans_type = db::complex_trans <coord_type, coord_type>;
+  using trans_type = Trans;
+  using result_type = typename compute_result_trans<coord_type, trans_type>::result_trans;
   //  dummy definitions to satisfy iterator traits (without making much sense):
-  typedef result_type reference;
-  typedef result_type value_type;
-  typedef void pointer_type;
-  typedef void difference_type;
-  typedef void pointer;
-  typedef std::forward_iterator_tag iterator_category;
+  using reference = result_type;
+  using value_type = result_type;
+  using pointer_type = void;
+  using difference_type = void;
+  using pointer = void;
+  using iterator_category = std::forward_iterator_tag;
 
   /**
    *  @brief The default constructor
@@ -1610,20 +1610,20 @@ private:
 template <class Obj, class Trans>
 struct array
 {
-  typedef typename Trans::coord_type coord_type;
-  typedef db::box <coord_type> box_type;
-  typedef db::point <coord_type> point_type;
-  typedef db::vector <coord_type> vector_type;
-  typedef db::complex_trans <coord_type, coord_type> complex_trans_type;
-  typedef db::simple_trans <coord_type> simple_trans_type;
-  typedef db::disp_trans <coord_type> disp_trans_type;
-  typedef db::unit_trans <coord_type> unit_trans_type;
-  typedef Trans trans_type;
-  typedef db::array_iterator <coord_type, Trans> iterator;
-  typedef Obj object_type;
-  typedef db::object_tag< array<Obj, Trans> > tag;
-  typedef db::iterated_array<coord_type> iterated_array_type;
-  typedef db::iterated_complex_array<coord_type> iterated_complex_array_type;
+  using coord_type = typename Trans::coord_type;
+  using box_type = db::box <coord_type>;
+  using point_type = db::point <coord_type>;
+  using vector_type = db::vector <coord_type>;
+  using complex_trans_type = db::complex_trans <coord_type, coord_type>;
+  using simple_trans_type = db::simple_trans <coord_type>;
+  using disp_trans_type = db::disp_trans <coord_type>;
+  using unit_trans_type = db::unit_trans <coord_type>;
+  using trans_type = Trans;
+  using iterator = db::array_iterator <coord_type, Trans>;
+  using object_type = Obj;
+  using tag = db::object_tag< array<Obj, Trans> >;
+  using iterated_array_type = db::iterated_array<coord_type>;
+  using iterated_complex_array_type = db::iterated_complex_array<coord_type>;
 
   /**
    *  @brief The default constructor

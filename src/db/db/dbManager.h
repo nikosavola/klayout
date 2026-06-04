@@ -79,8 +79,8 @@ public:
 class DB_PUBLIC Manager
 {
 public:
-  typedef size_t ident_t;
-  typedef size_t transaction_id_t;
+  using ident_t = size_t;
+  using transaction_id_t = size_t;
 
   /**
    *  @brief Default constructor
@@ -287,10 +287,10 @@ private:
   std::vector<db::Object *> m_id_table;
   std::vector<ident_t> m_unused_ids;
 
-  typedef std::pair<db::Manager::ident_t, db::Op *> operation_t;
-  typedef std::list<operation_t> operations_t;
-  typedef std::pair<operations_t, std::string> transaction_t;
-  typedef std::list<transaction_t> transactions_t;
+  using operation_t = std::pair<db::Manager::ident_t, db::Op *>;
+  using operations_t = std::list<operation_t>;
+  using transaction_t = std::pair<operations_t, std::string>;
+  using transactions_t = std::list<transaction_t>;
 
   transactions_t m_transactions;
   transactions_t::iterator m_current;

@@ -57,8 +57,8 @@ template <class Ref>
 class shape_reference_translator
 {
 public:
-  typedef typename Ref::shape_type shape_type;
-  typedef typename Ref::trans_type ref_trans_type;
+  using shape_type = typename Ref::shape_type;
+  using ref_trans_type = typename Ref::trans_type;
 
   shape_reference_translator (db::Layout *target_layout)
     : mp_layout (target_layout)
@@ -123,7 +123,7 @@ template <class Shape>
 class simple_shape_reference_translator
 {
 public:
-  typedef Shape shape_type;
+  using shape_type = Shape;
 
   simple_shape_reference_translator ()
   {
@@ -171,7 +171,7 @@ class shape_reference_translator<db::object_with_properties<Basic> >
   : public shape_reference_translator<Basic>
 {
 public:
-  typedef db::object_with_properties<Basic> shape_type;
+  using shape_type = db::object_with_properties<Basic>;
 
   shape_reference_translator (db::Layout *target_layout)
     : shape_reference_translator<Basic> (target_layout)
@@ -195,8 +195,8 @@ template <class Ref, class Trans>
 class shape_reference_translator_with_trans_from_shape_ref
 {
 public:
-  typedef typename Ref::shape_type shape_type;
-  typedef typename Ref::trans_type ref_trans_type;
+  using shape_type = typename Ref::shape_type;
+  using ref_trans_type = typename Ref::trans_type;
 
   shape_reference_translator_with_trans_from_shape_ref (db::Layout *target_layout)
     : mp_layout (target_layout)
@@ -273,7 +273,7 @@ template <class Sh, class Trans>
 class shape_reference_translator_with_trans
 {
 public:
-  typedef Sh shape_type;
+  using shape_type = Sh;
 
   shape_reference_translator_with_trans (db::Layout * /*target_layout*/)
   {
@@ -299,7 +299,7 @@ class shape_reference_translator_with_trans<db::object_with_properties<Basic>, T
   : public shape_reference_translator_with_trans<Basic, Trans>
 {
 public:
-  typedef db::object_with_properties<Basic> shape_type;
+  using shape_type = db::object_with_properties<Basic>;
 
   shape_reference_translator_with_trans (db::Layout *target_layout)
     : shape_reference_translator_with_trans<Basic, Trans> (target_layout)

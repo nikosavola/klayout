@@ -43,8 +43,8 @@ class DeepShapeStore;
 class TransformationReducer;
 class CompoundRegionOperationNode;
 
-typedef generic_shape_iterator<db::Polygon> RegionIterator;
-typedef addressable_shape_delivery<db::Polygon> AddressablePolygonDelivery;
+using RegionIterator = generic_shape_iterator<db::Polygon>;
+using AddressablePolygonDelivery = addressable_shape_delivery<db::Polygon>;
 
 /**
  *  @brief A region
@@ -64,16 +64,16 @@ class DB_PUBLIC Region
   : public db::ShapeCollection
 {
 public:
-  typedef db::Coord coord_type;
-  typedef db::coord_traits<db::Coord> coord_traits;
-  typedef db::Polygon polygon_type;
-  typedef db::Vector vector_type;
-  typedef db::Point point_type;
-  typedef db::Box box_type;
-  typedef coord_traits::distance_type distance_type;
-  typedef coord_traits::perimeter_type perimeter_type;
-  typedef coord_traits::area_type area_type;
-  typedef RegionIterator const_iterator;
+  using coord_type = db::Coord;
+  using coord_traits = db::coord_traits<db::Coord>;
+  using polygon_type = db::Polygon;
+  using vector_type = db::Vector;
+  using point_type = db::Point;
+  using box_type = db::Box;
+  using distance_type = coord_traits::distance_type;
+  using perimeter_type = coord_traits::perimeter_type;
+  using area_type = coord_traits::area_type;
+  using const_iterator = RegionIterator;
 
   /**
    *  @brief Default constructor

@@ -55,11 +55,11 @@ struct MetaInfo
 
 struct MetaInfoIterator
 {
-  typedef std::forward_iterator_tag iterator_category;
-  typedef MetaInfo value_type;
-  typedef void difference_type;
-  typedef MetaInfo reference;
-  typedef void pointer;
+  using iterator_category = std::forward_iterator_tag;
+  using value_type = MetaInfo;
+  using difference_type = void;
+  using reference = MetaInfo;
+  using pointer = void;
 
   MetaInfoIterator ()
     : mp_layout (), m_b (), m_e ()

@@ -59,7 +59,7 @@ public:
 
   struct NetPairData
   {
-    typedef db::Net object_type;
+    using object_type = db::Net;
 
     NetPairData (const db::Net *a, const db::Net *b, Status s, const std::string &m) : pair (a, b), status (s), msg (m) { }
     NetPairData () : pair ((const db::Net *)0, (const db::Net *)0), status (None) { }
@@ -71,7 +71,7 @@ public:
 
   struct DevicePairData
   {
-    typedef db::Device object_type;
+    using object_type = db::Device;
 
     DevicePairData (const db::Device *a, const db::Device *b, Status s, const std::string &m) : pair (a, b), status (s), msg (m) { }
     DevicePairData () : pair ((const db::Device *)0, (const db::Device *)0), status (None) { }
@@ -83,7 +83,7 @@ public:
 
   struct PinPairData
   {
-    typedef db::Pin object_type;
+    using object_type = db::Pin;
 
     PinPairData (const db::Pin *a, const db::Pin *b, Status s, const std::string &m) : pair (a, b), status (s), msg (m) { }
     PinPairData () : pair ((const db::Pin *)0, (const db::Pin *)0), status (None) { }
@@ -95,7 +95,7 @@ public:
 
   struct SubCircuitPairData
   {
-    typedef db::SubCircuit object_type;
+    using object_type = db::SubCircuit;
 
     SubCircuitPairData (const db::SubCircuit *a, const db::SubCircuit *b, Status s, const std::string &m) : pair (a, b), status (s), msg (m) { }
     SubCircuitPairData () : pair ((const db::SubCircuit *)0, (const db::SubCircuit *)0), status (None) { }
@@ -109,16 +109,16 @@ public:
   {
     PerCircuitData () : status (None) { }
 
-    typedef std::vector<NetPairData> net_pairs_type;
-    typedef net_pairs_type::const_iterator net_pairs_const_iterator;
-    typedef std::vector<DevicePairData> device_pairs_type;
-    typedef device_pairs_type::const_iterator device_pairs_const_iterator;
-    typedef std::vector<PinPairData> pin_pairs_type;
-    typedef pin_pairs_type::const_iterator pin_pairs_const_iterator;
-    typedef std::vector<SubCircuitPairData> subcircuit_pairs_type;
-    typedef subcircuit_pairs_type::const_iterator subcircuit_pairs_const_iterator;
-    typedef std::vector<LogEntryData> log_entries_type;
-    typedef log_entries_type::const_iterator log_entries_const_iterator;
+    using net_pairs_type = std::vector<NetPairData>;
+    using net_pairs_const_iterator = net_pairs_type::const_iterator;
+    using device_pairs_type = std::vector<DevicePairData>;
+    using device_pairs_const_iterator = device_pairs_type::const_iterator;
+    using pin_pairs_type = std::vector<PinPairData>;
+    using pin_pairs_const_iterator = pin_pairs_type::const_iterator;
+    using subcircuit_pairs_type = std::vector<SubCircuitPairData>;
+    using subcircuit_pairs_const_iterator = subcircuit_pairs_type::const_iterator;
+    using log_entries_type = std::vector<LogEntryData>;
+    using log_entries_const_iterator = log_entries_type::const_iterator;
 
     Status status;
     std::string msg;
@@ -131,12 +131,12 @@ public:
 
   struct PerNetData
   {
-    typedef std::vector<std::pair<const db::NetTerminalRef *, const db::NetTerminalRef *> > terminal_pairs_type;
-    typedef terminal_pairs_type::const_iterator terminal_pairs_const_iterator;
-    typedef std::vector<std::pair<const db::NetPinRef *, const db::NetPinRef *> > pin_pairs_type;
-    typedef pin_pairs_type::const_iterator pin_pairs_const_iterator;
-    typedef std::vector<std::pair<const db::NetSubcircuitPinRef *, const db::NetSubcircuitPinRef *> > subcircuit_pin_pairs_type;
-    typedef subcircuit_pin_pairs_type::const_iterator subcircuit_pin_pairs_const_iterator;
+    using terminal_pairs_type = std::vector<std::pair<const db::NetTerminalRef *, const db::NetTerminalRef *> >;
+    using terminal_pairs_const_iterator = terminal_pairs_type::const_iterator;
+    using pin_pairs_type = std::vector<std::pair<const db::NetPinRef *, const db::NetPinRef *> >;
+    using pin_pairs_const_iterator = pin_pairs_type::const_iterator;
+    using subcircuit_pin_pairs_type = std::vector<std::pair<const db::NetSubcircuitPinRef *, const db::NetSubcircuitPinRef *> >;
+    using subcircuit_pin_pairs_const_iterator = subcircuit_pin_pairs_type::const_iterator;
 
     std::vector<std::pair<const db::NetTerminalRef *, const db::NetTerminalRef *> > terminals;
     std::vector<std::pair<const db::NetPinRef *, const db::NetPinRef *> > pins;
@@ -258,7 +258,7 @@ public:
 
   const PerCircuitData *per_circuit_data_for (const std::pair<const db::Circuit *, const db::Circuit *> &circuits) const;
 
-  typedef std::vector<std::pair<const db::Circuit *, const db::Circuit *> >::const_iterator circuits_iterator;
+  using circuits_iterator = std::vector<std::pair<const db::Circuit *, const db::Circuit *> >::const_iterator;
 
   circuits_iterator begin_circuits () const
   {

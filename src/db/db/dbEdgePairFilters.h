@@ -65,7 +65,7 @@ class DB_PUBLIC EdgePairFilterByDistance
   : public EdgePairFilterBase
 {
 public:
-  typedef db::coord_traits<db::Coord>::distance_type distance_type;
+  using distance_type = db::coord_traits<db::Coord>::distance_type;
 
   EdgePairFilterByDistance (distance_type min_distance, distance_type max_distance, bool inverted);
 
@@ -88,7 +88,7 @@ class DB_PUBLIC EdgePairFilterByArea
   : public EdgePairFilterBase
 {
 public:
-  typedef db::coord_traits<db::Coord>::area_type area_type;
+  using area_type = db::coord_traits<db::Coord>::area_type;
 
   EdgePairFilterByArea (area_type min_area, area_type max_area, bool inverted);
 

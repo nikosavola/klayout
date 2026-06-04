@@ -135,7 +135,7 @@ public:
 class DB_PUBLIC CommonReaderBase
 {
 public:
-  typedef tl::interval_map <db::ld_type, tl::interval_map <db::ld_type, std::string> > layer_name_map;
+  using layer_name_map = tl::interval_map <db::ld_type, tl::interval_map <db::ld_type, std::string> >;
 
   /**
    *  @brief Constructor
@@ -304,7 +304,7 @@ class DB_PUBLIC CommonReader
   : public ReaderBase, public CommonReaderBase
 {
 public:
-  typedef tl::interval_map <db::ld_type, tl::interval_map <db::ld_type, std::string> > layer_name_map;
+  using layer_name_map = tl::interval_map <db::ld_type, tl::interval_map <db::ld_type, std::string> >;
 
   /**
    *  @brief Constructor

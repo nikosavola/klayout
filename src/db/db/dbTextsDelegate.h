@@ -40,10 +40,10 @@ class RegionDelegate;
 class EdgesDelegate;
 class Layout;
 
-typedef shape_collection_processor<db::Text, db::Text> TextProcessorBase;
-typedef shape_collection_processor<db::Text, db::Polygon> TextToPolygonProcessorBase;
+using TextProcessorBase = shape_collection_processor<db::Text, db::Text>;
+using TextToPolygonProcessorBase = shape_collection_processor<db::Text, db::Polygon>;
 
-typedef db::generic_shape_iterator_delegate_base <db::Text> TextsIteratorDelegate;
+using TextsIteratorDelegate = db::generic_shape_iterator_delegate_base <db::Text>;
 
 /**
  *  @brief The delegate for the actual edge set implementation
@@ -52,12 +52,12 @@ class DB_PUBLIC TextsDelegate
   : public ShapeCollectionDelegateBase
 {
 public:
-  typedef db::Coord coord_type;
-  typedef db::coord_traits<db::Coord> coord_traits;
-  typedef db::Text edge_pair_type;
-  typedef db::Vector vector_type;
-  typedef db::Point point_type;
-  typedef db::Box box_type;
+  using coord_type = db::Coord;
+  using coord_traits = db::coord_traits<db::Coord>;
+  using edge_pair_type = db::Text;
+  using vector_type = db::Vector;
+  using point_type = db::Point;
+  using box_type = db::Box;
 
   TextsDelegate ();
   virtual ~TextsDelegate ();

@@ -50,8 +50,8 @@ struct DB_PUBLIC PCellParametersCompareFunc
 class DB_PUBLIC PCellHeader
 {
 public:
-  typedef std::map<const pcell_parameters_type *, db::PCellVariant *, PCellParametersCompareFunc> variant_map_t;
-  typedef variant_map_t::const_iterator variant_iterator;
+  using variant_map_t = std::map<const pcell_parameters_type *, db::PCellVariant *, PCellParametersCompareFunc>;
+  using variant_iterator = variant_map_t::const_iterator;
 
   /**
    *  @brief The default constructor

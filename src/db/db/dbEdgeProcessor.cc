@@ -706,7 +706,7 @@ InteractionDetector::edge (bool north, bool enter, property_type p)
   //  we have to catch interactions between objects north and south to the scanline
   if (north || (m_mode == 0 && m_include_touching) || (m_mode < -1 && m_include_touching)) {
 
-    std::set <property_type> *inside = north ? &m_inside_n : &m_inside_s;
+    inside_set_type *inside = north ? &m_inside_n : &m_inside_s;
 
     if (inside_after < inside_before) {
 
@@ -716,7 +716,7 @@ InteractionDetector::edge (bool north, bool enter, property_type p)
       //  (due to prefer_touch == true and the sorting of coincident edges by property id)
       //  hence every remaining parts count as non-interacting (outside)
       if (p <= m_last_primary_id) {
-        for (std::set <property_type>::const_iterator i = inside->begin (); i != inside->end (); ++i) {
+        for (inside_set_type::const_iterator i = inside->begin (); i != inside->end (); ++i) {
           if (*i > m_last_primary_id) {
             m_non_interactions.insert (*i);
           }
@@ -734,7 +734,7 @@ InteractionDetector::edge (bool north, bool enter, property_type p)
           //  edges hence we can check whether the primary is present even for coincident
           //  edges
           bool any = false;
-          for (std::set <property_type>::const_iterator i = inside->begin (); i != inside->end (); ++i) {
+          for (inside_set_type::const_iterator i = inside->begin (); i != inside->end (); ++i) {
             if (*i <= m_last_primary_id) {
               any = true;
               m_interactions.insert (std::make_pair (*i, p));
@@ -746,7 +746,7 @@ InteractionDetector::edge (bool north, bool enter, property_type p)
 
         } else {
 
-          for (std::set <property_type>::const_iterator i = inside->begin (); i != inside->end (); ++i) {
+          for (inside_set_type::const_iterator i = inside->begin (); i != inside->end (); ++i) {
             if (*i > m_last_primary_id) {
               if (m_mode < -1) {
                 //  enclosing mode: an opening primary (= enclosing one) with open secondaries means the secondary
@@ -763,7 +763,7 @@ InteractionDetector::edge (bool north, bool enter, property_type p)
 
       } else {
 
-        for (std::set <property_type>::const_iterator i = m_inside_n.begin (); i != m_inside_n.end (); ++i) {
+        for (inside_set_type::const_iterator i = m_inside_n.begin (); i != m_inside_n.end (); ++i) {
           if (*i < p) {
             m_interactions.insert (std::make_pair (*i, p));
           } else if (p < *i) {
@@ -771,7 +771,7 @@ InteractionDetector::edge (bool north, bool enter, property_type p)
           }
         }
 
-        for (std::set <property_type>::const_iterator i = m_inside_s.begin (); i != m_inside_s.end (); ++i) {
+        for (inside_set_type::const_iterator i = m_inside_s.begin (); i != m_inside_s.end (); ++i) {
           if (*i < p) {
             m_interactions.insert (std::make_pair (*i, p));
           } else if (p < *i) {

@@ -33,6 +33,7 @@
 
 #include <vector>
 #include <set>
+#include <unordered_set>
 
 namespace db
 {
@@ -373,7 +374,12 @@ private:
   bool m_include_touching;
   property_type m_last_primary_id;
   std::vector <int> m_wcv_n, m_wcv_s;
-  std::set <property_type> m_inside_n, m_inside_s;
+  //  Sets of property ids currently "inside" at the scanline. Membership and
+  //  insert/erase are the hot operations; iteration order is irrelevant
+  //  because every traversal feeds order-independent (sorted) result sets, so
+  //  an unordered_set is both correct and faster than the former std::set.
+  typedef std::unordered_set<property_type> inside_set_type;
+  inside_set_type m_inside_n, m_inside_s;
   std::set<std::pair<property_type, property_type> > m_interactions;
   std::set<property_type> m_non_interactions;
 };

@@ -32,6 +32,7 @@
 #include <vector>
 #include <deque>
 #include <memory>
+#include <set>
 
 #if 0
 #define DEBUG_MERGEOP
@@ -225,7 +226,7 @@ struct CutPoints
   void add_attractor (const db::Point &p, size_t next)
   {
     if (strong_cutpoints) {
-      cut_points.push_back (p);
+      push_cut_point (p);
     } else {
       attractors.push_back (std::make_pair (p, next));
     }
@@ -249,19 +250,43 @@ struct CutPoints
 
       }
 
-    } 
+    }
 
-    //  do not insert points twice
-    for (auto c = cut_points.begin (); c != cut_points.end (); ++c) {
-      if (*c == p) {
+    //  do not insert points twice. A linear scan is cheapest for the common
+    //  case of few cut points; once an edge accumulates many of them the
+    //  repeated scans become O(n^2), so we switch to a sorted index that
+    //  gives O(log n) membership tests. Both paths make the same decision.
+    if (mp_index.get ()) {
+      if (mp_index->find (p) != mp_index->end ()) {
         return;
+      }
+    } else {
+      for (auto c = cut_points.begin (); c != cut_points.end (); ++c) {
+        if (*c == p) {
+          return;
+        }
       }
     }
 
-    cut_points.push_back (p);
+    push_cut_point (p);
 
   }
 
+private:
+  //  Lazily-built membership index over cut_points, mirroring its distinct
+  //  points. Only allocated once an edge collects enough cut points for the
+  //  linear dedup scan to become the dominant cost.
+  std::unique_ptr<std::set<db::Point> > mp_index;
+
+  void push_cut_point (const db::Point &p)
+  {
+    cut_points.push_back (p);
+    if (mp_index.get ()) {
+      mp_index->insert (p);
+    } else if (cut_points.size () > 32) {
+      mp_index.reset (new std::set<db::Point> (cut_points.begin (), cut_points.end ()));
+    }
+  }
 };
 
 /**

@@ -23,6 +23,7 @@
 
 
 #include "dbEdgeProcessor.h"
+#include "dbScanlineCompare.h"
 #include "dbPolygonGenerators.h"
 #include "dbLayout.h"
 #include "tlTimer.h"
@@ -379,13 +380,14 @@ struct EdgeXAtYCompare
     } else {
 
       //  complex case:
-      //  HINT: "volatile" forces xa and xb into memory and disables FPU register optimisation.
-      //  That way, we can exactly compare doubles afterwards.
-      volatile double xa = edge_xaty (a, m_y);
-      volatile double xb = edge_xaty (b, m_y);
+      //  Compare the x positions at the scanline *exactly* using rational
+      //  arithmetic. This is deterministic on every platform and, unlike the
+      //  former "volatile double" comparison, does not defeat register
+      //  allocation and instruction-level parallelism in the comparator.
+      int cmp = db::scanline_x_compare (db::scanline_xaty (a, m_y), db::scanline_xaty (b, m_y));
 
-      if (xa != xb) {
-        return xa < xb;
+      if (cmp != 0) {
+        return cmp < 0;
       } else if (a.dy () == 0) {
         return false;
       } else if (b.dy () == 0) {
@@ -421,13 +423,10 @@ struct EdgeXAtYCompare
       return false;
     } else {
 
-      //  complex case:
-      //  HINT: "volatile" forces xa and xb into memory and disables FPU register optimisation.
-      //  That way, we can exactly compare doubles afterwards.
-      volatile double xa = edge_xaty (a, m_y);
-      volatile double xb = edge_xaty (b, m_y);
+      //  complex case: exact rational comparison of the scanline x positions
+      int cmp = db::scanline_x_compare (db::scanline_xaty (a, m_y), db::scanline_xaty (b, m_y));
 
-      if (xa != xb) {
+      if (cmp != 0) {
         return false;
       } else if (a.dy () == 0 || b.dy () == 0) {
         return (a.dy () == 0) == (b.dy () == 0);
@@ -502,14 +501,12 @@ struct EdgeXAtYCompare2
       return false;
     } else {
 
-      //  complex case:
-      //  HINT: "volatile" forces xa and xb into memory and disables FPU register optimisation.
-      //  That way, we can exactly compare doubles afterwards.
-      volatile double xa = edge_xaty2 (a, m_y);
-      volatile double xb = edge_xaty2 (b, m_y);
+      //  complex case: exact rational comparison of the scanline x positions
+      //  (edge_xaty2 variant, delivering the minimum x for horizontal edges)
+      int cmp = db::scanline_x_compare (db::scanline_xaty2 (a, m_y), db::scanline_xaty2 (b, m_y));
 
-      if (xa != xb) {
-        return xa < xb;
+      if (cmp != 0) {
+        return cmp < 0;
       } else if (a.dy () == 0) {
         return false;
       } else if (b.dy () == 0) {
@@ -557,13 +554,10 @@ struct EdgeXAtYCompare2
       return false;
     } else {
 
-      //  complex case:
-      //  HINT: "volatile" forces xa and xb into memory and disables FPU register optimisation.
-      //  That way, we can exactly compare doubles afterwards.
-      volatile double xa = edge_xaty2 (a, m_y);
-      volatile double xb = edge_xaty2 (b, m_y);
+      //  complex case: exact rational comparison of the scanline x positions
+      int cmp = db::scanline_x_compare (db::scanline_xaty2 (a, m_y), db::scanline_xaty2 (b, m_y));
 
-      if (xa != xb) {
+      if (cmp != 0) {
         return false;
       } else if (a.dy () == 0 || b.dy () == 0) {
         return (a.dy () == 0) == (b.dy () == 0);
@@ -2519,13 +2513,17 @@ EdgeProcessor::redo_or_process (const std::vector<std::pair<db::EdgeSink *, db::
 
             std::vector <WorkEdge>::iterator f = c + 1;
 
-            //  HINT: "volatile" forces x and xx into memory and disables FPU register optimisation.
-            //  That way, we can exactly compare doubles afterwards.
-            volatile double x = edge_xaty (*c, y);
+            //  Group all edges crossing the scanline at exactly the same x.
+            //  The grouping uses the same exact rational comparison as the
+            //  scanline sort (EdgeXAtYCompare) so the two are always consistent.
+            //  The (non-volatile) double "x" only provides the rounded vertex
+            //  coordinate passed to next_vertex; on SSE2/x86-64 this is the
+            //  identical value the former volatile double produced.
+            db::ScanlineX xc = db::scanline_xaty (*c, y);
+            double x = edge_xaty (*c, y);
 
             while (f != future) {
-              volatile double xx = edge_xaty (*f, y);
-              if (xx != x) {
+              if (db::scanline_x_compare (xc, db::scanline_xaty (*f, y)) != 0) {
                 break;
               }
               gs.reset_skip_entry (f->data);
@@ -2533,7 +2531,7 @@ EdgeProcessor::redo_or_process (const std::vector<std::pair<db::EdgeSink *, db::
             }
 
             //  compute edges that occur at this vertex
-            
+
             gs.next_vertex (x);
             
             //  treat all edges crossing the scanline in a certain point

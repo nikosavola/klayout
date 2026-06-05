@@ -40,14 +40,14 @@ namespace mpi
 
 #if defined(HAVE_MPI)
 
-//  The message tag used for all of the point-to-point transfers below. As MPI
-//  preserves message ordering between a given (source, destination, tag) triple
-//  we can use a single tag for the length header followed by the payload.
-static const int s_tag = 0x4b4c;  // 'KL'
+//  The message tag used for the point-to-point fallback below. As MPI preserves
+//  message ordering between a given (source, destination, tag) triple we can use
+//  a single tag for the length header followed by the payload.
+static constexpr int s_tag = 0x4b4c;  // 'KL'
 
 //  The maximum number of bytes sent in a single MPI_Send/MPI_Recv. MPI counts
 //  are "int", so payloads larger than this are transferred in multiple chunks.
-static const size_t s_max_chunk = size_t (1) << 30;  // 1 GiB
+static constexpr size_t s_max_chunk = size_t (1) << 30;  // 1 GiB
 
 static tl::Mutex s_init_mutex;
 
@@ -187,14 +187,83 @@ gather_to_root (const std::string &local)
   int r = rank ();
   int n = size ();
 
+  //  Phase 1: collect the per-rank buffer sizes on the root with a collective
+  //  gather. This is small and lets the root size its receive buffer and decide
+  //  how to transfer the payload.
+  unsigned long long my_size = (unsigned long long) local.size ();
+  std::vector<unsigned long long> sizes;
   if (r == 0) {
-    res.resize (size_t (n));
-    res[0] = local;
-    for (int src = 1; src < n; ++src) {
-      res[size_t (src)] = recv_all (src);
+    sizes.resize (size_t (n));
+  }
+  MPI_Gather (&my_size, 1, MPI_UNSIGNED_LONG_LONG,
+              r == 0 ? sizes.data () : 0, 1, MPI_UNSIGNED_LONG_LONG,
+              0, MPI_COMM_WORLD);
+
+  //  MPI_Gatherv counts and displacements are "int", so it can only be used when
+  //  every buffer and the total fit into an int. The root decides and broadcasts
+  //  that decision so all ranks take the same path (avoiding a collective
+  //  mismatch).
+  int use_gatherv = 1;
+  if (r == 0) {
+    unsigned long long total = 0;
+    for (int i = 0; i < n; ++i) {
+      total += sizes[size_t (i)];
+      if (sizes[size_t (i)] > (unsigned long long) std::numeric_limits<int>::max ()) {
+        use_gatherv = 0;
+      }
     }
+    if (total > (unsigned long long) std::numeric_limits<int>::max ()) {
+      use_gatherv = 0;
+    }
+  }
+  MPI_Bcast (&use_gatherv, 1, MPI_INT, 0, MPI_COMM_WORLD);
+
+  if (use_gatherv) {
+
+    //  Phase 2 (common case): a single collective MPI_Gatherv transfers all the
+    //  payloads at once, letting the MPI implementation optimize the collection
+    //  (e.g. a tree) instead of the root serially receiving from each rank.
+    std::vector<int> counts, displs;
+    std::vector<char> buf;
+    if (r == 0) {
+      counts.resize (size_t (n));
+      displs.resize (size_t (n));
+      int off = 0;
+      for (int i = 0; i < n; ++i) {
+        counts[size_t (i)] = int (sizes[size_t (i)]);
+        displs[size_t (i)] = off;
+        off += counts[size_t (i)];
+      }
+      buf.resize (size_t (off));
+    }
+
+    MPI_Gatherv (local.data (), int (local.size ()), MPI_BYTE,
+                 r == 0 ? buf.data () : 0,
+                 r == 0 ? counts.data () : 0,
+                 r == 0 ? displs.data () : 0,
+                 MPI_BYTE, 0, MPI_COMM_WORLD);
+
+    if (r == 0) {
+      res.resize (size_t (n));
+      for (int i = 0; i < n; ++i) {
+        res[size_t (i)].assign (buf.data () + displs[size_t (i)], size_t (counts[size_t (i)]));
+      }
+    }
+
   } else {
-    send_all (local.c_str (), local.size (), 0);
+
+    //  Phase 2 (fallback): for very large buffers that exceed the int range of
+    //  MPI_Gatherv, fall back to chunked point-to-point transfers.
+    if (r == 0) {
+      res.resize (size_t (n));
+      res[0] = local;
+      for (int src = 1; src < n; ++src) {
+        res[size_t (src)] = recv_all (src);
+      }
+    } else {
+      send_all (local.c_str (), local.size (), 0);
+    }
+
   }
 
   return res;

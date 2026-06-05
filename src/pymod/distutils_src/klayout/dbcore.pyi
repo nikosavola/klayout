@@ -74514,6 +74514,8 @@ class TilingProcessor:
 
     The tiling processor executes one or several scripts on one or multiple layouts providing a tiling scheme. In that scheme, the processor divides the original layout into rectangular tiles and executes the scripts on each tile separately. The tiling processor allows one to specify multiple, independent scripts which are run separately on each tile. It can make use of multi-core CPU's by supporting multiple threads running the tasks in parallel (with respect to tiles and scripts).
 
+    If KLayout is built with MPI (MPICH) support and launched under "mpiexec", the tiling processor additionally distributes the tiles across the MPI ranks. Each rank processes its share of the tiles (optionally with multiple threads per rank) and the results are gathered onto rank 0, which holds the complete output. This is a distributed-memory SPMD model: every rank runs the same script on identical inputs, so a script should perform output handling - such as saving a layout - on rank 0 only, guarded with "RBA::TilingProcessor::mpi_rank == 0". See \TilingProcessor#mpi_rank, \TilingProcessor#mpi_size and \TilingProcessor#mpi_available?.
+
     Tiling a optional - if no tiles are specified, the tiling processing basically operates flat and parallelization extends to the scripts only.
 
     Tiles can be overlapping to gather input from neighboring tiles into the current tile. In order to provide that feature, a border can be specified which gives the amount by which the search region is extended beyond the border of the tile. To specify the border, use the \TilingProcessor#tile_border method.
@@ -74609,6 +74611,38 @@ class TilingProcessor:
     Setter:
     @brief Specifies the number of threads to use
     """
+    @classmethod
+    def mpi_available(cls) -> bool:
+        r"""
+        @brief Gets a value indicating whether MPI support is available
+
+        If this method returns true, KLayout was built with MPI (MPICH) support and the tiling processor is able to distribute tiles across MPI ranks. To actually run distributed, the application has to be launched under "mpiexec".
+
+        This method has been introduced in version 0.30.10.
+        """
+        ...
+    @classmethod
+    def mpi_rank(cls) -> int:
+        r"""
+        @brief Gets the MPI rank of the current process
+
+        Returns 0 if MPI is not active (not built or not launched under "mpiexec").
+
+        When the tiling processor runs under MPI, the tiles are distributed across the ranks and the results are gathered onto rank 0. Only rank 0 holds the complete output, so a script should guard output handling (such as saving a layout) with "RBA::TilingProcessor::mpi_rank == 0".
+
+        This method has been introduced in version 0.30.10.
+        """
+        ...
+    @classmethod
+    def mpi_size(cls) -> int:
+        r"""
+        @brief Gets the number of MPI ranks
+
+        Returns 1 if MPI is not active.
+
+        This method has been introduced in version 0.30.10.
+        """
+        ...
     @classmethod
     def new(cls) -> TilingProcessor:
         r"""

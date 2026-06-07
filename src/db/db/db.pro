@@ -343,6 +343,7 @@ HEADERS = \
   dbRegion.h \
   dbRegionCheckUtils.h \
   dbRegionLocalOperations.h \
+  dbSIMDUtils.h \
   dbSaveLayoutOptions.h \
   dbShape.h \
   dbShapeFlags.h \

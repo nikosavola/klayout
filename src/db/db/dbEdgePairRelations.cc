@@ -24,6 +24,7 @@
 #include "dbCommon.h"
 
 #include "dbEdgePairRelations.h"
+#include "dbSIMDUtils.h"
 
 #include <algorithm>
 #include <cmath>
@@ -219,20 +220,30 @@ bool euclidian_near_part_of_edge (zero_distance_mode zd_mode, db::coord_traits<d
 
   //  Compute a solution for the circles and the ends if there is one
 
-  for (int i = 0; i < 2; ++i) {
-
-    db::Point o = i ? e.p2 () : e.p1 ();
-
+  //  Solve the two endpoint circles together. The two iterations are
+  //  independent, so the two square roots are computed as one packed SSE2
+  //  operation (bit-identical to two scalar sqrt calls - including NaN for the
+  //  s in [-epsilon, 0) case, which leaves l1/l2 unchanged via std::min/max).
+  {
     double a = g.double_sq_length ();
-    double b = db::sprod (db::Vector (g.p1 () - o), g.d ()) / a;
-    double c = (g.p1 ().sq_double_distance (o) - double (d) * double (d)) / a;
-
-    double s = b * b - c;
-    if (s >= -db::epsilon) {
-      l1 = std::min (l1, -b - sqrt (s));
-      l2 = std::max (l2, -b + sqrt (s));
+    double bb[2], ss[2];
+    for (int i = 0; i < 2; ++i) {
+      db::Point o = i ? e.p2 () : e.p1 ();
+      double b = db::sprod (db::Vector (g.p1 () - o), g.d ()) / a;
+      double c = (g.p1 ().sq_double_distance (o) - double (d) * double (d)) / a;
+      bb[i] = b;
+      ss[i] = b * b - c;
     }
 
+    double sq[2];
+    db::simd_sqrt2 (ss[0], ss[1], sq);
+
+    for (int i = 0; i < 2; ++i) {
+      if (ss[i] >= -db::epsilon) {
+        l1 = std::min (l1, -bb[i] - sq[i]);
+        l2 = std::max (l2, -bb[i] + sq[i]);
+      }
+    }
   }
 
   l1 = std::max (0.0, l1);

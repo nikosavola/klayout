@@ -91,6 +91,7 @@ SOURCES = \
   dbCellTests.cc \
   dbBoxTreeTests.cc \
   dbBoxScannerTests.cc \
+  dbSIMDUtilsTests.cc \
   dbBoxTests.cc \
   dbArrayTests.cc \
   dbDeepTextsTests.cc \

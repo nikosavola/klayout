@@ -2140,7 +2140,7 @@ public:
    */
   void release_skip_entry (size_t n)
   {
-    m_skip_queue.push_front (n - 1);
+    m_skip_queue.push_back (n - 1);
   }
 
   /**
@@ -2175,8 +2175,8 @@ public:
     size_t n = 0;
 
     if (! m_skip_queue.empty ()) {
-      n = m_skip_queue.front ();
-      m_skip_queue.pop_front ();
+      n = m_skip_queue.back ();
+      m_skip_queue.pop_back ();
     } else {
       n = m_skip_info.size ();
       m_skip_info.push_back (SkipInfo ());
@@ -2191,7 +2191,10 @@ private:
   std::vector<EdgeProcessorState> m_states;
   bool m_selects_edges, m_prefer_touch;
   std::vector<SkipInfo> m_skip_info;
-  std::list<size_t> m_skip_queue;
+  //  Free list of reusable m_skip_info slots, used as a LIFO stack. A vector
+  //  (push_back/pop_back) reuses slots in the same order as the former
+  //  std::list (push_front/pop_front) but without a node allocation per release.
+  std::vector<size_t> m_skip_queue;
   std::vector<size_t> m_nres;
 };
 

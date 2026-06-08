@@ -1369,6 +1369,7 @@ get_intersections_per_band_any (std::vector <CutPoints> &cutpoints, std::vector 
   double dy = y - 0.5;
   double dyy = yy + 0.5;
   std::vector <std::pair<const WorkEdge *, WorkEdge *> > p1_weak;   // holds weak interactions of edge endpoints with other edges
+  std::vector <db::Point> weak_points;   // holds points that need to go in all other edges; sorted+uniqued per cell (see below)
 
   std::sort (current, future, edge_xmin_at_yinterval_double_compare<db::Coord> (dy, dyy));
 
@@ -1420,7 +1421,7 @@ get_intersections_per_band_any (std::vector <CutPoints> &cutpoints, std::vector 
 
       db::Box cell (x, y, xx, yy);
 
-      std::set<db::Point> weak_points;    // holds points that need to go in all other edges
+      weak_points.clear ();   // reuse capacity across cells; collected as a vector and sorted/uniqued below
       p1_weak.clear ();
 
       for (std::vector <WorkEdge>::iterator c1 = c; c1 != f; ++c1) {
@@ -1452,7 +1453,7 @@ get_intersections_per_band_any (std::vector <CutPoints> &cutpoints, std::vector 
                 std::pair <bool, db::Point> cp = safe_intersect_point (*c1, *c2);
                 if (cp.first && cell.contains (cp.second)) {
                   //  Stash the cutpoint as it must be inserted into other edges as well.
-                  weak_points.insert (cp.second);
+                  weak_points.push_back (cp.second);
                 }
 
               }
@@ -1495,7 +1496,7 @@ get_intersections_per_band_any (std::vector <CutPoints> &cutpoints, std::vector 
               std::pair <bool, db::Point> cp = safe_intersect_point (*c1, *c2);
               if (cp.first && cell.contains (cp.second)) {
                 //  Stash the cutpoint as it must be inserted into other edges as well.
-                weak_points.insert (cp.second);
+                weak_points.push_back (cp.second);
               }
 
             } 
@@ -1523,6 +1524,19 @@ get_intersections_per_band_any (std::vector <CutPoints> &cutpoints, std::vector 
 
         }
 
+      }
+
+      //  Deduplicate and order the collected weak points. Sorting by the same
+      //  order std::set<db::Point> would use (db::Point::operator<) and removing
+      //  duplicates yields exactly the sequence the former std::set delivered,
+      //  so the downstream cutpoint insertion is unchanged - but collecting into
+      //  a flat vector avoids the per-point tree node allocation and is more
+      //  cache friendly when many intersections fall into one cell.
+      //  (0 or 1 points are already trivially sorted and unique - skip the call
+      //  overhead, which matters because sparse cells dominate in many layouts.)
+      if (weak_points.size () > 1) {
+        std::sort (weak_points.begin (), weak_points.end ());
+        weak_points.erase (std::unique (weak_points.begin (), weak_points.end ()), weak_points.end ());
       }
 
       //  insert weak intersection points into all relevant edges - weak into edges

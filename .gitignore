@@ -78,3 +78,7 @@ py.typed
 .tmp*
 .venv
 
+
+# clang-tidy / Bear compilation database
+compile_commands.json
+compile_commands.events.json

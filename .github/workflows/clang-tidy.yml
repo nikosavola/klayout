@@ -1,0 +1,82 @@
+---
+name: clang-tidy
+
+# Runs clang-tidy on the C/C++ sources and fails the job if any diagnostic is
+# reported. The check set is defined by the project .clang-tidy file.
+#
+# clang-tidy needs a compilation database (compile_commands.json). KLayout uses
+# qmake, which does not emit one, so we configure with build.sh, then capture
+# the compile commands with Bear during a real build (the build also produces
+# the generated Qt moc_*/ui_* sources clang-tidy needs to see).
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+concurrency:
+  group: clang-tidy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  clang-tidy:
+    name: Run clang-tidy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # cpp-linter needs history to compute the changed-files diff.
+          fetch-depth: 0
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential bear \
+            qtbase5-dev qttools5-dev qttools5-dev-tools \
+            libqt5svg5-dev qtmultimedia5-dev libqt5xmlpatterns5-dev \
+            ruby-dev python3-dev libgit2-dev zlib1g-dev
+
+      - name: ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: clang-tidy
+          max-size: "2G"
+
+      - name: Configure and build (capture compile_commands.json)
+        run: |
+          # ccache-action puts compiler shims on /usr/lib/ccache; using them
+          # keeps the recorded compiler "g++" (not "ccache g++"), which
+          # clang-tidy parses cleanly.
+          export PATH="/usr/lib/ccache:$PATH"
+          ./build.sh -dry-run -j"$(nproc)"
+          bear --output compile_commands.json -- \
+            make -C build-release -j"$(nproc)" -k
+
+      - name: Run clang-tidy
+        uses: cpp-linter/cpp-linter-action@v2.19.0
+        id: linter
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          version: "20"
+          # Defer the check selection to the project .clang-tidy file.
+          tidy-checks: ""
+          # clang-format is enforced by the separate clang-format workflow.
+          style: ""
+          # Directory holding compile_commands.json (repository root).
+          database: "."
+          files-changed-only: true
+          ignore: ".github|testdata|src/gsiqt"
+          step-summary: true
+
+      - name: Fail on clang-tidy findings
+        if: steps.linter.outputs.clang-tidy-checks-failed > 0
+        run: |
+          echo "clang-tidy reported" \
+            "${{ steps.linter.outputs.clang-tidy-checks-failed }} issue(s)."
+          exit 1

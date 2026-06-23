@@ -1,0 +1,42 @@
+# EditorConfig — https://editorconfig.org
+# Codifies the existing KLayout whitespace conventions so editors apply them
+# automatically. This only affects editor behaviour; it does not rewrite files.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# C/C++ core sources use 2-space indentation
+[*.{c,cc,cpp,cxx,h,hh,hpp}]
+indent_size = 2
+
+# Python (PEP 8)
+[*.py]
+indent_size = 4
+
+# Ruby (DRC/LVS macros, scripts)
+[*.{rb,gemspec}]
+indent_size = 2
+
+# Makefiles require real tabs
+[{Makefile,*.mk,*.make}]
+indent_style = tab
+
+# qmake project files
+[*.{pro,pri}]
+indent_size = 2
+
+# Markdown: trailing whitespace can be a hard line break
+[*.md]
+trim_trailing_whitespace = false
+
+# Test fixtures and golden reference files: do not touch whitespace,
+# byte-exact content matters for comparisons.
+[testdata/**]
+trim_trailing_whitespace = false
+insert_final_newline = false

@@ -5,15 +5,12 @@ This uses the `tl` module of the API, which offers an introspection layer to
 the C-extension modules.
 """
 
-from collections import Counter
-from copy import copy
-from dataclasses import dataclass, field
-from functools import wraps
 import functools
-from sys import argv
+from dataclasses import dataclass, field
+from sys import argv, exit
 from textwrap import indent
-from typing import Any, List, Optional, Tuple, Union
-import pya  # initialize all modules
+from typing import Any
+
 import klayout.tl as ktl
 
 
@@ -21,15 +18,13 @@ def qualified_name(_class: ktl.Class) -> str:
     name = _class.name()
     if _class.parent():
         return f"{qualified_name(_class.parent())}.{name}"
-    else:
-        return name
+    return name
 
 
 def superclass(_class: ktl.Class) -> str:
     if _class.base():
         return superclass(_class.base())
-    else:
-        return _class.name()
+    return _class.name()
 
 
 def is_reserved_word(name: str) -> bool:
@@ -97,7 +92,7 @@ _type_dict[ktl.ArgType.TypeVoidPtr] = "None"
 
 
 def _translate_type(
-    arg_type: ktl.ArgType, within_class: ktl.Class, is_return=False
+    arg_type: ktl.ArgType, within_class: ktl.Class, is_return=False,
 ) -> str:
     """Translates klayout's C-type to a type in Python.
 
@@ -135,7 +130,7 @@ class Stub:
     name: Any
     docstring: str
     indent_docstring: bool = True
-    child_stubs: List["Stub"] = field(default_factory=list)
+    child_stubs: list["Stub"] = field(default_factory=list)
     decorator: str = ""
 
     def __eq__(self, __o: object) -> bool:
@@ -189,7 +184,7 @@ class Stub:
         for stub in self.child_stubs:
             stub_str += "\n"
             stub_str += indent(
-                stub.format_stub(include_docstring=include_docstring), " " * 4
+                stub.format_stub(include_docstring=include_docstring), " " * 4,
             )
 
         if self.indent_docstring and (include_docstring or len(self.child_stubs)):
@@ -220,21 +215,20 @@ def get_child_classes(c: ktl.Class):
     return sorted(child_classes, key=lambda cls: cls.name())
 
 def get_py_child_classes(c: ktl.Class):
-    for c_child in get_child_classes(c):
-        yield c_child
+    yield from get_child_classes(c)
 
 
 def get_py_methods(
     c: ktl.Class,
-) -> List[Stub]:
+) -> list[Stub]:
 
     translate_arg_type = functools.partial(_translate_type, within_class=c, is_return=False)
     translate_ret_type = functools.partial(_translate_type, within_class=c, is_return=True)
 
     def _get_arglist(
-        m: ktl.Method, self_str: str
-    ) -> List[Tuple[str, Optional[ktl.ArgType]]]:
-        args: List[Tuple[str, Optional[ktl.ArgType]]] = [(self_str, None)]
+        m: ktl.Method, self_str: str,
+    ) -> list[tuple[str, ktl.ArgType | None]]:
+        args: list[tuple[str, ktl.ArgType | None]] = [(self_str, None)]
         for i, a in enumerate(m.each_argument()):
             argname = a.name()
             if is_reserved_word(argname):
@@ -244,7 +238,7 @@ def get_py_methods(
             args.append((argname, a))
         return args
 
-    def _format_args(arglist: List[Tuple[str, Optional[str]]]):
+    def _format_args(arglist: list[tuple[str, str | None]]):
         args = []
         for argname, argtype in arglist:
             if argtype:
@@ -255,7 +249,7 @@ def get_py_methods(
 
     def format_args(m: ktl.Method, self_str: str = "self") -> str:
         arg_list = _get_arglist(m, self_str=self_str)
-        new_arglist: List[Tuple[str, Optional[str]]] = []
+        new_arglist: list[tuple[str, str | None]] = []
         for argname, a in arg_list:
             if a:
                 new_arglist.append((argname, translate_arg_type(a)))
@@ -264,10 +258,10 @@ def get_py_methods(
         return _format_args(new_arglist)
 
     # Collect all properties here
-    properties: List[Stub] = list()
+    properties: list[Stub] = list()
 
     # Extract all instance properties
-    for f in c.python_properties(False): 
+    for f in c.python_properties(False):
         name = f.getter().name()
         getter = None
         if len(f.getter().methods()) > 0:
@@ -275,7 +269,7 @@ def get_py_methods(
         setter = None
         if len(f.setter().methods()) > 0:
             setter = f.setter().methods()[0]
-        if getter and setter: 
+        if getter and setter:
             # Full property
             ret_type = translate_ret_type(getter.ret_type())
             doc = "Getter:\n" + getter.doc() + "\nSetter:\n" + setter.doc()
@@ -285,7 +279,7 @@ def get_py_methods(
                     signature=f"{name}: {ret_type}",
                     name=name,
                     docstring=doc,
-                )
+                ),
             )
         elif getter:
             # Only getter
@@ -297,7 +291,7 @@ def get_py_methods(
                     signature=f"def {name}(self) -> {ret_type}",
                     name=name,
                     docstring=doc,
-                )
+                ),
             )
         elif setter:
             # Only setter
@@ -308,11 +302,11 @@ def get_py_methods(
                     signature=f"def {name}(self) -> None",
                     name=name,
                     docstring=doc,
-                )
+                ),
             )
 
     # Extract all class properties (TODO: setters not supported currently)
-    for f in c.python_properties(True): 
+    for f in c.python_properties(True):
         name = f.getter().name()
         if len(f.getter().methods()) > 0:
             getter = f.getter().methods()[0]
@@ -324,13 +318,13 @@ def get_py_methods(
                     signature=f"{name}: ClassVar[{ret_type}]",
                     name=name,
                     docstring=doc,
-                )
+                ),
             )
 
     # Extract all classmethods
-    classmethods: List[Stub] = list()
+    classmethods: list[Stub] = list()
 
-    for f in c.python_methods(True): 
+    for f in c.python_methods(True):
 
         name = f.name()
 
@@ -347,13 +341,13 @@ def get_py_methods(
                     signature=f"def {name}({format_args(m, 'cls')}) -> {ret_type}",
                     name=name,
                     docstring=m.doc(),
-                )
+                ),
             )
 
     # Extract bound methods
-    boundmethods: List[Stub] = list()
+    boundmethods: list[Stub] = list()
 
-    for f in c.python_methods(False): 
+    for f in c.python_methods(False):
 
         name = f.name()
 
@@ -363,10 +357,7 @@ def get_py_methods(
 
         for m in f.methods():
 
-            if name == "__init__":
-                ret_type = "None"
-            else:
-                ret_type = translate_ret_type(m.ret_type())
+            ret_type = "None" if name == "__init__" else translate_ret_type(m.ret_type())
 
             arg_list = _get_arglist(m, "self")
             # TODO: fix type errors
@@ -397,32 +388,29 @@ def get_py_methods(
                     signature=f"def {name}({formatted_args}) -> {ret_type}",
                     name=name,
                     docstring=m.doc(),
-                )
+                ),
             )
 
     boundmethods = sorted(boundmethods, key=lambda m: m.signature)
     properties = sorted(properties, key=lambda m: m.signature)
     classmethods = sorted(classmethods, key=lambda m: m.signature)
 
-    return_list: List[Stub] = properties + classmethods + boundmethods
+    return_list: list[Stub] = properties + classmethods + boundmethods
 
     return return_list
 
 
 def get_class_stub(
     c: ktl.Class,
-    ignore: List[ktl.Class] = None,
+    ignore: list[ktl.Class] = None,
     module: str = "",
 ) -> ClassStub:
     base = ""
     if c.base():
         base = f"({c.base().name()})"
-    if c.module() != module:
-        full_name = c.module() + "." + c.name()
-    else:
-        full_name = c.name()
+    full_name = c.module() + "." + c.name() if c.module() != module else c.name()
     _cstub = ClassStub(
-        signature="class " + full_name + base, docstring=c.doc(), name=full_name
+        signature="class " + full_name + base, docstring=c.doc(), name=full_name,
     )
     child_attributes = get_py_methods(c)
     for child_c in get_child_classes(c):
@@ -431,14 +419,14 @@ def get_class_stub(
                 child_c,
                 ignore=ignore,
                 module=c.module(),
-            )
+            ),
         )
     for stub in child_attributes:
         _cstub.child_stubs.append(stub)
     return _cstub
 
 
-def get_classes(module: str) -> List[ktl.Class]:
+def get_classes(module: str) -> list[ktl.Class]:
     _classes = []
     for c in ktl.Class.each_class():
         if c.module() != module:
@@ -447,7 +435,7 @@ def get_classes(module: str) -> List[ktl.Class]:
     return sorted(_classes, key=lambda cls: cls.name())
 
 
-def get_module_stubs(module: str) -> List[ClassStub]:
+def get_module_stubs(module: str) -> list[ClassStub]:
     _stubs = []
     _classes = get_classes(module)
     for c in _classes:

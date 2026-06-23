@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 """
 File: "macbuild/bundle_qtconf.py"
@@ -76,12 +75,13 @@ Typical usage:
 
 from __future__ import annotations
 
+import argparse
+import contextlib
 import os
 import shutil
 import subprocess
-import argparse
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable, Optional, Tuple, List, Union
 
 
 class QtConfError(RuntimeError):
@@ -91,7 +91,7 @@ class QtConfError(RuntimeError):
 # -----------------------------------------------------------------------------
 # Utility helpers
 # -----------------------------------------------------------------------------
-def _app_paths(app_path: Path) -> Tuple[Path, Path, Path]:
+def _app_paths(app_path: Path) -> tuple[Path, Path, Path]:
     """Return (Resources, PlugIns, MacOS) directories for the .app bundle."""
     app_path = app_path.resolve()
     contents = app_path / "Contents"
@@ -119,21 +119,19 @@ def _is_executable(p: Path) -> bool:
         return False
 
 
-def _expand_candidates_with_glob(candidates: List[Path]) -> List[Path]:
-    expanded: List[Path] = []
+def _expand_candidates_with_glob(candidates: list[Path]) -> list[Path]:
+    expanded: list[Path] = []
     for c in candidates:
         s = str(c)
         if "*" in s or "?" in s or "[" in s:
-            try:
+            with contextlib.suppress(Exception):
                 expanded.extend(Path(x) for x in sorted(map(str, c.parent.glob(c.name))))
-            except Exception:
-                pass
         else:
             expanded.append(c)
     return expanded
 
 
-def _first_existing_platforms_dir(candidates: List[Path]) -> Optional[Path]:
+def _first_existing_platforms_dir(candidates: list[Path]) -> Path | None:
     for c in _expand_candidates_with_glob(candidates):
         if (c / "platforms").is_dir():
             return c
@@ -156,9 +154,9 @@ def _home_dir() -> Path:
 # -----------------------------------------------------------------------------
 def find_plugins_dir_lw(
     lw_stack: str,
-    lw_qt_major: Optional[int] = None,
+    lw_qt_major: int | None = None,
     arch_hint: str = "auto",
-    conda_prefix: Optional[Path] = None,
+    conda_prefix: Path | None = None,
 ) -> Path:
     """Resolve the absolute Qt plugins directory for LW mode."""
     stack = lw_stack.lower().strip()
@@ -183,7 +181,7 @@ def find_plugins_dir_lw(
             s = str(p)
             return "/qt@5/" in s or "/qt5/" in s
 
-        candidates: List[Path] = []
+        candidates: list[Path] = []
 
         if lw_qt_major == 6:
             # Prefer qtpaths from qt or qtbase (Qt6 split)
@@ -230,7 +228,7 @@ def find_plugins_dir_lw(
 
         raise QtConfError(
             f"Homebrew Qt{lw_qt_major} plugins not found under {hb}. Checked: "
-            + ", ".join(str(p) for p in _expand_candidates_with_glob(candidates))
+            + ", ".join(str(p) for p in _expand_candidates_with_glob(candidates)),
         )
 
     # --- Anaconda / Miniconda / Mambaforge / Miniforge ---
@@ -238,8 +236,7 @@ def find_plugins_dir_lw(
         def _env_plugins_candidates(env_root, qt_major):
             if qt_major == 6:
                 return [Path(env_root) / "lib" / "qt6" / "plugins"]
-            else:
-                return [Path(env_root) / "plugins"]
+            return [Path(env_root) / "plugins"]
 
         def _base_preferred_envs(base_root, qt_major):
             names = ["klayout-qt6"] if qt_major == 6 else ["klayout-qt5"]
@@ -276,7 +273,7 @@ def find_plugins_dir_lw(
 
         qt_major = lw_qt_major or 6
 
-        roots: List[Path] = []
+        roots: list[Path] = []
         if conda_prefix:
             roots.append(Path(conda_prefix))
         env_prefix = os.environ.get("CONDA_PREFIX", "")
@@ -301,7 +298,7 @@ def find_plugins_dir_lw(
             Path("/Applications/miniforge3"),
         ]
 
-        plugin_candidates: List[Path] = []
+        plugin_candidates: list[Path] = []
 
         if conda_prefix:
             cp = Path(conda_prefix)
@@ -310,10 +307,8 @@ def find_plugins_dir_lw(
 
         for base in roots:
             b = Path(base)
-            try:
+            with contextlib.suppress(Exception):
                 b = b.resolve()
-            except Exception:
-                pass
             plugin_candidates.extend(_base_preferred_envs(b, qt_major))
             plugin_candidates.extend(_scan_all_envs(b, qt_major))
             plugin_candidates.extend(_base_generic_candidates(b))
@@ -329,7 +324,7 @@ def find_plugins_dir_lw(
 
         raise QtConfError(
             "Anaconda plugins not found. Checked: "
-            + ", ".join(str(p) for p in _expand_candidates_with_glob(plugin_candidates))
+            + ", ".join(str(p) for p in _expand_candidates_with_glob(plugin_candidates)),
         )
 
     raise QtConfError(f"Unknown lw_stack: {lw_stack}")
@@ -383,18 +378,18 @@ def make_qtconf_text_absolute(plugins_dir: Path) -> str:
 
 
 def generate_qtconf(
-    app_path: Optional[Union[str, Path]] = None,
+    app_path: str | Path | None = None,
     *,
     mode: str,
-    embedded_plugins_src: Optional[Union[str, Path]] = None,
-    lw_stack: Optional[str] = None,
-    lw_qt_major: Optional[int] = None,
+    embedded_plugins_src: str | Path | None = None,
+    lw_stack: str | None = None,
+    lw_qt_major: int | None = None,
     arch_hint: str = "auto",
-    conda_prefix: Optional[Union[str, Path]] = None,
+    conda_prefix: str | Path | None = None,
     validate: bool = True,
 ) -> str:
     """Generate qt.conf content (and optionally write it to the bundle)."""
-    app_path_p: Optional[Path] = Path(app_path).resolve() if app_path else None
+    app_path_p: Path | None = Path(app_path).resolve() if app_path else None
     qtconf_text: str
 
     if mode in ("st", "hw"):

@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 #===============================================================================
 # File: "macbuild/macQAT.py"
@@ -10,13 +9,14 @@
 #
 #  This script must be copied to a "*.macQAT/" directory to run.
 #===============================================================================
-import sys
-import os
 import datetime
-from   time import sleep
-import platform
 import optparse
+import os
+import platform
 import subprocess
+import sys
+from time import sleep
+
 
 #-------------------------------------------------------------------------------
 ## To set global variables including present directory and platform info.
@@ -75,7 +75,7 @@ def SetGlobals():
     Arguments       = list()
     GitSHA1         = GetGitShortSHA1()
     TimeStamp       = GetTimeStamp()
-    WorkDir         = "QATest_%s_%s__%s" % (GitSHA1, TimeStamp, os.path.basename(ProjectDir) )
+    WorkDir         = f"QATest_{GitSHA1}_{TimeStamp}__{os.path.basename(ProjectDir)}"
     LogFile         = WorkDir + ".log"
     DryRun          = False
 
@@ -88,8 +88,7 @@ def SetGlobals():
 #-------------------------------------------------------------------------------
 def GetGitShortSHA1():
     command = "git rev-parse --short HEAD 2>/dev/null"
-    sha1val = os.popen( command ).read().strip()
-    return sha1val
+    return os.popen( command ).read().strip()
 
 #-------------------------------------------------------------------------------
 ## Get the time stamp
@@ -173,17 +172,17 @@ def ParseCommandLineArguments():
     opt, args = p.parse_args()
     if opt.checkusage:
         print(Usage)
-        quit()
+        sys.exit()
 
     RunnerUsage     = opt.runner_usage
     StartKLayout    = opt.start_KLayout
     Run             = opt.runme
     ContinueOnError = not opt.stop_on_error
-    if not len(opt.exclude_tests) == 0:
+    if len(opt.exclude_tests) != 0:
         excluded_tests = list()
         for item in opt.exclude_tests:
             excluded_tests += [ subitem.strip() for subitem in item.split(',') ]
-        TestsExcluded = sorted(list(set(excluded_tests)))
+        TestsExcluded = sorted(set(excluded_tests))
     else:
         TestsExcluded = []
     Arguments = opt.arguments
@@ -215,13 +214,13 @@ def ExportEnvVariables():
     MyEnviron[ 'TESTSRC' ] = ".."
     MyEnviron[ 'TESTTMP' ] = WorkDir
     if System == "Darwin":
-        MyEnviron[ 'DYLD_LIBRARY_PATH' ] = "%s:%s/db_plugins:%s/lay_plugins:%s/pymod" % (ProjectDir, ProjectDir, ProjectDir, ProjectDir)
+        MyEnviron[ 'DYLD_LIBRARY_PATH' ] = f"{ProjectDir}:{ProjectDir}/db_plugins:{ProjectDir}/lay_plugins:{ProjectDir}/pymod"
         MyEnviron[ 'MallocNanoZone' ] = "0"
         MyEnviron[ 'ASAN_OPTIONS' ] = "ast_unwind_on_malloc=0:verbosity=1:detect_leaks=0:abort_on_error=0:halt_on_error=0:symbolize=1"
         for env in [ 'TESTSRC', 'TESTTMP', 'DYLD_LIBRARY_PATH', 'MallocNanoZone', 'ASAN_OPTIONS' ]:
             os.environ[env] = MyEnviron[env]
     else:
-        MyEnviron[ 'LD_LIBRARY_PATH' ] = "%s:%s/db_plugins:%s/lay_plugins:%s/pymod" % (ProjectDir, ProjectDir, ProjectDir, ProjectDir)
+        MyEnviron[ 'LD_LIBRARY_PATH' ] = f"{ProjectDir}:{ProjectDir}/db_plugins:{ProjectDir}/lay_plugins:{ProjectDir}/pymod"
         for env in [ 'TESTSRC', 'TESTTMP', 'LD_LIBRARY_PATH' ]:
             os.environ[env] = MyEnviron[env]
 
@@ -230,10 +229,7 @@ def ExportEnvVariables():
 #
 #-------------------------------------------------------------------------------
 def StartKLatyouGUIWindow():
-    if System == "Darwin":
-        command = "./klayout.app/Contents/MacOS/klayout"
-    else:
-        command = "./klayout"
+    command = "./klayout.app/Contents/MacOS/klayout" if System == "Darwin" else "./klayout"
 
     subprocess.call( command, shell=False )
 
@@ -249,7 +245,7 @@ def RunTester( command, logfile="" ):
                              stderr=subprocess.STDOUT, \
                              universal_newlines=True )
 
-    if not logfile == "":
+    if logfile != "":
         with proc.stdout, open( logfile, 'w' ) as file:
             for line in proc.stdout:
                 sys.stdout.write(line)
@@ -278,7 +274,7 @@ def Main():
     if RunnerUsage:
         command = './ut_runner --help-all'
         RunTester( command )
-        quit()
+        sys.exit()
 
     #-------------------------------------------------------
     # [3] Start the KLayout main GUI window
@@ -293,27 +289,27 @@ def Main():
         print( "! pass <-r|--run> option to run the QA tests" )
         print( "! pass <-k|--klayout> option to start the KLayout main GUI window" )
         print(Usage)
-        quit()
+        sys.exit()
 
     if Run:
         command = './ut_runner'
         if ContinueOnError:
             command += " -c"
         for item in TestsExcluded:
-            command += ' -x %s' % item
-        if not len(Arguments) == 0:
+            command += f' -x {item}'
+        if len(Arguments) != 0:
             for arg in Arguments:
-                command += " %s" % arg
+                command += f" {arg}"
 
         print( "" )
-        print( "### Dumping the log to <%s>" % LogFile )
+        print( f"### Dumping the log to <{LogFile}>" )
         print( "------------------------------------------------------------------------" )
-        print( "  Git SHA1     = %s" % GitSHA1 )
-        print( "  Time stamp   = %s" % TimeStamp )
-        print( "  Command line = %s" % command )
+        print( f"  Git SHA1     = {GitSHA1}" )
+        print( f"  Time stamp   = {TimeStamp}" )
+        print( f"  Command line = {command}" )
         print( "------------------------------------------------------------------------" )
         if DryRun:
-            quit()
+            sys.exit()
         sleep(1.0)
         HidePrivateDir()
         RunTester( command, logfile=LogFile )

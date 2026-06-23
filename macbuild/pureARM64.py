@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 """
 File: "macbuild/pureARM64.py"
@@ -59,10 +58,14 @@ def color(text: str, code: str) -> str:
     return f'\033[{code}m{text}\033[0m'
 
 
-OKC  = lambda s: color(s, '32')   # green
-WRNC = lambda s: color(s, '33')   # yellow
-ERRC = lambda s: color(s, '31')   # red
-DIM  = lambda s: color(s, '2')    # dim
+def OKC(s):
+    return color(s, '32')   # green
+def WRNC(s):
+    return color(s, '33')   # yellow
+def ERRC(s):
+    return color(s, '31')   # red
+def DIM(s):
+    return color(s, '2')    # dim
 
 
 def run_cmd(cmd: list[str]) -> tuple[int, str]:
@@ -207,20 +210,20 @@ def has_code_signature(path: str) -> bool:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Check Mach-O binaries for pure arm64 (no arm64e/x86_64)."
+        description="Check Mach-O binaries for pure arm64 (no arm64e/x86_64).",
     )
     parser.add_argument("target", help=".app path or a single Mach-O path")
     parser.add_argument(
         "--no-deps", action="store_true",
-        help="Do not follow external dependencies (ignore 'otool -L')."
+        help="Do not follow external dependencies (ignore 'otool -L').",
     )
     parser.add_argument(
         "--deps-filter", default=DEFAULT_DEPS_FILTER,
-        help=f"Regex for which absolute dependency paths to include (default: {DEFAULT_DEPS_FILTER})"
+        help=f"Regex for which absolute dependency paths to include (default: {DEFAULT_DEPS_FILTER})",
     )
     parser.add_argument(
         "--show-code-sign", action="store_true",
-        help="Also indicate whether LC_CODE_SIGNATURE exists (informational)."
+        help="Also indicate whether LC_CODE_SIGNATURE exists (informational).",
     )
     args = parser.parse_args()
 
@@ -243,7 +246,7 @@ def main() -> int:
     deps_pat = None if args.no_deps else re.compile(args.deps_filter)
     all_targets: set[str] = set(macho_files)
     if deps_pat:
-        for mf in list(macho_files):
+        for mf in macho_files:
             for dep in deps_from_otool(mf):
                 if deps_pat.search(dep):
                     all_targets.add(dep)

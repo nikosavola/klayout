@@ -1,10 +1,10 @@
 
 # pull everything from the generic klayout.pya package into pya
-from klayout.pya import __all__
-from klayout.pya import *
-
 from klayout.db.pcell_declaration_helper import *
 from klayout.db.pcell_declaration_helper import __all__ as _all_added1
+from klayout.pya import *
+from klayout.pya import __all__
+
 __all__ += _all_added1
 
 # establish the PCellDeclarationHelper using the mixin provided by _pcell_declaration_helper

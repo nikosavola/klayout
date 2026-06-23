@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 #==============================================================================
 # File: macbuild/python3HB.py
@@ -7,10 +6,12 @@
 # Descriptions: A handy tool to setup the standardized directory structures
 #               for Homebrew's Python 3.x
 #==============================================================================
-import os
-import sys
-import platform
+import contextlib
 import optparse
+import os
+import platform
+import sys
+
 
 #------------------------------------------------------------------------------
 # Set global variables
@@ -74,8 +75,8 @@ def Parse_CLI_Args():
 
     Version    = opt.version
     UnlinkOnly = opt.unlink
-    if not Version in [ '3.11', '3.12', '3.13' ]:
-        print( "! Unsupported Python 3 version <%s>" % Version )
+    if Version not in [ '3.11', '3.12', '3.13' ]:
+        print( f"! Unsupported Python 3 version <{Version}>" )
         print(Usage)
         sys.exit(0)
 
@@ -86,9 +87,9 @@ def SetDirectoryStructures():
     #----------------------------------------------------------
     # [1] Check the root directory of python@${Version}
     #----------------------------------------------------------
-    root = "%s/opt/python@%s" % (DefaultHomebrewRoot, Version)
+    root = f"{DefaultHomebrewRoot}/opt/python@{Version}"
     if not os.path.isdir(root):
-        print( "! Found no such a directory <%s>" % root )
+        print( f"! Found no such a directory <{root}>" )
         sys.exit(0)
 
     #----------------------------------------------------------
@@ -97,10 +98,8 @@ def SetDirectoryStructures():
     #----------------------------------------------------------
     os.chdir( root )
     os.chdir( "lib/" )
-    try:
+    with contextlib.suppress(FileNotFoundError):
         os.remove( "Python.framework" )
-    except FileNotFoundError:
-        pass
     if not UnlinkOnly:
         os.symlink( "../Frameworks/Python.framework/", "Python.framework" )
 
@@ -117,8 +116,8 @@ def SetDirectoryStructures():
     except FileNotFoundError:
         pass
     if not UnlinkOnly:
-        os.symlink( "./python%s" % Version, "python3" )
-        os.symlink( "./pip%s"    % Version, "pip3" )
+        os.symlink( f"./python{Version}", "python3" )
+        os.symlink( f"./pip{Version}", "pip3" )
 
     #----------------------------------------------------------
     # [4] Go to "Frameworks/Python.framework/" and delete
@@ -139,12 +138,10 @@ def SetDirectoryStructures():
     #----------------------------------------------------------
     os.chdir( root )
     os.chdir( "Frameworks/Python.framework/Versions/" )
-    try:
+    with contextlib.suppress(FileNotFoundError):
         os.remove( "Current" )
-    except FileNotFoundError:
-        pass
     if not UnlinkOnly:
-        os.symlink( "%s/" % Version, "Current" )
+        os.symlink( f"{Version}/", "Current" )
 
     #----------------------------------------------------------
     # [6] Go to "Frameworks/Python.framework/" and make

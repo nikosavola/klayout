@@ -54,28 +54,25 @@ and won't find them. So we need to take away the path with
 "-Wl,-soname" on Linux (see Config.link_args).
 """
 
-from typing import List
-from setuptools import setup, Distribution, find_packages
-from setuptools.extension import Extension, Library
-from pathlib import Path
+import distutils.command.build_ext
 import glob
+import multiprocessing
 import os
+import platform
 import re
 import sys
-import platform
 from distutils.errors import CompileError
-import distutils.command.build_ext
+from pathlib import Path
+
 import setuptools.command.build_ext
-from setuptools.command.build_ext import build_ext as _build_ext
-import multiprocessing
 import tomli
+from setuptools import Distribution, find_packages, setup
+from setuptools.command.build_ext import build_ext as _build_ext
+from setuptools.extension import Extension, Library
 
 # for Jenkins we do not want to be greedy
 multicore = os.getenv("KLAYOUT_SETUP_MULTICORE")
-if multicore:
-    N_cores = int(multicore)
-else:
-    N_cores = multiprocessing.cpu_count()
+N_cores = int(multicore) if multicore else multiprocessing.cpu_count()
 
 
 # monkey-patch for parallel compilation
@@ -93,7 +90,7 @@ def parallelCCompile(
 ):
     # those lines are copied from distutils.ccompiler.CCompiler directly
     macros, objects, extra_postargs, pp_opts, build = self._setup_compile(
-        output_dir, macros, include_dirs, sources, depends, extra_postargs
+        output_dir, macros, include_dirs, sources, depends, extra_postargs,
     )
     cc_args = self._get_cc_args(pp_opts, debug, extra_preargs)
     # parallel code
@@ -136,10 +133,10 @@ def quote_path(path):
     # looks like disutils don't need path quoting in version >= 3.9:
     if " " in path and sys.version_info[0] * 100 + sys.version_info[1] < 309:
         return '"' + path + '"'
-    else:
-        return path
+    return path
 
 import subprocess
+
 
 def check_libpng():
     """ Check if libpng is available (Linux & Macos only)"""
@@ -185,8 +182,7 @@ distutils.command.build_ext.build_ext.get_ext_filename = patched_get_ext_filenam
 class klayout_build_ext(_build_ext):
     """ Customize build extension class to check for dependencies before installing."""
     def finalize_options(self) -> None:
-        ret = super().finalize_options()
-        return ret
+        return super().finalize_options()
 
 # patch CCompiler's library_filename for _dbpi libraries (SOs)
 # Its default is to have .so for shared objects, instead of dylib,
@@ -198,12 +194,12 @@ old_library_filename = CCompiler.library_filename
 
 
 def patched_library_filename(
-    self, libname, lib_type="static", strip_dir=0, output_dir=""  # or 'shared'
+    self, libname, lib_type="static", strip_dir=0, output_dir="",  # or 'shared'
 ):
     if platform.system() == "Darwin" and "_dbpi" in libname:
         lib_type = "dylib"
     return old_library_filename(
-        self, libname, lib_type=lib_type, strip_dir=strip_dir, output_dir=output_dir
+        self, libname, lib_type=lib_type, strip_dir=strip_dir, output_dir=output_dir,
     )
 
 
@@ -254,11 +250,11 @@ setuptools.command.build_ext.link_shared_object = always_link_shared_object
 # ----------------------------------------------------------------------------------------
 
 
-# TODO: 
+# TODO:
 # * Pull this from module-specific configuration files?
 # * Include dependencies: "extra_objects", "include_dirs"
 
-class Config(object):
+class Config:
 
     """
     Provides some configuration-specific methods
@@ -294,8 +290,8 @@ class Config(object):
         """
         Declares a module with the given name and source path
 
-        If a file called "pysetup.toml" is found in that 
-        path, it is read and a Library or Extension module 
+        If a file called "pysetup.toml" is found in that
+        path, it is read and a Library or Extension module
         is created.
 
         Structure of TOML is:
@@ -321,16 +317,16 @@ class Config(object):
         pysetup_file = os.path.join(src_path, "pysetup.toml")
         if not os.path.isfile(pysetup_file):
             raise RuntimeError("Cannot find 'pysetup.toml' in " + src_path)
-          
+
         with open(pysetup_file, "rb") as f:
             pysetup = tomli.load(f)
 
         header = {}
         is_library = None
-        if "library" in pysetup: 
+        if "library" in pysetup:
             is_library = True
             header = pysetup["library"]
-        elif "extension" in pysetup: 
+        elif "extension" in pysetup:
             is_library = False
             header = pysetup["extension"]
         else:
@@ -339,7 +335,7 @@ class Config(object):
         header_name = header.get("name", None)
         if name is not None and header_name is not None and name != header_name:
             raise RuntimeError("Module name and specified name in setup file do not match in " + pysetup_file + ": " + header_name + " vs. " + name)
-        elif name is None:
+        if name is None:
             if header_name is None:
                 raise RuntimeError("No module name specified in " + pysetup_file)
             name = header_name
@@ -447,15 +443,14 @@ class Config(object):
             # On Windows, the library to link is the import library
             (dll_name, dll_ext) = os.path.splitext(self.libname_of(mod))
             return os.path.join(self.build_temp, self.src_path(mod), dll_name + ".lib")
-        else:
-            return os.path.join(self.build_platlib, self.root, self.libname_of(mod))
+        return os.path.join(self.build_platlib, self.root, self.libname_of(mod))
 
     def sources(self, mod):
         """
         Gets the source files for the given module and root source path
         """
         return glob.glob(os.path.join(self.src_path(mod), "*.cc"))
-          
+
     def compile_args(self, options):
         """
         Gets additional compiler arguments
@@ -538,7 +533,7 @@ class Config(object):
             if is_library:
                 args += [
                     "-Wl,-dylib",
-                    "-Wl,-install_name,@rpath/%s" % self.libname_of(mod, is_lib=True),
+                    f"-Wl,-install_name,@rpath/{self.libname_of(mod, is_lib=True)}",
                 ]
             args += ["-Wl,-rpath,@loader_path/", "-Wl,-headerpad_max_install_names"]
             args += options.get("ldflags-gcc", [])
@@ -573,7 +568,7 @@ class Config(object):
         """
         Returns the macros to use for building
         """
-        macros = [
+        return [
             ("HAVE_CURL", 1),
             ("HAVE_EXPAT", 1),
             ("HAVE_PNG", 1),
@@ -583,7 +578,6 @@ class Config(object):
             ("GSI_ALIAS_INSPECT", 1),
         ]
 
-        return macros
 
     def minor_version(self):
         """
@@ -593,14 +587,13 @@ class Config(object):
         # this will obtain the version string from the "version.sh" file which
         # is the central point of configuration
         version_file = os.path.join(os.path.dirname(__file__), "version.sh")
-        with open(version_file, "r") as file:
+        with open(version_file) as file:
             version_txt = file.read()
             rm = re.search(
-                r"KLAYOUT_VERSION\s*=\s*\"(.*?)\.(.*?)(\..*)?\".*", version_txt
+                r"KLAYOUT_VERSION\s*=\s*\"(.*?)\.(.*?)(\..*)?\".*", version_txt,
             )
             if rm:
-                version_string = rm.group(2)
-                return version_string
+                return rm.group(2)
 
         raise RuntimeError("Unable to obtain version string from version.sh")
 
@@ -612,14 +605,13 @@ class Config(object):
         # this will obtain the version string from the "version.sh" file which
         # is the central point of configuration
         version_file = os.path.join(os.path.dirname(__file__), "version.sh")
-        with open(version_file, "r") as file:
+        with open(version_file) as file:
             version_txt = file.read()
             rm = re.search(
-                r"KLAYOUT_VERSION\s*=\s*\"(.*?)\.(.*?)(\..*)?\".*", version_txt
+                r"KLAYOUT_VERSION\s*=\s*\"(.*?)\.(.*?)(\..*)?\".*", version_txt,
             )
             if rm:
-                version_string = rm.group(1)
-                return version_string
+                return rm.group(1)
 
         raise RuntimeError("Unable to obtain version string from version.sh")
 
@@ -631,12 +623,11 @@ class Config(object):
         # this will obtain the version string from the "version.sh" file which
         # is the central point of configuration
         version_file = os.path.join(os.path.dirname(__file__), "version.sh")
-        with open(version_file, "r") as file:
+        with open(version_file) as file:
             version_txt = file.read()
             rm = re.search(r"KLAYOUT_PYPI_VERSION\s*=\s*\"(.*?)\".*", version_txt)
             if rm:
-                version_string = rm.group(1)
-                return version_string
+                return rm.group(1)
 
         raise RuntimeError("Unable to obtain version string from version.sh")
 
@@ -660,7 +651,7 @@ while len(todo) > 0:
         p.pop()
         if not config.module(None, os.path.join(*p)):
             not_done.append(ms)
-      
+
     if len(not_done) == len(todo):
         raise RuntimeError("Dependency resolution failed - circular dependencies?")
 
@@ -694,11 +685,11 @@ if __name__ == "__main__":
         url="https://github.com/klayout/klayout",
         packages=find_packages("src/pymod/distutils_src"),
         package_dir={
-            "": "src/pymod/distutils_src"
+            "": "src/pymod/distutils_src",
         },  # https://github.com/pypa/setuptools/issues/230
         package_data={config.root: ["src/pymod/distutils_src/klayout/*.pyi"]},
         data_files=[(config.root, ["src/pymod/distutils_src/klayout/py.typed"])],
         include_package_data=True,
         ext_modules=config.modules,
-        cmdclass={'build_ext': klayout_build_ext}
+        cmdclass={'build_ext': klayout_build_ext},
     )

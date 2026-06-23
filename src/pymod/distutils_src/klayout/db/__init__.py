@@ -1,9 +1,10 @@
 
 import sys
-from ..dbcore import __all__
-from ..dbcore import *
 
+from ..dbcore import *
+from ..dbcore import __all__
 from .pcell_declaration_helper import *
+
 
 # establish the PCellDeclarationHelper using the mixin provided by _pcell_declaration_helper
 class PCellDeclarationHelper(_PCellDeclarationHelperMixin, PCellDeclaration):

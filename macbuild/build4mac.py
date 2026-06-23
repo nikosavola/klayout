@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 #===============================================================================
 # File: "macbuild/build4mac.py"
@@ -7,26 +6,25 @@
 #  The top Python script for building KLayout (http://www.klayout.de/index.php).
 #  version 0.30.5 or later on different Apple Mac OSX platforms.
 #===============================================================================
-import sys
-import os
-import re
-import codecs
-import shutil
 import glob
-import platform
 import optparse
-import subprocess
+import os
+import platform
 import pprint
-from   pathlib import Path
+import re
+import shutil
+import subprocess
+import sys
 
 #-------------------------------------------------------------------------------
 ## To import global dictionaries of different modules and utility functions
 #-------------------------------------------------------------------------------
 mydir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append( mydir + "/macbuild" )
-from build4mac_env  import *
+from build4mac_env import *
 from build4mac_util import *
-from bundle_qtconf  import generate_qtconf, QtConfError
+from bundle_qtconf import QtConfError, generate_qtconf
+
 
 #-------------------------------------------------------------------------------
 ## To generate the OS-wise usage strings and the default module set
@@ -42,7 +40,7 @@ def GenerateUsage(platform):
         myPython  = "sys"
         moduleset = ('Qt5MacPorts', 'Sys', 'Sys')
     else: # too obsolete
-        raise Exception( "! Too obsolete platform <%s>" % platform )
+        raise Exception( f"! Too obsolete platform <{platform}>" )
 
     usage  = "\n"
     usage += "-----------------------------------------------------------------------------------------------------------\n"
@@ -52,7 +50,7 @@ def GenerateUsage(platform):
     usage += "$ [python] ./build4mac.py\n"
     usage += "   option & argument    : descriptions (refer to 'macbuild/build4mac_env.py' for details)  | default value\n"
     usage += "   ----------------------------------------------------------------------------------------+---------------\n"
-    usage += "   [-q|--qt <type>]     : case-insensitive type=['Qt5MacPorts', 'Qt5Brew', 'Qt5Ana3',      | %s\n" % myQt56
+    usage += f"   [-q|--qt <type>]     : case-insensitive type=['Qt5MacPorts', 'Qt5Brew', 'Qt5Ana3',      | {myQt56}\n"
     usage += "                        :                        'Qt6MacPorts', 'Qt6Brew', 'Qt6Ana3'']     |\n"
     usage += "                        :   Qt5MacPorts: use Qt5 from MacPorts                             |\n"
     usage += "                        :       Qt5Brew: use Qt5 from Homebrew                             |\n"
@@ -61,13 +59,13 @@ def GenerateUsage(platform):
     usage += "                        :       Qt6Brew: use Qt6 from Homebrew (*)                         |\n"
     usage += "                        :       Qt6Ana3: use Qt6 from Anaconda3 (*)                        |\n"
     usage += "                        :                        (*) migration to Qt6 is ongoing           |\n"
-    usage += "   [-r|--ruby <type>]   : case-insensitive type=['nil', 'Sys', 'MP34', 'HB34', 'Ana3']     | %s\n" % myRuby
+    usage += f"   [-r|--ruby <type>]   : case-insensitive type=['nil', 'Sys', 'MP34', 'HB34', 'Ana3']     | {myRuby}\n"
     usage += "                        :    nil: don't bind Ruby                                          |\n"
     usage += "                        :    Sys: use [Tahoe|Sequoia|Sonoma]-bundled Ruby 2.6              |\n"
     usage += "                        :   MP34: use Ruby 3.4 from MacPorts                               |\n"
     usage += "                        :   HB34: use Ruby 3.4 from Homebrew                               |\n"
     usage += "                        :   Ana3: use Ruby 3.4 from Anaconda3                              |\n"
-    usage += "   [-p|--python <type>] : case-insensitive type=['nil', 'Sys', 'MP313', 'HB313', 'Ana3',   | %s\n" % myPython
+    usage += f"   [-p|--python <type>] : case-insensitive type=['nil', 'Sys', 'MP313', 'HB313', 'Ana3',   | {myPython}\n"
     usage += "                        :                        'MP312', 'MP312',                         |\n"
     usage += "                        :                        'MP311', 'HB311', 'HBAuto']               |\n"
     usage += "                        :    nil: don't bind Python                                        |\n"
@@ -113,9 +111,9 @@ def Get_Default_Config():
     BuildBash  = "./build.sh"
     (System, Node, Release, MacVersion, Machine, Processor) = platform.uname()
 
-    if not System == "Darwin":
+    if System != "Darwin":
         print("")
-        print( "!!! Sorry. Your system <%s> looks like non-Mac" % System, file=sys.stderr )
+        print( f"!!! Sorry. Your system <{System}> looks like non-Mac", file=sys.stderr )
         sys.exit(1)
 
     release = int( Release.split(".")[0] ) # take the first of ['21', '0', '0']
@@ -140,7 +138,7 @@ def Get_Default_Config():
         print( GenerateUsage("")[0] )
         sys.exit(1)
 
-    if not Machine == "x86_64":
+    if Machine != "x86_64":
 		# with an Apple Silicon Chip?
         if Machine == "arm64" and Platform in ["Tahoe", "Sequoia", "Sonoma", "Ventura", "Monterey"]:
             print("")
@@ -149,7 +147,7 @@ def Get_Default_Config():
             os.environ['QMAKE_APPLE_DEVICE_ARCHS'] = 'arm64'
         else:
             print("")
-            print( "!!! Sorry. Only x86_64/arm64 architecture machine is supported but found <%s>" % Machine, file=sys.stderr )
+            print( f"!!! Sorry. Only x86_64/arm64 architecture machine is supported but found <{Machine}>", file=sys.stderr )
             print( GenerateUsage("")[0] )
             sys.exit(1)
 
@@ -160,23 +158,7 @@ def Get_Default_Config():
     ToolDebug = list()
 
     # Set the default modules
-    if   Platform == "Tahoe":
-        ModuleQt     = "Qt5MacPorts"
-        ModuleRuby   = "Sys"
-        ModulePython = "Sys"
-    elif Platform == "Sequoia":
-        ModuleQt     = "Qt5MacPorts"
-        ModuleRuby   = "Sys"
-        ModulePython = "Sys"
-    elif Platform == "Sonoma":
-        ModuleQt     = "Qt5MacPorts"
-        ModuleRuby   = "Sys"
-        ModulePython = "Sys"
-    elif Platform == "Ventura":
-        ModuleQt     = "Qt5MacPorts"
-        ModuleRuby   = "Sys"
-        ModulePython = "Sys"
-    elif Platform == "Monterey":
+    if   Platform in {"Tahoe", "Sequoia", "Sonoma", "Ventura", "Monterey"}:
         ModuleQt     = "Qt5MacPorts"
         ModuleRuby   = "Sys"
         ModulePython = "Sys"
@@ -373,7 +355,7 @@ def Parse_CLI_Args(config):
                         tool_debug      = [],
                         checkusage      = False )
     else:
-        raise Exception( "! Too obsolete platform <%s>" % Platform )
+        raise Exception( f"! Too obsolete platform <{Platform}>" )
 
     opt, args = p.parse_args()
     if (opt.checkusage):
@@ -395,8 +377,7 @@ def Parse_CLI_Args(config):
         pass
     if ModuleQt == '':
         print("")
-        print( "!!! Unknown Qt type <%s>. Case-insensitive candidates: %s" % \
-                        (opt.type_qt, list(candidates.keys())), file=sys.stderr )
+        print( f"!!! Unknown Qt type <{opt.type_qt}>. Case-insensitive candidates: {list(candidates.keys())}", file=sys.stderr )
         print(Usage)
         sys.exit(1)
     elif ModuleQt == "Qt5MacPorts":
@@ -456,8 +437,7 @@ def Parse_CLI_Args(config):
             NonOSStdLang = True
     if ModuleRuby == '':
         print("")
-        print( "!!! Unknown Ruby type <%s>. Case-insensitive candidates: %s" % \
-                        (opt.type_ruby, list(candidates.keys())), file=sys.stderr )
+        print( f"!!! Unknown Ruby type <{opt.type_ruby}>. Case-insensitive candidates: {list(candidates.keys())}", file=sys.stderr )
         print(Usage)
         sys.exit(1)
 
@@ -532,8 +512,7 @@ def Parse_CLI_Args(config):
             NonOSStdLang = True
     if ModulePython == '':
         print("")
-        print( "!!! Unknown Python type <%s>. Case-insensitive candidates: %s" % \
-                        (opt.type_python, list(candidates.keys())), file=sys.stderr )
+        print( f"!!! Unknown Python type <{opt.type_python}>. Case-insensitive candidates: {list(candidates.keys())}", file=sys.stderr )
         print(Usage)
         sys.exit(1)
 
@@ -550,7 +529,7 @@ def Parse_CLI_Args(config):
     CheckComOnly  = opt.check_command
     DeploymentF   = opt.deploy_full
     DeploymentP   = opt.deploy_partial
-    ToolDebug     = sorted( set([ int(val) for val in opt.tool_debug ]) )
+    ToolDebug     = sorted( { int(val) for val in opt.tool_debug } )
 
     if DeploymentF and DeploymentP:
         print("")
@@ -559,7 +538,7 @@ def Parse_CLI_Args(config):
         sys.exit(1)
 
     DeployVerbose = int(opt.deploy_verbose)
-    if not DeployVerbose in [0, 1, 2, 3]:
+    if DeployVerbose not in [0, 1, 2, 3]:
         print("")
         print( "!!! Unsupported verbose level passed to `macdeployqt` tool", file=sys.stderr )
         print(Usage)
@@ -567,12 +546,9 @@ def Parse_CLI_Args(config):
 
     # (F) Build mode
     if not DeploymentF and not DeploymentP:
-        target  = "%s %s %s" % (Platform, Release, Machine)
-        modules = "Qt=%s, Ruby=%s, Python=%s" % (ModuleQt, ModuleRuby, ModulePython)
-        if BuildPymodWhl:
-            pymodWhlbuild = "enabled"
-        else:
-            pymodWhlbuild = "disabled"
+        target  = f"{Platform} {Release} {Machine}"
+        modules = f"Qt={ModuleQt}, Ruby={ModuleRuby}, Python={ModulePython}"
+        pymodWhlbuild = "enabled" if BuildPymodWhl else "disabled"
         message = "### You are going to build KLayout\n    for  <%s>\n    with <%s>\n    with Pymod <%s>...\n"
         print("")
         print( message % (target, modules, pymodWhlbuild) )
@@ -674,12 +650,12 @@ def Get_Build_Parameters(config):
     ModuleSet     = config['ModuleSet']
     NoQtBindings  = config['NoQtBindings']
     NoQtUiTools   = config['NoQtUiTools']
-    NoLibGit2     = config['NoLibGit2']
+    config['NoLibGit2']
     MakeOptions   = config['MakeOptions']
     DebugMode     = config['DebugMode']
     CheckComOnly  = config['CheckComOnly']
-    DeploymentF   = config['DeploymentF']
-    DeploymentP   = config['DeploymentP']
+    config['DeploymentF']
+    config['DeploymentP']
     PackagePrefix = config['PackagePrefix']
     OSPython3FW   = config['OSPython3FW']
 
@@ -692,20 +668,17 @@ def Get_Build_Parameters(config):
 
     # (A) debug or release
     parameters['debug_mode'] = DebugMode  # True if debug, False if release
-    if parameters["debug_mode"]:
-        mode = "debug"
-    else:
-        mode = "release"
+    mode = "debug" if parameters["debug_mode"] else "release"
 
     # (B) Modules
     (qt, ruby, python) = ModuleSet  # ( 'qt6Brew', 'Sys', 'Sys' )
-    ruby_python = "R%sP%s" % ( ruby.lower(), python.lower() )
+    ruby_python = f"R{ruby.lower()}P{python.lower()}"
 
     # (C) Target directories and files
-    MacPkgDir             = "%s%s.pkg.macos-%s-%s-%s"     % (PackagePrefix, qt, Platform, mode, ruby_python)
-    MacBinDir             = "%s.bin.macos-%s-%s-%s"       % (               qt, Platform, mode, ruby_python)
-    MacBuildDir           = "%s.build.macos-%s-%s-%s"     % (               qt, Platform, mode, ruby_python)
-    MacBuildLog           = "%s.build.macos-%s-%s-%s.log" % (               qt, Platform, mode, ruby_python)
+    MacPkgDir             = f"{PackagePrefix}{qt}.pkg.macos-{Platform}-{mode}-{ruby_python}"
+    MacBinDir             = f"{qt}.bin.macos-{Platform}-{mode}-{ruby_python}"
+    MacBuildDir           = f"{qt}.build.macos-{Platform}-{mode}-{ruby_python}"
+    MacBuildLog           = f"{qt}.build.macos-{Platform}-{mode}-{ruby_python}.log"
     MacBuildDirQAT        = MacBuildDir + ".macQAT"
     parameters['bin']     = MacBinDir
     parameters['build']   = MacBuildDir
@@ -729,7 +702,7 @@ def Get_Build_Parameters(config):
     parameters['no_qt_uitools'] = NoQtUiTools
 
     # (H) options to `make` tool
-    if not MakeOptions == "":
+    if MakeOptions != "":
         parameters['make_options'] = MakeOptions
         try:
             jobopt, number = MakeOptions.split('=')  # like '--jobs=4' ?
@@ -779,11 +752,11 @@ def Get_Build_Parameters(config):
     if Platform in [ 'Tahoe', 'Sequoia', 'Sonoma', 'Ventura', 'Monterey' ]:
         if ModuleRuby in [ 'Ruby34MacPorts', 'Ruby34Brew', 'RubyAnaconda3V5', 'RubyAnaconda3V6' ]:
             if ModulePython in [ 'Python313MacPorts', 'Python312MacPorts', 'Python311MacPorts' ]:
-                PymodDistDir[ModulePython] = 'dist-MP3-%s' % ModuleQt
+                PymodDistDir[ModulePython] = f'dist-MP3-{ModuleQt}'
             elif ModulePython in [ 'Python313Brew', 'Python312Brew', 'Python311Brew' ]:
-                PymodDistDir[ModulePython] = 'dist-HB3-%s' % ModuleQt
+                PymodDistDir[ModulePython] = f'dist-HB3-{ModuleQt}'
             elif ModulePython in [ 'PythonAnaconda3V5', 'PythonAnaconda3V6' ]:
-                PymodDistDir[ModulePython] = 'dist-ana3-%s' % ModuleQt
+                PymodDistDir[ModulePython] = f'dist-ana3-{ModuleQt}'
     parameters['pymod_dist'] = PymodDistDir
     return parameters
 
@@ -811,11 +784,7 @@ def Build_pymod_wheel(parameters):
     ModulePython  = parameters['ModulePython']
     if not BuildPymodWhl:
         return 0
-    if not Platform in [ 'Tahoe', 'Sequoia', 'Sonoma', 'Ventura', 'Monterey' ]:
-        return 0
-    elif not ModuleRuby in [ 'Ruby34MacPorts', 'Ruby34Brew', 'RubyAnaconda3V5', 'RubyAnaconda3V6' ]:
-        return 0
-    elif not ModulePython in [ 'Python313MacPorts', 'Python312MacPorts', 'Python311MacPorts', \
+    if Platform not in [ 'Tahoe', 'Sequoia', 'Sonoma', 'Ventura', 'Monterey' ] or ModuleRuby not in [ 'Ruby34MacPorts', 'Ruby34Brew', 'RubyAnaconda3V5', 'RubyAnaconda3V6' ] or ModulePython not in [ 'Python313MacPorts', 'Python312MacPorts', 'Python311MacPorts', \
                                'Python313Brew',     'Python312Brew',     'Python311Brew', \
                                'PythonAnaconda3V5', 'PythonAnaconda3V6' ]:
         return 0
@@ -834,20 +803,20 @@ def Build_pymod_wheel(parameters):
         whlTarget  = "MP3"
     # Using Homebrew
     elif PymodDistDir[ModulePython].find('dist-HB3') >= 0:
-        addBinPath = "%s/bin"     % DefaultHomebrewRoot  # defined in "build4mac_env.py"
-        addIncPath = "%s/include" % DefaultHomebrewRoot  # -- ditto --
-        addLibPath = "%s/lib"     % DefaultHomebrewRoot  # -- ditto --
+        addBinPath = f"{DefaultHomebrewRoot}/bin"  # defined in "build4mac_env.py"
+        addIncPath = f"{DefaultHomebrewRoot}/include"  # -- ditto --
+        addLibPath = f"{DefaultHomebrewRoot}/lib"  # -- ditto --
         whlTarget  = "HB3"
     # Using Anaconda3
     elif  PymodDistDir[ModulePython].find('dist-ana3-Qt5Ana3') >= 0:
-        addBinPath = "%s/bin" % Ana3VirEnv5
-        addIncPath = "%s/include" % Ana3VirEnv5
-        addLibPath = "%s/lib" % Ana3VirEnv5
+        addBinPath = f"{Ana3VirEnv5}/bin"
+        addIncPath = f"{Ana3VirEnv5}/include"
+        addLibPath = f"{Ana3VirEnv5}/lib"
         whlTarget  = "ana3"
     elif  PymodDistDir[ModulePython].find('dist-ana3-Qt6Ana3') >= 0:
-        addBinPath = "%s/bin" % Ana3VirEnv6
-        addIncPath = "%s/include" % Ana3VirEnv6
-        addLibPath = "%s/lib" % Ana3VirEnv6
+        addBinPath = f"{Ana3VirEnv6}/bin"
+        addIncPath = f"{Ana3VirEnv6}/include"
+        addLibPath = f"{Ana3VirEnv6}/lib"
         whlTarget  = "ana3"
     else:
         addBinPath = ""
@@ -855,29 +824,29 @@ def Build_pymod_wheel(parameters):
         addLibPath = ""
         whlTarget  = ""
 
-    if not addBinPath == "":
+    if addBinPath != "":
         try:
             bpath = os.environ['PATH']
         except KeyError:
             os.environ['PATH'] = addBinPath
         else:
-            os.environ['PATH'] = "%s:%s" % (addBinPath, bpath)
+            os.environ['PATH'] = f"{addBinPath}:{bpath}"
 
-    if not addIncPath == "":
+    if addIncPath != "":
         try:
             cpath = os.environ['CPATH']
         except KeyError:
             os.environ['CPATH'] = addIncPath
         else:
-            os.environ['CPATH'] = "%s:%s" % (addIncPath, cpath)
+            os.environ['CPATH'] = f"{addIncPath}:{cpath}"
 
-    if not addLibPath == "":
+    if addLibPath != "":
         try:
             ldpath = os.environ['LDFLAGS']
         except KeyError:
-            os.environ['LDFLAGS'] = '-L%s -headerpad_max_install_names' % addLibPath
+            os.environ['LDFLAGS'] = f'-L{addLibPath} -headerpad_max_install_names'
         else:
-            os.environ['LDFLAGS'] = '-L%s %s -headerpad_max_install_names' % (addLibPath, ldpath)
+            os.environ['LDFLAGS'] = f'-L{addLibPath} {ldpath} -headerpad_max_install_names'
 
     #--------------------------------------------------------------------
     # [3] Set different command line parameters for building <pymod>
@@ -893,27 +862,27 @@ def Build_pymod_wheel(parameters):
     #     "caffeinate" makes the CPU run at full speed even when the screen is locked.
     #-----------------------------------------------------------------------------------
     command1  = "time"
-    command1 += " \\\n   caffeinate -i %s \\\n" % parameters['python']
+    command1 += " \\\n   caffeinate -i {} \\\n".format(parameters['python'])
     command1 += cmd1_args
-    command1 += "   2>&1 | tee -a %s; \\\n" % parameters['logfile']
+    command1 += "   2>&1 | tee -a {}; \\\n".format(parameters['logfile'])
     command1 += "   test ${PIPESTATUS[0]} -eq 0"  # tee always exits with 0
 
     command2  = "time"
-    command2 += " \\\n   caffeinate -i %s \\\n" % parameters['python']
+    command2 += " \\\n   caffeinate -i {} \\\n".format(parameters['python'])
     command2 += cmd2_args
-    command2 += "   2>&1 | tee -a %s; \\\n" % parameters['logfile']
+    command2 += "   2>&1 | tee -a {}; \\\n".format(parameters['logfile'])
     command2 += "   test ${PIPESTATUS[0]} -eq 0"  # tee always exits with 0
 
     command3  = "time"
-    command3 += " \\\n   caffeinate -i %s \\\n" % deloc_cmd
+    command3 += f" \\\n   caffeinate -i {deloc_cmd} \\\n"
     command3 += cmd3_args
-    command3 += "   2>&1 | tee -a %s; \\\n" % parameters['logfile']
+    command3 += "   2>&1 | tee -a {}; \\\n".format(parameters['logfile'])
     command3 += "   test ${PIPESTATUS[0]} -eq 0"  # tee always exits with 0
 
     command4  = "time"
-    command4 += " \\\n   caffeinate -i %s \\\n" % parameters['python']
+    command4 += " \\\n   caffeinate -i {} \\\n".format(parameters['python'])
     command4 += cmd4_args
-    command4 += "   2>&1 | tee -a %s; \\\n" % parameters['logfile']
+    command4 += "   2>&1 | tee -a {}; \\\n".format(parameters['logfile'])
     command4 += "   test ${PIPESTATUS[0]} -eq 0"  # tee always exits with 0
 
     print( "" )
@@ -945,7 +914,7 @@ def Build_pymod_wheel(parameters):
     if ret != 0:
         print( "", file=sys.stderr )
         print( "-------------------------------------------------------------", file=sys.stderr )
-        print( "!!! <%s>: failed to build <pymod>" % myscript, file=sys.stderr )
+        print( f"!!! <{myscript}>: failed to build <pymod>", file=sys.stderr )
         print( "-------------------------------------------------------------", file=sys.stderr )
         print( "", file=sys.stderr )
         return 1
@@ -954,7 +923,7 @@ def Build_pymod_wheel(parameters):
     if ret != 0:
         print( "", file=sys.stderr )
         print( "-------------------------------------------------------------", file=sys.stderr )
-        print( "!!! <%s>: failed to build <pymod-wheel>" % myscript, file=sys.stderr )
+        print( f"!!! <{myscript}>: failed to build <pymod-wheel>", file=sys.stderr )
         print( "-------------------------------------------------------------", file=sys.stderr )
         print( "", file=sys.stderr )
         return 1
@@ -968,9 +937,9 @@ def Build_pymod_wheel(parameters):
     cmd3_args = glob.glob( "dist/*.whl" )  # like ['dist/klayout-0.30.2-cp312-cp312-macosx_10_15_x86_64.whl']
     if len(cmd3_args) == 1:
         command3  = "time"
-        command3 += " \\\n   caffeinate -i %s \\\n" % deloc_cmd
-        command3 += "  %s \\\n" % cmd3_args[0]
-        command3 += "   2>&1 | tee -a %s; \\\n" % parameters['logfile']
+        command3 += f" \\\n   caffeinate -i {deloc_cmd} \\\n"
+        command3 += f"  {cmd3_args[0]} \\\n"
+        command3 += "   2>&1 | tee -a {}; \\\n".format(parameters['logfile'])
         command3 += "   test ${PIPESTATUS[0]} -eq 0"  # tee always exits with 0
         ret = subprocess.call( command3, shell=True )
     else:
@@ -978,7 +947,7 @@ def Build_pymod_wheel(parameters):
     if ret != 0:
         print( "", file=sys.stderr )
         print( "-------------------------------------------------------------", file=sys.stderr )
-        print( "!!! <%s>: failed to <delocate-wheel>" % myscript, file=sys.stderr )
+        print( f"!!! <{myscript}>: failed to <delocate-wheel>", file=sys.stderr )
         print( "-------------------------------------------------------------", file=sys.stderr )
         print( "", file=sys.stderr )
         return 1
@@ -987,7 +956,7 @@ def Build_pymod_wheel(parameters):
     if ret != 0:
         print( "", file=sys.stderr )
         print( "-------------------------------------------------------------", file=sys.stderr )
-        print( "!!! <%s>: failed to clean <pymod>" % myscript, file=sys.stderr )
+        print( f"!!! <{myscript}>: failed to clean <pymod>", file=sys.stderr )
         print( "-------------------------------------------------------------", file=sys.stderr )
         print( "", file=sys.stderr )
         return 1
@@ -1002,15 +971,14 @@ def Build_pymod_wheel(parameters):
     #------------------------------------------------------------------------
     if whlTarget == "ana3" and Platform in ['Sequoia', 'Sonoma', 'Ventura', 'Monterey']:
         wheels = glob.glob( "dist/*.whl" )  # like ['dist/klayout-0.30.2-cp312-cp312-macosx_10_15_x86_64.whl']
-        if not len(wheels) == 1:
+        if len(wheels) != 1:
             print( "", file=sys.stderr )
             print( "-------------------------------------------------------------", file=sys.stderr )
-            print( "!!! <%s>: failed to <find wheel for anaconda3>" % myscript, file=sys.stderr )
+            print( f"!!! <{myscript}>: failed to <find wheel for anaconda3>", file=sys.stderr )
             print( "-------------------------------------------------------------", file=sys.stderr )
             print( "", file=sys.stderr )
             return 1
-        else:
-            pass
+        pass
 
         original = wheels[0]
         #                0             1     2     3      4     5         6           *7            8         9
@@ -1019,14 +987,13 @@ def Build_pymod_wheel(parameters):
         if not regwhl.match(original):
             print( "", file=sys.stderr )
             print( "-------------------------------------------------------------", file=sys.stderr )
-            print( "!!! <%s>: failed to <rename wheel for anaconda3>" % myscript, file=sys.stderr )
+            print( f"!!! <{myscript}>: failed to <rename wheel for anaconda3>", file=sys.stderr )
             print( "-------------------------------------------------------------", file=sys.stderr )
             print( "", file=sys.stderr )
             return 1
-        else:
-            ver = regwhl.match(original).groups()[7]
-            new = original.replace( ver, "10_9" )
-            os.rename( original, new )
+        ver = regwhl.match(original).groups()[7]
+        new = original.replace( ver, "10_9" )
+        os.rename( original, new )
 
     #-----------------------------------------------------
     # [6] Rename the "dist/" directory
@@ -1058,7 +1025,7 @@ def Run_Build_Command(config, parameters):
     #     This environment variable is tested in ../src/klayout.pri.
     #-----------------------------------------------------------------
     try:
-        useAsan = os.environ['MAC_USE_ASAN']
+        os.environ['MAC_USE_ASAN']
     except KeyError:
         pass
     else:
@@ -1077,27 +1044,27 @@ def Run_Build_Command(config, parameters):
             addLibPath = "/opt/local/lib"
         # Using Homebrew
         elif ModuleQt.upper() in [ 'QT5BREW', 'QT6BREW' ]:
-            addIncPath = "%s/include" % DefaultHomebrewRoot  # defined in "build4mac_env.py"
-            addLibPath = "%s/lib"     % DefaultHomebrewRoot  # -- ditto --
+            addIncPath = f"{DefaultHomebrewRoot}/include"  # defined in "build4mac_env.py"
+            addLibPath = f"{DefaultHomebrewRoot}/lib"  # -- ditto --
         # Using Anaconda3
         elif ModuleQt.upper() in [ 'QT5ANA3' ]:
-            addIncPath = "%s/include" % Ana3VirEnv5
-            addLibPath = "%s/lib" % Ana3VirEnv5
+            addIncPath = f"{Ana3VirEnv5}/include"
+            addLibPath = f"{Ana3VirEnv5}/lib"
         elif ModuleQt.upper() in [ 'QT6ANA3' ]:
-            addIncPath = "%s/include" % Ana3VirEnv6
-            addLibPath = "%s/lib" % Ana3VirEnv6
+            addIncPath = f"{Ana3VirEnv6}/include"
+            addLibPath = f"{Ana3VirEnv6}/lib"
         else:
             addIncPath = ""
             addLibPath = ""
 
         # These environment variables are expanded on the fly in ../src/klayout.pri.
-        if not addIncPath == "":
-            os.environ['MAC_LIBGIT2_INC'] = "%s" % addIncPath
+        if addIncPath != "":
+            os.environ['MAC_LIBGIT2_INC'] = f"{addIncPath}"
         else:
             os.environ['MAC_LIBGIT2_INC'] = "_invalid_MAC_LIBGIT2_INC_" # compile should fail
 
-        if not addLibPath == "":
-            os.environ['MAC_LIBGIT2_LIB'] = "%s" % addLibPath
+        if addLibPath != "":
+            os.environ['MAC_LIBGIT2_LIB'] = f"{addLibPath}"
         else:
             os.environ['MAC_LIBGIT2_LIB'] = "_invalid_MAC_LIBGIT2_LIB_" # link should fail
 
@@ -1109,20 +1076,18 @@ def Run_Build_Command(config, parameters):
 
         # (A) debug or release
         if parameters["debug_mode"]:
-            mode      = "debug"
             cmd_args += "  -debug"
         else:
-            mode      = "release"
             cmd_args += "  -release"
 
         # (C) Target directories and files
         MacBuildDirQAT = parameters['build'] + ".macQAT"
 
         # (D) Qt5 (MacPorts, Homebrew, Anaconda3) | Qt6 (MacPorts, Homebrew)
-        cmd_args += " \\\n  -qmake %s" % parameters['qmake']
-        cmd_args += " \\\n  -bin   %s" % parameters['bin']
-        cmd_args += " \\\n  -build %s" % parameters['build']
-        cmd_args += " \\\n  -rpath %s" % parameters['rpath']
+        cmd_args += " \\\n  -qmake {}".format(parameters['qmake'])
+        cmd_args += " \\\n  -bin   {}".format(parameters['bin'])
+        cmd_args += " \\\n  -build {}".format(parameters['build'])
+        cmd_args += " \\\n  -rpath {}".format(parameters['rpath'])
 
         # (E) want Qt bindings with Ruby scripts?
         if parameters['no_qt_bindings']:
@@ -1140,23 +1105,23 @@ def Run_Build_Command(config, parameters):
 
         # (H) options to `make` tool
         if 'make_options' in parameters:
-            cmd_args += " \\\n  -option %s" % parameters['make_options']
+            cmd_args += " \\\n  -option {}".format(parameters['make_options'])
 
         # (I) about Ruby
         if 'ruby' in parameters:
-            cmd_args += " \\\n  -ruby   %s" % parameters['ruby']
-            cmd_args += " \\\n  -rbinc  %s" % parameters['rbinc']
-            cmd_args += " \\\n  -rblib  %s" % parameters['rblib']
+            cmd_args += " \\\n  -ruby   {}".format(parameters['ruby'])
+            cmd_args += " \\\n  -rbinc  {}".format(parameters['rbinc'])
+            cmd_args += " \\\n  -rblib  {}".format(parameters['rblib'])
             if 'rbinc2' in parameters:
-                cmd_args += " \\\n  -rbinc2  %s" % parameters['rbinc2']
+                cmd_args += " \\\n  -rbinc2  {}".format(parameters['rbinc2'])
         else:
             cmd_args += " \\\n  -noruby"
 
         # (J) about Python
         if 'python' in parameters:
-            cmd_args += " \\\n  -python %s" % parameters['python']
-            cmd_args += " \\\n  -pyinc  %s" % parameters['pyinc']
-            cmd_args += " \\\n  -pylib  %s" % parameters['pylib']
+            cmd_args += " \\\n  -python {}".format(parameters['python'])
+            cmd_args += " \\\n  -pyinc  {}".format(parameters['pyinc'])
+            cmd_args += " \\\n  -pylib  {}".format(parameters['pylib'])
         else:
             cmd_args += " \\\n  -nopython"
 
@@ -1165,9 +1130,9 @@ def Run_Build_Command(config, parameters):
         #     "caffeinate" makes the CPU run at full speed even when the screen is locked.
         #-----------------------------------------------------------------------------------
         command  = "time"
-        command += " \\\n  caffeinate -i %s" % parameters['build_cmd']
+        command += " \\\n  caffeinate -i {}".format(parameters['build_cmd'])
         command += cmd_args
-        command += "  2>&1 | tee %s; \\\n" % parameters['logfile']
+        command += "  2>&1 | tee {}; \\\n".format(parameters['logfile'])
         command += "test ${PIPESTATUS[0]} -eq 0"  # tee always exits with 0
 
         if parameters['check_cmd_only']:
@@ -1182,14 +1147,14 @@ def Run_Build_Command(config, parameters):
         if ret != 0:
             print( "", file=sys.stderr )
             print( "-------------------------------------------------------------", file=sys.stderr )
-            print( "!!! <%s>: failed to build KLayout" % myscript, file=sys.stderr )
+            print( f"!!! <{myscript}>: failed to build KLayout", file=sys.stderr )
             print( "-------------------------------------------------------------", file=sys.stderr )
             print( "", file=sys.stderr )
             return 1
 
         print( "", file=sys.stderr )
         print( "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++", file=sys.stderr )
-        print( "### <%s>: successfully built KLayout" % myscript, file=sys.stderr )
+        print( f"### <{myscript}>: successfully built KLayout", file=sys.stderr )
         print( "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++", file=sys.stderr )
         print( "", file=sys.stderr )
 
@@ -1197,17 +1162,17 @@ def Run_Build_Command(config, parameters):
         # [6] Prepare "*.macQAT/" directory for the QATest.
         #     Binaries under "*.macQAT/" such as *.dylib will be touched later.
         #------------------------------------------------------------------------
-        print( "### Preparing <%s>" % MacBuildDirQAT )
+        print( f"### Preparing <{MacBuildDirQAT}>" )
         if os.path.isdir( MacBuildDirQAT ):
             shutil.rmtree( MacBuildDirQAT )
 
         os.chdir( parameters['build'] )
         tarFile = "../macQATest.tar"
-        tarCmdC = "tar cf %s ." % tarFile
+        tarCmdC = f"tar cf {tarFile} ."
         if subprocess.call( tarCmdC, shell=True ) != 0:
             print( "", file=sys.stderr )
             print( "-------------------------------------------------------------", file=sys.stderr )
-            print( "!!! <%s>: failed to create <%s>" % (myscript, tarFile), file=sys.stderr )
+            print( f"!!! <{myscript}>: failed to create <{tarFile}>", file=sys.stderr )
             print( "-------------------------------------------------------------", file=sys.stderr )
             print( "", file=sys.stderr )
             return 1
@@ -1215,11 +1180,11 @@ def Run_Build_Command(config, parameters):
         os.chdir( "../" )
         os.mkdir( MacBuildDirQAT )
         os.chdir( MacBuildDirQAT )
-        tarCmdX = "tar xf %s" % tarFile
+        tarCmdX = f"tar xf {tarFile}"
         if subprocess.call( tarCmdX, shell=True ) != 0:
             print( "", file=sys.stderr )
             print( "-------------------------------------------------------------", file=sys.stderr )
-            print( "!!! <%s>: failed to unpack <%s>" % (myscript, tarFile), file=sys.stderr )
+            print( f"!!! <{myscript}>: failed to unpack <{tarFile}>", file=sys.stderr )
             print( "-------------------------------------------------------------", file=sys.stderr )
             print( "", file=sys.stderr )
             return 1
@@ -1228,7 +1193,7 @@ def Run_Build_Command(config, parameters):
         os.chdir( "../" )
         shutil.copy2( "macbuild/macQAT.py", MacBuildDirQAT )
         print( "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++", file=sys.stderr )
-        print( "### <%s>: prepared the initial *.macQAT/" % myscript, file=sys.stderr )
+        print( f"### <{myscript}>: prepared the initial *.macQAT/", file=sys.stderr )
         print( "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++", file=sys.stderr )
         print( "", file=sys.stderr )
 
@@ -1237,10 +1202,8 @@ def Run_Build_Command(config, parameters):
     #------------------------------------------------------------------------
     BuildPymodWhl = parameters['BuildPymodWhl']
     if BuildPymodWhl:
-        ret = Build_pymod_wheel(parameters)
-        return ret
-    else:
-        return 0
+        return Build_pymod_wheel(parameters)
+    return 0
 
 #------------------------------------------------------------------------------
 ## For making a bundle (klayout.app), deploy built binaries and libraries
@@ -1279,10 +1242,9 @@ def Deploy_Binaries_For_Bundle(config, parameters):
     Platform       = parameters['Platform']
     QtLibRoot      = parameters['qt_lib_root']
 
-    AbsMacPkgDir   = "%s/%s" % (ProjectDir, MacPkgDir)
-    AbsMacBinDir   = "%s/%s" % (ProjectDir, MacBinDir)
-    AbsMacBuildDir = "%s/%s" % (ProjectDir, MacBuildDir)
-    AbsMacBuildLog = "%s/%s" % (ProjectDir, MacBuildLog)
+    AbsMacPkgDir   = f"{ProjectDir}/{MacPkgDir}"
+    AbsMacBinDir   = f"{ProjectDir}/{MacBinDir}"
+    f"{ProjectDir}/{MacBuildLog}"
 
     if BuildPymodWhl:
         try:
@@ -1309,17 +1271,17 @@ def Deploy_Binaries_For_Bundle(config, parameters):
         print( "         Consider using <-Y|--DEPLOY> instead", file=sys.stderr )
         #return 1
     if not os.path.isfile(MacBuildLog):
-        print( "!!! Build log file <%s> is not present !!!" % MacBuildLog, file=sys.stderr )
+        print( f"!!! Build log file <{MacBuildLog}> is not present !!!", file=sys.stderr )
         return 1
     if not os.path.isdir(MacBuildDir):
-        print( "!!! Build directory <%s> is not present !!!" % MacBuildDir, file=sys.stderr )
+        print( f"!!! Build directory <{MacBuildDir}> is not present !!!", file=sys.stderr )
         return 1
     if not os.path.isdir(MacBinDir):
-        print( "!!! Binary directory <%s> is not present !!!" % MacBinDir, file=sys.stderr )
+        print( f"!!! Binary directory <{MacBinDir}> is not present !!!", file=sys.stderr )
         return 1
 
 
-    print( " [2] Creating a new empty directory <%s> for deployment ..." % MacPkgDir )
+    print( f" [2] Creating a new empty directory <{MacPkgDir}> for deployment ..." )
     #-------------------------------------------------------------
     # [2] Create a new empty directory for deploying binaries
     #-------------------------------------------------------------
@@ -1367,7 +1329,7 @@ def Deploy_Binaries_For_Bundle(config, parameters):
     #
     #                                            (1) *.whl is install with 'pip3'
     #--------------------------------------------------------------------------------------------------------------
-    targetDir0 = "%s/klayout.app/Contents" % AbsMacPkgDir
+    targetDir0 = f"{AbsMacPkgDir}/klayout.app/Contents"
     targetDirR = targetDir0 + "/Resources"
     targetDirF = targetDir0 + "/Frameworks"
     targetDirM = targetDir0 + "/MacOS"
@@ -1377,7 +1339,7 @@ def Deploy_Binaries_For_Bundle(config, parameters):
     os.makedirs(targetDirF)
     os.makedirs(targetDirM)
     os.makedirs(targetDirB)
-    if BuildPymodWhl and not pymodDistDir == "":
+    if BuildPymodWhl and pymodDistDir != "":
         os.makedirs(targetDirP)
 
 
@@ -1432,7 +1394,7 @@ def Deploy_Binaries_For_Bundle(config, parameters):
             #     Note that will pull all dependencies and sort them out later
             #     dropping those which don't have a path entry
             #-------------------------------------------------------------------
-            otoolCm   = "otool -L %s | grep dylib" % nameStyle3
+            otoolCm   = f"otool -L {nameStyle3} | grep dylib"
             otoolOut  = os.popen( otoolCm ).read()
             dependDic = DecomposeLibraryDependency(otoolOut)
             dependencyDic_1.update(dependDic)
@@ -1470,7 +1432,7 @@ def Deploy_Binaries_For_Bundle(config, parameters):
                 #     Note that will pull all dependencies and sort them out later
                 #     dropping those which don't have a path entry
                 #-------------------------------------------------------------------
-                otoolCm   = "otool -L %s | grep 'dylib'" % destPath
+                otoolCm   = f"otool -L {destPath} | grep 'dylib'"
                 otoolOut  = os.popen( otoolCm ).read()
                 dependDic = DecomposeLibraryDependency(otoolOut)
                 dependencyDic_1.update(dependDic)
@@ -1633,7 +1595,7 @@ def Deploy_Binaries_For_Bundle(config, parameters):
         libAux_2 = "/usr/local/lib/"
         libAux_3 = "/opt/homebrew/lib/"
         libAux_4 = "/Applications/anaconda3/lib/"
-        patAux   = r'^(%s|%s|%s|%s)(lib.+[.]dylib)' % (libAux_1, libAux_2, libAux_3, libAux_4)
+        patAux   = rf'^({libAux_1}|{libAux_2}|{libAux_3}|{libAux_4})(lib.+[.]dylib)'
         regAux   = re.compile(patAux)
 
         # (3) Qt frameworks
@@ -1641,13 +1603,13 @@ def Deploy_Binaries_For_Bundle(config, parameters):
         #                MacPorts  ===> '/opt/local/libexec/qt5/lib'
         #                Homebrew  ===> '/usr/local/opt/qt@5/lib'
         #                Anaconda3 ===> '/Applications/anaconda3/lib' (not frameworks and won't be embedded)
-        patQt = r'(%s/)(Qt.+[.]framework.+)' % QtLibRoot
+        patQt = rf'({QtLibRoot}/)(Qt.+[.]framework.+)'
         regQt = re.compile(patQt)
 
         # (4) Python frameworks (only for Homebrew) # in the case of Intel Mac...
-        libPy3_1 = "%s/" % HBPython312FrameworkPath # /usr/local/opt/python@3.12/Frameworks/Python.framework/
-        libPy3_2 = "%s/" % HBPython311FrameworkPath # /usr/local/opt/python@3.11/Frameworks/Python.framework/
-        patPy3   = r'^(%s|%s)(.+)' % (libPy3_1, libPy3_2)
+        libPy3_1 = f"{HBPython312FrameworkPath}/" # /usr/local/opt/python@3.12/Frameworks/Python.framework/
+        libPy3_2 = f"{HBPython311FrameworkPath}/" # /usr/local/opt/python@3.11/Frameworks/Python.framework/
+        patPy3   = rf'^({libPy3_1}|{libPy3_2})(.+)'
         regPy3   = re.compile(patPy3)
 
         #-------------------------------------------------------------------------------
@@ -1671,10 +1633,10 @@ def Deploy_Binaries_For_Bundle(config, parameters):
                 #-------------------------------------------------------------------
                 # (D) Then get inter-library dependencies
                 #-------------------------------------------------------------------
-                otoolCm   = "otool -L %s" % destPath
+                otoolCm   = f"otool -L {destPath}"
                 otoolOut  = os.popen( otoolCm ).read()
                 dependDic = DecomposeLibraryDependency(otoolOut)
-                dicKey    = list(dependDic.keys())[0]
+                dicKey    = next(iter(dependDic.keys()))
                 dicVal    = dependDic[dicKey]
                 dicValIdx = list( range(0, len(dicVal)) )
 
@@ -1695,11 +1657,10 @@ def Deploy_Binaries_For_Bundle(config, parameters):
                     dependencyDic_2.update( {dicKey: dependLib_2} )
                     pathDic_2[nameStyle3] = "@executable_path/" + sourceDirKly + "/" + nameStyle3
 
-                    for libname in dependLib_2.keys():
+                    for libname in dependLib_2:
                         if libname == baseName:
                             continue
-                        else:
-                            pathDic_2[libname] = "@executable_path/../Frameworks/" + dependLib_2[libname]
+                        pathDic_2[libname] = "@executable_path/../Frameworks/" + dependLib_2[libname]
 
                 #-------------------------------------------------------------------
                 # (F) Dependencies on Qt and auxiliary libraries (optional)
@@ -1717,11 +1678,10 @@ def Deploy_Binaries_For_Bundle(config, parameters):
                     dependencyDic_3.update( {dicKey: dependLib_3} )
                     pathDic_3[nameStyle3] = "@executable_path/" + sourceDirKly + "/" + nameStyle3
 
-                    for libname in dependLib_3.keys():
+                    for libname in dependLib_3:
                         if libname == baseName:
                             continue
-                        else:
-                            pathDic_3[libname] = "@executable_path/../Frameworks/" + dependLib_3[libname]
+                        pathDic_3[libname] = "@executable_path/../Frameworks/" + dependLib_3[libname]
 
                 #-------------------------------------------------------------------
                 # (G) Dependencies on Python framework (optional)
@@ -1732,16 +1692,15 @@ def Deploy_Binaries_For_Bundle(config, parameters):
                     for idx in dicValIdx:
                         fname = dicVal[idx]
                         if regPy3.match(fname):
-                            dependLib_4[fname] = "Python.framework/%s" % regPy3.match(fname).groups()[1]
+                            dependLib_4[fname] = f"Python.framework/{regPy3.match(fname).groups()[1]}"
 
                     dependencyDic_4.update( {dicKey: dependLib_4} )
                     pathDic_4[nameStyle3] = "@executable_path/" + sourceDirKly + "/" + nameStyle3
 
-                    for libname in dependLib_4.keys():
+                    for libname in dependLib_4:
                         if libname == baseName:
                             continue
-                        else:
-                            pathDic_4[libname] = "@executable_path/../Frameworks/" + dependLib_4[libname]
+                        pathDic_4[libname] = "@executable_path/../Frameworks/" + dependLib_4[libname]
 
     if 441 in ToolDebug:
         DumpDependencyDicPair( "In [4-4 441]:", dependencyDic_2, pathDic_2 )
@@ -1760,7 +1719,7 @@ def Deploy_Binaries_For_Bundle(config, parameters):
     #-------------------------------------------------------------
     os.chdir(targetDirF)
     ret = SetChangeIdentificationNameOfDyLib( dependencyDic_1, pathDic_1 )
-    if not ret == 0:
+    if ret != 0:
         msg = "!!! Failed to set and change to new identification names with (dependencyDic_1, pathDic_1) !!!"
         print(msg)
         return 1
@@ -1769,25 +1728,25 @@ def Deploy_Binaries_For_Bundle(config, parameters):
     #-------------------------------------------------------------
     # [5-2] Similarly for the pymod's libraries...
     #-------------------------------------------------------------
-    if not targetDirKly == None:
+    if targetDirKly is not None:
         os.chdir(targetDirKly)
         if len(dependencyDic_2) > 0 and len(pathDic_2) > 0:
             ret = SetChangeIdentificationNameOfDyLib( dependencyDic_2, pathDic_2 )
-            if not ret == 0:
+            if ret != 0:
                 msg = "!!! Failed to set and change to new identification names with (dependencyDic_2, pathDic_2) !!!"
                 print(msg)
                 return 1
 
         if len(dependencyDic_3) > 0 and len(pathDic_3) > 0:
             ret = SetChangeIdentificationNameOfDyLib( dependencyDic_3, pathDic_3 )
-            if not ret == 0:
+            if ret != 0:
                 msg = "!!! Failed to set and change to new identification names with (dependencyDic_3, pathDic_3) !!!"
                 print(msg)
                 return 1
 
         if len(dependencyDic_4) > 0 and len(pathDic_4) > 0:
             ret = SetChangeIdentificationNameOfDyLib( dependencyDic_4, pathDic_4 )
-            if not ret == 0:
+            if ret != 0:
                 msg = "!!! Failed to set and change to new identification names with (dependencyDic_4, pathDic_4) !!!"
                 print(msg)
                 return 1
@@ -1798,10 +1757,10 @@ def Deploy_Binaries_For_Bundle(config, parameters):
     #     relevant target directories
     #-------------------------------------------------------------
     os.chdir(ProjectDir)
-    sourceDir0 = "%s/klayout.app/Contents" % MacBinDir
+    sourceDir0 = f"{MacBinDir}/klayout.app/Contents"
     sourceDir1 = sourceDir0 + "/MacOS"
-    sourceDir2 = "%s/macbuild/Resources" % ProjectDir
-    sourceDir3 = "%s" % MacBinDir
+    sourceDir2 = f"{ProjectDir}/macbuild/Resources"
+    sourceDir3 = f"{MacBinDir}"
 
     # (A) the main components
     tmpfileM = ProjectDir + "/macbuild/Resources/Info.plist.template"
@@ -1827,7 +1786,7 @@ def Deploy_Binaries_For_Bundle(config, parameters):
         os.chmod( targetDirB + "/" + buddy, 0o0755 )
 
     # (C) the Pymod
-    if BuildPymodWhl and not pymodDistDir == "":
+    if BuildPymodWhl and pymodDistDir != "":
         for item in glob.glob( pymodDistDir + "/*.whl" ):
             shutil.copy2( item,  targetDirP )
 
@@ -1837,7 +1796,6 @@ def Deploy_Binaries_For_Bundle(config, parameters):
     mode        = None      # ["st", "hw", "lw"]
     lw_qt_major = None      # [5, 6]
     lw_stack    = None      # ["macports", "homebrew", "anaconda"]
-    arch_hint   = "auto"
     if PackagePrefix == "ST-":
         mode = "st"
     elif PackagePrefix == "HW-":
@@ -1878,7 +1836,7 @@ def Deploy_Binaries_For_Bundle(config, parameters):
     os.chdir(MacPkgDir)
     klayoutexec = "klayout.app/Contents/MacOS/klayout"
     ret = SetChangeLibIdentificationName( klayoutexec, "../Frameworks" )
-    if not ret == 0:
+    if ret != 0:
         os.chdir(ProjectDir)
         msg = "!!! Failed to set/change library identification name for <%s> !!!"
         print( msg % klayoutexec, file=sys.stderr )
@@ -1887,9 +1845,9 @@ def Deploy_Binaries_For_Bundle(config, parameters):
     buddies     = glob.glob( "klayout.app/Contents/Buddy/strm*" )
     macdepQtOpt = ""
     for buddy in buddies:
-        macdepQtOpt += " -executable=%s" % buddy
+        macdepQtOpt += f" -executable={buddy}"
         ret = SetChangeLibIdentificationName( buddy, "../Frameworks" )
-        if not ret == 0:
+        if ret != 0:
             os.chdir(ProjectDir)
             msg = "!!! Failed to set/change library identification name for <%s> !!!"
             print( msg % buddy, file=sys.stderr )
@@ -1907,7 +1865,7 @@ def Deploy_Binaries_For_Bundle(config, parameters):
 
         os.chdir(ProjectDir)
         os.chdir(MacPkgDir)
-        command = "%s %s %s" % ( deploytool, app_bundle, options )
+        command = f"{deploytool} {app_bundle} {options}"
         if subprocess.call( command, shell=True ) != 0:
             msg = "!!! Failed to deploy applications on OSX/macOS !!!"
             print( msg, file=sys.stderr )
@@ -1965,32 +1923,29 @@ def Deploy_Binaries_For_Bundle(config, parameters):
                 pythonHBVer           = HBPythonAutoVersion
 
             bundlePath          = AbsMacPkgDir + '/klayout.app'
-            bundleExecPathAbs   = '%s/Contents/MacOS/' % bundlePath
-            pythonFrameworkPath = '%s/Contents/Frameworks/Python.framework' % bundlePath
-            testTarget          = '%s/Versions/%s/lib/python%s/test' % (pythonFrameworkPath, pythonHBVer, pythonHBVer)
-            resourceTarget1     = '%s/Versions/%s/Resources' % (pythonFrameworkPath, pythonHBVer)
-            resourceTarget2     = '%s/Resources' % pythonFrameworkPath
-            binTarget           = '%s/Versions/%s/bin' % (pythonFrameworkPath, pythonHBVer)
-            sitepackagesTarget  = '%s/Versions/%s/lib/python%s/site-packages' % (pythonFrameworkPath, pythonHBVer, pythonHBVer)
-            sitepackagesSource  = '%s/Versions/%s/lib/python%s/site-packages' % (HBPythonFrameworkPath, pythonHBVer, pythonHBVer)
+            bundleExecPathAbs   = f'{bundlePath}/Contents/MacOS/'
+            pythonFrameworkPath = f'{bundlePath}/Contents/Frameworks/Python.framework'
+            testTarget          = f'{pythonFrameworkPath}/Versions/{pythonHBVer}/lib/python{pythonHBVer}/test'
+            resourceTarget1     = f'{pythonFrameworkPath}/Versions/{pythonHBVer}/Resources'
+            resourceTarget2     = f'{pythonFrameworkPath}/Resources'
+            binTarget           = f'{pythonFrameworkPath}/Versions/{pythonHBVer}/bin'
+            sitepackagesTarget  = f'{pythonFrameworkPath}/Versions/{pythonHBVer}/lib/python{pythonHBVer}/site-packages'
+            sitepackagesSource  = f'{HBPythonFrameworkPath}/Versions/{pythonHBVer}/lib/python{pythonHBVer}/site-packages'
 
             print( "" )
-            print( " [9] Optional deployment of Python from %s ..." % HBPythonFrameworkPath )
+            print( f" [9] Optional deployment of Python from {HBPythonFrameworkPath} ..." )
             print( "  [9.1] Copying Python Framework" )
-            if 910 in ToolDebug:
-                dbglevel = 910
-            else:
-                dbglevel = 0
+            dbglevel = 910 if 910 in ToolDebug else 0
 
-            cmd01 = "rm -rf %s" % pythonFrameworkPath
-            cmd02 = "rsync -a --safe-links %s/ %s" % (HBPythonFrameworkPath, pythonFrameworkPath)
+            cmd01 = f"rm -rf {pythonFrameworkPath}"
+            cmd02 = f"rsync -a --safe-links {HBPythonFrameworkPath}/ {pythonFrameworkPath}"
 
-            cmd03 = "rm -rf %s" % testTarget
-            cmd04 = "rm -rf %s" % resourceTarget1
-            cmd05 = "unlink %s" % resourceTarget2
-            cmd06 = "rm -rf %s" % binTarget
+            cmd03 = f"rm -rf {testTarget}"
+            cmd04 = f"rm -rf {resourceTarget1}"
+            cmd05 = f"unlink {resourceTarget2}"
+            cmd06 = f"rm -rf {binTarget}"
 
-            cmd07 = "mkdir %s" % sitepackagesTarget
+            cmd07 = f"mkdir {sitepackagesTarget}"
             # cmd08 = "cp -RL %s/{*distutils*,pip*,pkg_resources,setuptools*,wheel*} %s" % (sitepackagesSource, sitepackagesTarget)
             # Updated for compatibility with modern Python environments (e.g., pip 26.0.1+).
             #  Since 'pkg_resources' and other legacy paths may be absent in recent setuptools,
@@ -2006,7 +1961,7 @@ def Deploy_Binaries_For_Bundle(config, parameters):
 
             if sources:
                 # Join all existing paths into a single string for the 'cp' command
-                cmd08 = "cp -RL %s %s" % (" ".join(sources), sitepackagesTarget)
+                cmd08 = "cp -RL {} {}".format(" ".join(sources), sitepackagesTarget)
             else:
                 # Fallback or log if no packages are found
                 cmd08 = "echo 'No matching site-packages found to copy; skipping.'"
@@ -2030,7 +1985,7 @@ def Deploy_Binaries_For_Bundle(config, parameters):
             ret = Generate_Start_Console_Py( sourceDir2 + "/template-start-console.py",
                                              pythonHBVer,
                                              targetDirM + "/start-console.py" )
-            if ret == False:
+            if not ret:
                 print( "! Generate_Start_Console_Py() failed", file=sys.stderr )
                 return 1
 
@@ -2040,10 +1995,7 @@ def Deploy_Binaries_For_Bundle(config, parameters):
 
             print( "  [9.2] Re-linking dylib dependencies inside Python.framework" )
             print( "   [9.2.1] Patching Python Framework" )
-            if 921 in ToolDebug:
-                dbglevel = 921
-            else:
-                dbglevel = 0
+            dbglevel = 921 if 921 in ToolDebug else 0
             Change_Python_LibPath_RelativeToAbsolute( pythonFrameworkPath, debug_level=dbglevel )
             depdict = WalkFrameworkPaths( pythonFrameworkPath, debug_level=dbglevel )
             DumpDependencyDic( "[9.2.1]", depdict, debug_level=dbglevel )
@@ -2052,22 +2004,16 @@ def Deploy_Binaries_For_Bundle(config, parameters):
             PerformChanges( depdict, replacePairs, bundleExecPathAbs, debug_level=dbglevel )
 
             print( "   [9.2.2] Patching 'Python' itself in Python Framework" )
-            if 922 in ToolDebug:
-                dbglevel = 922
-            else:
-                dbglevel = 0
-            filterreg = r'\t+%s/(opt|Cellar)' % DefaultHomebrewRoot
+            dbglevel = 922 if 922 in ToolDebug else 0
+            filterreg = rf'\t+{DefaultHomebrewRoot}/(opt|Cellar)'
             Patch_Python_In_PythonFramework( pythonFrameworkPath, filter_regex=filterreg, debug_level=dbglevel )
 
-            print( "   [9.2.3] Patching %s/opt/ libs" % DefaultHomebrewRoot ) # eg. DefaultHomebrewRoot == "/usr/local"
-            if 923 in ToolDebug:
-                dbglevel = 923
-            else:
-                dbglevel = 0
-            filterreg = r'\t+%s/(opt|Cellar)' % DefaultHomebrewRoot
+            print( f"   [9.2.3] Patching {DefaultHomebrewRoot}/opt/ libs" ) # eg. DefaultHomebrewRoot == "/usr/local"
+            dbglevel = 923 if 923 in ToolDebug else 0
+            filterreg = rf'\t+{DefaultHomebrewRoot}/(opt|Cellar)'
             depdict   = WalkFrameworkPaths( pythonFrameworkPath, search_path_filter=filterreg, debug_level=dbglevel )
             DumpDependencyDic( "[9.2.3]", depdict, debug_level=dbglevel )
-            usrLocalPath    = '%s/opt/' % DefaultHomebrewRoot
+            usrLocalPath    = f'{DefaultHomebrewRoot}/opt/'
             appUsrLocalPath = '@executable_path/../Frameworks/'
             replacePairs    = [ (usrLocalPath, appUsrLocalPath, True) ]
             PerformChanges( depdict, replacePairs, bundleExecPathAbs, debug_level=dbglevel )
@@ -2090,16 +2036,13 @@ def Deploy_Binaries_For_Bundle(config, parameters):
             #     xz          5.6.2   General-purpose data compression with high compression ratio
             #---------------------------------------------------------------------------------------------------
             print( "   [9.2.4] Patching [mpdecimal, openssl@3, sqlite, xz(, gdbm, readline)]" )
-            if 924 in ToolDebug:
-                dbglevel = 924
-            else:
-                dbglevel = 0
-            usrLocalPath    = '%s/opt/' % DefaultHomebrewRoot
+            dbglevel = 924 if 924 in ToolDebug else 0
+            usrLocalPath    = f'{DefaultHomebrewRoot}/opt/'
             appUsrLocalPath = '@executable_path/../Frameworks/'
             replacePairs    = [ (usrLocalPath, appUsrLocalPath, True) ]
             replacePairs.extend( [ (openssl_version, '@executable_path/../Frameworks/openssl@3', True)
-                for openssl_version in glob.glob( '%s/Cellar/openssl@3/*' % DefaultHomebrewRoot ) ] )
-            filterreg = r'\t+%s/(opt|Cellar)' % DefaultHomebrewRoot
+                for openssl_version in glob.glob( f'{DefaultHomebrewRoot}/Cellar/openssl@3/*' ) ] )
+            filterreg = rf'\t+{DefaultHomebrewRoot}/(opt|Cellar)'
             depdict   = WalkFrameworkPaths( [pythonFrameworkPath + '/../mpdecimal',
                                              pythonFrameworkPath + '/../openssl@3',
                                              pythonFrameworkPath + '/../sqlite',
@@ -2113,20 +2056,14 @@ def Deploy_Binaries_For_Bundle(config, parameters):
             PerformChanges( depdict, replacePairs, bundleExecPathAbs, debug_level=dbglevel )
 
             print( "  [9.3] Re-linking dylib dependencies for klayout" )
-            if 931 in ToolDebug:
-                dbglevel = 931
-            else:
-                dbglevel = 0
+            dbglevel = 931 if 931 in ToolDebug else 0
             klayoutPath = bundleExecPathAbs
             depdict     = WalkFrameworkPaths( klayoutPath, filter_regex=r'klayout$', debug_level=dbglevel )
             DumpDependencyDic( "[9.3.1]", depdict, debug_level=dbglevel )
             replacePairs = [ (HBPythonFrameworkPath, appPythonFrameworkPath, False) ]
             PerformChanges( depdict, replacePairs, bundleExecPathAbs, debug_level=dbglevel )
 
-            if 932 in ToolDebug:
-                dbglevel = 932
-            else:
-                dbglevel = 0
+            dbglevel = 932 if 932 in ToolDebug else 0
             libKlayoutPath = bundleExecPathAbs + '../Frameworks'
             depdict        = WalkFrameworkPaths( libKlayoutPath, filter_regex=r'libklayout', debug_level=dbglevel )
             DumpDependencyDic( "[9.3.2]", depdict, debug_level=dbglevel )
@@ -2134,11 +2071,8 @@ def Deploy_Binaries_For_Bundle(config, parameters):
             PerformChanges( depdict, replacePairs, bundleExecPathAbs, debug_level=dbglevel )
 
             print( "  [9.4] Patching site.py and pip/" )
-            if 940 in ToolDebug:
-                dbglevel = 940
-            else:
-                dbglevel = 0
-            site_module = "%s/Versions/%s/lib/python%s/site.py" % (pythonFrameworkPath, pythonHBVer, pythonHBVer)
+            dbglevel = 940 if 940 in ToolDebug else 0
+            site_module = f"{pythonFrameworkPath}/Versions/{pythonHBVer}/lib/python{pythonHBVer}/site.py"
             #-----------------------------------------------------------------------------------------
             # Rewrite the above <site.py> file.
             #     :
@@ -2173,7 +2107,7 @@ def Deploy_Binaries_For_Bundle(config, parameters):
             #  Type "help", "copyright", "credits" or "license" for more information.
             #  >>>
             #-----------------------------------------------------------------------------------------
-            with open(site_module, 'r') as site:
+            with open(site_module) as site:
                 buf = site.readlines()
             with open(site_module, 'w') as site:
                 for line in buf:
@@ -2203,9 +2137,8 @@ def Deploy_Binaries_For_Bundle(config, parameters):
             #
             # 'pandas' depends on many modules including 'numpy'. They are also installed.
             #-----------------------------------------------------------------------------------------
-            pip_module = "%s/Versions/%s/lib/python%s/site-packages/pip/__init__.py" % \
-                                     (pythonFrameworkPath, pythonHBVer, pythonHBVer)
-            with open(pip_module, 'r') as pip:
+            pip_module = f"{pythonFrameworkPath}/Versions/{pythonHBVer}/lib/python{pythonHBVer}/site-packages/pip/__init__.py"
+            with open(pip_module) as pip:
                 buf = pip.readlines()
             with open(pip_module, 'w') as pip:
                 for line in buf:
@@ -2266,7 +2199,7 @@ def Deploy_Binaries_For_Bundle(config, parameters):
         if deploymentRuby33HB and NonOSStdLang:
 
             print( "" )
-            print( " [10] You have reached optional deployment of Ruby from %s ..." % HBRuby34Path )
+            print( f" [10] You have reached optional deployment of Ruby from {HBRuby34Path} ..." )
             print( "   [!!!] Sorry, the deployed package will not work properly since deployment of" )
             print( "         Ruby3.3 from Homebrew is not yet supported." )
             print( "         Since you have Homebrew development environment, there two options:" )
@@ -2287,7 +2220,7 @@ def Deploy_Binaries_For_Bundle(config, parameters):
     #-------------------------------------------------------------
     if Platform in ['Tahoe']:
         print( " [11] Signing the macOS application bundle (ad-hoc) after all post-build edits (install_name_tool/strip)..." )
-        appbundle = "%s/klayout.app" % AbsMacPkgDir
+        appbundle = f"{AbsMacPkgDir}/klayout.app"
         res = Sign_App_Bundle(appbundle)
         print(res["ok"], res["verify_codesign_ok"], res["verify_spctl_ok"])
         if not res["ok"]:
@@ -2315,7 +2248,7 @@ def Main():
     if not config['DeploymentF'] and not config['DeploymentP']:
         ret = Run_Build_Command(config, parameters)
         pp.pprint(config)
-        if not ret == 0:
+        if ret != 0:
             sys.exit(1)
     else:
         #----------------------------------------------------------
@@ -2324,7 +2257,7 @@ def Main():
         #   resources to make the main "klayout.app" bundle
         #----------------------------------------------------------
         ret = Deploy_Binaries_For_Bundle(config, parameters)
-        if not ret == 0:
+        if ret != 0:
             sys.exit(1)
 
 #===================================================================================

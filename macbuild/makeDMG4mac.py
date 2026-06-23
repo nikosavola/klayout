@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 #=============================================================================================
 # File: "macbuild/makeDMG4mac.py"
@@ -11,18 +10,18 @@
 #   1) https://el-tramo.be/guides/fancy-dmg/
 #   2) https://github.com/andreyvit/create-dmg.git
 #=============================================================================================
-from time import sleep
-import sys
+import glob
+import hashlib
+import optparse
 import os
+import platform
 import re
 import shutil
-import zipfile
-import glob
-import platform
-import optparse
-import subprocess
-import hashlib
 import string
+import subprocess
+import sys
+import zipfile
+from time import sleep
 
 #-------------------------------------------------------------------------------
 ## To import global dictionaries of different modules and utility functions
@@ -30,6 +29,7 @@ import string
 mydir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append( mydir + "/macbuild" )
 from build4mac_util import *
+
 
 #-------------------------------------------------------------------------------
 ## To set global variables including present directory and platform info.
@@ -98,11 +98,11 @@ def SetGlobals():
     ProjectDir = os.getcwd()
     (System, Node, Release, Version, Machine, Processor) = platform.uname()
 
-    if not System == "Darwin":
+    if System != "Darwin":
         print("")
-        print( "!!! Sorry. Your system <%s> looks like non-Mac" % System, file=sys.stderr )
+        print( f"!!! Sorry. Your system <{System}> looks like non-Mac", file=sys.stderr )
         print(Usage)
-        quit()
+        sys.exit()
 
     release = int( Release.split(".")[0] ) # take the first of ['21', '0', '0']
     LatestOS = ""
@@ -133,7 +133,7 @@ def SetGlobals():
         print(Usage)
         sys.exit(1)
 
-    if not Machine == "x86_64":
+    if Machine != "x86_64":
         # with an Apple Silicon Chip?
         if Machine == "arm64" and Platform in ["Tahoe", "Sequoia", "Sonoma", "Ventura", "Monterey"]:
             print("")
@@ -141,7 +141,7 @@ def SetGlobals():
             print("")
         else:
             print("")
-            print( "!!! Sorry. Only x86_64/arm64 architecture machine is supported but found <%s>" % Machine, file=sys.stderr )
+            print( f"!!! Sorry. Only x86_64/arm64 architecture machine is supported but found <{Machine}>", file=sys.stderr )
             print(Usage)
             sys.exit(1)
 
@@ -169,19 +169,19 @@ def SetGlobals():
     LatestOSHomebrew  = False
     LatestOSAnaconda3 = False
     LatestOSHomebrewH = False
-    DicStdLightHeavyW = dict()
+    DicStdLightHeavyW = {}
     Item3AppleScript  = ""
 
     # Populate DicStdLightHeavyW
-    DicStdLightHeavyW[ "std" ]     = dict() # ST-*
-    DicStdLightHeavyW[ "ports" ]   = dict() # LW-*
-    DicStdLightHeavyW[ "brew" ]    = dict() # LW-*
-    DicStdLightHeavyW[ "ana3" ]    = dict() # LW-*
-    DicStdLightHeavyW[ "brewH" ]   = dict() # HW-*
+    DicStdLightHeavyW[ "std" ]     = {} # ST-*
+    DicStdLightHeavyW[ "ports" ]   = {} # LW-*
+    DicStdLightHeavyW[ "brew" ]    = {} # LW-*
+    DicStdLightHeavyW[ "ana3" ]    = {} # LW-*
+    DicStdLightHeavyW[ "brewH" ]   = {} # HW-*
     # "pbrew"   is the alternative of "brew"  using MacPorts' Qt and Homebrew's (Ruby, Python)
     # "pbrewHW" is the alternative of "brewH" using MacPorts' Qt and Homebrew's Python
-    DicStdLightHeavyW[ "pbrew" ]   = dict() # LW-*
-    DicStdLightHeavyW[ "pbrewHW" ] = dict() # HW-*
+    DicStdLightHeavyW[ "pbrew" ]   = {} # LW-*
+    DicStdLightHeavyW[ "pbrewHW" ] = {} # HW-*
 
     DicStdLightHeavyW[ "std" ]["zip"]       = "macbuild/Resources/script-bundle-S.zip"
     DicStdLightHeavyW[ "std" ]["src"]       = "script-bundle-S"
@@ -266,7 +266,7 @@ def CheckPkgDirectory():
         return -1
 
     if not os.path.isdir(PkgDir):
-        print( "! Specified package directory <%s> does not exist" % PkgDir, file=sys.stderr )
+        print( f"! Specified package directory <{PkgDir}> does not exist", file=sys.stderr )
         print( "" )
         return -1
 
@@ -426,7 +426,7 @@ def CheckPkgDirectory():
     #------------------------------------------------------
     os.chdir(PkgDir)
     if not os.path.isdir( DefaultBundleName ):
-        print( "! The package directory <%s> does not hold <%s> bundle" % (PkgDir, DefaultBundleName), file=sys.stderr )
+        print( f"! The package directory <{PkgDir}> does not hold <{DefaultBundleName}> bundle", file=sys.stderr )
         print( "" )
         os.chdir(ProjectDir)
         return -1
@@ -434,13 +434,13 @@ def CheckPkgDirectory():
     #------------------------------------------------------
     # [5] Check the occupied disk space
     #------------------------------------------------------
-    command = r"\du -sm %s" % DefaultBundleName
+    command = rf"\du -sm {DefaultBundleName}"
     sizeApp = int( os.popen(command).read().strip("\n").split("\t")[0] )
 
     #------------------------------------------------------
     # [6] Change the application bundle name if required
     #------------------------------------------------------
-    if OpMake and BundleName != "" and BundleName != DefaultBundleName:
+    if OpMake and BundleName not in ("", DefaultBundleName):
         os.rename( DefaultBundleName, BundleName )
     os.chdir(ProjectDir)
     return sizeApp
@@ -521,10 +521,10 @@ def ParseCommandLineArguments():
     #-----------------------------------------------------------
     # [1] Parse the command line options
     #-----------------------------------------------------------
-    opt, args = p.parse_args()
+    opt, _args = p.parse_args()
     if (opt.checkusage):
         print(Usage)
-        quit()
+        sys.exit()
 
     PkgDir       = opt.pkg_dir
     OpClean      = opt.operation_clean
@@ -532,8 +532,8 @@ def ParseCommandLineArguments():
     DMGSerialNum = int(opt.dmg_serial)
     UnsafePkg    = opt.unsafe
 
-    if not opt.bundle_name == "":
-        base, ext  = os.path.splitext( os.path.basename(opt.bundle_name) )
+    if opt.bundle_name != "":
+        base, _ext  = os.path.splitext( os.path.basename(opt.bundle_name) )
         BundleName = base + ".app"
     else:
         BundleName = DefaultBundleName
@@ -541,16 +541,16 @@ def ParseCommandLineArguments():
     if (OpClean and OpMake) or (not OpClean and not OpMake):
         print( "! Specify <-c|--clean> OR <-m|--make>", file=sys.stderr )
         print(Usage)
-        quit()
+        sys.exit()
 
     #------------------------------------------------------------------------------------
     # [2] Check the PKG directory to set QtIdentification, RubyPythonID, and BundleName
     #------------------------------------------------------------------------------------
     OccupiedDS = CheckPkgDirectory()
-    if not 0 < OccupiedDS and not UnsafePkg:
+    if not OccupiedDS > 0 and not UnsafePkg:
         print( "! Failed to check the PKG directory" )
         print( "" )
-        quit()
+        sys.exit()
 
     if opt.target_dmg != "":
         TargetDMG = opt.target_dmg
@@ -561,7 +561,6 @@ def ParseCommandLineArguments():
             TargetDMG = Machine + TargetDMG
         if BuildType == "debug": # in the case of 'debug' build
             TargetDMG = "debug-" + TargetDMG
-    return
 
 #------------------------------------------------------------------------------
 ## Make the target DMG file
@@ -581,7 +580,7 @@ def MakeTargetDMGFile(msg=""):
     #-------------------------------------------------------------
     # [1] Print message
     #-------------------------------------------------------------
-    if not msg == "":
+    if msg != "":
         print(msg)
 
     #-------------------------------------------------------------
@@ -601,11 +600,11 @@ def MakeTargetDMGFile(msg=""):
     print( ">>> (1) Preparing AppleScript to execute later..." )
     tempScr = "macbuild/Resources/template-KLayoutDMG.applescript"
     try:
-        fd   = open( tempScr, "r" )
+        fd   = open( tempScr )
         tmpl = fd.read()
         fd.close()
-    except Exception as e:
-        print( "        ! Failed to read <%s>" % tempScr, file=sys.stderr )
+    except Exception:
+        print( f"        ! Failed to read <{tempScr}>", file=sys.stderr )
         return False
     else:
         t = string.Template(tmpl)
@@ -613,23 +612,23 @@ def MakeTargetDMGFile(msg=""):
         applescript = t.safe_substitute(
                                             ORGX='50', ORGY='100',
                                             WIN_WIDTH='1000', WIN_HEIGHT='540',
-                                            FULL_PATH_DS_STORE='/Volumes/%s/.DS_Store' % VolumeDMG,
+                                            FULL_PATH_DS_STORE=f'/Volumes/{VolumeDMG}/.DS_Store',
                                             BACKGROUND_PNG_FILE=BackgroundPNG,
-                                            ITEM_1='%s' % BundleName,  X1='900', Y1='165',
+                                            ITEM_1=f'{BundleName}',  X1='900', Y1='165',
                                             ITEM_2='Applications',     X2='900', Y2='345',
                                             ITEM_3=Item3AppleScript,
-                                            CHECK_BASH='[ -f " & dotDSStore & " ]; echo $?'
+                                            CHECK_BASH='[ -f " & dotDSStore & " ]; echo $?',
                                         )
     try:
         # print(applescript)
         fd = open( AppleScriptDMG, "w" )
         fd.write(applescript)
         fd.close()
-    except Exception as e:
-        print( "! Failed to write <%s>" % AppleScriptDMG, file=sys.stderr )
+    except Exception:
+        print( f"! Failed to write <{AppleScriptDMG}>", file=sys.stderr )
         return False
     else:
-        print( "        saved <%s>" % AppleScriptDMG )
+        print( f"        saved <{AppleScriptDMG}>" )
 
     #----------------------------------------------------
     # (2) Create a work disk image under ProjectDir/
@@ -642,78 +641,77 @@ def MakeTargetDMGFile(msg=""):
     command  = cmdline % (PkgDir, VolumeDMG, dmgsize, WorkDMG)
     print( ">>> (2) Creating a work DMG file <%s> of <%d> [MB] with the volume name of <%s>..." % (WorkDMG, dmgsize, VolumeDMG) )
     os.system(command)
-    MountDir = "/Volumes/%s" % VolumeDMG
+    MountDir = f"/Volumes/{VolumeDMG}"
 
     #--------------------------------------------------------
     # (3) Check if the mount point 'MountDir' already exists.
     #     If so, unmount it first.
     #--------------------------------------------------------
-    command1 = "hdiutil info | grep %s | grep \"/dev/\" | awk '{print $1}'" % VolumeDMG
-    print ( ">>> (3) Checking if the mount point <%s> already exists..." % MountDir)
+    command1 = f"hdiutil info | grep {VolumeDMG} | grep \"/dev/\" | awk '{{print $1}}'"
+    print ( f">>> (3) Checking if the mount point <{MountDir}> already exists...")
     FileSys = os.popen(command1).read().strip('\n')
-    if os.path.isdir(MountDir) and not FileSys == "":
-        command2 = "hdiutil detach %s" % FileSys
+    if os.path.isdir(MountDir) and FileSys != "":
+        command2 = f"hdiutil detach {FileSys}"
         os.system(command2)
-        print( "        Mount directory <%s> was detached" % MountDir )
+        print( f"        Mount directory <{MountDir}> was detached" )
     else:
-        print( "        Mount directory <%s> does not exist; nothing to do" % MountDir )
+        print( f"        Mount directory <{MountDir}> does not exist; nothing to do" )
 
     #--------------------------------------------------------
     # (4) Mount the DMG
     #--------------------------------------------------------
-    print( ">>> (4) Mounting <%s> to <%s>" % (WorkDMG, MountDir ) )
-    command1 = "hdiutil attach %s -readwrite -noverify -quiet -noautoopen" % WorkDMG
+    print( f">>> (4) Mounting <{WorkDMG}> to <{MountDir}>" )
+    command1 = f"hdiutil attach {WorkDMG} -readwrite -noverify -quiet -noautoopen"
     os.system(command1)
 
-    command2 = "hdiutil info | grep %s | grep \"/dev/\" | awk '{print $1}'" % VolumeDMG
+    command2 = f"hdiutil info | grep {VolumeDMG} | grep \"/dev/\" | awk '{{print $1}}'"
     FileSys  = os.popen(command2).read().strip('\n')
     if FileSys == "":
-        print( "! Failed to identify the file system on which <%s> is mounted" % VolumeDMG )
+        print( f"! Failed to identify the file system on which <{VolumeDMG}> is mounted" )
         return False
-    else:
-        print( "        File System = %s" % FileSys )
+    print( f"        File System = {FileSys}" )
 
     #--------------------------------------------------------
     # (5) Copy the background image
     #--------------------------------------------------------
     print( ">>> (5) Copying the background image..." )
-    imageSrc  = "macbuild/Resources/%s" % BackgroundPNG
-    imageDest = "%s/.background" % MountDir
+    imageSrc  = f"macbuild/Resources/{BackgroundPNG}"
+    imageDest = f"{MountDir}/.background"
     if not os.path.isdir(imageDest):
         os.mkdir(imageDest)
-    command = r"\cp -p %s %s/%s" % (imageSrc, imageDest, BackgroundPNG)
+    command = rf"\cp -p {imageSrc} {imageDest}/{BackgroundPNG}"
     os.system(command)
 
     #--------------------------------------------------------
     # (6) Create a symbolic link to /Applications
     #--------------------------------------------------------
     print( ">>> (6) Creating a symbolic link to /Applications..." )
-    command = r"\ln -s %s %s/%s" % (RootApplications, MountDir, RootApplications)
+    command = rf"\ln -s {RootApplications} {MountDir}/{RootApplications}"
     os.system(command)
 
     #--------------------------------------------------------
     # (7) Run the AppleScript
     #--------------------------------------------------------
     print( ">>> (7) Running the AppleScript..." )
-    command = "/usr/bin/osascript %s %s" % (AppleScriptDMG, VolumeDMG)
+    command = f"/usr/bin/osascript {AppleScriptDMG} {VolumeDMG}"
     process = subprocess.Popen( command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True )
     output, error = process.communicate()
     outputStr = output.decode("utf-8")
     errorStr  = error.decode("utf-8")
-    if not outputStr == "":
-        print( "        STDOUT: %s" % outputStr )
-    if not errorStr == "":
-        print( "        STDERR: %s" % errorStr )
+    if outputStr != "":
+        print( f"        STDOUT: {outputStr}" )
+    if errorStr != "":
+        print( f"        STDERR: {errorStr}" )
 
     #--------------------------------------------------------
     # (8) Copy the custom volume icon
     #--------------------------------------------------------
     sleep(4)
     print( ">>> (8) Copying the volume icon..." )
-    iconsSrc  = "macbuild/Resources/%s" % VolumeIcons
-    iconsDest = "%s/.VolumeIcon.icns" % MountDir
-    command1  = r"\cp -p %s %s" % (iconsSrc, iconsDest)
-    command2  = "SetFile -c icnC %s" % iconsDest
+    iconsSrc  = f"macbuild/Resources/{VolumeIcons}"
+    iconsDest = f"{MountDir}/.VolumeIcon.icns"
+    command1  = rf"\cp -p {iconsSrc} {iconsDest}"
+    command2  = f"SetFile -c icnC {iconsDest}"
     os.system(command1)
     sleep(2)
     os.system(command2)
@@ -723,7 +721,7 @@ def MakeTargetDMGFile(msg=""):
     # (9) Change the permission
     #--------------------------------------------------------
     print( ">>> (9) Changing permission to 755..." )
-    command = r"\chmod -Rf 755 %s &> /dev/null" % MountDir
+    command = rf"\chmod -Rf 755 {MountDir} &> /dev/null"
     os.system(command)
 
     #--------------------------------------------------------
@@ -733,7 +731,7 @@ def MakeTargetDMGFile(msg=""):
     print( ">>> (10) Setting volume bootability and startup disk options..." )
     #command = "bless --folder %s --openfolder %s" % (MountDir, MountDir)
     #bless: The 'openfolder' option is deprecated
-    command = "bless --folder %s" % MountDir
+    command = f"bless --folder {MountDir}"
     os.system(command)
     sleep(2)
 
@@ -741,7 +739,7 @@ def MakeTargetDMGFile(msg=""):
     # (11) Set attributes of files and directories
     #--------------------------------------------------------
     print( ">>> (11) Setting attributes of files and directories..." )
-    command = "SetFile -a C %s" % MountDir # Custom icon (allowed on folders)
+    command = f"SetFile -a C {MountDir}" # Custom icon (allowed on folders)
     os.system(command)
     sleep(2)
 
@@ -749,7 +747,7 @@ def MakeTargetDMGFile(msg=""):
     # (12) Unmount the disk image
     #--------------------------------------------------------
     print( ">>> (12) Unmounting the disk image..." )
-    command = "hdiutil detach %s" % FileSys
+    command = f"hdiutil detach {FileSys}"
     os.system(command)
 
     #--------------------------------------------------------
@@ -757,11 +755,11 @@ def MakeTargetDMGFile(msg=""):
     #--------------------------------------------------------
     print( "" )
     print( ">>> (13) Compressing the disk image..." )
-    command = "hdiutil convert %s -format UDZO -imagekey zlib-level=9 -o %s" % (WorkDMG, TargetDMG)
+    command = f"hdiutil convert {WorkDMG} -format UDZO -imagekey zlib-level=9 -o {TargetDMG}"
     os.system(command)
     os.remove(WorkDMG)
     print( "" )
-    print( "        generated compressed target DMG <%s>" % TargetDMG )
+    print( f"        generated compressed target DMG <{TargetDMG}>" )
 
     #--------------------------------------------------------
     # (14) Compute MD5 checksum
@@ -771,22 +769,22 @@ def MakeTargetDMGFile(msg=""):
     with open( TargetDMG, "rb" ) as f:
         data = f.read()
         md5  = hashlib.md5(data).hexdigest()
-        md5 += " *%s\n" % TargetDMG
+        md5 += f" *{TargetDMG}\n"
     f.close()
-    path, ext    = os.path.splitext( os.path.basename(TargetDMG) )
+    path, _ext    = os.path.splitext( os.path.basename(TargetDMG) )
     md5TargetDMG = path + ".dmg.md5"
     with open( md5TargetDMG, "w" ) as f:
         f.write(md5)
     f.close()
-    print( "        generated MD5 checksum file <%s>" % md5TargetDMG )
+    print( f"        generated MD5 checksum file <{md5TargetDMG}>" )
     print( "" )
 
     #-------------------------------------------------------------------------
     # [3] Rename back the application bundle to the default name if required
     #-------------------------------------------------------------------------
-    if BundleName != "" and BundleName != DefaultBundleName:
-        dirPresent = "%s/%s" % (PkgDir, BundleName)
-        dirDefault = "%s/%s" % (PkgDir, DefaultBundleName)
+    if BundleName not in ("", DefaultBundleName):
+        dirPresent = f"{PkgDir}/{BundleName}"
+        dirDefault = f"{PkgDir}/{DefaultBundleName}"
         os.rename( dirPresent, dirDefault )
 
     return True
@@ -802,7 +800,7 @@ def CleanUp(msg=""):
     #----------------------------------------------------
     # [1] Print message
     #----------------------------------------------------
-    if not msg == "":
+    if msg != "":
         print(msg)
 
     #----------------------------------------------------
@@ -811,8 +809,8 @@ def CleanUp(msg=""):
     os.chdir(ProjectDir)
     dmgs = glob.glob( "*.dmg*" )
     for item in dmgs:
-        print("Removing %s" % item)
-        os.system( "rm -Rf -- \"%s\"" % item )
+        print(f"Removing {item}")
+        os.system( f"rm -Rf -- \"{item}\"" )
 
     #----------------------------------------------------
     # [3] Clean up AppleScript if any
@@ -828,19 +826,19 @@ def Main():
     ParseCommandLineArguments()
     if OpMake:
         print( "" )
-        print( "  ### You are going to make <%s> from <%s>" % (TargetDMG, PkgDir) )
+        print( f"  ### You are going to make <{TargetDMG}> from <{PkgDir}>" )
         print( "      KLayout bundles occupy about <%d> [MB] of disc space." % OccupiedDS )
         print( "" )
         ok = MakeTargetDMGFile()
         if not ok:
-            print( "  !!! Failed to make the target DMG <%s> ..." % TargetDMG, file=sys.stderr )
+            print( f"  !!! Failed to make the target DMG <{TargetDMG}> ...", file=sys.stderr )
             print( "", file=sys.stderr )
         else:
             print( "  ### Done making the target DMG" )
             print( "" )
     else:
         print( "" )
-        print( "  ### You are going to clean up <%s> directory" % ProjectDir )
+        print( f"  ### You are going to clean up <{ProjectDir}> directory" )
         CleanUp()
         print( "  ### Done cleaning up" )
         print( "" )

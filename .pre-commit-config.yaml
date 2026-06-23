@@ -1,0 +1,46 @@
+# pre-commit configuration — https://pre-commit.com
+#
+#   pip install pre-commit         # or: pipx install pre-commit
+#   pre-commit install             # enable the git hook
+#   pre-commit run --all-files     # run everything once
+#
+# By default the hooks run only on the files you stage, so adoption is
+# incremental and legacy files are left untouched until you edit them.
+#
+# clang-format is intentionally a *manual-stage* hook: until a repo-wide C++
+# formatting commit lands it would reformat whole legacy files on touch. Run it
+# deliberately with:  pre-commit run --hook-stage manual clang-format
+# For line-scoped C++ formatting prefer:  git clang-format
+
+exclude: '^(testdata/|venv/|build-release/|bin-release/|.*\.pyi$)'
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: '^testdata/'
+      - id: end-of-file-fixer
+        exclude: '^testdata/'
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ['--maxkb=2048']
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.18
+    hooks:
+      - id: ruff
+        args: ['--fix']
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: v19.1.7
+    hooks:
+      - id: clang-format
+        types_or: [c++, c]
+        stages: [manual]

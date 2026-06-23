@@ -30,3 +30,48 @@ environment-pass = ["HOST_CCACHE_DIR"]
 [tool.cibuildwheel.macos]
 # Repair macOS wheels (include libpng with the wheel, for example)
 repair-wheel-command = "delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v --ignore-missing-dependencies {wheel}"
+
+[tool.ruff]
+line-length = 120
+target-version = "py37"
+extend-exclude = [
+  "venv",
+  "testdata",
+  "build-release",
+  "bin-release",
+  "*.pyi",          # generated stubs (scripts/stubgen.py)
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "C4", "RUF", "N", "A", "COM", "PT", "RET", "ARG", "PTH", "ERA", "PL", "TRY", "FLY", "PERF"]
+ignore = [
+  "E501",   # line-too-long: many long lines in build scripts; relax for now
+]
+
+[tool.ruff.lint.per-file-ignores]
+# The shipped `klayout` package __init__ modules deliberately re-export symbols
+# from the compiled C-extension modules (pya/*core) via star imports.
+"src/pymod/distutils_src/**/__init__.py" = ["F401", "F403", "F405", "E402"]
+# Editor/macro templates are snippets, not standalone modules.
+"src/lay/lay/**/*.py" = ["F821", "F401"]
+
+"src/pymod/distutils_src/**/*.py" = ["N", "A", "COM", "PT", "RET", "ARG", "PTH", "ERA", "PL", "TRY", "FLY", "PERF", "PLE"]
+
+
+[tool.ruff.format]
+quote-style = "double"
+docstring-code-format = true
+
+[tool.pyrefly]
+project-includes = ["src/pymod/distutils_src/klayout"]
+project-excludes = [
+  "**/*.pyi",
+  "venv",
+  "testdata",
+  "build-release",
+  "bin-release",
+]
+"macbuild/*.py" = ["E402", "F403", "F405", "UP031", "SIM108", "SIM115", "B904", "W191", "C408", "RUF059", "RUF005", "N", "A", "COM", "PT", "RET", "ARG", "PTH", "ERA", "PL", "TRY", "FLY", "PERF"]
+"build4mac.py" = ["E402", "F403", "F405", "UP031", "SIM108", "SIM115", "B904", "W191", "C408", "RUF059", "N", "A", "COM", "PT", "RET", "ARG", "PTH", "ERA", "PL", "TRY", "FLY", "PERF"]
+"setup.py" = ["E402", "UP031", "SIM108", "SIM115", "W191", "RUF005", "RUF059", "N", "A", "COM", "PT", "RET", "ARG", "PTH", "ERA", "PL", "TRY", "FLY", "PERF"]
+"scripts/*.py" = ["E402", "UP031", "SIM108", "SIM115", "W191", "RUF013", "C408", "N", "A", "COM", "PT", "RET", "ARG", "PTH", "ERA", "PL", "TRY", "FLY", "PERF"]

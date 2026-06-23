@@ -119,13 +119,35 @@ equals(HAVE_GIT2, "1") {
   DEFINES += HAVE_GIT2
 }
 
-# Use the Address Sanitizer for the debug build on Mac
-mac {
-  USE_ASAN_MAC = $$system(echo $$(MAC_USE_ASAN))
-  equals(USE_ASAN_MAC, "1") {
-    QMAKE_CXXFLAGS += -fsanitize=address
-    QMAKE_LFLAGS += -fsanitize=address
+# Sanitizer support (Clang / GCC, Linux and macOS).
+#
+# Select sanitizers through the SANITIZE qmake variable, e.g.
+#   qmake ... "SANITIZE=address undefined"
+#   qmake ... SANITIZE=thread
+# Accepted tokens: address, undefined, thread, leak. Note that thread is
+# mutually exclusive with address/leak. Sanitizer builds are meant for the
+# debug configuration and for CI test runs, not for release artifacts.
+#
+# For backwards compatibility, the historical Mac-only MAC_USE_ASAN=1
+# environment switch still selects the address sanitizer.
+isEmpty(SANITIZE) {
+  mac {
+    USE_ASAN_MAC = $$system(echo $$(MAC_USE_ASAN))
+    equals(USE_ASAN_MAC, "1") {
+      SANITIZE = address
+    }
   }
+}
+
+!isEmpty(SANITIZE) {
+  for (san, SANITIZE) {
+    QMAKE_CXXFLAGS += -fsanitize=$$san
+    QMAKE_LFLAGS += -fsanitize=$$san
+  }
+  # Better diagnostics: keep frame pointers and line info, do not optimise away
+  QMAKE_CXXFLAGS += -fno-omit-frame-pointer -g
+  QMAKE_LFLAGS += -fno-omit-frame-pointer
+  message("Building with sanitizers: $$SANITIZE")
 }
 
 equals(HAVE_RUBY, "1") {

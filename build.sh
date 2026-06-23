@@ -683,6 +683,12 @@ qmake_options=(
   KLAYOUT_VERSION_REV="$KLAYOUT_VERSION_REV"
 )
 
+# Allow passing extra qmake variables verbatim, e.g. to enable sanitizers:
+#   KLAYOUT_QMAKE_ARGS="SANITIZE=address" ./build.sh -debug
+if [ -n "$KLAYOUT_QMAKE_ARGS" ]; then
+  qmake_options+=( $KLAYOUT_QMAKE_ARGS )
+fi
+
 # NOTE: qmake does not like include paths which clash with paths built into the compiler
 # hence we don't add RUBYINCLUDE or RUBYINCLUDE2 in this case (found on CentOS 8 where Ruby
 # headers are installed in /usr/include)

@@ -35,7 +35,7 @@
 static std::string demangle (const std::string &name)
 {
   int status = 1;
-  char *dn = abi::__cxa_demangle(name.c_str (), 0, 0, &status);
+  char *dn = abi::__cxa_demangle(name.c_str (), nullptr, nullptr, &status);
   if (status == 0) {
     std::string res (dn);
     std::free (dn);
@@ -78,7 +78,7 @@ void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, c
   if (! no_self) {
     stat->add (typeid (std::vector<bool>), (void *) &x, sizeof (std::vector<bool>), sizeof (std::vector<bool>), parent, purpose, cat);
   }
-  stat->add (typeid (bool []), (void *) 0 /*n/a*/, x.capacity () / 8, x.size () / 8, (void *) &x, purpose, cat);
+  stat->add (typeid (bool []), (void *) nullptr /*n/a*/, x.capacity () / 8, x.size () / 8, (void *) &x, purpose, cat);
 }
 
 // --------------------------------------------------------------------------------------

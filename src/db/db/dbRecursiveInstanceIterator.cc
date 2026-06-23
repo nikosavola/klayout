@@ -53,10 +53,10 @@ RecursiveInstanceIterator &RecursiveInstanceIterator::operator= (const Recursive
     mp_top_cell = d.mp_top_cell;
 
     m_region = d.m_region;
-    if (d.mp_complex_region != 0) {
+    if (d.mp_complex_region != nullptr) {
       mp_complex_region.reset (new region_type (*d.mp_complex_region));
     } else {
-      mp_complex_region.reset (0);
+      mp_complex_region.reset (nullptr);
     }
 
     m_box_convert = d.m_box_convert;
@@ -84,8 +84,8 @@ RecursiveInstanceIterator &RecursiveInstanceIterator::operator= (const Recursive
 RecursiveInstanceIterator::RecursiveInstanceIterator ()
 {
   //  anything. Not necessary reasonable.
-  mp_top_cell = 0;
-  mp_cell = 0;
+  mp_top_cell = nullptr;
+  mp_cell = nullptr;
   m_overlapping = false;
   m_max_depth = std::numeric_limits<int>::max (); // all
   m_min_depth = 0;
@@ -137,7 +137,7 @@ RecursiveInstanceIterator::init ()
   m_max_depth = std::numeric_limits<int>::max (); // all
   m_min_depth = 0; // from the beginning
   m_inst_quad_id = 0;
-  mp_cell = 0;
+  mp_cell = nullptr;
   m_all_targets = true;
 }
 
@@ -145,7 +145,7 @@ void
 RecursiveInstanceIterator::init_region (const RecursiveInstanceIterator::box_type &region)
 {
   m_region = region;
-  mp_complex_region.reset (0);
+  mp_complex_region.reset (nullptr);
 }
 
 void
@@ -154,12 +154,12 @@ RecursiveInstanceIterator::init_region (const RecursiveInstanceIterator::region_
   if (region.empty ()) {
 
     m_region = box_type ();
-    mp_complex_region.reset (0);
+    mp_complex_region.reset (nullptr);
 
   } else if (region.is_box ()) {
 
     m_region = region.bbox ();
-    mp_complex_region.reset (0);
+    mp_complex_region.reset (nullptr);
 
   } else {
 
@@ -174,7 +174,7 @@ RecursiveInstanceIterator::init_region (const RecursiveInstanceIterator::region_
 void
 RecursiveInstanceIterator::set_region (const box_type &region)
 {
-  if (m_region != region || mp_complex_region != 0) {
+  if (m_region != region || mp_complex_region != nullptr) {
     init_region (region);
     reset ();
   }
@@ -402,7 +402,7 @@ RecursiveInstanceIterator::select_all_cells ()
 const RecursiveInstanceIterator::instance_element_type *
 RecursiveInstanceIterator::operator-> () const
 {
-  validate (0);
+  validate (nullptr);
   m_combined_instance = db::InstElement (*m_inst, m_inst_array);
   return &m_combined_instance;
 }
@@ -410,7 +410,7 @@ RecursiveInstanceIterator::operator-> () const
 bool
 RecursiveInstanceIterator::at_end () const
 {
-  validate (0);
+  validate (nullptr);
   return m_inst.at_end ();
 }
 
@@ -588,7 +588,7 @@ RecursiveInstanceIterator::down (RecursiveInstanceReceiver *receiver) const
   }
 
   if (receiver) {
-    receiver->enter_cell (this, cell (), m_local_region_stack.back (), m_local_complex_region_stack.empty () ? 0 : &m_local_complex_region_stack.back ());
+    receiver->enter_cell (this, cell (), m_local_region_stack.back (), m_local_complex_region_stack.empty () ? nullptr : &m_local_complex_region_stack.back ());
   }
 
   new_cell (receiver);
@@ -665,7 +665,7 @@ RecursiveInstanceIterator::new_inst (RecursiveInstanceReceiver *receiver) const
 
     RecursiveInstanceReceiver::new_inst_mode ni = RecursiveInstanceReceiver::NI_all;
     if (receiver) {
-      ni = receiver->new_inst (this, m_inst->cell_inst (), m_local_region_stack.back (), m_local_complex_region_stack.empty () ? 0 : &m_local_complex_region_stack.back (), all_of_instance);
+      ni = receiver->new_inst (this, m_inst->cell_inst (), m_local_region_stack.back (), m_local_complex_region_stack.empty () ? nullptr : &m_local_complex_region_stack.back (), all_of_instance);
     }
 
     if (ni == RecursiveInstanceReceiver::NI_skip) {
@@ -710,7 +710,7 @@ RecursiveInstanceIterator::new_inst_member (RecursiveInstanceReceiver *receiver)
   }
 
   while (! m_inst_array.at_end () && receiver) {
-    if (receiver->new_inst_member (this, m_inst->cell_inst (), m_inst->complex_trans (*m_inst_array), m_local_region_stack.back (), m_local_complex_region_stack.empty () ? 0 : &m_local_complex_region_stack.back (), is_all_of_instance ())) {
+    if (receiver->new_inst_member (this, m_inst->cell_inst (), m_inst->complex_trans (*m_inst_array), m_local_region_stack.back (), m_local_complex_region_stack.empty () ? nullptr : &m_local_complex_region_stack.back (), is_all_of_instance ())) {
       break;
     } else {
       ++m_inst_array;

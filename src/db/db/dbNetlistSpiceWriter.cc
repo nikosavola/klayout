@@ -41,7 +41,7 @@ static const char *not_connect_prefix = "nc_";
 // --------------------------------------------------------------------------------
 
 NetlistSpiceWriterDelegate::NetlistSpiceWriterDelegate ()
-  : mp_writer (0)
+  : mp_writer (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -53,25 +53,25 @@ NetlistSpiceWriterDelegate::~NetlistSpiceWriterDelegate ()
 
 std::string NetlistSpiceWriterDelegate::net_to_string (const db::Net *net) const
 {
-  tl_assert (mp_writer != 0);
+  tl_assert (mp_writer != nullptr);
   return mp_writer->net_to_string (net);
 }
 
 std::string NetlistSpiceWriterDelegate::format_name (const std::string &name) const
 {
-  tl_assert (mp_writer != 0);
+  tl_assert (mp_writer != nullptr);
   return mp_writer->format_name (name);
 }
 
 void NetlistSpiceWriterDelegate::emit_line (const std::string &line) const
 {
-  tl_assert (mp_writer != 0);
+  tl_assert (mp_writer != nullptr);
   mp_writer->emit_line (line);
 }
 
 void NetlistSpiceWriterDelegate::emit_comment (const std::string &comment) const
 {
-  tl_assert (mp_writer != 0);
+  tl_assert (mp_writer != nullptr);
   mp_writer->emit_comment (comment);
 }
 
@@ -247,7 +247,7 @@ std::string NetlistSpiceWriterDelegate::format_params (const db::Device &dev, si
 // --------------------------------------------------------------------------------
 
 NetlistSpiceWriter::NetlistSpiceWriter (NetlistSpiceWriterDelegate *delegate)
-  : mp_netlist (0), mp_stream (0), mp_delegate (delegate), m_next_net_id (0), m_use_net_names (false), m_with_comments (true)
+  : mp_netlist (nullptr), mp_stream (nullptr), mp_delegate (delegate), m_next_net_id (0), m_use_net_names (false), m_with_comments (true)
 {
   static NetlistSpiceWriterDelegate std_delegate;
   if (! delegate) {
@@ -282,15 +282,15 @@ void NetlistSpiceWriter::write (tl::OutputStream &stream, const db::Netlist &net
 
     do_write (description);
 
-    mp_stream = 0;
-    mp_netlist = 0;
-    mp_delegate->attach_writer (0);
+    mp_stream = nullptr;
+    mp_netlist = nullptr;
+    mp_delegate->attach_writer (nullptr);
 
   } catch (...) {
 
-    mp_stream = 0;
-    mp_netlist = 0;
-    mp_delegate->attach_writer (0);
+    mp_stream = nullptr;
+    mp_netlist = nullptr;
+    mp_delegate->attach_writer (nullptr);
     throw;
 
   }
@@ -320,7 +320,7 @@ std::string NetlistSpiceWriter::net_to_string (const db::Net *net) const
         nn += "\\";
       }
       for (const char *cp = n.c_str (); *cp; ++cp) {
-        if (! isalnum (*cp) && strchr (allowed_name_chars, *cp) == 0) {
+        if (! isalnum (*cp) && strchr (allowed_name_chars, *cp) == nullptr) {
           nn += tl::sprintf ("\\x%02x", (unsigned char) *cp);
         } else if (*cp == ',') {
           nn += "|";
@@ -347,7 +347,7 @@ std::string NetlistSpiceWriter::net_to_string (const db::Net *net) const
 
 void NetlistSpiceWriter::emit_line (const std::string &line) const
 {
-  tl_assert (mp_stream != 0);
+  tl_assert (mp_stream != nullptr);
 
   int max_length = 80;
   bool first = true;
@@ -356,7 +356,7 @@ void NetlistSpiceWriter::emit_line (const std::string &line) const
   do {
 
     const char *cpn = cp;
-    const char *cspc = 0;
+    const char *cspc = nullptr;
     int c = 0;
 
     int l = first ? max_length : max_length - 2;
@@ -393,7 +393,7 @@ void NetlistSpiceWriter::emit_line (const std::string &line) const
 
 void NetlistSpiceWriter::emit_comment (const std::string &comment) const
 {
-  tl_assert (mp_stream != 0);
+  tl_assert (mp_stream != nullptr);
 
   //  TODO: should do some line breaking or reduction for long lines
   //  or when lines contain newlines

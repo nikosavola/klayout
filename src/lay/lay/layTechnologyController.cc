@@ -50,7 +50,7 @@ static std::string tech_string_from_name (const std::string &tn)
 }
 
 TechnologyController::TechnologyController ()
-  : PluginDeclaration (), mp_editor (0), mp_mw (0), mp_dispatcher (0), mp_active_technology (0)
+  : PluginDeclaration (), mp_editor (nullptr), mp_mw (nullptr), mp_dispatcher (nullptr), mp_active_technology (nullptr)
 {
   m_configure_enabled = true;
   m_current_technology_updated = false;
@@ -66,7 +66,7 @@ TechnologyController::instance ()
       return tc;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -168,7 +168,7 @@ TechnologyController::active_technology () const
 void
 TechnologyController::update_active_technology ()
 {
-  db::Technology *active_tech = 0;
+  db::Technology *active_tech = nullptr;
   if (mp_mw && mp_mw->current_view () && mp_mw->current_view ()->active_cellview_index () >= 0 && mp_mw->current_view ()->active_cellview_index () <= int (mp_mw->current_view ()->cellviews ())) {
 
     std::string tn = mp_mw->current_view ()->active_cellview ()->tech_name ();
@@ -406,7 +406,7 @@ TechnologyController::update_menu (lay::Dispatcher *dispatcher)
 void
 TechnologyController::replace_technologies (const db::Technologies &technologies)
 {
-  bool has_active_tech = (mp_active_technology != 0);
+  bool has_active_tech = (mp_active_technology != nullptr);
   std::string active_tech_name;
   if (mp_active_technology) {
     active_tech_name = mp_active_technology->name ();

@@ -55,7 +55,7 @@ static PluginDescriptor load_plugin (const std::string &pp)
 
   tl::log << tl::sprintf (tl::to_string (tr ("Loading plugin: %s")), pp);
 
-  dbp_init_func_t init_func = 0;
+  dbp_init_func_t init_func = nullptr;
   static const char *init_func_name = "dbp_init";
 
 #if defined(_WIN32)
@@ -81,8 +81,8 @@ static PluginDescriptor load_plugin (const std::string &pp)
 
   //  If present, call the initialization function to fetch some details from the plugin
   if (init_func) {
-    const char *version = 0;
-    const char *description = 0;
+    const char *version = nullptr;
+    const char *description = nullptr;
     (*init_func) (&version, &description);
     if (version) {
       desc.version = version;

@@ -50,7 +50,7 @@ class DB_PUBLIC NetlistSpiceReader
 public:
   typedef std::map<std::string, tl::Variant> parameters_type;
 
-  NetlistSpiceReader (NetlistSpiceReaderDelegate *delegate = 0);
+  NetlistSpiceReader (NetlistSpiceReaderDelegate *delegate = nullptr);
   virtual ~NetlistSpiceReader ();
 
   virtual void read (tl::InputStream &stream, db::Netlist &netlist);

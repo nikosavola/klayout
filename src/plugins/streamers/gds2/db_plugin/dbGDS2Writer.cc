@@ -39,7 +39,7 @@ namespace db
 //  GDS2Writer implementation
 
 GDS2Writer::GDS2Writer ()
-  : mp_stream (0), m_progress (tl::to_string (tr ("Writing GDS2 file")), 10000)
+  : mp_stream (nullptr), m_progress (tl::to_string (tr ("Writing GDS2 file")), 10000)
 {
   m_progress.set_format (tl::to_string (tr ("%.0f MB")));
   m_progress.set_unit (1024 * 1024);

@@ -197,7 +197,7 @@ LayerMap::target (unsigned int l) const
   if (i != m_target_layers.end ()) {
     return & i->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -539,13 +539,13 @@ LayerMap::mapping (unsigned int ll) const
 void 
 LayerMap::mmap (const LDPair &p, unsigned int l)
 {
-  insert (p, p, l, (const LayerProperties *) 0);
+  insert (p, p, l, (const LayerProperties *) nullptr);
 }
 
 void 
 LayerMap::mmap (const std::string &name, unsigned int l)
 {
-  insert (name, l, (const LayerProperties *) 0);
+  insert (name, l, (const LayerProperties *) nullptr);
 }
 
 void 
@@ -585,7 +585,7 @@ LayerMap::mmap (const LayerProperties &f, unsigned int l, const LayerProperties 
 void 
 LayerMap::mmap (const LDPair &p1, const LDPair &p2, unsigned int l)
 {
-  insert (p1, p2, l, (const LayerProperties *) 0);
+  insert (p1, p2, l, (const LayerProperties *) nullptr);
 }
 
 void 

@@ -71,7 +71,7 @@ ColdProxy::~ColdProxy ()
   }
 
   delete mp_context_info;
-  mp_context_info = 0;
+  mp_context_info = nullptr;
 }
 
 void

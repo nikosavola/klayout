@@ -465,7 +465,7 @@ namespace
 
     virtual void wait_for_input ()
     {
-      yield (0);
+      yield (nullptr);
     }
 
     virtual void trigger (tl::Progress *progress)

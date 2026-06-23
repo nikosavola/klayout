@@ -763,7 +763,7 @@ DeviceClassMOS3Transistor::join_split_gates (db::Circuit *circuit) const
 
         size_t tid = t->terminal_id ();
         const db::Device *d = t->device ();
-        const db::Net *nn = 0;
+        const db::Net *nn = nullptr;
 
         while (true) {
 
@@ -775,7 +775,7 @@ DeviceClassMOS3Transistor::join_split_gates (db::Circuit *circuit) const
             break;
           }
 
-          const db::Device *other_device = 0;
+          const db::Device *other_device = nullptr;
           for (db::Net::const_terminal_iterator tt = nn->begin_terminals (); tt != nn->end_terminals (); ++tt) {
             if (tt->device () != d) {
               other_tid = tt->terminal_id ();
@@ -786,7 +786,7 @@ DeviceClassMOS3Transistor::join_split_gates (db::Circuit *circuit) const
           tl_assert (other_device);
 
           if (seen_nets.find (nn) != seen_nets.end ()) {
-            nn = 0;
+            nn = nullptr;
             break;
           }
           seen_nets.insert (nn);

@@ -67,7 +67,7 @@ public:
    *  The hasher will not take ownership over the layout, nor
    *  the selected cell set.
    */
-  CellInstanceSetHasher (const db::Layout *layout, db::cell_index_type top_cell, const std::set<db::cell_index_type> *selection = 0);
+  CellInstanceSetHasher (const db::Layout *layout, db::cell_index_type top_cell, const std::set<db::cell_index_type> *selection = nullptr);
 
   /**
    *  @brief Computes the hash value representative for the flat instance set of the given cell in the top cell and the selection

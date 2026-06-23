@@ -46,7 +46,7 @@ void TextProgress::update_progress (tl::Progress *progress)
   }
 
   std::string value = progress->formatted_value ();
-  for (tl::Progress *p = progress->next (); p != 0; p = p->next ()) {
+  for (tl::Progress *p = progress->next (); p != nullptr; p = p->next ()) {
     value += " " + p->formatted_value ();
   }
 

@@ -103,7 +103,7 @@ LineStyleInfo::operator= (const LineStyleInfo &d)
 void
 LineStyleInfo::assign_no_lock (const LineStyleInfo &d)
 {
-  m_scaled_pattern.reset (0);
+  m_scaled_pattern.reset (nullptr);
 
   m_order_index = d.m_order_index;
   m_name = d.m_name;
@@ -221,7 +221,7 @@ void
 LineStyleInfo::set_pattern (uint32_t pt, unsigned int w) 
 {
   tl::MutexLocker locker (& s_mutex);
-  m_scaled_pattern.reset (0);
+  m_scaled_pattern.reset (nullptr);
 
   memset (m_pattern, 0, sizeof (m_pattern));
 
@@ -410,7 +410,7 @@ struct ReplaceLineStyleOp
 };
 
 LineStyles::LineStyles () :
-    db::Object (0)
+    db::Object (nullptr)
 {
   for (unsigned int d = 0; d < sizeof (style_strings) / sizeof (style_strings [0]); d += 2) {
     m_styles.push_back (LineStyleInfo ());
@@ -420,7 +420,7 @@ LineStyles::LineStyles () :
 }
 
 LineStyles::LineStyles (const LineStyles &p) :
-  db::Object (0)
+  db::Object (nullptr)
 {
   m_styles = p.m_styles;
 }

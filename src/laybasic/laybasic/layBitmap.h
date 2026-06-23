@@ -348,7 +348,7 @@ private:
 inline bool
 Bitmap::is_scanline_empty (unsigned int n) const
 {
-  return m_scanlines.empty () || m_scanlines [n] == 0;
+  return m_scanlines.empty () || m_scanlines [n] == nullptr;
 }
 
 inline bool
@@ -396,7 +396,7 @@ Bitmap::last_scanline () const
 inline const uint32_t *
 Bitmap::scanline (unsigned n) const
 {
-  if (n >= m_scanlines.size () || m_scanlines [n] == 0) {
+  if (n >= m_scanlines.size () || m_scanlines [n] == nullptr) {
     return m_empty_scanline;
   } else {
     return m_scanlines [n];

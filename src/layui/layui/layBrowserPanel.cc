@@ -97,7 +97,7 @@ BrowserPanel::BrowserPanel (QWidget *parent)
   : QWidget (parent),
     m_back_dm (this, &BrowserPanel::back),
     m_new_url_dm (this, &BrowserPanel::new_url),
-    mp_dispatcher (0)
+    mp_dispatcher (nullptr)
 {
   init ();
 }
@@ -107,7 +107,7 @@ BrowserPanel::init ()
 {
   m_enable_load = false;
   m_enable_reject = false;
-  mp_source.reset (0);
+  mp_source.reset (nullptr);
 
   mp_ui = new Ui::BrowserPanel ();
   mp_ui->setupUi (this);
@@ -175,11 +175,11 @@ BrowserPanel::init ()
 
 BrowserPanel::~BrowserPanel ()
 {
-  set_source (0);
-  mp_ui->browser->set_panel (0);
+  set_source (nullptr);
+  mp_ui->browser->set_panel (nullptr);
 
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -795,7 +795,7 @@ BrowserSource::~BrowserSource ()
   std::set<BrowserPanel *> owners;
   owners.swap (mp_owners);
   for (std::set<BrowserPanel *>::const_iterator o = owners.begin (); o != owners.end (); ++o) {
-    (*o)->set_source (0);
+    (*o)->set_source (nullptr);
   }
 }
 

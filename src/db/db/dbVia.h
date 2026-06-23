@@ -184,7 +184,7 @@ private:
 struct SelectedViaDefinition
 {
   SelectedViaDefinition ()
-    : lib (0), pcell (0)
+    : lib (nullptr), pcell (0)
   { }
 
   SelectedViaDefinition (db::Library *_lib, db::pcell_id_type _pcell, const db::ViaType &_via_type)

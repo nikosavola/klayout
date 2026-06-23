@@ -102,7 +102,7 @@ class DB_PUBLIC NetlistDeviceExtractorMOS3Transistor
   : public db::NetlistDeviceExtractorImplBase
 {
 public:
-  NetlistDeviceExtractorMOS3Transistor (const std::string &name, bool strict = false, DeviceClassFactory *factory = 0);
+  NetlistDeviceExtractorMOS3Transistor (const std::string &name, bool strict = false, DeviceClassFactory *factory = nullptr);
 
   virtual void setup ();
   virtual db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const;
@@ -148,7 +148,7 @@ class DB_PUBLIC NetlistDeviceExtractorMOS4Transistor
   : public NetlistDeviceExtractorMOS3Transistor
 {
 public:
-  NetlistDeviceExtractorMOS4Transistor (const std::string &name, bool strict = false, DeviceClassFactory *factory = 0);
+  NetlistDeviceExtractorMOS4Transistor (const std::string &name, bool strict = false, DeviceClassFactory *factory = nullptr);
 
   virtual void setup ();
 
@@ -178,7 +178,7 @@ class DB_PUBLIC NetlistDeviceExtractorResistor
   : public db::NetlistDeviceExtractorImplBase
 {
 public:
-  NetlistDeviceExtractorResistor (const std::string &name, double sheet_rho, DeviceClassFactory *factory = 0);
+  NetlistDeviceExtractorResistor (const std::string &name, double sheet_rho, DeviceClassFactory *factory = nullptr);
 
   virtual void setup ();
   virtual db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const;
@@ -216,7 +216,7 @@ class DB_PUBLIC NetlistDeviceExtractorResistorWithBulk
   : public db::NetlistDeviceExtractorResistor
 {
 public:
-  NetlistDeviceExtractorResistorWithBulk (const std::string &name, double sheet_rho, DeviceClassFactory *factory = 0);
+  NetlistDeviceExtractorResistorWithBulk (const std::string &name, double sheet_rho, DeviceClassFactory *factory = nullptr);
 
   virtual void setup ();
   virtual void modify_device (const db::Polygon &res, const std::vector<db::Region> & /*layer_geometry*/, db::Device *device);
@@ -243,7 +243,7 @@ class DB_PUBLIC NetlistDeviceExtractorCapacitor
   : public db::NetlistDeviceExtractorImplBase
 {
 public:
-  NetlistDeviceExtractorCapacitor (const std::string &name, double area_cap, DeviceClassFactory *factory = 0);
+  NetlistDeviceExtractorCapacitor (const std::string &name, double area_cap, DeviceClassFactory *factory = nullptr);
 
   virtual void setup ();
   virtual db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const;
@@ -281,7 +281,7 @@ class DB_PUBLIC NetlistDeviceExtractorCapacitorWithBulk
   : public db::NetlistDeviceExtractorCapacitor
 {
 public:
-  NetlistDeviceExtractorCapacitorWithBulk (const std::string &name, double cap_area, DeviceClassFactory *factory = 0);
+  NetlistDeviceExtractorCapacitorWithBulk (const std::string &name, double cap_area, DeviceClassFactory *factory = nullptr);
 
   virtual void setup ();
   virtual void modify_device (const db::Polygon &cap, const std::vector<db::Region> & /*layer_geometry*/, db::Device *device);
@@ -313,7 +313,7 @@ class DB_PUBLIC NetlistDeviceExtractorBJT3Transistor
   : public db::NetlistDeviceExtractorImplBase
 {
 public:
-  NetlistDeviceExtractorBJT3Transistor (const std::string &name, DeviceClassFactory *factory = 0);
+  NetlistDeviceExtractorBJT3Transistor (const std::string &name, DeviceClassFactory *factory = nullptr);
 
   virtual void setup ();
   virtual db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const;
@@ -350,7 +350,7 @@ class DB_PUBLIC NetlistDeviceExtractorBJT4Transistor
   : public NetlistDeviceExtractorBJT3Transistor
 {
 public:
-  NetlistDeviceExtractorBJT4Transistor (const std::string &name, DeviceClassFactory *factory = 0);
+  NetlistDeviceExtractorBJT4Transistor (const std::string &name, DeviceClassFactory *factory = nullptr);
 
   virtual void setup ();
 
@@ -378,7 +378,7 @@ class DB_PUBLIC NetlistDeviceExtractorDiode
   : public db::NetlistDeviceExtractorImplBase
 {
 public:
-  NetlistDeviceExtractorDiode (const std::string &name, DeviceClassFactory *factory = 0);
+  NetlistDeviceExtractorDiode (const std::string &name, DeviceClassFactory *factory = nullptr);
 
   virtual void setup ();
   virtual db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const;

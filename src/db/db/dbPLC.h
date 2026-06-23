@@ -226,7 +226,7 @@ public:
 
     PolygonIterator &operator++ ()
     {
-      while (++m_index < 2 && operator-> () == 0)
+      while (++m_index < 2 && operator-> () == nullptr)
         ;
       return *this;
     }
@@ -291,7 +291,7 @@ public:
    */
   PolygonIterator end_polygons () const
   {
-    return PolygonIterator (0);
+    return PolygonIterator (nullptr);
   }
 
   /**
@@ -678,7 +678,7 @@ public:
    *
    *  This method only applies to triangles.
    */
-  std::pair<db::DPoint, double> circumcircle (bool *ok = 0) const;
+  std::pair<db::DPoint, double> circumcircle (bool *ok = nullptr) const;
 
   /**
    *  @brief Gets the vertex opposite of the given edge

@@ -161,10 +161,10 @@ struct VariantUserClassTableKey
   bool is_const;
 };
 
-static std::vector<const VariantUserClassBase *> *sp_classes = 0;
-static std::map<const VariantUserClassBase *, size_t> *sp_class_to_index = 0; 
-static std::map<std::pair<std::string, bool>, size_t> *sp_class_index_by_name = 0;
-static std::map<VariantUserClassTableKey, size_t> *sp_class_table = 0;
+static std::vector<const VariantUserClassBase *> *sp_classes = nullptr;
+static std::map<const VariantUserClassBase *, size_t> *sp_class_to_index = nullptr; 
+static std::map<std::pair<std::string, bool>, size_t> *sp_class_index_by_name = nullptr;
+static std::map<VariantUserClassTableKey, size_t> *sp_class_table = nullptr;
 static std::map <std::string, const VariantUserClassBase *> s_user_type_by_name;
 
 void
@@ -198,7 +198,7 @@ VariantUserClassBase::find_cls_by_name (const std::string &name)
 
   auto s = s_user_type_by_name.find (tl::to_lower_case (name));
   if (s == s_user_type_by_name.end ()) {
-    return 0;
+    return nullptr;
   }
 
   return s->second;
@@ -208,9 +208,9 @@ VariantUserClassBase::find_cls_by_name (const std::string &name)
 
 const tl::VariantUserClassBase *VariantUserClassBase::instance (const std::type_info &type, bool is_const)
 {
-  tl_assert (sp_class_table != 0);
+  tl_assert (sp_class_table != nullptr);
 
-  const tl::VariantUserClassBase *inst = 0;
+  const tl::VariantUserClassBase *inst = nullptr;
 
   auto c = sp_class_table->find (VariantUserClassTableKey (type, is_const));
   if (c == sp_class_table->end ()) {
@@ -225,7 +225,7 @@ const tl::VariantUserClassBase *VariantUserClassBase::instance (const std::type_
     inst = sp_classes->operator[] (c->second);
   }
 
-  tl_assert (inst != 0);
+  tl_assert (inst != nullptr);
   return inst;
 }
 
@@ -259,8 +259,8 @@ void VariantUserClassBase::unregister_instance (const tl::VariantUserClassBase *
     auto c = sp_class_table->find (VariantUserClassTableKey (type, is_const));
     if (c != sp_class_table->end ()) {
       if (sp_classes && c->second < sp_classes->size ()) {
-        sp_classes->operator[] (c->second) = 0;
-        while (!sp_classes->empty () && sp_classes->back () == 0) {
+        sp_classes->operator[] (c->second) = nullptr;
+        while (!sp_classes->empty () && sp_classes->back () == nullptr) {
           sp_classes->pop_back ();
         }
       }
@@ -281,22 +281,22 @@ void VariantUserClassBase::unregister_instance (const tl::VariantUserClassBase *
 
   if (sp_class_table && sp_class_table->empty ()) {
     delete sp_class_table;
-    sp_class_table = 0;
+    sp_class_table = nullptr;
   }
 
   if (sp_classes && sp_classes->empty ()) {
     delete sp_classes;
-    sp_classes = 0;
+    sp_classes = nullptr;
   }
 
   if (sp_class_index_by_name && sp_class_index_by_name->empty ()) {
     delete sp_class_index_by_name;
-    sp_class_index_by_name = 0;
+    sp_class_index_by_name = nullptr;
   }
 
   if (sp_class_to_index && sp_class_to_index->empty ()) {
     delete sp_class_to_index;
-    sp_class_to_index = 0;
+    sp_class_to_index = nullptr;
   }
 }
 
@@ -304,19 +304,19 @@ void VariantUserClassBase::unregister_instance (const tl::VariantUserClassBase *
 //  Implementation of tl::Variant
 
 Variant::Variant () 
-  : m_type (t_nil), m_string (0)
+  : m_type (t_nil), m_string (nullptr)
 {
   // .. nothing yet ..
 }
 
 Variant::Variant (const std::vector<char> &ba)
-  : m_type (t_bytearray), m_string (0)
+  : m_type (t_bytearray), m_string (nullptr)
 {
   m_var.m_bytearray = new std::vector<char> (ba);
 }
 
 Variant::Variant (std::vector<char> &&ba)
-  : m_type (t_bytearray), m_string (0)
+  : m_type (t_bytearray), m_string (nullptr)
 {
   m_var.m_bytearray = new std::vector<char> (ba);
 }
@@ -324,7 +324,7 @@ Variant::Variant (std::vector<char> &&ba)
 #if defined(HAVE_QT)
 
 Variant::Variant (const QByteArray &qba) 
-  : m_type (qba.isNull () ? t_nil : t_qbytearray), m_string (0)
+  : m_type (qba.isNull () ? t_nil : t_qbytearray), m_string (nullptr)
 {
   if (! qba.isNull ()) {
     m_var.m_qbytearray = new QByteArray (qba);
@@ -332,7 +332,7 @@ Variant::Variant (const QByteArray &qba)
 }
 
 Variant::Variant (const QString &qs) 
-  : m_type (qs.isNull () ? t_nil : t_qstring), m_string (0)
+  : m_type (qs.isNull () ? t_nil : t_qstring), m_string (nullptr)
 {
   if (! qs.isNull ()) {
     m_var.m_qstring = new QString (qs);
@@ -340,7 +340,7 @@ Variant::Variant (const QString &qs)
 }
 
 Variant::Variant (const QVariant &v)
-  : m_type (t_nil), m_string (0)
+  : m_type (t_nil), m_string (nullptr)
 {
   switch (v.type ()) {
   case QVariant::Invalid:
@@ -531,96 +531,96 @@ Variant::Variant (const QVariant &v)
 #endif
 
 Variant::Variant (const std::string &s) 
-  : m_type (t_stdstring), m_string (0)
+  : m_type (t_stdstring), m_string (nullptr)
 {
   m_var.m_stdstring = new std::string (s);
 }
 
 Variant::Variant (std::string &&s)
-  : m_type (t_stdstring), m_string (0)
+  : m_type (t_stdstring), m_string (nullptr)
 {
   m_var.m_stdstring = new std::string (s);
 }
 
 Variant::Variant (const char *s)
-  : m_type (s != 0 ? t_string : t_nil)
+  : m_type (s != nullptr ? t_string : t_nil)
 {
   if (s) {
     m_string = new char [strlen (s) + 1];
     strcpy (m_string, s);
   } else {
-    m_string = 0;
+    m_string = nullptr;
   }
 }
 
 Variant::Variant (double d)
-  : m_type (t_double), m_string (0)
+  : m_type (t_double), m_string (nullptr)
 {
   m_var.m_double = d;
 }
 
 Variant::Variant (float d)
-  : m_type (t_float), m_string (0)
+  : m_type (t_float), m_string (nullptr)
 {
   m_var.m_float = d;
 }
 
 Variant::Variant (bool b)
-  : m_type (t_bool), m_string (0)
+  : m_type (t_bool), m_string (nullptr)
 {
   m_var.m_bool = b;
 }
 
 Variant::Variant (char c)
-  : m_type (t_char), m_string (0)
+  : m_type (t_char), m_string (nullptr)
 {
   m_var.m_char = c;
 }
 
 Variant::Variant (signed char c)
-  : m_type (t_schar), m_string (0)
+  : m_type (t_schar), m_string (nullptr)
 {
   m_var.m_schar = c;
 }
 
 Variant::Variant (unsigned char c)
-  : m_type (t_uchar), m_string (0)
+  : m_type (t_uchar), m_string (nullptr)
 {
   m_var.m_uchar = c;
 }
 
 Variant::Variant (short s)
-  : m_type (t_short), m_string (0)
+  : m_type (t_short), m_string (nullptr)
 {
   m_var.m_short = s;
 }
 
 Variant::Variant (unsigned short s)
-  : m_type (t_ushort), m_string (0)
+  : m_type (t_ushort), m_string (nullptr)
 {
   m_var.m_ushort = s;
 }
 
 Variant::Variant (int l)
-  : m_type (t_int), m_string (0)
+  : m_type (t_int), m_string (nullptr)
 {
   m_var.m_int = l;
 }
 
 Variant::Variant (unsigned int l)
-  : m_type (t_uint), m_string (0)
+  : m_type (t_uint), m_string (nullptr)
 {
   m_var.m_uint = l;
 }
 
 Variant::Variant (long long l)
-  : m_type (t_longlong), m_string (0)
+  : m_type (t_longlong), m_string (nullptr)
 {
   m_var.m_longlong = l;
 }
 
 Variant::Variant (unsigned long long l)
-  : m_type (t_ulonglong), m_string (0)
+  : m_type (t_ulonglong), m_string (nullptr)
 {
   m_var.m_ulonglong = l;
 }
@@ -634,31 +634,31 @@ Variant::Variant (__int128 l)
 #endif
 
 Variant::Variant (long l)
-  : m_type (t_long), m_string (0)
+  : m_type (t_long), m_string (nullptr)
 {
   m_var.m_long = l;
 }
 
 Variant::Variant (unsigned long l)
-  : m_type (t_ulong), m_string (0)
+  : m_type (t_ulong), m_string (nullptr)
 {
   m_var.m_ulong = l;
 }
 
 Variant::Variant (size_t l, bool /*dummy*/)
-  : m_type (t_id), m_string (0)
+  : m_type (t_id), m_string (nullptr)
 {
   m_var.m_id = l;
 }
 
 Variant::Variant (const Variant &v)
-  : m_type (t_nil), m_string (0)
+  : m_type (t_nil), m_string (nullptr)
 {
   operator= (v);
 }
 
 Variant::Variant (Variant &&v)
-  : m_type (t_nil), m_string (0)
+  : m_type (t_nil), m_string (nullptr)
 {
   swap (v);
 }
@@ -674,7 +674,7 @@ Variant::reset ()
   if (m_string) {
     delete [] m_string;
   }
-  m_string = 0;
+  m_string = nullptr;
   if (m_type == t_list) {
     delete m_var.m_list;
   } else if (m_type == t_array) {
@@ -1027,7 +1027,7 @@ Variant::operator= (const Variant &v)
           m_var.mp_user.shared = false;
         }
       } else {
-        m_var.mp_user.object = 0;
+        m_var.mp_user.object = nullptr;
       }
     } else if (m_type == t_user_ref) {
       m_var.mp_user_ref.cls = v.m_var.mp_user_ref.cls;
@@ -2580,7 +2580,7 @@ Variant::native_ptr () const
     return m_var.m_list;
   case t_nil:
   default:
-    return 0;
+    return nullptr;
   }
 }
 
@@ -2603,13 +2603,13 @@ tl::Variant *
 tl::Variant::find (const tl::Variant &k)
 {
   if (m_type != t_array) {
-    return 0;
+    return nullptr;
   } else {
     array_iterator a = m_var.m_array->find (k);
     if (a != m_var.m_array->end ()) {
       return &a->second;
     } else {
-      return 0;
+      return nullptr;
     }
   }
 }
@@ -2621,13 +2621,13 @@ const tl::Variant *
 tl::Variant::find (const tl::Variant &k) const
 {
   if (m_type != t_array) {
-    return 0;
+    return nullptr;
   } else {
     const_array_iterator a = m_var.m_array->find (k);
     if (a != m_var.m_array->end ()) {
       return &a->second;
     } else {
-      return 0;
+      return nullptr;
     }
   }
 }

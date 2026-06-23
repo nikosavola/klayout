@@ -34,7 +34,7 @@ namespace lay
 {
 
 FontController::FontController ()
-  : m_file_watcher (0),
+  : m_file_watcher (nullptr),
     dm_sync_dirs (this, &FontController::sync_dirs)
 {
 }
@@ -70,7 +70,7 @@ FontController::uninitialize (lay::Dispatcher * /*root*/)
     disconnect (m_file_watcher, SIGNAL (fileChanged (const QString &)), this, SLOT (file_watcher_triggered ()));
     disconnect (m_file_watcher, SIGNAL (fileRemoved (const QString &)), this, SLOT (file_watcher_triggered ()));
     delete m_file_watcher;
-    m_file_watcher = 0;
+    m_file_watcher = nullptr;
   }
 
   if (lay::SaltController::instance ()) {
@@ -172,7 +172,7 @@ FontController::instance ()
       return sc;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 //  The singleton instance of the library controller

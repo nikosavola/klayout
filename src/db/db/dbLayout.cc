@@ -192,14 +192,14 @@ private:
 
   virtual void new_cell (db::Layout *layout) const
   {
-    tl_assert (mp_cell != 0);
+    tl_assert (mp_cell != nullptr);
     layout->insert_cell (m_cell_index, m_name, mp_cell);
-    mp_cell = 0; // now it belongs to the layout
+    mp_cell = nullptr; // now it belongs to the layout
   }
 
   virtual void remove_cell (db::Layout *layout) const
   {
-    tl_assert (mp_cell == 0);
+    tl_assert (mp_cell == nullptr);
     mp_cell = layout->take_cell (m_cell_index);
   }
 };
@@ -261,7 +261,7 @@ struct SetLayoutMetaInfoOp
   : public LayoutOp
 {
   SetLayoutMetaInfoOp (db::Layout::meta_info_name_id_type name_id, const db::MetaInfo *f, const db::MetaInfo *t)
-    : m_name_id (name_id), m_has_from (f != 0), m_has_to (t != 0)
+    : m_name_id (name_id), m_has_from (f != nullptr), m_has_to (t != nullptr)
   {
     if (f) {
       m_from = *f;
@@ -299,7 +299,7 @@ struct SetCellMetaInfoOp
   : public LayoutOp
 {
   SetCellMetaInfoOp (db::cell_index_type ci, db::Layout::meta_info_name_id_type name_id, const db::MetaInfo *f, const db::MetaInfo *t)
-    : m_ci (ci), m_name_id (name_id), m_has_from (f != 0), m_has_to (t != 0)
+    : m_ci (ci), m_name_id (name_id), m_has_from (f != nullptr), m_has_to (t != nullptr)
   {
     if (f) {
       m_from = *f;
@@ -469,8 +469,8 @@ LayoutOrCellContextInfo::has_meta_info () const
 
 Layout::Layout (db::Manager *manager)
   : db::Object (manager),
-    mp_library (0),
-    mp_builder (0),
+    mp_library (nullptr),
+    mp_builder (nullptr),
     m_cells_size (0),
     m_invalid (0),
     m_top_cells (0),
@@ -484,8 +484,8 @@ Layout::Layout (db::Manager *manager)
 
 Layout::Layout (bool editable, db::Manager *manager)
   : db::Object (manager),
-    mp_library (0),
-    mp_builder (0),
+    mp_library (nullptr),
+    mp_builder (nullptr),
     m_cells_size (0),
     m_invalid (0),
     m_top_cells (0),
@@ -503,8 +503,8 @@ Layout::Layout (const db::Layout &layout)
     gsi::ObjectBase (),
     tl::Object (),
     tl::UniqueId (),
-    mp_library (0),
-    mp_builder (0),
+    mp_library (nullptr),
+    mp_builder (nullptr),
     m_cells_size (0),
     m_invalid (0),
     m_top_cells (0),
@@ -595,14 +595,14 @@ Layout::operator= (const Layout &d)
       if (*pc) {
         m_pcells.push_back (new pcell_header_type (**pc));
       } else {
-        m_pcells.push_back (0);
+        m_pcells.push_back (nullptr);
       }
     }
 
     m_lib_proxy_map = d.m_lib_proxy_map;
     m_cold_proxy_map = d.m_cold_proxy_map;
 
-    m_cell_ptrs.resize (d.m_cell_ptrs.size (), 0);
+    m_cell_ptrs.resize (d.m_cell_ptrs.size (), nullptr);
 
     for (const_iterator c = d.begin (); c != d.end (); ++c) {
       cell_type *new_cell = (*c).clone (*this);
@@ -624,7 +624,7 @@ Layout::operator= (const Layout &d)
         m_cell_names.push_back (pp);
         m_cell_map.insert (std::make_pair (pp, i));
       } else {
-        m_cell_names.push_back (0);
+        m_cell_names.push_back (nullptr);
       }
       ++i;
     }
@@ -647,7 +647,7 @@ Layout::operator= (const Layout &d)
 const db::Technology *
 Layout::technology () const
 {
-  return db::Technologies::instance ()->has_technology (m_tech_name) ? db::Technologies::instance ()->technology_by_name (m_tech_name) : 0;
+  return db::Technologies::instance ()->has_technology (m_tech_name) ? db::Technologies::instance ()->technology_by_name (m_tech_name) : nullptr;
 }
 
 void
@@ -1335,7 +1335,7 @@ Layout::insert_cell (cell_index_type ci, const std::string &name, db::Cell *cell
 {
   //  this method is supposed to restore a cell deleted before
   tl_assert (m_cell_names.size () > ci);
-  tl_assert (m_cell_names [ci] == 0);
+  tl_assert (m_cell_names [ci] == nullptr);
 
   char *cp = new char [name.size () + 1];
   m_cell_names [ci] = cp;
@@ -1354,7 +1354,7 @@ Layout::insert_cell (cell_index_type ci, const std::string &name, db::Cell *cell
 db::Cell *
 Layout::take_cell (cell_index_type ci)
 {
-  tl_assert (m_cell_ptrs [ci] != 0);
+  tl_assert (m_cell_ptrs [ci] != nullptr);
 
   invalidate_hier ();
 
@@ -1362,7 +1362,7 @@ Layout::take_cell (cell_index_type ci)
   cell->unregister ();
   --m_cells_size;
 
-  m_cell_ptrs [ci] = 0;
+  m_cell_ptrs [ci] = nullptr;
 
   auto mi = m_meta_info_by_cell.find (ci);
   if (mi != m_meta_info_by_cell.end ()) {
@@ -1377,7 +1377,7 @@ Layout::take_cell (cell_index_type ci)
   //  an arbitrary ID.
   // m_free_cell_indices.push_back (ci);
 
-  if (m_cell_names [ci] != 0) {
+  if (m_cell_names [ci] != nullptr) {
 
     cell_map_type::iterator cm = m_cell_map.find (m_cell_names [ci]);
     if (cm != m_cell_map.end ()) {
@@ -1385,7 +1385,7 @@ Layout::take_cell (cell_index_type ci)
     }
 
     delete [] m_cell_names [ci];
-    m_cell_names [ci] = 0;
+    m_cell_names [ci] = nullptr;
 
   }
 
@@ -1395,7 +1395,7 @@ Layout::take_cell (cell_index_type ci)
 std::string 
 Layout::uniquify_cell_name (const char *name) const
 {
-  if (name != 0 && m_cell_map.find (name) == m_cell_map.end ()) {
+  if (name != nullptr && m_cell_map.find (name) == m_cell_map.end ()) {
     return std::string (name);
   } else {
 
@@ -1439,10 +1439,10 @@ Layout::add_cell (const char *name)
 {
   std::string b;
 
-  if (name == 0) {
+  if (name == nullptr) {
 
     //  0 name means: create a new one
-    b = uniquify_cell_name (0);
+    b = uniquify_cell_name (nullptr);
     name = b.c_str ();
 
   } else {
@@ -1476,7 +1476,7 @@ Layout::add_cell (const char *name)
   register_cell_name (name, new_index);
 
   if (manager () && manager ()->transacting ()) {
-    manager ()->queue (this, new NewRemoveCellOp (new_index, m_cell_names [new_index], false /*new*/, 0));
+    manager ()->queue (this, new NewRemoveCellOp (new_index, m_cell_names [new_index], false /*new*/, nullptr));
   }
 
   return new_index;
@@ -1495,10 +1495,10 @@ Layout::add_anonymous_cell ()
   m_cell_ptrs [new_index] = new_cell;
 
   //  enter its index and cell_name
-  register_cell_name (0, new_index);
+  register_cell_name (nullptr, new_index);
 
   if (manager () && manager ()->transacting ()) {
-    manager ()->queue (this, new NewRemoveCellOp (new_index, m_cell_names [new_index], false /*new*/, 0));
+    manager ()->queue (this, new NewRemoveCellOp (new_index, m_cell_names [new_index], false /*new*/, nullptr));
   }
 
   return new_index;
@@ -1510,7 +1510,7 @@ Layout::register_cell_name (const char *name, cell_index_type ci)
   //  enter its index and cell_name
   char *cp;
 
-  if (name == 0) {
+  if (name == nullptr) {
     cp = new char [1];
     *cp = 0;
   } else {
@@ -1693,7 +1693,7 @@ Layout::move_tree_shapes (db::Layout &source_layout, const db::CellMapping &cm, 
 bool 
 Layout::is_valid_cell_index (cell_index_type ci) const
 {
-  return ci < m_cell_ptrs.size () && m_cell_ptrs [ci] != 0;
+  return ci < m_cell_ptrs.size () && m_cell_ptrs [ci] != nullptr;
 }
 
 cell_index_type
@@ -1704,7 +1704,7 @@ Layout::allocate_new_cell ()
   cell_index_type new_index;
   if (m_free_cell_indices.empty ()) {
     new_index = cell_index_type (m_cell_ptrs.size ());
-    m_cell_ptrs.push_back (0);
+    m_cell_ptrs.push_back (nullptr);
   } else {
     new_index = m_free_cell_indices.back ();
     m_free_cell_indices.pop_back ();
@@ -2203,7 +2203,7 @@ Layout::clear_meta ()
 {
   if (manager () && manager ()->transacting ()) {
     for (auto i = m_meta_info.begin (); i != m_meta_info.end (); ++i) {
-      manager ()->queue (this, new SetLayoutMetaInfoOp (i->first, &i->second, 0));
+      manager ()->queue (this, new SetLayoutMetaInfoOp (i->first, &i->second, nullptr));
     }
   }
 
@@ -2215,7 +2215,7 @@ Layout::add_meta_info (meta_info_name_id_type name_id, const MetaInfo &i)
 {
   if (manager () && manager ()->transacting ()) {
     auto e = m_meta_info.find (name_id);
-    manager ()->queue (this, new SetLayoutMetaInfoOp (name_id, e != m_meta_info.end () ? &e->second : 0, &i));
+    manager ()->queue (this, new SetLayoutMetaInfoOp (name_id, e != m_meta_info.end () ? &e->second : nullptr, &i));
   }
 
   m_meta_info[name_id] = i;
@@ -2227,7 +2227,7 @@ Layout::remove_meta_info (meta_info_name_id_type name_id)
   if (manager () && manager ()->transacting ()) {
     auto e = m_meta_info.find (name_id);
     if (e != m_meta_info.end ()) {
-      manager ()->queue (this, new SetLayoutMetaInfoOp (name_id, &e->second, 0));
+      manager ()->queue (this, new SetLayoutMetaInfoOp (name_id, &e->second, nullptr));
     }
   }
 
@@ -2255,7 +2255,7 @@ Layout::clear_meta (db::cell_index_type ci)
     auto ib = begin_meta (ci);
     auto ie = end_meta (ci);
     for (auto i = ib; i != ie; ++i) {
-      manager ()->queue (this, new SetCellMetaInfoOp (ci, i->first, &i->second, 0));
+      manager ()->queue (this, new SetCellMetaInfoOp (ci, i->first, &i->second, nullptr));
     }
   }
 
@@ -2275,7 +2275,7 @@ void
 Layout::add_meta_info (db::cell_index_type ci, meta_info_name_id_type name_id, const MetaInfo &i)
 {
   if (manager () && manager ()->transacting ()) {
-    const MetaInfo *from = 0;
+    const MetaInfo *from = nullptr;
     auto c = m_meta_info_by_cell.find (ci);
     if (c != m_meta_info_by_cell.end ()) {
       auto e = c->second.find (name_id);
@@ -2295,14 +2295,14 @@ Layout::remove_meta_info (db::cell_index_type ci, meta_info_name_id_type name_id
   auto c = m_meta_info_by_cell.find (ci);
 
   if (manager () && manager ()->transacting ()) {
-    const MetaInfo *from = 0;
+    const MetaInfo *from = nullptr;
     if (c != m_meta_info_by_cell.end ()) {
       auto e = c->second.find (name_id);
       if (e != c->second.end ()) {
         from = &e->second;
       }
     }
-    manager ()->queue (this, new SetCellMetaInfoOp (ci, name_id, from, 0));
+    manager ()->queue (this, new SetCellMetaInfoOp (ci, name_id, from, nullptr));
   }
 
   if (c != m_meta_info_by_cell.end ()) {
@@ -2601,7 +2601,7 @@ Layout::replace_cell (cell_index_type target_cell_index, db::Cell *new_cell, boo
   m_cell_ptrs [target_cell_index] = new_cell;
 
   if (manager () && manager ()->transacting ()) {
-    manager ()->queue (this, new NewRemoveCellOp (target_cell_index, m_cell_names [target_cell_index], false /*new*/, 0));
+    manager ()->queue (this, new NewRemoveCellOp (target_cell_index, m_cell_names [target_cell_index], false /*new*/, nullptr));
   }
 }
 
@@ -2625,15 +2625,15 @@ void
 Layout::get_pcell_variant_as (pcell_id_type pcell_id, const std::vector<tl::Variant> &p, cell_index_type target_cell_index, ImportLayerMapping *layer_mapping, bool retain_layout)
 {
   pcell_header_type *header = pcell_header (pcell_id);
-  tl_assert (header != 0);
+  tl_assert (header != nullptr);
 
   std::vector<tl::Variant> buffer;
   const std::vector<tl::Variant> &parameters = gauge_parameters (p, header->declaration (), buffer);
 
   //  this variant must not exist yet for "get as" semantics
-  tl_assert (header->get_variant (*this, parameters) == 0);
+  tl_assert (header->get_variant (*this, parameters) == nullptr);
 
-  tl_assert (m_cell_ptrs [target_cell_index] != 0);
+  tl_assert (m_cell_ptrs [target_cell_index] != nullptr);
  
   pcell_variant_type *variant = new pcell_variant_type (target_cell_index, *this, pcell_id, parameters);
   replace_cell (target_cell_index, variant, retain_layout);
@@ -2648,7 +2648,7 @@ cell_index_type
 Layout::get_pcell_variant_dict (pcell_id_type pcell_id, const std::map<std::string, tl::Variant> &p)
 {
   pcell_header_type *header = pcell_header (pcell_id);
-  tl_assert (header != 0);
+  tl_assert (header != nullptr);
 
   std::vector<tl::Variant> parameters;
   const std::vector<db::PCellParameterDeclaration> &pcp = header->declaration ()->parameter_declarations ();
@@ -2681,7 +2681,7 @@ Layout::get_pcell_variant_dict (pcell_id_type pcell_id, const std::map<std::stri
     register_cell_name (b.c_str (), new_index);
 
     if (manager () && manager ()->transacting ()) {
-      manager ()->queue (this, new NewRemoveCellOp (new_index, m_cell_names [new_index], false /*new*/, 0));
+      manager ()->queue (this, new NewRemoveCellOp (new_index, m_cell_names [new_index], false /*new*/, nullptr));
     }
 
     // produce the layout
@@ -2696,7 +2696,7 @@ cell_index_type
 Layout::get_pcell_variant (pcell_id_type pcell_id, const std::vector<tl::Variant> &p)
 {
   pcell_header_type *header = pcell_header (pcell_id);
-  tl_assert (header != 0);
+  tl_assert (header != nullptr);
 
   std::vector<tl::Variant> buffer;
   const std::vector<tl::Variant> &parameters = gauge_parameters (p, header->declaration (), buffer);
@@ -2720,7 +2720,7 @@ Layout::get_pcell_variant (pcell_id_type pcell_id, const std::vector<tl::Variant
     register_cell_name (b.c_str (), new_index);
 
     if (manager () && manager ()->transacting ()) {
-      manager ()->queue (this, new NewRemoveCellOp (new_index, m_cell_names [new_index], false /*new*/, 0));
+      manager ()->queue (this, new NewRemoveCellOp (new_index, m_cell_names [new_index], false /*new*/, nullptr));
     }
 
     // produce the layout
@@ -2741,7 +2741,7 @@ Layout::pcell_header_type *
 Layout::pcell_header (pcell_id_type pcell_id)
 {
   if (pcell_id >= m_pcells.size ()) {
-    return 0;
+    return nullptr;
   } else {
     return m_pcells [pcell_id];
   }
@@ -2815,7 +2815,7 @@ const Layout::pcell_declaration_type *
 Layout::pcell_declaration (pcell_id_type pcell_id) const
 {
   const pcell_header_type *header = pcell_header (pcell_id);
-  return header ? header->declaration () : 0;
+  return header ? header->declaration () : nullptr;
 }
 
 db::cell_index_type 
@@ -2863,7 +2863,7 @@ Layout::is_pcell_instance (cell_index_type cell_index) const
   const LibraryProxy *lib_proxy = dynamic_cast<const LibraryProxy *> (child_cell);
   if (lib_proxy) {
     Library *lib = LibraryManager::instance ().lib (lib_proxy->lib_id ());
-    tl_assert (lib != 0);
+    tl_assert (lib != nullptr);
     return lib->layout ().is_pcell_instance (lib_proxy->library_cell_index ());
   }
 
@@ -2883,7 +2883,7 @@ Layout::pcell_declaration_for_pcell_variant (cell_index_type variant_cell_index)
   const LibraryProxy *lib_proxy = dynamic_cast<const LibraryProxy *> (variant_cell);
   if (lib_proxy) {
     Library *lib = LibraryManager::instance ().lib (lib_proxy->lib_id ());
-    tl_assert (lib != 0);
+    tl_assert (lib != nullptr);
     return lib->layout ().pcell_declaration_for_pcell_variant (lib_proxy->library_cell_index ());
   }
 
@@ -2891,7 +2891,7 @@ Layout::pcell_declaration_for_pcell_variant (cell_index_type variant_cell_index)
   if (pcell_variant) {
     return pcell_declaration (pcell_variant->pcell_id ());
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -2899,7 +2899,7 @@ std::pair<db::Library *, db::cell_index_type>
 Layout::defining_library (cell_index_type cell_index) const
 {
   const db::Layout *layout = this;
-  db::Library *lib = 0;
+  db::Library *lib = nullptr;
 
   while (true) {
 
@@ -2908,7 +2908,7 @@ Layout::defining_library (cell_index_type cell_index) const
     if (lib_proxy) {
 
       lib = LibraryManager::instance ().lib (lib_proxy->lib_id ());
-      tl_assert (lib != 0);
+      tl_assert (lib != nullptr);
       cell_index = lib_proxy->library_cell_index ();
       layout = &lib->layout ();
 
@@ -2927,7 +2927,7 @@ Layout::get_pcell_parameter (cell_index_type cell_index, const std::string &name
   const LibraryProxy *lib_proxy = dynamic_cast<const LibraryProxy *> (child_cell);
   if (lib_proxy) {
     Library *lib = LibraryManager::instance ().lib (lib_proxy->lib_id ());
-    tl_assert (lib != 0);
+    tl_assert (lib != nullptr);
     return lib->layout ().get_pcell_parameter (lib_proxy->library_cell_index (), name);
   }
 
@@ -2947,7 +2947,7 @@ Layout::get_named_pcell_parameters (cell_index_type cell_index) const
   const LibraryProxy *lib_proxy = dynamic_cast<const LibraryProxy *> (child_cell);
   if (lib_proxy) {
     Library *lib = LibraryManager::instance ().lib (lib_proxy->lib_id ());
-    tl_assert (lib != 0);
+    tl_assert (lib != nullptr);
     return lib->layout ().get_named_pcell_parameters (lib_proxy->library_cell_index ());
   }
 
@@ -2967,7 +2967,7 @@ Layout::get_pcell_parameters (cell_index_type cell_index) const
   const LibraryProxy *lib_proxy = dynamic_cast<const LibraryProxy *> (child_cell);
   if (lib_proxy) {
     Library *lib = LibraryManager::instance ().lib (lib_proxy->lib_id ());
-    tl_assert (lib != 0);
+    tl_assert (lib != nullptr);
     return lib->layout ().get_pcell_parameters (lib_proxy->library_cell_index ());
   }
 
@@ -3118,7 +3118,7 @@ Layout::get_context_info (cell_index_type cell_index, LayoutOrCellContextInfo &i
   const db::Layout *ly = this;
 
   const db::LibraryProxy *lib_proxy;
-  while (ly != 0 && (lib_proxy = dynamic_cast <const db::LibraryProxy *> (cptr)) != 0) {
+  while (ly != nullptr && (lib_proxy = dynamic_cast <const db::LibraryProxy *> (cptr)) != nullptr) {
 
     const db::Library *lib = db::LibraryManager::instance ().lib (lib_proxy->lib_id ());
     if (! lib) {
@@ -3227,7 +3227,7 @@ Layout::recover_proxy_as (cell_index_type cell_index, const LayoutOrCellContextI
 {
   if (! info.lib_name.empty ()) {
 
-    db::Cell *lib_cell = 0;
+    db::Cell *lib_cell = nullptr;
 
     Library *lib = db::LibraryManager::instance ().lib_ptr_by_name (info.lib_name, m_tech_name);
     if (lib) {
@@ -3270,7 +3270,7 @@ db::Cell *
 Layout::recover_proxy (std::vector <std::string>::const_iterator from, std::vector <std::string>::const_iterator to)
 {
   if (from == to) {
-    return 0;
+    return nullptr;
   }
 
   return recover_proxy (LayoutOrCellContextInfo::deserialize (from, to));
@@ -3283,7 +3283,7 @@ Layout::recover_proxy (const LayoutOrCellContextInfo &info)
 
     Library *lib = db::LibraryManager::instance ().lib_ptr_by_name (info.lib_name, m_tech_name);
 
-    db::Cell *lib_cell = 0;
+    db::Cell *lib_cell = nullptr;
     if (lib) {
       lib_cell = lib->layout ().recover_proxy_no_lib (info);
     }
@@ -3324,7 +3324,7 @@ Layout::recover_proxy_no_lib (const LayoutOrCellContextInfo &info)
 
   }
 
-  return 0;
+  return nullptr;
 }
 
 std::string 
@@ -3379,7 +3379,7 @@ Layout::unregister_lib_proxy (db::LibraryProxy *lib_proxy)
 void
 Layout::get_lib_proxy_as (Library *lib, cell_index_type cell_index, cell_index_type target_cell_index, ImportLayerMapping *layer_mapping, bool retain_layout)
 {
-  tl_assert (m_cell_ptrs [target_cell_index] != 0);
+  tl_assert (m_cell_ptrs [target_cell_index] != nullptr);
  
   LibraryProxy *proxy = new LibraryProxy (target_cell_index, *this, lib->get_id (), cell_index);
   replace_cell (target_cell_index, proxy, retain_layout);
@@ -3419,7 +3419,7 @@ Layout::get_lib_proxy (Library *lib, cell_index_type cell_index)
     register_cell_name (b.c_str (), new_index);
 
     if (manager () && manager ()->transacting ()) {
-      manager ()->queue (this, new NewRemoveCellOp (new_index, m_cell_names [new_index], false /*new*/, 0));
+      manager ()->queue (this, new NewRemoveCellOp (new_index, m_cell_names [new_index], false /*new*/, nullptr));
     }
 
     //  produce the layout
@@ -3500,7 +3500,7 @@ Layout::create_cold_proxy (const db::LayoutOrCellContextInfo &info)
     register_cell_name (b.c_str (), new_index);
 
     if (manager () && manager ()->transacting ()) {
-      manager ()->queue (this, new NewRemoveCellOp (new_index, m_cell_names [new_index], false /*new*/, 0));
+      manager ()->queue (this, new NewRemoveCellOp (new_index, m_cell_names [new_index], false /*new*/, nullptr));
     }
 
     return new_index;
@@ -3511,7 +3511,7 @@ Layout::create_cold_proxy (const db::LayoutOrCellContextInfo &info)
 void
 Layout::create_cold_proxy_as (const db::LayoutOrCellContextInfo &info, cell_index_type target_cell_index)
 {
-  tl_assert (m_cell_ptrs [target_cell_index] != 0);
+  tl_assert (m_cell_ptrs [target_cell_index] != nullptr);
 
   ColdProxy *proxy = new ColdProxy (target_cell_index, *this, info);
   replace_cell (target_cell_index, proxy, true);

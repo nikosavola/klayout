@@ -176,7 +176,7 @@ public:
 #endif
 
   event ()
-    : mp_destroyed_sentinel (0)
+    : mp_destroyed_sentinel (nullptr)
   {
     //  .. nothing yet ..
   }
@@ -186,7 +186,7 @@ public:
     if (mp_destroyed_sentinel) {
       *mp_destroyed_sentinel = true;
     }
-    mp_destroyed_sentinel = 0;
+    mp_destroyed_sentinel = nullptr;
   }
 
   void operator() (_CALLARGLIST)
@@ -247,7 +247,7 @@ public:
         return t;
       }
     }
-    return 0;
+    return nullptr;
   }
 
   template <class T>

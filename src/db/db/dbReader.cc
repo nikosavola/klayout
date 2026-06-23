@@ -132,7 +132,7 @@ ReaderBase::check_dbu (double dbu) const
 //  Reader implementation
 
 Reader::Reader (tl::InputStream &stream)
-  : mp_actual_reader (0), m_stream (stream)
+  : mp_actual_reader (nullptr), m_stream (stream)
 {
   if (stream.is_explicit_suffix ()) {
 
@@ -160,7 +160,7 @@ Reader::Reader (tl::InputStream &stream)
 
     m_stream.reset ();
     std::string head = m_stream.read_all (4000);
-    bool has_more (m_stream.get (1) != 0);
+    bool has_more (m_stream.get (1) != nullptr);
 
     throw db::ReaderUnknownFormatException (tl::to_string (tr ("Stream has unknown format: ")) + stream.source (), head, has_more);
 
@@ -171,7 +171,7 @@ Reader::~Reader ()
 {
   if (mp_actual_reader) {
     delete mp_actual_reader;
-    mp_actual_reader = 0;
+    mp_actual_reader = nullptr;
   }
 }
 

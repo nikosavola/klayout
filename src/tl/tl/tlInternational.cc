@@ -41,7 +41,7 @@ namespace tl
 
 #if defined(HAVE_QT)
 
-QTextCodec *ms_system_codec = 0;
+QTextCodec *ms_system_codec = nullptr;
 
 QString to_qstring (const std::string &s)
 {

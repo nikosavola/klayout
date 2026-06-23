@@ -66,7 +66,7 @@ Region::Region (const Region &other)
 Region::~Region ()
 {
   delete mp_delegate;
-  mp_delegate = 0;
+  mp_delegate = nullptr;
 }
 
 Region &Region::operator= (const Region &other)
@@ -135,7 +135,7 @@ Region::Region (DeepShapeStore &dss)
 void
 Region::convert_to_deep (const db::DeepLayer &layer)
 {
-  tl_assert (mp_delegate->deep () == 0);
+  tl_assert (mp_delegate->deep () == nullptr);
   set_delegate (copy_data_id (new db::DeepRegion (layer)));
 }
 
@@ -159,7 +159,7 @@ const db::RecursiveShapeIterator &
 Region::iter () const
 {
   static db::RecursiveShapeIterator def_iter;
-  const db::RecursiveShapeIterator *i = mp_delegate ? mp_delegate->iter () : 0;
+  const db::RecursiveShapeIterator *i = mp_delegate ? mp_delegate->iter () : nullptr;
   return *(i ? i : &def_iter);
 }
 
@@ -457,7 +457,7 @@ template <class Iter, class Delivery>
 static void fill_texts (const Iter &iter, const std::string &pat, bool pattern, const Delivery &delivery, typename Delivery::container_type *container, const db::ICplxTrans &trans, const db::DeepRegion *org_deep)
 {
   std::pair<bool, db::property_names_id_type> text_annot_name_id;
-  const db::Layout *layout = 0;
+  const db::Layout *layout = nullptr;
 
   if (org_deep) {
     //  NOTE: deep regions can store texts in a special way - as small boxes with a special property attached.
@@ -518,7 +518,7 @@ class text_shape_receiver
 {
 public:
   text_shape_receiver (const Delivery &delivery, const std::string &pat, bool pattern, const db::DeepRegion *org_deep)
-    : m_delivery (delivery), m_glob_pat (), m_all (false), m_pattern (pattern), m_pat (pat), m_text_annot_name_id (false, 0), mp_layout (0)
+    : m_delivery (delivery), m_glob_pat (), m_all (false), m_pattern (pattern), m_pat (pat), m_text_annot_name_id (false, 0), mp_layout (nullptr)
   {
     if (org_deep) {
       mp_layout = & org_deep->deep_layer ().layout ();

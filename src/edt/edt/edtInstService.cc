@@ -46,7 +46,7 @@ InstService::InstService (db::Manager *manager, lay::LayoutViewBase *view)
     m_row_x (0.0), m_row_y (0.0), m_column_x (0.0), m_column_y (0.0),
     m_place_origin (false), m_reference_transaction_id (0),
     m_needs_update (true), m_parameters_changed (false), m_has_valid_cell (false), m_in_drag_drop (false),
-    m_current_cell (0), mp_current_layout (0), mp_pcell_decl (0), m_cv_index (-1)
+    m_current_cell (0), mp_current_layout (nullptr), mp_pcell_decl (nullptr), m_cv_index (-1)
 { 
   //  .. nothing yet ..
 }
@@ -92,7 +92,7 @@ InstService::drag_enter_event (const db::DPoint &p, const lay::DragDropDataBase 
   if (view ()->is_editable () && cd && (cd->layout () == & view ()->active_cellview ()->layout () || cd->library ())) {
 
     view ()->cancel ();
-    set_edit_marker (0);
+    set_edit_marker (nullptr);
 
     bool switch_parameters = true;
 
@@ -170,7 +170,7 @@ void
 InstService::drag_leave_event () 
 { 
   if (m_in_drag_drop) {
-    set_edit_marker (0);
+    set_edit_marker (nullptr);
     do_cancel_edit ();
   }
 }
@@ -298,7 +298,7 @@ InstService::make_cell (const lay::CellView &cv)
 
   db::cell_index_type inst_cell_index = ci.second;
 
-  mp_pcell_decl = 0;
+  mp_pcell_decl = nullptr;
 
   //  instantiate the PCell
   if (pci.first) {
@@ -490,7 +490,7 @@ InstService::do_cancel_edit ()
   m_has_valid_cell = false;
   m_in_drag_drop = false;
 
-  set_edit_marker (0);
+  set_edit_marker (nullptr);
 
   //  clean up any proxy cells created so far 
   const lay::CellView &cv = view ()->cellview (m_cv_index);
@@ -727,7 +727,7 @@ InstService::switch_cell_or_pcell (bool switch_parameters)
   }
 
   const lay::CellView &cv = view ()->cellview (m_cv_index);
-  db::Library *lib = 0;
+  db::Library *lib = nullptr;
   if (cv.is_valid ()) {
     lib = db::LibraryManager::instance ().lib_ptr_by_name (m_lib_name, cv->tech_name ());
   } else {
@@ -736,7 +736,7 @@ InstService::switch_cell_or_pcell (bool switch_parameters)
 
   //  find the layout the cell has to be looked up: that is either the layout of the current instance or
   //  the library selected
-  const db::Layout *layout = 0;
+  const db::Layout *layout = nullptr;
   if (lib) {
     layout = &lib->layout ();
   } else if (cv.is_valid ()) {
@@ -806,7 +806,7 @@ InstService::update_marker ()
     }
 
   } else {
-    set_edit_marker (0);
+    set_edit_marker (nullptr);
   }
 
   //  call hooks with new shape

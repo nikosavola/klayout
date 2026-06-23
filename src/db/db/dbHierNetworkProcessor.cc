@@ -734,8 +734,8 @@ local_cluster<T>::interacts (const local_cluster<T> &other, const db::ICplxTrans
   }
 
   std::map<unsigned int, std::set<const T *> > is_this, is_other;
-  std::map<unsigned int, std::set<const T *> > *p_is_this = interacting_this ? &is_this : 0;
-  std::map<unsigned int, std::set<const T *> > *p_is_other = interacting_other ? &is_other : 0;
+  std::map<unsigned int, std::set<const T *> > *p_is_this = interacting_this ? &is_this : nullptr;
+  std::map<unsigned int, std::set<const T *> > *p_is_other = interacting_other ? &is_other : nullptr;
 
   hnp_interaction_receiver<T> rec (conn, trans, p_is_this, p_is_other);
   scanner.process (rec, 1 /*==touching*/, bc, bc_t);
@@ -1362,7 +1362,7 @@ private:
     //  remap soft connections: remove soft connections between ic1 and ic2 and
     //  remap ic2 connections to ic1 as first
 
-    auto i2 = m_soft_connections.lower_bound (std::make_pair (ic2.operator-> (), (const cluster_value *) 0));
+    auto i2 = m_soft_connections.lower_bound (std::make_pair (ic2.operator-> (), (const cluster_value *) nullptr));
     for (auto i = i2; i != m_soft_connections.end () && i->first.first == ic2.operator-> (); ++i) {
       m_soft_connections.erase (std::make_pair (i->first.second, i->first.first));
     }
@@ -1793,7 +1793,7 @@ public:
   cell_clusters_box_converter (const db::Layout &layout, const hier_clusters<T> &tree)
     : mp_layout (&layout), mp_tree (&tree)
   {
-    m_cache.resize (layout.cells (), 0);
+    m_cache.resize (layout.cells (), nullptr);
   }
 
   const box_type &operator() (const db::CellInst &cell_inst) const
@@ -2153,8 +2153,8 @@ private:
 
       db::ICplxTrans cache_norm = tt1.inverted ();
 
-      ii_key = InstanceToInstanceInteraction ((! i1element.at_end () || i1.size () == 1) ? 0 : i1.cell_inst ().delegate (),
-                                              (! i2element.at_end () || i2.size () == 1) ? 0 : i2.cell_inst ().delegate (),
+      ii_key = InstanceToInstanceInteraction ((! i1element.at_end () || i1.size () == 1) ? nullptr : i1.cell_inst ().delegate (),
+                                              (! i2element.at_end () || i2.size () == 1) ? nullptr : i2.cell_inst ().delegate (),
                                               cache_norm, cache_norm * tt2);
 
       const cluster_instance_pair_list_type *cached = mp_instance_interaction_cache->find (i1.cell_index (), i2.cell_index (), ii_key);
@@ -2862,7 +2862,7 @@ hier_clusters<T>::do_build (cell_clusters_box_converter<T> &cbc, const db::Layou
       //  look for the net label joining spec - for the top cell the "top_cell_index" entry is looked for.
       //  If there is no such entry or the cell is not the top cell, look for the entry by cell index.
       std::map<db::cell_index_type, tl::equivalence_clusters<size_t> >::const_iterator ae;
-      const tl::equivalence_clusters<size_t> *ec = 0;
+      const tl::equivalence_clusters<size_t> *ec = nullptr;
       if (attr_equivalence) {
         if (*c == cell.cell_index ()) {
           ae = attr_equivalence->find (top_cell_index);
@@ -3158,7 +3158,7 @@ hier_clusters<T>::build_hier_connections (cell_clusters_box_converter<T> &cbc, c
     tl::info << "Cluster build cache statistics (instance to shape cache): size=" << rec->cluster_cache_size () << ", hits=" << rec->cluster_cache_hits () << ", misses=" << rec->cluster_cache_misses ();
   }
 
-  rec.reset (0);
+  rec.reset (nullptr);
 
   //  finally connect global nets
   {
@@ -3537,7 +3537,7 @@ template <class T>
 void
 incoming_cluster_connections<T>::ensure_computed (db::cell_index_type ci) const
 {
-  tl_assert (mp_layout.get () != 0);
+  tl_assert (mp_layout.get () != nullptr);
   m_incoming.insert (std::make_pair (ci, std::map<size_t, incoming_connections> ()));
 
   const db::Cell &cell = mp_layout->cell (ci);

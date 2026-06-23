@@ -380,7 +380,7 @@ public:
    */
   bool has_complex_region () const
   {
-    return mp_complex_region != 0;
+    return mp_complex_region != nullptr;
   }
 
   /**
@@ -617,7 +617,7 @@ public:
   unsigned int layer () const
   {
     if (m_has_layers) {
-      validate (0);
+      validate (nullptr);
     }
     return m_layer;
   }
@@ -653,7 +653,7 @@ public:
    */
   const cplx_trans_type &trans () const
   {
-    validate (0);
+    validate (nullptr);
     return m_trans;
   }
 
@@ -664,7 +664,7 @@ public:
    */
   unsigned int depth () const
   {
-    validate (0);
+    validate (nullptr);
     return (unsigned int) m_trans_stack.size ();
   }
 
@@ -676,7 +676,7 @@ public:
    */
   shape_type shape () const
   {
-    validate (0);
+    validate (nullptr);
     return *m_shape;
   }
 
@@ -687,7 +687,7 @@ public:
    */
   shape_type operator* () const
   {
-    validate (0);
+    validate (nullptr);
     return *m_shape;
   }
 
@@ -698,7 +698,7 @@ public:
    */
   const shape_type *operator-> () const
   {
-    validate (0);
+    validate (nullptr);
     return m_shape.operator-> ();
   }
 
@@ -729,7 +729,7 @@ public:
     if (m_property_translator.is_null ()) {
       return 0;
     } else {
-      validate (0);
+      validate (nullptr);
       return m_property_translator (m_shape->prop_id ());
     }
   }
@@ -747,7 +747,7 @@ public:
    */
   const cell_type *cell () const
   {
-    validate (0);
+    validate (nullptr);
     size_t c = reinterpret_cast<size_t> (mp_cell);
     return reinterpret_cast<const cell_type *> (c - (c & size_t (3)));
   }
@@ -767,7 +767,7 @@ public:
    */
   RecursiveShapeIterator &operator++() 
   {
-    next (0);
+    next (nullptr);
     return *this;
   }
 
@@ -776,7 +776,7 @@ public:
    */
   void next ()
   {
-    next (0);
+    next (nullptr);
   }
 
   /**

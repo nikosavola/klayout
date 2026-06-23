@@ -267,7 +267,7 @@ class LAYUI_PUBLIC BrowserTextWidget
 {
 public:
   BrowserTextWidget (QWidget *w)
-    : QTextBrowser (w), mp_panel (0)
+    : QTextBrowser (w), mp_panel (nullptr)
   {
     //  .. nothing yet ..
   }

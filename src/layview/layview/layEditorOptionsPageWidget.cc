@@ -36,20 +36,20 @@ namespace lay
 //  EditorOptionsPageWidget implementation
 
 EditorOptionsPageWidget::EditorOptionsPageWidget (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher)
-  : QWidget (0), EditorOptionsPage (view, dispatcher), m_is_transparent (false)
+  : QWidget (nullptr), EditorOptionsPage (view, dispatcher), m_is_transparent (false)
 {
   init (view, dispatcher);
 }
 
 EditorOptionsPageWidget::EditorOptionsPageWidget ()
-  : QWidget (0), EditorOptionsPage (), m_is_transparent (false)
+  : QWidget (nullptr), EditorOptionsPage (), m_is_transparent (false)
 {
   //  .. nothing yet ..
 }
 
 EditorOptionsPageWidget::~EditorOptionsPageWidget ()
 {
-  set_owner (0);
+  set_owner (nullptr);
 }
 
 void
@@ -154,7 +154,7 @@ EditorOptionsPageWidget::set_transparent (bool f)
 {
   if (f != m_is_transparent) {
     m_is_transparent = f;
-    resizeEvent (0);
+    resizeEvent (nullptr);
   }
 }
 

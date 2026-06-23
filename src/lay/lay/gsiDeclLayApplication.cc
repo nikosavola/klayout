@@ -62,7 +62,7 @@ void crash_me (int reason)
     abort ();
   } else if (reason == 1) {
     //  SIGSEGV
-    ugly_cast.c_ptr = 0;
+    ugly_cast.c_ptr = nullptr;
     *ugly_cast.c_ptr = 0;
   } else if (reason == 2) {
     //  SIGILL

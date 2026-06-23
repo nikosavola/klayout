@@ -220,7 +220,7 @@ create_instances (GenericRasterizer &am, db::Cell *cell, db::cell_index_type fil
   for (unsigned int i = 0; i < am.area_maps (); ++i) {
 
     db::AreaMap &am1 = am.area_map (i);
-    const db::AreaMap *am1_excl = 0;
+    const db::AreaMap *am1_excl = nullptr;
     if (exclude_rasterized) {
       int ie = exclude_rasterized->index_for_p0 (am1.p0 ());
       if (ie >= 0) {
@@ -275,7 +275,7 @@ create_instances (GenericRasterizer &am, db::Cell *cell, db::cell_index_type fil
 
           {
             //  In case we run this from a tiling processor we need to lock against multithread races
-            tl_assert (cell->layout () != 0);
+            tl_assert (cell->layout () != nullptr);
             tl::MutexLocker locker (&cell->layout ()->lock ());
             cell->insert (array);
           }
@@ -351,7 +351,7 @@ fill_polygon_impl (db::Cell *cell, const db::Polygon &fp0, db::cell_index_type f
 
       has_exclude_area = true;
 
-      if (enhanced_fill || remaining_parts != 0) {
+      if (enhanced_fill || remaining_parts != nullptr) {
 
         //  In enhanced fill or if the remaining parts are requested, it is better to implement the
         //  exclude area by a boolean NOT
@@ -416,10 +416,10 @@ fill_polygon_impl (db::Cell *cell, const db::Polygon &fp0, db::cell_index_type f
 
   } else if (exclude_rasterized) {
 
-    tl_assert (remaining_parts == 0);
+    tl_assert (remaining_parts == nullptr);
     GenericRasterizer am (filled_poly, rasterized_area, row_step, column_step, origin, fc_bbox.p2 () - fc_bbox.p1 ());
 
-    size_t ninsts = create_instances (am, cell, fill_cell_index, kernel_origin, fill_margin, exclude_rasterized.get (), 0);
+    size_t ninsts = create_instances (am, cell, fill_cell_index, kernel_origin, fill_margin, exclude_rasterized.get (), nullptr);
     if (ninsts > 0) {
       any_fill = true;
     }
@@ -452,7 +452,7 @@ fill_polygon_impl (db::Cell *cell, const db::Polygon &fp0, db::cell_index_type f
 
       GenericRasterizer am (*fp, rasterized_area, row_step, column_step, o, fc_bbox.p2 () - fc_bbox.p1 ());
 
-      size_t ninsts = create_instances (am, cell, fill_cell_index, kernel_origin, fill_margin, 0, remaining_parts ? &filled_regions : 0);
+      size_t ninsts = create_instances (am, cell, fill_cell_index, kernel_origin, fill_margin, nullptr, remaining_parts ? &filled_regions : nullptr);
       if (ninsts > 0) {
         any_fill = true;
       }
@@ -527,7 +527,7 @@ fill_region_impl (db::Cell *cell, const db::Region &fr, db::cell_index_type fill
     tl::RelativeProgress progress (progress_title, n);
 
     for (db::Region::const_iterator p = fr.begin_merged (); !p.at_end (); ++p) {
-      if (! fill_polygon_impl (cell, *p, fill_cell_index, fc_bbox, row_step, column_step, origin, enhanced_fill, remaining_parts ? &rem_pp : 0, fill_margin, glue_box, exclude_area)) {
+      if (! fill_polygon_impl (cell, *p, fill_cell_index, fc_bbox, row_step, column_step, origin, enhanced_fill, remaining_parts ? &rem_pp : nullptr, fill_margin, glue_box, exclude_area)) {
         if (remaining_polygons) {
           rem_poly.push_back (*p);
         }

@@ -43,7 +43,7 @@ struct MacroEditorSetupDialogData
 {
   MacroEditorSetupDialogData (QObject *parent)
     : QObject(parent),
-      basic_attributes (0), tab_width (8), indent (2), save_all_on_run (true), stop_on_exception (true), file_watcher_enabled (true), font_size (0)
+      basic_attributes (nullptr), tab_width (8), indent (2), save_all_on_run (true), stop_on_exception (true), file_watcher_enabled (true), font_size (0)
   {
   }
 
@@ -305,7 +305,7 @@ MacroEditorSetupPage::commit_attributes (QListWidgetItem *to_item)
     return;
   }
 
-  GenericSyntaxHighlighterAttributes *attributes = 0;
+  GenericSyntaxHighlighterAttributes *attributes = nullptr;
 
   int ai = to_item->data (Qt::UserRole).toInt ();
   if (ai < 0) {
@@ -392,7 +392,7 @@ MacroEditorSetupPage::update_attributes (QListWidgetItem *from_item)
     underline_cb->setEnabled (true);
     strikeout_cb->setEnabled (true);
 
-    GenericSyntaxHighlighterAttributes *attributes = 0;
+    GenericSyntaxHighlighterAttributes *attributes = nullptr;
 
     int ai = from_item->data (Qt::UserRole).toInt ();
     if (ai < 0) {

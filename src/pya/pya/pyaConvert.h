@@ -351,7 +351,7 @@ template <class T> struct python2c_func<T &>
     tl_assert (rval != Py_None);
 
     const gsi::ClassBase *cls_decl = PythonModule::cls_for_type (Py_TYPE (rval));
-    tl_assert (cls_decl != 0);
+    tl_assert (cls_decl != nullptr);
     tl_assert (is_derived_from (cls_decl, typeid (T)));
 
     PYAObjectBase *p = PYAObjectBase::from_pyobject (rval);
@@ -416,7 +416,7 @@ struct c2python_func<T &>
 {
   PyObject *operator() (T &p)
   {
-    return object_to_python ((void *) &p, 0, gsi::class_by_typeinfo_no_assert (typeid (T)), false /*==don't pass*/, false /*==non-const*/, false, false /*==can't destroy*/);
+    return object_to_python ((void *) &p, nullptr, gsi::class_by_typeinfo_no_assert (typeid (T)), false /*==don't pass*/, false /*==non-const*/, false, false /*==can't destroy*/);
   }
 };
 
@@ -429,7 +429,7 @@ struct c2python_func<const T &>
 {
   PyObject *operator() (const T &p)
   {
-    return object_to_python ((void *) &p, 0, gsi::class_by_typeinfo_no_assert (typeid (T)), false /*==don't pass*/, true /*==const*/, false, false /*==can't destroy*/);
+    return object_to_python ((void *) &p, nullptr, gsi::class_by_typeinfo_no_assert (typeid (T)), false /*==don't pass*/, true /*==const*/, false, false /*==can't destroy*/);
   }
 };
 
@@ -447,7 +447,7 @@ struct c2python_func<T *>
     if (! p) {
       Py_RETURN_NONE;
     } else {
-      return object_to_python ((void *) p, 0, gsi::class_by_typeinfo_no_assert (typeid (T)), false /*==don't pass*/, false /*==non-const*/, false, false /*==can't destroy*/);
+      return object_to_python ((void *) p, nullptr, gsi::class_by_typeinfo_no_assert (typeid (T)), false /*==don't pass*/, false /*==non-const*/, false, false /*==can't destroy*/);
     }
   }
 };
@@ -465,7 +465,7 @@ struct c2python_func<const T *>
     if (! p) {
       Py_RETURN_NONE;
     } else {
-      return object_to_python ((void *) p, 0, gsi::class_by_typeinfo_no_assert (typeid (T)), false /*==don't pass*/, true /*==const*/, false, false /*==can't destroy*/);
+      return object_to_python ((void *) p, nullptr, gsi::class_by_typeinfo_no_assert (typeid (T)), false /*==don't pass*/, true /*==const*/, false, false /*==can't destroy*/);
     }
   }
 };
@@ -659,7 +659,7 @@ inline PyObject *c2python_new (T *p)
   if (! p) {
     Py_RETURN_NONE;
   } else {
-    return object_to_python ((void *) p, 0, gsi::class_by_typeinfo_no_assert (typeid (T)), true /*==pass*/, false /*==non-const*/, false, true /*==can destroy*/);
+    return object_to_python ((void *) p, nullptr, gsi::class_by_typeinfo_no_assert (typeid (T)), true /*==pass*/, false /*==non-const*/, false, true /*==can destroy*/);
   }
 }
 

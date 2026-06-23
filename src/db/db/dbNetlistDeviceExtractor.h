@@ -140,7 +140,7 @@ public:
    *
    *  The definition of the input layers is device class specific.
    */
-  void extract (Layout &layout, Cell &cell, const std::vector<unsigned int> &layers, Netlist *netlist, hier_clusters_type &clusters, double device_scaling = 1.0, const std::set<cell_index_type> *breakout_cells = 0);
+  void extract (Layout &layout, Cell &cell, const std::vector<unsigned int> &layers, Netlist *netlist, hier_clusters_type &clusters, double device_scaling = 1.0, const std::set<cell_index_type> *breakout_cells = nullptr);
 
   /**
    *  @brief Extracts the devices from a list of regions

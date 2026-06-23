@@ -87,7 +87,7 @@ static const char *cfg_suffix_text_size_value = "-text-size-value";
 //  Some utilities
 
 static std::string 
-escape_string (const std::string &s, bool process_substring_refs = false, bool *has_substring_refs = 0)
+escape_string (const std::string &s, bool process_substring_refs = false, bool *has_substring_refs = nullptr)
 {
   std::string r = "\"";
 
@@ -146,7 +146,7 @@ add_layer_clause (std::string &expr, LayerSelectionComboBox *layer)
 }
 
 static void
-add_numerical_condition (std::string &expr, QComboBox *op, QLineEdit *value, const char *attribute, const char *unit = 0)
+add_numerical_condition (std::string &expr, QComboBox *op, QLineEdit *value, const char *attribute, const char *unit = nullptr)
 {
   std::string v = tl::to_string (value->text ());
   if (! v.empty ()) {

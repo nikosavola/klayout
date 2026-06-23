@@ -47,7 +47,7 @@ public:
 
   StreamReaderOptionsPage *format_specific_options_page (QWidget * /*parent*/) const
   {
-    return 0;
+    return nullptr;
   }
 
   db::FormatSpecificReaderOptions *create_specific_options () const

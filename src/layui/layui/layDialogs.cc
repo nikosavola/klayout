@@ -81,7 +81,7 @@ LayerSourceDialog::LayerSourceDialog (QWidget *parent)
 LayerSourceDialog::~LayerSourceDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 bool 
@@ -113,7 +113,7 @@ NewLayoutPropertiesDialog::NewLayoutPropertiesDialog (QWidget *parent)
 NewLayoutPropertiesDialog::~NewLayoutPropertiesDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -236,7 +236,7 @@ END_PROTECTED;
 
 NewCellPropertiesDialog::NewCellPropertiesDialog (QWidget *parent)
   : QDialog (parent),
-    mp_layout (0)
+    mp_layout (nullptr)
 {
   setObjectName (QString::fromUtf8 ("new_cell_properties_dialog"));
 
@@ -247,7 +247,7 @@ NewCellPropertiesDialog::NewCellPropertiesDialog (QWidget *parent)
 NewCellPropertiesDialog::~NewCellPropertiesDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 bool 
@@ -301,7 +301,7 @@ NewLayerPropertiesDialog::NewLayerPropertiesDialog (QWidget *parent)
 NewLayerPropertiesDialog::~NewLayerPropertiesDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 bool 
@@ -398,7 +398,7 @@ LayoutViewFunctionDialog::LayoutViewFunctionDialog (QWidget *parent, const QStri
 LayoutViewFunctionDialog::~LayoutViewFunctionDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 bool
@@ -447,7 +447,7 @@ MoveOptionsDialog::MoveOptionsDialog (QWidget *parent)
 MoveOptionsDialog::~MoveOptionsDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 bool 
@@ -513,7 +513,7 @@ MoveToOptionsDialog::MoveToOptionsDialog (QWidget *parent)
 MoveToOptionsDialog::~MoveToOptionsDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 bool 
@@ -583,7 +583,7 @@ MoveToOptionsDialog::button_clicked ()
 //  RenameCellDialog implementation
 
 RenameCellDialog::RenameCellDialog (QWidget *parent)
-  : QDialog (parent), mp_layout (0)
+  : QDialog (parent), mp_layout (nullptr)
 {
   setObjectName (QString::fromUtf8 ("rename_cell_dialog"));
 
@@ -594,7 +594,7 @@ RenameCellDialog::RenameCellDialog (QWidget *parent)
 RenameCellDialog::~RenameCellDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -639,7 +639,7 @@ CopyCellModeDialog::CopyCellModeDialog (QWidget *parent)
 CopyCellModeDialog::~CopyCellModeDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 bool 
@@ -679,7 +679,7 @@ DeleteCellModeDialog::DeleteCellModeDialog (QWidget *parent)
 DeleteCellModeDialog::~DeleteCellModeDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 bool 
@@ -718,7 +718,7 @@ ReplaceCellOptionsDialog::ReplaceCellOptionsDialog (QWidget *parent)
 ReplaceCellOptionsDialog::~ReplaceCellOptionsDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 static std::pair<bool, db::cell_index_type>
@@ -755,7 +755,7 @@ ReplaceCellOptionsDialog::exec_dialog (const lay::CellView &cv, int &replace_mod
     }
 
     std::string cn = tl::to_string (mp_ui->cell_selection_cbx->lineEdit ()->text ());
-    std::pair<bool, db::cell_index_type> cc = find_cell_by_display_name (cv->layout (), cn.c_str ());
+    std::pair<bool, db::cell_index_type> cc = find_cell_by_display_name (cv->layout (), cn);
     cell_index = cc.second;
 
     return cc.first;
@@ -773,7 +773,7 @@ BEGIN_PROTECTED;
   lay::CellTreeModel *model = dynamic_cast<lay::CellTreeModel *> (mp_ui->cell_selection_cbx->model ());
   if (model) {
     std::string cn = tl::to_string (mp_ui->cell_selection_cbx->lineEdit ()->text ());
-    std::pair<bool, db::cell_index_type> cc = find_cell_by_display_name (*model->layout (), cn.c_str ());
+    std::pair<bool, db::cell_index_type> cc = find_cell_by_display_name (*model->layout (), cn);
     if (! cc.first) {
       throw tl::Exception (tl::to_string (QObject::tr ("Not a valid cell name: ")) + cn);
     }
@@ -799,7 +799,7 @@ ClearLayerModeDialog::ClearLayerModeDialog (QWidget *parent)
 ClearLayerModeDialog::~ClearLayerModeDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 bool 
@@ -838,7 +838,7 @@ OpenLayoutModeDialog::OpenLayoutModeDialog (QWidget *parent)
 OpenLayoutModeDialog::~OpenLayoutModeDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 bool 
@@ -867,7 +867,7 @@ OpenLayoutModeDialog::exec_dialog (int &open_mode)
 
 DuplicateLayerDialog::DuplicateLayerDialog (QWidget *parent)
   : QDialog (parent),
-    mp_view (0)
+    mp_view (nullptr)
 {
   setObjectName (QString::fromUtf8 ("merge_options_dialog"));
 
@@ -881,7 +881,7 @@ DuplicateLayerDialog::DuplicateLayerDialog (QWidget *parent)
 DuplicateLayerDialog::~DuplicateLayerDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -928,7 +928,7 @@ DuplicateLayerDialog::exec_dialog (lay::LayoutViewBase *view, int &cv, int &laye
 
   }
 
-  mp_view = 0;
+  mp_view = nullptr;
   return res;
 }
 
@@ -994,7 +994,7 @@ AlignCellOptionsDialog::AlignCellOptionsDialog (QWidget *parent)
 AlignCellOptionsDialog::~AlignCellOptionsDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 bool 
@@ -1084,7 +1084,7 @@ FlattenInstOptionsDialog::FlattenInstOptionsDialog (QWidget *parent, bool enable
 FlattenInstOptionsDialog::~FlattenInstOptionsDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 bool
@@ -1169,7 +1169,7 @@ UserPropertiesForm::UserPropertiesForm (QWidget *parent)
 UserPropertiesForm::~UserPropertiesForm ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 db::PropertiesSet
@@ -1356,7 +1356,7 @@ BEGIN_PROTECTED
     return;
   }
 
-  if (mp_ui->prop_list->currentItem () == 0) {
+  if (mp_ui->prop_list->currentItem () == nullptr) {
     throw tl::Exception (tl::to_string (QObject::tr ("Select an item to delete")));
   }
 
@@ -1424,7 +1424,7 @@ BEGIN_PROTECTED
     return;
   }
 
-  if (mp_ui->prop_list->currentItem () == 0) {
+  if (mp_ui->prop_list->currentItem () == nullptr) {
     throw tl::Exception (tl::to_string (QObject::tr ("Select an item to edit")));
   }
 
@@ -1457,7 +1457,7 @@ UserPropertiesEditForm::UserPropertiesEditForm (QWidget *parent)
 UserPropertiesEditForm::~UserPropertiesEditForm ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 static QString
@@ -1608,7 +1608,7 @@ UndoRedoListForm::UndoRedoListForm (QWidget *parent, db::Manager *manager, bool 
 UndoRedoListForm::~UndoRedoListForm ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void

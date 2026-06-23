@@ -28,18 +28,18 @@ namespace db
   Object::~Object ()
   {
     //  release from any manager
-    manager (0);
+    manager (nullptr);
   }
  
   Object::Object (Manager *m)
-    : m_id (0), mp_manager (0)
+    : m_id (0), mp_manager (nullptr)
   {
     //  attach to the manager if required
     manager (m);
   }
 
   Object::Object (const Object &d)
-    : m_id (0), mp_manager (0)
+    : m_id (0), mp_manager (nullptr)
   {
     //  attach to the manager if required
     manager (d.manager ());
@@ -58,7 +58,7 @@ namespace db
         mp_manager = p_manager;
         m_id = mp_manager->next_id (this);
       } else {
-        mp_manager = 0;
+        mp_manager = nullptr;
         m_id = 0;
       }
 

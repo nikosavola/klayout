@@ -42,7 +42,7 @@ class RegistrarNode
 {
 private:
   RegistrarNode ()
-    : mp_object (0), m_owned (true), m_position (0), mp_next (0)
+    : mp_object (nullptr), m_owned (true), m_position (0), mp_next (nullptr)
   {
     // .. nothing else ..
   }
@@ -52,7 +52,7 @@ private:
     if (m_owned) {
       delete mp_object;
     }
-    mp_object = 0;
+    mp_object = nullptr;
   }
 
   X *mp_object;
@@ -117,7 +117,7 @@ public:
       if (instance->begin () == instance->end ()) {
         //  no more registered objects left - remove registrar
         delete instance;
-        Registrar<X>::set_instance (0);
+        Registrar<X>::set_instance (nullptr);
       }
 
     }
@@ -206,7 +206,7 @@ public:
     X *take () const
     {
       X *x = mp_pos->mp_object;
-      mp_pos->mp_object = 0;
+      mp_pos->mp_object = nullptr;
       return x;
     }
 
@@ -218,7 +218,7 @@ public:
    *  @brief Constructor
    */
   Registrar ()
-    : mp_first (0)
+    : mp_first (nullptr)
   {
     //  .. nothing yet ..
   }
@@ -231,7 +231,7 @@ public:
     if (get_instance ()) {
       return iterator (get_instance ()->mp_first);
     } else {
-      return iterator (0); 
+      return iterator (nullptr); 
     }
   }
 
@@ -240,7 +240,7 @@ public:
    */
   static iterator end () 
   {
-    return iterator (0); 
+    return iterator (nullptr); 
   }
 
   static Registrar<X> *get_instance () 

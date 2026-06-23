@@ -188,7 +188,7 @@ NetlistComparer::unmatched_circuits (db::Netlist *a, db::Netlist *b, std::vector
 static void clear_primary_classes (const db::Netlist *nl)
 {
   for (db::Netlist::const_device_class_iterator dc = nl->begin_device_classes (); dc != nl->end_device_classes (); ++dc) {
-    dc->set_primary_class (0);
+    dc->set_primary_class (nullptr);
   }
 }
 
@@ -305,14 +305,14 @@ NetlistComparer::compare_impl (const db::Netlist *a, const db::Netlist *b) const
   for (db::Netlist::const_device_class_iterator dc = a->begin_device_classes (); dc != a->end_device_classes (); ++dc) {
     size_t cat = device_categorizer.cat_for_device_class (dc.operator-> ());
     if (cat) {
-      cat2dc.insert (std::make_pair (cat, std::make_pair ((const db::DeviceClass *) 0, (const db::DeviceClass *) 0))).first->second.first = dc.operator-> ();
+      cat2dc.insert (std::make_pair (cat, std::make_pair ((const db::DeviceClass *) nullptr, (const db::DeviceClass *) nullptr))).first->second.first = dc.operator-> ();
     }
   }
 
   for (db::Netlist::const_device_class_iterator dc = b->begin_device_classes (); dc != b->end_device_classes (); ++dc) {
     size_t cat = device_categorizer.cat_for_device_class (dc.operator-> ());
     if (cat) {
-      cat2dc.insert (std::make_pair (cat, std::make_pair ((const db::DeviceClass *) 0, (const db::DeviceClass *) 0))).first->second.second = dc.operator-> ();
+      cat2dc.insert (std::make_pair (cat, std::make_pair ((const db::DeviceClass *) nullptr, (const db::DeviceClass *) nullptr))).first->second.second = dc.operator-> ();
     }
   }
 
@@ -352,7 +352,7 @@ NetlistComparer::compare_impl (const db::Netlist *a, const db::Netlist *b) const
       good = false;
       if (mp_logger) {
         for (std::vector<const db::Circuit *>::const_iterator j = i->second.second.begin (); j != i->second.second.end (); ++j) {
-          mp_logger->circuit_mismatch (0, *j);
+          mp_logger->circuit_mismatch (nullptr, *j);
         }
       }
     }
@@ -360,7 +360,7 @@ NetlistComparer::compare_impl (const db::Netlist *a, const db::Netlist *b) const
       good = false;
       if (mp_logger) {
         for (std::vector<const db::Circuit *>::const_iterator j = i->second.first.begin (); j != i->second.first.end (); ++j) {
-          mp_logger->circuit_mismatch (*j, 0);
+          mp_logger->circuit_mismatch (*j, nullptr);
         }
       }
     }
@@ -908,7 +908,7 @@ NetlistComparer::compare_circuits (const db::Circuit *c1, const db::Circuit *c2,
   if (db::NetlistCompareGlobalOptions::options ()->debug_netgraph) {
     tl::info << "Netlist graph:";
   }
-  g1.build (c1, device_categorizer, circuit_categorizer, device_filter, &c12_circuit_and_pin_mapping, &circuit_pin_mapper, (size_t *)0);
+  g1.build (c1, device_categorizer, circuit_categorizer, device_filter, &c12_circuit_and_pin_mapping, &circuit_pin_mapper, (size_t *)nullptr);
 
   if (db::NetlistCompareGlobalOptions::options ()->debug_netgraph) {
     tl::info << "Other netlist graph:";
@@ -1158,9 +1158,9 @@ NetlistComparer::compare_circuits (const db::Circuit *c1, const db::Circuit *c2,
       }
       if (mp_logger) {
         if (good) {
-          mp_logger->match_nets (i->net (), 0);
+          mp_logger->match_nets (i->net (), nullptr);
         } else {
-          mp_logger->net_mismatch (i->net (), 0);
+          mp_logger->net_mismatch (i->net (), nullptr);
         }
       }
       if (good) {
@@ -1177,9 +1177,9 @@ NetlistComparer::compare_circuits (const db::Circuit *c1, const db::Circuit *c2,
       }
       if (mp_logger) {
         if (good) {
-          mp_logger->match_nets (0, i->net ());
+          mp_logger->match_nets (nullptr, i->net ());
         } else {
-          mp_logger->net_mismatch (0, i->net ());
+          mp_logger->net_mismatch (nullptr, i->net ());
         }
       }
       if (good) {
@@ -1293,14 +1293,14 @@ NetlistComparer::do_pin_assignment (const db::Circuit *c1, const db::NetGraph &g
   for (db::Circuit::const_pin_iterator p = c2->begin_pins (); p != c2->end_pins (); ++p) {
     const db::Net *net = c2->net_for_pin (p->id ());
     if (!net && !p->name ().empty ()) {
-      abstract_pins_by_name.insert (std::make_pair (db::Netlist::normalize_name (m_case_sensitive, p->name ()), std::make_pair ((const db::Pin *) 0, (const db::Pin *) 0))).first->second.second = p.operator-> ();
+      abstract_pins_by_name.insert (std::make_pair (db::Netlist::normalize_name (m_case_sensitive, p->name ()), std::make_pair ((const db::Pin *) nullptr, (const db::Pin *) nullptr))).first->second.second = p.operator-> ();
     }
   }
 
   for (db::Circuit::const_pin_iterator p = c1->begin_pins (); p != c1->end_pins (); ++p) {
     const db::Net *net = c1->net_for_pin (p->id ());
     if (!net && !p->name ().empty ()) {
-      abstract_pins_by_name.insert (std::make_pair (db::Netlist::normalize_name (m_case_sensitive, p->name ()), std::make_pair ((const db::Pin *) 0, (const db::Pin *) 0))).first->second.first = p.operator-> ();
+      abstract_pins_by_name.insert (std::make_pair (db::Netlist::normalize_name (m_case_sensitive, p->name ()), std::make_pair ((const db::Pin *) nullptr, (const db::Pin *) nullptr))).first->second.first = p.operator-> ();
     }
   }
 
@@ -1366,7 +1366,7 @@ NetlistComparer::do_pin_assignment (const db::Circuit *c1, const db::NetGraph &g
       } else {
 
         //  otherwise this is an error for subcircuits or worth a report for top-level circuits
-        if (! handle_pin_mismatch (g1, c1, p.operator-> (), g2, c2, 0)) {
+        if (! handle_pin_mismatch (g1, c1, p.operator-> (), g2, c2, nullptr)) {
           good = false;
           pin_mismatch = true;
         }
@@ -1413,14 +1413,14 @@ NetlistComparer::do_pin_assignment (const db::Circuit *c1, const db::NetGraph &g
   }
 
   for (std::multimap<size_t, const db::Pin *>::iterator np = net2pin1.begin (); np != net2pin1.end (); ++np) {
-    if (! handle_pin_mismatch (g1, c1, np->second, g2, c2, 0)) {
+    if (! handle_pin_mismatch (g1, c1, np->second, g2, c2, nullptr)) {
       good = false;
       pin_mismatch = true;
     }
   }
 
   for (std::multimap<size_t, const db::Pin *>::iterator np = net2pin2.begin (); np != net2pin2.end (); ++np) {
-    if (! handle_pin_mismatch (g1, c1, 0, g2, c2, np->second)) {
+    if (! handle_pin_mismatch (g1, c1, nullptr, g2, c2, np->second)) {
       good = false;
       pin_mismatch = true;
     }
@@ -1428,7 +1428,7 @@ NetlistComparer::do_pin_assignment (const db::Circuit *c1, const db::NetGraph &g
 
   //  abstract pins must match.
   while (next_abstract != abstract_pins2.end ()) {
-    if (! handle_pin_mismatch (g1, c1, 0, g2, c2, *next_abstract)) {
+    if (! handle_pin_mismatch (g1, c1, nullptr, g2, c2, *next_abstract)) {
       good = false;
       pin_mismatch = true;
     }
@@ -1491,7 +1491,7 @@ NetlistComparer::do_device_assignment (const db::Circuit *c1, const db::NetGraph
       continue;
     }
 
-    const db::Device *c1_device = 0;
+    const db::Device *c1_device = nullptr;
     size_t c1_device_cat = 0;
 
     const db::Device *d_this = device_eq.other (d.operator-> ());
@@ -1614,10 +1614,10 @@ NetlistComparer::do_device_assignment (const db::Circuit *c1, const db::NetGraph
 
       //  don't try too much analysis - this may be a waste of time
       for (unmatched_list::const_iterator i = unmatched_a.begin (); i != unmatched_a.end (); ++i) {
-        mp_logger->device_mismatch (i->second.first, 0);
+        mp_logger->device_mismatch (i->second.first, nullptr);
       }
       for (unmatched_list::const_iterator i = unmatched_b.begin (); i != unmatched_b.end (); ++i) {
-        mp_logger->device_mismatch (0, i->second.first);
+        mp_logger->device_mismatch (nullptr, i->second.first);
       }
 
     } else {
@@ -1630,12 +1630,12 @@ NetlistComparer::do_device_assignment (const db::Circuit *c1, const db::NetGraph
       for (unmatched_list::iterator i = unmatched_a.begin (), j = unmatched_b.begin (); i != unmatched_a.end () || j != unmatched_b.end (); ) {
 
         while (j != unmatched_b.end () && (i == unmatched_a.end () || !cmp.equals (*j, *i))) {
-          mp_logger->device_mismatch (0, j->second.first);
+          mp_logger->device_mismatch (nullptr, j->second.first);
           ++j;
         }
 
         while (i != unmatched_a.end () && (j == unmatched_b.end () || !cmp.equals (*i, *j))) {
-          mp_logger->device_mismatch (i->second.first, 0);
+          mp_logger->device_mismatch (i->second.first, nullptr);
           ++i;
         }
 
@@ -1661,11 +1661,11 @@ NetlistComparer::do_device_assignment (const db::Circuit *c1, const db::NetGraph
         }
 
         for ( ; jj != j; ++jj) {
-          mp_logger->device_mismatch (0, jj->second.first);
+          mp_logger->device_mismatch (nullptr, jj->second.first);
         }
 
         for ( ; ii != i; ++ii) {
-          mp_logger->device_mismatch (ii->second.first, 0);
+          mp_logger->device_mismatch (ii->second.first, nullptr);
         }
 
       }
@@ -1699,7 +1699,7 @@ NetlistComparer::do_subcircuit_assignment (const db::Circuit *c1, const db::NetG
 
     if (! mapped) {
       if (mp_logger) {
-        mp_logger->subcircuit_mismatch (sc.operator-> (), 0);
+        mp_logger->subcircuit_mismatch (sc.operator-> (), nullptr);
       }
       good = false;
     } else if (valid) {
@@ -1708,7 +1708,7 @@ NetlistComparer::do_subcircuit_assignment (const db::Circuit *c1, const db::NetG
     } else {
       //  emit a mismatch event but do not consider that an error - this may happen if the circuit has been dropped intentionally (e.g. via cells)
       if (mp_logger) {
-        mp_logger->subcircuit_mismatch (sc.operator-> (), 0);
+        mp_logger->subcircuit_mismatch (sc.operator-> (), nullptr);
       }
     }
 
@@ -1797,7 +1797,7 @@ NetlistComparer::do_subcircuit_assignment (const db::Circuit *c1, const db::NetG
 
             //  no unique match
             if (mp_logger) {
-              mp_logger->subcircuit_mismatch (0, sc.operator-> ());
+              mp_logger->subcircuit_mismatch (nullptr, sc.operator-> ());
             }
 
           }
@@ -1838,10 +1838,10 @@ NetlistComparer::do_subcircuit_assignment (const db::Circuit *c1, const db::NetG
 
       //  don't try too much analysis - this may be a waste of time
       for (unmatched_list::const_iterator i = unmatched_a.begin (); i != unmatched_a.end (); ++i) {
-        mp_logger->subcircuit_mismatch (i->second, 0);
+        mp_logger->subcircuit_mismatch (i->second, nullptr);
       }
       for (unmatched_list::const_iterator i = unmatched_b.begin (); i != unmatched_b.end (); ++i) {
-        mp_logger->subcircuit_mismatch (0, i->second);
+        mp_logger->subcircuit_mismatch (nullptr, i->second);
       }
 
     } else {
@@ -1852,12 +1852,12 @@ NetlistComparer::do_subcircuit_assignment (const db::Circuit *c1, const db::NetG
       for (unmatched_list::iterator i = unmatched_a.begin (), j = unmatched_b.begin (); i != unmatched_a.end () || j != unmatched_b.end (); ) {
 
         while (j != unmatched_b.end () && (i == unmatched_a.end () || j->first.size () < i->first.size ())) {
-          mp_logger->subcircuit_mismatch (0, j->second);
+          mp_logger->subcircuit_mismatch (nullptr, j->second);
           ++j;
         }
 
         while (i != unmatched_a.end () && (j == unmatched_b.end () || i->first.size () < j->first.size ())) {
-          mp_logger->subcircuit_mismatch (i->second, 0);
+          mp_logger->subcircuit_mismatch (i->second, nullptr);
           ++i;
         }
 
@@ -1886,11 +1886,11 @@ NetlistComparer::do_subcircuit_assignment (const db::Circuit *c1, const db::NetG
           }
 
           for ( ; jj != j; ++jj) {
-            mp_logger->subcircuit_mismatch (0, jj->second);
+            mp_logger->subcircuit_mismatch (nullptr, jj->second);
           }
 
           for ( ; ii != i; ++ii) {
-            mp_logger->subcircuit_mismatch (ii->second, 0);
+            mp_logger->subcircuit_mismatch (ii->second, nullptr);
           }
 
         }
@@ -2002,7 +2002,7 @@ NetlistComparer::join_symmetric_nets (db::Circuit *circuit)
   db::NetGraph graph;
   db::CircuitCategorizer circuit_categorizer;
   db::DeviceCategorizer device_categorizer;
-  graph.build (circuit, device_categorizer, circuit_categorizer, device_filter, &circuit_and_pin_mapping, &circuit_pin_equivalence, (size_t *) 0);
+  graph.build (circuit, device_categorizer, circuit_categorizer, device_filter, &circuit_and_pin_mapping, &circuit_pin_equivalence, (size_t *) nullptr);
 
   //  sort the nodes so we can easily identify the identical ones (in terms of topology)
   //  nodes are identical if the attached devices and circuits are of the same kind and with the same parameters

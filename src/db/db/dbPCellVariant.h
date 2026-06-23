@@ -121,7 +121,7 @@ public:
   /**
    *  @brief Updates the layout
    */
-  virtual void update (ImportLayerMapping *layer_mapping = 0);
+  virtual void update (ImportLayerMapping *layer_mapping = nullptr);
 
   /**
    *  @brief Gets a value indicating if this cell is a proxy cell

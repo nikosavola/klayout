@@ -47,14 +47,14 @@ class TL_PUBLIC XMLException : public tl::Exception
 {
 public: 
   XMLException (const char *msg)
-    : Exception (tl::to_string (tr ("XML parser error: %s")).c_str ()),
+    : Exception (tl::to_string (tr ("XML parser error: %s"))),
       m_msg (msg)
   {
     //  .. nothing yet ..
   }
 
   XMLException (const std::string &msg)
-    : Exception (fmt (-1, -1).c_str (), msg.c_str ()),
+    : Exception (fmt (-1, -1), msg.c_str ()),
       m_msg (msg)
   {
     //  .. nothing yet ..
@@ -71,7 +71,7 @@ public:
 
 protected:
   XMLException (const std::string &msg, int line, int column)
-    : Exception (fmt (line, column).c_str (), msg.c_str (), line, column),
+    : Exception (fmt (line, column), msg.c_str (), line, column),
       m_msg (msg)
   {
     //  .. nothing yet ..
@@ -83,9 +83,9 @@ private:
   static std::string fmt (int line, int /*column*/)
   {
     if (line < 0) {
-      return tl::to_string (tr ("XML parser error: %s")).c_str ();
+      return tl::to_string (tr ("XML parser error: %s"));
     } else {
-      return tl::to_string (tr ("XML parser error: %s in line %d, column %d")).c_str ();
+      return tl::to_string (tr ("XML parser error: %s in line %d, column %d"));
     }
   }
 };
@@ -161,7 +161,7 @@ public:
     if (m_owns_obj && mp_obj) {
       delete mp_obj;
     }
-    mp_obj = 0;
+    mp_obj = nullptr;
   }
 
   virtual void detach ()
@@ -584,7 +584,7 @@ public:
   template <class Obj>
   const Obj *back (XMLObjTag<Obj> /*tag*/) 
   {
-    tl_assert (m_objects.size () > 0);
+    tl_assert (!m_objects.empty());
     return reinterpret_cast <const Obj *> (m_objects.end () [-1]);
   }
 
@@ -632,7 +632,7 @@ public:
   {
     if (m_owns_child_list) {
       delete const_cast <XMLElementList *> (mp_children);
-      mp_children = 0;
+      mp_children = nullptr;
     }
   }
 
@@ -1300,7 +1300,7 @@ struct XMLMemberReadAdaptor
   typedef pass_by_ref_tag tag;
 
   XMLMemberReadAdaptor (Value Parent::*member)
-    : mp_member (member), mp_owner (0), m_done (false)
+    : mp_member (member), mp_owner (nullptr), m_done (false)
   {
     // .. nothing yet ..
   }
@@ -1338,7 +1338,7 @@ struct XMLMemberAccRefReadAdaptor
   typedef pass_by_ref_tag tag;
 
   XMLMemberAccRefReadAdaptor (const Value &(Parent::*member) () const)
-    : mp_member (member), mp_owner (0), m_done (false)
+    : mp_member (member), mp_owner (nullptr), m_done (false)
   {
     // .. nothing yet ..
   }
@@ -1376,7 +1376,7 @@ struct XMLMemberAccReadAdaptor
   typedef pass_by_value_tag tag;
 
   XMLMemberAccReadAdaptor (Value (Parent::*member) () const)
-    : mp_member (member), mp_owner (0), m_done (false)
+    : mp_member (member), mp_owner (nullptr), m_done (false)
   {
     // .. nothing yet ..
   }

@@ -64,7 +64,7 @@ BookmarkManagementForm::BookmarkManagementForm (QWidget *parent, const char *nam
 
   mp_ui->setupUi (this);
 
-  QListWidgetItem *first_item = 0;
+  QListWidgetItem *first_item = nullptr;
 
   for (size_t i = 0; i < m_bookmarks.size (); ++i) {
     QListWidgetItem *item = new BookmarkListLVI (mp_ui->bookmark_list, m_bookmarks.name (i), m_bookmarks.state (i));

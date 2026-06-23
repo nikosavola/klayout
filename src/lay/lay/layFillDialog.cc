@@ -54,7 +54,7 @@ public:
 
   virtual lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
   {
-    return 0; //  .. no config page yet ..
+    return nullptr; //  .. no config page yet ..
   }
 
   virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
@@ -68,7 +68,7 @@ public:
     if (lay::has_gui ()) {
       return new FillDialog (lay::MainWindow::instance (), view);
     } else {
-      return 0;
+      return nullptr;
     }
   }
 };
@@ -186,7 +186,7 @@ FillDialog::generate_fill (const FillParameters &fp)
 
   const db::Cell *fill_cell = &ly.cell (fc.second);
 
-  const db::Cell *fill_cell2 = 0;
+  const db::Cell *fill_cell2 = nullptr;
   if (! fp.fill_cell_name2.empty ()) {
     std::pair<bool, db::cell_index_type> fc2 = cv->layout ().cell_by_name (fp.fill_cell_name2.c_str ());
     if (! fc2.first) {
@@ -275,9 +275,9 @@ FillDialog::generate_fill (const FillParameters &fp)
       }
 
       if (! enhanced_fill) {
-        db::fill_region (cv.cell (), fill_region, fill_cell->cell_index (), fc_bbox, row_step, column_step, fill_origin, false, fill_cell2 ? &fill_region : 0, fill_margin, fill_cell2 ? &fill_region : 0);
+        db::fill_region (cv.cell (), fill_region, fill_cell->cell_index (), fc_bbox, row_step, column_step, fill_origin, false, fill_cell2 ? &fill_region : nullptr, fill_margin, fill_cell2 ? &fill_region : nullptr);
       } else {
-        db::fill_region_repeat (cv.cell (), fill_region, fill_cell->cell_index (), fc_bbox, row_step, column_step, fill_margin, fill_cell2 ? &fill_region : 0);
+        db::fill_region_repeat (cv.cell (), fill_region, fill_cell->cell_index (), fc_bbox, row_step, column_step, fill_margin, fill_cell2 ? &fill_region : nullptr);
       }
 
       fill_cell = fill_cell2;
@@ -286,9 +286,9 @@ FillDialog::generate_fill (const FillParameters &fp)
       fc_bbox = fc_bbox2;
       fill_margin = fill_margin2;
 
-      fill_cell2 = 0;
+      fill_cell2 = nullptr;
 
-    } while (fill_cell != 0 && ! fill_region.empty ());
+    } while (fill_cell != nullptr && ! fill_region.empty ());
 
   }
 

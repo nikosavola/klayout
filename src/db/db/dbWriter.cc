@@ -33,7 +33,7 @@ namespace db
 {
 
 Writer::Writer (const db::SaveLayoutOptions &options)
-  : mp_writer (0), m_options (options)
+  : mp_writer (nullptr), m_options (options)
 {
   for (tl::Registrar<db::StreamFormatDeclaration>::iterator fmt = tl::Registrar<db::StreamFormatDeclaration>::begin (); fmt != tl::Registrar<db::StreamFormatDeclaration>::end () && ! mp_writer; ++fmt) {
     if (m_options.format () == fmt->format_name ()) {
@@ -50,7 +50,7 @@ Writer::~Writer ()
   if (mp_writer) {
     delete mp_writer;
   }
-  mp_writer = 0;
+  mp_writer = nullptr;
 }
 
 void 
@@ -63,7 +63,7 @@ Writer::write (db::Layout &layout, tl::OutputStream &stream)
     layout.force_update ();
   }
 
-  tl_assert (mp_writer != 0);
+  tl_assert (mp_writer != nullptr);
   mp_writer->write (layout, stream, m_options);
 }
 

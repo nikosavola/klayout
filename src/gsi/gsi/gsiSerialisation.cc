@@ -49,7 +49,7 @@ public:
 
     delete mp_src;
     delete mp_target;
-    mp_src = 0;
+    mp_src = nullptr;
   }
 
 private:

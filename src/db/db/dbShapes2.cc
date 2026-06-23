@@ -581,7 +581,7 @@ private:
       //  Convert the box to a polygon reference and translate ..
       db::polygon_ref<db::polygon<C>, db::unit_trans<C> > poly_ref (db::polygon<C> (db::box<C> (sh.object ())), m_shape_rep);
       const db::basic_array<C> *ba = dynamic_cast <const db::basic_array<C> *> (sh.delegate ());
-      db::array<db::polygon_ref<db::polygon<C>, db::unit_trans<C> >, db::disp_trans<C> > poly_array (poly_ref, db::disp_trans<C> (sh.front ()), ba ? ba->clone () : 0);
+      db::array<db::polygon_ref<db::polygon<C>, db::unit_trans<C> >, db::disp_trans<C> > poly_array (poly_ref, db::disp_trans<C> (sh.front ()), ba ? ba->clone () : nullptr);
       db::array<db::polygon_ref<db::polygon<C>, db::unit_trans<C> >, db::disp_trans<C> > new_array;
       new_array.translate (poly_array, trans, m_shape_rep, m_array_rep);
       mp_shapes->insert (new_array);
@@ -601,7 +601,7 @@ private:
       //  Convert the box to a polygon reference and translate ..
       db::polygon_ref<db::polygon<C>, db::unit_trans<C> > poly_ref (db::polygon<C> (db::box<C> (sh.object ())), m_shape_rep);
       const db::basic_array<C> *ba = dynamic_cast <const db::basic_array<C> *> (sh.delegate ());
-      db::array<db::polygon_ref<db::polygon<C>, db::unit_trans<C> >, db::disp_trans<C> > poly_array (poly_ref, db::disp_trans<C> (sh.front ()), ba ? ba->clone () : 0);
+      db::array<db::polygon_ref<db::polygon<C>, db::unit_trans<C> >, db::disp_trans<C> > poly_array (poly_ref, db::disp_trans<C> (sh.front ()), ba ? ba->clone () : nullptr);
       db::array<db::polygon_ref<db::polygon<C>, db::unit_trans<C> >, db::disp_trans<C> > new_array;
       new_array.translate (poly_array, trans, m_shape_rep, m_array_rep);
       mp_shapes->insert (db::object_with_properties<db::array<db::polygon_ref<db::polygon<C>, db::unit_trans<C> >, db::disp_trans<C> > > (new_array, pm (sh.properties_id ())));

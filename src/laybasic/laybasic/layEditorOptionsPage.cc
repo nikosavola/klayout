@@ -41,20 +41,20 @@ EditorOptionsPageCollection::EditorOptionsPageCollection ()
 //  EditorOptionsPage implementation
 
 EditorOptionsPage::EditorOptionsPage (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher)
-  : mp_owner (0), m_active (true), m_focus_page (false), m_modal_page (false), m_toolbox_widget (false), mp_dispatcher (0), mp_view (0)
+  : mp_owner (nullptr), m_active (true), m_focus_page (false), m_modal_page (false), m_toolbox_widget (false), mp_dispatcher (nullptr), mp_view (nullptr)
 {
   init (view, dispatcher);
 }
 
 EditorOptionsPage::EditorOptionsPage ()
-  : mp_owner (0), m_active (true), m_focus_page (false), m_modal_page (false), m_toolbox_widget (false), mp_dispatcher (0), mp_view (0)
+  : mp_owner (nullptr), m_active (true), m_focus_page (false), m_modal_page (false), m_toolbox_widget (false), mp_dispatcher (nullptr), mp_view (nullptr)
 {
   //  .. nothing yet ..
 }
 
 EditorOptionsPage::~EditorOptionsPage ()
 {
-  set_owner (0);
+  set_owner (nullptr);
 }
 
 void

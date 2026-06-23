@@ -44,7 +44,7 @@
 namespace ant
 {
 
-static PluginDeclaration *sp_instance = 0;
+static PluginDeclaration *sp_instance = nullptr;
 
 static std::vector<ant::Template> make_standard_templates ()
 {
@@ -87,7 +87,7 @@ PluginDeclaration::PluginDeclaration ()
 
 PluginDeclaration::~PluginDeclaration ()
 {
-  sp_instance = 0;
+  sp_instance = nullptr;
 }
 
 PluginDeclaration *

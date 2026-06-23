@@ -465,7 +465,7 @@ Class<rdb::Category> decl_RdbCategory ("rdb", "RdbCategory",
     "\n"
     "This method has been introduced in version 0.28.\n"
   ) +
-  gsi::method_ext ("scan_layer", &scan_layer, gsi::arg ("layout"), gsi::arg ("layer"), gsi::arg ("cell", (const db::Cell *) 0, "nil"), gsi::arg ("levels", -1), gsi::arg ("with_properties", true),
+  gsi::method_ext ("scan_layer", &scan_layer, gsi::arg ("layout"), gsi::arg ("layer"), gsi::arg ("cell", (const db::Cell *) nullptr, "nil"), gsi::arg ("levels", -1), gsi::arg ("with_properties", true),
     "@brief Scans a layer from a layout into this category, starting with a given cell and a depth specification\n"
     "Creates RDB items for each polygon or edge shape read from the cell and its children in the layout on the given layer and puts them into this category.\n"
     "New cells will be generated when required.\n"
@@ -584,7 +584,7 @@ rdb::ValueWrapper *new_value_b (const db::DBox &b)
 
 std::string value_to_string (const rdb::ValueWrapper *v)
 {
-  if (v->get () == 0) {
+  if (v->get () == nullptr) {
     return std::string ();
   } else {
     return v->get ()->to_string ();
@@ -593,7 +593,7 @@ std::string value_to_string (const rdb::ValueWrapper *v)
 
 bool value_is_polygon (const rdb::ValueWrapper *v)
 {
-  return dynamic_cast <const rdb::Value<db::DPolygon> *> (v->get ()) != 0;
+  return dynamic_cast <const rdb::Value<db::DPolygon> *> (v->get ()) != nullptr;
 }
 
 db::DPolygon value_get_polygon (const rdb::ValueWrapper *v)
@@ -608,7 +608,7 @@ db::DPolygon value_get_polygon (const rdb::ValueWrapper *v)
 
 bool value_is_path (const rdb::ValueWrapper *v)
 {
-  return dynamic_cast <const rdb::Value<db::DPath> *> (v->get ()) != 0;
+  return dynamic_cast <const rdb::Value<db::DPath> *> (v->get ()) != nullptr;
 }
 
 db::DPath value_get_path (const rdb::ValueWrapper *v)
@@ -623,7 +623,7 @@ db::DPath value_get_path (const rdb::ValueWrapper *v)
 
 bool value_is_text (const rdb::ValueWrapper *v)
 {
-  return dynamic_cast <const rdb::Value<db::DText> *> (v->get ()) != 0;
+  return dynamic_cast <const rdb::Value<db::DText> *> (v->get ()) != nullptr;
 }
 
 db::DText value_get_text (const rdb::ValueWrapper *v)
@@ -638,7 +638,7 @@ db::DText value_get_text (const rdb::ValueWrapper *v)
 
 bool value_is_edge_pair (const rdb::ValueWrapper *v)
 {
-  return dynamic_cast <const rdb::Value<db::DEdgePair> *> (v->get ()) != 0;
+  return dynamic_cast <const rdb::Value<db::DEdgePair> *> (v->get ()) != nullptr;
 }
 
 db::DEdgePair value_get_edge_pair (const rdb::ValueWrapper *v)
@@ -653,7 +653,7 @@ db::DEdgePair value_get_edge_pair (const rdb::ValueWrapper *v)
 
 bool value_is_edge (const rdb::ValueWrapper *v)
 {
-  return dynamic_cast <const rdb::Value<db::DEdge> *> (v->get ()) != 0;
+  return dynamic_cast <const rdb::Value<db::DEdge> *> (v->get ()) != nullptr;
 }
 
 db::DEdge value_get_edge (const rdb::ValueWrapper *v)
@@ -668,7 +668,7 @@ db::DEdge value_get_edge (const rdb::ValueWrapper *v)
 
 bool value_is_box (const rdb::ValueWrapper *v)
 {
-  return dynamic_cast <const rdb::Value<db::DBox> *> (v->get ()) != 0;
+  return dynamic_cast <const rdb::Value<db::DBox> *> (v->get ()) != nullptr;
 }
 
 db::DBox value_get_box (const rdb::ValueWrapper *v)
@@ -683,7 +683,7 @@ db::DBox value_get_box (const rdb::ValueWrapper *v)
 
 bool value_is_string (const rdb::ValueWrapper *v)
 {
-  return dynamic_cast <const rdb::Value<std::string> *> (v->get ()) != 0;
+  return dynamic_cast <const rdb::Value<std::string> *> (v->get ()) != nullptr;
 }
 
 std::string value_get_string (const rdb::ValueWrapper *v)
@@ -697,7 +697,7 @@ std::string value_get_string (const rdb::ValueWrapper *v)
 
 bool value_is_float (const rdb::ValueWrapper *v)
 {
-  return dynamic_cast <const rdb::Value<double> *> (v->get ()) != 0;
+  return dynamic_cast <const rdb::Value<double> *> (v->get ()) != nullptr;
 }
 
 double value_get_float (const rdb::ValueWrapper *v)
@@ -1247,7 +1247,7 @@ static rdb::Item *create_item_from_objects (rdb::Database *db, rdb::Cell *cell, 
   if (cell && cat) {
     return db->create_item (cell->id (), cat->id ());
   } else {
-    return 0;
+    return nullptr;
   }
 }
 

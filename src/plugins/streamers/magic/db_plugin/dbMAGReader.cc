@@ -50,13 +50,13 @@ namespace db
 MAGReader::MAGReader (tl::InputStream &s)
   : m_stream (s),
     m_progress (tl::to_string (tr ("Reading MAG file")), 1000),
-    m_lambda (1.0), m_dbu (0.001), m_merge (true), mp_klayout_tech (0)
+    m_lambda (1.0), m_dbu (0.001), m_merge (true), mp_klayout_tech (nullptr)
 {
   m_progress.set_format (tl::to_string (tr ("%.0fk lines")));
   m_progress.set_format_unit (1000.0);
   m_progress.set_unit (100000.0);
 
-  mp_current_stream = 0;
+  mp_current_stream = nullptr;
 }
 
 MAGReader::~MAGReader ()
@@ -84,7 +84,7 @@ MAGReader::read (db::Layout &layout, const db::LoadLayoutOptions &options)
   m_dbu = specific_options.dbu;
   m_lib_paths = specific_options.lib_paths;
   m_merge = specific_options.merge;
-  mp_current_stream = 0;
+  mp_current_stream = nullptr;
 
   set_layer_map (specific_options.layer_map);
   set_create_layers (specific_options.create_other_layers);
@@ -259,7 +259,7 @@ class EnvInterpolator
 {
 public:
   EnvInterpolator ()
-    : tl::Eval (0, 0, false)  //  safe mode
+    : tl::Eval (nullptr, nullptr, false)  //  safe mode
   {
     //  .. nothing yet ..
   }

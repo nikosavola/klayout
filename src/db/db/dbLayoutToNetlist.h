@@ -734,7 +734,7 @@ public:
    */
   db::DeepShapeStore &dss ()
   {
-    tl_assert (mp_dss.get () != 0);
+    tl_assert (mp_dss.get () != nullptr);
     return *mp_dss;
   }
 
@@ -745,7 +745,7 @@ public:
    */
   const db::DeepShapeStore &dss () const
   {
-    tl_assert (mp_dss.get () != 0);
+    tl_assert (mp_dss.get () != nullptr);
     return *mp_dss;
   }
 
@@ -1058,7 +1058,7 @@ public:
    *  The subcircuit path leading to the topmost net is stored in *sc_path_out if this
    *  pointer is non-null.
    */
-  db::Net *probe_net (const db::Region &of_region, const db::DPoint &point, std::vector<SubCircuit *> *sc_path_out = 0, Circuit *initial_circuit = 0);
+  db::Net *probe_net (const db::Region &of_region, const db::DPoint &point, std::vector<SubCircuit *> *sc_path_out = nullptr, Circuit *initial_circuit = nullptr);
 
   /**
    *  @brief Finds the net by probing a specific location on the given layer
@@ -1066,7 +1066,7 @@ public:
    *  This variant accepts a database-unit location. The location is given in the
    *  coordinate space of the initial cell.
    */
-  db::Net *probe_net (const db::Region &of_region, const db::Point &point, std::vector<SubCircuit *> *sc_path_out = 0, Circuit *initial_circuit = 0);
+  db::Net *probe_net (const db::Region &of_region, const db::Point &point, std::vector<SubCircuit *> *sc_path_out = nullptr, Circuit *initial_circuit = nullptr);
 
   /**
    *  @brief Runs an antenna check on the extracted clusters
@@ -1098,7 +1098,7 @@ public:
    *  regardless of the diode's area.
    *  In other words: any diode will make the net safe against antenna discharge.
    */
-  db::Region antenna_check (const db::Region &gate, double gate_perimeter_factor, const db::Region &metal, double metal_perimeter_factor, double ratio, const std::vector<std::pair<const db::Region *, double> > &diodes = std::vector<std::pair<const db::Region *, double> > (), db::Texts *values = 0)
+  db::Region antenna_check (const db::Region &gate, double gate_perimeter_factor, const db::Region &metal, double metal_perimeter_factor, double ratio, const std::vector<std::pair<const db::Region *, double> > &diodes = std::vector<std::pair<const db::Region *, double> > (), db::Texts *values = nullptr)
   {
     return antenna_check (gate, 1.0, gate_perimeter_factor, metal, 1.0, metal_perimeter_factor, ratio, diodes, values);
   }
@@ -1107,7 +1107,7 @@ public:
    *  @brief Variant of the antenna check not using the perimeter
    *  This version uses 0 for the perimeter factor hence not taking into account the perimeter at all.
    */
-  db::Region antenna_check (const db::Region &gate, const db::Region &metal, double ratio, const std::vector<std::pair<const db::Region *, double> > &diodes = std::vector<std::pair<const db::Region *, double> > (), db::Texts *values = 0)
+  db::Region antenna_check (const db::Region &gate, const db::Region &metal, double ratio, const std::vector<std::pair<const db::Region *, double> > &diodes = std::vector<std::pair<const db::Region *, double> > (), db::Texts *values = nullptr)
   {
     return antenna_check (gate, 1.0, 0.0, metal, 1.0, 0.0, ratio, diodes, values);
   }
@@ -1124,7 +1124,7 @@ public:
    *
    *  If values is non-null, texts explaining the violations are placed there.
    */
-  db::Region antenna_check (const db::Region &gate, double gate_area_factor, double gate_perimeter_factor, const db::Region &metal, double metal_area_factor, double metal_perimeter_factor, double ratio, const std::vector<std::pair<const db::Region *, double> > &diodes = std::vector<std::pair<const db::Region *, double> > (), Texts *values = 0);
+  db::Region antenna_check (const db::Region &gate, double gate_area_factor, double gate_perimeter_factor, const db::Region &metal, double metal_area_factor, double metal_perimeter_factor, double ratio, const std::vector<std::pair<const db::Region *, double> > &diodes = std::vector<std::pair<const db::Region *, double> > (), Texts *values = nullptr);
 
   /**
    *  @brief Runs a generic net measurement function
@@ -1180,7 +1180,7 @@ public:
   /**
    *  @brief Generate memory statistics
    */
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const;
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const;
 
   //  for debugging and testing
   bool make_soft_connection_diodes () const

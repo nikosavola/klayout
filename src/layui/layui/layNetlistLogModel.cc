@@ -39,8 +39,8 @@ namespace {
   {
     inline bool operator() (const Obj *a, const Obj *b) const
     {
-      if ((a != 0) != (b != 0)) {
-        return (a != 0) < (b != 0);
+      if ((a != nullptr) != (b != nullptr)) {
+        return (a != nullptr) < (b != nullptr);
       }
       if (! a) {
         return false;
@@ -81,17 +81,17 @@ const std::string var_sep (" \u21D4 ");
 NetlistLogModel::NetlistLogModel (QWidget *parent, const db::NetlistCrossReference *cross_ref, const db::LayoutToNetlist *l2n)
   : QAbstractItemModel (parent), m_max_severity (db::NoSeverity)
 {
-  tl_assert (! cross_ref || cross_ref->netlist_a () != 0);
-  tl_assert (! cross_ref || cross_ref->netlist_b () != 0);
+  tl_assert (! cross_ref || cross_ref->netlist_a () != nullptr);
+  tl_assert (! cross_ref || cross_ref->netlist_b () != nullptr);
 
-  mp_lvsdb_messages = cross_ref ? &cross_ref->other_log_entries () : 0;
+  mp_lvsdb_messages = cross_ref ? &cross_ref->other_log_entries () : nullptr;
   if (mp_lvsdb_messages) {
     for (auto l = mp_lvsdb_messages->begin (); l != mp_lvsdb_messages->end (); ++l) {
       m_max_severity = std::max (m_max_severity, l->severity ());
     }
   }
 
-  mp_l2n_messages = l2n ? &l2n->log_entries () : 0;
+  mp_l2n_messages = l2n ? &l2n->log_entries () : nullptr;
   if (mp_l2n_messages) {
     for (auto l = mp_l2n_messages->begin (); l != mp_l2n_messages->end (); ++l) {
       m_max_severity = std::max (m_max_severity, l->severity ());
@@ -131,7 +131,7 @@ QModelIndex
 NetlistLogModel::index (int row, int column, const QModelIndex &parent) const
 {
   if (! parent.isValid ()) {
-    return createIndex (row, column, (void *) (0));
+    return createIndex (row, column, (void *) nullptr);
   } else {
     return createIndex (row, column, (void *) (& m_circuits [parent.row () - m_global_entries]));
   }
@@ -140,11 +140,11 @@ NetlistLogModel::index (int row, int column, const QModelIndex &parent) const
 QModelIndex
 NetlistLogModel::parent (const QModelIndex &child) const
 {
-  if (child.internalPointer () == (void *) 0) {
+  if (child.internalPointer () == (void *) nullptr) {
     return QModelIndex ();
   } else {
     const circuit_entry *ce = (const circuit_entry *) child.internalPointer ();
-    return createIndex (int (ce - & m_circuits.front ()) + m_global_entries, child.column (), (void *) (0));
+    return createIndex (int (ce - & m_circuits.front ()) + m_global_entries, child.column (), (void *) nullptr);
   }
 }
 
@@ -185,7 +185,7 @@ NetlistLogModel::icon_for_severity (db::Severity severity)
 const db::LogEntryData *
 NetlistLogModel::log_entry (const QModelIndex &index) const
 {
-  const db::LogEntryData *le = 0;
+  const db::LogEntryData *le = nullptr;
 
   if (index.parent ().isValid ()) {
     const circuit_entry *ce = (const circuit_entry *) index.internalPointer ();

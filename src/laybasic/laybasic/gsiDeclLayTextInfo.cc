@@ -131,7 +131,7 @@ public:
         ctx_trans = dbu_trans * cv.context_trans () * dbu_trans.inverted ();
 
         const std::vector<db::DCplxTrans> *tv_list = m_tv.per_cv_and_layer (cv_index, layer);
-        if (tv_list != 0 && ! tv_list->empty ()) {
+        if (tv_list != nullptr && ! tv_list->empty ()) {
           tv_trans = tv_list->front ();
         }
 

@@ -138,7 +138,7 @@ TriangulationRExtractor::extract (const db::Polygon &polygon, const std::vector<
         continue;
       }
 
-      pex::RNode *n = 0;
+      pex::RNode *n = nullptr;
 
       auto ipp = pp_vertexes.find (vertex);
       if (ipp != pp_vertexes.end ()) {

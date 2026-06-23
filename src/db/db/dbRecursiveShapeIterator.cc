@@ -59,10 +59,10 @@ RecursiveShapeIterator &RecursiveShapeIterator::operator= (const RecursiveShapeI
     mp_shapes = d.mp_shapes;
 
     m_region = d.m_region;
-    if (d.mp_complex_region != 0) {
+    if (d.mp_complex_region != nullptr) {
       mp_complex_region.reset (new region_type (*d.mp_complex_region));
     } else {
-      mp_complex_region.reset (0);
+      mp_complex_region.reset (nullptr);
     }
 
     m_box_convert = d.m_box_convert;
@@ -102,16 +102,16 @@ RecursiveShapeIterator::RecursiveShapeIterator ()
   //  anything. Not necessary reasonable.
   m_layer = 0;
   m_has_layers = false;
-  mp_shapes = 0;
-  mp_top_cell = 0;
-  mp_cell = 0;
+  mp_shapes = nullptr;
+  mp_top_cell = nullptr;
+  mp_cell = nullptr;
   m_current_layer = 0;
   m_overlapping = false;
   m_for_merged_input = false;
   m_max_depth = std::numeric_limits<int>::max (); // all
   m_min_depth = 0;
   m_shape_flags = shape_iterator::All;
-  mp_shape_prop_sel = 0;
+  mp_shape_prop_sel = nullptr;
   m_shape_inv_prop_sel = false;
   m_needs_reinit = false;
   m_inst_quad_id = 0;
@@ -123,7 +123,7 @@ RecursiveShapeIterator::RecursiveShapeIterator (const shapes_type &shapes)
   m_layer = 0;
   m_has_layers = false;
   mp_shapes = &shapes;
-  mp_top_cell = 0;
+  mp_top_cell = nullptr;
   m_overlapping = false;
   m_for_merged_input = false;
   init ();
@@ -135,7 +135,7 @@ RecursiveShapeIterator::RecursiveShapeIterator (const shapes_type &shapes, const
   m_layer = 0;
   m_has_layers = false;
   mp_shapes = &shapes;
-  mp_top_cell = 0;
+  mp_top_cell = nullptr;
   m_overlapping = overlapping;
   m_for_merged_input = false;
   init ();
@@ -147,7 +147,7 @@ RecursiveShapeIterator::RecursiveShapeIterator (const shapes_type &shapes, const
   m_layer = 0;
   m_has_layers = false;
   mp_shapes = &shapes;
-  mp_top_cell = 0;
+  mp_top_cell = nullptr;
   m_overlapping = overlapping;
   m_for_merged_input = false;
   init ();
@@ -160,7 +160,7 @@ RecursiveShapeIterator::RecursiveShapeIterator (const layout_type &layout, const
   m_layer = layer;
   m_has_layers = false;
   mp_layout.reset (const_cast<db::Layout *> (&layout));
-  mp_shapes = 0;
+  mp_shapes = nullptr;
   mp_top_cell = &cell;
   m_overlapping = overlapping;
   m_for_merged_input = for_merged_input;
@@ -174,7 +174,7 @@ RecursiveShapeIterator::RecursiveShapeIterator (const layout_type &layout, const
   m_layer = layer;
   m_has_layers = false;
   mp_layout.reset (const_cast<db::Layout *> (&layout));
-  mp_shapes = 0;
+  mp_shapes = nullptr;
   mp_top_cell = &cell;
   m_overlapping = overlapping;
   m_for_merged_input = for_merged_input;
@@ -188,7 +188,7 @@ RecursiveShapeIterator::RecursiveShapeIterator (const layout_type &layout, const
   m_layer = layer;
   m_has_layers = false;
   mp_layout.reset (const_cast<db::Layout *> (&layout));
-  mp_shapes = 0;
+  mp_shapes = nullptr;
   mp_top_cell = &cell;
   m_overlapping = false;
   m_for_merged_input = for_merged_input;
@@ -203,7 +203,7 @@ RecursiveShapeIterator::RecursiveShapeIterator (const layout_type &layout, const
   m_layers = layers;
   m_has_layers = true;
   mp_layout.reset (const_cast<db::Layout *> (&layout));
-  mp_shapes = 0;
+  mp_shapes = nullptr;
   mp_top_cell = &cell;
   m_overlapping = overlapping;
   m_for_merged_input = for_merged_input;
@@ -218,7 +218,7 @@ RecursiveShapeIterator::RecursiveShapeIterator (const layout_type &layout, const
   m_layers = layers;
   m_has_layers = true;
   mp_layout.reset (const_cast<db::Layout *> (&layout));
-  mp_shapes = 0;
+  mp_shapes = nullptr;
   mp_top_cell = &cell;
   m_overlapping = overlapping;
   m_for_merged_input = for_merged_input;
@@ -233,7 +233,7 @@ RecursiveShapeIterator::RecursiveShapeIterator (const layout_type &layout, const
   m_layers = layers;
   m_has_layers = true;
   mp_layout.reset (const_cast<db::Layout *> (&layout));
-  mp_shapes = 0;
+  mp_shapes = nullptr;
   mp_top_cell = &cell;
   m_overlapping = false;
   m_for_merged_input = for_merged_input;
@@ -248,7 +248,7 @@ RecursiveShapeIterator::RecursiveShapeIterator (const layout_type &layout, const
   m_layers.insert (m_layers.end (), layers.begin (), layers.end ());
   m_has_layers = true;
   mp_layout.reset (const_cast<db::Layout *> (&layout));
-  mp_shapes = 0;
+  mp_shapes = nullptr;
   mp_top_cell = &cell;
   m_overlapping = overlapping;
   m_for_merged_input = for_merged_input;
@@ -263,7 +263,7 @@ RecursiveShapeIterator::RecursiveShapeIterator (const layout_type &layout, const
   m_layers.insert (m_layers.end (), layers.begin (), layers.end ());
   m_has_layers = true;
   mp_layout.reset (const_cast<db::Layout *> (&layout));
-  mp_shapes = 0;
+  mp_shapes = nullptr;
   mp_top_cell = &cell;
   m_overlapping = overlapping;
   m_for_merged_input = for_merged_input;
@@ -278,7 +278,7 @@ RecursiveShapeIterator::RecursiveShapeIterator (const layout_type &layout, const
   m_layers.insert (m_layers.end (), layers.begin (), layers.end ());
   m_has_layers = true;
   mp_layout.reset (const_cast<db::Layout *> (&layout));
-  mp_shapes = 0;
+  mp_shapes = nullptr;
   mp_top_cell = &cell;
   m_overlapping = false;
   m_for_merged_input = for_merged_input;
@@ -299,11 +299,11 @@ RecursiveShapeIterator::init ()
   m_max_depth = std::numeric_limits<int>::max (); // all
   m_min_depth = 0; // from the beginning
   m_shape_flags = shape_iterator::All;
-  mp_shape_prop_sel = 0;
+  mp_shape_prop_sel = nullptr;
   m_shape_inv_prop_sel = false;
   m_inst_quad_id = 0;
   m_shape_quad_id = 0;
-  mp_cell = 0;
+  mp_cell = nullptr;
   m_current_layer = 0;
   m_global_trans = cplx_trans_type ();
   m_property_translator = db::PropertiesTranslator ();
@@ -313,7 +313,7 @@ void
 RecursiveShapeIterator::init_region (const RecursiveShapeIterator::box_type &region)
 {
   m_region = region;
-  mp_complex_region.reset (0);
+  mp_complex_region.reset (nullptr);
 }
 
 void
@@ -322,12 +322,12 @@ RecursiveShapeIterator::init_region (const RecursiveShapeIterator::region_type &
   if (region.empty ()) {
 
     m_region = box_type ();
-    mp_complex_region.reset (0);
+    mp_complex_region.reset (nullptr);
 
   } else if (region.is_box ()) {
 
     m_region = region.bbox ();
-    mp_complex_region.reset (0);
+    mp_complex_region.reset (nullptr);
 
   } else {
 
@@ -362,7 +362,7 @@ RecursiveShapeIterator::always_apply () const
 void
 RecursiveShapeIterator::set_region (const box_type &region)
 {
-  if (m_region != region || mp_complex_region != 0) {
+  if (m_region != region || mp_complex_region != nullptr) {
     init_region (region);
     reset ();
   }
@@ -605,7 +605,7 @@ RecursiveShapeIterator::select_all_cells ()
 bool
 RecursiveShapeIterator::at_end () const
 {
-  validate (0);
+  validate (nullptr);
   return m_shape.at_end () || is_inactive ();
 }
 
@@ -898,7 +898,7 @@ RecursiveShapeIterator::down (RecursiveShapeReceiver *receiver) const
   } else {
 
     if (receiver) {
-      receiver->enter_cell (this, cell (), m_local_region_stack.back (), m_local_complex_region_stack.empty () ? 0 : &m_local_complex_region_stack.back ());
+      receiver->enter_cell (this, cell (), m_local_region_stack.back (), m_local_complex_region_stack.empty () ? nullptr : &m_local_complex_region_stack.back ());
     }
 
     new_cell (receiver);
@@ -1073,7 +1073,7 @@ RecursiveShapeIterator::new_inst (RecursiveShapeReceiver *receiver) const
 
     RecursiveShapeReceiver::new_inst_mode ni = RecursiveShapeReceiver::NI_all;
     if (receiver) {
-      ni = receiver->new_inst (this, m_inst->cell_inst (), always_apply (), m_local_region_stack.back (), m_local_complex_region_stack.empty () ? 0 : &m_local_complex_region_stack.back (), all_of_instance, m_skip_shapes);
+      ni = receiver->new_inst (this, m_inst->cell_inst (), always_apply (), m_local_region_stack.back (), m_local_complex_region_stack.empty () ? nullptr : &m_local_complex_region_stack.back (), all_of_instance, m_skip_shapes);
     } else if (m_skip_shapes) {
       ni = RecursiveShapeReceiver::NI_skip;
     }
@@ -1137,7 +1137,7 @@ RecursiveShapeIterator::new_inst_member (RecursiveShapeReceiver *receiver) const
 
     bool skip = false;
     if (receiver) {
-      skip = ! receiver->new_inst_member (this, m_inst->cell_inst (), always_apply (), m_inst->complex_trans (*m_inst_array), m_local_region_stack.back (), m_local_complex_region_stack.empty () ? 0 : &m_local_complex_region_stack.back (), is_all_of_instance (), m_skip_shapes_member);
+      skip = ! receiver->new_inst_member (this, m_inst->cell_inst (), always_apply (), m_inst->complex_trans (*m_inst_array), m_local_region_stack.back (), m_local_complex_region_stack.empty () ? nullptr : &m_local_complex_region_stack.back (), is_all_of_instance (), m_skip_shapes_member);
     } else {
       skip = m_skip_shapes_member;
     }
@@ -1186,7 +1186,7 @@ RecursiveShapeIterator::push (RecursiveShapeReceiver *receiver)
     validate (receiver);
 
     while (! at_end ()) {
-      receiver->shape (this, *m_shape, always_apply (), m_trans, m_local_region_stack.back (), m_local_complex_region_stack.empty () ? 0 : &m_local_complex_region_stack.back ());
+      receiver->shape (this, *m_shape, always_apply (), m_trans, m_local_region_stack.back (), m_local_complex_region_stack.empty () ? nullptr : &m_local_complex_region_stack.back ());
       next (receiver);
     }
 

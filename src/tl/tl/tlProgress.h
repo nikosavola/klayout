@@ -152,7 +152,7 @@ public:
    *  The widget is not the progress bar - the progress bar is always shown.
    *  This method returns 0 if no graphical representation is required.
    */
-  virtual QWidget *progress_widget () const { return 0; }
+  virtual QWidget *progress_widget () const { return nullptr; }
 
   /**
    *  @brief Renders the progress on the widget that was created by progress_widget

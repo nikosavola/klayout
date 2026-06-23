@@ -125,19 +125,19 @@ struct CellCacheInfo
 {
 public:
   CellCacheInfo ()
-    : hits (0), fill (0), frame (0), vertex (0), text (0)
+    : hits (0), fill (nullptr), frame (nullptr), vertex (nullptr), text (nullptr)
   { }
 
   ~CellCacheInfo () 
   {
     delete fill;
-    fill = 0;
+    fill = nullptr;
     delete frame;
-    frame = 0;
+    frame = nullptr;
     delete vertex;
-    vertex = 0;
+    vertex = nullptr;
     delete text;
-    text = 0;
+    text = nullptr;
   }
 
   size_t hits;

@@ -307,7 +307,7 @@ void LayoutToNetlistStandardReader::do_read (db::LayoutToNetlist *l2n)
   tl::SelfTimer timer (tl::verbosity () >= 21, tl::to_string (tr ("File read: ")) + m_path);
 
   try {
-    read_netlist (0, l2n);
+    read_netlist (nullptr, l2n);
   } catch (tl::Exception &ex) {
     throw tl::Exception (tl::sprintf (tl::to_string (tr ("%s in line: %d of %s")), ex.msg (), m_stream.line_number (), m_path));
   }
@@ -330,7 +330,7 @@ void LayoutToNetlistStandardReader::read_netlist (db::Netlist *netlist, db::Layo
 
   if (l2n) {
 
-    tl_assert (netlist == 0);
+    tl_assert (netlist == nullptr);
 
     tl_assert (l2n->internal_layout ());
     l2n->internal_layout ()->dbu (1.0); //  mainly for testing
@@ -338,15 +338,15 @@ void LayoutToNetlistStandardReader::read_netlist (db::Netlist *netlist, db::Layo
     if (l2n->internal_layout ()->cells () == 0) {
       l2n->internal_layout ()->add_cell ("TOP");
     }
-    tl_assert (l2n->internal_top_cell () != 0);
+    tl_assert (l2n->internal_top_cell () != nullptr);
 
     netlist = l2n->make_netlist ();
 
   } else {
-    tl_assert (netlist != 0);
+    tl_assert (netlist != nullptr);
   }
 
-  db::LayoutLocker layout_locker (l2n ? l2n->internal_layout () : 0);
+  db::LayoutLocker layout_locker (l2n ? l2n->internal_layout () : nullptr);
 
   while (nested ? *nested : ! at_end ()) {
 
@@ -409,7 +409,7 @@ void LayoutToNetlistStandardReader::read_netlist (db::Netlist *netlist, db::Layo
       int full_specs = 0;
       try_read_int (full_specs);
 
-      if (netlist->device_class_by_name (class_name) != 0) {
+      if (netlist->device_class_by_name (class_name) != nullptr) {
         throw tl::Exception (tl::to_string (tr ("Duplicate definition of device class: ")) + class_name);
       }
 
@@ -630,7 +630,7 @@ void LayoutToNetlistStandardReader::read_netlist (db::Netlist *netlist, db::Layo
       db::DeviceClass *dc = netlist->device_class_by_name (cls);
 
       //  use a generic device class unless the right one is registered already.
-      bool gen_dc = (dc == 0);
+      bool gen_dc = (dc == nullptr);
       if (gen_dc) {
         dc = new db::DeviceClass ();
         dc->set_name (cls);
@@ -642,7 +642,7 @@ void LayoutToNetlistStandardReader::read_netlist (db::Netlist *netlist, db::Layo
       while (br) {
 
         if (test (skeys::terminal_key) || test (lkeys::terminal_key)) {
-          read_abstract_terminal (l2n, dm, gen_dc ? dc : 0);
+          read_abstract_terminal (l2n, dm, gen_dc ? dc : nullptr);
         } else if (at_end ()) {
           throw tl::Exception (tl::to_string (tr ("Unexpected end of file inside device abstract definition (terminal expected)")));
         } else {
@@ -858,7 +858,7 @@ LayoutToNetlistStandardReader::read_pin (db::Netlist * /*netlist*/, db::LayoutTo
 {
   Brace br (this);
 
-  db::Net *net = 0;
+  db::Net *net = nullptr;
 
   db::Pin pin;
   int netid = 0;
@@ -936,7 +936,7 @@ LayoutToNetlistStandardReader::device_model_by_name (db::Netlist *netlist, const
     throw tl::Exception (tl::to_string (tr ("Not a valid device abstract name: ")) + dmname);
   }
 
-  return std::make_pair ((db::DeviceAbstract *) 0, cls);
+  return std::make_pair ((db::DeviceAbstract *) nullptr, cls);
 }
 
 void
@@ -1315,7 +1315,7 @@ LayoutToNetlistStandardReader::read_abstract_terminal (db::LayoutToNetlist *l2n,
     dm->set_cluster_id_for_terminal (tid, lc.id ());
 
     db::Cell &cell = l2n->internal_layout ()->cell (dm->cell_index ());
-    read_geometries (0, br, l2n, lc, cell);
+    read_geometries (nullptr, br, l2n, lc, cell);
 
   }
 

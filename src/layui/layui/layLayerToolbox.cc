@@ -103,7 +103,7 @@ LCPActiveLabel::mouseReleaseEvent (QMouseEvent *e)
 //  LCPDitherPalette implementation
 
 LCPDitherPalette::LCPDitherPalette (QWidget *parent, const char *name)
-  : QFrame (parent), mp_view (0)
+  : QFrame (parent), mp_view (nullptr)
 {
   setObjectName (QString::fromUtf8 (name));
 
@@ -265,7 +265,7 @@ LCPDitherPalette::button_clicked (int index)
   } else if (index == -2) {
     
     //  select pattern
-    lay::SelectStippleForm stipples_form (0, mp_view->dither_pattern ());
+    lay::SelectStippleForm stipples_form (nullptr, mp_view->dither_pattern ());
     if (stipples_form.exec () && stipples_form.selected () >= 0) {
       emit dither_selected (int (stipples_form.selected ()));
     }
@@ -447,7 +447,7 @@ LCPAnimationPalette::button_clicked (int index)
 //  LCPStylePalette implementation
 
 LCPStylePalette::LCPStylePalette (QWidget *parent, const char *name)
-  : QFrame (parent), mp_view (0)
+  : QFrame (parent), mp_view (nullptr)
 {
   setObjectName (QString::fromUtf8 (name));
 
@@ -684,7 +684,7 @@ LCPStylePalette::button_clicked (int index)
   } else if (index == -2) {
 
     //  select pattern
-    lay::SelectLineStyleForm styles_form (0, mp_view->line_styles ());
+    lay::SelectLineStyleForm styles_form (nullptr, mp_view->line_styles ());
     if (styles_form.exec () && styles_form.selected () >= 0) {
       emit line_style_selected (int (styles_form.selected ()));
     }
@@ -724,7 +724,7 @@ LCPColorPalette::LCPColorPalette (QWidget *parent, const char *name)
 
       LCPActiveLabel *b = new LCPActiveLabel (n, f);
       while (m_color_buttons.size () <= n) {
-        m_color_buttons.push_back (0);
+        m_color_buttons.push_back (nullptr);
       }
       m_color_buttons [n] = b;
       b->setMinimumSize (16, 16);
@@ -866,7 +866,7 @@ LCPColorPalette::button_clicked (int index)
 //  LayerToolbox implementation
 
 LayerToolbox::LayerToolbox (QWidget *parent, const char *name)
-  : QWidget (parent), mp_view (0)
+  : QWidget (parent), mp_view (nullptr)
 {
   setObjectName (QString::fromUtf8 (name));
 

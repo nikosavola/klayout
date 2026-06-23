@@ -106,7 +106,7 @@ public:
   /**
    *  @brief Generate memory statistics
    */
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const
   {
     if (! no_self) {
       stat->add (typeid (*this), (void *) this, sizeof (*this), sizeof (*this), parent, purpose, cat);
@@ -277,7 +277,7 @@ public:
   /**
    *  @brief Generate memory statistics
    */
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const
   {
     if (! no_self) {
       stat->add (typeid (*this), (void *) this, sizeof (*this), sizeof (*this), parent, purpose, cat);
@@ -782,7 +782,7 @@ public:
   /**
    *  @brief Generate memory statistics
    */
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const
   {
     if (! no_self) {
       stat->add (typeid (*this), (void *) this, sizeof (*this), sizeof (*this), parent, purpose, cat);
@@ -878,7 +878,7 @@ public:
 
   virtual bool is_of (const db::DeviceClass *dc) const
   {
-    return dynamic_cast<const T *> (dc) != 0;
+    return dynamic_cast<const T *> (dc) != nullptr;
   }
 
   virtual DeviceClass *create () const

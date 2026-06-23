@@ -94,7 +94,7 @@ public:
   /**
    *  @brief Get the layer index list for this PCell declaration for the given parameter set
    */
-  std::vector<unsigned int> get_layer_indices (db::Layout &layout, const pcell_parameters_type &parameters, db::ImportLayerMapping *layer_mapping = 0);
+  std::vector<unsigned int> get_layer_indices (db::Layout &layout, const pcell_parameters_type &parameters, db::ImportLayerMapping *layer_mapping = nullptr);
 
   /**
    *  @brief Get the variant for a given parameter set if it already exists.

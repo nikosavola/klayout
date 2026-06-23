@@ -69,7 +69,7 @@ public:
     if (lay::has_gui ()) {
       return new SearchReplaceDialog (root, view);
     } else {
-      return 0;
+      return nullptr;
     }
   }
 };

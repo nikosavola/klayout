@@ -188,7 +188,7 @@ void CaptureChannel::begin ()
 // --------------------------------------------------------------------------------------
 //  TestRegistrar implementation
 
-tl::TestRegistrar *tl::TestRegistrar::ms_instance = 0;
+tl::TestRegistrar *tl::TestRegistrar::ms_instance = nullptr;
 
 TestRegistrar::TestRegistrar ()
   : m_tests ()

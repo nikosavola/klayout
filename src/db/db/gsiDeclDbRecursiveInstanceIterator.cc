@@ -81,7 +81,7 @@ static IteratorIterator each (db::RecursiveInstanceIterator *r)
 static db::DCplxTrans si_dtrans (const db::RecursiveInstanceIterator *r)
 {
   const db::Layout *ly = r->layout ();
-  tl_assert (ly != 0);
+  tl_assert (ly != nullptr);
   return db::CplxTrans (ly->dbu ()) * r->trans () * db::VCplxTrans (1.0 / ly->dbu ());
 }
 
@@ -95,7 +95,7 @@ static void set_targets1 (db::RecursiveInstanceIterator *r, const std::vector<db
 static db::DCplxTrans inst_dtrans (const db::RecursiveInstanceIterator *r)
 {
   const db::Layout *ly = r->layout ();
-  tl_assert (ly != 0);
+  tl_assert (ly != nullptr);
   return db::CplxTrans (ly->dbu ()) * (*r)->complex_trans () * db::VCplxTrans (1.0 / ly->dbu ());
 }
 
@@ -107,7 +107,7 @@ static db::ICplxTrans inst_trans (const db::RecursiveInstanceIterator *r)
 static db::Cell *inst_cell (const db::RecursiveInstanceIterator *r)
 {
   const db::Layout *ly = r->layout ();
-  tl_assert (ly != 0);
+  tl_assert (ly != nullptr);
   return const_cast<db::Cell *> (&ly->cell ((*r)->inst_ptr.cell_index ()));
 }
 

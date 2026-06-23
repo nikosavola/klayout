@@ -47,8 +47,8 @@ namespace pya
 static void
 set_type_attr (PyTypeObject *type, const std::string &name, PythonRef &attr)
 {
-  tl_assert (attr.get () != NULL);
-  if (type->tp_dict != NULL && PyDict_GetItemString ((PyObject *) type, name.c_str ()) != NULL) {
+  tl_assert (attr.get () != nullptr);
+  if (type->tp_dict != nullptr && PyDict_GetItemString ((PyObject *) type, name.c_str ()) != nullptr) {
     tl::warn << "Ambiguous attribute name " << name << " in class " << type->tp_name;
   } else {
     PyObject_SetAttrString ((PyObject *) type, name.c_str (), attr.get ());
@@ -64,7 +64,7 @@ std::vector<const gsi::ClassBase *> PythonModule::m_classes;
 const std::string pymod_name ("klayout");
 
 PythonModule::PythonModule ()
-  : mp_mod_def (0)
+  : mp_mod_def (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -83,7 +83,7 @@ PythonModule::~PythonModule ()
 
   if (mp_mod_def) {
     delete[] mp_mod_def;
-    mp_mod_def = 0;
+    mp_mod_def = nullptr;
   }
 }
 
@@ -117,13 +117,13 @@ PythonModule::init (const char *mod_name, const char *description)
   }
 
   //  do some checks before we create the module
-  tl_assert (mod_name != 0);
-  tl_assert (mp_module.get () == 0);
+  tl_assert (mod_name != nullptr);
+  tl_assert (mp_module.get () == nullptr);
 
   m_mod_name = pymod_name + "." + mod_name;
   m_mod_description = description;
 
-  PyObject *module = 0;
+  PyObject *module = nullptr;
 
 #if PY_MAJOR_VERSION < 3
 
@@ -138,10 +138,10 @@ PythonModule::init (const char *mod_name, const char *description)
   struct PyModuleDef mod_def = {
      PyModuleDef_HEAD_INIT,
      m_mod_name.c_str (),
-     NULL,     // module documentation
+     nullptr,     // module documentation
      -1,       // size of per-interpreter state of the module,
                // if the module keeps state in global variables.
-     NULL
+     nullptr
   };
 
   tl_assert (! mp_mod_def);
@@ -162,7 +162,7 @@ void
 PythonModule::init (const char *mod_name, PyObject *module)
 {
   //  do some checks before we create the module
-  tl_assert (mp_module.get () == 0);
+  tl_assert (mp_module.get () == nullptr);
 
   m_mod_name = mod_name;
   mp_module = PythonRef (module);
@@ -254,7 +254,7 @@ public:
     //  not capable of handling more than a single base class.
 
     PyTypeObject *pt = PythonClassClientData::py_type (*cls, as_static);
-    if (pt != 0) {
+    if (pt != nullptr) {
 
       if (! mp_module->is_class_of_module (cls)) {
 
@@ -282,7 +282,7 @@ public:
 
     //  mix-in unnamed extensions and get the base classes
 
-    int n_bases = (cls->base () != 0 ? 1 : 0);
+    int n_bases = (cls->base () != nullptr ? 1 : 0);
     auto exts = m_extensions_for.find (cls);
     if (exts != m_extensions_for.end ()) {
       n_bases += int (exts->second.size ());
@@ -291,7 +291,7 @@ public:
     bases = PythonRef (PyTuple_New (n_bases));
 
     int ibase = 0;
-    if (cls->base () != 0) {
+    if (cls->base () != nullptr) {
       PyTypeObject *pt = make_class (cls->base (), as_static);
       PyObject *base = (PyObject *) pt;
       Py_INCREF (base);
@@ -322,8 +322,8 @@ public:
     PyTuple_SetItem (args.get (), 1, bases.release ());
     PyTuple_SetItem (args.get (), 2, dict.release ());
 
-    PyTypeObject *type = (PyTypeObject *) PyObject_Call ((PyObject *) &PyType_Type, args.get (), NULL);
-    if (type == NULL) {
+    PyTypeObject *type = (PyTypeObject *) PyObject_Call ((PyObject *) &PyType_Type, args.get (), nullptr);
+    if (type == nullptr) {
       try {
       	check_error ();
       } catch (tl::Exception &ex) {
@@ -365,7 +365,7 @@ public:
       if (! cc->name ().empty ()) {
         PyTypeObject *child_class = make_class (cc->declaration (), as_static);
         PythonRef attr ((PyObject *) child_class, false /*borrowed*/);
-        set_type_attr (type, cc->name ().c_str (), attr);
+        set_type_attr (type, cc->name (), attr);
       }
     }
 
@@ -397,7 +397,7 @@ public:
 
         //  look for the real getter and setter, also look in the base classes
         const gsi::ClassBase *icls = cls;
-        while ((icls = icls->base ()) != 0 && (begin_setters == end_setters || begin_getters == end_getters)) {
+        while ((icls = icls->base ()) != nullptr && (begin_setters == end_setters || begin_getters == end_getters)) {
 
           const MethodTable *mt_base = MethodTable::method_table_by_class (icls);
           tl_assert (mt_base);
@@ -452,8 +452,8 @@ public:
           //  non-static attribute getters/setters
           PyGetSetDef *getset = mp_module->make_getset_def ();
           getset->name = mp_module->make_string (name);
-          getset->get = begin_getters != end_getters ? &property_getter_func : NULL;
-          getset->set = begin_setters != end_setters ? &property_setter_func : NULL;
+          getset->get = begin_getters != end_getters ? &property_getter_func : nullptr;
+          getset->set = begin_setters != end_setters ? &property_setter_func : nullptr;
           getset->doc = mp_module->make_string (doc);
           getset->closure = make_closure (getter_mid, setter_mid);
 
@@ -464,8 +464,8 @@ public:
           PYAStaticAttributeDescriptorObject *desc = PYAStaticAttributeDescriptorObject::create (mp_module->make_string (name));
 
           desc->type = type;
-          desc->getter = begin_getters != end_getters ? get_property_getter_adaptor (getter_mid) : NULL;
-          desc->setter = begin_setters != end_setters ? get_property_setter_adaptor (setter_mid) : NULL;
+          desc->getter = begin_getters != end_getters ? get_property_getter_adaptor (getter_mid) : nullptr;
+          desc->setter = begin_setters != end_setters ? get_property_setter_adaptor (setter_mid) : nullptr;
           attr = PythonRef (desc);
 
         }
@@ -650,7 +650,7 @@ public:
 
         PyObject *attr_inst = PyObject_GetAttrString ((PyObject *) type, ("_inst_" + *a).c_str ());
         PyObject *attr_class = PyObject_GetAttrString ((PyObject *) type, ("_class_" + *a).c_str ());
-        if (attr_inst == NULL || attr_class == NULL) {
+        if (attr_inst == nullptr || attr_class == nullptr) {
 
           //  some error -> don't install the disambiguator
           Py_XDECREF (attr_inst);

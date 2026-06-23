@@ -36,7 +36,7 @@ namespace db
 //  NetlistDeviceExtractor implementation
 
 NetlistDeviceExtractor::NetlistDeviceExtractor (const std::string &name)
-  : mp_layout (0), m_cell_index (0), mp_breakout_cells (0), m_device_scaling (1.0), mp_circuit (0)
+  : mp_layout (nullptr), m_cell_index (0), mp_breakout_cells (nullptr), m_device_scaling (1.0), mp_circuit (nullptr)
 {
   m_name = name;
   m_terminal_id_propname_id = 0;
@@ -70,7 +70,7 @@ const tl::Variant &NetlistDeviceExtractor::device_class_property_name ()
 void NetlistDeviceExtractor::initialize (db::Netlist *nl)
 {
   m_layer_definitions.clear ();
-  mp_device_class = 0;
+  mp_device_class = nullptr;
   m_device_scaling = 1.0;
   m_terminal_id_propname_id = 0;
   m_device_id_propname_id = 0;
@@ -126,7 +126,7 @@ void NetlistDeviceExtractor::extract (db::DeepShapeStore &dss, unsigned int layo
 
     tl_assert (l->second != 0);
     db::DeepShapeCollectionDelegateBase *dr = l->second->get_delegate ()->deep ();
-    if (dr == 0) {
+    if (dr == nullptr) {
 
       std::pair<bool, db::DeepLayer> alias = dss.layer_for_flat (tl::id_of (l->second->get_delegate ()));
       if (alias.first) {
@@ -186,7 +186,7 @@ void NetlistDeviceExtractor::extract_without_initialize (db::Layout &layout, db:
   m_device_id_propname_id = db::property_names_id (device_id_property_name ());
   m_device_class_propname_id = db::property_names_id (device_class_property_name ());
 
-  tl_assert (m_netlist.get () != 0);
+  tl_assert (m_netlist.get () != nullptr);
 
   //  build a cell-id-to-circuit lookup table
   std::map<db::cell_index_type, db::Circuit *> circuits_by_cell;
@@ -212,7 +212,7 @@ void NetlistDeviceExtractor::extract_without_initialize (db::Layout &layout, db:
 
   db::Connectivity device_conn = get_connectivity (layout, layers);
   db::hier_clusters<shape_type> device_clusters;
-  device_clusters.build (layout, cell, device_conn, 0, breakout_cells);
+  device_clusters.build (layout, cell, device_conn, nullptr, breakout_cells);
 
   tl::SelfTimer timer (tl::verbosity () >= 21, tl::to_string (tr ("Extracting devices")));
 
@@ -465,10 +465,10 @@ void NetlistDeviceExtractor::extract_devices (const std::vector<db::Region> & /*
 void NetlistDeviceExtractor::register_device_class (DeviceClass *device_class)
 {
   std::unique_ptr<DeviceClass> holder (device_class);
-  tl_assert (device_class != 0);
-  tl_assert (m_netlist.get () != 0);
+  tl_assert (device_class != nullptr);
+  tl_assert (m_netlist.get () != nullptr);
 
-  if (mp_device_class.get () != 0) {
+  if (mp_device_class.get () != nullptr) {
     throw tl::Exception (tl::to_string (tr ("Device class already set")));
   }
   if (m_name.empty ()) {
@@ -507,11 +507,11 @@ const db::NetlistDeviceExtractorLayerDefinition &NetlistDeviceExtractor::define_
 
 Device *NetlistDeviceExtractor::create_device ()
 {
-  if (mp_device_class.get () == 0) {
+  if (mp_device_class.get () == nullptr) {
     throw tl::Exception (tl::to_string (tr ("No device class registered")));
   }
 
-  tl_assert (mp_circuit != 0);
+  tl_assert (mp_circuit != nullptr);
   Device *device = new Device (mp_device_class.get ());
   mp_circuit->add_device (device);
   return device;
@@ -519,7 +519,7 @@ Device *NetlistDeviceExtractor::create_device ()
 
 void NetlistDeviceExtractor::define_terminal (Device *device, size_t terminal_id, size_t geometry_index, const db::Region &region)
 {
-  tl_assert (mp_layout != 0);
+  tl_assert (mp_layout != nullptr);
   tl_assert (geometry_index < m_layers.size ());
   unsigned int layer_index = m_layers [geometry_index];
 
@@ -534,7 +534,7 @@ void NetlistDeviceExtractor::define_terminal (Device *device, size_t terminal_id
 
 void NetlistDeviceExtractor::define_terminal (Device *device, size_t terminal_id, size_t geometry_index, const db::Polygon &polygon)
 {
-  tl_assert (mp_layout != 0);
+  tl_assert (mp_layout != nullptr);
   tl_assert (geometry_index < m_layers.size ());
   unsigned int layer_index = m_layers [geometry_index];
 

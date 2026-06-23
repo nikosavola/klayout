@@ -264,7 +264,7 @@ AbstractMenuItem::setup_item (const std::string &pn, const std::string &s, Actio
 void
 AbstractMenuItem::set_action (Action *a, bool copy_properties)
 {
-  tl_assert (a != 0);
+  tl_assert (a != nullptr);
 
   a->keep ();
 
@@ -279,7 +279,7 @@ AbstractMenuItem::set_action (Action *a, bool copy_properties)
 
   bool enabled = mp_action.get () ? mp_action->is_enabled () : true;
   bool visible = mp_action.get () ? mp_action->is_visible () : true;
-  mp_action->set_dispatcher (0);
+  mp_action->set_dispatcher (nullptr);
   mp_action.reset (a);
   mp_action->set_enabled (enabled);
   mp_action->set_visible (visible);
@@ -314,7 +314,7 @@ AbstractMenuItem::set_remove_on_empty ()
 // ---------------------------------------------------------------
 //  Action implementation
 
-static std::set<Action *> *sp_actionHandles = 0;
+static std::set<Action *> *sp_actionHandles = nullptr;
 
 #if defined(HAVE_QT)
 namespace {
@@ -360,7 +360,7 @@ public:
           }
         }
 
-        QMessageBox::warning (0, QObject::tr ("Warning"), msg);
+        QMessageBox::warning (nullptr, QObject::tr ("Warning"), msg);
 
         return true;
 
@@ -388,14 +388,14 @@ id_from_action (QAction *action)
 
 Action::Action () :
 #if defined(HAVE_QT)
-    mp_menu (0),
-    mp_action (lay::has_gui () ? new ActionObject (0) : 0),
+    mp_menu (nullptr),
+    mp_action (lay::has_gui () ? new ActionObject (nullptr) : nullptr),
 #endif
     m_checked (false),
     m_checkable (false),
     m_enabled (true),
     m_separator (false),
-    mp_dispatcher (0),
+    mp_dispatcher (nullptr),
     m_owned (true),
     m_visible (true),
     m_hidden (false),
@@ -417,13 +417,13 @@ Action::Action () :
 
 #if defined(HAVE_QT)
 Action::Action (QAction *action, bool owned)
-  : mp_menu (0),
+  : mp_menu (nullptr),
     mp_action (action),
     m_checked (false),
     m_checkable (false),
     m_enabled (true),
     m_separator (false),
-    mp_dispatcher (0),
+    mp_dispatcher (nullptr),
     m_owned (owned),
     m_visible (true),
     m_hidden (false),
@@ -446,7 +446,7 @@ Action::Action (QMenu *menu, bool owned)
     m_checkable (false),
     m_enabled (true),
     m_separator (false),
-    mp_dispatcher (0),
+    mp_dispatcher (nullptr),
     m_owned (owned),
     m_visible (true),
     m_hidden (false),
@@ -466,14 +466,14 @@ Action::Action (QMenu *menu, bool owned)
 
 Action::Action (const std::string &title) :
 #if defined(HAVE_QT)
-    mp_menu (0),
-    mp_action (lay::has_gui () ? new ActionObject (0) : 0),
+    mp_menu (nullptr),
+    mp_action (lay::has_gui () ? new ActionObject (nullptr) : nullptr),
 #endif
     m_checked (false),
     m_checkable (false),
     m_enabled (true),
     m_separator (false),
-    mp_dispatcher (0),
+    mp_dispatcher (nullptr),
     m_owned (true),
     m_visible (true),
     m_hidden (false),
@@ -501,7 +501,7 @@ Action::~Action ()
     sp_actionHandles->erase (this);
     if (sp_actionHandles->empty ()) {
       delete sp_actionHandles;
-      sp_actionHandles = 0;
+      sp_actionHandles = nullptr;
     }
   }
 
@@ -511,14 +511,14 @@ Action::~Action ()
       delete mp_menu;
       m_owned = false;
     }
-    mp_menu = 0;
-    mp_action = 0;
+    mp_menu = nullptr;
+    mp_action = nullptr;
   } else if (mp_action) {
     if (m_owned) {
       delete mp_action;
       m_owned = false;
     }
-    mp_action = 0;
+    mp_action = nullptr;
   }
 #endif
 }
@@ -529,7 +529,7 @@ Action::set_dispatcher (Dispatcher *dispatcher)
   if (mp_dispatcher != dispatcher) {
 #if defined(HAVE_QT)
     if (mp_action && m_owned) {
-      mp_action->setParent (dispatcher ? dispatcher->menu_parent_widget () : 0);
+      mp_action->setParent (dispatcher ? dispatcher->menu_parent_widget () : nullptr);
     }
 #endif
     mp_dispatcher = dispatcher;
@@ -653,13 +653,13 @@ Action::set_menu (QMenu *menu, bool owned)
 
   if (mp_menu && ! menu) {
 
-    QAction *new_action = new ActionObject (0);
+    QAction *new_action = new ActionObject (nullptr);
     configure_action (new_action);
 
     if (m_owned) {
       delete mp_menu;
     }
-    mp_menu = 0;
+    mp_menu = nullptr;
 
     mp_action = new_action;
     m_owned = true;
@@ -703,11 +703,11 @@ void
 Action::was_destroyed (QObject *obj)
 {
   if (obj == mp_action) {
-    mp_action = 0;
+    mp_action = nullptr;
   }
   if (obj == mp_menu) {
-    mp_menu = 0;
-    mp_action = 0;
+    mp_menu = nullptr;
+    mp_action = nullptr;
   }
   m_owned = false;
 }
@@ -1192,7 +1192,7 @@ AbstractMenu::build_detached (const std::string &name, QFrame *mbar)
   mbar->setLayout (menu_layout);
 
   AbstractMenuItem *item = find_item_exact ("@@" + name);
-  tl_assert (item != 0);
+  tl_assert (item != nullptr);
 
   for (std::list<AbstractMenuItem>::iterator c = item->children.begin (); c != item->children.end (); ++c) {
 
@@ -1204,7 +1204,7 @@ AbstractMenu::build_detached (const std::string &name, QFrame *mbar)
       menu_button->setPopupMode (QToolButton::MenuButtonPopup);
       menu_button->setText (tl::to_qstring (c->action ()->get_title ()));
 
-      if (c->menu () == 0) {
+      if (c->menu () == nullptr) {
         c->set_menu (new QMenu (mp_dispatcher->menu_parent_widget ()), true);
       }
 
@@ -1231,8 +1231,8 @@ static QAction *insert_action_after (QWidget *widget, QAction *after, QAction *a
 {
   QList<QAction *> actions = widget->actions ();
 
-  QAction *before = 0;
-  if (after == 0) {
+  QAction *before = nullptr;
+  if (after == nullptr) {
     if (! actions.isEmpty ()) {
       before = actions.front ();
     }
@@ -1252,7 +1252,7 @@ static const std::string s_extras_menu_name ("_extras_menu");
 static QMenu *find_extras_menu (QMenuBar *mbar)
 {
   if (! mbar) {
-    return 0;
+    return nullptr;
   }
 
   QList<QAction *> a = mbar->actions ();
@@ -1262,7 +1262,7 @@ static QMenu *find_extras_menu (QMenuBar *mbar)
     }
   }
 
-  return 0;
+  return nullptr;
 }
 
 bool
@@ -1300,7 +1300,7 @@ AbstractMenu::build (QMenuBar *mbar, QToolBar *tbar)
       extras_menu->clear ();
     }
 
-    QAction *prev_action = 0;
+    QAction *prev_action = nullptr;
 
     for (std::list<AbstractMenuItem>::iterator c = m_root.children.begin (); c != m_root.children.end (); ++c) {
 
@@ -1312,7 +1312,7 @@ AbstractMenu::build (QMenuBar *mbar, QToolBar *tbar)
 
         } else {
 
-          if (c->menu () == 0) {
+          if (c->menu () == nullptr) {
 
             //  NOTE: we intentionally do not make the item owner of the menu action
             //  as implicitly deleting it might cause trouble on MacOS. Instead we
@@ -1429,7 +1429,7 @@ AbstractMenu::build (QMenuBar *mbar, QToolBar *tbar)
 
       } else if (c->name ().find ('@') == 0) {
 
-        if (c->menu () == 0) {
+        if (c->menu () == nullptr) {
           QMenu *menu = new QMenu (tl::to_qstring (c->action ()->get_title ()), mp_dispatcher->menu_parent_widget ());
           c->action ()->set_menu (menu, true);
         }
@@ -1461,7 +1461,7 @@ AbstractMenu::build (QMenu *m, std::list<AbstractMenuItem> &items)
     present_actions.insert (std::make_pair (id_from_action (*i), *i));
   }
 
-  QAction *prev_action = 0;
+  QAction *prev_action = nullptr;
 
   for (std::list<AbstractMenuItem>::iterator c = items.begin (); c != items.end (); ++c) {
 
@@ -1526,7 +1526,7 @@ AbstractMenu::build (QToolBar *t, std::list<AbstractMenuItem> &items)
       //  To support tool buttons with menu we have to attach a helper menu
       //  item to the QAction object.
       if (! c->menu ()) {
-        c->set_menu (new QMenu (0), true);
+        c->set_menu (new QMenu (nullptr), true);
       }
       build (c->menu (), c->children);
     }
@@ -1540,7 +1540,7 @@ QMenu *
 AbstractMenu::detached_menu (const std::string &name)
 {
   AbstractMenuItem *item = find_item_exact ("@" + name);
-  tl_assert (item != 0);
+  tl_assert (item != nullptr);
   return item->menu ();
 }
 
@@ -1551,7 +1551,7 @@ AbstractMenu::menu (const std::string &path)
   if (item) {
     return item->menu ();
   } else {
-    return 0;
+    return nullptr;
   }
 }
 #endif
@@ -1560,21 +1560,21 @@ bool
 AbstractMenu::is_valid (const std::string &path) const
 {
   const AbstractMenuItem *item = find_item_exact (path);
-  return item != 0;
+  return item != nullptr;
 }
 
 bool
 AbstractMenu::is_menu (const std::string &path) const
 {
   const AbstractMenuItem *item = find_item_exact (path);
-  return item != 0 && item->has_submenu ();
+  return item != nullptr && item->has_submenu ();
 }
 
 bool
 AbstractMenu::is_separator (const std::string &path) const
 {
   const AbstractMenuItem *item = find_item_exact (path);
-  return item != 0 && item->action ()->is_separator ();
+  return item != nullptr && item->action ()->is_separator ();
 }
 
 const Action *AbstractMenu::action(const std::string &path) const
@@ -1585,7 +1585,7 @@ const Action *AbstractMenu::action(const std::string &path) const
 Action *AbstractMenu::action(const std::string &path)
 {
   AbstractMenuItem *item = find_item_exact (path);
-  return item ? item->action () : 0;
+  return item ? item->action () : nullptr;
 }
 
 std::vector<std::string>
@@ -1790,7 +1790,7 @@ AbstractMenu::find_item_for_action (const Action *action, AbstractMenuItem *from
     }
   }
 
-  return 0;
+  return nullptr;
 }
 
 const AbstractMenuItem *
@@ -1818,7 +1818,7 @@ AbstractMenu::find_item_exact (const std::string &path)
         ++c;
       }
       if (n > 0) {
-        return 0;
+        return nullptr;
       }
 
       item = &*c;
@@ -1835,15 +1835,15 @@ AbstractMenu::find_item_exact (const std::string &path)
 
       AbstractMenuItem *p = item;
 
-      item = 0;
-      for (std::list<AbstractMenuItem>::iterator c = p->children.begin (); c != p->children.end () && item == 0; ++c) {
+      item = nullptr;
+      for (std::list<AbstractMenuItem>::iterator c = p->children.begin (); c != p->children.end () && item == nullptr; ++c) {
         if (c->name () == name) {
           item = &*c;
         }
       }
 
       if (! item) {
-        return 0;
+        return nullptr;
       }
 
     }
@@ -1928,7 +1928,7 @@ AbstractMenu::find_item (tl::Extractor &extr)
         }
 
         AbstractMenuItem *p = parent;
-        parent = 0;
+        parent = nullptr;
 
         //  Look for the next path item
         for (std::list<AbstractMenuItem>::iterator c = p->children.begin (); c != p->children.end (); ++c) {
@@ -1989,7 +1989,7 @@ AbstractMenu::find_item (tl::Extractor &extr)
     extr.test (".");
 
     if (iter == parent->children.end ()) {
-      parent = 0;
+      parent = nullptr;
     } else {
       parent = iter.operator-> ();
     }
@@ -2077,7 +2077,7 @@ AbstractMenu::get_shortcuts (const std::string &root, std::map<std::string, std:
 {
   std::vector<std::string> items = this->items (root);
   for (std::vector<std::string>::const_iterator i = items.begin (); i != items.end (); ++i) {
-    if (i->size () > 0) {
+    if (!i->empty()) {
       const AbstractMenuItem *item = find_item_exact (*i);
       if (item && item->action () && item->action ()->is_visible ()) {
         if (item->has_submenu ()) {

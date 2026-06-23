@@ -88,7 +88,7 @@ HCPCellTreeWidget::~HCPCellTreeWidget ()
   //  persistent indexes and only found a model which was deleted already.
   QAbstractItemModel *m = model ();
   if (m) {
-    setModel (0);
+    setModel (nullptr);
     delete m;
   }
 }
@@ -842,7 +842,7 @@ HierarchyControlPanel::find_child_item (cell_path_type::const_iterator start, ce
     }
 
     //  not found
-    return 0;
+    return nullptr;
 
   }
 }
@@ -939,7 +939,7 @@ HierarchyControlPanel::do_update_content (int cv_index)
 
     HCPCellTreeWidget *cell_list = new HCPCellTreeWidget (cl_frame, "tree", mp_view->canvas ()->widget ());
     cl_ly->addWidget (cell_list);
-    cell_list->setModel (new CellTreeModel (cell_list, mp_view, cv_index, m_flat ? CellTreeModel::Flat : 0, 0, m_sorting));
+    cell_list->setModel (new CellTreeModel (cell_list, mp_view, cv_index, m_flat ? CellTreeModel::Flat : 0, nullptr, m_sorting));
     cell_list->setUniformRowHeights (true);
 
     pl = cell_list->palette ();
@@ -1013,7 +1013,7 @@ HierarchyControlPanel::do_update_content (int cv_index)
 
         CellTreeModel *model = dynamic_cast <CellTreeModel *> (mp_cell_lists [i]->model ());
         if (model) {
-          model->configure (mp_view, i, m_flat ? CellTreeModel::Flat : 0, 0, m_sorting);
+          model->configure (mp_view, i, m_flat ? CellTreeModel::Flat : 0, nullptr, m_sorting);
         }
 
       }
@@ -1034,12 +1034,12 @@ CellTreeItem *
 HierarchyControlPanel::current_item () const
 {
   if (m_active_index < 0 || m_active_index >= int (mp_cell_lists.size ())) {
-    return 0;
+    return nullptr;
   }
   if (mp_cell_lists [m_active_index]->currentIndex ().isValid ()) {
     return (CellTreeItem *) mp_cell_lists [m_active_index]->currentIndex ().internalPointer ();
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -1177,7 +1177,7 @@ HierarchyControlPanel::cut ()
 bool
 HierarchyControlPanel::has_selection ()
 {
-  return (current_item () != 0);
+  return (current_item () != nullptr);
 }
 
 void
@@ -1241,7 +1241,7 @@ HierarchyControlPanel::paste ()
   for (db::Clipboard::iterator c = db::Clipboard::instance ().begin (); c != db::Clipboard::instance ().end (); ++c) {
     const db::ClipboardValue<lay::CellClipboardData> *value = dynamic_cast<const db::ClipboardValue<lay::CellClipboardData> *> (*c);
     if (value) {
-      std::vector<unsigned int> nl = value->get ().insert (layout, 0, &new_tops);
+      std::vector<unsigned int> nl = value->get ().insert (layout, nullptr, &new_tops);
       new_layers.insert (new_layers.end (), nl.begin (), nl.end ());
     }
   }

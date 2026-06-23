@@ -76,7 +76,7 @@ const std::string var_sep = tl::to_string (tr (" vs. "));
 std::string
 expanded_name (const db::Net *a)
 {
-  if (a == 0) {
+  if (a == nullptr) {
     return tl::to_string (tr ("(not connected)"));
   } else {
     return a->expanded_name ();
@@ -270,7 +270,7 @@ CircuitPinCategorizer::normalize_pin_id (const db::Circuit *circuit, size_t pin_
 //  CircuitMapper implementation
 
 CircuitMapper::CircuitMapper ()
-  : mp_other (0)
+  : mp_other (nullptr)
 {
   //  .. nothing yet ..
 }

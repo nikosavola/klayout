@@ -541,7 +541,7 @@ public:
    *
    *  "included_cells" - if not 0 - will only include the given cells in the cell mapping
    */
-  const db::CellMapping &cell_mapping_to_original (unsigned int layout_index, db::Layout *into_layout, db::cell_index_type into_cell, const std::set<db::cell_index_type> *excluded_cells = 0, const std::set<db::cell_index_type> *included_cells = 0);
+  const db::CellMapping &cell_mapping_to_original (unsigned int layout_index, db::Layout *into_layout, db::cell_index_type into_cell, const std::set<db::cell_index_type> *excluded_cells = nullptr, const std::set<db::cell_index_type> *included_cells = nullptr);
 
   /**
    *  @brief Gets the cell mapping from one internal layout to another

@@ -90,7 +90,7 @@ public:
    *  @brief Default ctor
    */
   CellDragDropData ()
-    : mp_layout (0), mp_library (0), m_cell_index (0), m_is_pcell (false)
+    : mp_layout (nullptr), mp_library (nullptr), m_cell_index (0), m_is_pcell (false)
   {
     //  .. nothing yet ..
   }

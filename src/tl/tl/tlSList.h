@@ -51,7 +51,7 @@ template <class T> class slist;
 template <class T>
 struct slist_node_type
 {
-  slist_node_type (const T &_t) : next (0), t (_t) { }
+  slist_node_type (const T &_t) : next (nullptr), t (_t) { }
   slist_node_type (T &&_t) : next (0), t (_t) { }
   slist_node_type *next;
   T t;
@@ -136,7 +136,7 @@ public:
   typedef slist_iterator<T> iterator;
 
   slist ()
-    : mp_first (0), mp_last (0), m_size (0)
+    : mp_first (nullptr), mp_last (nullptr), m_size (0)
   {
     //  .. nothing yet ..
   }
@@ -151,7 +151,7 @@ public:
   }
 
   slist (const slist<T> &other)
-    : mp_first (0), mp_last (0), m_size (0)
+    : mp_first (nullptr), mp_last (nullptr), m_size (0)
   {
     for (auto i = other.begin (); i != other.end (); ++i) {
       push_back (*i);
@@ -198,7 +198,7 @@ public:
 
   iterator end ()
   {
-    return iterator (0);
+    return iterator (nullptr);
   }
 
   const_iterator begin () const
@@ -208,7 +208,7 @@ public:
 
   const_iterator end () const
   {
-    return const_iterator (0);
+    return const_iterator (nullptr);
   }
 
   size_t size () const
@@ -218,7 +218,7 @@ public:
 
   bool empty () const
   {
-    return mp_first == 0;
+    return mp_first == nullptr;
   }
 
   void clear ()
@@ -240,7 +240,7 @@ public:
     if (mp_first) {
       node_type *n = mp_first;
       if (n == mp_last) {
-        mp_first = mp_last = 0;
+        mp_first = mp_last = nullptr;
       } else {
         mp_first = mp_first->next;
       }

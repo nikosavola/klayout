@@ -1409,7 +1409,7 @@ public:
   const LayerPropertiesNode &operator* () const
   {
     const LayerPropertiesNode *o = obj ();
-    tl_assert (o != 0);
+    tl_assert (o != nullptr);
     return *o;
   }
 
@@ -1419,7 +1419,7 @@ public:
   const LayerPropertiesNode *operator-> () const
   {
     const LayerPropertiesNode *o = obj ();
-    tl_assert (o != 0);
+    tl_assert (o != nullptr);
     return o;
   }
 

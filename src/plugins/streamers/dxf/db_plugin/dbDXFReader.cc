@@ -2923,7 +2923,7 @@ DXFReader::prepare_read (bool ignore_empty_lines)
       m_line.clear ();
 
       //  read one line 
-      while ((c = m_stream.get (1)) != 0) {
+      while ((c = m_stream.get (1)) != nullptr) {
         if (*c == '\015' /*CR*/ || *c == '\012') {
           break;
         }
@@ -2945,7 +2945,7 @@ DXFReader::prepare_read (bool ignore_empty_lines)
         return true;
       }
 
-    } while (c != 0);
+    } while (c != nullptr);
 
     return false;
 
@@ -3192,7 +3192,7 @@ DXFReader::read_string (bool ignore_empty_lines)
 
     //  read one string 
     const char *c;
-    while ((c = m_stream.get (1)) != 0 && *c) {
+    while ((c = m_stream.get (1)) != nullptr && *c) {
       m_line += *c;
     }
 

@@ -231,7 +231,7 @@ struct get_boxed_value_func
 
       const gsi::ClassBase *bt = gsi::cls_decl <gsi::Value> ();
 
-      Proxy *p = 0;
+      Proxy *p = nullptr;
       Data_Get_Struct (arg, Proxy, p);
       if (!p->cls_decl ()->is_derived_from (bt)) {
         throw tl::Exception (tl::sprintf (tl::to_string (tr ("Passing an object to pointer or reference requires a boxed type (RBA::%s)")), bt->name ()));
@@ -264,7 +264,7 @@ template <> struct get_boxed_value_func<gsi::VoidType> : get_boxed_value_func_er
 
 void *boxed_value_ptr (gsi::BasicType type, VALUE arg, tl::Heap &heap)
 {
-  void *ret = 0;
+  void *ret = nullptr;
   gsi::do_on_type<get_boxed_value_func> () (type, &ret, arg, &heap);
   return ret;
 }
@@ -286,9 +286,9 @@ struct writer
       if (atype.is_ref () || atype.is_cref ()) {
         throw tl::Exception (tl::to_string (tr ("Arguments or return values of reference type cannot be passed nil")));
       } else if (atype.is_ptr ()) {
-        aa->write<R *> ((R *)0);
+        aa->write<R *> ((R *)nullptr);
       } else if (atype.is_cptr ()) {
-        aa->write<const R *> ((const R *)0);
+        aa->write<const R *> ((const R *)nullptr);
       } else {
         aa->write<R> ((R)0);
       }
@@ -332,7 +332,7 @@ struct writer<gsi::StringType>
         //  nil is treated as an empty string for references
         aa->write<void *> ((void *)new gsi::StringAdaptorImpl<std::string> (std::string ()));
       } else {
-        aa->write<void *> ((void *)0);
+        aa->write<void *> ((void *)nullptr);
       }
 
     } else {
@@ -340,7 +340,7 @@ struct writer<gsi::StringType>
       if (atype.is_ref () || atype.is_ptr ()) {
 
         // references or pointers require a boxed object. Pointers also allow nil.
-        void *vc = 0;
+        void *vc = nullptr;
         get_boxed_value_func<std::string> () (&vc, arg, heap);
         if (! vc && atype.is_ref ()) {
           throw tl::Exception (tl::to_string (tr ("Arguments or return values of reference or direct type cannot be passed nil or an empty boxed value object")));
@@ -381,7 +381,7 @@ struct writer<gsi::ByteArrayType>
         //  nil is treated as an empty string for references
         aa->write<void *> ((void *)new gsi::ByteArrayAdaptorImpl<std::vector<char> > (std::vector<char> ()));
       } else {
-        aa->write<void *> ((void *)0);
+        aa->write<void *> ((void *)nullptr);
       }
 
     } else {
@@ -389,7 +389,7 @@ struct writer<gsi::ByteArrayType>
       if (atype.is_ref () || atype.is_ptr ()) {
 
         // references or pointers require a boxed object. Pointers also allow nil.
-        void *vc = 0;
+        void *vc = nullptr;
         get_boxed_value_func<std::vector<char> > () (&vc, arg, heap);
         if (! vc && atype.is_ref ()) {
           throw tl::Exception (tl::to_string (tr ("Arguments or return values of reference or direct type cannot be passed nil or an empty boxed value object")));
@@ -439,7 +439,7 @@ struct writer<gsi::VectorType>
       if (! (atype.is_ptr () || atype.is_cptr ())) {
         throw tl::Exception (tl::to_string (tr ("Arguments of reference or direct type cannot be passed nil")));
       } else {
-        aa->write<void *> ((void *)0);
+        aa->write<void *> ((void *)nullptr);
       }
     } else {
 
@@ -447,7 +447,7 @@ struct writer<gsi::VectorType>
         throw tl::Exception (tl::sprintf (tl::to_string (tr ("Unexpected object type (expected array, got %s)")), rba_class_name (arg).c_str ()));
       }
 
-      tl_assert (atype.inner () != 0);
+      tl_assert (atype.inner () != nullptr);
       aa->write<void *> ((void *)new RubyBasedVectorAdaptor (arg, atype.inner ()));
 
     }
@@ -466,7 +466,7 @@ struct writer<gsi::MapType>
       if (! (atype.is_ptr () || atype.is_cptr ())) {
         throw tl::Exception (tl::to_string (tr ("Arguments of reference or direct type cannot be passed nil")));
       } else {
-        aa->write<void *> ((void *)0);
+        aa->write<void *> ((void *)nullptr);
       }
 
     } else {
@@ -475,8 +475,8 @@ struct writer<gsi::MapType>
         throw tl::Exception (tl::sprintf (tl::to_string (tr ("Unexpected object type (expected hash, got %s)")), rba_class_name (arg).c_str ()));
       }
 
-      tl_assert (atype.inner () != 0);
-      tl_assert (atype.inner_k () != 0);
+      tl_assert (atype.inner () != nullptr);
+      tl_assert (atype.inner_k () != nullptr);
       aa->write<void *> ((void *)new RubyBasedMapAdaptor (arg, atype.inner (), atype.inner_k ()));
 
     }
@@ -496,7 +496,7 @@ struct writer <gsi::ObjectType>
       if (! (atype.is_ptr () || atype.is_cptr ())) {
         throw tl::Exception (tl::to_string (tr ("Arguments of reference or direct type cannot be passed nil")));
       } else {
-        aa->write<void *> ((void *) 0);
+        aa->write<void *> ((void *) nullptr);
       }
 
     } else if (TYPE (arg) == T_ARRAY) {
@@ -505,7 +505,7 @@ struct writer <gsi::ObjectType>
       //  for now we only check whether the number of arguments is compatible with the array given.
 
       int n = RARRAY_LEN (arg);
-      const gsi::MethodBase *meth = 0;
+      const gsi::MethodBase *meth = nullptr;
       for (gsi::ClassBase::method_iterator c = atype.cls ()->begin_constructors (); c != atype.cls ()->end_constructors (); ++c) {
         if ((*c)->compatible_with_num_args (n)) {
           meth = *c;
@@ -523,7 +523,7 @@ struct writer <gsi::ObjectType>
 
       push_args (arglist, meth, RARRAY_PTR (arg), n, Qnil, *heap);
 
-      meth->call (0, arglist, retlist);
+      meth->call (nullptr, arglist, retlist);
 
       void *new_obj = retlist.read<void *> (*heap);
       if (new_obj && (atype.is_ptr () || atype.is_cptr () || atype.is_ref () || atype.is_cref ())) {
@@ -541,7 +541,7 @@ struct writer <gsi::ObjectType>
         throw tl::Exception (tl::sprintf (tl::to_string (tr ("Unexpected object type (expected argument of class %s, got %s)")), atype.cls ()->name (), rba_class_name (arg).c_str ()));
       }
 
-      Proxy *p = 0;
+      Proxy *p = nullptr;
       Data_Get_Struct (arg, Proxy, p);
 
       if (atype.is_ptr () || atype.is_cptr () || atype.is_ref () || atype.is_cref ()) {
@@ -805,7 +805,7 @@ struct reader<gsi::VectorType>
       *ret = Qnil;
     } else {
       *ret = rb_ary_new ();
-      tl_assert (atype.inner () != 0);
+      tl_assert (atype.inner () != nullptr);
       RubyBasedVectorAdaptor t (*ret, atype.inner ());
       a->copy_to (&t, *heap);
     }
@@ -825,8 +825,8 @@ struct reader<gsi::MapType>
       *ret = Qnil;
     } else {
       *ret = rb_hash_new ();
-      tl_assert (atype.inner () != 0);
-      tl_assert (atype.inner_k () != 0);
+      tl_assert (atype.inner () != nullptr);
+      tl_assert (atype.inner_k () != nullptr);
       RubyBasedMapAdaptor t (*ret, atype.inner (), atype.inner_k ());
       a->copy_to (&t, *heap);
     }
@@ -929,7 +929,7 @@ gsi::VectorAdaptorIterator *RubyBasedVectorAdaptor::create_iterator () const
 void RubyBasedVectorAdaptor::push (gsi::SerialArgs &r, tl::Heap &heap)
 {
   VALUE member;
-  gsi::do_on_type<reader> () (mp_ainner->type (), &r, &member, (Proxy *) 0, *mp_ainner, &heap);
+  gsi::do_on_type<reader> () (mp_ainner->type (), &r, &member, (Proxy *) nullptr, *mp_ainner, &heap);
   rb_ary_push (m_array, member);
 }
 
@@ -1005,8 +1005,8 @@ gsi::MapAdaptorIterator *RubyBasedMapAdaptor::create_iterator () const
 void RubyBasedMapAdaptor::insert (gsi::SerialArgs &r, tl::Heap &heap)
 {
   VALUE k, v;
-  gsi::do_on_type<reader> () (mp_ainner_k->type (), &r, &k, (Proxy *) 0, *mp_ainner_k, &heap);
-  gsi::do_on_type<reader> () (mp_ainner->type (), &r, &v, (Proxy *) 0, *mp_ainner, &heap);
+  gsi::do_on_type<reader> () (mp_ainner_k->type (), &r, &k, (Proxy *) nullptr, *mp_ainner_k, &heap);
+  gsi::do_on_type<reader> () (mp_ainner->type (), &r, &v, (Proxy *) nullptr, *mp_ainner, &heap);
   rb_hash_aset (m_hash, k, v);
 }
 
@@ -1069,7 +1069,7 @@ struct test_arg_func
         //  check if we have a boxed type
         if (TYPE (arg) == T_DATA) {
           const gsi::ClassBase *bc = gsi::cls_decl <gsi::Value> ();
-          Proxy *p = 0;
+          Proxy *p = nullptr;
           Data_Get_Struct (arg, Proxy, p);
           if (p->cls_decl ()->is_derived_from (bc)) {
             *ret = true;
@@ -1121,7 +1121,7 @@ struct test_arg_func<gsi::VectorType>
       *ret = false;
     } else {
 
-      tl_assert (atype.inner () != 0);
+      tl_assert (atype.inner () != nullptr);
       const gsi::ArgType &ainner = *atype.inner ();
 
       gsi::do_on_type<test_vector> () (ainner.type (), ret, arg, ainner, loose);
@@ -1164,8 +1164,8 @@ struct test_arg_func<gsi::MapType>
       *ret = false;
     } else {
 
-      tl_assert (atype.inner () != 0);
-      tl_assert (atype.inner_k () != 0);
+      tl_assert (atype.inner () != nullptr);
+      tl_assert (atype.inner_k () != nullptr);
 
       HashTestKeyValueData args;
       args.ainner_k = atype.inner_k ();
@@ -1212,7 +1212,7 @@ struct test_arg_func<gsi::ObjectType>
       if (*ret) {
 
         //  additionally check, whether the object matches the class type
-        Proxy *p = 0;
+        Proxy *p = nullptr;
         Data_Get_Struct (arg, Proxy, p);
 
         //  in loose mode (second pass) try to match the types via implicit constructors,

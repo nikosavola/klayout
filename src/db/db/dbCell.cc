@@ -94,7 +94,7 @@ Cell::Cell (cell_index_type ci, db::Layout &l)
   : db::Object (l.manager ()), 
     m_cell_index (ci), mp_layout (&l), m_instances (this), m_prop_id (0), m_hier_levels (0),
     m_bbox_needs_update (false), m_locked (false), m_ghost_cell (false),
-    mp_last (0), mp_next (0)
+    mp_last (nullptr), mp_next (nullptr)
 {
   m_bbox_with_empty = box_type (box_type::point_type (), box_type::point_type ());
 }
@@ -103,7 +103,7 @@ Cell::Cell (const Cell &d)
   : db::Object (d), 
     gsi::ObjectBase (),
     mp_layout (d.mp_layout), m_instances (this), m_prop_id (d.m_prop_id), m_hier_levels (d.m_hier_levels),
-    mp_last (0), mp_next (0)
+    mp_last (nullptr), mp_next (nullptr)
 {
   m_cell_index = d.m_cell_index;
   operator= (d);
@@ -211,7 +211,7 @@ Cell::shapes (unsigned int index)
 {
   shapes_map::iterator s = m_shapes_map.find(index);
   if (s == m_shapes_map.end()) {
-    s = m_shapes_map.insert (std::make_pair(index, shapes_type (0, this, mp_layout ? mp_layout->is_editable () : true))).first;
+    s = m_shapes_map.insert (std::make_pair(index, shapes_type (nullptr, this, mp_layout ? mp_layout->is_editable () : true))).first;
     s->second.manager (manager ());
   }
   return s->second;
@@ -226,7 +226,7 @@ Cell::shapes (unsigned int index) const
   } else {
     //  Because of a gcc bug it seems to be not possible
     //  to instantiate a simple static object here:
-    static const shapes_type *empty_shapes = 0;
+    static const shapes_type *empty_shapes = nullptr;
     if (! empty_shapes) {
       empty_shapes = new shapes_type ();
     }
@@ -844,7 +844,7 @@ Cell::get_pcell_parameters (const instance_type &ref) const
 Cell::instance_type 
 Cell::change_pcell_parameters (const instance_type &ref, const std::vector<tl::Variant> &new_parameters)
 {
-  tl_assert (mp_layout != 0);
+  tl_assert (mp_layout != nullptr);
   cell_index_type new_cell_index = mp_layout->get_pcell_variant_cell (ref.cell_index (), new_parameters);
   if (new_cell_index != ref.cell_index ()) {
 
@@ -861,7 +861,7 @@ Cell::change_pcell_parameters (const instance_type &ref, const std::vector<tl::V
 Cell::instance_type
 Cell::change_pcell_parameters (const instance_type &ref, const std::map<std::string, tl::Variant> &map)
 {
-  tl_assert (mp_layout != 0);
+  tl_assert (mp_layout != nullptr);
 
   const db::PCellDeclaration *pcd = pcell_declaration_of_inst (ref);
   if (! pcd) {
@@ -892,14 +892,14 @@ Cell::change_pcell_parameters (const instance_type &ref, const std::map<std::str
 const db::PCellDeclaration *
 Cell::pcell_declaration_of_inst (const db::Cell::instance_type &ref) const
 {
-  tl_assert (mp_layout != 0);
+  tl_assert (mp_layout != nullptr);
   return mp_layout->cell (ref.cell_index ()).pcell_declaration ();
 }
 
 const db::PCellDeclaration *
 Cell::pcell_declaration () const
 {
-  tl_assert (mp_layout != 0);
+  tl_assert (mp_layout != nullptr);
   std::pair<bool, db::pcell_id_type> pc = mp_layout->is_pcell_instance (cell_index ());
   if (pc.first) {
     db::Library *lib = mp_layout->defining_library (cell_index ()).first;
@@ -909,7 +909,7 @@ Cell::pcell_declaration () const
       return mp_layout->pcell_declaration (pc.second);
     }
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -925,7 +925,7 @@ Cell::sort_inst_tree (bool force)
 std::string 
 Cell::get_basic_name () const
 {
-  tl_assert (layout () != 0);
+  tl_assert (layout () != nullptr);
   return layout ()->cell_name (cell_index ());
 }
 
@@ -944,7 +944,7 @@ Cell::get_qualified_name () const
 std::string 
 Cell::get_display_name () const
 {
-  tl_assert (layout () != 0);
+  tl_assert (layout () != nullptr);
   if (is_real_ghost_cell ()) {
     return std::string ("(") + layout ()->cell_name (cell_index ()) + std::string (")");
   } else {
@@ -955,7 +955,7 @@ Cell::get_display_name () const
 void
 Cell::set_name (const std::string &name)
 {
-  tl_assert (layout () != 0);
+  tl_assert (layout () != nullptr);
   layout ()->rename_cell (cell_index (), name.c_str ());
 }
 
@@ -966,7 +966,7 @@ Cell::set_ghost_cell (bool g)
   if (m_ghost_cell != g) {
 
     m_ghost_cell = g;
-    tl_assert (layout () != 0);
+    tl_assert (layout () != nullptr);
     //  To trigger a redraw and cell tree rebuild
     layout ()->cell_name_changed ();
 

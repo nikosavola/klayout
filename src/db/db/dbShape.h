@@ -719,9 +719,9 @@ public:
    *  @brief Construct a shape proxy as a null object
    */
   Shape ()
-    : mp_shapes (0), m_with_props (false), m_stable (false), m_type (Null)
+    : mp_shapes (nullptr), m_with_props (false), m_stable (false), m_type (Null)
   {
-    m_generic.any = 0;
+    m_generic.any = nullptr;
   }
 
   /**

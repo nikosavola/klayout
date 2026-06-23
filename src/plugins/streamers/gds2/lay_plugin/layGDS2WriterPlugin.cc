@@ -48,7 +48,7 @@ GDS2WriterOptionPage::GDS2WriterOptionPage (QWidget *parent)
 GDS2WriterOptionPage::~GDS2WriterOptionPage ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -191,7 +191,7 @@ public:
 
   StreamWriterOptionsPage *format_specific_options_page (QWidget *) const
   {
-    return 0;
+    return nullptr;
   }
 };
 

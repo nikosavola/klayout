@@ -118,7 +118,7 @@ LEFDEFReader::read_lefdef (db::Layout &layout, const db::LoadLayoutOptions &opti
   //  If the LEF reader context (LEF caching) is enabled on the options,
   //  pull the state from there, otherwise create a local state.
   db::LEFDEFReaderState local_state (&effective_options);
-  db::LEFDEFReaderState *state = 0;
+  db::LEFDEFReaderState *state = nullptr;
   if (lefdef_options) {
     state = lefdef_options->reader_state (layout, base_path, options);
   }
@@ -285,7 +285,7 @@ class LEFDEFFormatDeclaration
 
   virtual db::WriterBase *create_writer () const
   {
-    return 0;
+    return nullptr;
   }
 
   virtual bool can_read () const

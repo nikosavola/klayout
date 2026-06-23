@@ -121,7 +121,7 @@ public:
    *  Creates an text set representing a single instance of that object
    */
   explicit Texts (const db::Text &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -132,7 +132,7 @@ public:
    *  Creates an text set representing a single instance of that object
    */
   explicit Texts (const db::TextWithProperties &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -143,7 +143,7 @@ public:
    *  Creates an text set representing a single instance of that object
    */
   explicit Texts (const db::Shape &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -156,7 +156,7 @@ public:
    */
   template <class Iter>
   explicit Texts (const Iter &b, const Iter &e)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     reserve (e - b);
     for (Iter i = b; i != e; ++i) {
@@ -243,7 +243,7 @@ public:
   TextsDelegate *take_delegate ()
   {
     TextsDelegate *delegate = mp_delegate;
-    mp_delegate = 0;
+    mp_delegate = nullptr;
     return delegate;
   }
 

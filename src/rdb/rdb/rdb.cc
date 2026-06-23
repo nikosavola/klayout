@@ -409,7 +409,7 @@ ValueBase::create_from_shape (const db::Shape &shape, const db::CplxTrans &trans
     return new rdb::Value <db::DEdgePair> (edge_pair.transformed (trans));
 
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -516,8 +516,8 @@ Values::compare (const Values &other, const std::map<id_type, id_type> &tag_map,
       } else if (rdb::ValueBase::compare (b->get (), a->get ())) {
         return false;
       }
-    } else if ((a->get () != 0) != (b->get () != 0)) {
-      return (a->get () != 0) < (b->get () != 0);
+    } else if ((a->get () != nullptr) != (b->get () != nullptr)) {
+      return (a->get () != nullptr) < (b->get () != nullptr);
     }
 
     ++a;
@@ -587,7 +587,7 @@ Cells::import_cell (const Cell &c)
 //  Cell implementation
 
 Cell::Cell ()
-  : m_id (0), m_num_items (0), m_num_items_visited (0), mp_database (0)
+  : m_id (0), m_num_items (0), m_num_items_visited (0), mp_database (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -599,13 +599,13 @@ Cell::Cell (Cells *cells)
 }
 
 Cell::Cell (id_type id, const std::string &name)
-  : m_id (id), m_name (name), m_num_items (0), m_num_items_visited (0), mp_database (0)
+  : m_id (id), m_name (name), m_num_items (0), m_num_items_visited (0), mp_database (nullptr)
 {
   //  .. nothing yet ..
 }
 
 Cell::Cell (id_type id, const std::string &name, const std::string &variant, const std::string &layout_name = std::string ())
-  : m_id (id), m_name (name), m_variant (variant), m_layout_name (layout_name), m_num_items (0), m_num_items_visited (0), mp_database (0)
+  : m_id (id), m_name (name), m_variant (variant), m_layout_name (layout_name), m_num_items (0), m_num_items_visited (0), mp_database (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -676,7 +676,7 @@ Cell::qname () const
 //  References implementation
 
 References::References ()
-  : mp_database (0)
+  : mp_database (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -721,7 +721,7 @@ Reference::trans_str () const
 void 
 Reference::set_parent_cell_qname (const std::string &qname)
 {
-  tl_assert (mp_database != 0);
+  tl_assert (mp_database != nullptr);
   const Cell *cell = mp_database->cell_by_qname (qname);
   if (! cell) {
     throw tl::Exception (tl::to_string (tr ("%s is not a valid cell name or name/variant combination")), qname);
@@ -732,9 +732,9 @@ Reference::set_parent_cell_qname (const std::string &qname)
 std::string 
 Reference::parent_cell_qname () const
 {
-  tl_assert (mp_database != 0);
+  tl_assert (mp_database != nullptr);
   const Cell *cell = mp_database->cell_by_id (m_parent_cell_id);
-  tl_assert (cell != 0);
+  tl_assert (cell != nullptr);
   return cell->qname ();
 }
 
@@ -742,19 +742,19 @@ Reference::parent_cell_qname () const
 //  Category implementation
 
 Category::Category (Categories *categories)
-  : m_id (0), mp_parent (0), mp_sub_categories (0), m_num_items (0), m_num_items_visited (0), mp_database (categories->database ())
+  : m_id (0), mp_parent (nullptr), mp_sub_categories (nullptr), m_num_items (0), m_num_items_visited (0), mp_database (categories->database ())
 {
   // .. nothing yet ..
 }
 
 Category::Category ()
-  : m_id (0), mp_parent (0), mp_sub_categories (0), m_num_items (0), m_num_items_visited (0), mp_database (0)
+  : m_id (0), mp_parent (nullptr), mp_sub_categories (nullptr), m_num_items (0), m_num_items_visited (0), mp_database (nullptr)
 {
   // .. nothing yet ..
 }
 
 Category::Category (const std::string &name)
-  : m_id (0), m_name (name), mp_parent (0), mp_sub_categories (0), m_num_items (0), m_num_items_visited (0), mp_database (0)
+  : m_id (0), m_name (name), mp_parent (nullptr), mp_sub_categories (nullptr), m_num_items (0), m_num_items_visited (0), mp_database (nullptr)
 {
   // .. nothing yet ..
 }
@@ -763,7 +763,7 @@ Category::~Category ()
 {
   if (mp_sub_categories) {
     delete mp_sub_categories;
-    mp_sub_categories = 0;
+    mp_sub_categories = nullptr;
   }
 }
 
@@ -819,7 +819,7 @@ Category::import_sub_categories (Categories *categories)
 
   mp_sub_categories = categories;
 
-  if (mp_sub_categories != 0) {
+  if (mp_sub_categories != nullptr) {
     for (Categories::iterator c = mp_sub_categories->begin (); c != mp_sub_categories->end (); ++c) {
       c->set_parent (this);
     }
@@ -878,7 +878,7 @@ Categories::category_by_name (const char *path)
     }
   }
 
-  return 0;
+  return nullptr;
 }
 
 Category *
@@ -905,7 +905,7 @@ Categories::import_category (Category *category)
   cat->set_description (category->description ());
   cat->import_sub_categories (category->mp_sub_categories);
 
-  category->mp_sub_categories = 0;
+  category->mp_sub_categories = nullptr;
   delete category;
 }
 
@@ -985,7 +985,7 @@ Item::Item (Items *items)
 }
 
 Item::Item ()
-  : m_cell_id (0), m_category_id (0), m_multiplicity (1), m_visited (false), mp_database (0)
+  : m_cell_id (0), m_category_id (0), m_multiplicity (1), m_visited (false), mp_database (nullptr)
 {
   // .. nothing yet ..
 }
@@ -1049,16 +1049,16 @@ Item::has_tag (id_type tag_id) const
 std::string 
 Item::cell_qname () const
 {
-  tl_assert (mp_database != 0);
+  tl_assert (mp_database != nullptr);
   const Cell *cell = mp_database->cell_by_id (m_cell_id);
-  tl_assert (cell != 0);
+  tl_assert (cell != nullptr);
   return cell->qname ();
 }
 
 void 
 Item::set_cell_qname (const std::string &qname)
 {
-  tl_assert (mp_database != 0);
+  tl_assert (mp_database != nullptr);
   const Cell *cell = mp_database->cell_by_qname (qname);
   if (! cell) {
     throw tl::Exception (tl::to_string (tr ("%s is not a valid cell name or name/variant combination")), qname);
@@ -1069,16 +1069,16 @@ Item::set_cell_qname (const std::string &qname)
 std::string
 Item::category_name () const
 {
-  tl_assert (mp_database != 0);
+  tl_assert (mp_database != nullptr);
   const Category *category = mp_database->category_by_id (m_category_id);
-  tl_assert (category != 0);
+  tl_assert (category != nullptr);
   return category->path ();
 }
 
 void 
 Item::set_category_name (const std::string &path)
 {
-  tl_assert (mp_database != 0);
+  tl_assert (mp_database != nullptr);
   const Category *category = mp_database->categories ().category_by_name (path.c_str ());
   if (! category) {
     throw tl::Exception (tl::to_string (tr ("%s is not a valid category path")), path);
@@ -1089,7 +1089,7 @@ Item::set_category_name (const std::string &path)
 std::string 
 Item::tag_str () const
 {
-  tl_assert (mp_database != 0);
+  tl_assert (mp_database != nullptr);
 
   std::string r;
   r.reserve (200);
@@ -1118,7 +1118,7 @@ Item::tag_str () const
 void 
 Item::set_tag_str (const std::string &tags)
 {
-  tl_assert (mp_database != 0);
+  tl_assert (mp_database != nullptr);
 
   m_tag_ids.clear ();
 
@@ -1233,10 +1233,10 @@ Database::~Database ()
   m_items_by_category_id.clear ();
 
   delete mp_items;
-  mp_items = 0;
+  mp_items = nullptr;
 
   delete mp_categories;
-  mp_categories = 0;
+  mp_categories = nullptr;
 }
 
 void
@@ -1279,7 +1279,7 @@ Database::set_items (Items *items)
     id_type category_id = i->category_id ();
     Category *category = category_by_id_non_const (category_id);
 
-    if (cell != 0 && category != 0) {
+    if (cell != nullptr && category != nullptr) {
 
       cell->add_to_num_items (1);
 
@@ -1403,7 +1403,7 @@ Database::category_by_id_non_const (id_type id)
   if (c != m_categories_by_id.end ()) {
     return c->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -1420,7 +1420,7 @@ Database::create_cell (const std::string &name, const std::string &variant, cons
 
     //  If another cell with that name already exists, rename it to variant "cell:1":
     Cell *other_cell = cell_by_qname_non_const (name);
-    if (other_cell != 0) {
+    if (other_cell != nullptr) {
 
       other_cell->set_variant ("1");
       variant = m_cell_variants.insert (std::make_pair (name, std::vector <id_type> ())).first;
@@ -1470,7 +1470,7 @@ Database::create_cell (const std::string &name, const std::string &variant, cons
 
     //  If another cell with that name already exists, rename it to a suitable variant
     Cell *other_cell = cell_by_qname_non_const (name);
-    if (other_cell != 0) {
+    if (other_cell != nullptr) {
 
       variant->second.push_back (other_cell->id ());
 
@@ -1519,7 +1519,7 @@ Database::cell_by_qname_non_const (const std::string &qname)
   if (c != m_cells_by_qname.end ()) {
     return c->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -1530,7 +1530,7 @@ Database::cell_by_id_non_const (id_type id)
   if (c != m_cells_by_id.end ()) {
     return c->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -1604,7 +1604,7 @@ Database::set_item_visited (const Item *item_c, bool visited)
     m_num_items_visited += (visited ? 1 : -1);
 
     rdb::Category *cat = category_by_id_non_const (item->category_id ());
-    while (cat != 0) {
+    while (cat != nullptr) {
       cat->add_to_num_items_visited (visited ? 1 : -1);
       m_num_items_visited_by_cell_and_category.insert (std::make_pair (std::make_pair (item->cell_id (), cat->id ()), 0)).first->second += (visited ? 1 : -1);
       cat = cat->parent ();
@@ -1621,12 +1621,12 @@ Database::create_item (id_type cell_id, id_type category_id)
   m_num_items += 1;
 
   Cell *cell = cell_by_id_non_const (cell_id);
-  tl_assert (cell != 0);
+  tl_assert (cell != nullptr);
 
   cell->m_num_items += 1;
 
   Category *category = category_by_id_non_const (category_id);
-  while (category != 0) {
+  while (category != nullptr) {
     category->m_num_items += 1;
     m_num_items_by_cell_and_category.insert (std::make_pair (std::make_pair (cell_id, category->id ()), 0)).first->second += 1;
     category = category->parent ();
@@ -1847,7 +1847,7 @@ namespace
   {
   public:
     ValueMapEntry ()
-      : mp_tag2tag (0), mp_rev_tag2tag (0)
+      : mp_tag2tag (nullptr), mp_rev_tag2tag (nullptr)
     { }
 
     void build (const rdb::Database &rdb, id_type cell_id, id_type cat_id, const std::map<id_type, id_type> &tag2tag, const std::map<id_type, id_type> &rev_tag2tag)
@@ -1877,11 +1877,11 @@ namespace
 
       auto i = std::lower_bound (m_items.begin (), m_items.end (), &item, cmp);
       if (i == m_items.end ()) {
-        return 0;
+        return nullptr;
       }
 
       if (cmp (&item, *i) || cmp (*i, &item)) {
-        return 0;
+        return nullptr;
       } else {
         return *i;
       }
@@ -1950,7 +1950,7 @@ static void map_databases (rdb::Database &self, const rdb::Database &other,
   }
 
   for (auto c = other.categories ().begin (); c != other.categories ().end (); ++c) {
-    map_category (*c, self, cat2cat, rev_cat2cat, create_missing, 0);
+    map_category (*c, self, cat2cat, rev_cat2cat, create_missing, nullptr);
   }
 
   std::map<std::string, id_type> tags_by_name;
@@ -2087,7 +2087,7 @@ Database::scan_layout (const db::Layout &layout, db::cell_index_type cell_index,
 
     desc += layout.get_properties (layers_and_descriptions.front ().first).to_string ();
 
-  } else if (layers_and_descriptions.size () < 4 && layers_and_descriptions.size () > 0) {
+  } else if (layers_and_descriptions.size () < 4 && !layers_and_descriptions.empty()) {
 
     if (flat) {
       desc = tl::to_string (tr ("Flat shapes of layers "));

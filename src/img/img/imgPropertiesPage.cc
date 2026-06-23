@@ -41,7 +41,7 @@ const double max_gamma = 3.0;
 //  PropertiesPage implementation
 
 PropertiesPage::PropertiesPage (img::Service *service, db::Manager *manager, QWidget *parent)
-  : lay::PropertiesPage (parent, manager, service), mp_service (service), mp_direct_image (0)
+  : lay::PropertiesPage (parent, manager, service), mp_service (service), mp_direct_image (nullptr)
 {
   mp_service->get_selection (m_selection);
   m_index = 0;
@@ -52,7 +52,7 @@ PropertiesPage::PropertiesPage (img::Service *service, db::Manager *manager, QWi
 }
 
 PropertiesPage::PropertiesPage (QWidget *parent)
-  : lay::PropertiesPage (parent, 0, 0), mp_service (0), mp_direct_image (0)
+  : lay::PropertiesPage (parent, nullptr, nullptr), mp_service (nullptr), mp_direct_image (nullptr)
 {
   init ();
 }
@@ -65,7 +65,7 @@ PropertiesPage::~PropertiesPage ()
 
     if (mp_direct_image) {
       delete mp_direct_image;
-      mp_direct_image = 0;
+      mp_direct_image = nullptr;
     }
 
   }
@@ -159,7 +159,7 @@ PropertiesPage::attach_service (img::Service *service)
     int cv_index = service->view ()->active_cellview_index ();
     layer_binding_cbx->set_view (service->view (), cv_index, true);
   } else {
-    layer_binding_cbx->set_view (0, -1);
+    layer_binding_cbx->set_view (nullptr, -1);
   }
 }
 
@@ -168,7 +168,7 @@ PropertiesPage::invalidate ()
 {
   if (mp_direct_image) {
     delete mp_direct_image;
-    mp_direct_image = 0;
+    mp_direct_image = nullptr;
   }
 }
 
@@ -235,7 +235,7 @@ PropertiesPage::leave ()
 void 
 PropertiesPage::set_direct_image (img::Object *image)
 {
-  tl_assert (mp_service == 0);
+  tl_assert (mp_service == nullptr);
   mp_direct_image = image;
 }
 
@@ -252,7 +252,7 @@ PropertiesPage::get_xmin_xmax (double &xmin, double &xmax, bool &has_error_out)
 
   try {
     tl::from_string_ext (tl::to_string (from_le->text ()), xmin);
-    lay::indicate_error (from_le, (tl::Exception *) 0);
+    lay::indicate_error (from_le, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (from_le, &ex);
     has_error = true;
@@ -260,7 +260,7 @@ PropertiesPage::get_xmin_xmax (double &xmin, double &xmax, bool &has_error_out)
 
   try {
     tl::from_string_ext (tl::to_string (to_le->text ()), xmax);
-    lay::indicate_error (to_le, (tl::Exception *) 0);
+    lay::indicate_error (to_le, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (to_le, &ex);
     has_error = true;
@@ -371,7 +371,7 @@ PropertiesPage::value_changed ()
   double x = 0.0;
   try {
     tl::from_string_ext (tl::to_string (value_le->text ()), x);
-    lay::indicate_error (value_le, (tl::Exception *) 0);
+    lay::indicate_error (value_le, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (value_le, &ex);
     has_error = true;
@@ -843,7 +843,7 @@ PropertiesPage::apply (bool /*commit*/)
     if (w <= 0.0 || h <= 0.0) {
       throw tl::Exception (tl::to_string (QObject::tr ("Pixel width or height must be positive, non-null values")));
     }
-    lay::indicate_error (width_le, (tl::Exception *) 0);
+    lay::indicate_error (width_le, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (width_le, &ex);
     has_error = true;
@@ -851,7 +851,7 @@ PropertiesPage::apply (bool /*commit*/)
 
   try {
     tl::from_string_ext (tl::to_string (height_le->text ()), h);
-    lay::indicate_error (height_le, (tl::Exception *) 0);
+    lay::indicate_error (height_le, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (height_le, &ex);
     has_error = true;
@@ -859,7 +859,7 @@ PropertiesPage::apply (bool /*commit*/)
 
   try {
     tl::from_string_ext (tl::to_string (x_offset_le->text ()), x);
-    lay::indicate_error (x_offset_le, (tl::Exception *) 0);
+    lay::indicate_error (x_offset_le, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (x_offset_le, &ex);
     has_error = true;
@@ -867,7 +867,7 @@ PropertiesPage::apply (bool /*commit*/)
 
   try {
     tl::from_string_ext (tl::to_string (y_offset_le->text ()), y);
-    lay::indicate_error (y_offset_le, (tl::Exception *) 0);
+    lay::indicate_error (y_offset_le, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (y_offset_le, &ex);
     has_error = true;
@@ -875,7 +875,7 @@ PropertiesPage::apply (bool /*commit*/)
 
   try {
     tl::from_string_ext (tl::to_string (angle_le->text ()), a);
-    lay::indicate_error (angle_le, (tl::Exception *) 0);
+    lay::indicate_error (angle_le, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (angle_le, &ex);
     has_error = true;
@@ -886,7 +886,7 @@ PropertiesPage::apply (bool /*commit*/)
     if (sa <= -45 || sa >= 45) {
       throw tl::Exception (tl::to_string (QObject::tr ("The shear angle must be larger than -45 and less than 45 degree")));
     }
-    lay::indicate_error (shear_le, (tl::Exception *) 0);
+    lay::indicate_error (shear_le, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (shear_le, &ex);
     has_error = true;
@@ -897,7 +897,7 @@ PropertiesPage::apply (bool /*commit*/)
     if (tx <= -90 || tx >= 90) {
       throw tl::Exception (tl::to_string (QObject::tr ("The perspective tilt angles must be larger than -90 and less than 90 degree")));
     }
-    lay::indicate_error (persp_tx_le, (tl::Exception *) 0);
+    lay::indicate_error (persp_tx_le, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (persp_tx_le, &ex);
     has_error = true;
@@ -908,7 +908,7 @@ PropertiesPage::apply (bool /*commit*/)
     if (ty <= -90 || ty >= 90) {
       throw tl::Exception (tl::to_string (QObject::tr ("The perspective tilt angles must be larger than -90 and less than 90 degree")));
     }
-    lay::indicate_error (persp_ty_le, (tl::Exception *) 0);
+    lay::indicate_error (persp_ty_le, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (persp_ty_le, &ex);
     has_error = true;

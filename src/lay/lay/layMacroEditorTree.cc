@@ -132,7 +132,7 @@ MacroTreeModel::MacroTreeModel (QObject *parent, lay::MacroEditorDialog *dialog,
 }
 
 MacroTreeModel::MacroTreeModel (QWidget *parent, lym::MacroCollection *root, const std::string &cat)
-  : QAbstractItemModel (parent), mp_dialog (0), mp_parent (parent), mp_root (root), m_category (cat)
+  : QAbstractItemModel (parent), mp_dialog (nullptr), mp_parent (parent), mp_root (root), m_category (cat)
 {
   connect (root, SIGNAL (macro_changed (lym::Macro *)), this, SLOT (macro_changed ()));
   connect (root, SIGNAL (macro_about_to_be_deleted (lym::Macro *)), this, SLOT (macro_about_to_be_deleted (lym::Macro *)));
@@ -327,7 +327,7 @@ bool MacroTreeModel::setData (const QModelIndex &index, const QVariant &v, int r
 
   //  TODO: don't do this while executing
   if (macro) {
-    if (macro->parent () && macro->parent ()->macro_by_name (tl::to_string (v.toString ()), macro->format ()) != 0) {
+    if (macro->parent () && macro->parent ()->macro_by_name (tl::to_string (v.toString ()), macro->format ()) != nullptr) {
       //  a macro with that name already exists - do nothing
       return false;
     }
@@ -338,7 +338,7 @@ bool MacroTreeModel::setData (const QModelIndex &index, const QVariant &v, int r
       return false;
     }
   } else if (mc) {
-    if (mc->parent () && mc->parent ()->folder_by_name (tl::to_string (v.toString ())) != 0) {
+    if (mc->parent () && mc->parent ()->folder_by_name (tl::to_string (v.toString ())) != nullptr) {
       //  a folder with that name already exists - do nothing
       return false;
     }
@@ -429,7 +429,7 @@ Qt::ItemFlags MacroTreeModel::flags (const QModelIndex &index) const
 
 bool MacroTreeModel::hasChildren (const QModelIndex &parent) const
 {
-  const lym::MacroCollection *mc = 0;
+  const lym::MacroCollection *mc = nullptr;
   if (! parent.isValid ()) {
     mc = mp_root;
   } else {
@@ -455,7 +455,7 @@ QModelIndex MacroTreeModel::parent (const QModelIndex &index) const
   const lym::Macro *macro = dynamic_cast <const lym::Macro *> (object);
   const lym::MacroCollection *mc = dynamic_cast <const lym::MacroCollection *> (object);
 
-  const lym::MacroCollection *p = 0;
+  const lym::MacroCollection *p = nullptr;
   if (macro) {
     p = macro->parent ();
   } else if (mc) {
@@ -479,7 +479,7 @@ QModelIndex MacroTreeModel::parent (const QModelIndex &index) const
 
 QModelIndex MacroTreeModel::index (int row, int column, const QModelIndex &parent) const
 {
-  const lym::MacroCollection *mc = 0;
+  const lym::MacroCollection *mc = nullptr;
   if (! parent.isValid ()) {
     mc = mp_root;
   } else {
@@ -512,7 +512,7 @@ QModelIndex MacroTreeModel::index (int row, int column, const QModelIndex &paren
 
 int MacroTreeModel::rowCount (const QModelIndex &parent) const 
 {
-  const lym::MacroCollection *mc = 0;
+  const lym::MacroCollection *mc = nullptr;
   if (! parent.isValid ()) {
     mc = mp_root;
   } else {
@@ -599,8 +599,8 @@ MacroTreeModel::index_for (lym::MacroCollection *mc) const
 MacroEditorTree::MacroEditorTree (QWidget *parent, const std::string &cat)
   : QTreeView (parent), m_category (cat)
 {
-  mp_proxyModel = 0;
-  mp_model = 0;
+  mp_proxyModel = nullptr;
+  mp_model = nullptr;
 
   setDragDropMode (QAbstractItemView::InternalMove);
   setDragEnabled (true);
@@ -637,7 +637,7 @@ lym::Macro *MacroEditorTree::current_macro () const
   if (ci.isValid () && mp_model->is_valid_pointer (ci.internalPointer ())) {
     return dynamic_cast <lym::Macro *> ((QObject *) ci.internalPointer ());
   } else {
-    return 0; 
+    return nullptr; 
   }
 }
 
@@ -647,7 +647,7 @@ lym::MacroCollection *MacroEditorTree::current_macro_collection () const
   if (ci.isValid () && mp_model->is_valid_pointer (ci.internalPointer ())) {
     return dynamic_cast <lym::MacroCollection *> ((QObject *) ci.internalPointer ());
   } else {
-    return 0; 
+    return nullptr; 
   }
 }
 

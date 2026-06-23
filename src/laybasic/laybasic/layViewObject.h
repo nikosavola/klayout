@@ -102,7 +102,7 @@ public:
   /**
    *  @brief Constructor
    */
-  ViewService (ViewObjectUI *widget = 0);
+  ViewService (ViewObjectUI *widget = nullptr);
 
   /**
    *  @brief Initialization, can follow default constructor
@@ -356,7 +356,7 @@ public:
    *  @param widget The widget object that the object is shown on.
    *  @param _static True, if the object is in frozen mode initially
    */
-  BackgroundViewObject (ViewObjectUI *widget = 0);
+  BackgroundViewObject (ViewObjectUI *widget = nullptr);
 
   /**
    *  @brief The destructor
@@ -456,7 +456,7 @@ public:
    *  @param widget The widget object that the object is shown on.
    *  @param _static True, if the object is in frozen mode initially
    */
-  ViewObject (ViewObjectUI *widget = 0, bool _static = true);
+  ViewObject (ViewObjectUI *widget = nullptr, bool _static = true);
 
   /**
    *  @brief The destructor

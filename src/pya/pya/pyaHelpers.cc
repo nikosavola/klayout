@@ -35,7 +35,7 @@ namespace pya
 // -------------------------------------------------------------------
 //  Helper objects: PYAChannelObject
 
-PyTypeObject *PYAChannelObject::cls = 0;
+PyTypeObject *PYAChannelObject::cls = nullptr;
 
 /**
  *  @brief Implementation of the write method of the channel object
@@ -43,9 +43,9 @@ PyTypeObject *PYAChannelObject::cls = 0;
 static PyObject *
 pya_channel_write (PyObject *self, PyObject *args)
 {
-  const char *msg = 0;
+  const char *msg = nullptr;
   if (! PyArg_ParseTuple (args, "s", &msg)) {
-    return NULL;
+    return nullptr;
   }
 
   PYAChannelObject *channel = (PYAChannelObject *) self;
@@ -63,7 +63,7 @@ static PyObject *
 pya_channel_flush (PyObject * /*self*/, PyObject *args)
 {
   if (! PyArg_ParseTuple (args, "")) {
-    return NULL;
+    return nullptr;
   }
 
   if (PythonInterpreter::instance () && PythonInterpreter::instance ()->current_console ()) {
@@ -80,7 +80,7 @@ static PyObject *
 pya_channel_isatty (PyObject * /*self*/, PyObject *args)
 {
   if (! PyArg_ParseTuple (args, "")) {
-    return NULL;
+    return nullptr;
   }
 
   if (PythonInterpreter::instance () && PythonInterpreter::instance ()->current_console () && PythonInterpreter::instance ()->current_console ()->is_tty ()) {
@@ -114,7 +114,7 @@ PYAChannelObject::make_class ()
       {"write", (PyCFunction) &pya_channel_write, METH_VARARGS, "internal stdout/stderr redirection object: write method" },
       {"flush", (PyCFunction) &pya_channel_flush, METH_VARARGS, "internal stdout/stderr redirection object: flush method" },
       {"isatty", (PyCFunction) &pya_channel_isatty, METH_VARARGS, "internal stdout/stderr redirection object: isatty method" },
-      {NULL,  NULL},
+      {nullptr,  nullptr},
   };
 
   channel_type.tp_flags = Py_TPFLAGS_DEFAULT;
@@ -133,9 +133,9 @@ PYAChannelObject::make_class ()
 PYAChannelObject *
 PYAChannelObject::create (gsi::Console::output_stream chn)
 {
-  tl_assert (cls != 0);
+  tl_assert (cls != nullptr);
   PYAChannelObject *channel = (PYAChannelObject *) cls->tp_alloc (cls, 0);
-  if (channel == NULL) {
+  if (channel == nullptr) {
     check_error ();
   } else {
     channel->channel = chn;
@@ -146,7 +146,7 @@ PYAChannelObject::create (gsi::Console::output_stream chn)
 // -------------------------------------------------------------------
 //  Helper objects: PYAStaticAttributeDescriptorObject
 
-PyTypeObject *PYAStaticAttributeDescriptorObject::cls = 0;
+PyTypeObject *PYAStaticAttributeDescriptorObject::cls = nullptr;
 
 /**
  *  @brief Implementation of the static attribute getter
@@ -156,7 +156,7 @@ pya_static_attribute_descriptor_get (PyObject *self, PyObject * /*obj*/, PyObjec
 {
   PYAStaticAttributeDescriptorObject *attr = (PYAStaticAttributeDescriptorObject *) self;
   if (attr->getter) {
-    return (*(attr->getter)) ((PyObject *) attr->type, NULL);
+    return (*(attr->getter)) ((PyObject *) attr->type, nullptr);
   } else {
     std::string msg;
     msg += tl::to_string (tr ("Attribute not readable"));
@@ -165,7 +165,7 @@ pya_static_attribute_descriptor_get (PyObject *self, PyObject * /*obj*/, PyObjec
     msg += ".";
     msg += attr->name;
     PyErr_SetString (PyExc_AttributeError, msg.c_str ());
-    return NULL;
+    return nullptr;
   }
 }
 
@@ -204,10 +204,10 @@ static int
 pya_static_attribute_descriptor_init (PyObject *self, PyObject *, PyObject *)
 {
   PYAStaticAttributeDescriptorObject *attr = (PYAStaticAttributeDescriptorObject *) self;
-  attr->getter = 0;
-  attr->setter = 0;
-  attr->name = 0;
-  attr->type = 0;
+  attr->getter = nullptr;
+  attr->setter = nullptr;
+  attr->name = nullptr;
+  attr->type = nullptr;
   return 0;
 }
 
@@ -238,9 +238,9 @@ PYAStaticAttributeDescriptorObject::make_class (PyObject *module)
 PYAStaticAttributeDescriptorObject *
 PYAStaticAttributeDescriptorObject::create (const char *n)
 {
-  tl_assert (cls != 0);
+  tl_assert (cls != nullptr);
   PYAStaticAttributeDescriptorObject *desc = (PYAStaticAttributeDescriptorObject *) cls->tp_alloc (cls, 0);
-  if (desc == NULL) {
+  if (desc == nullptr) {
     check_error ();
   } else {
     desc->name = n;
@@ -251,14 +251,14 @@ PYAStaticAttributeDescriptorObject::create (const char *n)
 // -------------------------------------------------------------------
 //  Helper objects: PYAAmbiguousMethodDispatcher
 
-PyTypeObject *PYAAmbiguousMethodDispatcher::cls = 0;
+PyTypeObject *PYAAmbiguousMethodDispatcher::cls = nullptr;
 
 static PyObject *
 pya_ambiguous_method_dispatcher_get (PyObject *self, PyObject *obj, PyObject *type)
 {
   PYAAmbiguousMethodDispatcher *attr = (PYAAmbiguousMethodDispatcher *) self;
   PyObject *descr;
-  if (obj == NULL || obj == Py_None) {
+  if (obj == nullptr || obj == Py_None) {
     descr = attr->attr_class;
   } else {
     descr = attr->attr_inst;
@@ -269,7 +269,7 @@ pya_ambiguous_method_dispatcher_get (PyObject *self, PyObject *obj, PyObject *ty
   tl_assert (PyType_HasFeature (Py_TYPE (descr), Py_TPFLAGS_HAVE_CLASS)); 
 #endif
   descrgetfunc f = Py_TYPE (descr)->tp_descr_get;
-  if (f == NULL) {
+  if (f == nullptr) {
     Py_INCREF (descr);
     return descr;
   } else {
@@ -320,9 +320,9 @@ PYAAmbiguousMethodDispatcher::make_class (PyObject *module)
 PYAAmbiguousMethodDispatcher *
 PYAAmbiguousMethodDispatcher::create (PyObject *ai, PyObject *ac)
 {
-  tl_assert (cls != 0);
+  tl_assert (cls != nullptr);
   PYAAmbiguousMethodDispatcher* desc = (PYAAmbiguousMethodDispatcher *) cls->tp_alloc (cls, 0);
-  if (desc == NULL) {
+  if (desc == nullptr) {
     Py_XDECREF (ai);
     Py_XDECREF (ac);
     check_error ();
@@ -337,7 +337,7 @@ PYAAmbiguousMethodDispatcher::create (PyObject *ai, PyObject *ac)
 // -------------------------------------------------------------------
 //  Helper objects: PYAIteratorObject
 
-PyTypeObject *PYAIteratorObject::cls = 0;
+PyTypeObject *PYAIteratorObject::cls = nullptr;
 
 /**
  *  @brief Gets the iterator object (reflective)
@@ -360,7 +360,7 @@ pya_plain_iterator_next (PyObject *self)
 
   if (! iter->iter) {
     PyErr_SetNone (PyExc_StopIteration);
-    return NULL;
+    return nullptr;
   }
 
   //  increment except on first visit
@@ -371,7 +371,7 @@ pya_plain_iterator_next (PyObject *self)
 
   if (iter->iter->at_end ()) {
     PyErr_SetNone (PyExc_StopIteration);
-    return NULL;
+    return nullptr;
   }
 
   //  TODO: what to do with the heap here?
@@ -379,7 +379,7 @@ pya_plain_iterator_next (PyObject *self)
 
   gsi::SerialArgs args (iter->iter->serial_size ());
   iter->iter->get (args);
-  PythonRef obj = pull_arg (*iter->value_type, args, 0, heap);
+  PythonRef obj = pull_arg (*iter->value_type, args, nullptr, heap);
 
   return obj.release ();
 }
@@ -390,11 +390,11 @@ pya_plain_iterator_deallocate (PyObject *self)
   PYAIteratorObject *p = (PYAIteratorObject *) self;
   if (p->origin) {
     Py_DECREF (p->origin);
-    p->origin = 0;
+    p->origin = nullptr;
   }
   if (p->iter) {
     delete p->iter;
-    p->iter = 0;
+    p->iter = nullptr;
   }
   Py_TYPE (self)->tp_free ((PyObject *) self);
 }
@@ -424,9 +424,9 @@ PYAIteratorObject::make_class (PyObject *module)
 PYAIteratorObject *
 PYAIteratorObject::create (PyObject *origin, gsi::IterAdaptorAbstractBase *iter, const gsi::ArgType *value_type)
 {
-  tl_assert (cls != 0);
+  tl_assert (cls != nullptr);
   PYAIteratorObject *iter_obj = (PYAIteratorObject *) cls->tp_alloc (cls, 0);
-  if (iter_obj == NULL) {
+  if (iter_obj == nullptr) {
     check_error ();
   } else {
     if (origin) {
@@ -444,7 +444,7 @@ PYAIteratorObject::create (PyObject *origin, gsi::IterAdaptorAbstractBase *iter,
 // -------------------------------------------------------------------
 //  Helper objects: PYASignal
 
-PyTypeObject *PYASignal::cls = 0;
+PyTypeObject *PYASignal::cls = nullptr;
 
 /**
  *  @brief Adds a callable to the signal
@@ -452,16 +452,16 @@ PyTypeObject *PYASignal::cls = 0;
 static PyObject *
 pya_signal_add (PyObject *self, PyObject *args)
 {
-  PyObject *callable = 0;
+  PyObject *callable = nullptr;
   if (! PyArg_ParseTuple (args, "O", &callable)) {
-    return NULL;
+    return nullptr;
   }
 
   if (! PyCallable_Check (callable)) {
     std::string msg;
     msg += tl::to_string (tr ("Signal's += operator needs a callable object"));
     PyErr_SetString (PyExc_AttributeError, msg.c_str ());
-    return NULL;
+    return nullptr;
   }
 
   PYASignal *signal = (PYASignal *) self;
@@ -479,7 +479,7 @@ pya_signal_inplace_add (PyObject *self, PyObject *callable)
     std::string msg;
     msg += tl::to_string (tr ("Signal's += operator needs a callable object"));
     PyErr_SetString (PyExc_AttributeError, msg.c_str ());
-    return NULL;
+    return nullptr;
   }
 
   PYASignal *signal = (PYASignal *) self;
@@ -497,16 +497,16 @@ pya_signal_inplace_add (PyObject *self, PyObject *callable)
 static PyObject *
 pya_signal_remove (PyObject *self, PyObject *args)
 {
-  PyObject *callable = 0;
+  PyObject *callable = nullptr;
   if (! PyArg_ParseTuple (args, "O", &callable)) {
-    return NULL;
+    return nullptr;
   }
 
   if (! PyCallable_Check (callable)) {
     std::string msg;
     msg += tl::to_string (tr ("Signal's -= operator needs a callable object"));
     PyErr_SetString (PyExc_AttributeError, msg.c_str ());
-    return NULL;
+    return nullptr;
   }
 
   PYASignal *signal = (PYASignal *) self;
@@ -527,7 +527,7 @@ pya_signal_inplace_remove (PyObject *self, PyObject *callable)
     std::string msg;
     msg += tl::to_string (tr ("Signal's -= operator needs a callable object"));
     PyErr_SetString (PyExc_AttributeError, msg.c_str ());
-    return NULL;
+    return nullptr;
   }
 
   PYASignal *signal = (PYASignal *) self;
@@ -545,16 +545,16 @@ pya_signal_inplace_remove (PyObject *self, PyObject *callable)
 static PyObject *
 pya_signal_set (PyObject *self, PyObject *args)
 {
-  PyObject *callable = 0;
+  PyObject *callable = nullptr;
   if (! PyArg_ParseTuple (args, "O", &callable)) {
-    return NULL;
+    return nullptr;
   }
 
   if (! PyCallable_Check (callable)) {
     std::string msg;
     msg += tl::to_string (tr ("Signal's 'set' method needs a callable object"));
     PyErr_SetString (PyExc_AttributeError, msg.c_str ());
-    return NULL;
+    return nullptr;
   }
 
   PYASignal *signal = (PYASignal *) self;
@@ -613,7 +613,7 @@ PYASignal::~PYASignal ()
 {
   if (origin) {
     Py_DECREF (origin);
-    origin = 0;
+    origin = nullptr;
   }
 }
 
@@ -633,7 +633,7 @@ PYASignal::make_class (PyObject *module)
       {"disconnect", (PyCFunction) &pya_signal_remove, METH_VARARGS, "synonym to 'remove' or '-='" },
       {"set", (PyCFunction) &pya_signal_set, METH_VARARGS, "internal signal proxy object: assignment" },
       {"clear", (PyCFunction) &pya_signal_clear, METH_NOARGS, "internal signal proxy object: clears all receivers" },
-      {NULL,  NULL},
+      {nullptr,  nullptr},
   };
 
   static PyNumberMethods nm = { };
@@ -661,9 +661,9 @@ PYASignal::make_class (PyObject *module)
 PYASignal *
 PYASignal::create (PyObject *origin, pya::SignalHandler *handler)
 {
-  tl_assert (cls != 0);
+  tl_assert (cls != nullptr);
   PYASignal *signal_obj = (PYASignal *) cls->tp_alloc (cls, 0);
-  if (signal_obj == NULL) {
+  if (signal_obj == nullptr) {
     check_error ();
   } else {
     new (signal_obj) PYASignal (origin, handler);

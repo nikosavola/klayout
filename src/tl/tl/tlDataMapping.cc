@@ -84,11 +84,11 @@ CombinedDataMapping::~CombinedDataMapping ()
 {
   if (mp_o) {
     delete mp_o;
-    mp_o = 0;
+    mp_o = nullptr;
   }
   if (mp_i) {
     delete mp_i;
-    mp_i = 0;
+    mp_i = nullptr;
   }
 }
 
@@ -197,11 +197,11 @@ LinearCombinationDataMapping::~LinearCombinationDataMapping ()
 {
   if (mp_a) {
     delete mp_a;
-    mp_a = 0;
+    mp_a = nullptr;
   }
   if (mp_b) {
     delete mp_b;
-    mp_b = 0;
+    mp_b = nullptr;
   }
 }
 
@@ -321,7 +321,7 @@ TableDataMapping::dump () const
 //  DataMappingLookupTable implementation
 
 DataMappingLookupTable::DataMappingLookupTable (DataMappingBase *dm)
-  : m_dxinv (1.0), m_xmin (0.0), mp_y (0), mp_c (0), m_size (0), mp_dm (dm)
+  : m_dxinv (1.0), m_xmin (0.0), mp_y (nullptr), mp_c (nullptr), m_size (0), mp_dm (dm)
 {
   // .. nothing yet ..
 }
@@ -336,16 +336,16 @@ DataMappingLookupTable::release ()
 {
   if (mp_y) {
     delete [] mp_y;
-    mp_y = 0;
+    mp_y = nullptr;
   }
   if (mp_c) {
     delete [] mp_c;
-    mp_c = 0;
+    mp_c = nullptr;
   }
 
   if (mp_dm) {
     delete mp_dm;
-    mp_dm = 0;
+    mp_dm = nullptr;
   }
 }
 
@@ -361,11 +361,11 @@ DataMappingLookupTable::update_table (double xmin, double xmax, double delta_y, 
 {
   if (mp_y) {
     delete [] mp_y;
-    mp_y = 0;
+    mp_y = nullptr;
   }
   if (mp_c) {
     delete [] mp_c;
-    mp_c = 0;
+    mp_c = nullptr;
   }
 
   std::vector< std::pair<double, double> > table;
@@ -374,7 +374,7 @@ DataMappingLookupTable::update_table (double xmin, double xmax, double delta_y, 
     mp_dm->generate_table (table);
   }
 
-  if (table.size () < 1) {
+  if (table.empty()) {
 
     //  TODO: should mimic a linear behaviour by observing delta_y
     m_dxinv = 1.0 / (xmax - xmin);

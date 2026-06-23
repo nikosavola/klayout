@@ -103,7 +103,7 @@ public:
 
   virtual lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
   {
-    return 0; //  .. no config page yet ..
+    return nullptr; //  .. no config page yet ..
   }
 
   virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
@@ -117,7 +117,7 @@ public:
     if (lay::has_gui ()) {
       return new DensityMapDialog (root, view);
     } else {
-      return 0;
+      return nullptr;
     }
   }
 };
@@ -627,7 +627,7 @@ DensityMapDialog::compute_density_map (const DensityMapParameters &par)
 
   //  Prepare the Image for receiving
 
-  img::Object *img_object = 0;
+  img::Object *img_object = nullptr;
 
   img::Service *img_service = view ()->get_plugin <img::Service> ();
   if (img_service) {

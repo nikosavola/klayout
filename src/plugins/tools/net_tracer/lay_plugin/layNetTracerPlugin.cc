@@ -82,7 +82,7 @@ public:
     if (lay::has_gui ()) {
       return new NetTracerDialog (root, view);
     } else {
-      return 0;
+      return nullptr;
     }
   }
 };

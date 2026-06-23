@@ -47,7 +47,7 @@ public:
 
   virtual lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
   {
-    return 0; //  .. no config page yet ..
+    return nullptr; //  .. no config page yet ..
   }
 
   virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
@@ -61,7 +61,7 @@ public:
     if (lay::has_gui ()) {
       return new ClipDialog (root, view);
     } else {
-      return 0;
+      return nullptr;
     }
   }
 };
@@ -202,7 +202,7 @@ BEGIN_PROTECTED
       //  select that cell as new cell
       view ()->select_cell (clip_top, view ()->active_cellview_index ());
 
-    } else if (new_cells.size () > 0 && new_cells [0] != cv.cell_index ()) {
+    } else if (!new_cells.empty() && new_cells [0] != cv.cell_index ()) {
 
       //  it is sufficient to rename the new cell ..
       cv->layout ().rename_cell (new_cells [0], cv->layout ().uniquify_cell_name (clip_cell_name.c_str ()).c_str ());

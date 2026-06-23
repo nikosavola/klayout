@@ -438,7 +438,7 @@ public:
 
   void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector <tl::Variant> &vv, const std::map<std::string, tl::Variant> * /*kwargs*/) const
   {
-    if (vv.size () != 0) {
+    if (!vv.empty()) {
       throw tl::EvalError (tl::to_string (tr ("Layer source function must not have arguments")), context);
     }
 
@@ -558,7 +558,7 @@ LayerProperties::realize_visual () const
 {
   //  do as much as we can. The node implementation will provide a 
   //  parent and a view if possible.
-  merge_visual (0);
+  merge_visual (nullptr);
 }
 
 void
@@ -566,8 +566,8 @@ LayerProperties::realize_source () const
 {
   //  do as much as we can. The node implementation will provide a 
   //  parent and a view if possible.
-  merge_source (0);
-  do_realize (0);
+  merge_source (nullptr);
+  do_realize (nullptr);
 }
 
 void
@@ -1068,7 +1068,7 @@ LayerPropertiesConstIterator &
 LayerPropertiesConstIterator::up ()
 {
   m_uint %= factor ().first;
-  mp_obj.reset (0);
+  mp_obj.reset (nullptr);
   return *this;
 }
 
@@ -1076,7 +1076,7 @@ LayerPropertiesConstIterator &
 LayerPropertiesConstIterator::next_sibling (ptrdiff_t n)
 {
   m_uint += factor ().first * n;
-  mp_obj.reset (0);
+  mp_obj.reset (nullptr);
   return *this;
 }
 
@@ -1085,7 +1085,7 @@ LayerPropertiesConstIterator::to_sibling (size_t n)
 {
   std::pair <size_t, size_t> f = factor ();
   m_uint = (m_uint % f.first) + (1 + n) * f.first;
-  mp_obj.reset (0);
+  mp_obj.reset (nullptr);
   return *this;
 }
 
@@ -1101,7 +1101,7 @@ LayerPropertiesConstIterator::down_first_child ()
 {
   std::pair <size_t, size_t> f = factor ();
   m_uint += f.first * f.second;
-  mp_obj.reset (0);
+  mp_obj.reset (nullptr);
   return *this;
 }
 
@@ -1111,7 +1111,7 @@ LayerPropertiesConstIterator::down_last_child ()
   std::pair <size_t, size_t> f = factor ();
   const LayerPropertiesNode *o = obj ();
   m_uint += f.first * f.second * ((o->end_children () - o->begin_children ()) + 1);
-  mp_obj.reset (0);
+  mp_obj.reset (nullptr);
   return *this;
 }
 
@@ -1123,7 +1123,7 @@ LayerPropertiesConstIterator::parent_obj () const
   size_t uint = m_uint;
   LayerPropertiesList::const_iterator iter = m_list->begin_const ();
   size_t n = ((m_list->end_const () - m_list->begin_const ()) + 2);
-  const LayerPropertiesNode *ret = 0;
+  const LayerPropertiesNode *ret = nullptr;
 
   while (uint > n) {
     size_t rem = uint % n;
@@ -1142,7 +1142,7 @@ LayerPropertiesConstIterator::parent_obj () const
 void
 LayerPropertiesConstIterator::invalidate () 
 {
-  mp_obj.reset (0);
+  mp_obj.reset (nullptr);
 
   //  the iterator may be parked at a position behind the last element.
   //  Move one step further in this case.
@@ -1158,7 +1158,7 @@ LayerPropertiesConstIterator::set_obj () const
 {
   if (is_null () || !m_list) {
 
-    mp_obj.reset (0);
+    mp_obj.reset (nullptr);
 
   } else {
 
@@ -1195,7 +1195,7 @@ LayerPropertiesConstIterator::inc (unsigned int d)
       while (true) {
         std::pair <size_t, size_t> f = factor ();
         m_uint += f.first;
-        mp_obj.reset (0);
+        mp_obj.reset (nullptr);
         if (m_uint / f.first < f.second - 1) {
           break;
         } else if (at_top ()) {
@@ -1474,7 +1474,7 @@ LayerPropertiesList::append (const LayerPropertiesList &other)
 void
 LayerPropertiesList::expand (const std::map<int, int> &map_cv_index, bool add_default)
 {
-  tl_assert (view () != 0);
+  tl_assert (view () != nullptr);
 
   //  Add a default element if required unless there already is one at top level.
   //  If there already is one, this one will be ignored.
@@ -1721,7 +1721,7 @@ struct WidthConverter
     if (s.empty ()) {
       b = -1;
     } else {
-      tl::from_string (s.c_str (), b);
+      tl::from_string (s, b);
     }
   }
 };
@@ -1941,7 +1941,7 @@ LayerPropertiesList::insert (const LayerPropertiesIterator &iter, const LayerPro
 {
   tl_assert (! iter.is_null ());
 
-  LayerPropertiesNode *ret = 0;
+  LayerPropertiesNode *ret = nullptr;
 
   LayerPropertiesIterator parent = iter.parent ();
 

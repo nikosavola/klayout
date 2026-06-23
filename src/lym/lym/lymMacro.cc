@@ -60,7 +60,7 @@ Macro::Macro ()
     m_priority (0), m_show_in_menu (false), m_is_file (false),
     m_interpreter (None), m_format (Macro::NoFormat)
 {
-  mp_parent = 0;
+  mp_parent = nullptr;
 }
 
 void Macro::on_menu_needs_update ()
@@ -577,17 +577,17 @@ struct PropertyField
 };
 
 static PropertyField property_fields[] = {
-  { "description",    &lym::Macro::description, &lym::Macro::set_description,   0, 0,                                                            0, 0 },
-  { "prolog",         &lym::Macro::prolog, &lym::Macro::set_prolog,             0, 0,                                                            0, 0 },
-  { "epilog",         &lym::Macro::epilog, &lym::Macro::set_epilog,             0, 0,                                                            0, 0 },
-  { "version",        &lym::Macro::version, &lym::Macro::set_version,           0, 0,                                                            0, 0 },
-  { "autorun",        0, 0,                                                     &lym::Macro::is_autorun, &lym::Macro::set_autorun,               0, 0 },
-  { "autorun-early",  0, 0,                                                     &lym::Macro::is_autorun_early, &lym::Macro::set_autorun_early,   0, 0 },
-  { "show-in-menu",   0, 0,                                                     &lym::Macro::show_in_menu, &lym::Macro::set_show_in_menu,        0, 0 },
-  { "group-name",     &lym::Macro::group_name, &lym::Macro::set_group_name,     0, 0,                                                            0, 0 },
-  { "menu-path",      &lym::Macro::menu_path, &lym::Macro::set_menu_path,       0, 0,                                                            0, 0 },
-  { "shortcut",       &lym::Macro::shortcut, &lym::Macro::set_shortcut,         0, 0,                                                            0, 0 },
-  { "priority",       0, 0,                                                     0, 0,                                                            &lym::Macro::priority, &lym::Macro::set_priority }
+  { "description",    &lym::Macro::description, &lym::Macro::set_description,   nullptr, nullptr,                                                            nullptr, nullptr },
+  { "prolog",         &lym::Macro::prolog, &lym::Macro::set_prolog,             nullptr, nullptr,                                                            nullptr, nullptr },
+  { "epilog",         &lym::Macro::epilog, &lym::Macro::set_epilog,             nullptr, nullptr,                                                            nullptr, nullptr },
+  { "version",        &lym::Macro::version, &lym::Macro::set_version,           nullptr, nullptr,                                                            nullptr, nullptr },
+  { "autorun",        nullptr, nullptr,                                                     &lym::Macro::is_autorun, &lym::Macro::set_autorun,               nullptr, nullptr },
+  { "autorun-early",  nullptr, nullptr,                                                     &lym::Macro::is_autorun_early, &lym::Macro::set_autorun_early,   nullptr, nullptr },
+  { "show-in-menu",   nullptr, nullptr,                                                     &lym::Macro::show_in_menu, &lym::Macro::set_show_in_menu,        nullptr, nullptr },
+  { "group-name",     &lym::Macro::group_name, &lym::Macro::set_group_name,     nullptr, nullptr,                                                            nullptr, nullptr },
+  { "menu-path",      &lym::Macro::menu_path, &lym::Macro::set_menu_path,       nullptr, nullptr,                                                            nullptr, nullptr },
+  { "shortcut",       &lym::Macro::shortcut, &lym::Macro::set_shortcut,         nullptr, nullptr,                                                            nullptr, nullptr },
+  { "priority",       nullptr, nullptr,                                                     nullptr, nullptr,                                                            &lym::Macro::priority, &lym::Macro::set_priority }
 };
 
 static std::string escape_pta_string (const char *cp) 
@@ -936,7 +936,7 @@ void Macro::install_doc () const
   if (! lines.empty () && tl::trim (lines [0]).find ("@class") == 0) {
 
     //  this macro provides documentation for the GSI namespace
-    gsi::ClassBase *cls = 0;
+    gsi::ClassBase *cls = nullptr;
 
     for (size_t i = 0; i < lines.size (); ++i) {
 
@@ -983,7 +983,7 @@ void Macro::install_doc () const
           }
         }
 
-        const gsi::ClassBase *super_cls = 0;
+        const gsi::ClassBase *super_cls = nullptr;
         if (! super_cls_name.empty ()) {
           for (gsi::ClassBase::class_iterator c = gsi::ClassBase::begin_classes (); c != gsi::ClassBase::end_classes (); ++c) {
             if (c->name () == super_cls_name) {
@@ -1007,7 +1007,7 @@ void Macro::install_doc () const
 
       } else if (ex.test ("@method") || (st = ex.test ("@static_method")) == true) {
 
-        if (cls == 0) {
+        if (cls == nullptr) {
           tl::error << tl::to_string (tr ("Reading class doc from ")) << path () << ": " << tl::to_string (tr ("@method without preceding @class"));
         } else {
 
@@ -1041,7 +1041,7 @@ void Macro::install_doc () const
 
 static gsi::Interpreter *script_interpreter (lym::Macro::Interpreter lang)
 {
-  gsi::Interpreter *ip = 0;
+  gsi::Interpreter *ip = nullptr;
 
   //  This
   if (lang == lym::Macro::Ruby) {
@@ -1050,7 +1050,7 @@ static gsi::Interpreter *script_interpreter (lym::Macro::Interpreter lang)
     ip = pya::PythonInterpreter::instance ();
   }
 
-  return (ip && ip->available() ? ip : 0);
+  return (ip && ip->available() ? ip : nullptr);
 }
 
 bool Macro::can_run () const
@@ -1065,7 +1065,7 @@ bool Macro::can_run () const
   }
 }
 
-static Macro *sp_current_macro = 0;
+static Macro *sp_current_macro = nullptr;
 
 Macro *
 Macro::current ()
@@ -1137,10 +1137,10 @@ int Macro::run () const
       throw tl::Exception (tl::to_string (tr ("Can't run macro (no interpreter): ")) + path ());
     }
 
-    sp_current_macro = 0;
+    sp_current_macro = nullptr;
 
   } catch (tl::ExitException &ex) {
-    sp_current_macro = 0;
+    sp_current_macro = nullptr;
     return ex.status ();
   }
 

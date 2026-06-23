@@ -243,8 +243,8 @@ RNetwork::simplify ()
 
     for (size_t ic = 1; ic <= clusters.size (); ++ic) {
 
-      RNode *remaining = 0;
-      RNode *first_node = 0;
+      RNode *remaining = nullptr;
+      RNode *first_node = nullptr;
       for (auto c = clusters.begin_cluster (ic); c != clusters.end_cluster (ic); ++c) {
         RNode *n = const_cast<RNode *> ((*c)->first);
         if (! first_node) {

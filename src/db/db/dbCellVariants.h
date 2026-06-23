@@ -244,7 +244,7 @@ public:
    *  If given, *var_table will be filled with a map giving the new cell and variant against
    *  the old cell for all cells with more than one variant.
    */
-  void separate_variants (std::map<db::cell_index_type, std::map<db::ICplxTrans, db::cell_index_type> > *var_table = 0);
+  void separate_variants (std::map<db::cell_index_type, std::map<db::ICplxTrans, db::cell_index_type> > *var_table = nullptr);
 
   /**
    *  @brief Commits the shapes for different variants to the current cell hierarchy

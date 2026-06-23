@@ -57,7 +57,7 @@ namespace lay
 //  DitherPatternSelectionButton implementation
 
 DitherPatternSelectionButton::DitherPatternSelectionButton (QWidget *parent)
-  : QPushButton (parent), mp_view (0), m_dither_pattern (-1)
+  : QPushButton (parent), mp_view (nullptr), m_dither_pattern (-1)
 {
   setMenu (new QMenu (this));
   update_pattern ();
@@ -111,7 +111,7 @@ DitherPatternSelectionButton::browse_selected ()
 {
   if (mp_view) {
 
-    SelectStippleForm stipples_form (0, mp_view->dither_pattern (), true);
+    SelectStippleForm stipples_form (nullptr, mp_view->dither_pattern (), true);
     stipples_form.set_selected (m_dither_pattern);
 
     if (stipples_form.exec ()) {
@@ -127,7 +127,7 @@ DitherPatternSelectionButton::browse_selected ()
     //  Use the default (non-custom) pattern if no view is set.
     lay::DitherPattern default_pattern;
 
-    SelectStippleForm stipples_form (0, default_pattern, true);
+    SelectStippleForm stipples_form (nullptr, default_pattern, true);
     stipples_form.set_selected (m_dither_pattern);
 
     if (stipples_form.exec ()) {
@@ -251,7 +251,7 @@ DitherPatternSelectionButton::update_menu ()
 //  LineStyleSelectionButton implementation
 
 LineStyleSelectionButton::LineStyleSelectionButton (QWidget *parent)
-  : QPushButton (parent), mp_view (0), m_line_style (-1)
+  : QPushButton (parent), mp_view (nullptr), m_line_style (-1)
 {
   setMenu (new QMenu (this));
   update_pattern ();
@@ -305,7 +305,7 @@ LineStyleSelectionButton::browse_selected ()
 {
   if (mp_view) {
 
-    SelectLineStyleForm styles_form (0, mp_view->line_styles (), true);
+    SelectLineStyleForm styles_form (nullptr, mp_view->line_styles (), true);
     styles_form.set_selected (m_line_style);
 
     if (styles_form.exec ()) {
@@ -321,7 +321,7 @@ LineStyleSelectionButton::browse_selected ()
     //  Use the default (non-custom) pattern if no view is set.
     lay::LineStyles default_pattern;
 
-    SelectLineStyleForm styles_form (0, default_pattern, true);
+    SelectLineStyleForm styles_form (nullptr, default_pattern, true);
     styles_form.set_selected (m_line_style);
 
     if (styles_form.exec ()) {
@@ -446,13 +446,13 @@ CellViewSelectionComboBox::CellViewSelectionComboBox (QWidget *parent)
   : QComboBox (parent)
 {
   mp_private = new CellViewSelectionComboBoxPrivateData ();
-  mp_private->layout_view = 0;
+  mp_private->layout_view = nullptr;
 }
 
 CellViewSelectionComboBox::~CellViewSelectionComboBox ()
 {
   delete mp_private;
-  mp_private = 0;
+  mp_private = nullptr;
 }
 
 const lay::LayoutViewBase *
@@ -519,8 +519,8 @@ LayerSelectionComboBox::LayerSelectionComboBox (QWidget *parent)
   mp_private = new LayerSelectionComboBoxPrivateData ();
   mp_private->no_layer_available = false;
   mp_private->new_layer_enabled = true;
-  mp_private->layout = 0;
-  mp_private->view = 0;
+  mp_private->layout = nullptr;
+  mp_private->view = nullptr;
   mp_private->cv_index = -1;
   mp_private->all_layers = false;
 
@@ -530,7 +530,7 @@ LayerSelectionComboBox::LayerSelectionComboBox (QWidget *parent)
 LayerSelectionComboBox::~LayerSelectionComboBox ()
 {
   delete mp_private;
-  mp_private = 0;
+  mp_private = nullptr;
 }
 
 void  
@@ -568,7 +568,7 @@ LayerSelectionComboBox::item_selected (int index)
 {
 BEGIN_PROTECTED
 
-  if (mp_private->view != 0 && index == count () - 1 && mp_private->new_layer_enabled) {
+  if (mp_private->view != nullptr && index == count () - 1 && mp_private->new_layer_enabled) {
 
     setCurrentIndex (-1);
 
@@ -633,12 +633,12 @@ struct LPIPairCompareOp
 void 
 LayerSelectionComboBox::set_view (lay::LayoutViewBase *view, int cv_index, bool all_layers)
 {
-  if (view == 0 || cv_index < 0) {
-    set_layout (0);
+  if (view == nullptr || cv_index < 0) {
+    set_layout (nullptr);
     return;
   }
 
-  mp_private->layout = 0;
+  mp_private->layout = nullptr;
   mp_private->view = view;
   mp_private->cv_index = cv_index;
   mp_private->all_layers = all_layers;
@@ -660,7 +660,7 @@ void
 LayerSelectionComboBox::set_layout (const db::Layout *layout)
 {
   mp_private->layout = layout;
-  mp_private->view = 0;
+  mp_private->view = nullptr;
   mp_private->cv_index = -1;
   mp_private->all_layers = false;
 
@@ -691,7 +691,7 @@ LayerSelectionComboBox::do_update_layer_list ()
 
   if (mp_private->view) {
 
-    const db::Layout *layout = 0;
+    const db::Layout *layout = nullptr;
 
     const CellView &cv = mp_private->view->cellview (mp_private->cv_index);
     if (cv.is_valid ()) {
@@ -976,7 +976,7 @@ LibrarySelectionComboBox::set_current_library (db::Library *lib)
 
     for (int i = 0; i < count (); ++i) {
       QVariant data = itemData (i);
-      db::Library *item_lib = 0;
+      db::Library *item_lib = nullptr;
       if (! data.isNull ()) {
         item_lib = db::LibraryManager::instance ().lib (data.value<db::lib_id_type> ());
       }
@@ -997,7 +997,7 @@ LibrarySelectionComboBox::current_library () const
 {
   QVariant data = itemData (currentIndex ());
   if (data.isNull ()) {
-    return 0;
+    return nullptr;
   } else {
     return db::LibraryManager::instance ().lib (data.value<db::lib_id_type> ());
   }
@@ -1044,7 +1044,7 @@ SimpleColorButton::SimpleColorButton (QPushButton *&to_replace, const char *name
   }
 
   delete to_replace;
-  to_replace = 0;
+  to_replace = nullptr;
 
   connect (this, SIGNAL (clicked ()), this, SLOT (selected ()));
 }
@@ -1150,7 +1150,7 @@ ColorButton::ColorButton (QPushButton *&to_replace, const char *name)
   }
 
   delete to_replace;
-  to_replace = 0;
+  to_replace = nullptr;
 }
 
 const char *color_icon = 
@@ -1208,7 +1208,7 @@ const char *color_icon_2x =
 void
 ColorButton::build_color_menu (QMenu *menu, QObject *receiver, const char *browse_slot, const char *selected_slot)
 {
-  tl_assert (selected_slot != 0);
+  tl_assert (selected_slot != nullptr);
 
   menu->clear ();
 
@@ -1229,7 +1229,7 @@ ColorButton::build_color_menu (QMenu *menu, QObject *receiver, const char *brows
       palette.from_string (s);
     }
 
-    QMenu *submenu = 0;
+    QMenu *submenu = nullptr;
 
     //  fill the list of stipple palette items
     for (unsigned int i = 0; i < palette.colors (); ++i) {
@@ -1467,7 +1467,7 @@ DecoratedLineEdit::DecoratedLineEdit (QWidget *parent)
   : QLineEdit (parent),
     m_clear_button_enabled (false), m_options_button_enabled (false),
     m_escape_signal_enabled (false), m_tab_signal_enabled (false),
-    mp_options_menu (0)
+    mp_options_menu (nullptr)
 {
   mp_options_label = new QLabel (this);
   mp_options_label->hide ();
@@ -1567,7 +1567,7 @@ void DecoratedLineEdit::set_margins ()
   margins.setLeft (left_margin);
   setTextMargins (margins);
 
-  resizeEvent (0);
+  resizeEvent (nullptr);
 }
 
 void DecoratedLineEdit::set_clear_button_enabled (bool en)

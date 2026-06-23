@@ -555,7 +555,7 @@ namespace
   {
   public:
     cut_polygon_receiver_double_impl ()
-      : mp_next (0)
+      : mp_next (nullptr)
     { }
 
     void set_next (cut_polygon_receiver_base<PolygonType> *next)
@@ -1388,15 +1388,15 @@ do_extract_rad (const db::polygon<C> &polygon, double &rinner, double &router, u
 
   } else {
 
-    if (! do_extract_rad_from_contour (polygon.begin_hull (), polygon.end_hull (), rinner, router, n, (std::vector<db::point<C> > *) 0, false)) {
-      if (! do_extract_rad_from_contour (polygon.begin_hull (), polygon.end_hull (), rinner, router, n, (std::vector<db::point<C> > *) 0, true)) {
+    if (! do_extract_rad_from_contour (polygon.begin_hull (), polygon.end_hull (), rinner, router, n, (std::vector<db::point<C> > *) nullptr, false)) {
+      if (! do_extract_rad_from_contour (polygon.begin_hull (), polygon.end_hull (), rinner, router, n, (std::vector<db::point<C> > *) nullptr, true)) {
         return false;
       }
     }
 
     for (unsigned int h = 0; h < polygon.holes (); ++h) {
-      if (! do_extract_rad_from_contour (polygon.begin_hole (h), polygon.end_hole (h), rinner, router, n, (std::vector<db::point<C> > *) 0, false)) {
-        if (! do_extract_rad_from_contour (polygon.begin_hole (h), polygon.end_hole (h), rinner, router, n, (std::vector<db::point<C> > *) 0, true)) {
+      if (! do_extract_rad_from_contour (polygon.begin_hole (h), polygon.end_hole (h), rinner, router, n, (std::vector<db::point<C> > *) nullptr, false)) {
+        if (! do_extract_rad_from_contour (polygon.begin_hole (h), polygon.end_hole (h), rinner, router, n, (std::vector<db::point<C> > *) nullptr, true)) {
           return false;
         }
       }
@@ -1601,14 +1601,14 @@ template <class C>
 area_map<C>::area_map ()
   : m_nx (0), m_ny (0)
 {
-  mp_av = 0;
+  mp_av = nullptr;
 }
 
 template <class C>
 area_map<C>::area_map (const area_map &other)
   : m_nx (0), m_ny (0)
 {
-  mp_av = 0;
+  mp_av = nullptr;
   operator= (other);
 }
 
@@ -1648,7 +1648,7 @@ area_map<C>::~area_map ()
   if (mp_av) {
     delete[] mp_av;
   }
-  mp_av = 0;
+  mp_av = nullptr;
 }
 
 template <class C>
@@ -2032,7 +2032,7 @@ public:
       m_last_set = false;
     }
 
-    mp_ep = 0;
+    mp_ep = nullptr;
   }
 
   void operator+= (const db::Point &p)

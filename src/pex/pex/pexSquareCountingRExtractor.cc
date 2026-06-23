@@ -316,19 +316,19 @@ SquareCountingRExtractor::extract (const db::Polygon &polygon, const std::vector
     //  1. internal ports
     for (auto i = ip_indexes.begin (); i != ip_indexes.end (); ++i) {
       db::Box loc = (inv_trans * internal_port_edges [*i]->edge ()).bbox ();
-      ports.push_back (std::make_pair (PortDefinition (pex::RNode::Internal, loc, (unsigned int) *i), (pex::RNode *) 0));
+      ports.push_back (std::make_pair (PortDefinition (pex::RNode::Internal, loc, (unsigned int) *i), (pex::RNode *) nullptr));
     }
 
     //  2. vertex ports
     for (auto i = vp_indexes.begin (); i != vp_indexes.end (); ++i) {
       db::Point loc = vertex_ports [*i];
-      ports.push_back (std::make_pair (PortDefinition (pex::RNode::VertexPort, db::Box (loc, loc), (unsigned int) *i), (pex::RNode *) 0));
+      ports.push_back (std::make_pair (PortDefinition (pex::RNode::VertexPort, db::Box (loc, loc), (unsigned int) *i), (pex::RNode *) nullptr));
     }
 
     //  3. polygon ports
     for (auto i = pp_indexes.begin (); i != pp_indexes.end (); ++i) {
       db::Box loc = polygon_ports [*i].box ();
-      ports.push_back (std::make_pair (PortDefinition (pex::RNode::PolygonPort, loc, (unsigned int) *i), (pex::RNode *) 0));
+      ports.push_back (std::make_pair (PortDefinition (pex::RNode::PolygonPort, loc, (unsigned int) *i), (pex::RNode *) nullptr));
     }
 
     //  create nodes for the ports

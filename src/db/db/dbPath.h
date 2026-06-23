@@ -923,7 +923,7 @@ private:
  *  @brief Collect memory statistics
  */
 template <class C>
-inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const path<C> &x, bool no_self = false, void *parent = 0)
+inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const path<C> &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }

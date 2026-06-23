@@ -117,7 +117,7 @@ public:
 
   QSize sizeHint (const QStyleOptionViewItem &option, const QModelIndex &index) const
   {
-    QWidget *editor = createEditor (0, option, index);
+    QWidget *editor = createEditor (nullptr, option, index);
     QSize size = editor->sizeHint ();
     delete editor;
     return size - QSize (2, 2);
@@ -192,7 +192,7 @@ NetTracerTechComponentEditor::setup ()
   if (stack_tree->topLevelItemCount () > 0) {
     stack_tree->setCurrentItem (stack_tree->topLevelItem (0));
   }
-  current_item_changed (stack_tree->currentItem (), 0);
+  current_item_changed (stack_tree->currentItem (), nullptr);
 }
 
 void
@@ -307,7 +307,7 @@ NetTracerTechComponentEditor::del_clicked ()
   }
 
   update ();
-  stack_tree->setCurrentItem (0);
+  stack_tree->setCurrentItem (nullptr);
 }
 
 void 

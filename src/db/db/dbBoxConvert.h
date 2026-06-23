@@ -569,7 +569,7 @@ struct box_convert <db::CellInst, AllowEmpty>
   typedef complex_bbox_tag complexity;
 
   box_convert ()
-    : mp_layout (0), m_layer (-1)
+    : mp_layout (nullptr), m_layer (-1)
   { }
   
   box_convert (const layout_type &ly, unsigned int l)

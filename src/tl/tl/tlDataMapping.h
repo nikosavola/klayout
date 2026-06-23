@@ -241,7 +241,7 @@ public:
    *  If the b object is 0, the linear combination degenerates to y = ca * a(x) + c.
    *  If the a and b object is 0, the linear combination degenerates to y = c.
    */
-  LinearCombinationDataMapping (double c, DataMappingBase *a = 0, double ca = 1.0, DataMappingBase *b = 0, double cb = 1.0);
+  LinearCombinationDataMapping (double c, DataMappingBase *a = nullptr, double ca = 1.0, DataMappingBase *b = nullptr, double cb = 1.0);
 
   /**
    *  @brief Destructor
@@ -294,7 +294,7 @@ public:
    *
    *  @param The underlying data mapping - will become owned by the DataMappingLookupTable object.
    */
-  DataMappingLookupTable (DataMappingBase *dm = 0);
+  DataMappingLookupTable (DataMappingBase *dm = nullptr);
 
   /**
    *  @brief Destructor

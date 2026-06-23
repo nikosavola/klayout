@@ -34,8 +34,8 @@ namespace gsi
 // -------------------------------------------------------------------------
 //  ClassBase implementation
 
-ClassBase::class_collection *ClassBase::mp_class_collection = 0;
-ClassBase::class_collection *ClassBase::mp_new_class_collection = 0;
+ClassBase::class_collection *ClassBase::mp_class_collection = nullptr;
+ClassBase::class_collection *ClassBase::mp_new_class_collection = nullptr;
 
 namespace {
   struct type_info_compare
@@ -49,16 +49,16 @@ namespace {
 
 //  TODO: thread-safe? Unlikely that multiple threads access this member -
 //  we do a initial scan and after this no more write access here.
-static std::vector<const ClassBase *> *sp_classes = 0;
+static std::vector<const ClassBase *> *sp_classes = nullptr;
 typedef std::map<const ClassBase *, size_t> class_to_index_map_t;
-static class_to_index_map_t *sp_class_to_index = 0;
+static class_to_index_map_t *sp_class_to_index = nullptr;
 typedef std::map<const std::type_info *, size_t> ti_to_class_map_t;
-static ti_to_class_map_t *sp_ti_to_class_index = 0;
+static ti_to_class_map_t *sp_ti_to_class_index = nullptr;
 typedef std::map<std::string, const ClassBase *> tname_to_class_map_t;
-static tname_to_class_map_t *sp_tname_to_class = 0;
+static tname_to_class_map_t *sp_tname_to_class = nullptr;
 
 ClassBase::ClassBase (const std::string &doc, const Methods &mm, bool do_register)
-  : m_initialized (false), mp_base (0), mp_parent (0), m_doc (doc), m_methods (mm)
+  : m_initialized (false), mp_base (nullptr), mp_parent (nullptr), m_doc (doc), m_methods (mm)
 { 
   if (do_register) {
 
@@ -71,19 +71,19 @@ ClassBase::ClassBase (const std::string &doc, const Methods &mm, bool do_registe
     //  invalidate the "typeinfo to class" map
     if (sp_classes) {
       delete sp_classes;
-      sp_classes = 0;
+      sp_classes = nullptr;
     }
     if (sp_class_to_index) {
       delete sp_class_to_index;
-      sp_class_to_index = 0;
+      sp_class_to_index = nullptr;
     }
     if (sp_ti_to_class_index) {
       delete sp_ti_to_class_index;
-      sp_ti_to_class_index = 0;
+      sp_ti_to_class_index = nullptr;
     }
     if (sp_tname_to_class) {
       delete sp_tname_to_class;
-      sp_tname_to_class = 0;
+      sp_tname_to_class = nullptr;
     }
 
   }
@@ -205,7 +205,7 @@ ClassBase::can_convert_to (const ClassBase *target) const
 void *
 ClassBase::create_obj_from (const ClassBase *from, void *obj) const
 {
-  const MethodBase *ctor = 0;
+  const MethodBase *ctor = nullptr;
 
   for (method_iterator m = begin_constructors (); m != end_constructors (); ++m) {
     if (is_constructor_of (this, *m, from)) {
@@ -216,7 +216,7 @@ ClassBase::create_obj_from (const ClassBase *from, void *obj) const
     }
   }
 
-  tl_assert (ctor != 0);
+  tl_assert (ctor != nullptr);
 
   SerialArgs ret (ctor->retsize ());
 
@@ -228,7 +228,7 @@ ClassBase::create_obj_from (const ClassBase *from, void *obj) const
     args.write<void *> (from->clone (obj));
   }
 
-  ctor->call (0, args, ret);
+  ctor->call (nullptr, args, ret);
 
   tl::Heap heap;
   return ret.read<void *> (heap);
@@ -462,7 +462,7 @@ static const std::set<std::pair<std::string, bool> > &name_map_for_class (const 
     return cc->second;
   }
 
-  cc = cache.insert (std::make_pair ((const gsi::ClassBase *) 0, std::set<std::pair<std::string, bool> > ())).first;
+  cc = cache.insert (std::make_pair ((const gsi::ClassBase *) nullptr, std::set<std::pair<std::string, bool> > ())).first;
   cc->second = name_map_for_class (cls->base (), cache);
 
   for (gsi::ClassBase::method_iterator m = cls->begin_methods (); m != cls->end_methods (); ++m) {
@@ -763,13 +763,13 @@ ClassBase::classes_in_definition_order (const char *mod_name)
         continue;
       }
 
-      if ((*c)->parent () != 0 && taken.find ((*c)->parent ()) == taken.end ()) {
+      if ((*c)->parent () != nullptr && taken.find ((*c)->parent ()) == taken.end ()) {
         //  can't produce this class yet - it's a child of a parent that is not produced yet.
         more_classes.push_back (*c);
         continue;
       }
 
-      if ((*c)->base () != 0 && taken.find ((*c)->base ()) == taken.end ()) {
+      if ((*c)->base () != nullptr && taken.find ((*c)->base ()) == taken.end ()) {
         //  can't produce this class yet. The base class needs to be handled first.
         more_classes.push_back (*c);
         continue;
@@ -791,10 +791,10 @@ ClassBase::classes_in_definition_order (const char *mod_name)
         } else if ((*c)->declaration () && (*c)->declaration () != *c && taken.find ((*c)->declaration ()) == taken.end ()) {
           //  can't produce this class yet - it refers to a class which is not available.
           tl::error << tl::sprintf ("class %s.%s refers to another class (%s.%s) which is not available", (*c)->module (), (*c)->name (), (*c)->declaration ()->module (), (*c)->declaration ()->name ());
-        } else if ((*c)->parent () != 0 && taken.find ((*c)->parent ()) == taken.end ()) {
+        } else if ((*c)->parent () != nullptr && taken.find ((*c)->parent ()) == taken.end ()) {
           //  can't produce this class yet - it's a child of a parent that is not produced yet.
           tl::error << tl::sprintf ("parent of class %s.%s not available (%s.%s)", (*c)->module (), (*c)->name (), (*c)->parent ()->module (), (*c)->parent ()->name ());
-        } else if ((*c)->base () != 0 && taken.find ((*c)->base ()) == taken.end ()) {
+        } else if ((*c)->base () != nullptr && taken.find ((*c)->base ()) == taken.end ()) {
           //  can't produce this class yet. The base class needs to be handled first.
           tl::error << tl::sprintf ("base of class %s.%s not available (%s.%s)", (*c)->module (), (*c)->name (), (*c)->base ()->module (), (*c)->base ()->name ());
         }
@@ -875,7 +875,7 @@ const ClassBase *class_by_name_no_assert (const std::string &name)
   if (c != s_name_to_class.end ()) {
     return c->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -891,7 +891,7 @@ const ClassBase *class_by_name (const std::string &name)
 
 bool has_class (const std::string &name)
 {
-  return class_by_name_no_assert (name) != 0;
+  return class_by_name_no_assert (name) != nullptr;
 }
 
 static void add_class_to_map (const gsi::ClassBase *c)
@@ -945,7 +945,7 @@ const ClassBase *class_by_typeinfo_no_assert (const std::type_info &ti)
   }
 
   if (! sp_ti_to_class_index) {
-    return 0;
+    return nullptr;
   } else {
     auto c = sp_ti_to_class_index->find (&ti);
     if (c != sp_ti_to_class_index->end ()) {
@@ -958,7 +958,7 @@ const ClassBase *class_by_typeinfo_no_assert (const std::type_info &ti)
         sp_ti_to_class_index->insert (std::make_pair (&ti, sp_class_to_index->operator[] (cn->second)));
         return cn->second;
       } else {
-        return 0;
+        return nullptr;
       }
     }
   }
@@ -976,7 +976,7 @@ const ClassBase *class_by_typeinfo (const std::type_info &ti)
 
 bool has_class (const std::type_info &ti)
 {
-  return class_by_typeinfo_no_assert (ti) != 0;
+  return class_by_typeinfo_no_assert (ti) != nullptr;
 }
 
 }

@@ -85,7 +85,7 @@ public:
    *  @brief The default constructor
    */
   string ()
-    : m_size (0), m_capacity (0), mp_rep (0)
+    : m_size (0), m_capacity (0), mp_rep (nullptr)
   {
     //  nothing yet ..
   }
@@ -250,7 +250,7 @@ public:
    */
   const char *c_str () const
   {
-    return mp_rep == 0 ? "" : mp_rep;
+    return mp_rep == nullptr ? "" : mp_rep;
   }
    
   /**
@@ -258,7 +258,7 @@ public:
    */
   std::string std_str () const
   {
-    if (mp_rep == 0) {
+    if (mp_rep == nullptr) {
       return std::string ();
     } else {
       return std::string (mp_rep, 0, m_size);
@@ -985,7 +985,7 @@ TL_PUBLIC uint32_t utf32_upcase (uint32_t c32);
  *  @param cp The input character's position, will be set to the next character.
  *  @param cpe The end of the string of 0 for "no end"
  */
-TL_PUBLIC uint32_t utf32_from_utf8 (const char *&cp, const char *cpe = 0);
+TL_PUBLIC uint32_t utf32_from_utf8 (const char *&cp, const char *cpe = nullptr);
 
 /**
  *  @brief Checks if the next characters are CR, LF or CR+LF and skips them

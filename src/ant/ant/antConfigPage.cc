@@ -51,7 +51,7 @@ ConfigPage::ConfigPage (QWidget *parent)
 ConfigPage::~ConfigPage ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -97,7 +97,7 @@ ConfigPage2::ConfigPage2 (QWidget *parent)
 ConfigPage2::~ConfigPage2 ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -151,7 +151,7 @@ ConfigPage3::ConfigPage3 (QWidget *parent)
 ConfigPage3::~ConfigPage3 ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -217,7 +217,7 @@ ConfigPage4::ConfigPage4 (QWidget *parent)
 ConfigPage4::~ConfigPage4 ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -266,7 +266,7 @@ ConfigPage4::add_clicked ()
   m_ruler_templates [m_current_template].title (tl::to_string (QObject::tr ("New Ruler")));
   update_list ();
   show ();
-  double_clicked (0); // to edit the name
+  double_clicked (nullptr); // to edit the name
 }
 
 void  

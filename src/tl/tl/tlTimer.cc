@@ -222,7 +222,7 @@ Timer::memory_size ()
     
   unsigned long memsize = 0;
   FILE *procfile = fopen ("/proc/self/stat", "r");
-  if (procfile != NULL) {
+  if (procfile != nullptr) {
     int n = fscanf (procfile, "%*d " // pid
                               "%*s " // comm
                               "%*c " // state

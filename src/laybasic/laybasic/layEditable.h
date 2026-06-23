@@ -69,7 +69,7 @@ public:
    *  @param editables The collection in which to insert the 
    *                   object. Can be 0 for not inserting it somewhere.
    */
-  Editable (Editables *editables = 0);
+  Editable (Editables *editables = nullptr);
 
   /**
    *  @brief Initializes after constructor with a null pointer was called
@@ -479,7 +479,7 @@ public:
   /**
    *  @brief The constructor
    */
-  Editables (db::Manager *manager = 0);
+  Editables (db::Manager *manager = nullptr);
 
   /**
    *  @brief The destructor
@@ -492,7 +492,7 @@ public:
    *  If a transaction is given, the operation will be appended to this pending transaction
    *  The Editables object takes ownership over the Transaction object.
    */
-  void del (db::Transaction *transaction = 0);
+  void del (db::Transaction *transaction = nullptr);
 
   /**
    *  @brief "cut" operation
@@ -618,7 +618,7 @@ public:
    *  If a transaction is given, the operation will be appended to this pending transaction
    *  The Editables object takes ownership over the Transaction object.
    */
-  void end_move (const db::DPoint &p, lay::angle_constraint_type ac, db::Transaction *transaction = 0);
+  void end_move (const db::DPoint &p, lay::angle_constraint_type ac, db::Transaction *transaction = nullptr);
 
   /**
    *  @brief End "move" operation with given vector
@@ -628,7 +628,7 @@ public:
    *
    *  The vector is supposed to be taken "as is" and no snapping shall be applied.
    */
-  void end_move (const db::DVector &v, db::Transaction *transaction = 0);
+  void end_move (const db::DVector &v, db::Transaction *transaction = nullptr);
 
   /**
    *  @brief Indicates how many objects are selected.

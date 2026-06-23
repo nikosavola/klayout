@@ -152,7 +152,7 @@ public:
 
   void is_isotropic_and_scale_invariant ()
   {
-    mp_vars = 0;
+    mp_vars = nullptr;
   }
 
   static gsi::Methods method_decls (bool with_requires_raw_input)
@@ -323,7 +323,7 @@ public:
 
   void is_isotropic_and_scale_invariant ()
   {
-    mp_vars = 0;
+    mp_vars = nullptr;
   }
 
   static gsi::Methods method_decls (bool with_merged_options)

@@ -125,7 +125,7 @@ public:
    */
   virtual tl::XMLElementBase *xml_reader_options_element () const
   {
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -139,7 +139,7 @@ public:
    */
   virtual tl::XMLElementBase *xml_writer_options_element () const
   {
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -161,7 +161,7 @@ public:
   typedef tl::pass_by_ref_tag tag;
 
   StreamOptionsReadAdaptor ()
-    : mp_options (0), m_done (false)
+    : mp_options (nullptr), m_done (false)
   {
     // .. nothing yet ..
   }
@@ -184,7 +184,7 @@ public:
 
   void next ()
   {
-    mp_options = 0;
+    mp_options = nullptr;
     m_done = true;
   }
 

@@ -133,7 +133,7 @@ PathService::do_mouse_move (const db::DPoint &p)
 bool 
 PathService::do_mouse_click (const db::DPoint &p)
 {
-  if (m_points.size () >= 1) {
+  if (!m_points.empty()) {
     m_last = m_points.back ();
     m_points.push_back (db::DPoint ());
     set_last_point (p);
@@ -338,7 +338,7 @@ PathService::get_via_for (const db::LayerProperties &lp, unsigned int cv_index, 
 
   std::vector<db::SelectedViaDefinition> via_defs = db::find_via_definitions_for (cv->layout ().technology_name (), lp, dir);
 
-  if (via_defs.size () == 0) {
+  if (via_defs.empty()) {
 
     return false;
 
@@ -644,7 +644,7 @@ PathService::update_via ()
   //  change the via PCell
 
   {
-    db::Transaction transaction (manager () && ! manager ()->transacting () ? manager () : 0, std::string (), ps.transaction_id);
+    db::Transaction transaction (manager () && ! manager ()->transacting () ? manager () : nullptr, std::string (), ps.transaction_id);
     ps.via_instance = via_parent_cell->change_pcell_parameters (ps.via_instance, params);
 
     layout ().cleanup ();

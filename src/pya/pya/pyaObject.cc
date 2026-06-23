@@ -116,7 +116,7 @@ Callee::clear_callbacks ()
 bool
 Callee::can_call () const
 {
-  return pya::PythonInterpreter::instance () != 0;
+  return pya::PythonInterpreter::instance () != nullptr;
 }
 
 void 
@@ -145,7 +145,7 @@ Callee::call (int id, gsi::SerialArgs &args, gsi::SerialArgs &ret) const
 
         //  TODO: callbacks with default arguments?
         for (gsi::MethodBase::argument_iterator a = meth->begin_arguments (); args && a != meth->end_arguments (); ++a) {
-          PyTuple_SetItem (argv.get (), arg4self + (a - meth->begin_arguments ()), pull_arg (*a, args, 0, heap).release ());
+          PyTuple_SetItem (argv.get (), arg4self + (a - meth->begin_arguments ()), pull_arg (*a, args, nullptr, heap).release ());
         }
 
         PythonRef result (PyObject_CallObject (callable.get (), argv.get ()));
@@ -185,7 +185,7 @@ PYAObjectBase::PYAObjectBase(const gsi::ClassBase *_cls_decl, PyObject *py_objec
     mp_listener (new pya::StatusChangedListener (this)),
     mp_callee (new pya::Callee (this)),
     m_cls_decl (_cls_decl),
-    m_obj (0),
+    m_obj (nullptr),
     m_owned (false),
     m_const_ref (false),
     m_destroyed (false),
@@ -218,9 +218,9 @@ PYAObjectBase::~PYAObjectBase ()
   }
 
   delete mp_listener;
-  mp_listener = 0;
+  mp_listener = nullptr;
   delete mp_callee;
-  mp_callee = 0;
+  mp_callee = nullptr;
   m_destroyed = true;
 }
 
@@ -334,7 +334,7 @@ PYAObjectBase::detach ()
       detach_callbacks ();
     }
 
-    m_obj = 0;
+    m_obj = nullptr;
     m_const_ref = false;
     m_owned = false;
     m_can_destroy = false;
@@ -570,7 +570,7 @@ void
 PYAObjectBase::destroy ()
 {
   if (! m_cls_decl) {
-    m_obj = 0;
+    m_obj = nullptr;
     return;
   }
 
@@ -589,7 +589,7 @@ PYAObjectBase::destroy ()
     }
   }
 
-  void *o = 0;
+  void *o = nullptr;
   if (m_owned || m_can_destroy) {
     o = m_obj;
   }
@@ -621,7 +621,7 @@ PYAObjectBase::obj ()
 PYAObjectBase *
 PYAObjectBase::from_pyobject (PyObject *py_object)
 {
-  if (Py_TYPE (py_object)->tp_init == NULL) {
+  if (Py_TYPE (py_object)->tp_init == nullptr) {
     throw tl::Exception (tl::to_string (tr ("Extension classes do not support instance methods or properties")));
   }
 

@@ -42,7 +42,7 @@ class PluginFactoryBase
 public:
   PluginFactoryBase ()
     : PluginDeclaration (), 
-      m_implements_mouse_mode (true), mp_registration (0) 
+      m_implements_mouse_mode (true), mp_registration (nullptr) 
   {
     //  .. nothing yet ..
   }
@@ -57,12 +57,12 @@ public:
     }
 
     delete mp_registration;
-    mp_registration = 0;
+    mp_registration = nullptr;
   }
 
   void register_gsi (int position, const char *name, const char *title)
   {
-    register_gsi2 (position, name, title, 0);
+    register_gsi2 (position, name, title, nullptr);
   }
 
   void register_gsi2 (int position, const char *name, const char *title, const char *icon)
@@ -244,7 +244,7 @@ public:
   { 
     s_in_create_plugin = true;
 
-    gsi::PluginImpl *ret = 0;
+    gsi::PluginImpl *ret = nullptr;
     try {
 
       ret = f_create_plugin.issue<PluginFactoryBase, gsi::PluginImpl *, db::Manager *, lay::Dispatcher *, lay::LayoutViewBase *> (&PluginFactoryBase::create_plugin_gsi, manager, root, view);

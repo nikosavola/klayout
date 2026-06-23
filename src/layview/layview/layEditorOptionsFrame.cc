@@ -34,7 +34,7 @@ namespace lay
 {
 
 EditorOptionsFrame::EditorOptionsFrame (QWidget *parent)
-  : QFrame (parent), mp_pages (0)
+  : QFrame (parent), mp_pages (nullptr)
 {
   setObjectName (QString::fromUtf8 ("editor_options_frame"));
 

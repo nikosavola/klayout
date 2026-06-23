@@ -127,7 +127,7 @@ set_or_request_current_layer (lay::LayoutViewBase *view, const db::LayerProperti
   view->init_layer_properties (lpn);
 
   {
-    db::Transaction transaction (! view->manager ()->transacting () ? view->manager () : 0, tl::to_string (tr ("Create new layer")));
+    db::Transaction transaction (! view->manager ()->transacting () ? view->manager () : nullptr, tl::to_string (tr ("Create new layer")));
 
     lay::LayerPropertiesConstIterator lpi = lay::LayerPropertiesConstIterator (& view->insert_layer (view->end_layers (), lpn));
     if (make_current) {
@@ -197,7 +197,7 @@ TransformationVariants::per_cv_and_layer (unsigned int cv, unsigned int layer) c
   if (t != m_per_cv_and_layer_tv.end ()) {
     return &t->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -208,7 +208,7 @@ TransformationVariants::per_cv (unsigned int cv) const
   if (t != m_per_cv_tv.end ()) {
     return &t->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 

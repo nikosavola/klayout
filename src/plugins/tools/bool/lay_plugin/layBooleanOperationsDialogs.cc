@@ -34,7 +34,7 @@ namespace lay
 
 BooleanOptionsDialog::BooleanOptionsDialog (QWidget *parent)
   : QDialog (parent),
-    mp_view (0)
+    mp_view (nullptr)
 {
   setObjectName (QString::fromUtf8 ("boolean_options_dialog"));
   Ui::BooleanOptionsDialog::setupUi (this);
@@ -103,7 +103,7 @@ BooleanOptionsDialog::exec_dialog (lay::LayoutViewBase *view, int &cv_a, int &la
 
   }
 
-  mp_view = 0;
+  mp_view = nullptr;
   return res;
 }
 
@@ -157,7 +157,7 @@ END_PROTECTED;
 
 SizingOptionsDialog::SizingOptionsDialog (QWidget *parent)
   : QDialog (parent),
-    mp_view (0)
+    mp_view (nullptr)
 {
   setObjectName (QString::fromUtf8 ("sizing_options_dialog"));
   Ui::SizingOptionsDialog::setupUi (this);
@@ -231,7 +231,7 @@ SizingOptionsDialog::exec_dialog (lay::LayoutViewBase *view, int &cv, int &layer
 
   }
 
-  mp_view = 0;
+  mp_view = nullptr;
   return res;
 }
 
@@ -283,7 +283,7 @@ END_PROTECTED;
 
 MergeOptionsDialog::MergeOptionsDialog (QWidget *parent)
   : QDialog (parent),
-    mp_view (0)
+    mp_view (nullptr)
 {
   setObjectName (QString::fromUtf8 ("merge_options_dialog"));
   Ui::MergeOptionsDialog::setupUi (this);
@@ -346,7 +346,7 @@ MergeOptionsDialog::exec_dialog (lay::LayoutViewBase *view, int &cv, int &layer,
 
   }
 
-  mp_view = 0;
+  mp_view = nullptr;
   return res;
 }
 

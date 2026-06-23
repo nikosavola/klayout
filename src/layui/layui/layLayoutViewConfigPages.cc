@@ -74,7 +74,7 @@ LayoutViewConfigPage::LayoutViewConfigPage (QWidget *parent)
 LayoutViewConfigPage::~LayoutViewConfigPage ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -107,7 +107,7 @@ LayoutViewConfigPage1::LayoutViewConfigPage1 (QWidget *parent)
 LayoutViewConfigPage1::~LayoutViewConfigPage1 ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -192,7 +192,7 @@ LayoutViewConfigPage2a::LayoutViewConfigPage2a (QWidget *parent)
 LayoutViewConfigPage2a::~LayoutViewConfigPage2a ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -288,7 +288,7 @@ LayoutViewConfigPage2b::LayoutViewConfigPage2b (QWidget *parent)
 LayoutViewConfigPage2b::~LayoutViewConfigPage2b ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -364,7 +364,7 @@ LayoutViewConfigPage2c::LayoutViewConfigPage2c (QWidget *parent)
 LayoutViewConfigPage2c::~LayoutViewConfigPage2c ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -390,11 +390,11 @@ LayoutViewConfigPage2c::setup (lay::Dispatcher *root)
   root->config_get (cfg_sel_line_style, ls);
   mp_ui->line_style_pb->set_line_style (ls);
 
-  bool halo = 0;
+  bool halo = false;
   root->config_get (cfg_sel_halo, halo);
   mp_ui->halo_cb->setChecked (halo);
 
-  bool tm = 0;
+  bool tm = false;
   root->config_get (cfg_sel_transient_mode, tm);
   mp_ui->transient_mode_gb->setChecked (tm);
 
@@ -418,15 +418,15 @@ LayoutViewConfigPage2c::setup (lay::Dispatcher *root)
   root->config_get (cfg_transient_sel_line_style, transient_ls);
   mp_ui->transient_line_style_pb->set_line_style (transient_ls);
 
-  bool transient_halo = 0;
+  bool transient_halo = false;
   root->config_get (cfg_transient_sel_halo, transient_halo);
   mp_ui->transient_halo_cb->setChecked (transient_halo);
 
-  bool ipm = 0;
+  bool ipm = false;
   root->config_get (cfg_sel_inside_pcells_mode, ipm);
   mp_ui->sel_inside_pcells_cb->setChecked (ipm);
 
-  bool tpm = 0;
+  bool tpm = false;
   root->config_get (cfg_text_point_mode, tpm);
   mp_ui->text_point_mode_cb->setChecked (tpm);
 
@@ -475,7 +475,7 @@ LayoutViewConfigPage2d::LayoutViewConfigPage2d (QWidget *parent)
 LayoutViewConfigPage2d::~LayoutViewConfigPage2d ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -526,7 +526,7 @@ LayoutViewConfigPage3a::LayoutViewConfigPage3a (QWidget *parent)
 LayoutViewConfigPage3a::~LayoutViewConfigPage3a ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -563,7 +563,7 @@ LayoutViewConfigPage3b::LayoutViewConfigPage3b (QWidget *parent)
 LayoutViewConfigPage3b::~LayoutViewConfigPage3b ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -622,7 +622,7 @@ LayoutViewConfigPage3c::LayoutViewConfigPage3c (QWidget *parent)
 LayoutViewConfigPage3c::~LayoutViewConfigPage3c ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -656,7 +656,7 @@ LayoutViewConfigPage3f::LayoutViewConfigPage3f (QWidget *parent)
 LayoutViewConfigPage3f::~LayoutViewConfigPage3f ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -764,10 +764,10 @@ LayoutViewConfigPage4::LayoutViewConfigPage4 (QWidget *parent)
 LayoutViewConfigPage4::~LayoutViewConfigPage4 ()
 {
   //  uninstall the manager
-  manager (0);
+  manager (nullptr);
 
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -998,7 +998,7 @@ LayoutViewConfigPage5::LayoutViewConfigPage5 (QWidget *parent)
 LayoutViewConfigPage5::~LayoutViewConfigPage5 ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -1104,10 +1104,10 @@ LayoutViewConfigPage6::LayoutViewConfigPage6 (QWidget *parent)
 LayoutViewConfigPage6::~LayoutViewConfigPage6 ()
 {
   //  uninstall the manager
-  manager (0);
+  manager (nullptr);
 
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -1261,7 +1261,7 @@ LayoutViewConfigPage6::stipple_button_clicked ()
 
         if (m_palette.stipples () > i) {
 
-          SelectStippleForm stipples_form (0, m_pattern);
+          SelectStippleForm stipples_form (nullptr, m_pattern);
           if (stipples_form.exec () && stipples_form.selected () >= 0) {
 
             unsigned int s = stipples_form.selected ();
@@ -1385,10 +1385,10 @@ LayoutViewConfigPage6a::LayoutViewConfigPage6a (QWidget *parent)
 LayoutViewConfigPage6a::~LayoutViewConfigPage6a ()
 {
   //  uninstall the manager
-  manager (0);
+  manager (nullptr);
 
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -1475,7 +1475,7 @@ LayoutViewConfigPage6a::line_style_button_clicked ()
 
       if (m_palette.styles () > i) {
 
-        SelectLineStyleForm styles_form (0, m_style);
+        SelectLineStyleForm styles_form (nullptr, m_style);
         if (styles_form.exec () && styles_form.selected () >= 0) {
 
           unsigned int s = styles_form.selected ();
@@ -1552,7 +1552,7 @@ LayoutViewConfigPage7::LayoutViewConfigPage7 (QWidget *parent)
 LayoutViewConfigPage7::~LayoutViewConfigPage7 ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -1613,7 +1613,7 @@ LayoutViewConfigPage8::LayoutViewConfigPage8 (QWidget *parent)
 LayoutViewConfigPage8::~LayoutViewConfigPage8 ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void

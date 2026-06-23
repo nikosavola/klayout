@@ -249,7 +249,7 @@ RecentConfigurationPage::render_to (QTreeWidgetItem *item, int column, const std
     {
       //  search for a libname
       int libname_column = 0;
-      const db::Library *lib = 0;
+      const db::Library *lib = nullptr;
       for (std::list<ConfigurationDescriptor>::const_iterator c = m_cfg.begin (); c != m_cfg.end (); ++c, ++libname_column) {
         if (c->rendering == RecentConfigurationPage::CellLibraryName) {
           if (view ()->active_cellview ().is_valid ()) {
@@ -342,7 +342,7 @@ RecentConfigurationPage::update_list (const std::list<std::vector<std::string> >
   int row = 0;
   for (std::list<std::vector<std::string> >::const_iterator v = stored_values.begin (); v != stored_values.end (); ++v, ++row) {
 
-    QTreeWidgetItem *item = 0;
+    QTreeWidgetItem *item = nullptr;
     if (row < mp_tree_widget->topLevelItemCount ()) {
       item = mp_tree_widget->topLevelItem (row);
     } else {

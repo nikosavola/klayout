@@ -56,7 +56,7 @@ void compare_layouts (tl::TestBase *_this, const db::Layout &layout, const std::
     hash = (hash << 4) ^ (hash >> 4) ^ ((unsigned int) *cp);
   }
 
-  const db::Layout *subject = 0;
+  const db::Layout *subject = nullptr;
   db::Layout layout2;
 
   std::string tmp_file;
@@ -79,7 +79,7 @@ void compare_layouts (tl::TestBase *_this, const db::Layout &layout, const std::
   }
 
   {
-    tl::OutputStream stream (tmp_file.c_str ());
+    tl::OutputStream stream (tmp_file);
     db::Writer writer (options);
     writer.write (const_cast<db::Layout &> (layout), stream);
   }
@@ -353,7 +353,7 @@ void DB_PUBLIC compare_netlist (tl::TestBase *_this, const db::Netlist &netlist,
 
 void DB_PUBLIC compare_netlist (tl::TestBase *_this, const db::Netlist &netlist, const db::Netlist &netlist_au, bool exact_parameter_match, bool with_names)
 {
-  db::NetlistComparer comp (0);
+  db::NetlistComparer comp (nullptr);
   comp.set_dont_consider_net_names (! with_names);
 
   db::Netlist netlist_copy (netlist);

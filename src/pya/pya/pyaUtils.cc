@@ -42,9 +42,9 @@ namespace pya
  */
 void check_error ()
 {
-  PyObject *py_exc_type = NULL, *py_exc_value = NULL, *py_exc_traceback = NULL;
+  PyObject *py_exc_type = nullptr, *py_exc_value = nullptr, *py_exc_traceback = nullptr;
   PyErr_Fetch (&py_exc_type, &py_exc_value, &py_exc_traceback);
-  if (py_exc_type != NULL) {
+  if (py_exc_type != nullptr) {
 
     PyErr_NormalizeException (&py_exc_type, &py_exc_value, &py_exc_traceback);
 
@@ -80,7 +80,7 @@ void check_error ()
 
     if (PyErr_GivenExceptionMatches (exc_type.get (), PyExc_SyntaxError) && PyTuple_Check (exc_value.get ()) && PyTuple_Size (exc_value.get ()) >= 2) {
 
-      const char *sourcefile = 0;
+      const char *sourcefile = nullptr;
       std::string sourcefile_arg;
       int line = 0;
       std::string msg = "syntax error (could not parse exception)";
@@ -141,7 +141,7 @@ void check_error ()
         }
       }
 
-      const char *sourcefile = 0;
+      const char *sourcefile = nullptr;
       int line = 0;
 
       if (! backtrace.empty ()) {

@@ -1285,7 +1285,7 @@ static Container *decompose_trapezoids (const db::Region *r, int mode)
 
 static bool is_deep (const db::Region *region)
 {
-  return dynamic_cast<const db::DeepRegion *> (region->delegate ()) != 0;
+  return dynamic_cast<const db::DeepRegion *> (region->delegate ()) != nullptr;
 }
 
 static size_t data_id (const db::Region *r)
@@ -1311,14 +1311,14 @@ static void
 fill_region (const db::Region *fr, db::Cell *cell, db::cell_index_type fill_cell_index, const db::Box &fc_box, const db::Point *origin,
              db::Region *remaining_parts, const db::Vector &fill_margin, db::Region *remaining_polygons, const db::Box &glue_box, const db::Region &exclude_area)
 {
-  db::fill_region (cell, *fr, fill_cell_index, fc_box, origin ? *origin : db::Point (), origin == 0, remaining_parts, fill_margin, remaining_polygons, glue_box, exclude_area);
+  db::fill_region (cell, *fr, fill_cell_index, fc_box, origin ? *origin : db::Point (), origin == nullptr, remaining_parts, fill_margin, remaining_polygons, glue_box, exclude_area);
 }
 
 static void
 fill_region_skew (const db::Region *fr, db::Cell *cell, db::cell_index_type fill_cell_index, const db::Box &fc_box, const db::Vector &row_step, const db::Vector &column_step, const db::Point *origin,
                   db::Region *remaining_parts, const db::Vector &fill_margin, db::Region *remaining_polygons, const db::Box &glue_box, const db::Region &exclude_area)
 {
-  db::fill_region (cell, *fr, fill_cell_index, fc_box, row_step, column_step, origin ? *origin : db::Point (), origin == 0, remaining_parts, fill_margin, remaining_polygons, glue_box, exclude_area);
+  db::fill_region (cell, *fr, fill_cell_index, fc_box, row_step, column_step, origin ? *origin : db::Point (), origin == nullptr, remaining_parts, fill_margin, remaining_polygons, glue_box, exclude_area);
 }
 
 static void
@@ -4350,9 +4350,9 @@ Class<db::Region> decl_Region (decl_dbShapeCollection, "db", "Region",
                                          gsi::arg ("fill_cell_index"),
                                          gsi::arg ("fc_box"),
                                          gsi::arg ("origin", &default_origin, "(0, 0)"),
-                                         gsi::arg ("remaining_parts", (db::Region *)0, "nil"),
+                                         gsi::arg ("remaining_parts", (db::Region *)nullptr, "nil"),
                                          gsi::arg ("fill_margin", db::Vector ()),
-                                         gsi::arg ("remaining_polygons", (db::Region *)0, "nil"),
+                                         gsi::arg ("remaining_polygons", (db::Region *)nullptr, "nil"),
                                          gsi::arg ("glue_box", db::Box ()),
                                          gsi::arg ("exclude_area", db::Region (), "empty"),
     "@brief A mapping of \\Cell#fill_region to the Region class\n"
@@ -4367,9 +4367,9 @@ Class<db::Region> decl_Region (decl_dbShapeCollection, "db", "Region",
                                               gsi::arg ("row_step"),
                                               gsi::arg ("column_step"),
                                               gsi::arg ("origin", &default_origin, "(0, 0)"),
-                                              gsi::arg ("remaining_parts", (db::Region *)0, "nil"),
+                                              gsi::arg ("remaining_parts", (db::Region *)nullptr, "nil"),
                                               gsi::arg ("fill_margin", db::Vector ()),
-                                              gsi::arg ("remaining_polygons", (db::Region *)0, "nil"),
+                                              gsi::arg ("remaining_polygons", (db::Region *)nullptr, "nil"),
                                               gsi::arg ("glue_box", db::Box ()),
                                               gsi::arg ("exclude_area", db::Region (), "empty"),
     "@brief A mapping of \\Cell#fill_region to the Region class\n"
@@ -4384,7 +4384,7 @@ Class<db::Region> decl_Region (decl_dbShapeCollection, "db", "Region",
                                                      gsi::arg ("row_step"),
                                                      gsi::arg ("column_step"),
                                                      gsi::arg ("fill_margin", db::Vector ()),
-                                                     gsi::arg ("remaining_polygons", (db::Region *)0, "nil"),
+                                                     gsi::arg ("remaining_polygons", (db::Region *)nullptr, "nil"),
                                                      gsi::arg ("glue_box", db::Box ()),
                                                      gsi::arg ("exclude_area", db::Region (), "empty"),
     "@brief A mapping of \\Cell#fill_region to the Region class\n"
@@ -4393,7 +4393,7 @@ Class<db::Region> decl_Region (decl_dbShapeCollection, "db", "Region",
     "\n"
     "This method has been introduced in version 0.27. The 'exclude_area' argument has been added in version 0.30.4.\n"
   ) +
-  gsi::method_ext ("nets", &nets, gsi::arg ("extracted"), gsi::arg ("net_prop_name", tl::Variant (), "nil"), gsi::arg ("net_filter", (const std::vector<const db::Net *> *) (0), "nil"),
+  gsi::method_ext ("nets", &nets, gsi::arg ("extracted"), gsi::arg ("net_prop_name", tl::Variant (), "nil"), gsi::arg ("net_filter", (const std::vector<const db::Net *> *) nullptr, "nil"),
     "@brief Pulls the net shapes from a LayoutToNetlist database\n"
     "This method will create a new layer with the net shapes from the LayoutToNetlist database, provided that this "
     "region was an input to the netlist extraction on this database.\n"

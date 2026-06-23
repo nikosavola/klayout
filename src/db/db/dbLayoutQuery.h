@@ -536,7 +536,7 @@ public:
    *
    *  The context provides a way to define variables and functions.
    */
-  void execute (db::Layout &layout, db::Cell *cell = 0, tl::Eval *context = 0);
+  void execute (db::Layout &layout, db::Cell *cell = nullptr, tl::Eval *context = nullptr);
   
   /**
    *  @brief A dump method (for debugging)
@@ -578,7 +578,7 @@ public:
    *  @param q The query that this iterator walks over
    *  @param layout The layout to which the query is applied
    */
-  LayoutQueryIterator (const LayoutQuery &q, db::Layout *layout, db::Cell *cell = 0, tl::Eval *parent_eval = 0, tl::AbsoluteProgress *progress = 0);
+  LayoutQueryIterator (const LayoutQuery &q, db::Layout *layout, db::Cell *cell = nullptr, tl::Eval *parent_eval = nullptr, tl::AbsoluteProgress *progress = nullptr);
 
   /**
    *  @brief Constructor
@@ -586,7 +586,7 @@ public:
    *  @param q The query that this iterator walks over
    *  @param layout The layout to which the query is applied
    */
-  LayoutQueryIterator (const LayoutQuery &q, const db::Layout *layout, const db::Cell *cell = 0, tl::Eval *parent_eval = 0, tl::AbsoluteProgress *progress = 0);
+  LayoutQueryIterator (const LayoutQuery &q, const db::Layout *layout, const db::Cell *cell = nullptr, tl::Eval *parent_eval = nullptr, tl::AbsoluteProgress *progress = nullptr);
 
   /**
    *  @brief Destructor

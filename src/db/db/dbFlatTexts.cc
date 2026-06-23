@@ -174,7 +174,7 @@ const db::Text *FlatTexts::nth (size_t n) const
   //  NOTE: this assumes that we iterate over non-property texts first and then over texts with properties
 
   if (n >= mp_texts->size ()) {
-    return 0;
+    return nullptr;
   }
 
   const db::layer<db::Text, db::unstable_layer_tag> &l = mp_texts->get_layer<db::Text, db::unstable_layer_tag> ();
@@ -188,7 +188,7 @@ const db::Text *FlatTexts::nth (size_t n) const
     return &lp.begin () [n];
   }
 
-  return 0;
+  return nullptr;
 }
 
 db::properties_id_type FlatTexts::nth_prop_id (size_t n) const
@@ -220,7 +220,7 @@ bool FlatTexts::has_valid_texts () const
 
 const db::RecursiveShapeIterator *FlatTexts::iter () const
 {
-  return 0;
+  return nullptr;
 }
 
 void FlatTexts::apply_property_translator (const db::PropertiesTranslator &pt)

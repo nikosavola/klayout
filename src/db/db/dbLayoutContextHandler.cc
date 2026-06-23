@@ -29,12 +29,12 @@ namespace db
 {
 
 LayoutContextHandler::LayoutContextHandler (const db::Layout *layout)
-  : tl::ContextHandler (), mp_layout (layout), mp_layout_nc (0)
+  : tl::ContextHandler (), mp_layout (layout), mp_layout_nc (nullptr)
 {
 }
 
 LayoutContextHandler::LayoutContextHandler (db::Layout *layout, bool can_modify)
-  : tl::ContextHandler (), mp_layout (layout), mp_layout_nc (0)
+  : tl::ContextHandler (), mp_layout (layout), mp_layout_nc (nullptr)
 {
   if (can_modify) {
     mp_layout_nc = layout;

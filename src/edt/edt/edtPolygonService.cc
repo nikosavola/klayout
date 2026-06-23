@@ -126,7 +126,7 @@ PolygonService::do_mouse_move (const db::DPoint &p)
 bool 
 PolygonService::do_mouse_click (const db::DPoint &p)
 {
-  if (m_points.size () >= 1) {
+  if (!m_points.empty()) {
     m_last = m_points.back ();
     m_points.push_back (db::DPoint ());
     set_last_point (p);
@@ -391,7 +391,7 @@ PolygonService::update_marker ()
     add_edit_marker (marker);
 
   } else {
-    set_edit_marker (0);
+    set_edit_marker (nullptr);
   }
 
   if (m_points.size () >= 2) {

@@ -124,7 +124,7 @@ Technologies::load_from_xml (const std::string &s)
 db::Technology *
 Technologies::add_tech (const Technology &tech, bool replace_same)
 {
-  Technology *t = 0;
+  Technology *t = nullptr;
   for (tl::stable_vector<Technology>::iterator i = m_technologies.begin (); !t && i != m_technologies.end (); ++i) {
     if (i->name () == tech.name ()) {
       t = i.operator-> ();
@@ -424,7 +424,7 @@ Technology::component_by_name (const std::string &component_name) const
     }
   }
 
-  return 0;
+  return nullptr;
 }
 
 TechnologyComponent *
@@ -436,7 +436,7 @@ Technology::component_by_name (const std::string &component_name)
     }
   }
 
-  return 0;
+  return nullptr;
 }
 
 std::vector <std::string>

@@ -94,7 +94,7 @@ class PluginDeclaration
 {
 public:
   PluginDeclaration (const std::string &title, const std::string &mouse_mode, 
-                     void (*option_get_f) (std::vector < std::pair<std::string, std::string> > &) = 0)
+                     void (*option_get_f) (std::vector < std::pair<std::string, std::string> > &) = nullptr)
     : m_title (title), m_mouse_mode (mouse_mode), mp_option_get_f (option_get_f)
   {
     //  .. nothing yet ..
@@ -102,7 +102,7 @@ public:
 
   virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const
   {
-    if (mp_option_get_f != 0) {
+    if (mp_option_get_f != nullptr) {
       (*mp_option_get_f) (options);
     }
   }
@@ -110,7 +110,7 @@ public:
 #if defined(HAVE_QT)
   virtual lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
   {
-    return 0;
+    return nullptr;
   }
 #endif
 
@@ -157,12 +157,12 @@ private:
 };
 
 static tl::RegisteredClass<lay::PluginDeclaration> config_decl1 (
-  new edt::PluginDeclaration<edt::PolygonService> (tl::to_string (tr ("Polygons")), "polygon:edit_mode\t" + tl::to_string (tr ("Polygon")) + "<:polygon_24px.png>" + tl::to_string (tr ("{Create a polygon}")), 0),
+  new edt::PluginDeclaration<edt::PolygonService> (tl::to_string (tr ("Polygons")), "polygon:edit_mode\t" + tl::to_string (tr ("Polygon")) + "<:polygon_24px.png>" + tl::to_string (tr ("{Create a polygon}")), nullptr),
   4010, 
   "edt::Service(Polygons)"
 );
 static tl::RegisteredClass<lay::PluginDeclaration> config_decl2 (
-  new edt::PluginDeclaration<edt::BoxService> (tl::to_string (tr ("Boxes")), "box:edit_mode\t" + tl::to_string (tr ("Box")) + "\t<:box_24px.png>" + tl::to_string (tr ("{Create a box}")), 0),
+  new edt::PluginDeclaration<edt::BoxService> (tl::to_string (tr ("Boxes")), "box:edit_mode\t" + tl::to_string (tr ("Box")) + "\t<:box_24px.png>" + tl::to_string (tr ("{Create a box}")), nullptr),
   4011, 
   "edt::Service(Boxes)"
 );
@@ -177,7 +177,7 @@ static tl::RegisteredClass<lay::PluginDeclaration> config_decl4 (
   "edt::Service(Paths)"
 );
 static tl::RegisteredClass<lay::PluginDeclaration> config_decl5 (
-  new edt::PluginDeclaration<edt::PointService> (tl::to_string (tr ("Points")), std::string (), 0),
+  new edt::PluginDeclaration<edt::PointService> (tl::to_string (tr ("Points")), std::string (), nullptr),
   4014,
   "edt::Service(Points)"
 );
@@ -211,7 +211,7 @@ class MainPluginDeclaration
 {
 public:
   MainPluginDeclaration (const std::string &title)
-    : mp_root (0), m_title (title)
+    : mp_root (nullptr), m_title (title)
   {
     //  .. nothing yet ..
   }
@@ -231,7 +231,7 @@ public:
 #if defined(HAVE_QT)
   virtual lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
   {
-    return 0;
+    return nullptr;
   }
 #endif
 

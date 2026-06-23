@@ -93,7 +93,7 @@ public:
    */
   bool is_valid () const
   {
-    return mp_writer != 0;
+    return mp_writer != nullptr;
   }
 
 private:

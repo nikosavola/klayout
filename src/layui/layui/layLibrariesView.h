@@ -109,7 +109,7 @@ public:
    *  @param parent The Qt parent widget
    *  @param name The layer control panel's widget name
    */
-  LibrariesView (LayoutViewBase *view, QWidget *parent = 0, const char *name = "libraries_view");
+  LibrariesView (LayoutViewBase *view, QWidget *parent = nullptr, const char *name = "libraries_view");
 
   /**
    *  @brief Destructor

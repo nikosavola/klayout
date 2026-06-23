@@ -84,13 +84,13 @@ MainService::MainService (db::Manager *manager, lay::LayoutViewBase *view, lay::
     m_router (0.0), m_rinner (0.0), m_npoints (64), m_undo_before_apply (true)
 {
 #if defined(HAVE_QT)
-  mp_round_corners_dialog = 0;
-  mp_area_and_perimeter_dialog = 0;
-  mp_align_options_dialog = 0;
-  mp_distribute_options_dialog = 0;
-  mp_flatten_inst_options_dialog = 0;
-  mp_make_cell_options_dialog = 0;
-  mp_make_array_options_dialog = 0;
+  mp_round_corners_dialog = nullptr;
+  mp_area_and_perimeter_dialog = nullptr;
+  mp_align_options_dialog = nullptr;
+  mp_distribute_options_dialog = nullptr;
+  mp_flatten_inst_options_dialog = nullptr;
+  mp_make_cell_options_dialog = nullptr;
+  mp_make_array_options_dialog = nullptr;
 #endif
 }
 
@@ -1307,7 +1307,7 @@ MainService::cm_convert_to_pcell ()
             if (pc_decl->can_create_from_shape (cv->layout (), s->shape (), s->layer ())) {
               --n;
             } else {
-              pc_decl = 0; // stop
+              pc_decl = nullptr; // stop
             }
           }
         }
@@ -1357,7 +1357,7 @@ MainService::cm_convert_to_pcell ()
   db::Library *lib = pcells [index].first;
   db::pcell_id_type pcid = pcells [index].second;
   const db::PCellDeclaration *pcell_decl = lib->layout ().pcell_declaration (pcid);
-  tl_assert (pcell_decl != 0);
+  tl_assert (pcell_decl != nullptr);
 
   view ()->cancel_edits ();
 
@@ -1688,7 +1688,7 @@ MainService::cm_round_corners ()
   
   //  set the new selection on the polygon service (because now we have polygons)
   for (std::vector<edt::Service *>::const_iterator es = edt_services.begin (); es != edt_services.end (); ++es) {
-    if (dynamic_cast <edt::PolygonService *> (*es) != 0) {
+    if (dynamic_cast <edt::PolygonService *> (*es) != nullptr) {
       (*es)->set_selection (new_selection.begin (), new_selection.end ());
       break;
     }
@@ -1818,7 +1818,7 @@ MainService::cm_size ()
   
   //  set the new selection on the polygon service (because now we have polygons)
   for (std::vector<edt::Service *>::const_iterator es = edt_services.begin (); es != edt_services.end (); ++es) {
-    if (dynamic_cast <edt::PolygonService *> (*es) != 0) {
+    if (dynamic_cast <edt::PolygonService *> (*es) != nullptr) {
       (*es)->set_selection (new_selection.begin (), new_selection.end ());
       break;
     }
@@ -1945,7 +1945,7 @@ MainService::boolean_op (int mode)
   
   //  set the new selection on the polygon service (because now we have polygons)
   for (std::vector<edt::Service *>::const_iterator es = edt_services.begin (); es != edt_services.end (); ++es) {
-    if (dynamic_cast <edt::PolygonService *> (*es) != 0) {
+    if (dynamic_cast <edt::PolygonService *> (*es) != nullptr) {
       (*es)->set_selection (new_selection.begin (), new_selection.end ());
       break;
     }
@@ -2486,24 +2486,24 @@ MainService::cm_change_layer ()
 
     lay::LayerPropertiesConstIterator cl = view ()->current_layer ();
     if (cl.is_null ()) {
-      throw tl::Exception (tl::to_string (tr ("Please select a layer first")).c_str ());
+      throw tl::Exception (tl::to_string (tr ("Please select a layer first")));
     }
     
     if (cv_index != cl->cellview_index ()) {
-      throw tl::Exception (tl::to_string (tr ("Shapes cannot be moved to a different layout")).c_str ());
+      throw tl::Exception (tl::to_string (tr ("Shapes cannot be moved to a different layout")));
     }
 
     const lay::CellView &cv = view ()->cellview (cv_index);
     int layer = cl->layer_index ();
 
     if (! cv.is_valid ()) {
-      throw tl::Exception (tl::to_string (tr ("Please select a cell first")).c_str ());
+      throw tl::Exception (tl::to_string (tr ("Please select a cell first")));
     }
 
     if (layer < 0 || ! cv->layout ().is_valid_layer ((unsigned int) layer)) {
 
       if (cl->has_children ()) {
-        throw tl::Exception (tl::to_string (tr ("Please select a valid drawing layer first")).c_str ());
+        throw tl::Exception (tl::to_string (tr ("Please select a valid drawing layer first")));
       } else {
 
         //  create this layer now
@@ -2700,7 +2700,7 @@ MainService::paste ()
     bool any = false;
     for (db::Clipboard::iterator c = db::Clipboard::instance ().begin (); c != db::Clipboard::instance ().end () && ! any; ++c) {
       const db::ClipboardValue<edt::ClipboardData> *value = dynamic_cast<const db::ClipboardValue<edt::ClipboardData> *> (*c);
-      any = (value != 0);
+      any = (value != nullptr);
     }
     if (! any) {
       return;
@@ -2721,7 +2721,7 @@ MainService::paste ()
     for (db::Clipboard::iterator c = db::Clipboard::instance ().begin (); c != db::Clipboard::instance ().end (); ++c) {
       const db::ClipboardValue<edt::ClipboardData> *value = dynamic_cast<const db::ClipboardValue<edt::ClipboardData> *> (*c);
       if (value) {
-        std::vector<unsigned int> nl = value->get ().insert (cv->layout (), cv.context_trans ().inverted (), &cv->layout ().cell (cv.cell_index ()), 0 /*new_tops*/, &insert_notification);
+        std::vector<unsigned int> nl = value->get ().insert (cv->layout (), cv.context_trans ().inverted (), &cv->layout ().cell (cv.cell_index ()), nullptr /*new_tops*/, &insert_notification);
         new_layers.insert (new_layers.end (), nl.begin (), nl.end ());
       }
     }

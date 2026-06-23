@@ -59,7 +59,7 @@ public:
    *  @brief The default constructor
    */
   reuse_vector_iterator ()
-    : mp_v (0), m_n (0)
+    : mp_v (nullptr), m_n (0)
   { }
 
   /**
@@ -218,7 +218,7 @@ public:
    *  @brief The default constructor
    */
   reuse_vector_const_iterator ()
-    : mp_v (0), m_n (0)
+    : mp_v (nullptr), m_n (0)
   { }
 
   /**
@@ -551,7 +551,7 @@ public:
     mp_start = d.mp_start; d.mp_start = 0;
     mp_finish = d.mp_finish; d.mp_finish = 0;
     mp_capacity = d.mp_capacity; d.mp_capacity = 0;
-    mp_rdata = d.mp_rdata; d.mp_rdata = 0;
+    mp_rdata = d.mp_rdata; d.mp_rdata = nullptr;
   }
 
   /**
@@ -590,7 +590,7 @@ public:
       mp_start = d.mp_start; d.mp_start = 0;
       mp_finish = d.mp_finish; d.mp_finish = 0;
       mp_capacity = d.mp_capacity; d.mp_capacity = 0;
-      mp_rdata = d.mp_rdata; d.mp_rdata = 0;
+      mp_rdata = d.mp_rdata; d.mp_rdata = nullptr;
     }
     return *this;
   }
@@ -751,7 +751,7 @@ public:
       //  ReuseData pointer and add to the end
       if (! mp_rdata->can_allocate ()) {
         delete mp_rdata;
-        mp_rdata = 0;
+        mp_rdata = nullptr;
       }
     } else {
       if (mp_finish == mp_capacity) {
@@ -848,7 +848,7 @@ public:
     }
     if (mp_rdata) {
       delete mp_rdata;
-      mp_rdata = 0;
+      mp_rdata = nullptr;
     }
 
     mp_finish = mp_start;
@@ -918,7 +918,7 @@ public:
     }
     if (mp_rdata) {
       delete mp_rdata;
-      mp_rdata = 0;
+      mp_rdata = nullptr;
     }
     init ();
   }
@@ -966,8 +966,8 @@ private:
 
   void init ()
   {
-    mp_start = mp_finish = mp_capacity = 0;
-    mp_rdata = 0;
+    mp_start = mp_finish = mp_capacity = nullptr;
+    mp_rdata = nullptr;
   }
 
   size_type first () const

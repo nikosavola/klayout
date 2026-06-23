@@ -90,12 +90,12 @@ static void device_connect_terminal_by_name (db::Device *device, const std::stri
 
 static void device_disconnect_terminal (db::Device *device, size_t terminal_id)
 {
-  device->connect_terminal (terminal_id, 0);
+  device->connect_terminal (terminal_id, nullptr);
 }
 
 static void device_disconnect_terminal_by_name (db::Device *device, const std::string &terminal_name)
 {
-  device_connect_terminal_by_name (device, terminal_name, 0);
+  device_connect_terminal_by_name (device, terminal_name, nullptr);
 }
 
 static size_t get_device_index (const db::DeviceReconnectedTerminal *obj)
@@ -253,7 +253,7 @@ static void add_other_abstracts (db::Device *device, const db::DeviceAbstractRef
 static const db::Net *net_for_terminal_by_name_const (const db::Device *device, const std::string &name)
 {
   if (! device->device_class () || ! device->device_class ()->has_terminal_with_name (name)) {
-    return 0;
+    return nullptr;
   } else {
     return device->net_for_terminal (device->device_class ()->terminal_id_for_name (name));
   }
@@ -262,7 +262,7 @@ static const db::Net *net_for_terminal_by_name_const (const db::Device *device, 
 static db::Net *net_for_terminal_by_name (db::Device *device, const std::string &name)
 {
   if (! device->device_class () || ! device->device_class ()->has_terminal_with_name (name)) {
-    return 0;
+    return nullptr;
   } else {
     return device->net_for_terminal (device->device_class ()->terminal_id_for_name (name));
   }
@@ -271,7 +271,7 @@ static db::Net *net_for_terminal_by_name (db::Device *device, const std::string 
 static const db::NetTerminalRef *terminal_ref_by_name_const (const db::Device *device, const std::string &name)
 {
   if (! device->device_class () || ! device->device_class ()->has_terminal_with_name (name)) {
-    return 0;
+    return nullptr;
   } else {
     return device->terminal_ref_for_terminal (device->device_class ()->terminal_id_for_name (name));
   }
@@ -280,7 +280,7 @@ static const db::NetTerminalRef *terminal_ref_by_name_const (const db::Device *d
 static db::NetTerminalRef *terminal_ref_by_name (db::Device *device, const std::string &name)
 {
   if (! device->device_class () || ! device->device_class ()->has_terminal_with_name (name)) {
-    return 0;
+    return nullptr;
   } else {
     return device->terminal_ref_for_terminal (device->device_class ()->terminal_id_for_name (name));
   }
@@ -508,13 +508,13 @@ static void subcircuit_connect_pin1 (db::SubCircuit *subcircuit, const db::Pin *
 
 static void subcircuit_disconnect_pin  (db::SubCircuit *subcircuit, size_t pin_id)
 {
-  subcircuit->connect_pin (pin_id, 0);
+  subcircuit->connect_pin (pin_id, nullptr);
 }
 
 static void subcircuit_disconnect_pin1 (db::SubCircuit *subcircuit, const db::Pin *pin)
 {
   if (pin) {
-    subcircuit->connect_pin (pin->id (), 0);
+    subcircuit->connect_pin (pin->id (), nullptr);
   }
 }
 
@@ -1123,7 +1123,7 @@ static void enable_parameter2 (db::DeviceClass *cls, const std::string &name, bo
 static const db::DeviceParameterDefinition *parameter_definition2 (const db::DeviceClass *cls, const std::string &name)
 {
   if (! cls->has_parameter_with_name (name)) {
-    return 0;
+    return nullptr;
   } else {
     return cls->parameter_definition (cls->parameter_id_for_name (name));
   }
@@ -1443,12 +1443,12 @@ static db::SubCircuit *create_subcircuit1 (db::Circuit *c, db::Circuit *cc, cons
 
 static db::Net *circuit_net_for_pin (db::Circuit *c, const db::Pin *pin)
 {
-  return pin ? c->net_for_pin (pin->id ()) : 0;
+  return pin ? c->net_for_pin (pin->id ()) : nullptr;
 }
 
 static const db::Net *circuit_net_for_pin_const (const db::Circuit *c, const db::Pin *pin)
 {
-  return pin ? c->net_for_pin (pin->id ()) : 0;
+  return pin ? c->net_for_pin (pin->id ()) : nullptr;
 }
 
 static void circuit_connect_pin1 (db::Circuit *c, const db::Pin *pin, db::Net *net)
@@ -1460,13 +1460,13 @@ static void circuit_connect_pin1 (db::Circuit *c, const db::Pin *pin, db::Net *n
 
 static void circuit_disconnect_pin (db::Circuit *c, size_t pin_id)
 {
-  c->connect_pin (pin_id, 0);
+  c->connect_pin (pin_id, nullptr);
 }
 
 static void circuit_disconnect_pin1 (db::Circuit *c, const db::Pin *pin)
 {
   if (pin) {
-    c->connect_pin (pin->id (), 0);
+    c->connect_pin (pin->id (), nullptr);
   }
 }
 
@@ -1917,28 +1917,28 @@ Class<db::Circuit> decl_dbCircuit (decl_dbNetlistObject, "db", "Circuit",
 
 static void add_circuit (db::Netlist *nl, db::Circuit *c)
 {
-  tl_assert (c != 0);
+  tl_assert (c != nullptr);
   c->keep ();
   nl->add_circuit (c);
 }
 
 static void add_device_class (db::Netlist *nl, db::DeviceClass *cl)
 {
-  tl_assert (cl != 0);
+  tl_assert (cl != nullptr);
   cl->keep ();
   nl->add_device_class (cl);
 }
 
 static void write_netlist (const db::Netlist *nl, const std::string &file, db::NetlistWriter *writer, const std::string &description)
 {
-  tl_assert (writer != 0);
+  tl_assert (writer != nullptr);
   tl::OutputStream os (file);
   writer->write (os, *nl, description);
 }
 
 static void read_netlist (db::Netlist *nl, const std::string &file, db::NetlistReader *reader)
 {
-  tl_assert (reader != 0);
+  tl_assert (reader != nullptr);
   tl::InputStream os (file);
   reader->read (os, *nl);
 }
@@ -2595,7 +2595,7 @@ class NetlistSpiceReaderDelegateImpl
 {
 public:
   NetlistSpiceReaderDelegateImpl ()
-    : db::NetlistSpiceReaderDelegate (), mp_variables (0)
+    : db::NetlistSpiceReaderDelegate (), mp_variables (nullptr)
   {
     //  .. nothing yet ..
   }
@@ -2728,17 +2728,17 @@ public:
       nn = data.net_names ();
       pv = data.parameters ();
 
-      mp_variables = 0;
+      mp_variables = nullptr;
 
     } catch (tl::Exception &) {
-      mp_variables = 0;
+      mp_variables = nullptr;
       if (! m_error.empty ()) {
         db::NetlistSpiceReaderDelegate::error (m_error);
       } else {
         throw;
       }
     } catch (...) {
-      mp_variables = 0;
+      mp_variables = nullptr;
       throw;
     }
   }

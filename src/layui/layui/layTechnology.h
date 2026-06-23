@@ -49,7 +49,7 @@ public:
    *  @brief The constructor
    */
   TechnologyComponentEditor (QWidget *parent)
-    : QFrame (parent), mp_tech (0), mp_tech_component (0)
+    : QFrame (parent), mp_tech (nullptr), mp_tech_component (nullptr)
   {
     // .. nothing yet ..
   }
@@ -130,7 +130,7 @@ public:
    */
   virtual TechnologyComponentEditor *create_editor (QWidget * /*parent*/) const 
   {
-    return 0;
+    return nullptr;
   }
 };
 

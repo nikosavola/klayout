@@ -63,7 +63,7 @@ void ViewWidgetStack::remove_widget (size_t index)
   if (index < m_widgets.size ()) {
     m_widgets.erase (m_widgets.begin () + index);
   }
-  if (m_widgets.size () == 0) {
+  if (m_widgets.empty()) {
     mp_bglabel->show ();
   }
 }
@@ -90,7 +90,7 @@ LayoutViewWidget *ViewWidgetStack::widget (size_t index)
   if (index < m_widgets.size ()) {
     return m_widgets [index];
   } else {
-    return 0;
+    return nullptr;
   }
 }
 

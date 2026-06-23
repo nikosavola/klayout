@@ -214,7 +214,7 @@ protected:
     if (mp_b) {
       mp_b->m_elements.erase (m_ib);
     }
-    mp_a = mp_b = 0;
+    mp_a = mp_b = nullptr;
   }
 
   std::list<const RElement *>::iterator m_ia, m_ib;

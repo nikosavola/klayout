@@ -75,7 +75,7 @@ RS274XReader::init ()
   m_current_dcode = -1;
   m_polygon_mode = false;
   m_axis_mapping = ab_xy;
-  m_current_aperture = 0;
+  m_current_aperture = nullptr;
   m_360deg_circular = false;
   m_buffer.clear ();
   m_polygon_points.clear ();
@@ -87,7 +87,7 @@ RS274XReader::init ()
   }
   m_apertures.clear ();
   m_aperture_macros.clear ();
-  m_current_aperture = 0;
+  m_current_aperture = nullptr;
 }
 
 static GerberMetaData::Position
@@ -491,7 +491,7 @@ RS274XReader::do_read ()
           if (dcode >= 10) {
 
             //  set current aperture
-            if (dcode >= int (m_apertures.size ()) || m_apertures[dcode] == 0) {
+            if (dcode >= int (m_apertures.size ()) || m_apertures[dcode] == nullptr) {
               throw tl::Exception (tl::to_string (tr ("Aperture code D%d is invalid or undefined")), dcode);
             }
 
@@ -1019,7 +1019,7 @@ RS274XReader::read_ad_parameter (const std::string &block)
   }
 
   while (int (m_apertures.size ()) <= dcode) {
-    m_apertures.push_back (0);
+    m_apertures.push_back (nullptr);
   }
 
   std::string name;
@@ -1062,7 +1062,7 @@ RS274XReader::install_block_aperture (const std::string &d, const db::Region &re
   }
 
   while (int (m_apertures.size ()) <= dcode) {
-    m_apertures.push_back (0);
+    m_apertures.push_back (nullptr);
   }
 
   m_apertures[dcode] = new RS274XRegionAperture (region);

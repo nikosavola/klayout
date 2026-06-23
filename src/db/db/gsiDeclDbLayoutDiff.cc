@@ -36,8 +36,8 @@ class LayoutDiff
 {
 public:
   LayoutDiff ()
-    : mp_layout_a (0), mp_cell_a (0), m_layer_index_a (0),
-      mp_layout_b (0), mp_cell_b (0), m_layer_index_b (0)
+    : mp_layout_a (nullptr), mp_cell_a (nullptr), m_layer_index_a (0),
+      mp_layout_b (nullptr), mp_cell_b (nullptr), m_layer_index_b (0)
   {
     // .. nothing yet ..
   }
@@ -54,9 +54,9 @@ public:
     mp_layout_b = b;
     try {
       res = db::compare_layouts(*a, *b, flags, tolerance, *this);
-      mp_layout_a = mp_layout_b = 0;
+      mp_layout_a = mp_layout_b = nullptr;
     } catch (...) {
-      mp_layout_a = mp_layout_b = 0;
+      mp_layout_a = mp_layout_b = nullptr;
     }
 
     return res;
@@ -72,14 +72,14 @@ public:
 
     mp_layout_a = a->layout ();
     mp_layout_b = b->layout ();
-    tl_assert (mp_layout_a != 0);
-    tl_assert (mp_layout_b != 0);
+    tl_assert (mp_layout_a != nullptr);
+    tl_assert (mp_layout_b != nullptr);
 
     try {
       res = db::compare_layouts(*mp_layout_a, a->cell_index (), *mp_layout_b, b->cell_index (), flags, tolerance, *this);
-      mp_layout_a = mp_layout_b = 0;
+      mp_layout_a = mp_layout_b = nullptr;
     } catch (...) {
-      mp_layout_a = mp_layout_b = 0;
+      mp_layout_a = mp_layout_b = nullptr;
     }
 
     return res;
@@ -342,13 +342,13 @@ public:
 
   db::LayerProperties layer_info_a () const
   {
-    tl_assert (mp_layout_a != 0);
+    tl_assert (mp_layout_a != nullptr);
     return mp_layout_a->get_properties (m_layer_index_a);
   }
 
   db::LayerProperties layer_info_b () const
   {
-    tl_assert (mp_layout_b != 0);
+    tl_assert (mp_layout_b != nullptr);
     return mp_layout_b->get_properties (m_layer_index_b);
   }
 

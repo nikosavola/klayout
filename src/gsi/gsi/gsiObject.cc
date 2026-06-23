@@ -35,7 +35,7 @@ tl::Mutex Proxy::m_lock;
 
 Proxy::Proxy (const gsi::ClassBase *_cls_decl)
   : m_cls_decl (_cls_decl),
-    m_obj (0),
+    m_obj (nullptr),
     m_owned (false),
     m_const_ref (false),
     m_destroyed (false),
@@ -46,12 +46,12 @@ Proxy::Proxy (const gsi::ClassBase *_cls_decl)
 
 Proxy::~Proxy ()
 {
-  void *prev_obj = 0;
+  void *prev_obj = nullptr;
 
   {
     tl::MutexLocker locker (&m_lock);
     try {
-      prev_obj = set_internal (0, false, false, false);
+      prev_obj = set_internal (nullptr, false, false, false);
     } catch (std::exception &ex) {
       tl::warn << "Caught exception in object destructor: " << ex.what ();
     } catch (tl::Exception &ex) {
@@ -75,7 +75,7 @@ Proxy::destroy ()
   tl::MutexLocker locker (&m_lock);
 
   if (! m_cls_decl) {
-    m_obj = 0;
+    m_obj = nullptr;
     return;
   }
 
@@ -94,7 +94,7 @@ Proxy::destroy ()
     }
   }
 
-  void *o = 0;
+  void *o = nullptr;
   if (m_owned || m_can_destroy) {
     o = m_obj;
   }
@@ -182,7 +182,7 @@ Proxy::obj_internal ()
       throw tl::Exception (tl::to_string (tr ("Object has been destroyed already")));
     } else {
       //  delayed creation of a detached C++ object ..
-      tl_assert (set_internal (m_cls_decl->create (), true, false, true) == 0);
+      tl_assert (set_internal (m_cls_decl->create (), true, false, true) == nullptr);
     }
   }
 
@@ -213,7 +213,7 @@ Proxy::set_internal (void *obj, bool owned, bool const_ref, bool can_destroy)
   m_owned = owned;
   m_can_destroy = can_destroy;
   m_const_ref = const_ref;
-  void *prev_object = 0;
+  void *prev_object = nullptr;
 
   const gsi::ClassBase *cls = m_cls_decl;
   if (! cls) {
@@ -236,7 +236,7 @@ Proxy::set_internal (void *obj, bool owned, bool const_ref, bool can_destroy)
       //  (either because we are not owner or from C++ side using keep())
       if (prev_owned) {
         prev_object = m_obj;
-        m_obj = 0;
+        m_obj = nullptr;
       }
 
     }
@@ -275,7 +275,7 @@ Proxy::detach_internal()
     }
   }
 
-  m_obj = 0;
+  m_obj = nullptr;
   m_destroyed = true;
   m_const_ref = false;
   m_owned = false;

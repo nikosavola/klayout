@@ -753,7 +753,7 @@ private:
 //  PartialShapeFinder implementation
 
 PartialShapeFinder::PartialShapeFinder (bool point_mode, bool top_level_sel, db::ShapeIterator::flags_type flags)
-  : lay::ShapeFinder (point_mode, top_level_sel, flags, 0)
+  : lay::ShapeFinder (point_mode, top_level_sel, flags, nullptr)
 {
   set_test_count (point_sel_tests);
 }
@@ -1099,7 +1099,7 @@ PartialService::PartialService (db::Manager *manager, lay::LayoutViewBase *view,
     mp_root (root),
     m_moving (false),
     m_keep_selection (true),
-    mp_box (0),
+    mp_box (nullptr),
     m_color (0),
     m_buttons (0),
     m_connect_ac (lay::AC_Any), m_move_ac (lay::AC_Any), m_alt_ac (lay::AC_Global),
@@ -1128,7 +1128,7 @@ PartialService::~PartialService ()
 
   if (mp_box) {
     delete mp_box;
-    mp_box = 0;
+    mp_box = nullptr;
   }
 }
 
@@ -1554,7 +1554,7 @@ PartialService::issue_editor_hook_calls (const tl::weak_collection<edt::EditorHo
 db::Shape
 PartialService::modify_shape (lay::TransformationVariants &tv, const db::Shape &shape_in, const lay::ObjectInstPath &path, const std::set <EdgeWithIndex> &sel, const db::DTrans &move_trans, std::map <EdgeWithIndex, db::Edge> &new_edges, std::map <PointWithIndex, db::Point> &new_points)
 {
-  tl_assert (shape_in.shapes () != 0);
+  tl_assert (shape_in.shapes () != nullptr);
   db::Shape shape = shape_in;
   db::Shapes &shapes = *shape_in.shapes ();
 
@@ -1765,7 +1765,7 @@ PartialService::edit_cancel ()
 
   if (mp_box) {
     delete mp_box;
-    mp_box = 0;
+    mp_box = nullptr;
   }
 
   ui ()->ungrab_mouse (this);
@@ -1796,7 +1796,7 @@ PartialService::move_impl (const db::DPoint &p)
     //  for a single selected point or edge, m_start is the original position and we snap the target -
     //  thus, we can bring the point on grid or to an object's edge or vertex
     double snap_range = ui ()->mouse_event_trans ().inverted ().ctrans (sr_pixels);
-    snap_details = lay::obj_snap (m_snap_to_objects ? view () : 0, m_start, p, m_edit_grid == db::DVector () ? m_global_grid : m_edit_grid, lay::AC_Any, snap_range);;
+    snap_details = lay::obj_snap (m_snap_to_objects ? view () : nullptr, m_start, p, m_edit_grid == db::DVector () ? m_global_grid : m_edit_grid, lay::AC_Any, snap_range);;
 
     if (snap_details.object_snap == lay::PointSnapToObjectResult::NoObject) {
 
@@ -2053,7 +2053,7 @@ PartialService::mouse_click_event (const db::DPoint &p, unsigned int buttons, bo
         finder.find (view (), search_box);
 
         //  identify the instances under the mouse
-        lay::InstFinder inst_finder (true /*point mode*/, m_top_level_sel, true /*full arrays*/, true /*enclose*/, 0 /*no excludes*/, true /*visible layers*/);
+        lay::InstFinder inst_finder (true /*point mode*/, m_top_level_sel, true /*full arrays*/, true /*enclose*/, nullptr /*no excludes*/, true /*visible layers*/);
         inst_finder.find (view (), search_box);
 
         //  clear the selection if we now select a guiding shape or if it was consisting of a guiding shape before
@@ -2249,7 +2249,7 @@ PartialService::mouse_release_event (const db::DPoint &p, unsigned int buttons, 
     ui ()->ungrab_mouse (this);
 
     delete mp_box;
-    mp_box = 0;
+    mp_box = nullptr;
 
     if (ui ()->mouse_event_viewport ().contains (p)) { 
 
@@ -2434,7 +2434,7 @@ PartialService::end_move (const db::DPoint & /*p*/, lay::angle_constraint_type /
 
   if (m_current != m_start) {
 
-    db::Transaction transaction ((manager () && ! manager ()->transacting ()) ? manager () : 0, tl::to_string (tr ("Partial move")));
+    db::Transaction transaction ((manager () && ! manager ()->transacting ()) ? manager () : nullptr, tl::to_string (tr ("Partial move")));
 
     db::DTrans move_trans = db::DTrans (m_current - m_start);
 
@@ -2490,7 +2490,7 @@ PartialService::selection_bbox ()
     if (! r->first.is_cell_inst ()) {
 
       const std::vector<db::DCplxTrans> *tv_list = tv.per_cv_and_layer (r->first.cv_index (), r->first.layer ());
-      if (tv_list != 0) {
+      if (tv_list != nullptr) {
         for (std::vector<db::DCplxTrans>::const_iterator t = tv_list->begin (); t != tv_list->end (); ++t) {
           if (r->first.shape ().is_text ()) {
             db::Text text;
@@ -2507,7 +2507,7 @@ PartialService::selection_bbox ()
     } else {
 
       const std::vector<db::DCplxTrans> *tv_list = tv.per_cv (r->first.cv_index ());
-      if (tv_list != 0) {
+      if (tv_list != nullptr) {
         for (std::vector<db::DCplxTrans>::const_iterator t = tv_list->begin (); t != tv_list->end (); ++t) {
           box += *t * (ctx_trans * r->first.back ().bbox (bc));
         }
@@ -3227,7 +3227,7 @@ PartialService::partial_select (const db::DBox &box, lay::Editable::SelectionMod
     //  check, if there is a selected instance inside the box - in this case, we do not do a new selection
     if (! box.is_point () && edt::instances_enabled ()) {
 
-      lay::InstFinder inst_finder (box.is_point (), m_top_level_sel, true /*full arrays*/, true /*enclose*/, 0 /*no excludes*/, true /*visible layers*/);
+      lay::InstFinder inst_finder (box.is_point (), m_top_level_sel, true /*full arrays*/, true /*enclose*/, nullptr /*no excludes*/, true /*visible layers*/);
       inst_finder.find (view (), search_box);
 
       //  collect the founds from the finder

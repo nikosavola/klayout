@@ -43,7 +43,7 @@ namespace pya
  */
 static bool is_plain_type (PyObject *obj)
 {
-  if (obj == NULL || obj == Py_None) {
+  if (obj == nullptr || obj == Py_None) {
     return true;
   }
 #if PY_MAJOR_VERSION < 3
@@ -67,11 +67,11 @@ static bool is_plain_type (PyObject *obj)
  */
 std::string type_str (PyObject *obj)
 {
-  if (obj == NULL) {
+  if (obj == nullptr) {
     return std::string ();
   } 
   PyTypeObject *type = Py_TYPE (obj);
-  if (type == NULL) {
+  if (type == nullptr) {
     return std::string ();
   } 
   return type->tp_name;
@@ -217,7 +217,7 @@ public:
     if (m_values && PyList_Check (m_values.get ()) && Py_ssize_t (index) < PyList_Size (m_values.get ())) {
       return create_inspector (PyList_GET_ITEM (m_values.get (), index));
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -301,7 +301,7 @@ public:
     if (m_values && PyList_Check (m_values.get ()) && Py_ssize_t (index) < PyList_Size (m_values.get ())) {
       return create_inspector (PyList_GET_ITEM (m_values.get (), index));
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -383,7 +383,7 @@ public:
     if (m_values && PyTuple_Check (m_values.get ()) && Py_ssize_t (index) < PyTuple_Size (m_values.get ())) {
       return create_inspector (PyTuple_GET_ITEM (m_values.get (), index));
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -515,7 +515,7 @@ public:
       }
       return create_inspector (value.get ());
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -533,10 +533,10 @@ create_inspector (PyObject *obj, bool symbolic)
     return new ListInspector (obj);
   } else if (PyTuple_Check (obj)) {
     return new TupleInspector (obj);
-  } else if (obj != NULL) {
+  } else if (obj != nullptr) {
     return new ObjectInspector (obj);
   } else {
-    return 0;
+    return nullptr;
   }
 }
 

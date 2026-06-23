@@ -101,7 +101,7 @@ class XORProgressWidget
 {
 public:
   XORProgressWidget ()
-    : QWidget (0)
+    : QWidget (nullptr)
   {
     m_pixmap_size = 24;
     m_spacing = 4;
@@ -183,7 +183,7 @@ public:
             int iy = 0;
             for (std::vector<size_t>::const_iterator cc = c->begin (); cc != c->end (); ++cc, ++iy) {
 
-              QImage *img = 0;
+              QImage *img = nullptr;
               if (*cc == 0) {
                 img = &m_green_images.back ().back ();
               } else if (*cc == missing_in_a) {

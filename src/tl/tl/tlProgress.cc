@@ -36,14 +36,14 @@ namespace tl
 //  ProgressAdaptor implementation
 
 ProgressAdaptor::ProgressAdaptor ()
-  : mp_prev (0)
+  : mp_prev (nullptr)
 {
   tl::Progress::register_adaptor (this);
 }
 
 ProgressAdaptor::~ProgressAdaptor ()
 {
-  tl::Progress::register_adaptor (0);
+  tl::Progress::register_adaptor (nullptr);
 }
 
 void
@@ -90,7 +90,7 @@ ProgressAdaptor::first ()
       return k.operator-> ();
     }
   }
-  return 0;
+  return nullptr;
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -201,7 +201,7 @@ ProgressAdaptor *
 Progress::adaptor () 
 {
   if (! s_thread_data.hasLocalData ()) {
-    return 0;
+    return nullptr;
   } else {
     return *s_thread_data.localData ();
   }

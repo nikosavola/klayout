@@ -323,7 +323,7 @@ bool DeepEdgePairs::has_valid_edge_pairs () const
 
 const db::RecursiveShapeIterator *DeepEdgePairs::iter () const
 {
-  return 0;
+  return nullptr;
 }
 
 void DeepEdgePairs::apply_property_translator (const db::PropertiesTranslator &pt)
@@ -414,8 +414,8 @@ DeepEdgePairs::apply_filter (const EdgePairFilterBase &filter, bool with_true, b
 
   std::map<db::cell_index_type, std::map<db::ICplxTrans, db::Shapes> > to_commit_true, to_commit_false;
 
-  std::unique_ptr<db::DeepEdgePairs> res_true (with_true ? new db::DeepEdgePairs (edge_pairs.derived ()) : 0);
-  std::unique_ptr<db::DeepEdgePairs> res_false (with_false ? new db::DeepEdgePairs (edge_pairs.derived ()) : 0);
+  std::unique_ptr<db::DeepEdgePairs> res_true (with_true ? new db::DeepEdgePairs (edge_pairs.derived ()) : nullptr);
+  std::unique_ptr<db::DeepEdgePairs> res_false (with_false ? new db::DeepEdgePairs (edge_pairs.derived ()) : nullptr);
   for (db::Layout::iterator c = layout.begin (); c != layout.end (); ++c) {
 
     const db::Shapes &s = c->shapes (edge_pairs.layer ());
@@ -425,7 +425,7 @@ DeepEdgePairs::apply_filter (const EdgePairFilterBase &filter, bool with_true, b
       const std::set<db::ICplxTrans> &vv = vars->variants (c->cell_index ());
       for (auto v = vv.begin (); v != vv.end (); ++v) {
 
-        db::Shapes *st_true = 0, *st_false = 0;
+        db::Shapes *st_true = nullptr, *st_false = nullptr;
         if (vv.size () == 1) {
           if (with_true) {
             st_true = & c->shapes (res_true->deep_layer ().layer ());
@@ -460,8 +460,8 @@ DeepEdgePairs::apply_filter (const EdgePairFilterBase &filter, bool with_true, b
 
     } else {
 
-      db::Shapes *st_true = with_true ? &c->shapes (res_true->deep_layer ().layer ()) : 0;
-      db::Shapes *st_false = with_false ? &c->shapes (res_false->deep_layer ().layer ()) : 0;
+      db::Shapes *st_true = with_true ? &c->shapes (res_true->deep_layer ().layer ()) : nullptr;
+      db::Shapes *st_false = with_false ? &c->shapes (res_false->deep_layer ().layer ()) : nullptr;
 
       for (db::Shapes::shape_iterator si = s.begin (db::ShapeIterator::EdgePairs); ! si.at_end (); ++si) {
         if (filter.selected (si->edge_pair (), si->prop_id ())) {
@@ -480,11 +480,11 @@ DeepEdgePairs::apply_filter (const EdgePairFilterBase &filter, bool with_true, b
   }
 
   if (! to_commit_true.empty () && vars.get ()) {
-    tl_assert (res_true.get () != 0);
+    tl_assert (res_true.get () != nullptr);
     vars->commit_shapes (res_true->deep_layer ().layer (), to_commit_true);
   }
   if (! to_commit_false.empty () && vars.get ()) {
-    tl_assert (res_false.get () != 0);
+    tl_assert (res_false.get () != nullptr);
     vars->commit_shapes (res_false->deep_layer ().layer (), to_commit_false);
   }
 

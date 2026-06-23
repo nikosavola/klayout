@@ -358,7 +358,7 @@ public:
 
   void detach ()
   {
-    mp_view.reset (0);
+    mp_view.reset (nullptr);
   }
 
   bool is_valid () const
@@ -1098,7 +1098,7 @@ static void show_image (lay::LayoutViewBase *view, size_t id, bool visible)
   if (img_service) {
 
     const img::Object *img = img_service->object_by_id (id);
-    if (img == 0) {
+    if (img == nullptr) {
       throw tl::Exception (tl::to_string (tr ("The image Id is not valid")));
     }
 
@@ -1116,7 +1116,7 @@ void replace_image_base (lay::LayoutViewBase *view, size_t id, ImageRef &new_obj
   if (img_service) {
 
     const img::Object *img = img_service->object_by_id (id);
-    if (img == 0) {
+    if (img == nullptr) {
       throw tl::Exception (tl::to_string (tr ("The image Id is not valid")));
     }
 
@@ -1136,7 +1136,7 @@ void erase_image_base (lay::LayoutViewBase *view, size_t id)
   if (img_service) {
 
     const img::Object *img = img_service->object_by_id (id);
-    if (img == 0) {
+    if (img == nullptr) {
       throw tl::Exception (tl::to_string (tr ("The image Id is not valid")));
     }
 
@@ -1180,21 +1180,21 @@ static ImageRef get_image (lay::LayoutViewBase *view, size_t id)
 static tl::Event &get_images_changed_event (lay::LayoutViewBase *view)
 {
   img::Service *img_service = view->get_plugin <img::Service> ();
-  tl_assert (img_service != 0);
+  tl_assert (img_service != nullptr);
   return img_service->images_changed_event;
 }
 
 static tl::Event &get_image_selection_changed_event (lay::LayoutViewBase *view)
 {
   img::Service *img_service = view->get_plugin <img::Service> ();
-  tl_assert (img_service != 0);
+  tl_assert (img_service != nullptr);
   return img_service->image_selection_changed_event;
 }
 
 static tl::event<int> &get_image_changed_event (lay::LayoutViewBase *view)
 {
   img::Service *img_service = view->get_plugin <img::Service> ();
-  tl_assert (img_service != 0);
+  tl_assert (img_service != nullptr);
   return img_service->image_changed_event;
 }
 

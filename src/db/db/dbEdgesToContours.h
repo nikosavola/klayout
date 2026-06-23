@@ -64,7 +64,7 @@ public:
   }
 
   template <class Iter>
-  void fill (Iter from, Iter to, bool no = false, typename std::iterator_traits<Iter>::value_type::coord_type distance = 0, tl::RelativeProgress *progress = 0);
+  void fill (Iter from, Iter to, bool no = false, typename std::iterator_traits<Iter>::value_type::coord_type distance = 0, tl::RelativeProgress *progress = nullptr);
 
 private:
   std::vector<std::vector <db::Point> > m_contours;

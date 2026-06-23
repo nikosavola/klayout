@@ -472,7 +472,7 @@ public:
    *
    *  CAUTION: with GIT protocol and large repositories, this function may be very expensive.
    */
-  static SaltGrain from_url (const std::string &url, double timeout = 60.0, tl::InputHttpStreamCallback *callback = 0);
+  static SaltGrain from_url (const std::string &url, double timeout = 60.0, tl::InputHttpStreamCallback *callback = nullptr);
 
   /**
    *  @brief Returns a stream prepared for downloading the grain
@@ -482,7 +482,7 @@ public:
    *
    *  CAUTION: with GIT protocol and large repositories, this function may be very expensive.
    */
-  static tl::InputStream *stream_from_url (std::string &url, double timeout = 60.0, tl::InputHttpStreamCallback *callback = 0);
+  static tl::InputStream *stream_from_url (std::string &url, double timeout = 60.0, tl::InputHttpStreamCallback *callback = nullptr);
 
   /**
    *  @brief Gets the name of the spec file ("grain.xml")

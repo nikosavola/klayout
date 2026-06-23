@@ -38,29 +38,29 @@ static db::cell_index_type drop_cell_const ()
 
 static void create_single_mapping (db::CellMapping *cm, db::Cell &a, const db::Cell &b)
 {
-  tl_assert (a.layout () != 0);
-  tl_assert (b.layout () != 0);
+  tl_assert (a.layout () != nullptr);
+  tl_assert (b.layout () != nullptr);
   cm->create_single_mapping (*a.layout (), a.cell_index (), *b.layout(), b.cell_index ());
 }
 
 static std::vector<db::cell_index_type> create_single_mapping_full (db::CellMapping *cm, db::Cell &a, const db::Cell &b)
 {
-  tl_assert (a.layout () != 0);
-  tl_assert (b.layout () != 0);
+  tl_assert (a.layout () != nullptr);
+  tl_assert (b.layout () != nullptr);
   return cm->create_single_mapping_full (*a.layout (), a.cell_index (), *b.layout(), b.cell_index ());
 }
 
 static std::vector<db::cell_index_type> create_multi_mapping_gen (db::CellMapping *cm, const std::vector<db::Cell *> &a, const std::vector<const db::Cell *> &b, bool full)
 {
-  db::Layout *lya = 0;
-  const db::Layout *lyb = 0;
+  db::Layout *lya = nullptr;
+  const db::Layout *lyb = nullptr;
   std::vector<db::cell_index_type> cia, cib;
 
   for (auto i = a.begin (); i != a.end (); ++i) {
     tl_assert (*i != 0);
-    tl_assert ((*i)->layout () != 0);
+    tl_assert ((*i)->layout () != nullptr);
     cia.push_back ((*i)->cell_index ());
-    if (lya == 0) {
+    if (lya == nullptr) {
       lya = (*i)->layout ();
     } else if (lya != (*i)->layout ()) {
       throw tl::Exception (tl::to_string (tr ("First cell array contains cells from different layouts")));
@@ -69,9 +69,9 @@ static std::vector<db::cell_index_type> create_multi_mapping_gen (db::CellMappin
 
   for (auto i = b.begin (); i != b.end (); ++i) {
     tl_assert (*i != 0);
-    tl_assert ((*i)->layout () != 0);
+    tl_assert ((*i)->layout () != nullptr);
     cib.push_back ((*i)->cell_index ());
-    if (lyb == 0) {
+    if (lyb == nullptr) {
       lyb = (*i)->layout ();
     } else if (lyb != (*i)->layout ()) {
       throw tl::Exception (tl::to_string (tr ("Second cell array contains cells from different layouts")));
@@ -98,29 +98,29 @@ static void create_multi_mapping (db::CellMapping *cm, const std::vector<db::Cel
 
 static void create_from_geometry (db::CellMapping *cm, db::Cell &a, const db::Cell &b)
 {
-  tl_assert (a.layout () != 0);
-  tl_assert (b.layout () != 0);
+  tl_assert (a.layout () != nullptr);
+  tl_assert (b.layout () != nullptr);
   return cm->create_from_geometry (*a.layout (), a.cell_index (), *b.layout(), b.cell_index ());
 }
 
 static std::vector<db::cell_index_type> create_from_geometry_full (db::CellMapping *cm, db::Cell &a, const db::Cell &b)
 {
-  tl_assert (a.layout () != 0);
-  tl_assert (b.layout () != 0);
+  tl_assert (a.layout () != nullptr);
+  tl_assert (b.layout () != nullptr);
   return cm->create_from_geometry_full (*a.layout (), a.cell_index (), *b.layout(), b.cell_index ());
 }
 
 static void create_from_names (db::CellMapping *cm, db::Cell &a, const db::Cell &b)
 {
-  tl_assert (a.layout () != 0);
-  tl_assert (b.layout () != 0);
+  tl_assert (a.layout () != nullptr);
+  tl_assert (b.layout () != nullptr);
   return cm->create_from_names (*a.layout (), a.cell_index (), *b.layout(), b.cell_index ());
 }
 
 static std::vector<db::cell_index_type> create_from_names_full (db::CellMapping *cm, db::Cell &a, const db::Cell &b)
 {
-  tl_assert (a.layout () != 0);
-  tl_assert (b.layout () != 0);
+  tl_assert (a.layout () != nullptr);
+  tl_assert (b.layout () != nullptr);
   return cm->create_from_names_full (*a.layout (), a.cell_index (), *b.layout(), b.cell_index ());
 }
 

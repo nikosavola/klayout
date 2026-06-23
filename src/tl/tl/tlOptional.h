@@ -115,7 +115,7 @@ public:
 
   const T* operator-> () const
   {
-    return m_is_valid ? &m_value : 0;
+    return m_is_valid ? &m_value : nullptr;
   }
 
 private:

@@ -93,11 +93,11 @@ Transition::operator< (const Transition &other) const
 
   if (is_for_subcircuit ()) {
 
-    if ((subcircuit () != 0) != (other.subcircuit () != 0)) {
-      return (subcircuit () != 0) < (other.subcircuit () != 0);
+    if ((subcircuit () != nullptr) != (other.subcircuit () != nullptr)) {
+      return (subcircuit () != nullptr) < (other.subcircuit () != nullptr);
     }
 
-    if (subcircuit () != 0) {
+    if (subcircuit () != nullptr) {
       SubCircuitCompare scc;
       if (! scc.equals (std::make_pair (subcircuit (), cat ()), std::make_pair (other.subcircuit (), other.cat ()))) {
         return scc (std::make_pair (subcircuit (), cat ()), std::make_pair (other.subcircuit (), other.cat ()));
@@ -108,11 +108,11 @@ Transition::operator< (const Transition &other) const
 
   } else {
 
-    if ((device () != 0) != (other.device () != 0)) {
-      return (device () != 0) < (other.device () != 0);
+    if ((device () != nullptr) != (other.device () != nullptr)) {
+      return (device () != nullptr) < (other.device () != nullptr);
     }
 
-    if (device () != 0) {
+    if (device () != nullptr) {
       DeviceCompare dc;
       if (! dc.equals (std::make_pair (device (), cat ()), std::make_pair (other.device (), other.cat ()))) {
         return dc (std::make_pair (device (), cat ()), std::make_pair (other.device (), other.cat ()));
@@ -136,11 +136,11 @@ Transition::operator== (const Transition &other) const
 
   if (is_for_subcircuit ()) {
 
-    if ((subcircuit () != 0) != (other.subcircuit () != 0)) {
+    if ((subcircuit () != nullptr) != (other.subcircuit () != nullptr)) {
       return false;
     }
 
-    if (subcircuit () != 0) {
+    if (subcircuit () != nullptr) {
       SubCircuitCompare scc;
       if (! scc.equals (std::make_pair (subcircuit (), cat ()), std::make_pair (other.subcircuit (), other.cat ()))) {
         return false;
@@ -151,11 +151,11 @@ Transition::operator== (const Transition &other) const
 
   } else {
 
-    if ((device () != 0) != (other.device () != 0)) {
+    if ((device () != nullptr) != (other.device () != nullptr)) {
       return false;
     }
 
-    if (device () != 0) {
+    if (device () != nullptr) {
       DeviceCompare dc;
       if (! dc.equals (std::make_pair (device (), cat ()), std::make_pair (other.device (), other.cat ()))) {
         return false;
@@ -251,7 +251,7 @@ NetGraphNode::NetGraphNode (const db::Net *net, DeviceCategorizer &device_catego
     std::map<const void *, size_t>::const_iterator in = n2entry.find ((const void *) sc);
     if (in == n2entry.end ()) {
       in = n2entry.insert (std::make_pair ((const void *) sc, m_edges.size ())).first;
-      m_edges.push_back (edge_type (std::vector<Transition> (), std::make_pair (size_t (0), (const db::Net *) 0)));
+      m_edges.push_back (edge_type (std::vector<Transition> (), std::make_pair (size_t (0), (const db::Net *) nullptr)));
     }
 
     m_edges [in->second].first.push_back (ed);
@@ -305,7 +305,7 @@ NetGraphNode::NetGraphNode (const db::Net *net, DeviceCategorizer &device_catego
 }
 
 NetGraphNode::NetGraphNode (const db::SubCircuit *sc, CircuitCategorizer &circuit_categorizer, const std::map<const db::Circuit *, CircuitMapper> *circuit_map, const CircuitPinCategorizer *pin_map, size_t *unique_pin_id)
-  : mp_net (0), m_other_net_index (invalid_id)
+  : mp_net (nullptr), m_other_net_index (invalid_id)
 {
   std::map<const db::Net *, size_t> n2entry;
 
@@ -313,7 +313,7 @@ NetGraphNode::NetGraphNode (const db::SubCircuit *sc, CircuitCategorizer &circui
   tl_assert (circuit_cat != 0);
 
   const db::Circuit *cr = sc->circuit_ref ();
-  tl_assert (cr != 0);
+  tl_assert (cr != nullptr);
 
   std::map<const db::Circuit *, CircuitMapper>::const_iterator icm = circuit_map->find (cr);
   tl_assert (icm != circuit_map->end ());
@@ -394,7 +394,7 @@ NetGraphNode::expand_subcircuit_nodes (NetGraph *graph)
 
   for (std::list<edge_type>::const_iterator e = sc_edges.begin (); e != sc_edges.end (); ++e) {
 
-    const db::SubCircuit *sc = 0;
+    const db::SubCircuit *sc = nullptr;
     for (std::vector<Transition>::const_iterator t = e->first.begin (); t != e->first.end (); ++t) {
       tl_assert (t->is_for_subcircuit ());
       if (! sc) {
@@ -519,10 +519,10 @@ NetGraphNode::equal (const NetGraphNode &node, bool with_name) const
 bool
 NetGraphNode::net_less (const db::Net *a, const db::Net *b, bool with_name)
 {
-  if ((a != 0) != (b != 0)) {
-    return (a != 0) < (b != 0);
+  if ((a != nullptr) != (b != nullptr)) {
+    return (a != nullptr) < (b != nullptr);
   }
-  if (a == 0) {
+  if (a == nullptr) {
     return false;
   }
   if (a->pin_count () != b->pin_count ()) {
@@ -534,10 +534,10 @@ NetGraphNode::net_less (const db::Net *a, const db::Net *b, bool with_name)
 bool
 NetGraphNode::net_equal (const db::Net *a, const db::Net *b, bool with_name)
 {
-  if ((a != 0) != (b != 0)) {
+  if ((a != nullptr) != (b != nullptr)) {
     return false;
   }
-  if (a == 0) {
+  if (a == nullptr) {
     return true;
   }
   if (a->pin_count () != b->pin_count ()) {
@@ -565,7 +565,7 @@ NetGraph::build (const db::Circuit *c, DeviceCategorizer &device_categorizer, Ci
   m_net_index.clear ();
 
   //  create a dummy node for a null net
-  m_nodes.push_back (NetGraphNode (0, device_categorizer, circuit_categorizer, device_filter, circuit_and_pin_mapping, circuit_pin_mapper, unique_pin_id));
+  m_nodes.push_back (NetGraphNode (nullptr, device_categorizer, circuit_categorizer, device_filter, circuit_and_pin_mapping, circuit_pin_mapper, unique_pin_id));
 
   size_t nets = 0;
   for (db::Circuit::const_net_iterator n = c->begin_nets (); n != c->end_nets (); ++n) {

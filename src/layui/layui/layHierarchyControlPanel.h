@@ -112,7 +112,7 @@ public:
    *  @param parent The Qt parent widget
    *  @param name The layer control panel's widget name
    */
-  HierarchyControlPanel (lay::LayoutViewBase *view, QWidget *parent = 0, const char *name = "control_panel");
+  HierarchyControlPanel (lay::LayoutViewBase *view, QWidget *parent = nullptr, const char *name = "control_panel");
 
   /** 
    *  @brief Destructor

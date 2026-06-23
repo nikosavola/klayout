@@ -36,7 +36,7 @@ std::string net_tracer_component_name ()
 //  NetTracerLayerExpressionInfo implementation
 
 NetTracerLayerExpressionInfo::NetTracerLayerExpressionInfo ()
-  : mp_a (0), mp_b (0), m_op (NetTracerLayerExpression::OPNone)
+  : mp_a (nullptr), mp_b (nullptr), m_op (NetTracerLayerExpression::OPNone)
 {
   //  .. nothing yet ..
 }
@@ -44,13 +44,13 @@ NetTracerLayerExpressionInfo::NetTracerLayerExpressionInfo ()
 NetTracerLayerExpressionInfo::~NetTracerLayerExpressionInfo ()
 {
   delete mp_a;
-  mp_a = 0;
+  mp_a = nullptr;
   delete mp_b;
-  mp_b = 0;
+  mp_b = nullptr;
 }
 
 NetTracerLayerExpressionInfo::NetTracerLayerExpressionInfo (const NetTracerLayerExpressionInfo &other)
-  : m_expression (other.m_expression), m_a (other.m_a), m_b (other.m_b), mp_a (0), mp_b (0), m_op (other.m_op)
+  : m_expression (other.m_expression), m_a (other.m_a), m_b (other.m_b), mp_a (nullptr), mp_b (nullptr), m_op (other.m_op)
 {
   if (other.mp_a) {
     mp_a = new NetTracerLayerExpressionInfo (*other.mp_a);
@@ -68,9 +68,9 @@ NetTracerLayerExpressionInfo::operator= (const NetTracerLayerExpressionInfo &oth
     m_expression = other.m_expression;
 
     delete mp_a;
-    mp_a = 0;
+    mp_a = nullptr;
     delete mp_b;
-    mp_b = 0;
+    mp_b = nullptr;
 
     m_a = other.m_a;
     m_b = other.m_b;
@@ -213,7 +213,7 @@ NetTracerLayerExpressionInfo::get (const db::Layout &layout, const NetTracerConn
 NetTracerLayerExpression *
 NetTracerLayerExpressionInfo::get (const db::Layout &layout, const NetTracerConnectivity &tech, const std::set<std::string> &used_symbols) const
 {
-  NetTracerLayerExpression *e = 0;
+  NetTracerLayerExpression *e = nullptr;
 
   if (mp_a) {
     e = mp_a->get (layout, tech, used_symbols);
@@ -259,7 +259,7 @@ static int get_layer_id (const NetTracerLayerExpressionInfo &e, const db::Layout
   if (l < 0 && data) {
     l = data->find_symbol (e.to_string ());
     if (l < 0) {
-      return int (data->register_logical_layer (expr_in.release (), 0));
+      return int (data->register_logical_layer (expr_in.release (), nullptr));
     }
   }
   return l;

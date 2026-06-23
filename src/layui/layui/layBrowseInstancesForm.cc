@@ -86,7 +86,7 @@ public:
     if (lay::has_gui ()) {
       return new BrowseInstancesForm (root, view);
     } else {
-      return 0;
+      return nullptr;
     }
   }
 };
@@ -407,7 +407,7 @@ BrowseInstancesForm::configure (const std::string &name, const std::string &valu
     if (m_mode == ToCellView) {
       m_context_cv.set_cell (m_context_cell);
     }
-    cell_changed (lv_cell->currentItem (), 0);
+    cell_changed (lv_cell->currentItem (), nullptr);
   }
 
   return taken;
@@ -461,13 +461,13 @@ BrowseInstancesForm::cell_changed (QTreeWidgetItem *item, QTreeWidgetItem *)
 
   for (std::vector <const db::Cell *>::const_iterator parent = parents.begin (); parent != parents.end () && ! shortened; ++parent) {
     if (m_mode == AnyTop) {
-      shortened = fill_cell_instances (db::ICplxTrans (), layout, *parent, &cell, 0, false, std::string (), items);
+      shortened = fill_cell_instances (db::ICplxTrans (), layout, *parent, &cell, nullptr, false, std::string (), items);
     } else if (m_mode == ToCellView) {
       if (m_context_cv.is_valid ()) {
         shortened = fill_cell_instances (db::ICplxTrans (), layout, *parent, &cell, m_context_cv.cell (), false, std::string (), items);
       }
     } else if (m_mode == Parent) {
-      shortened = fill_cell_instances (db::ICplxTrans (), layout, *parent, &cell, 0, true, std::string (), items);
+      shortened = fill_cell_instances (db::ICplxTrans (), layout, *parent, &cell, nullptr, true, std::string (), items);
     }
   }
 
@@ -570,7 +570,7 @@ BrowseInstancesForm::change_cell (db::cell_index_type cell_index, int cv_index)
 
   //  update the cell list
 
-  BrowseInstancesFormCellLVI *sel_item = 0;
+  BrowseInstancesFormCellLVI *sel_item = nullptr;
 
   lv_cell->clear ();
 
@@ -623,7 +623,7 @@ BrowseInstancesForm::change_cell (db::cell_index_type cell_index, int cv_index)
 
   //  create the entries.
   m_items.clear ();
-  BrowseInstancesFormCellLVI *item = 0;
+  BrowseInstancesFormCellLVI *item = nullptr;
   for (std::vector<BrowseInstancesCellInfo>::const_iterator cn = cell_info.begin (); cn != cell_info.end (); ++cn) {
     item = new BrowseInstancesFormCellLVI (cn->name, cn->cell_index);
     item->setText (1, tl::to_qstring (tl::to_string (cn->count)));
@@ -649,7 +649,7 @@ BrowseInstancesForm::change_cell (db::cell_index_type cell_index, int cv_index)
   m_cell_changed_enabled = true;
 
   if (sel_item) {
-    cell_changed (sel_item, 0);
+    cell_changed (sel_item, nullptr);
   }
 
   m_view_changed = false;
@@ -676,7 +676,7 @@ BrowseInstancesForm::deactivated ()
 bool 
 BrowseInstancesForm::fill_cell_instances (const db::ICplxTrans &t, const db::Layout &layout, const db::Cell *parent, const db::Cell *from, const db::Cell *to, bool to_parent, const std::string &path, QList<QTreeWidgetItem *> &items)
 {
-  if (from == to || (! to_parent && to == 0 && from->is_top ())) {
+  if (from == to || (! to_parent && to == nullptr && from->is_top ())) {
 
     if (m_current_count == m_max_inst_count) {
       return true; //  shorten list
@@ -728,7 +728,7 @@ BrowseInstancesForm::fill_cell_instances (const db::ICplxTrans &t, const db::Lay
 
       db::ICplxTrans tt (parent_inst.complex_trans ());
       const db::Cell *cell = & layout.cell (p->parent_cell_index ());
-      if (fill_cell_instances (tt.inverted () * t, layout, 0, cell, to_parent ? cell : to, false, new_path, items)) {
+      if (fill_cell_instances (tt.inverted () * t, layout, nullptr, cell, to_parent ? cell : to, false, new_path, items)) {
         return true; // list too long - no more entries possible
       }
 

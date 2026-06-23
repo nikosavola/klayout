@@ -80,7 +80,7 @@ public:
    *
    *  This constructor creates an empty hierarchical netlist
    */
-  Netlist (NetlistManipulationCallbacks *callbacks = 0);
+  Netlist (NetlistManipulationCallbacks *callbacks = nullptr);
 
   /**
    *  @brief Copy constructor
@@ -565,7 +565,7 @@ public:
   /**
    *  @brief Generate memory statistics
    */
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const;
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const;
 
 private:
   friend class Circuit;

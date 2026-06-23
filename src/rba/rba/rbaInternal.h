@@ -116,7 +116,7 @@ public:
 
   void reset ()
   {
-    set (0, false, false, false, Qnil);
+    set (nullptr, false, false, false, Qnil);
   }
 
   const gsi::ClassBase *cls_decl () const

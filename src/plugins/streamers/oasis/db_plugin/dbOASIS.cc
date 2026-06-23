@@ -122,7 +122,7 @@ bool
 RegularRepetition::equals (const RepetitionBase *b) const
 {
   const RegularRepetition *r = dynamic_cast <const RegularRepetition *> (b);
-  tl_assert (r != 0);
+  tl_assert (r != nullptr);
   return m_a == r->m_a && m_b == r->m_b && m_n == r->m_n && m_m == r->m_m;
 }
 
@@ -130,7 +130,7 @@ bool
 RegularRepetition::less (const RepetitionBase *b) const
 {
   const RegularRepetition *r = dynamic_cast <const RegularRepetition *> (b);
-  tl_assert (r != 0);
+  tl_assert (r != nullptr);
   if (m_a != r->m_a) {
     return m_a < r->m_a;
   }
@@ -156,7 +156,7 @@ RegularRepetition::is_regular (db::Vector &a, db::Vector &b, size_t &n, size_t &
 const std::vector<db::Vector> *
 RegularRepetition::is_iterated () const
 {
-  return 0;
+  return nullptr;
 }
 
 //  Irregular repetitions
@@ -239,7 +239,7 @@ bool
 IrregularRepetition::equals (const RepetitionBase *b) const
 {
   const IrregularRepetition *r = dynamic_cast <const IrregularRepetition *> (b);
-  tl_assert (r != 0);
+  tl_assert (r != nullptr);
   return m_points == r->m_points;
 }
 
@@ -247,7 +247,7 @@ bool
 IrregularRepetition::less (const RepetitionBase *b) const
 {
   const IrregularRepetition *r = dynamic_cast <const IrregularRepetition *> (b);
-  tl_assert (r != 0);
+  tl_assert (r != nullptr);
   return m_points < r->m_points;
 }
 
@@ -275,7 +275,7 @@ RepetitionIterator::RepetitionIterator (RepetitionIteratorBase *base)
 RepetitionIterator::~RepetitionIterator ()
 {
   delete mp_base;
-  mp_base = 0;
+  mp_base = nullptr;
 }
 
 RepetitionIterator::RepetitionIterator (const RepetitionIterator &d)
@@ -332,7 +332,7 @@ Repetition::Repetition (RepetitionBase *base)
 
 Repetition::~Repetition ()
 {
-  set_base (0);
+  set_base (nullptr);
 }
 
 Repetition::Repetition (const Repetition &d)
@@ -340,7 +340,7 @@ Repetition::Repetition (const Repetition &d)
   if (d.mp_base) {
     mp_base = d.mp_base->clone ();
   } else {
-    mp_base = 0;
+    mp_base = nullptr;
   }
 }
 
@@ -348,7 +348,7 @@ Repetition &
 Repetition::operator= (const Repetition &d)
 {
   if (this != &d) {
-    set_base (d.mp_base ? d.mp_base->clone () : 0);
+    set_base (d.mp_base ? d.mp_base->clone () : nullptr);
   }
   return *this;
 }
@@ -363,10 +363,10 @@ Repetition::operator= (RepetitionBase *base)
 bool 
 Repetition::operator== (const Repetition &d) const
 {
-  if (mp_base == 0 && d.mp_base == 0) { 
+  if (mp_base == nullptr && d.mp_base == nullptr) { 
     return true;
   }
-  if (! (mp_base != 0 && d.mp_base != 0)) {
+  if (! (mp_base != nullptr && d.mp_base != nullptr)) {
     return false;
   }
   if (mp_base->type () != d.mp_base->type ()) {
@@ -378,8 +378,8 @@ Repetition::operator== (const Repetition &d) const
 bool 
 Repetition::operator< (const Repetition &d) const
 {
-  if (mp_base == 0 || d.mp_base == 0) { 
-    return (mp_base == 0) < (d.mp_base == 0);
+  if (mp_base == nullptr || d.mp_base == nullptr) { 
+    return (mp_base == nullptr) < (d.mp_base == nullptr);
   }
   if (mp_base->type () != d.mp_base->type ()) {
     return mp_base->type () < d.mp_base->type ();
@@ -411,13 +411,13 @@ Repetition::is_regular (db::Vector &a, db::Vector &b, size_t &n, size_t &m) cons
 const std::vector<db::Vector> *
 Repetition::is_iterated () const
 {
-  return mp_base != 0 ? mp_base->is_iterated () : 0;
+  return mp_base != nullptr ? mp_base->is_iterated () : nullptr;
 }
 
 RepetitionIterator 
 Repetition::begin () const
 {
-  tl_assert (mp_base != 0);
+  tl_assert (mp_base != nullptr);
   return RepetitionIterator (mp_base->begin ());
 }
 

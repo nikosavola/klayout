@@ -31,7 +31,7 @@ namespace db
 //  SubCircuit class implementation
 
 SubCircuit::SubCircuit ()
-  : db::NetlistObject (), m_id (0), mp_circuit (0)
+  : db::NetlistObject (), m_id (0), mp_circuit (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -46,13 +46,13 @@ SubCircuit::~SubCircuit()
 }
 
 SubCircuit::SubCircuit (Circuit *circuit, const std::string &name)
-  : db::NetlistObject (), m_circuit_ref (0), m_name (name), m_id (0), mp_circuit (0)
+  : db::NetlistObject (), m_circuit_ref (nullptr), m_name (name), m_id (0), mp_circuit (nullptr)
 {
   set_circuit_ref (circuit);
 }
 
 SubCircuit::SubCircuit (const SubCircuit &other)
-  : db::NetlistObject (other), m_id (0), mp_circuit (0)
+  : db::NetlistObject (other), m_id (0), mp_circuit (nullptr)
 {
   operator= (other);
 }
@@ -135,7 +135,7 @@ const Net *SubCircuit::net_for_pin (size_t pin_id) const
       return p->net ();
     }
   }
-  return 0;
+  return nullptr;
 }
 
 const NetSubcircuitPinRef *SubCircuit::netref_for_pin (size_t pin_id) const
@@ -146,7 +146,7 @@ const NetSubcircuitPinRef *SubCircuit::netref_for_pin (size_t pin_id) const
       return p.operator-> ();
     }
   }
-  return 0;
+  return nullptr;
 }
 
 void SubCircuit::connect_pin (size_t pin_id, Net *net)

@@ -159,7 +159,7 @@ PCellVariant::parameters_by_name_from_list (const db::pcell_parameters_type &lis
 void 
 PCellVariant::update (ImportLayerMapping *layer_mapping)
 {
-  tl_assert (layout () != 0);
+  tl_assert (layout () != nullptr);
 
   clear_shapes ();
   clear_insts ();

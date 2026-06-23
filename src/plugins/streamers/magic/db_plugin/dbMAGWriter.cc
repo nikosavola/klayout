@@ -48,7 +48,7 @@ static db::Box safe_box (const db::Box &bx)
 }
 
 MAGWriter::MAGWriter ()
-  : mp_stream (0),
+  : mp_stream (nullptr),
     m_progress (tl::to_string (tr ("Writing Magic file")), 10000)
 {
   m_progress.set_format (tl::to_string (tr ("%.0f MB")));

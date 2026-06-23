@@ -33,14 +33,14 @@ namespace lay
 // ----------------------------------------------------------------
 //  Dispatcher implementation
 
-static Dispatcher *ms_dispatcher_instance = 0;
+static Dispatcher *ms_dispatcher_instance = nullptr;
 
 Dispatcher::Dispatcher (Plugin *parent, bool standalone)
   : Plugin (parent, standalone),
 #if defined(HAVE_QT)
-    mp_menu_parent_widget (0),
+    mp_menu_parent_widget (nullptr),
 #endif
-    mp_delegate (0)
+    mp_delegate (nullptr)
 {
   if (! parent && ! ms_dispatcher_instance) {
     ms_dispatcher_instance = this;
@@ -50,7 +50,7 @@ Dispatcher::Dispatcher (Plugin *parent, bool standalone)
 Dispatcher::Dispatcher (DispatcherDelegate *delegate, Plugin *parent, bool standalone)
   : Plugin (parent, standalone),
 #if defined(HAVE_QT)
-    mp_menu_parent_widget (0),
+    mp_menu_parent_widget (nullptr),
 #endif
     mp_delegate (delegate)
 {
@@ -62,7 +62,7 @@ Dispatcher::Dispatcher (DispatcherDelegate *delegate, Plugin *parent, bool stand
 Dispatcher::~Dispatcher ()
 {
   if (ms_dispatcher_instance == this) {
-    ms_dispatcher_instance = 0;
+    ms_dispatcher_instance = nullptr;
   }
 }
 
@@ -117,7 +117,7 @@ Dispatcher::function (const std::string &symbol, const std::string &args)
 struct ConfigGetAdaptor
 {
   ConfigGetAdaptor (const std::string &name)
-    : mp_owner (0), m_done (false), m_name (name)
+    : mp_owner (nullptr), m_done (false), m_name (name)
   {
     // .. nothing yet ..
   }

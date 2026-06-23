@@ -276,7 +276,7 @@ public:
    *  layout needs to be supplied, because in that case, the
    *  layout of "this" is already replaced.
    */
-  void remap_to (db::Library *other, Layout *original_layout = 0);
+  void remap_to (db::Library *other, Layout *original_layout = nullptr);
 
   /**
    *  @brief This event is fired if proxies get retired on unretired

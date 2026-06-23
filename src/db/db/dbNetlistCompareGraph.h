@@ -162,7 +162,7 @@ public:
   typedef std::vector<edge_type>::const_iterator edge_iterator;
 
   NetGraphNode ()
-    : mp_net (0), m_other_net_index (invalid_id)
+    : mp_net (nullptr), m_other_net_index (invalid_id)
   {
     //  .. nothing yet ..
   }

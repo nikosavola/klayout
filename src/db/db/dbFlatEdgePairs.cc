@@ -176,7 +176,7 @@ const db::EdgePair *FlatEdgePairs::nth (size_t n) const
   //  NOTE: this assumes that we iterate over non-property edge pairs first and then over edges with properties
 
   if (n >= mp_edge_pairs->size ()) {
-    return 0;
+    return nullptr;
   }
 
   const db::layer<db::EdgePair, db::unstable_layer_tag> &l = mp_edge_pairs->get_layer<db::EdgePair, db::unstable_layer_tag> ();
@@ -190,7 +190,7 @@ const db::EdgePair *FlatEdgePairs::nth (size_t n) const
     return &lp.begin () [n];
   }
 
-  return 0;
+  return nullptr;
 }
 
 db::properties_id_type FlatEdgePairs::nth_prop_id (size_t n) const
@@ -222,7 +222,7 @@ bool FlatEdgePairs::has_valid_edge_pairs () const
 
 const db::RecursiveShapeIterator *FlatEdgePairs::iter () const
 {
-  return 0;
+  return nullptr;
 }
 
 void FlatEdgePairs::apply_property_translator (const db::PropertiesTranslator &pt)

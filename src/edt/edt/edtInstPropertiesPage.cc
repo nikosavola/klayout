@@ -103,7 +103,7 @@ static bool is_orthogonal (const db::DVector &rv, const db::DVector &cv)
 }
 
 InstPropertiesPage::InstPropertiesPage (edt::Service *service, db::Manager *manager, QWidget *parent)
-  : lay::PropertiesPage (parent, manager, service), mp_service (service), m_enable_cb_callback (true), mp_pcell_parameters (0)
+  : lay::PropertiesPage (parent, manager, service), mp_service (service), m_enable_cb_callback (true), mp_pcell_parameters (nullptr)
 {
   m_selection_ptrs.reserve (service->selection_size ());
   for (EditableSelectionIterator s = service->begin_selection (); ! s.at_end (); ++s) {
@@ -215,8 +215,8 @@ BEGIN_PROTECTED
 
   //  find the layout the cell has to be looked up: that is either the layout of the current instance or 
   //  the library selected
-  db::Layout *layout = 0;
-  db::Library *lib = 0;
+  db::Layout *layout = nullptr;
+  db::Library *lib = nullptr;
   if (lib_cbx->current_library ()) {
     lib = lib_cbx->current_library ();
     layout = &lib->layout ();
@@ -226,7 +226,7 @@ BEGIN_PROTECTED
     layout = &cv->layout ();
   }
 
-  lay::LibraryCellSelectionForm form (this, layout, "browse_lib_cell", false, lib != 0 /*for libs show top cells only*/, lib != 0 /*for libs hide private cells*/);
+  lay::LibraryCellSelectionForm form (this, layout, "browse_lib_cell", false, lib != nullptr /*for libs show top cells only*/, lib != nullptr /*for libs hide private cells*/);
   if (lib) {
     form.setWindowTitle (tl::to_qstring (tl::to_string (QObject::tr ("Select Cell - Library: ")) + lib->get_description ()));
   }
@@ -551,19 +551,19 @@ InstPropertiesPage::create_applicator (db::Cell & /*cell*/, const db::Instance &
     std::pair<bool, db::pcell_id_type> pci;
     get_cell_or_pcell_ids_by_name (layout, tl::to_string (cell_name_le->text ()), ci, pci);
     if (! ci.first && ! pci.first) {
-      throw tl::Exception (tl::to_string (QObject::tr ("Not a valid cell or PCell name: %s")).c_str (), tl::to_string (cell_name_le->text ()).c_str ());
+      throw tl::Exception (tl::to_string (QObject::tr ("Not a valid cell or PCell name: %s")), tl::to_string (cell_name_le->text ()).c_str ());
     }
 
     //  detect recursions in the hierarchy
-    if (lib == 0 && ci.first) {
+    if (lib == nullptr && ci.first) {
       std::set<db::cell_index_type> called;
       layout->cell (ci.second).collect_called_cells (called);
       if (ci.second == cv.cell_index () || called.find (cv.cell_index ()) != called.end ()) {
-        throw tl::Exception (tl::to_string (QObject::tr ("Trying to build a recursive hierarchy")).c_str ());
+        throw tl::Exception (tl::to_string (QObject::tr ("Trying to build a recursive hierarchy")));
       }
     }
 
-    lay::indicate_error (cell_name_le, (tl::Exception *) 0);
+    lay::indicate_error (cell_name_le, (tl::Exception *) nullptr);
 
   } catch (tl::Exception &ex) {
     lay::indicate_error (cell_name_le, &ex);
@@ -600,7 +600,7 @@ InstPropertiesPage::create_applicator (db::Cell & /*cell*/, const db::Instance &
 
       //  instantiates the PCell
       if (pci.first) {
-        tl_assert (mp_pcell_parameters != 0);
+        tl_assert (mp_pcell_parameters != nullptr);
         tl_assert (layout->pcell_declaration (pci.second) == mp_pcell_parameters->pcell_decl ());
         inst_cell_index = layout->get_pcell_variant (pci.second, mp_pcell_parameters->get_parameters ());
       } else {
@@ -625,7 +625,7 @@ InstPropertiesPage::create_applicator (db::Cell & /*cell*/, const db::Instance &
 
       tl_assert (mp_pcell_parameters);
 
-      std::vector<tl::Variant> param = mp_pcell_parameters->get_parameters (0);
+      std::vector<tl::Variant> param = mp_pcell_parameters->get_parameters (nullptr);
       std::vector<tl::Variant> initial_param = mp_pcell_parameters->initial_parameters ();
 
       const std::vector<db::PCellParameterDeclaration> &pcp = mp_pcell_parameters->pcell_decl ()->parameter_declarations ();
@@ -657,7 +657,7 @@ InstPropertiesPage::create_applicator (db::Cell & /*cell*/, const db::Instance &
 
   try {
     tl::from_string_ext (tl::to_string (pos_x_le->text ()), x);
-    lay::indicate_error (pos_x_le, (tl::Exception *) 0);
+    lay::indicate_error (pos_x_le, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (pos_x_le, &ex);
     has_error = true;
@@ -665,7 +665,7 @@ InstPropertiesPage::create_applicator (db::Cell & /*cell*/, const db::Instance &
 
   try {
     tl::from_string_ext (tl::to_string (pos_y_le->text ()), y);
-    lay::indicate_error (pos_y_le, (tl::Exception *) 0);
+    lay::indicate_error (pos_y_le, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (pos_y_le, &ex);
     has_error = true;
@@ -682,7 +682,7 @@ InstPropertiesPage::create_applicator (db::Cell & /*cell*/, const db::Instance &
   double angle = 0.0;
   try {
     tl::from_string_ext (tl::to_string (angle_le->text ()), angle);
-    lay::indicate_error (angle_le, (tl::Exception *) 0);
+    lay::indicate_error (angle_le, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (angle_le, &ex);
     has_error = true;
@@ -691,7 +691,7 @@ InstPropertiesPage::create_applicator (db::Cell & /*cell*/, const db::Instance &
   double mag = 0.0;
   try {
     tl::from_string_ext (tl::to_string (mag_le->text ()), mag);
-    lay::indicate_error (mag_le, (tl::Exception *) 0);
+    lay::indicate_error (mag_le, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (mag_le, &ex);
     has_error = true;
@@ -720,7 +720,7 @@ InstPropertiesPage::create_applicator (db::Cell & /*cell*/, const db::Instance &
 
     try {
       tl::from_string_ext (tl::to_string (column_x_le->text ()), cx);
-      lay::indicate_error (column_x_le, (tl::Exception *) 0);
+      lay::indicate_error (column_x_le, (tl::Exception *) nullptr);
     } catch (tl::Exception &ex) {
       lay::indicate_error (column_x_le, &ex);
       has_error = true;
@@ -728,7 +728,7 @@ InstPropertiesPage::create_applicator (db::Cell & /*cell*/, const db::Instance &
 
     try {
       tl::from_string_ext (tl::to_string (column_y_le->text ()), cy);
-      lay::indicate_error (column_y_le, (tl::Exception *) 0);
+      lay::indicate_error (column_y_le, (tl::Exception *) nullptr);
     } catch (tl::Exception &ex) {
       lay::indicate_error (column_y_le, &ex);
       has_error = true;
@@ -736,7 +736,7 @@ InstPropertiesPage::create_applicator (db::Cell & /*cell*/, const db::Instance &
 
     try {
       tl::from_string_ext (tl::to_string (row_x_le->text ()), rx);
-      lay::indicate_error (row_x_le, (tl::Exception *) 0);
+      lay::indicate_error (row_x_le, (tl::Exception *) nullptr);
     } catch (tl::Exception &ex) {
       lay::indicate_error (row_x_le, &ex);
       has_error = true;
@@ -744,7 +744,7 @@ InstPropertiesPage::create_applicator (db::Cell & /*cell*/, const db::Instance &
 
     try {
       tl::from_string_ext (tl::to_string (row_y_le->text ()), ry);
-      lay::indicate_error (row_y_le, (tl::Exception *) 0);
+      lay::indicate_error (row_y_le, (tl::Exception *) nullptr);
     } catch (tl::Exception &ex) {
       lay::indicate_error (row_y_le, &ex);
       has_error = true;
@@ -755,7 +755,7 @@ InstPropertiesPage::create_applicator (db::Cell & /*cell*/, const db::Instance &
       if (rows < 1) {
         throw tl::Exception (tl::to_string (tr ("Rows count can't be zero")));
       }
-      lay::indicate_error (rows_le, (tl::Exception *) 0);
+      lay::indicate_error (rows_le, (tl::Exception *) nullptr);
     } catch (tl::Exception &ex) {
       lay::indicate_error (rows_le, &ex);
       has_error = true;
@@ -766,7 +766,7 @@ InstPropertiesPage::create_applicator (db::Cell & /*cell*/, const db::Instance &
       if (cols < 1) {
         throw tl::Exception (tl::to_string (tr ("Columns count can't be zero")));
       }
-      lay::indicate_error (columns_le, (tl::Exception *) 0);
+      lay::indicate_error (columns_le, (tl::Exception *) nullptr);
     } catch (tl::Exception &ex) {
       lay::indicate_error (columns_le, &ex);
       has_error = true;
@@ -993,10 +993,10 @@ InstPropertiesPage::update_pcell_parameters ()
 
   //  indicate an invalid cell name
   if (! pc.first && ! cc.first) {
-    tl::Exception ex (tl::to_string (QObject::tr ("Not a valid cell or PCell name: %s")).c_str (), tl::to_string (cell_name_le->text ()).c_str ());
+    tl::Exception ex (tl::to_string (QObject::tr ("Not a valid cell or PCell name: %s")), tl::to_string (cell_name_le->text ()).c_str ());
     lay::indicate_error (cell_name_le, &ex);
   } else {
-    lay::indicate_error (cell_name_le, (tl::Exception *) 0);
+    lay::indicate_error (cell_name_le, (tl::Exception *) nullptr);
   }
 
   if (pc.first && layout->pcell_declaration (pc.second)) {
@@ -1055,7 +1055,7 @@ InstPropertiesPage::update_pcell_parameters ()
       mp_pcell_parameters->deleteLater ();
     }
 
-    mp_pcell_parameters = 0;
+    mp_pcell_parameters = nullptr;
 
     if (param_tab_widget->currentIndex () == 1) {
       param_tab_widget->setCurrentIndex (0);

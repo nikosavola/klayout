@@ -41,7 +41,7 @@ namespace lay
 {
 
 MacroController::MacroController ()
-  : mp_macro_editor (0), mp_mw (0), m_no_implicit_macros (false), m_file_watcher (0),
+  : mp_macro_editor (nullptr), mp_mw (nullptr), m_no_implicit_macros (false), m_file_watcher (nullptr),
     dm_do_update_menu_with_macros (this, &MacroController::do_update_menu_with_macros),
     dm_do_sync_with_external_sources (this, &MacroController::do_sync_with_external_sources),
     dm_sync_file_watcher (this, &MacroController::sync_file_watcher),
@@ -198,12 +198,12 @@ MacroController::uninitialize (lay::Dispatcher * /*root*/)
     disconnect (m_file_watcher, SIGNAL (fileChanged (const QString &)), this, SLOT (file_watcher_triggered ()));
     disconnect (m_file_watcher, SIGNAL (fileRemoved (const QString &)), this, SLOT (file_watcher_triggered ()));
     delete m_file_watcher;
-    m_file_watcher = 0;
+    m_file_watcher = nullptr;
   }
 
   delete mp_macro_editor;
-  mp_macro_editor = 0;
-  mp_mw = 0;
+  mp_macro_editor = nullptr;
+  mp_mw = nullptr;
 }
 
 bool
@@ -287,7 +287,7 @@ MacroController::drop_url (const std::string &path_or_url)
       }
 
       if (! folder.cd (tl::to_qstring (cat))) {
-        throw tl::Exception (tl::to_string (QObject::tr ("Folder '%s' does not exists in installation path '%s' - cannot install")).c_str (), cat, lay::ApplicationBase::instance ()->appdata_path ());
+        throw tl::Exception (tl::to_string (QObject::tr ("Folder '%s' does not exists in installation path '%s' - cannot install")), cat, lay::ApplicationBase::instance ()->appdata_path ());
       }
 
       QFileInfo target (folder, file_name);
@@ -719,7 +719,7 @@ MacroController::add_macro_items_to_menu (lym::MacroCollection &collection, std:
     }
 
     if (consider) {
-      add_macro_items_to_menu (*c->second, used_names, groups, 0 /*don't check 2nd level and below*/);
+      add_macro_items_to_menu (*c->second, used_names, groups, nullptr /*don't check 2nd level and below*/);
     }
 
   }
@@ -795,7 +795,7 @@ MacroController::do_update_menu_with_macros ()
     return;
   }
 
-  const db::Technology *tech = 0;
+  const db::Technology *tech = nullptr;
   if (lay::TechnologyController::instance ()) {
     tech = lay::TechnologyController::instance ()->active_technology ();
   }
@@ -866,7 +866,7 @@ MacroController::instance ()
       return mc;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 //  The singleton instance of the macro controller
@@ -875,7 +875,7 @@ static tl::RegisteredClass<lay::PluginDeclaration> macro_controller_decl (new la
 static lym::Macro *macro_for_action (const lay::Action *action)
 {
   const RunMacroAction *rma = dynamic_cast<const RunMacroAction *> (action);
-  return rma ? rma->macro () : 0;
+  return rma ? rma->macro () : nullptr;
 }
 
 //  extend lay::Action with the ability to associate a macro with it

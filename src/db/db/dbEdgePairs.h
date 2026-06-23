@@ -125,7 +125,7 @@ public:
    *  Creates an edge pair set representing a single instance of that object
    */
   explicit EdgePairs (const db::EdgePair &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -136,7 +136,7 @@ public:
    *  Creates an edge pair set representing a single instance of that object
    */
   explicit EdgePairs (const db::EdgePairWithProperties &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -147,7 +147,7 @@ public:
    *  Creates an edge pair set representing a single instance of that object
    */
   explicit EdgePairs (const db::Shape &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -160,7 +160,7 @@ public:
    */
   template <class Iter>
   explicit EdgePairs (const Iter &b, const Iter &e)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     reserve (e - b);
     for (Iter i = b; i != e; ++i) {
@@ -247,7 +247,7 @@ public:
   EdgePairsDelegate *take_delegate ()
   {
     EdgePairsDelegate *delegate = mp_delegate;
-    mp_delegate = 0;
+    mp_delegate = nullptr;
     return delegate;
   }
 

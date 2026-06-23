@@ -269,7 +269,7 @@ std::string micron_to_string (double d)
   } else if (std::isinf (d)) {
     return d < 0 ? ninf_string : inf_string;
   } else {
-    return tl::sprintf (micron_format.c_str (), d);
+    return tl::sprintf (micron_format, d);
   }
 }
 
@@ -280,7 +280,7 @@ std::string db_to_string (double d)
   } else if (std::isinf (d)) {
     return d < 0 ? ninf_string : inf_string;
   } else {
-    return tl::sprintf (dbu_format.c_str (), d);
+    return tl::sprintf (dbu_format, d);
   }
 }
 
@@ -742,9 +742,9 @@ to_word_or_quoted_string (const std::string &s, const char *non_term)
   //  If the string does not contain non_term characters, we may simply keep it.
   //  Otherwise we need to quote it.
   const char *cp = s.c_str ();
-  if (*cp && (safe_isalpha (*cp) || strchr (non_term, *cp) != NULL)) {
+  if (*cp && (safe_isalpha (*cp) || strchr (non_term, *cp) != nullptr)) {
     ++cp;
-    for ( ; *cp && (safe_isalnum (*cp) || strchr (non_term, *cp) != NULL); ++cp) {
+    for ( ; *cp && (safe_isalnum (*cp) || strchr (non_term, *cp) != nullptr); ++cp) {
       ;
     }
   }
@@ -880,7 +880,7 @@ from_string_numeric (const std::string &s, double &v, bool eval)
     if (eval) {
       //  try using an expression (using a clean environment disables all global features and leaves
       //  only some static functions)
-      v = tl::Eval (0, 0, false).parse (s).execute ().to_double ();
+      v = tl::Eval (nullptr, nullptr, false).parse (s).execute ().to_double ();
     } else {
       throw tl::Exception (tl::to_string (tr ("Unexpected text after numeric value: '...")) + cp_end + "'");
     }
@@ -1411,14 +1411,14 @@ Extractor::try_read_name (std::string &string, const char *non_term)
   string.clear ();
 
   //  first character must not be a digit
-  if (*m_cp && (safe_isalpha (*m_cp) || strchr (non_term, *m_cp) != NULL)) {
+  if (*m_cp && (safe_isalpha (*m_cp) || strchr (non_term, *m_cp) != nullptr)) {
     string += *m_cp;
     ++m_cp;
   } else {
     return false;
   }
 
-  while (*m_cp && (safe_isalnum (*m_cp) || strchr (non_term, *m_cp) != NULL)) {
+  while (*m_cp && (safe_isalnum (*m_cp) || strchr (non_term, *m_cp) != nullptr)) {
     string += *m_cp;
     ++m_cp;
   }
@@ -1435,7 +1435,7 @@ Extractor::try_read_word (std::string &string, const char *non_term)
 
   string.clear ();
 
-  while (*m_cp && (safe_isalnum (*m_cp) || strchr (non_term, *m_cp) != NULL)) {
+  while (*m_cp && (safe_isalnum (*m_cp) || strchr (non_term, *m_cp) != nullptr)) {
     string += *m_cp;
     ++m_cp;
   }
@@ -1480,7 +1480,7 @@ Extractor::try_read (std::string &string, const char *term)
 {
   //  if the terminating characters contain line feed for blank, we must not skip over them
   if (strchr (term, '\n') || strchr (term, ' ')) {
-    while (safe_isspace (*m_cp) && strchr (term, *m_cp) == 0) {
+    while (safe_isspace (*m_cp) && strchr (term, *m_cp) == nullptr) {
       ++m_cp;
     }
     if (! *m_cp) {
@@ -1496,7 +1496,7 @@ Extractor::try_read (std::string &string, const char *term)
   }
 
   string.clear ();
-  while (*m_cp && (term_is_space || ! safe_isspace (*m_cp)) && strchr (term, *m_cp) == NULL) {
+  while (*m_cp && (term_is_space || ! safe_isspace (*m_cp)) && strchr (term, *m_cp) == nullptr) {
     string += *m_cp;
     ++m_cp;
   }
@@ -1525,7 +1525,7 @@ Extractor &
 Extractor::expect (const char *token)
 {
   if (! test (token)) {
-    error (tl::sprintf (tl::to_string (tr ("Expected '%s'")).c_str (), token));
+    error (tl::sprintf (tl::to_string (tr ("Expected '%s'")), token));
   }
   return *this;
 }
@@ -1615,7 +1615,7 @@ string::string (const char *c)
     mp_rep = alloc.allocate (m_capacity + 1);
     strcpy (mp_rep, c);
   } else {
-    mp_rep = 0;
+    mp_rep = nullptr;
     m_capacity = m_size = 0;
   }
 }
@@ -1629,7 +1629,7 @@ string::string (const char *c, size_t from, size_t to)
     strncpy (mp_rep, c + from, m_size);
     mp_rep [m_size] = 0;
   } else {
-    mp_rep = 0;
+    mp_rep = nullptr;
   }
 }
 
@@ -1642,7 +1642,7 @@ string::string (const tl::string &s)
     strncpy (mp_rep, s.c_str (), m_size);
     mp_rep [m_size] = 0;
   } else {
-    mp_rep = 0;
+    mp_rep = nullptr;
   }
 }
 
@@ -1655,7 +1655,7 @@ string::string (const tl::string &s, size_t from, size_t to)
     strncpy (mp_rep, s.c_str () + from, m_size);
     mp_rep [m_size] = 0;
   } else {
-    mp_rep = 0;
+    mp_rep = nullptr;
   }
 }
 
@@ -1668,7 +1668,7 @@ string::string (const std::string &s)
     strncpy (mp_rep, s.c_str (), m_size);
     mp_rep [m_size] = 0;
   } else {
-    mp_rep = 0;
+    mp_rep = nullptr;
   }
 }
 
@@ -1681,7 +1681,7 @@ string::string (const std::string &s, size_t from, size_t to)
     strncpy (mp_rep, s.c_str () + from, m_size);
     mp_rep [m_size] = 0;
   } else {
-    mp_rep = 0;
+    mp_rep = nullptr;
   }
 }
 
@@ -1691,7 +1691,7 @@ string::~string ()
     allocator_t alloc;
     alloc.deallocate (mp_rep, m_capacity + 1);
   }
-  mp_rep = 0;
+  mp_rep = nullptr;
 }
 
 string &
@@ -1785,7 +1785,7 @@ string::clear ()
   if (mp_rep) {
     allocator_t alloc;
     alloc.deallocate (mp_rep, m_capacity + 1);
-    mp_rep = 0;
+    mp_rep = nullptr;
   }
   m_size = 0;
   m_capacity = 0;

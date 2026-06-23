@@ -187,7 +187,7 @@ public:
    */
   operator bool () const
   {
-    return get () != 0;
+    return get () != nullptr;
   }
 
   /**
@@ -357,7 +357,7 @@ public:
   T &operator* ()
   {
     T *t = get ();
-    tl_assert (t != 0);
+    tl_assert (t != nullptr);
     return *t;
   }
 
@@ -367,7 +367,7 @@ public:
   const T &operator* () const
   {
     const T *t = get ();
-    tl_assert (t != 0);
+    tl_assert (t != nullptr);
     return *t;
   }
 

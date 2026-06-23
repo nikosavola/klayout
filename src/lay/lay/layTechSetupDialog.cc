@@ -104,7 +104,7 @@ TechBaseEditorPage::TechBaseEditorPage (QWidget *parent)
 TechBaseEditorPage::~TechBaseEditorPage ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -219,7 +219,7 @@ TechLoadOptionsEditorPage::TechLoadOptionsEditorPage (QWidget *parent)
 
   for (tl::Registrar<db::StreamFormatDeclaration>::iterator fmt = tl::Registrar<db::StreamFormatDeclaration>::begin (); fmt != tl::Registrar<db::StreamFormatDeclaration>::end (); ++fmt) {
 
-    StreamReaderOptionsPage *page = 0;
+    StreamReaderOptionsPage *page = nullptr;
 
     //  obtain the config page from the plugin which we identify by format name
     const StreamReaderPluginDeclaration *decl = StreamReaderPluginDeclaration::plugin_for_format (fmt->format_name ());
@@ -261,7 +261,7 @@ TechLoadOptionsEditorPage::TechLoadOptionsEditorPage (QWidget *parent)
 TechLoadOptionsEditorPage::~TechLoadOptionsEditorPage ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -309,7 +309,7 @@ TechSaveOptionsEditorPage::TechSaveOptionsEditorPage (QWidget *parent)
 
   for (tl::Registrar<db::StreamFormatDeclaration>::iterator fmt = tl::Registrar<db::StreamFormatDeclaration>::begin (); fmt != tl::Registrar<db::StreamFormatDeclaration>::end (); ++fmt) {
 
-    StreamWriterOptionsPage *page = 0;
+    StreamWriterOptionsPage *page = nullptr;
 
     //  obtain the config page from the plugin which we identify by format name
     const StreamWriterPluginDeclaration *decl = StreamWriterPluginDeclaration::plugin_for_format (fmt->format_name ());
@@ -351,7 +351,7 @@ TechSaveOptionsEditorPage::TechSaveOptionsEditorPage (QWidget *parent)
 TechSaveOptionsEditorPage::~TechSaveOptionsEditorPage ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -422,7 +422,7 @@ TechMacrosPage::~TechMacrosPage ()
   delete mp_ui->folder_tree->model ();
 
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -440,7 +440,7 @@ TechMacrosPage::setup ()
   QString cp = macro_dir.canonicalPath ();
 
   //  if a macro collection already exists, show a readonly copy of this one
-  const lym::MacroCollection *original = 0;
+  const lym::MacroCollection *original = nullptr;
   const lym::MacroCollection *root = &lym::MacroCollection::root ();
   for (lym::MacroCollection::const_child_iterator m = root->begin_children (); m != root->end_children () && ! original; ++m) {
     if (m->second->virtual_mode () == lym::MacroCollection::TechFolder && m->second->category () == m_cat && QDir (tl::to_qstring (m->second->path ())).canonicalPath () == cp) {
@@ -448,7 +448,7 @@ TechMacrosPage::setup ()
     }
   }
 
-  const lym::MacroCollection *alt = 0;
+  const lym::MacroCollection *alt = nullptr;
   for (lym::MacroCollection::const_child_iterator m = root->begin_children (); m != root->end_children () && ! alt; ++m) {
     if (m->second->virtual_mode () != lym::MacroCollection::TechFolder && QDir (tl::to_qstring (m->second->path ())).canonicalPath () == cp) {
       alt = m->second;
@@ -547,7 +547,7 @@ END_PROTECTED
 void
 TechMacrosPage::macro_selected (const QModelIndex &index)
 {
-  const lym::Macro *m = 0;
+  const lym::Macro *m = nullptr;
   lay::MacroTreeModel *model = dynamic_cast<lay::MacroTreeModel *> (mp_ui->folder_tree->model ());
   if (model && model->is_valid_pointer (index.internalPointer ())) {
     m = dynamic_cast <lym::Macro *> ((QObject *) index.internalPointer ());
@@ -573,7 +573,7 @@ TechMacrosPage::commit ()
 static bool s_first_show = true;
 
 TechSetupDialog::TechSetupDialog (QWidget *parent)
-  : QDialog (parent), mp_current_tech (0), mp_current_editor (0), mp_current_tech_component (0), m_current_tech_changed_enabled (true)
+  : QDialog (parent), mp_current_tech (nullptr), mp_current_editor (nullptr), mp_current_tech_component (nullptr), m_current_tech_changed_enabled (true)
 {
   setObjectName (QString::fromUtf8 ("tech_setup_dialog"));
 
@@ -620,7 +620,7 @@ TechSetupDialog::~TechSetupDialog ()
   clear_components ();
 
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -637,8 +637,8 @@ TechSetupDialog::clear_components ()
   }
   m_component_editors.clear ();
 
-  mp_current_editor = 0;
-  mp_current_tech_component = 0;
+  mp_current_editor = nullptr;
+  mp_current_tech_component = nullptr;
 }
 
 void
@@ -649,7 +649,7 @@ TechSetupDialog::refresh_clicked ()
 BEGIN_PROTECTED
 
   commit_tech_component ();
-  update_tech (0);
+  update_tech (nullptr);
 
   std::string tech_name;
   if (selected_tech ()) {
@@ -672,7 +672,7 @@ BEGIN_PROTECTED
 
   update_tech_tree ();
 
-  QTreeWidgetItem *new_item = 0;
+  QTreeWidgetItem *new_item = nullptr;
 
   for (int i = 0; i < mp_ui->tech_tree->topLevelItemCount () && !new_item; ++i) {
     QTreeWidgetItem *item = mp_ui->tech_tree->topLevelItem (i);
@@ -730,7 +730,7 @@ TechSetupDialog::exec_dialog (db::Technologies &technologies)
   }
 
   //  clean up
-  update_tech (0);
+  update_tech (nullptr);
   m_technologies = db::Technologies ();
   update_tech_tree ();
 
@@ -747,7 +747,7 @@ BEGIN_PROTECTED
   db::Technology *t = selected_tech ();
   if (! t) {
     t = m_technologies.technology_by_name (std::string ());
-    tl_assert (t != 0);
+    tl_assert (t != nullptr);
   }
 
   std::string d = t->get_display_string ();
@@ -1010,7 +1010,7 @@ TechSetupDialog::update_tech (db::Technology *t)
 
     lay::TechnologyComponentEditor *tce_widget = new TechBaseEditorPage (this);
     tce_widget->setEnabled (!t->is_readonly ());
-    tce_widget->set_technology (t, 0);
+    tce_widget->set_technology (t, nullptr);
     mp_ui->tc_stack->addWidget (tce_widget);
     m_component_editors.insert (std::make_pair (std::string ("_general"), tce_widget));
 
@@ -1019,7 +1019,7 @@ TechSetupDialog::update_tech (db::Technology *t)
       for (std::vector<lay::MacroController::MacroCategory>::const_iterator c = mc.begin (); c != mc.end (); ++c) {
         tce_widget = new TechMacrosPage (this, c->name, c->description);
         tce_widget->setEnabled (!t->is_readonly ());
-        tce_widget->set_technology (t, 0);
+        tce_widget->set_technology (t, nullptr);
         mp_ui->tc_stack->addWidget (tce_widget);
         m_component_editors.insert (std::make_pair (std::string ("_macros_") + c->name, tce_widget));
       }
@@ -1027,13 +1027,13 @@ TechSetupDialog::update_tech (db::Technology *t)
 
     tce_widget = new TechLoadOptionsEditorPage (this);
     tce_widget->setEnabled (!t->is_readonly ());
-    tce_widget->set_technology (t, 0);
+    tce_widget->set_technology (t, nullptr);
     mp_ui->tc_stack->addWidget (tce_widget);
     m_component_editors.insert (std::make_pair (std::string ("_load_options"), tce_widget));
 
     tce_widget = new TechSaveOptionsEditorPage (this);
     tce_widget->setEnabled (!t->is_readonly ());
-    tce_widget->set_technology (t, 0);
+    tce_widget->set_technology (t, nullptr);
     mp_ui->tc_stack->addWidget (tce_widget);
     m_component_editors.insert (std::make_pair (std::string ("_save_options"), tce_widget));
 
@@ -1043,7 +1043,7 @@ TechSetupDialog::update_tech (db::Technology *t)
       db::TechnologyComponent *tc = t->component_by_name (*n)->clone ();
       m_technology_components.insert (std::make_pair (*n, tc));
 
-      tce_widget = 0;
+      tce_widget = nullptr;
       for (tl::Registrar<lay::TechnologyEditorProvider>::iterator cls = tl::Registrar<lay::TechnologyEditorProvider>::begin (); cls != tl::Registrar<lay::TechnologyEditorProvider>::end () && ! tce_widget; ++cls) {
         if (cls.current_name () == tc->name ()) {
           tce_widget = cls->create_editor (this);
@@ -1073,7 +1073,7 @@ TechSetupDialog::update_tech_component ()
     if (tc != m_technology_components.end ()) {
       mp_current_tech_component = tc->second;
     } else {
-      mp_current_tech_component = 0;
+      mp_current_tech_component = nullptr;
     }
 
     mp_ui->tc_stack->setCurrentWidget (tce->second);
@@ -1083,7 +1083,7 @@ TechSetupDialog::update_tech_component ()
   } else {
 
     mp_ui->tc_stack->setCurrentIndex (0);
-    mp_current_editor = 0;
+    mp_current_editor = nullptr;
 
   }
 }
@@ -1092,10 +1092,10 @@ void
 TechSetupDialog::select_tech (const db::Technology &tech)
 {
   //  unselect the previous technology
-  update_tech (0); 
+  update_tech (nullptr); 
 
   //  find the item for the new technology
-  QTreeWidgetItem *item = 0;
+  QTreeWidgetItem *item = nullptr;
   for (int i = mp_ui->tech_tree->topLevelItemCount (); i > 0; --i) {
     item = mp_ui->tech_tree->topLevelItem (i - 1);
     if (item->data (0, Qt::UserRole).toString () == tl::to_qstring (tech.name ())) {
@@ -1201,7 +1201,7 @@ TechSetupDialog::selected_tech ()
 
   }
 
-  return 0;
+  return nullptr;
 }
 
 // ----------------------------------------------------------------
@@ -1209,7 +1209,7 @@ TechSetupDialog::selected_tech ()
 
 TechComponentSetupDialog::TechComponentSetupDialog (QWidget *parent, db::Technology *tech, const std::string &component_name)
   : QDialog (parent),
-    mp_tech (tech), mp_component (0), mp_editor (0)
+    mp_tech (tech), mp_component (nullptr), mp_editor (nullptr)
 {
   setObjectName (QString::fromUtf8 ("tech_component_setup_dialog"));
 
@@ -1227,7 +1227,7 @@ TechComponentSetupDialog::TechComponentSetupDialog (QWidget *parent, db::Technol
 
     mp_component = component->clone ();
 
-    mp_editor = 0;
+    mp_editor = nullptr;
     for (tl::Registrar<lay::TechnologyEditorProvider>::iterator cls = tl::Registrar<lay::TechnologyEditorProvider>::begin (); cls != tl::Registrar<lay::TechnologyEditorProvider>::end () && ! mp_editor; ++cls) {
       if (cls.current_name () == mp_component->name ()) {
         mp_editor = cls->create_editor (mp_ui->content_frame);
@@ -1251,10 +1251,10 @@ TechComponentSetupDialog::TechComponentSetupDialog (QWidget *parent, db::Technol
 TechComponentSetupDialog::~TechComponentSetupDialog ()
 {
   delete mp_component;
-  mp_component = 0;
+  mp_component = nullptr;
 
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -1264,7 +1264,7 @@ BEGIN_PROTECTED
   if (mp_editor && mp_tech && mp_component) {
     mp_editor->commit ();
     mp_tech->set_component (mp_component);
-    mp_component = 0;
+    mp_component = nullptr;
   }
 
   QDialog::accept ();

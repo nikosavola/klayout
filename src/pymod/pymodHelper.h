@@ -56,14 +56,14 @@ module_init (const char *pymod_name, const char *mod_name, const char *mod_descr
 
     PyObject *mod_object = module->take_module ();
 
-    tl_assert (pya::PythonInterpreter::instance () != 0);
+    tl_assert (pya::PythonInterpreter::instance () != nullptr);
     pya::PythonInterpreter::instance ()->register_module (module.release ());
 
     return mod_object;
 
   PYA_CATCH_ANYWHERE
 
-  return 0;
+  return nullptr;
 }
 
 #define STRINGIFY(s) _STRINGIFY(s)

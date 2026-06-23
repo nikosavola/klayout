@@ -45,7 +45,7 @@
 namespace db
 {
 
-inline db::Region *subject_regionptr () { return (db::Region *) 0; }
+inline db::Region *subject_regionptr () { return (db::Region *) nullptr; }
 inline db::Region *foreign_regionptr () { return (db::Region *) 1; }
 inline bool is_subject_regionptr (const db::Region *ptr) { return ptr == subject_regionptr () || ptr == foreign_regionptr (); }
 
@@ -64,7 +64,7 @@ public:
   std::pair<bool, std::vector<std::unordered_set<TR> > *> get (const CompoundRegionOperationNode *node)
   {
     bool valid = false;
-    std::vector<std::unordered_set<TR> > *cache = 0;
+    std::vector<std::unordered_set<TR> > *cache = nullptr;
     get_cache (cache, valid, node);
     return std::make_pair (valid, cache);
   }
@@ -184,7 +184,7 @@ public:
    *  @brief Returns the transformation reducer for building cell variants
    *  This method may return 0. In this case, not cell variants are built.
    */
-  virtual const TransformationReducer *vars () const  { return 0; }
+  virtual const TransformationReducer *vars () const  { return nullptr; }
 
   /**
    *  @brief Returns true, if the processor wants to build variants
@@ -521,7 +521,7 @@ protected:
   CompoundRegionOperationNode *child (unsigned int index);
   const CompoundRegionOperationNode *child (unsigned int index) const;
 
-  virtual const TransformationReducer *local_vars () const { return 0; }
+  virtual const TransformationReducer *local_vars () const { return nullptr; }
 
   void init ();
 
@@ -684,19 +684,19 @@ public:
    *  CompoundRegionOperationSecondaryNode nodes need to be provided. If no derived node
    *  is requested for input, the input-less constructor may be used which is more efficient.
    */
-  compound_region_generic_operation_node (const db::local_operation<TS, TI, TR> *op, const std::vector<CompoundRegionOperationNode *> &inputs, const db::TransformationReducer *vars = 0, bool want_variants = false)
+  compound_region_generic_operation_node (const db::local_operation<TS, TI, TR> *op, const std::vector<CompoundRegionOperationNode *> &inputs, const db::TransformationReducer *vars = nullptr, bool want_variants = false)
     : CompoundRegionMultiInputOperationNode (inputs), m_op (op), mp_vars (vars), m_wants_variants (want_variants)
   {
     //  .. nothing yet ..
   }
 
-  compound_region_generic_operation_node (const db::local_operation<TS, TI, TR> *op, CompoundRegionOperationNode *input, const db::TransformationReducer *vars = 0, bool want_variants = false)
+  compound_region_generic_operation_node (const db::local_operation<TS, TI, TR> *op, CompoundRegionOperationNode *input, const db::TransformationReducer *vars = nullptr, bool want_variants = false)
     : CompoundRegionMultiInputOperationNode (input), m_op (op), mp_vars (vars), m_wants_variants (want_variants)
   {
     //  .. nothing yet ..
   }
 
-  compound_region_generic_operation_node (const db::local_operation<TS, TI, TR> *op, CompoundRegionOperationNode *a, CompoundRegionOperationNode *b, const db::TransformationReducer *vars = 0, bool want_variants = false)
+  compound_region_generic_operation_node (const db::local_operation<TS, TI, TR> *op, CompoundRegionOperationNode *a, CompoundRegionOperationNode *b, const db::TransformationReducer *vars = nullptr, bool want_variants = false)
     : CompoundRegionMultiInputOperationNode (a, b), m_op (op), mp_vars (vars), m_wants_variants (want_variants)
   {
     //  .. nothing yet ..
@@ -721,19 +721,19 @@ public:
   }
 
 protected:
-  compound_region_generic_operation_node (const db::local_operation<TS, TI, TR> *op, const std::vector<db::Region *> &inputs, const db::TransformationReducer *vars = 0, bool want_variants = false)
+  compound_region_generic_operation_node (const db::local_operation<TS, TI, TR> *op, const std::vector<db::Region *> &inputs, const db::TransformationReducer *vars = nullptr, bool want_variants = false)
     : CompoundRegionMultiInputOperationNode (), m_op (op), mp_vars (vars), m_wants_variants (want_variants), m_inputs (inputs)
   {
     //  .. nothing yet ..
   }
 
-  compound_region_generic_operation_node (const db::local_operation<TS, TI, TR> *op, db::Region *input, const db::TransformationReducer *vars = 0, bool want_variants = false)
+  compound_region_generic_operation_node (const db::local_operation<TS, TI, TR> *op, db::Region *input, const db::TransformationReducer *vars = nullptr, bool want_variants = false)
     : CompoundRegionMultiInputOperationNode (), m_op (op), mp_vars (vars), m_wants_variants (want_variants)
   {
     m_inputs.push_back (input);
   }
 
-  compound_region_generic_operation_node (const db::local_operation<TS, TI, TR> *op, db::Region *a, db::Region *b, const db::TransformationReducer *vars = 0, bool want_variants = false)
+  compound_region_generic_operation_node (const db::local_operation<TS, TI, TR> *op, db::Region *a, db::Region *b, const db::TransformationReducer *vars = nullptr, bool want_variants = false)
     : CompoundRegionMultiInputOperationNode (), m_op (op), mp_vars (vars), m_wants_variants (want_variants)
   {
     m_inputs.push_back (a);

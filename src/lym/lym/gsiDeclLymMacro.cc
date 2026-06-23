@@ -93,7 +93,7 @@ class MacroInterpreterImpl
 public:
   MacroInterpreterImpl ()
     : lym::MacroInterpreter (), 
-      mp_registration (0), m_supports_include_expansion (true)
+      mp_registration (nullptr), m_supports_include_expansion (true)
   {
     m_suffix = lym::MacroInterpreter::suffix ();
     m_description = lym::MacroInterpreter::description ();
@@ -105,7 +105,7 @@ public:
   ~MacroInterpreterImpl ()
   {
     delete mp_registration;
-    mp_registration = 0;
+    mp_registration = nullptr;
     for (std::vector<lym::Macro *>::const_iterator t = m_templates.begin (); t != m_templates.end (); ++t) {
       delete *t;
     }
@@ -146,7 +146,7 @@ public:
     if (f_executable.can_issue ()) {
       return f_executable.issue<MacroInterpreter, tl::Executable *, const lym::Macro *> (&MacroInterpreter::executable, macro);
     } else {
-      return 0;
+      return nullptr;
     }
   }
 

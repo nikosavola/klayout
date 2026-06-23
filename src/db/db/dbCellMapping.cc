@@ -50,7 +50,7 @@ struct SortedCellIndexIterator
   typedef std::random_access_iterator_tag iterator_category;
 
   SortedCellIndexIterator ()
-    : mp_cell (0), m_n (0)
+    : mp_cell (nullptr), m_n (0)
   { 
     // .. nothing yet ..
   }
@@ -486,7 +486,7 @@ std::vector<db::cell_index_type>
 CellMapping::create_missing_mapping (db::Layout &layout_a, const db::Layout &layout_b, const std::vector<db::cell_index_type> &cell_index_b, const std::set<db::cell_index_type> *exclude_cells, const std::set<db::cell_index_type> *include_cells)
 {
   std::vector<db::cell_index_type> new_cells;
-  do_create_missing_mapping (layout_a, layout_b, cell_index_b, exclude_cells, include_cells, &new_cells, 0);
+  do_create_missing_mapping (layout_a, layout_b, cell_index_b, exclude_cells, include_cells, &new_cells, nullptr);
   return new_cells;
 }
 
@@ -494,7 +494,7 @@ std::vector<std::pair<db::cell_index_type, db::cell_index_type> >
 CellMapping::create_missing_mapping2 (db::Layout &layout_a, const db::Layout &layout_b, const std::vector<db::cell_index_type> &cell_index_b, const std::set<db::cell_index_type> *exclude_cells, const std::set<db::cell_index_type> *include_cells)
 {
   std::vector<std::pair<db::cell_index_type, db::cell_index_type> > cell_pairs;
-  do_create_missing_mapping (layout_a, layout_b, cell_index_b, exclude_cells, include_cells, 0, &cell_pairs);
+  do_create_missing_mapping (layout_a, layout_b, cell_index_b, exclude_cells, include_cells, nullptr, &cell_pairs);
   return cell_pairs;
 }
 
@@ -743,7 +743,7 @@ CellMapping::create_from_geometry (const db::Layout &layout_a, db::cell_index_ty
         std::set<db::cell_index_type> callers;
         layout_a.cell (cand->first).collect_caller_cells (callers, cc_a.selection (), -1);
 
-        for (std::set<db::cell_index_type>::const_iterator c = callers.begin (); c != callers.end () && refined_cand.size () > 0; ++c) {
+        for (std::set<db::cell_index_type>::const_iterator c = callers.begin (); c != callers.end () && !refined_cand.empty(); ++c) {
 
           if (*c != cell_index_a) {
 
@@ -777,12 +777,12 @@ CellMapping::create_from_geometry (const db::Layout &layout_a, db::cell_index_ty
 
         }
 
-        if (refined_cand.size () > 0) {
+        if (!refined_cand.empty()) {
 
           std::set<db::cell_index_type> called;
           layout_a.cell (cand->first).collect_called_cells (called);
 
-          for (std::set<db::cell_index_type>::const_iterator c = called.begin (); c != called.end () && refined_cand.size () > 0; ++c) {
+          for (std::set<db::cell_index_type>::const_iterator c = called.begin (); c != called.end () && !refined_cand.empty(); ++c) {
 
             const std::vector<db::cell_index_type> &others = candidates.find (*c)->second;
             if (others.size () == 1) {
@@ -905,7 +905,7 @@ CellMapping::create_from_geometry (const db::Layout &layout_a, db::cell_index_ty
 
     for (std::map <db::cell_index_type, std::vector<db::cell_index_type> >::iterator cand = candidates.begin (); cand != candidates.end (); ++cand) {
       ++total;
-      if (cand->second.size () == 0) {
+      if (cand->second.empty()) {
         ++not_mapped;
       } else if (cand->second.size () == 1) {
         ++unique;
@@ -972,7 +972,7 @@ CellMapping::create_from_geometry (const db::Layout &layout_a, db::cell_index_ty
 
     for (std::map <db::cell_index_type, std::vector<db::cell_index_type> >::iterator cand = candidates.begin (); cand != candidates.end (); ++cand) {
       ++total;
-      if (cand->second.size () == 0) {
+      if (cand->second.empty()) {
         if (tl::verbosity () >= 50) {
           tl::info << "Unmapped cell: " << layout_a.cell_name (cand->first);
         }

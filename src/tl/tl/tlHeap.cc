@@ -30,7 +30,7 @@ namespace tl
 //  HeapObject implementation
 
 HeapObject::HeapObject () 
-  : mp_b (0) 
+  : mp_b (nullptr) 
 { 
   //  .. nothing yet ..
 }
@@ -40,7 +40,7 @@ HeapObject::~HeapObject ()
   if (mp_b) {
     delete mp_b;
   }
-  mp_b = 0;
+  mp_b = nullptr;
 }
 
 // ----------------------------------------------------------

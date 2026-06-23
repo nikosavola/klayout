@@ -67,7 +67,7 @@ private:
 
 VALUE LockedObjectVault::m_klass = Qnil;
 VALUE LockedObjectVault::m_instance = Qnil;
-LockedObjectVault *LockedObjectVault::mp_instance = 0;
+LockedObjectVault *LockedObjectVault::mp_instance = nullptr;
 
 LockedObjectVault::LockedObjectVault ()
 {
@@ -77,7 +77,7 @@ LockedObjectVault::LockedObjectVault ()
 LockedObjectVault::~LockedObjectVault ()
 {
   if (mp_instance == this) {
-    mp_instance = 0;
+    mp_instance = nullptr;
   }
 }
 
@@ -143,7 +143,7 @@ LockedObjectVault::init (VALUE module, const char *name)
   m_klass = rb_define_class_under (module, name, rb_cObject);
   rb_define_alloc_func (m_klass, LockedObjectVault::alloc);
 
-  m_instance = rba_class_new_instance_checked (0, 0, m_klass);
+  m_instance = rba_class_new_instance_checked (0, nullptr, m_klass);
   rb_gc_register_address (&m_instance);
 }
 
@@ -174,7 +174,7 @@ gc_unlock_object (VALUE value)
 
 Proxy::Proxy (const gsi::ClassBase *_cls_decl)
   : m_cls_decl (_cls_decl),
-    m_obj (0),
+    m_obj (nullptr),
     m_owned (false),
     m_const_ref (false),
     m_destroyed (false),
@@ -221,7 +221,7 @@ Proxy::signal_handler (const gsi::MethodBase *meth)
   m_signal_handlers.insert (std::make_pair (meth, sh));
 
   //  install the handler
-  SignalHandler *sig_handler = 0;
+  SignalHandler *sig_handler = nullptr;
   Data_Get_Struct (sh, SignalHandler, sig_handler);
   meth->add_handler (obj (), sig_handler);
 
@@ -230,7 +230,7 @@ Proxy::signal_handler (const gsi::MethodBase *meth)
 
 bool Proxy::can_call () const
 {
-  return rba::RubyInterpreter::instance () != 0;
+  return rba::RubyInterpreter::instance () != nullptr;
 }
 
 void
@@ -250,7 +250,7 @@ Proxy::call (int id, gsi::SerialArgs &args, gsi::SerialArgs &ret) const
 
     //  TODO: callbacks with default arguments?
     for (gsi::MethodBase::argument_iterator a = meth->begin_arguments (); args && a != meth->end_arguments (); ++a) {
-      rb_ary_push (argv, pull_arg (*a, 0, args, heap));
+      rb_ary_push (argv, pull_arg (*a, nullptr, args, heap));
     }
 
     VALUE rb_ret = rba_funcall2_checked (m_self, mid, RARRAY_LEN (argv), RARRAY_PTR (argv));
@@ -260,7 +260,7 @@ Proxy::call (int id, gsi::SerialArgs &args, gsi::SerialArgs &ret) const
     if (meth->ret_type ().pass_obj ()) {
       //  In factory callbacks, make sure the returned object is not deleted by
       //  anyone except the caller.
-      Proxy *p = 0;
+      Proxy *p = nullptr;
       Data_Get_Struct (rb_ret, Proxy, p);
       p->keep ();
     }
@@ -285,7 +285,7 @@ void
 Proxy::destroy ()
 {
   if (! m_cls_decl) {
-    m_obj = 0;
+    m_obj = nullptr;
     return;
   }
 
@@ -304,7 +304,7 @@ Proxy::destroy ()
     }
   }
 
-  void *o = 0;
+  void *o = nullptr;
   if (m_owned || m_can_destroy) {
     o = m_obj;
   }
@@ -334,7 +334,7 @@ Proxy::detach ()
   }
 
   m_self = Qnil;
-  m_obj = 0;
+  m_obj = nullptr;
   m_destroyed = true;
   m_const_ref = false;
   m_owned = false;
@@ -728,7 +728,7 @@ SignalHandler::alloc (VALUE klass)
 VALUE
 SignalHandler::static_initialize (VALUE self, VALUE obj)
 {
-  SignalHandler *p = 0;
+  SignalHandler *p = nullptr;
   Data_Get_Struct (self, SignalHandler, p);
   if (p) {
     p->initialize (obj);
@@ -751,7 +751,7 @@ SignalHandler::static_assign (VALUE self, VALUE proc)
       rb_exc_raise (rb_class_new_instance(1, args, rb_eRuntimeError));
     }
 
-    SignalHandler *p = 0;
+    SignalHandler *p = nullptr;
     Data_Get_Struct (self, SignalHandler, p);
     if (p) {
       p->assign (proc);
@@ -772,7 +772,7 @@ SignalHandler::static_add (VALUE self, VALUE proc)
     rb_exc_raise (rb_class_new_instance(1, args, rb_eRuntimeError));
   }
 
-  SignalHandler *p = 0;
+  SignalHandler *p = nullptr;
   Data_Get_Struct (self, SignalHandler, p);
   if (p) {
     p->add (proc);
@@ -783,7 +783,7 @@ SignalHandler::static_add (VALUE self, VALUE proc)
 VALUE
 SignalHandler::static_clear (VALUE self)
 {
-  SignalHandler *p = 0;
+  SignalHandler *p = nullptr;
   Data_Get_Struct (self, SignalHandler, p);
   if (p) {
     p->clear ();
@@ -794,7 +794,7 @@ SignalHandler::static_clear (VALUE self)
 VALUE
 SignalHandler::static_remove (VALUE self, VALUE proc)
 {
-  SignalHandler *p = 0;
+  SignalHandler *p = nullptr;
   Data_Get_Struct (self, SignalHandler, p);
   if (p) {
     p->remove (proc);
@@ -827,7 +827,7 @@ void SignalHandler::call (const gsi::MethodBase *meth, gsi::SerialArgs &args, gs
 
   //  TODO: signals with default arguments?
   for (gsi::MethodBase::argument_iterator a = meth->begin_arguments (); args && a != meth->end_arguments (); ++a) {
-    rb_ary_push (argv, pull_arg (*a, 0, args, heap));
+    rb_ary_push (argv, pull_arg (*a, nullptr, args, heap));
   }
 
   //  call the signal handlers ... the last one will deliver the return value
@@ -869,7 +869,7 @@ bool is_registered (const gsi::ClassBase *cls, bool as_static)
 const gsi::ClassBase *find_cclass (VALUE k)
 {
   const gsi::ClassBase *cls = find_cclass_maybe_null (k);
-  tl_assert (cls != 0);
+  tl_assert (cls != nullptr);
   return cls;
 }
 

@@ -69,11 +69,11 @@ PolygonNeighborhoodVisitor::connect_output (Layout * /*layout*/, std::unordered_
 void
 PolygonNeighborhoodVisitor::disconnect_outputs () const
 {
-  mp_layout = 0;
-  mp_polygons = 0;
-  mp_polygon_refs = 0;
-  mp_edges = 0;
-  mp_edge_pairs = 0;
+  mp_layout = nullptr;
+  mp_polygons = nullptr;
+  mp_polygon_refs = nullptr;
+  mp_edges = nullptr;
+  mp_edge_pairs = nullptr;
 }
 
 void
@@ -82,7 +82,7 @@ PolygonNeighborhoodVisitor::output_polygon (const db::PolygonWithProperties &pol
   if (mp_polygons) {
     mp_polygons->insert (poly.transformed (m_trans));
   } else if (mp_polygon_refs) {
-    tl_assert (mp_layout != 0);
+    tl_assert (mp_layout != nullptr);
     mp_polygon_refs->insert (db::PolygonRefWithProperties (db::PolygonRef (poly.transformed (m_trans), mp_layout->shape_repository ()), poly.properties_id ()));
   } else {
     throw tl::Exception (tl::to_string (tr ("PolygonNeighborhoodVisitor is not configured for edge output (use 'result_type=Edges')")));
@@ -92,7 +92,7 @@ PolygonNeighborhoodVisitor::output_polygon (const db::PolygonWithProperties &pol
 void
 PolygonNeighborhoodVisitor::output_edge (const db::EdgeWithProperties &edge)
 {
-  if (mp_edges == 0) {
+  if (mp_edges == nullptr) {
     throw tl::Exception (tl::to_string (tr ("PolygonNeighborhoodVisitor is not configured for edge output (use 'result_type=Edges')")));
   }
   mp_edges->insert (edge.transformed (m_trans));
@@ -101,7 +101,7 @@ PolygonNeighborhoodVisitor::output_edge (const db::EdgeWithProperties &edge)
 void
 PolygonNeighborhoodVisitor::output_edge_pair (const db::EdgePairWithProperties &edge_pair)
 {
-  if (mp_edge_pairs == 0) {
+  if (mp_edge_pairs == nullptr) {
     throw tl::Exception (tl::to_string (tr ("PolygonNeighborhoodVisitor is not configured for edge pair output (use 'result_type=EdgePairs')")));
   }
   mp_edge_pairs->insert (edge_pair.transformed (m_trans));
@@ -113,7 +113,7 @@ PolygonNeighborhoodCompoundOperationNode::PolygonNeighborhoodCompoundOperationNo
   : CompoundRegionMultiInputOperationNode (children, true /*no implicit init()*/),
     m_dist (dist), mp_visitor (visitor)
 {
-  tl_assert (visitor != 0);
+  tl_assert (visitor != nullptr);
   visitor->keep ();
 
   m_vars.reset (db::make_reducer (visitor->variant_type ()));

@@ -633,7 +633,7 @@ private:
 //  Implementation of GenericSyntaxHighlighterRule
 
 GenericSyntaxHighlighterRule::GenericSyntaxHighlighterRule ()
-  : mp_rule (0), m_attribute_id (-1), m_target_context_id (-1), m_owner (true), m_lookahead (false), m_first_non_space (false), m_column (-1)
+  : mp_rule (nullptr), m_attribute_id (-1), m_target_context_id (-1), m_owner (true), m_lookahead (false), m_first_non_space (false), m_column (-1)
 {
   //  .. nothing yet ..
 }
@@ -648,7 +648,7 @@ GenericSyntaxHighlighterRule::GenericSyntaxHighlighterRule (const GenericSyntaxH
 {
   m_owner = d.m_owner;
   if (d.m_owner) {
-    mp_rule = (d.mp_rule ? d.mp_rule->clone () : 0);
+    mp_rule = (d.mp_rule ? d.mp_rule->clone () : nullptr);
   } else {
     mp_rule = d.mp_rule;
   }
@@ -664,7 +664,7 @@ GenericSyntaxHighlighterRule::~GenericSyntaxHighlighterRule ()
   if (m_owner) {
     delete mp_rule;
   }
-  mp_rule = 0;
+  mp_rule = nullptr;
 }
 
 GenericSyntaxHighlighterRule &
@@ -679,7 +679,7 @@ GenericSyntaxHighlighterRule::operator= (const GenericSyntaxHighlighterRule &d)
     m_first_non_space = d.m_first_non_space;
     m_column = d.m_column;
     if (m_owner) {
-      mp_rule = d.mp_rule ? d.mp_rule->clone () : 0;
+      mp_rule = d.mp_rule ? d.mp_rule->clone () : nullptr;
     } else {
       mp_rule = d.mp_rule;
     }
@@ -909,31 +909,31 @@ GenericSyntaxHighlighterAttributes::GenericSyntaxHighlighterAttributes (const Ge
   : mp_basic_attributes (basic_attributes)
 {
   if (! basic_attributes) {
-    add (QString::fromUtf8 ("Normal"),            dsNormal,         false, false, false, false, 0,         0,         0,         0);
-    add (QString::fromUtf8 ("Alert"),             dsAlert,          true,  false, false, false, "#BF0303", "#9C0D0D", "#F7E7E7", 0);
-    add (QString::fromUtf8 ("Base-N Integer"),    dsBaseN,          false, false, false, false, "#B07E00", "#FFDD00", 0,         0);
-    add (QString::fromUtf8 ("Character"),         dsChar,           false, false, false, false, "#FF80E0", "#FF80E0", 0,         0);
-    add (QString::fromUtf8 ("Comment"),           dsComment,        false, true,  false, false, "#888786", "#A6C2E4", 0,         0);
-    add (QString::fromUtf8 ("Data Type"),         dsDataType,       false, false, false, false, "#0057AE", "#00316E", 0,         0);
-    add (QString::fromUtf8 ("Decimal/Value"),     dsDecVal,         false, false, false, false, "#B07E00", "#FFDD00", 0,         0);
-    add (QString::fromUtf8 ("Error"),             dsError,          false, false, true,  false, "#BF0303", "#9C0D0D", 0,         0);
-    add (QString::fromUtf8 ("Floating Point"),    dsFloat,          false, false, false, false, "#B07E00", "#FFDD00", 0,         0);
-    add (QString::fromUtf8 ("Function"),          dsFunction,       false, false, false, false, "#442886", "#442886", 0,         0);
-    add (QString::fromUtf8 ("Keyword"),           dsKeyword,        true,  false, false, false, 0,         0,         0,         0);
-    add (QString::fromUtf8 ("Others"),            dsOthers,         false, false, false, false, "#006E26", "#80FF80", 0,         0);
-    add (QString::fromUtf8 ("Region Marker"),     dsRegionMarker,   false, false, false, false, "#0057AE", "#00316E", "#E1EAF8", 0);
-    add (QString::fromUtf8 ("String"),            dsString,         false, false, false, false, "#BF0303", "#9C0D0D", 0,         0);
-    add (QString::fromUtf8 ("Operator"),          dsOperator,       false, false, false, false, "#1F1C1B", 0,         0,         0);
-    add (QString::fromUtf8 ("Control Flow"),      dsControlFlow,    true,  false, false, false, "#1F1C1B", 0,         0,         0);
-    add (QString::fromUtf8 ("Built-in"),          dsBuiltIn,        true,  false, false, false, "#644A9B", "#452886", 0,         0);
-    add (QString::fromUtf8 ("Variable"),          dsVariable,       false, false, false, false, "#0057AE", "#00316e", 0,         0);
-    add (QString::fromUtf8 ("Extension"),         dsExtension,      false, false, false, false, "#0095FF", 0,         0,         0);
-    add (QString::fromUtf8 ("Preprocessor"),      dsPreprocessor,   false, false, false, false, "#006E28", "#006e28", 0,         0);
-    add (QString::fromUtf8 ("Import"),            dsImport,         false, false, false, false, "#FF5500", "#FF5500", 0,         0);
-    add (QString::fromUtf8 ("Verbatim String"),   dsVerbatimString, false, false, false, false, "#BF0303", "#9C0E0E", 0,         0);
-    add (QString::fromUtf8 ("Special String"),    dsSpecialString,  false, false, false, false, "#FF5500", "#FF5500", 0,         0);
-    add (QString::fromUtf8 ("Special Character"), dsSpecialChar,    false, false, false, false, "#3DAEE9", "#FCFCFC", 0,         0);
-    add (QString::fromUtf8 ("Attribute"),         dsAttribute,      false, false, false, false, "#0057AE", "#00316E", 0,         0);
+    add (QString::fromUtf8 ("Normal"),            dsNormal,         false, false, false, false, nullptr,         nullptr,         nullptr,         nullptr);
+    add (QString::fromUtf8 ("Alert"),             dsAlert,          true,  false, false, false, "#BF0303", "#9C0D0D", "#F7E7E7", nullptr);
+    add (QString::fromUtf8 ("Base-N Integer"),    dsBaseN,          false, false, false, false, "#B07E00", "#FFDD00", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Character"),         dsChar,           false, false, false, false, "#FF80E0", "#FF80E0", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Comment"),           dsComment,        false, true,  false, false, "#888786", "#A6C2E4", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Data Type"),         dsDataType,       false, false, false, false, "#0057AE", "#00316E", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Decimal/Value"),     dsDecVal,         false, false, false, false, "#B07E00", "#FFDD00", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Error"),             dsError,          false, false, true,  false, "#BF0303", "#9C0D0D", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Floating Point"),    dsFloat,          false, false, false, false, "#B07E00", "#FFDD00", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Function"),          dsFunction,       false, false, false, false, "#442886", "#442886", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Keyword"),           dsKeyword,        true,  false, false, false, nullptr,         nullptr,         nullptr,         nullptr);
+    add (QString::fromUtf8 ("Others"),            dsOthers,         false, false, false, false, "#006E26", "#80FF80", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Region Marker"),     dsRegionMarker,   false, false, false, false, "#0057AE", "#00316E", "#E1EAF8", nullptr);
+    add (QString::fromUtf8 ("String"),            dsString,         false, false, false, false, "#BF0303", "#9C0D0D", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Operator"),          dsOperator,       false, false, false, false, "#1F1C1B", nullptr,         nullptr,         nullptr);
+    add (QString::fromUtf8 ("Control Flow"),      dsControlFlow,    true,  false, false, false, "#1F1C1B", nullptr,         nullptr,         nullptr);
+    add (QString::fromUtf8 ("Built-in"),          dsBuiltIn,        true,  false, false, false, "#644A9B", "#452886", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Variable"),          dsVariable,       false, false, false, false, "#0057AE", "#00316e", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Extension"),         dsExtension,      false, false, false, false, "#0095FF", nullptr,         nullptr,         nullptr);
+    add (QString::fromUtf8 ("Preprocessor"),      dsPreprocessor,   false, false, false, false, "#006E28", "#006e28", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Import"),            dsImport,         false, false, false, false, "#FF5500", "#FF5500", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Verbatim String"),   dsVerbatimString, false, false, false, false, "#BF0303", "#9C0E0E", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Special String"),    dsSpecialString,  false, false, false, false, "#FF5500", "#FF5500", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Special Character"), dsSpecialChar,    false, false, false, false, "#3DAEE9", "#FCFCFC", nullptr,         nullptr);
+    add (QString::fromUtf8 ("Attribute"),         dsAttribute,      false, false, false, false, "#0057AE", "#00316E", nullptr,         nullptr);
   }
 }
 

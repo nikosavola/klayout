@@ -131,7 +131,7 @@ private:
   struct ConcaveCorner
   {
     ConcaveCorner ()
-      : corner (0), incoming (0), outgoing (0)
+      : corner (nullptr), incoming (nullptr), outgoing (nullptr)
     {
       //  .. nothing yet ..
     }

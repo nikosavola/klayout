@@ -789,7 +789,7 @@ AsIfFlatEdges::run_check (db::edge_relation_type rel, const Edges *other, db::Co
 
   EdgeRelationFilter check (rel, d, options);
 
-  edge2edge_check_for_edges<db::FlatEdgePairs> edge_check (check, *result, other != 0);
+  edge2edge_check_for_edges<db::FlatEdgePairs> edge_check (check, *result, other != nullptr);
   scanner.process (edge_check, d, db::box_convert<db::Edge> ());
 
   return result.release ();
@@ -801,7 +801,7 @@ AsIfFlatEdges::merged () const
   if (empty ()) {
     return new db::EmptyEdges ();
   } else {
-    return boolean (0, EdgeOr);
+    return boolean (nullptr, EdgeOr);
   }
 }
 
@@ -974,9 +974,9 @@ AsIfFlatEdges::edge_region_op (const Region &other, db::EdgePolygonOp::mode_t mo
     if (mode == db::EdgePolygonOp::Both) {
       return std::make_pair (new EmptyEdges (), clone ());
     } else if (mode == db::EdgePolygonOp::Inside) {
-      return std::make_pair (new EmptyEdges (), (EdgesDelegate *) 0);
+      return std::make_pair (new EmptyEdges (), (EdgesDelegate *) nullptr);
     } else {
-      return std::make_pair (clone (), (EdgesDelegate *) 0);
+      return std::make_pair (clone (), (EdgesDelegate *) nullptr);
     }
   }
 

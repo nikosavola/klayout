@@ -44,7 +44,7 @@ public:
   MoveService (lay::LayoutViewBase *view);
   ~MoveService ();
 
-  bool start_move (db::Transaction *transaction = 0, bool transient_selection = false);
+  bool start_move (db::Transaction *transaction = nullptr, bool transient_selection = false);
   void finish_move ();
 
   bool configure (const std::string &name, const std::string &value);

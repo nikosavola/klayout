@@ -127,7 +127,7 @@ public:
    *  This ctor creates an empty contour.
    */
   polygon_contour ()
-    : mp_points (0), m_size (0)
+    : mp_points (nullptr), m_size (0)
   {
     //  .. nothing yet ..
   }
@@ -138,8 +138,8 @@ public:
   polygon_contour (const polygon_contour &d)
     : m_size (d.m_size)
   {
-    if (d.mp_points == 0) {
-      mp_points = 0;
+    if (d.mp_points == nullptr) {
+      mp_points = nullptr;
     } else {
       point_type *p = new point_type [m_size];
       point_type *pp = (point_type *) ((size_t) d.mp_points & ~3);
@@ -1075,7 +1075,7 @@ public:
   /**
    *  @brief Collect memory statistics
    */
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const
   {
     if (! no_self) {
       stat->add (typeid (*this), (void *) this, sizeof (*this), sizeof (*this), parent, purpose, cat);
@@ -1093,7 +1093,7 @@ private:
     if (p) {
       delete [] p;
     }
-    mp_points = 0;
+    mp_points = nullptr;
     m_size = 0;
   }
 };
@@ -1141,7 +1141,7 @@ public:
    *  @brief The default constructor 
    */
   polygon_contour_iterator ()
-    : mp_contour (0), m_index (0), m_reverse (false)
+    : mp_contour (nullptr), m_index (0), m_reverse (false)
   {
     //  .. nothing yet .. 
   }
@@ -2524,7 +2524,7 @@ public:
     return copy;
   }
 
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const
   {
     db::mem_stat (stat, purpose, cat, m_ctrs, no_self, parent);
     db::mem_stat (stat, purpose, cat, m_bbox, no_self, parent);
@@ -3327,7 +3327,7 @@ public:
     }
   }
 
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const
   {
     db::mem_stat (stat, purpose, cat, m_hull, no_self, parent);
     db::mem_stat (stat, purpose, cat, m_bbox, no_self, parent);
@@ -3772,7 +3772,7 @@ typedef polygon_ref<DSimplePolygon, DUnitTrans> DSimplePolygonPtr;
  *  @brief Collect memory statistics
  */
 template <class X>
-inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const polygon_contour<X> &x, bool no_self = false, void *parent = 0)
+inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const polygon_contour<X> &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }
@@ -3781,7 +3781,7 @@ inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int
  *  @brief Collect memory statistics
  */
 template <class X>
-inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const polygon<X> &x, bool no_self = false, void *parent = 0)
+inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const polygon<X> &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }
@@ -3790,7 +3790,7 @@ inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int
  *  @brief Collect memory statistics
  */
 template <class X>
-inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const simple_polygon<X> &x, bool no_self = false, void *parent = 0)
+inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const simple_polygon<X> &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }

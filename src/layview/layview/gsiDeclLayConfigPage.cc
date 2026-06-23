@@ -31,7 +31,7 @@ namespace gsi
 {
 
 ConfigPageImpl::ConfigPageImpl (const std::string &title)
-  : lay::ConfigPage (0), m_title (title)
+  : lay::ConfigPage (nullptr), m_title (title)
 {
   //  .. nothing yet ..
 }

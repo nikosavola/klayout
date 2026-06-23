@@ -161,7 +161,7 @@ BitmapRedrawThreadCanvas::is_plane_empty (unsigned int n)
   bool ret = true;
 
   lock ();
-  if (n < mp_plane_buffers.size () && mp_plane_buffers [n] != 0) {
+  if (n < mp_plane_buffers.size () && mp_plane_buffers [n] != nullptr) {
     ret = mp_plane_buffers [n]->empty ();
   }
   unlock ();
@@ -326,7 +326,7 @@ BitmapRedrawThreadCanvas::set_plane (unsigned int n, const lay::CanvasPlane *pla
   lock ();
   if (n < mp_plane_buffers.size ()) {
     const lay::Bitmap *bitmap = dynamic_cast<const lay::Bitmap *> (plane);
-    tl_assert (bitmap != 0);
+    tl_assert (bitmap != nullptr);
     *(mp_plane_buffers [n]) = *bitmap; 
   }
   unlock ();
@@ -338,7 +338,7 @@ BitmapRedrawThreadCanvas::set_drawing_plane (unsigned int d, unsigned int n, con
   lock ();
   if (d < mp_drawing_plane_buffers.size () && n < mp_drawing_plane_buffers [d].size ()) {
     const lay::Bitmap *bitmap = dynamic_cast<const lay::Bitmap *> (plane);
-    tl_assert (bitmap != 0);
+    tl_assert (bitmap != nullptr);
     *(mp_drawing_plane_buffers [d][n]) = *bitmap; 
   }
   unlock ();
@@ -373,7 +373,7 @@ BitmapRedrawThreadCanvas::initialize_plane (lay::CanvasPlane *plane, unsigned in
   lock ();
   if (n < mp_plane_buffers.size ()) {
     lay::Bitmap *bitmap = dynamic_cast<lay::Bitmap *> (plane);
-    tl_assert (bitmap != 0);
+    tl_assert (bitmap != nullptr);
     *bitmap = *(mp_plane_buffers [n]);
   }
   unlock ();
@@ -385,7 +385,7 @@ BitmapRedrawThreadCanvas::initialize_plane (lay::CanvasPlane *plane, unsigned in
   lock ();
   if (d < mp_drawing_plane_buffers.size () && n < mp_drawing_plane_buffers [d].size ()) {
     lay::Bitmap *bitmap = dynamic_cast<lay::Bitmap *> (plane);
-    tl_assert (bitmap != 0);
+    tl_assert (bitmap != nullptr);
     *bitmap = *(mp_drawing_plane_buffers [d][n]);
   }
   unlock ();

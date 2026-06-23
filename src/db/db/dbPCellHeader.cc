@@ -73,7 +73,7 @@ PCellHeader::~PCellHeader ()
   if (mp_declaration) {
     mp_declaration->release_ref ();
   }
-  mp_declaration = 0;
+  mp_declaration = nullptr;
 }
 
 void 
@@ -126,7 +126,7 @@ PCellHeader::get_variant (db::Layout & /*layout*/, const pcell_parameters_type &
   if (v != m_variant_map.end ()) {
     return v->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 

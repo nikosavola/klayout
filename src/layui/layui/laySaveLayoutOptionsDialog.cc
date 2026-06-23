@@ -50,7 +50,7 @@ static const StreamWriterPluginDeclaration *plugin_for_format (const std::string
       return decl;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 static unsigned int om_to_index (tl::OutputStream::OutputStreamMode om)
@@ -98,7 +98,7 @@ SaveLayoutOptionsDialog::SaveLayoutOptionsDialog (QWidget *parent, const std::st
 
   for (tl::Registrar<db::StreamFormatDeclaration>::iterator fmt = tl::Registrar<db::StreamFormatDeclaration>::begin (); fmt != tl::Registrar<db::StreamFormatDeclaration>::end (); ++fmt) {
 
-    StreamWriterOptionsPage *page = 0;
+    StreamWriterOptionsPage *page = nullptr;
 
     //  obtain the config page from the plugin which we identify by format name
     const StreamWriterPluginDeclaration *decl = StreamWriterPluginDeclaration::plugin_for_format (fmt->format_name ());
@@ -107,7 +107,7 @@ SaveLayoutOptionsDialog::SaveLayoutOptionsDialog (QWidget *parent, const std::st
     page_host->setFrameStyle (QFrame::NoFrame);
     page_host->setWidgetResizable (true);
 
-    page = decl ? decl->format_specific_options_page (mp_ui->options_tab) : 0;
+    page = decl ? decl->format_specific_options_page (mp_ui->options_tab) : nullptr;
     if (page) {
       page_host->setWidget (page);
     } else {
@@ -120,7 +120,7 @@ SaveLayoutOptionsDialog::SaveLayoutOptionsDialog (QWidget *parent, const std::st
 #else
       //  Drop empty pages
       delete page_host;
-      page_host = 0;
+      page_host = nullptr;
 #endif
     }
 
@@ -144,7 +144,7 @@ SaveLayoutOptionsDialog::SaveLayoutOptionsDialog (QWidget *parent, const std::st
 SaveLayoutOptionsDialog::~SaveLayoutOptionsDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -300,7 +300,7 @@ SaveLayoutOptionsDialog::get_options (db::SaveLayoutOptions &options)
   m_opt_array.clear ();
   m_opt_array.push_back (options);
   m_tech_array.clear ();
-  m_tech_array.push_back (0);
+  m_tech_array.push_back (nullptr);
   m_technology_index = 0;
 
   if (get_options_internal ()) {
@@ -328,7 +328,7 @@ SaveLayoutOptionsDialog::get_options_internal ()
 //  SaveLayoutAsOptionsDialog implementation
 
 SaveLayoutAsOptionsDialog::SaveLayoutAsOptionsDialog (QWidget *parent, const std::string &title)
-  : QDialog (parent), mp_tech (0)
+  : QDialog (parent), mp_tech (nullptr)
 {
   mp_ui = new Ui::SaveLayoutAsOptionsDialog ();
 
@@ -369,7 +369,7 @@ SaveLayoutAsOptionsDialog::SaveLayoutAsOptionsDialog (QWidget *parent, const std
             m_pages.push_back (std::make_pair (m_pages [index].first, fmt->format_name ()));
             m_tab_positions.push_back (m_tab_positions[index]);
           } else {
-            m_pages.push_back (std::make_pair ((StreamWriterOptionsPage *) 0, fmt->format_name ()));
+            m_pages.push_back (std::make_pair ((StreamWriterOptionsPage *) nullptr, fmt->format_name ()));
             m_tab_positions.push_back (empty_widget_index);
           }
 
@@ -384,7 +384,7 @@ SaveLayoutAsOptionsDialog::SaveLayoutAsOptionsDialog (QWidget *parent, const std
 
       } else {
 
-        m_pages.push_back (std::make_pair ((StreamWriterOptionsPage *) 0, fmt->format_name ()));
+        m_pages.push_back (std::make_pair ((StreamWriterOptionsPage *) nullptr, fmt->format_name ()));
         m_tab_positions.push_back (empty_widget_index);
 
       }
@@ -400,7 +400,7 @@ SaveLayoutAsOptionsDialog::SaveLayoutAsOptionsDialog (QWidget *parent, const std
 SaveLayoutAsOptionsDialog::~SaveLayoutAsOptionsDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void

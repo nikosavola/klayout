@@ -354,7 +354,7 @@ make_regular_array (stream::repetition::Repetition::Reader repetition, db::regul
 Reader::Reader (tl::InputStream &s)
   : m_stream (&s), m_source (s.source ()),
     m_progress (tl::to_string (tr ("Reading LStream file"))),
-    m_library_index (0), mp_cell (0), mp_layout (0), m_layout_view_id (0)
+    m_library_index (0), mp_cell (nullptr), mp_layout (nullptr), m_layout_view_id (0)
 {
   m_progress.set_format (tl::to_string (tr ("%.0f MB")));
   m_progress.set_unit (1024 * 1024);
@@ -390,7 +390,7 @@ Reader::position ()
 void 
 Reader::error (const std::string &msg)
 {
-  throw LStreamReaderException (msg, cellname ().c_str (), m_source, position ());
+  throw LStreamReaderException (msg, cellname (), m_source, position ());
 }
 
 void 
@@ -1538,7 +1538,7 @@ template <class Object, class CPObject>
 void
 Reader::read_shapes (unsigned int li, typename stream::layoutView::ObjectContainerForType<CPObject>::Reader reader, capnp::List<stream::repetition::Repetition, capnp::Kind::STRUCT>::Reader repetitions) 
 {
-  tl_assert (mp_cell != 0);
+  tl_assert (mp_cell != nullptr);
 
   auto basic = reader.getBasic ();
   auto with_properties = reader.getWithProperties ();
@@ -1646,7 +1646,7 @@ Reader::read_layout_view (db::cell_index_type cell_index, kj::BufferedInputStrea
     read_layer (*l);
   }
 
-  mp_cell = 0;
+  mp_cell = nullptr;
 }
 
 /**
@@ -1828,7 +1828,7 @@ Reader::read_library (kj::BufferedInputStream &is)
   //  Now as we have read the properties tables, we can set the global properties
 
   mp_layout->prop_id (get_properties_id_by_id (layout_view.getPropertySetId ()));
-  make_meta_data (0, layout_view.getMetaData ());
+  make_meta_data (nullptr, layout_view.getMetaData ());
 
   double resolution = layout_view.getResolution ();
   if (resolution < 1e-10) {

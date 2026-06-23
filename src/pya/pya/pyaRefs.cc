@@ -32,7 +32,7 @@ namespace pya
 //  PythonRef implementation
 
 PythonRef::PythonRef ()
-  : mp_obj (NULL), m_owns_pointer (true)
+  : mp_obj (nullptr), m_owns_pointer (true)
 { 
   //  .. nothing yet ..
 }
@@ -100,7 +100,7 @@ PythonRef::~PythonRef ()
 
 PythonRef::operator bool () const
 {
-  return mp_obj != NULL;
+  return mp_obj != nullptr;
 }
 
 PyObject *PythonRef::operator-> () const
@@ -116,7 +116,7 @@ PyObject *PythonRef::get () const
 PyObject *PythonRef::release ()
 {
   PyObject *o = mp_obj;
-  mp_obj = NULL;
+  mp_obj = nullptr;
   return o;
 }
 
@@ -130,7 +130,7 @@ PyObject *PythonRef::release_const () const
 //  PythonPtr implementation
 
 PythonPtr::PythonPtr ()
-  : mp_obj (NULL)
+  : mp_obj (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -171,13 +171,13 @@ PythonPtr::~PythonPtr ()
 PyObject *PythonPtr::release ()
 {
   PyObject *obj = mp_obj;
-  mp_obj = NULL;
+  mp_obj = nullptr;
   return obj;
 }
 
 PythonPtr::operator bool () const
 {
-  return mp_obj != NULL;
+  return mp_obj != nullptr;
 }
 
 PyObject *PythonPtr::operator-> () const

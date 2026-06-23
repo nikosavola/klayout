@@ -939,8 +939,8 @@ private:
   friend class Action;
 
   std::vector<std::pair<AbstractMenuItem *, std::list<AbstractMenuItem>::iterator> > find_item (tl::Extractor &extr);
-  const AbstractMenuItem *find_item_for_action (const Action *action, const AbstractMenuItem *from = 0) const;
-  AbstractMenuItem *find_item_for_action (const Action *action, AbstractMenuItem *from = 0);
+  const AbstractMenuItem *find_item_for_action (const Action *action, const AbstractMenuItem *from = nullptr) const;
+  AbstractMenuItem *find_item_for_action (const Action *action, AbstractMenuItem *from = nullptr);
 #if defined(HAVE_QT)
   void build (QMenu *menu, std::list<AbstractMenuItem> &items);
   void build (QToolBar *tbar, std::list<AbstractMenuItem> &items);

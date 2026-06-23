@@ -45,7 +45,7 @@ SelectionService::SelectionService (lay::LayoutViewBase *view) :
     lay::ViewService (view->canvas ()), 
     lay::Plugin (view),
     mp_view (view),
-    mp_box (0),
+    mp_box (nullptr),
     m_color (0),
     m_hover (false),
     m_hover_wait (false),
@@ -62,7 +62,7 @@ SelectionService::~SelectionService ()
 {
   if (mp_box) {
     delete mp_box;
-    mp_box = 0;
+    mp_box = nullptr;
   }
 }
 
@@ -116,7 +116,7 @@ SelectionService::reset_box ()
     ui ()->ungrab_mouse (this);
 
     delete mp_box;
-    mp_box = 0;
+    mp_box = nullptr;
 
   }
 }
@@ -249,7 +249,7 @@ SelectionService::mouse_click_event (const db::DPoint &p, unsigned int buttons, 
     } catch (tl::Exception &ex) {
       tl::error << ex.msg ();
 #if defined(HAVE_QT)
-      QMessageBox::critical (0, tr ("Error"), tl::to_qstring (ex.msg ()));
+      QMessageBox::critical (nullptr, tr ("Error"), tl::to_qstring (ex.msg ()));
 #endif
       //  clear selection
       mp_view->select (db::DBox (), lay::Editable::Reset);
@@ -288,7 +288,7 @@ SelectionService::mouse_release_event (const db::DPoint & /*p*/, unsigned int bu
       } catch (tl::Exception &ex) {
         tl::error << ex.msg ();
 #if defined(HAVE_QT)
-        QMessageBox::critical (0, tr ("Error"), tl::to_qstring (ex.msg ()));
+        QMessageBox::critical (nullptr, tr ("Error"), tl::to_qstring (ex.msg ()));
 #endif
         //  clear selection
         mp_view->select (db::DBox (), lay::Editable::Reset);

@@ -270,7 +270,7 @@ A::ia_cref_to_ql1s_ref (const std::vector<int> &ia)
   for (std::vector<int>::const_iterator i = ia.begin (); i != ia.end (); ++i) {
     str += char (*i);
   }
-  static QLatin1String s (0);
+  static QLatin1String s (nullptr);
   s = QLatin1String (str.c_str (), str.size ());
   return s;
 }
@@ -393,7 +393,7 @@ void A::sp_i_set (int v)
 // ----------------------------------------------------------------
 //  Implementation of B
 
-B *B::b_inst = 0;
+B *B::b_inst = nullptr;
 static int b_count = 0;
 
 B::B () 
@@ -421,7 +421,7 @@ B::~B ()
     m_avc_nc.pop_back ();
   }
   if (b_inst == this) {
-    b_inst = 0;
+    b_inst = nullptr;
   }
   --b_count;
 }
@@ -485,7 +485,7 @@ B *B::inst ()
 
 bool B::has_inst () 
 { 
-  return b_inst != 0; 
+  return b_inst != nullptr; 
 }
 
 tl::Variant B::new_b_by_variant ()
@@ -518,7 +518,7 @@ static std::vector <A>::const_iterator b10e_ext (const B *b)
 static const A *b10bp_ext (const B *b) 
 { 
   if (b->b10b () == b->b10e ()) {
-      return 0;
+      return nullptr;
   } else {
     return b->b10b ().operator-> ();
   }
@@ -627,7 +627,7 @@ E *E::inc()
 
 void E::reset_inst ()
 {
-  e_inst.reset (0);
+  e_inst.reset (nullptr);
 }
 
 int inst_count();
@@ -795,13 +795,13 @@ static Y *make_y (const char *x)
 }
 
 Y::Y ()
-  : mp_c(0)
+  : mp_c(nullptr)
 { 
   ++s_dyn_count;
 }
 
 Y::Y (const char *x)
-  : X(x), mp_c(0)
+  : X(x), mp_c(nullptr)
 { 
   ++s_dyn_count;
 }
@@ -840,7 +840,7 @@ void Y::vx_dyn_make()
 void Y::vx_dyn_destroy()
 {
   delete mp_c;
-  mp_c = 0;
+  mp_c = nullptr;
 }
 
 std::vector<X *> Y::vx_dyn() 
@@ -877,7 +877,7 @@ std::vector<const Y *> Y::vy_cptr()
 std::vector<Y *> Y::vy0_ptr() 
 {
   std::vector<Y *> r;
-  r.push_back (0);
+  r.push_back (nullptr);
   return r;
 }
 
@@ -923,7 +923,7 @@ std::string YY::cls_name() const
 //  Implementation of Z
 
 Z::Z ()
-  : mp_x (0)
+  : mp_x (nullptr)
 {
   //  .. nothing yet ..
 }

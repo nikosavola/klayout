@@ -879,7 +879,7 @@ static void insert_s (db::Edges *e, const db::Shapes &a)
 
 static bool is_deep (const db::Edges *e)
 {
-  return dynamic_cast<const db::DeepEdges *> (e->delegate ()) != 0;
+  return dynamic_cast<const db::DeepEdges *> (e->delegate ()) != nullptr;
 }
 
 static db::Edges *new_texts_as_dots1 (const db::RecursiveShapeIterator &si, const std::string &pat, bool pattern)

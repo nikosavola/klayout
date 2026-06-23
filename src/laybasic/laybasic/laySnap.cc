@@ -270,7 +270,7 @@ public:
     : m_any (false), m_any_exact (false), 
       m_original (original), m_is_vertex (false), m_is_vertex_exact (false),
       m_tests (10000 /* max. number of tests, TODO: make variable? */),
-      mp_layout (0), m_cutlines (cutlines), mp_prop_sel (0), m_inv_prop_sel (false),
+      mp_layout (nullptr), m_cutlines (cutlines), mp_prop_sel (nullptr), m_inv_prop_sel (false),
       m_vertex_mode (vertex_mode), m_directed (directed)
   {
     m_projection_constraint = ! m_cutlines.empty ();

@@ -288,7 +288,7 @@ class DB_PUBLIC ShapeFilterState
 public:
   ShapeFilterState (const FilterBase *filter, const db::LayerMap &layers, db::ShapeIterator::flags_type flags, tl::Eval &eval, db::Layout *layout, bool reading, const ShapeFilterPropertyIDs &pids)
     : FilterStateBase (filter, layout, eval),
-      m_flags (flags), mp_parent (0), m_reading (reading), m_pids (pids), m_lindex (0)
+      m_flags (flags), mp_parent (nullptr), m_reading (reading), m_pids (pids), m_lindex (0)
   {
     //  get the layers which we have to look for
     for (db::Layout::layer_iterator l = layout->begin_layers (); l != layout->end_layers (); ++l) {
@@ -303,7 +303,7 @@ public:
     FilterStateBase::reset (previous);
 
     //  Get the parent cell by asking the previous states 
-    mp_parent = 0;
+    mp_parent = nullptr;
     tl::Variant parent_id;
     if (FilterStateBase::get_property (m_pids.cell_index, parent_id)) {
       mp_parent = &layout ()->cell (db::cell_index_type (parent_id.to_ulong ()));
@@ -594,7 +594,7 @@ class DB_PUBLIC ChildCellFilterState
 public:
   ChildCellFilterState (const FilterBase *filter, const NameFilterArgument &pattern, ChildCellFilterInstanceMode instance_mode, tl::Eval &eval, db::Layout *layout, bool reading, const ChildCellFilterPropertyIDs &pids)
     : FilterStateBase (filter, layout, eval),
-      m_pattern (pattern, eval), m_instance_mode (instance_mode), mp_parent (0), m_pids (pids),
+      m_pattern (pattern, eval), m_instance_mode (instance_mode), mp_parent (nullptr), m_pids (pids),
       m_weight (0), m_references (0), m_weight_set (false), m_references_set (false), m_reading (reading),
       m_cell_index (std::numeric_limits<db::cell_index_type>::max ())
   {
@@ -634,7 +634,7 @@ public:
 
         int levels = 1;
         for (size_t i = 0; i < followers ().size (); ++i) {
-          if (followers ()[i] == 0) {
+          if (followers ()[i] == nullptr) {
             //  this is a sign of recursion - collect caller cells from all levels.
             levels = -1;
           }
@@ -694,7 +694,7 @@ public:
     m_ignored.clear ();
 
     //  Get the parent cell by asking the previous states 
-    mp_parent = 0;
+    mp_parent = nullptr;
     tl::Variant parent_id;
     if (FilterStateBase::get_property (m_pids.cell_index, parent_id)) {
       if (layout ()->is_valid_cell_index (db::cell_index_type (parent_id.to_ulong ()))) {
@@ -1456,7 +1456,7 @@ public:
     : FilterStateBase (filter, layout, eval),
       m_pids (pids),
       m_pattern (pattern, eval),
-      mp_parent (0),
+      mp_parent (nullptr),
       m_reading (reading),
       m_cell_index (std::numeric_limits<db::cell_index_type>::max ())
   {
@@ -1495,13 +1495,13 @@ public:
     }
 
     //  Get the parent cell by asking the previous states 
-    mp_parent = 0;
+    mp_parent = nullptr;
     tl::Variant parent_id;
     if (FilterStateBase::get_property (m_pids.cell_index, parent_id)) {
       mp_parent = &layout ()->cell (db::cell_index_type (parent_id.to_ulong ()));
     }
 
-    m_cell_counter.reset (0);
+    m_cell_counter.reset (nullptr);
   }
 
   virtual void next (bool) 
@@ -2005,7 +2005,7 @@ class DB_PUBLIC SelectFilterState
 public:
   SelectFilterState (const FilterBase *filter, const std::vector<std::string> &expressions, const std::string &sort_expression, bool unique, tl::Eval &eval, db::Layout *layout, const SelectFilterPropertyIDs &pids)
     : FilterStateBase (filter, layout, eval),
-      m_pids (pids), m_has_sorting (false), m_unique (unique), m_done (false), m_in_data_eval (false), mp_reporter_state (0)
+      m_pids (pids), m_has_sorting (false), m_unique (unique), m_done (false), m_in_data_eval (false), mp_reporter_state (nullptr)
   {
     for (std::vector<std::string>::const_iterator e = expressions.begin (); e != expressions.end (); ++e) {
       m_expressions.push_back (tl::Expression ());
@@ -2264,7 +2264,7 @@ public:
 
   void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
   {
-    if (args.size () > 0) {
+    if (!args.empty()) {
       throw tl::EvalError (tl::to_string (tr ("Query function does not allow parameters")), context);
     }
 
@@ -2340,7 +2340,7 @@ LayoutQueryIterator::init ()
   std::vector<FilterStateBase *> f;
   mp_root_state = mp_q->root ().create_state (f, mp_layout, m_eval, false);
   mp_root_state->init ();
-  mp_root_state->reset (0);
+  mp_root_state->reset (nullptr);
   m_state.push_back (mp_root_state);
 
   while (! next_down ()) {
@@ -2357,7 +2357,7 @@ LayoutQueryIterator::cleanup ()
     delete *s;
   }
   m_state.clear ();
-  mp_root_state = 0;
+  mp_root_state = nullptr;
 }
 
 void
@@ -2496,7 +2496,7 @@ parse_cell_name_filter_element (tl::Extractor &ex, LayoutQuery *q, ChildCellFilt
   if (ex.test (")") || ex.test (",")) {
 
     ex = ex0;
-    return 0;
+    return nullptr;
 
   } else if (ex.test ("(")) {
 
@@ -2579,19 +2579,19 @@ parse_cell_name_filter_element (tl::Extractor &ex, LayoutQuery *q, ChildCellFilt
 
   }
 
-  return 0;
+  return nullptr;
 }
 
 static void
 parse_cell_name_filter_seq (tl::Extractor &ex, LayoutQuery *q, FilterBracket *bracket, ChildCellFilterInstanceMode instance_mode, bool reading)
 {
-  FilterBase *f0 = 0;
-  FilterBase *fl = 0;
+  FilterBase *f0 = nullptr;
+  FilterBase *fl = nullptr;
   FilterBase *f;
 
   while (! ex.at_end ()) {
     
-    if (check_trailing_reserved_word (ex) || (f = parse_cell_name_filter_element (ex, q, instance_mode, reading)) == 0) {
+    if (check_trailing_reserved_word (ex) || (f = parse_cell_name_filter_element (ex, q, instance_mode, reading)) == nullptr) {
       break;
     }
 
@@ -2610,7 +2610,7 @@ parse_cell_name_filter_seq (tl::Extractor &ex, LayoutQuery *q, FilterBracket *br
 
   //  satisfy instance mode if there is just a cell name filter
   CellFilter *cf;
-  if (instance_mode != NoInstances && f0 == fl && (cf = dynamic_cast<CellFilter *> (f0)) != 0) {
+  if (instance_mode != NoInstances && f0 == fl && (cf = dynamic_cast<CellFilter *> (f0)) != nullptr) {
 
     fl = new ChildCellFilter (q, cf->name_filter (), instance_mode, reading);
     bracket->add_child (fl);
@@ -2652,7 +2652,7 @@ parse_cell_filter (tl::Extractor &ex, LayoutQuery *q, FilterBracket *bracket, bo
       parse_cell_name_filter_seq (ex, q, b.get (), NoInstances, reading);
     }
 
-    FilterBase *fl = 0, *f = 0;
+    FilterBase *fl = nullptr, *f = nullptr;
 
     if (with_where_clause && ex.test (s_where)) {
 
@@ -2718,7 +2718,7 @@ parse_filter (tl::Extractor &ex, LayoutQuery *q, FilterBracket *bracket, bool re
     std::unique_ptr<FilterBracket> b (new FilterBracket (q));
     parse_cell_filter (ex, q, b.get (), false, reading);
 
-    FilterBase *f = 0, *fl = 0;
+    FilterBase *f = nullptr, *fl = nullptr;
     
     f = b.release ();
     bracket->add_child (f);
@@ -2826,7 +2826,7 @@ parse_statement (tl::Extractor &ex, LayoutQuery *q, FilterBracket *bracket, bool
 }
 
 LayoutQuery::LayoutQuery (const std::string &query)
-  : mp_root (0)
+  : mp_root (nullptr)
 {
   std::unique_ptr<FilterBracket> r (new FilterBracket (this));
 
@@ -2846,7 +2846,7 @@ LayoutQuery::~LayoutQuery ()
   if (mp_root) {
     delete mp_root;
   }
-  mp_root = 0;
+  mp_root = nullptr;
 }
 
 void
@@ -3026,7 +3026,7 @@ FilterBracket::create_state (const std::vector<FilterStateBase *> &followers, db
     FilterStateBase *closure_state = new FilterSingleState (this, layout, eval);
     closure_state->connect (followers); 
 
-    FilterStateBase *b = 0;
+    FilterStateBase *b = nullptr;
 
     for (int l = int (m_loopmax == std::numeric_limits<unsigned int>::max () ? m_loopmin : m_loopmax); l >= 0; --l) {
 
@@ -3303,7 +3303,7 @@ FilterStateObjectives::wants_cell (db::cell_index_type ci) const
 //  FilterStateBase implementation
 
 FilterStateBase::FilterStateBase (const FilterBase *filter, db::Layout *layout, tl::Eval &eval)
-  : mp_previous (0), mp_filter (filter), mp_layout (layout), m_follower (0), mp_eval (&eval)
+  : mp_previous (nullptr), mp_filter (filter), mp_layout (layout), m_follower (0), mp_eval (&eval)
 {
 }
 
@@ -3358,7 +3358,7 @@ FilterStateBase *
 FilterStateBase::child () const
 {
   if (m_followers.empty ()) {
-    return 0;
+    return nullptr;
   } else {
 
     FilterStateBase *b = m_followers [m_follower];

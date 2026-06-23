@@ -313,7 +313,7 @@ struct __try_cast<T, S, True>
 template <class T, class S>
 struct __try_cast<T, S, False>
 {
-  T *operator() (S * /*s*/) const { return 0; }
+  T *operator() (S * /*s*/) const { return nullptr; }
 };
 
 /**

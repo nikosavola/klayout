@@ -121,7 +121,7 @@ public:
   /**
    *  @brief Gets the cell variant reducer that indicates whether to build cell variants and which
    */
-  virtual const db::TransformationReducer *vars () const { return 0; }
+  virtual const db::TransformationReducer *vars () const { return nullptr; }
 
 protected:
   /**

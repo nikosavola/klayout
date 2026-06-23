@@ -335,7 +335,7 @@ public:
    *  If non-null "interacting_this" will receive all interacting shapes from *this in case of success.
    *  If non-null "interacting_other" will receive all interacting shapes from other in case of success.
    */
-  bool interacts (const local_cluster<T> &other, const db::ICplxTrans &trans, const Connectivity &conn, int &soft, std::map<unsigned int, std::vector<const T *> > *interacting_this = 0, std::map<unsigned int, std::vector<const T *> > *interacting_other = 0) const;
+  bool interacts (const local_cluster<T> &other, const db::ICplxTrans &trans, const Connectivity &conn, int &soft, std::map<unsigned int, std::vector<const T *> > *interacting_this = nullptr, std::map<unsigned int, std::vector<const T *> > *interacting_other = nullptr) const;
 
   /**
    *  @brief Tests whether this cluster interacts with the given cell
@@ -628,7 +628,7 @@ public:
    *  cluster joining may happen in this case, because multi-attribute
    *  assignment might create connections too.
    */
-  void build_clusters (const db::Cell &cell, const db::Connectivity &conn, const tl::equivalence_clusters<size_t> *attr_equivalence = 0, bool report_progress = false, bool separate_attributes = false);
+  void build_clusters (const db::Cell &cell, const db::Connectivity &conn, const tl::equivalence_clusters<size_t> *attr_equivalence = nullptr, bool report_progress = false, bool separate_attributes = false);
 
   /**
    *  @brief Creates and inserts a new clusters
@@ -959,7 +959,7 @@ struct ClusterIDPair
 
 inline bool equal_array_delegates (const db::ArrayBase *a, const db::ArrayBase *b)
 {
-  if ((a == 0) != (b == 0)) {
+  if ((a == nullptr) != (b == nullptr)) {
     return false;
   } else if (a) {
     return ! db::array_base_ptr_cmp_f () (a, b) && ! db::array_base_ptr_cmp_f () (b, a);
@@ -970,8 +970,8 @@ inline bool equal_array_delegates (const db::ArrayBase *a, const db::ArrayBase *
 
 inline bool less_array_delegates (const db::ArrayBase *a, const db::ArrayBase *b)
 {
-  if ((a == 0) != (b == 0)) {
-    return (a == 0) < (b == 0);
+  if ((a == nullptr) != (b == nullptr)) {
+    return (a == nullptr) < (b == nullptr);
   } else if (a) {
     return db::array_base_ptr_cmp_f () (a, b);
   } else {
@@ -985,7 +985,7 @@ inline bool less_array_delegates (const db::ArrayBase *a, const db::ArrayBase *b
 struct DB_PUBLIC InstanceToInstanceInteraction
 {
   InstanceToInstanceInteraction (const db::ArrayBase *_array1, const db::ArrayBase *_array2, const db::ICplxTrans &_tn, const db::ICplxTrans &_t21)
-    : array1 (0), array2 (0), t21 (_t21)
+    : array1 (nullptr), array2 (nullptr), t21 (_t21)
   {
     if (_array1) {
       array1 = _array1->basic_clone ();
@@ -999,14 +999,14 @@ struct DB_PUBLIC InstanceToInstanceInteraction
   }
 
   InstanceToInstanceInteraction ()
-    : array1 (0), array2 (0)
+    : array1 (nullptr), array2 (nullptr)
   {
     //  .. nothing yet ..
   }
 
   InstanceToInstanceInteraction (const InstanceToInstanceInteraction &other)
-    : array1 (other.array1 ? other.array1->basic_clone () : 0),
-      array2 (other.array2 ? other.array2->basic_clone () : 0),
+    : array1 (other.array1 ? other.array1->basic_clone () : nullptr),
+      array2 (other.array2 ? other.array2->basic_clone () : nullptr),
       t21 (other.t21)
   {
     //  .. nothing yet ..
@@ -1019,12 +1019,12 @@ struct DB_PUBLIC InstanceToInstanceInteraction
       if (array1) {
         delete array1;
       }
-      array1 = other.array1 ? other.array1->basic_clone () : 0;
+      array1 = other.array1 ? other.array1->basic_clone () : nullptr;
 
       if (array2) {
         delete array2;
       }
-      array2 = other.array2 ? other.array2->basic_clone () : 0;
+      array2 = other.array2 ? other.array2->basic_clone () : nullptr;
 
       t21 = other.t21;
 
@@ -1038,12 +1038,12 @@ struct DB_PUBLIC InstanceToInstanceInteraction
     if (array1) {
       delete array1;
     }
-    array1 = 0;
+    array1 = nullptr;
 
     if (array2) {
       delete array2;
     }
-    array2 = 0;
+    array2 = nullptr;
   }
 
   bool operator== (const InstanceToInstanceInteraction &other) const
@@ -1075,7 +1075,7 @@ struct DB_PUBLIC_TEMPLATE interaction_key_for_clusters
   : public InstanceToInstanceInteraction
 {
   interaction_key_for_clusters (const db::ICplxTrans &_t1, const db::ICplxTrans &_t21, const Box &_box)
-    : InstanceToInstanceInteraction (0, 0, _t1, _t21), box (_box)
+    : InstanceToInstanceInteraction (nullptr, nullptr, _t1, _t21), box (_box)
   { }
 
   bool operator== (const interaction_key_for_clusters &other) const
@@ -1130,7 +1130,7 @@ public:
     typename std::map <std::pair<db::cell_index_type, db::cell_index_type>, std::list <std::pair<Key, Value> > >::iterator i1 = m_map.find (std::make_pair (ci1, ci2));
     if (i1 == m_map.end ()) {
       ++m_misses;
-      return 0;
+      return nullptr;
     }
 
     //  NOTE: the number of entries is low, so we can afford a linear search
@@ -1141,7 +1141,7 @@ public:
 
     if (i == i1->second.end ()) {
       ++m_misses;
-      return 0;
+      return nullptr;
     } else {
       //  move the element to the front so the most frequently used ones are at the front
       if (i != i1->second.begin ()) {
@@ -1393,7 +1393,7 @@ public:
   /**
    *  @brief Builds a hierarchy of clusters from a cell hierarchy and given connectivity
    */
-  void build (const db::Layout &layout, const db::Cell &cell, const db::Connectivity &conn, const std::map<db::cell_index_type, tl::equivalence_clusters<size_t> > *attr_equivalence = 0, const std::set<cell_index_type> *breakout_cells = 0, bool separate_attributes = false);
+  void build (const db::Layout &layout, const db::Cell &cell, const db::Connectivity &conn, const std::map<db::cell_index_type, tl::equivalence_clusters<size_t> > *attr_equivalence = nullptr, const std::set<cell_index_type> *breakout_cells = nullptr, bool separate_attributes = false);
 
   /**
    *  @brief Gets the connected clusters for a given cell
@@ -1483,7 +1483,7 @@ public:
   /**
    *  @brief Constructor
    */
-  recursive_cluster_shape_iterator (const hier_clusters<T> &hc, unsigned int layer, db::cell_index_type ci, typename local_cluster<T>::id_type id, const CircuitCallback *callback = 0);
+  recursive_cluster_shape_iterator (const hier_clusters<T> &hc, unsigned int layer, db::cell_index_type ci, typename local_cluster<T>::id_type id, const CircuitCallback *callback = nullptr);
 
   /**
    *  @brief Returns a value indicating whether there are any more shapes

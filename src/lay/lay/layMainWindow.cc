@@ -116,7 +116,7 @@ const int max_dirty_files = 15;
 
 // -------------------------------------------------------------
 
-static MainWindow *mw_instance = 0;
+static MainWindow *mw_instance = nullptr;
 
 MainWindow *
 MainWindow::instance ()
@@ -164,12 +164,12 @@ show_dock_widget (QDockWidget *dock_widget, bool visible)
 // -------------------------------------------------------------
 
 MainWindow::MainWindow (QApplication *app, const char *name, bool undo_enabled)
-    : QMainWindow (0),
+    : QMainWindow (nullptr),
       lay::DispatcherDelegate (),
       m_dispatcher (this),
       m_text_progress (this, 10 /*verbosity threshold*/),
       m_mode (std::numeric_limits<unsigned int>::max ()),
-      mp_setup_form (0),
+      mp_setup_form (nullptr),
       m_open_mode (0),
       m_keep_backups (0),
       m_disable_tab_selected (false),
@@ -199,20 +199,20 @@ MainWindow::MainWindow (QApplication *app, const char *name, bool undo_enabled)
 
   setObjectName (QString::fromUtf8 (name));
 
-  if (mw_instance != 0) {
+  if (mw_instance != nullptr) {
     throw tl::Exception (tl::to_string (QObject::tr ("Only one instance of MainWindow may be created")));
   }
   mw_instance = this;
 
   lay::register_help_handler (this, SLOT (show_help (const QString &)), SLOT (show_modal_help (const QString &)));
 
-  mp_setup_form = new SettingsForm (0, dispatcher (), "setup_form"),
+  mp_setup_form = new SettingsForm (nullptr, dispatcher (), "setup_form"),
 
   db::LibraryManager::instance ().changed_event.add (this, &MainWindow::libraries_changed);
 
   init_menu ();
 
-  mp_assistant = 0;
+  mp_assistant = nullptr;
 
   m_always_exit_without_saving = false;
 
@@ -445,7 +445,7 @@ MainWindow::MainWindow (QApplication *app, const char *name, bool undo_enabled)
   mp_layout_load_options = new lay::LoadLayoutOptionsDialog (this, tl::to_string (QObject::tr ("Layout Reader Options")));
 
   //  log viewer dialog
-  mp_log_viewer_dialog = new lay::LogViewerDialog (0);
+  mp_log_viewer_dialog = new lay::LogViewerDialog (nullptr);
 
   //  install timer for message timeout
   connect (&m_message_timer, SIGNAL (timeout ()), this, SLOT (message_timer ()));
@@ -475,9 +475,9 @@ MainWindow::MainWindow (QApplication *app, const char *name, bool undo_enabled)
 
 MainWindow::~MainWindow ()
 {
-  lay::register_help_handler (0, 0, 0);
+  lay::register_help_handler (nullptr, nullptr, nullptr);
 
-  mw_instance = 0;
+  mw_instance = nullptr;
 
   //  explicitly delete the views here. Otherwise they
   //  are deleted by ~QWidget, which is too late since then
@@ -488,16 +488,16 @@ MainWindow::~MainWindow ()
   //  delete the Menu after the views because they may want to access them in the destructor
 
   delete mp_pr;
-  mp_pr = 0;
+  mp_pr = nullptr;
 
   delete mp_setup_form;
-  mp_setup_form = 0;
+  mp_setup_form = nullptr;
 
   delete mp_log_viewer_dialog;
-  mp_log_viewer_dialog = 0;
+  mp_log_viewer_dialog = nullptr;
 
   delete mp_assistant;
-  mp_assistant = 0;
+  mp_assistant = nullptr;
 }
 
 std::string
@@ -679,7 +679,7 @@ MainWindow::close_all ()
   cancel ();
 
   //  try a smooth shutdown of the current view
-  lay::LayoutView::set_current (0);
+  lay::LayoutView::set_current (nullptr);
 
   current_view_changed ();
 
@@ -700,7 +700,7 @@ MainWindow::close_all ()
   //  First pop the mp_views vector and then delete. This way,
   //  any callbacks issued during the deleting of the views do
   //  not find any invalid view pointers but rather nothing.
-  while (mp_views.size () > 0) {
+  while (!mp_views.empty()) {
 
     view_closed_event (int (mp_views.size () - 1));
 
@@ -734,7 +734,7 @@ MainWindow::about_to_exec ()
   f = false;
   dispatcher ()->config_get (cfg_full_hier_new_cell, f);
   if (!f) {
-    TipDialog td (0,
+    TipDialog td (nullptr,
                   tl::to_string (QObject::tr ("<html><body>"
                                               "<p>With the current settings, only the top cell's content is shown initially, but the child cells are not drawn.</p>"
                                               "<p>This can be confusing, since the full layout becomes visible only after selecting "
@@ -760,7 +760,7 @@ MainWindow::about_to_exec ()
 
   //  TODO: later, each view may get its own editable flag
   if (lay::ApplicationBase::instance () && !lay::ApplicationBase::instance ()->is_editable ()) {
-    TipDialog td (0,
+    TipDialog td (nullptr,
                   tl::to_string (QObject::tr ("KLayout has been started in viewer mode. In this mode, editor functions are not available.\n\nTo enable these functions, start KLayout in editor mode by using the \"-e\" command line switch or select it as the default mode in the setup dialog. Choose \"Setup\" in the \"File\" menu and check \"Use editing mode by default\" on the \"Editing Mode\" page in the \"Application\" section.")),
                   "editor-mode");
     if (td.exec_dialog ()) {
@@ -772,7 +772,7 @@ MainWindow::about_to_exec ()
   f = false;
   dispatcher ()->config_get (cfg_no_stipple, f);
   if (f) {
-    TipDialog td (0,
+    TipDialog td (nullptr,
                   tl::to_string (QObject::tr ("Layers are shown without fill because fill has been intentionally turned off. This can be confusing since selecting a stipple does not have an effect in this case.\n\nTo turn this feature off, uncheck \"Show Layers Without Fill\" in the \"View\" menu.")),
                   "no-stipple");
     if (td.exec_dialog ()) {
@@ -784,7 +784,7 @@ MainWindow::about_to_exec ()
   f = false;
   dispatcher ()->config_get (cfg_markers_visible, f);
   if (! f) {
-    TipDialog td (0,
+    TipDialog td (nullptr,
                   tl::to_string (QObject::tr ("Markers are not visible because they have been turned off.\nYou may not see markers when using the marker browser feature.\n\nTo turn markers on, check \"Show Markers\" in the \"View\" menu.")),
                   "show-markers");
     if (td.exec_dialog ()) {
@@ -796,7 +796,7 @@ MainWindow::about_to_exec ()
   f = false;
   dispatcher ()->config_get (cfg_hide_empty_layers, f);
   if (f) {
-    TipDialog td (0,
+    TipDialog td (nullptr,
                   tl::to_string (QObject::tr ("The \"Hide Empty Layers\" feature is enabled. This can be confusing, in particular in edit mode, because layers are not shown although they are actually present.\n\nTo disable this feature, uncheck \"Hide Empty Layers\" in the layer panel's context menu.")),
                   "hide-empty-layers");
     if (td.exec_dialog ()) {
@@ -1651,7 +1651,7 @@ MainWindow::view (int index)
   if (index >= 0 && index < int (mp_views.size ())) {
     return mp_views [index]->view ();
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -1661,7 +1661,7 @@ MainWindow::view (int index) const
   if (index >= 0 && index < int (mp_views.size ())) {
     return mp_views [index]->view ();
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -2322,7 +2322,7 @@ MainWindow::do_save (bool as)
 
     std::vector<int> cv_indexes;
     if (current_view ()->cellviews () > 1) {
-      SelectCellViewForm form (0, current_view (), tl::to_string (QObject::tr ("Select Layout To Save")), false /*multiple selection*/);
+      SelectCellViewForm form (nullptr, current_view (), tl::to_string (QObject::tr ("Select Layout To Save")), false /*multiple selection*/);
       form.set_selection (current_view ()->active_cellview_index ());
       if (form.exec () == QDialog::Accepted) {
         cv_indexes = form.selected_cellviews ();
@@ -2452,7 +2452,7 @@ MainWindow::select_view (int index)
 
     mp_tab_bar->setCurrentIndex (index);
 
-    bool box_set = (m_synchronized_views && current_view () != 0);
+    bool box_set = (m_synchronized_views && current_view () != nullptr);
     db::DBox box;
     if (box_set) {
       box = current_view ()->viewport ().box ();
@@ -2521,7 +2521,7 @@ MainWindow::cm_pull_in ()
     layouts << tl::to_qstring (*n);
   }
 
-  if (layouts.size () == 0) {
+  if (layouts.empty()) {
     throw tl::Exception (tl::to_string (QObject::tr ("No layouts loaded")));
   }
 
@@ -2542,7 +2542,7 @@ MainWindow::cm_pull_in ()
 
         //  If there is another view holding that layout already, take the layer properties from there
         int other_cv_index = -1;
-        const lay::LayoutView *other_view = 0;
+        const lay::LayoutView *other_view = nullptr;
         for (unsigned int i = 0; i < views () && other_cv_index < 0; ++i) {
           for (unsigned int cvi = 0; cvi < view (i)->cellviews () && other_cv_index < 0; ++cvi) {
             if (view (i)->cellview (cvi).handle () == layout_handle) {
@@ -2624,7 +2624,7 @@ MainWindow::cm_new_layout ()
     if (dbu > 1e-10) {
       handle->layout ().dbu (dbu);
     }
-    db::cell_index_type new_ci = handle->layout ().add_cell (s_new_cell_cell_name.empty () ? 0 : s_new_cell_cell_name.c_str ());
+    db::cell_index_type new_ci = handle->layout ().add_cell (s_new_cell_cell_name.empty () ? nullptr : s_new_cell_cell_name.c_str ());
 
     for (std::vector<db::LayerProperties>::const_iterator l = s_layers.begin (); l != s_layers.end (); ++l) {
       handle->layout ().insert_layer (*l);
@@ -2648,7 +2648,7 @@ MainWindow::cm_clone ()
 void
 MainWindow::clone_current_view ()
 {
-  lay::LayoutViewWidget *view_widget = 0;
+  lay::LayoutViewWidget *view_widget = nullptr;
   lay::LayoutView *curr = current_view ();
   if (! curr) {
     throw tl::Exception (tl::to_string (QObject::tr ("No view open to clone")));
@@ -2806,7 +2806,7 @@ MainWindow::interactive_close_view (int from, int to, bool invert_range, bool al
 
       } else {
 
-        SelectCellViewForm form (0, view (from), tl::to_string (QObject::tr ("Select Layouts To Close")));
+        SelectCellViewForm form (nullptr, view (from), tl::to_string (QObject::tr ("Select Layouts To Close")));
         form.set_selection (view (from)->active_cellview_index ());
 
         if (form.exec () != QDialog::Accepted) {
@@ -2824,7 +2824,7 @@ MainWindow::interactive_close_view (int from, int to, bool invert_range, bool al
       selected.push_back (0);
     }
 
-    if (selected.size () > 0) {
+    if (!selected.empty()) {
 
       int dirty_layouts = 0;
       std::string dirty_files;
@@ -3006,7 +3006,7 @@ MainWindow::close_view (int index)
 
         //  last view closed
 
-        lay::LayoutView::set_current (0);
+        lay::LayoutView::set_current (nullptr);
         current_view_changed ();
 
         clear_current_pos ();
@@ -3166,7 +3166,7 @@ MainWindow::do_update_mru_menus ()
     Action *open_recent_action = menu ()->action (mru_menu);
     open_recent_action->set_enabled (true);
 
-    if (m_mru.size () > 0 && edits_enabled ()) {
+    if (!m_mru.empty() && edits_enabled ()) {
 
       //  rebuild MRU menu
       menu ()->clear_menu (mru_menu);
@@ -3195,7 +3195,7 @@ MainWindow::do_update_mru_menus ()
     Action *open_recent_action = menu ()->action (mru_menu);
     open_recent_action->set_enabled (true);
 
-    if (m_mru_sessions.size () > 0 && edits_enabled ()) {
+    if (!m_mru_sessions.empty() && edits_enabled ()) {
 
       //  rebuild MRU menu
       menu ()->clear_menu (mru_menu);
@@ -3224,7 +3224,7 @@ MainWindow::do_update_mru_menus ()
     Action *open_recent_action = menu ()->action (mru_menu);
     open_recent_action->set_enabled (true);
 
-    if (m_mru_layer_properties.size () > 0 && edits_enabled ()) {
+    if (!m_mru_layer_properties.empty() && edits_enabled ()) {
 
       //  rebuild MRU menu
       menu ()->clear_menu (mru_menu);
@@ -3253,7 +3253,7 @@ MainWindow::do_update_mru_menus ()
     Action *open_recent_action = menu ()->action (mru_menu);
     open_recent_action->set_enabled (true);
 
-    if (m_mru_bookmarks.size () > 0 && edits_enabled ()) {
+    if (!m_mru_bookmarks.empty() && edits_enabled ()) {
 
       //  rebuild MRU menu
       menu ()->clear_menu (mru_menu);
@@ -3487,7 +3487,7 @@ MainWindow::load_layout (const std::string &filename, const db::LoadLayoutOption
 lay::CellViewRef
 MainWindow::create_layout (const std::string &technology, int mode)
 {
-  return create_or_load_layout (0, 0, technology, mode);
+  return create_or_load_layout (nullptr, nullptr, technology, mode);
 }
 
 void
@@ -3569,7 +3569,7 @@ MainWindow::create_view ()
 lay::CellViewRef
 MainWindow::create_or_load_layout (const std::string *filename, const db::LoadLayoutOptions *options, const std::string &technology, int mode)
 {
-  lay::LayoutView *vw = 0;
+  lay::LayoutView *vw = nullptr;
 
   if (! current_view ()) {
     mode = 1;
@@ -3596,8 +3596,8 @@ MainWindow::create_or_load_layout (const std::string *filename, const db::LoadLa
   try {
 
     //  load or create the layout
-    if (filename != 0) {
-      tl_assert (options != 0);
+    if (filename != nullptr) {
+      tl_assert (options != nullptr);
       cv_index = vw->load_layout (*filename, *options, technology, mode == 2);
     } else {
       cv_index = vw->create_layout (technology, mode == 2);
@@ -3808,7 +3808,7 @@ MainWindow::progress_get_widget () const
   } else if ( mp_progress_widget) {
     return mp_progress_widget->get_widget ();
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -3861,7 +3861,7 @@ MainWindow::show_progress_bar (bool show)
 {
   if (!isVisible ()) {
 
-    mp_progress_dialog.reset (0);
+    mp_progress_dialog.reset (nullptr);
 
     if (show) {
       QWidget *tl = QApplication::activeWindow ();
@@ -3940,7 +3940,7 @@ MainWindow::show_help (const QString &url)
 {
   //  NOTE: from inside a modal widget we show the help dialog modal too
   //  (otherwise it's not usable)
-  show_assistant_url (tl::to_string (url), QApplication::activeModalWidget () != 0);
+  show_assistant_url (tl::to_string (url), QApplication::activeModalWidget () != nullptr);
 }
 
 void
@@ -4233,7 +4233,7 @@ MainWindow::do_update_menu ()
 void
 MainWindow::dragEnterEvent(QDragEnterEvent *event)
 {
-  if (event->mimeData () && event->mimeData ()->hasUrls () && event->mimeData ()->urls ().size () >= 1) {
+  if (event->mimeData () && event->mimeData ()->hasUrls () && !event->mimeData ()->urls ().empty()) {
     event->acceptProposedAction ();
   }
 }
@@ -4242,7 +4242,7 @@ bool
 MainWindow::eventFilter (QObject *watched, QEvent *event)
 {
   //  spy on the mouse events of the tab bar so we can tell which tab the menu was issued on
-  if (watched == mp_tab_bar && dynamic_cast<QMouseEvent *> (event) != 0) {
+  if (watched == mp_tab_bar && dynamic_cast<QMouseEvent *> (event) != nullptr) {
     m_mouse_pos = dynamic_cast<QMouseEvent *> (event)->pos ();
   }
 
@@ -4436,7 +4436,7 @@ MainWindow::plugin_registered (lay::PluginDeclaration *cls)
 
   //  regenerate the setup form
   delete mp_setup_form;
-  mp_setup_form = new SettingsForm (0, dispatcher (), "setup_form"),
+  mp_setup_form = new SettingsForm (nullptr, dispatcher (), "setup_form"),
   mp_setup_form->setup ();
 }
 

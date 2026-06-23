@@ -59,7 +59,7 @@ static std::vector<const pya::MethodTableEntry *> get_python_methods (const gsi:
 
   std::vector<const pya::MethodTableEntry *> methods;
 
-  if (mt != 0) {
+  if (mt != nullptr) {
     for (auto m = mt->method_table ().begin (); m != mt->method_table ().end (); ++m) {
       if (m->is_enabled () && m->is_static () == st) {
         methods.push_back (m.operator-> ());
@@ -76,7 +76,7 @@ static std::vector<std::pair<const pya::MethodTableEntry *, const pya::MethodTab
 
   std::vector<std::pair<const pya::MethodTableEntry *, const pya::MethodTableEntry *> > methods;
 
-  if (mt != 0) {
+  if (mt != nullptr) {
     for (auto m = mt->property_table ().begin (); m != mt->property_table ().end (); ++m) {
       if (m->first.is_enabled () && m->first.is_static () == st) {
         methods.push_back (std::make_pair (&m->first, &m->second));

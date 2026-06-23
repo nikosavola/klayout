@@ -52,7 +52,7 @@ SelectLineStyleForm::SelectLineStyleForm (QWidget *parent, const lay::LineStyles
 SelectLineStyleForm::~SelectLineStyleForm ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 

@@ -49,7 +49,7 @@ Manager::~Manager ()
   for (std::vector<db::Object *>::const_iterator obj = m_id_table.begin (); obj != m_id_table.end (); ++obj)
   {
     if (*obj) {
-      (*obj)->manager (0);
+      (*obj)->manager (nullptr);
     }
   }
 
@@ -61,7 +61,7 @@ db::Object *
 Manager::object_by_id (ident_t id)
 {
   if (id >= m_id_table.size ()) {
-    return 0;
+    return nullptr;
   } else {
     return m_id_table [id];
   }
@@ -70,14 +70,14 @@ Manager::object_by_id (ident_t id)
 void 
 Manager::release_object (ident_t id)
 {
-  m_id_table [id] = 0;
+  m_id_table [id] = nullptr;
   m_unused_ids.push_back (id);
 }
 
 Manager::ident_t 
 Manager::next_id (db::Object *obj)
 {
-  if (m_unused_ids.size () > 0) {
+  if (!m_unused_ids.empty()) {
     ident_t id = m_unused_ids.back ();
     m_unused_ids.pop_back ();
     m_id_table [id] = obj;
@@ -233,7 +233,7 @@ Manager::undo ()
 
       tl_assert (o->second->is_done ());
       db::Object *obj = object_by_id (o->first);
-      tl_assert (obj != 0);
+      tl_assert (obj != nullptr);
       obj->undo (o->second);
       o->second->set_done (false);
 
@@ -269,7 +269,7 @@ Manager::redo ()
 
       tl_assert (! o->second->is_done ());
       db::Object *obj = object_by_id (o->first);
-      tl_assert (obj != 0);
+      tl_assert (obj != nullptr);
       obj->redo (o->second);
       o->second->set_done (true);
 
@@ -379,7 +379,7 @@ Manager::last_queued (db::Object *object)
   tl_assert (! m_replay);
 
   if (m_current == m_transactions.end () || m_current->first.empty () || (object && m_current->first.back ().first != object->id ())) {
-    return 0;
+    return nullptr;
   } else {
     return m_current->first.back ().second;
   }

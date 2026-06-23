@@ -57,7 +57,7 @@ NetExportDialog::NetExportDialog (QWidget *parent)
 NetExportDialog::~NetExportDialog ()
 {
   delete ui;
-  ui = 0;
+  ui = nullptr;
 }
 
 void

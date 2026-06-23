@@ -244,7 +244,7 @@ LibrariesView::LibrariesView (lay::LayoutViewBase *view, QWidget *parent, const 
   mp_search_close_cb->setMaximumSize (QSize (mp_search_close_cb->maximumSize ().width (), mp_search_close_cb->sizeHint ().height () - 4));
   connect (mp_search_close_cb, SIGNAL (clicked ()), this, SLOT (search_editing_finished ()));
 
-  mp_search_model = 0;
+  mp_search_model = nullptr;
   mp_search_edit_box = new lay::DecoratedLineEdit (mp_search_frame);
   mp_search_edit_box->setObjectName (QString::fromUtf8 ("cellview_search_edit_box"));
   mp_search_edit_box->set_escape_signal_enabled (true);
@@ -364,7 +364,7 @@ LibrariesView::clear_all ()
 void
 LibrariesView::search_triggered (const QString &t)
 {
-  mp_search_model = 0;
+  mp_search_model = nullptr;
   lay::LibraryTreeWidget *w = dynamic_cast<lay::LibraryTreeWidget *> (sender ());
   if (w) {
     for (size_t i = 0; i < mp_cell_lists.size (); ++i) {
@@ -462,7 +462,7 @@ LibrariesView::search_editing_finished ()
   }
 
   mp_search_frame->hide ();
-  mp_search_model = 0;
+  mp_search_model = nullptr;
 }
 
 void
@@ -538,7 +538,7 @@ LibrariesView::do_update_content (int lib_index)
 {
   //  close the search box since we will modify the model
   mp_search_frame->hide ();
-  mp_search_model = 0;
+  mp_search_model = nullptr;
 
   size_t imin = (lib_index < 0 ? 0 : (size_t) lib_index);
   size_t imax = (lib_index < 0 ? std::numeric_limits <size_t>::max () : (size_t) lib_index);
@@ -634,7 +634,7 @@ LibrariesView::do_update_content (int lib_index)
 
     LibraryTreeWidget *cell_list = new LibraryTreeWidget (cl_frame, "tree", mp_view->canvas ()->widget ());
     cl_ly->addWidget (cell_list);
-    cell_list->setModel (new CellTreeModel (cell_list, m_libraries [i].get (), CellTreeModel::Flat | CellTreeModel::TopCells | CellTreeModel::BasicCells | CellTreeModel::HidePrivate | CellTreeModel::WithVariants | CellTreeModel::WithIcons, 0));
+    cell_list->setModel (new CellTreeModel (cell_list, m_libraries [i].get (), CellTreeModel::Flat | CellTreeModel::TopCells | CellTreeModel::BasicCells | CellTreeModel::HidePrivate | CellTreeModel::WithVariants | CellTreeModel::WithIcons, nullptr));
     cell_list->setUniformRowHeights (true);
 
     pl = cell_list->palette ();
@@ -707,7 +707,7 @@ LibrariesView::do_update_content (int lib_index)
 
         CellTreeModel *model = dynamic_cast <CellTreeModel *> (mp_cell_lists [i]->model ());
         if (model) {
-          model->configure (m_libraries [i].get (), CellTreeModel::Flat | CellTreeModel::TopCells | CellTreeModel::BasicCells | CellTreeModel::HidePrivate | CellTreeModel::WithVariants | CellTreeModel::WithIcons, 0);
+          model->configure (m_libraries [i].get (), CellTreeModel::Flat | CellTreeModel::TopCells | CellTreeModel::BasicCells | CellTreeModel::HidePrivate | CellTreeModel::WithVariants | CellTreeModel::WithIcons, nullptr);
         }
 
       }
@@ -752,7 +752,7 @@ LibrariesView::active_lib ()
   if (m_active_index >= 0 && m_active_index < int (m_libraries.size ())) {
     return m_libraries [m_active_index].get ();
   }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -808,12 +808,12 @@ CellTreeItem *
 LibrariesView::current_item () const
 {
   if (m_active_index < 0 || m_active_index >= int (mp_cell_lists.size ())) {
-    return 0;
+    return nullptr;
   }
   if (mp_cell_lists [m_active_index]->currentIndex ().isValid ()) {
     return (CellTreeItem *) mp_cell_lists [m_active_index]->currentIndex ().internalPointer ();
   } else {
-    return 0;
+    return nullptr;
   }
 }
 

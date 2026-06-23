@@ -63,12 +63,12 @@ SettingsForm::SettingsForm (QWidget *parent, lay::Dispatcher *dispatcher, const 
   for (tl::Registrar<lay::PluginDeclaration>::iterator cls = tl::Registrar<lay::PluginDeclaration>::begin (); cls != tl::Registrar<lay::PluginDeclaration>::end (); ++cls) {
 
     std::string config_title;
-    lay::ConfigPage *config_page = cls->config_page (0, config_title);
+    lay::ConfigPage *config_page = cls->config_page (nullptr, config_title);
     if (config_page) {
       pages.push_back (std::make_pair (config_title, config_page));
     }
 
-    std::vector <std::pair <std::string, lay::ConfigPage *> > pp = cls->config_pages (0);
+    std::vector <std::pair <std::string, lay::ConfigPage *> > pp = cls->config_pages (nullptr);
     pages.insert (pages.end (), pp.begin (), pp.end ());
 
   }
@@ -89,13 +89,13 @@ SettingsForm::SettingsForm (QWidget *parent, lay::Dispatcher *dispatcher, const 
     //  ignore ones without a title
     if (config_page && config_title.empty ()) {
       delete config_page;
-      config_page = 0;
+      config_page = nullptr;
     } 
 
     if (config_page) {
 
       //  override external settings
-      if (config_page->layout () == 0) {
+      if (config_page->layout () == nullptr) {
         tl::warn << "No layout in configuration page " << p->first;
       } else {
         config_page->layout ()->setContentsMargins (0, 0, 0, 0);
@@ -118,7 +118,7 @@ SettingsForm::SettingsForm (QWidget *parent, lay::Dispatcher *dispatcher, const 
         int index = pages_stack->addWidget (page);
         stack_headers.insert (std::make_pair (config_title, index));
 
-        QTreeWidgetItem *parent = 0;
+        QTreeWidgetItem *parent = nullptr;
 
         //  add the entry in the items tree
         while (! config_title.empty ()) {
@@ -134,11 +134,11 @@ SettingsForm::SettingsForm (QWidget *parent, lay::Dispatcher *dispatcher, const 
           }
 
           int count = parent ? parent->childCount () : items_tree->topLevelItemCount ();
-          QTreeWidgetItem *child = 0;
-          for (int i = 0; i < count && child == 0; ++i) {
+          QTreeWidgetItem *child = nullptr;
+          for (int i = 0; i < count && child == nullptr; ++i) {
             child = parent ? parent->child (i) : items_tree->topLevelItem (i);
-            if (child != 0 && child->text (0) != tl::to_qstring (subtitle)) {
-              child = 0;
+            if (child != nullptr && child->text (0) != tl::to_qstring (subtitle)) {
+              child = nullptr;
             }
           }
 

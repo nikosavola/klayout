@@ -41,7 +41,7 @@ scan_layer (rdb::Category *cat, const db::Layout &layout, unsigned int layer, co
     return;
   }
 
-  rdb::Cell *rdb_top_cell = 0;
+  rdb::Cell *rdb_top_cell = nullptr;
   if (from) {
     rdb_top_cell = rdb->create_cell (layout.cell_name (from->cell_index ()));
   }
@@ -59,7 +59,7 @@ scan_layer (rdb::Category *cat, const db::Layout &layout, unsigned int layer, co
     }
 
     const db::Cell &cell = *c;
-    if (cell.shapes (layer).size () > 0) {
+    if (!cell.shapes (layer).empty()) {
 
       std::string cn = layout.cell_name (cell.cell_index ());
       const rdb::Cell *rdb_cell = rdb->cell_by_qname (cn);
@@ -173,7 +173,7 @@ private:
 
   const rdb::Cell *cell_for_id (const db::Layout *layout, db::cell_index_type ci)
   {
-    tl_assert (layout != 0);
+    tl_assert (layout != nullptr);
 
     std::string cn = layout->cell_name (ci);
     std::string layout_cn = cn;
@@ -218,7 +218,7 @@ public:
 
       db::cell_index_type ci = iter->top_cell ()->cell_index ();
 
-      tl_assert (iter->layout () != 0);
+      tl_assert (iter->layout () != nullptr);
       std::string cn = iter->layout ()->cell_name (ci);
       mp_rdb_cell = mp_rdb->cell_by_qname (cn);
       if (! mp_rdb_cell) {
@@ -251,7 +251,7 @@ scan_layer (rdb::Category *cat, const db::RecursiveShapeIterator &iter, bool fla
   }
 
   db::CplxTrans trans (iter.layout ()->dbu ());
-  scan_layer (cat, 0, trans, iter, flat, with_properties);
+  scan_layer (cat, nullptr, trans, iter, flat, with_properties);
 }
 
 void

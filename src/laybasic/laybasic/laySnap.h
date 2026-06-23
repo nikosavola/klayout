@@ -244,7 +244,7 @@ namespace lay
    *  vector (e.g. (1, 0) for snapping to horizontal axis. If no snapping happens,
    *  the value of this vector is not changed.
    */
-  LAYBASIC_PUBLIC db::DVector snap_angle (const db::DVector &in, lay::angle_constraint_type ac, db::DVector *snapped_to = 0);
+  LAYBASIC_PUBLIC db::DVector snap_angle (const db::DVector &in, lay::angle_constraint_type ac, db::DVector *snapped_to = nullptr);
 
   /**
    *  @brief rounding of a double value for drawing purposes

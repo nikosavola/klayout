@@ -163,9 +163,9 @@ public:
    *  @param insert_receiver A notification object that receives insert events, i.e. for providing a selection
    *  @return An array containing a vector of newly created layers in the "into" layout
    */
-  std::vector<unsigned int> insert (db::Layout &into, db::Cell *cell = 0, std::vector<db::cell_index_type> *new_tops = 0, ClipboardDataInsertReceiver *insert_receiver = 0) const
+  std::vector<unsigned int> insert (db::Layout &into, db::Cell *cell = nullptr, std::vector<db::cell_index_type> *new_tops = nullptr, ClipboardDataInsertReceiver *insert_receiver = nullptr) const
   {
-    return do_insert (into, 0, cell, new_tops, insert_receiver);
+    return do_insert (into, nullptr, cell, new_tops, insert_receiver);
   }
 
   /**
@@ -185,7 +185,7 @@ public:
    *  @param insert_receiver A notification object that receives insert events, i.e. for providing a selection
    *  @return An array containing a vector of newly created layers in the "into" layout
    */
-  std::vector<unsigned int> insert (db::Layout &into, const db::ICplxTrans &trans, db::Cell *cell = 0, std::vector<db::cell_index_type> *new_tops = 0, ClipboardDataInsertReceiver *insert_receiver = 0) const
+  std::vector<unsigned int> insert (db::Layout &into, const db::ICplxTrans &trans, db::Cell *cell = nullptr, std::vector<db::cell_index_type> *new_tops = nullptr, ClipboardDataInsertReceiver *insert_receiver = nullptr) const
   {
     return do_insert (into, &trans, cell, new_tops, insert_receiver);
   }

@@ -94,7 +94,7 @@ Edge *find_outgoing_segment (Vertex *vertex, Edge *incoming, int &vp_max_sign)
 
   double vp_max = 0.0;
   vp_max_sign = 0;
-  Edge *outgoing = 0;
+  Edge *outgoing = nullptr;
 
   //  Look for the outgoing edge. We pick the one which bends "most", favoring
   //  convex corners. Multiple edges per vertex are possible is corner cases such as the
@@ -121,7 +121,7 @@ Edge *find_outgoing_segment (Vertex *vertex, Edge *incoming, int &vp_max_sign)
 
   }
 
-  tl_assert (outgoing != 0);
+  tl_assert (outgoing != nullptr);
   return outgoing;
 }
 
@@ -133,7 +133,7 @@ ConvexDecomposition::collect_concave_vertexes (std::vector<ConcaveCorner> &conca
   std::unordered_set<Edge *> left;
 
   for (auto e = mp_graph->edges ().begin (); e != mp_graph->edges ().end (); ++e) {
-    if (e->is_segment () && (e->left () != 0 || e->right () != 0)) {
+    if (e->is_segment () && (e->left () != nullptr || e->right () != nullptr)) {
       left.insert (e.operator-> ());
     }
   }
@@ -309,17 +309,17 @@ ConvexDecomposition::hertel_mehlhorn_decomposition (Triangulation &tris, const C
       while (e) {
 
         const Polygon *t = e->v2 () == v0 ? e->right () : e->left ();
-        tl_assert (t != 0);
+        tl_assert (t != nullptr);
 
         const Edge *en = t->next_edge (e, v0);
-        tl_assert (en != 0);
+        tl_assert (en != nullptr);
 
         db::DVector v1 = e->edge ().d () * (e->v1 () == v0 ? 1.0 : -1.0);
         db::DVector v2 = en->edge ().d () * (en->v1 () == v0 ? 1.0 : -1.0);
 
         double angle = atan2 (db::vprod (v1, v2), db::sprod (v1, v2));
 
-        e = (en == cc->outgoing) ? 0 : en;
+        e = (en == cc->outgoing) ? nullptr : en;
         angles_and_edges.push_back (std::make_pair (angle, e));
 
       }
@@ -385,9 +385,9 @@ ConvexDecomposition::hertel_mehlhorn_decomposition (Triangulation &tris, const C
         //  look for the next edge (clockwise) which is an essential edge
         do {
           const Polygon *t = enn->v2 () == v0 ? enn->right () : enn->left ();
-          tl_assert (t != 0);
+          tl_assert (t != nullptr);
           enn = t->next_edge (enn, v0);
-          tl_assert (enn != 0);
+          tl_assert (enn != nullptr);
         } while (enn != en && essential_edges.find (enn) == essential_edges.end ());
 
         db::DEdge e1 (*en->other (v0), *v0);

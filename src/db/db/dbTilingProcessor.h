@@ -54,7 +54,7 @@ public:
    *  @brief Constructor
    */
   TileOutputReceiver ()
-    : mp_proc (0)
+    : mp_proc (nullptr)
   {
     //  .. nothing yet ..
   }

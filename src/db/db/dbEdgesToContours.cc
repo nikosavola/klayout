@@ -42,7 +42,7 @@ public:
   typedef db::point<coord_type> point_type;
 
   EdgeRef (Iter i)
-    : iter (i), swapped (0), connected (false), delivered (false), seen (false), next (0)
+    : iter (i), swapped (0), connected (false), delivered (false), seen (false), next (nullptr)
   { }
 
   Iter iter;
@@ -176,7 +176,7 @@ EdgeRef<Iter> *search_follower (const db::point<C> &p, const EdgeRef<Iter> *e, C
 {
   typedef db::box<C> box_type;
 
-  EdgeRef<Iter> *cand = 0;
+  EdgeRef<Iter> *cand = nullptr;
   bool fwd = true;
   point_matcher<C> pm;
 
@@ -260,7 +260,7 @@ EdgesToContours::fill (Iter from, Iter to, bool no, typename std::iterator_trait
 
       ee->seen = true;
 
-      EdgeRef<Iter> *f1 = 0, *f2 = 0;
+      EdgeRef<Iter> *f1 = nullptr, *f2 = nullptr;
       if (ee->swapped != 1) {
         f1 = search_follower (ee->iter->p2 (), ee, distance, bt, btr);
       }

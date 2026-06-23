@@ -33,19 +33,19 @@ namespace db
 //  NetTerminalRef class implementation
 
 NetTerminalRef::NetTerminalRef ()
-  : m_terminal_id (0), mp_device (0), mp_net (0)
+  : m_terminal_id (0), mp_device (nullptr), mp_net (nullptr)
 {
   //  .. nothing yet ..
 }
 
 NetTerminalRef::NetTerminalRef (Device *device, size_t terminal_id)
-  : m_terminal_id (terminal_id), mp_device (device), mp_net (0)
+  : m_terminal_id (terminal_id), mp_device (device), mp_net (nullptr)
 {
   //  .. nothing yet ..
 }
 
 NetTerminalRef::NetTerminalRef (const NetTerminalRef &other)
-  : m_terminal_id (other.m_terminal_id), mp_device (other.mp_device), mp_net (0)
+  : m_terminal_id (other.m_terminal_id), mp_device (other.mp_device), mp_net (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -66,33 +66,33 @@ NetTerminalRef::terminal_def () const
   if (dc) {
     return dc->terminal_definition (m_terminal_id);
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
 const DeviceClass *
 NetTerminalRef::device_class () const
 {
-  return mp_device ? mp_device->device_class () : 0;
+  return mp_device ? mp_device->device_class () : nullptr;
 }
 
 // --------------------------------------------------------------------------------
 //  NetPinRef class implementation
 
 NetPinRef::NetPinRef ()
-  : m_pin_id (0), mp_net (0)
+  : m_pin_id (0), mp_net (nullptr)
 {
   //  .. nothing yet ..
 }
 
 NetPinRef::NetPinRef (size_t pin_id)
-  : m_pin_id (pin_id), mp_net (0)
+  : m_pin_id (pin_id), mp_net (nullptr)
 {
   //  .. nothing yet ..
 }
 
 NetPinRef::NetPinRef (const NetPinRef &other)
-  : m_pin_id (other.m_pin_id), mp_net (0)
+  : m_pin_id (other.m_pin_id), mp_net (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -110,26 +110,26 @@ const Pin *NetPinRef::pin () const
   if (mp_net && mp_net->circuit ()) {
     return mp_net->circuit ()->pin_by_id (m_pin_id);
   }
-  return 0;
+  return nullptr;
 }
 
 // --------------------------------------------------------------------------------
 //  NetSubcircuitPinRef class implementation
 
 NetSubcircuitPinRef::NetSubcircuitPinRef ()
-  : m_pin_id (0), mp_subcircuit (0), mp_net (0)
+  : m_pin_id (0), mp_subcircuit (nullptr), mp_net (nullptr)
 {
   //  .. nothing yet ..
 }
 
 NetSubcircuitPinRef::NetSubcircuitPinRef (SubCircuit *circuit, size_t pin_id)
-  : m_pin_id (pin_id), mp_subcircuit (circuit), mp_net (0)
+  : m_pin_id (pin_id), mp_subcircuit (circuit), mp_net (nullptr)
 {
   //  .. nothing yet ..
 }
 
 NetSubcircuitPinRef::NetSubcircuitPinRef (const NetSubcircuitPinRef &other)
-  : m_pin_id (other.m_pin_id), mp_subcircuit (other.mp_subcircuit), mp_net (0)
+  : m_pin_id (other.m_pin_id), mp_subcircuit (other.mp_subcircuit), mp_net (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -148,26 +148,26 @@ const Pin *NetSubcircuitPinRef::pin () const
   if (mp_subcircuit && mp_subcircuit->circuit_ref ()) {
     return mp_subcircuit->circuit_ref ()->pin_by_id (m_pin_id);
   }
-  return 0;
+  return nullptr;
 }
 
 // --------------------------------------------------------------------------------
 //  Net class implementation
 
 Net::Net ()
-  : NetlistObject (), m_cluster_id (0), mp_circuit (0)
+  : NetlistObject (), m_cluster_id (0), mp_circuit (nullptr)
 {
   //  .. nothing yet ..
 }
 
 Net::Net (const std::string &name)
-  : NetlistObject (), m_cluster_id (0), mp_circuit (0)
+  : NetlistObject (), m_cluster_id (0), mp_circuit (nullptr)
 {
   m_name = name;
 }
 
 Net::Net (const Net &other)
-  : NetlistObject (other), m_cluster_id (0), mp_circuit (0)
+  : NetlistObject (other), m_cluster_id (0), mp_circuit (nullptr)
 {
   operator= (other);
 }
@@ -206,12 +206,12 @@ Net::~Net ()
 
 Netlist *Net::netlist ()
 {
-  return mp_circuit ? mp_circuit->netlist () : 0;
+  return mp_circuit ? mp_circuit->netlist () : nullptr;
 }
 
 const Netlist *Net::netlist () const
 {
-  return mp_circuit ? mp_circuit->netlist () : 0;
+  return mp_circuit ? mp_circuit->netlist () : nullptr;
 }
 
 void Net::clear ()
@@ -288,7 +288,7 @@ void Net::add_subcircuit_pin (const NetSubcircuitPinRef &pin)
   NetSubcircuitPinRef &new_pin = m_subcircuit_pins.back ();
   new_pin.set_net (this);
 
-  tl_assert (pin.subcircuit () != 0);
+  tl_assert (pin.subcircuit () != nullptr);
   new_pin.subcircuit ()->set_pin_ref_for_pin (new_pin.pin_id (), --m_subcircuit_pins.end ());
 }
 

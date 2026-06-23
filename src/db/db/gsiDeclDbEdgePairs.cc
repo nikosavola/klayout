@@ -627,7 +627,7 @@ static void insert_e (db::EdgePairs *e, const db::EdgePairs &a)
 
 static bool is_deep (const db::EdgePairs *ep)
 {
-  return dynamic_cast<const db::DeepEdgePairs *> (ep->delegate ()) != 0;
+  return dynamic_cast<const db::DeepEdgePairs *> (ep->delegate ()) != nullptr;
 }
 
 static size_t data_id (const db::EdgePairs *ep)

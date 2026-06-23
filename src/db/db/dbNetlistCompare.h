@@ -173,7 +173,7 @@ public:
   /**
    *  @brief Constructor
    */
-  NetlistComparer (NetlistCompareLogger *logger = 0);
+  NetlistComparer (NetlistCompareLogger *logger = nullptr);
 
   /**
    *  @brief Destructor

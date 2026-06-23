@@ -45,7 +45,7 @@ Service::Service (db::Manager *manager, lay::LayoutViewBase *view, db::ShapeIter
   : lay::EditorServiceBase (view),
     db::Object (manager),
     mp_view (view),
-    mp_transient_marker (0), 
+    mp_transient_marker (nullptr), 
     m_mouse_buttons (0), m_mouse_in_view (false), m_editing (false), m_immediate (false),
     m_selection_maybe_invalid (false),
     m_cell_inst_service (false),
@@ -69,7 +69,7 @@ Service::Service (db::Manager *manager, lay::LayoutViewBase *view)
   : lay::EditorServiceBase (view),
     db::Object (manager),
     mp_view (view),
-    mp_transient_marker (0), 
+    mp_transient_marker (nullptr), 
     m_mouse_buttons (0), m_mouse_in_view (false), m_editing (false), m_immediate (false),
     m_selection_maybe_invalid (false),
     m_cell_inst_service (true),
@@ -288,7 +288,7 @@ lay::PointSnapToObjectResult
 Service::snap2_details (const db::DPoint &p) const
 {
   double snap_range = ui ()->mouse_event_trans ().inverted ().ctrans (lay::snap_range_pixels ());
-  return lay::obj_snap (m_snap_to_objects ? view () : 0, p, m_edit_grid == db::DVector () ? m_global_grid : m_edit_grid, snap_range);
+  return lay::obj_snap (m_snap_to_objects ? view () : nullptr, p, m_edit_grid == db::DVector () ? m_global_grid : m_edit_grid, snap_range);
 }
 
 db::DPoint
@@ -301,7 +301,7 @@ lay::PointSnapToObjectResult
 Service::snap2_details (const db::DPoint &p, const db::DPoint &plast, lay::angle_constraint_type ac) const
 {
   double snap_range = ui ()->mouse_event_trans ().inverted ().ctrans (lay::snap_range_pixels ());
-  return lay::obj_snap (m_snap_to_objects ? view () : 0, plast, p, m_edit_grid == db::DVector () ? m_global_grid : m_edit_grid, ac, snap_range);
+  return lay::obj_snap (m_snap_to_objects ? view () : nullptr, plast, p, m_edit_grid == db::DVector () ? m_global_grid : m_edit_grid, ac, snap_range);
 }
 
 lay::PointSnapToObjectResult
@@ -650,7 +650,7 @@ Service::selection_bbox ()
     if (! r->is_cell_inst ()) {
 
       const std::vector<db::DCplxTrans> *tv_list = tv.per_cv_and_layer (r->cv_index (), r->layer ());
-      if (tv_list != 0) {
+      if (tv_list != nullptr) {
         for (std::vector<db::DCplxTrans>::const_iterator t = tv_list->begin (); t != tv_list->end (); ++t) {
           if (r->shape ().is_text ()) {
             db::Text text;
@@ -665,7 +665,7 @@ Service::selection_bbox ()
     } else {
 
       const std::vector<db::DCplxTrans> *tv_list = tv.per_cv (r->cv_index ());
-      if (tv_list != 0) {
+      if (tv_list != nullptr) {
         for (std::vector<db::DCplxTrans>::const_iterator t = tv_list->begin (); t != tv_list->end (); ++t) {
           box += *t * (ctx_trans * r->back ().bbox (bc));
         }
@@ -702,7 +702,7 @@ Service::edit_marker ()
   if (! m_edit_markers.empty ()) {
     return m_edit_markers.front ();
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -746,7 +746,7 @@ Service::transform (const db::DCplxTrans &trans, const std::vector<db::DCplxTran
     if (cv.is_valid ()) {
 
       const std::vector<db::DCplxTrans> *tv_list = tv.per_cv_and_layer (sbc->first.second.first, sbc->first.second.second);
-      if (tv_list != 0) {
+      if (tv_list != nullptr) {
 
         db::CplxTrans tt = (*tv_list) [0] * db::CplxTrans (cv->layout ().dbu ()) * cv.context_trans ();
         db::DCplxTrans mt_mu (tt.inverted () * trans * tt);
@@ -762,7 +762,7 @@ Service::transform (const db::DCplxTrans &trans, const std::vector<db::DCplxTran
           //  mt = transformation in DBU units
           db::ICplxTrans mt;
           db::CplxTrans t (s->trans ());
-          if (p_trv != 0 && *si < p_trv->size ()) {
+          if (p_trv != nullptr && *si < p_trv->size ()) {
             db::DCplxTrans t_mu (tt.inverted () * (*p_trv) [*si] * tt);
             mt = db::ICplxTrans (t.inverted () * t_mu * t);
           } else {
@@ -816,7 +816,7 @@ Service::transform (const db::DCplxTrans &trans, const std::vector<db::DCplxTran
     if (cv.is_valid ()) {
 
       const std::vector<db::DCplxTrans> *tv_list = tv.per_cv (ibc->first.second);
-      if (tv_list != 0) {
+      if (tv_list != nullptr) {
 
         db::CplxTrans tt = (*tv_list) [0] * db::CplxTrans (cv->layout ().dbu ()) * cv.context_trans ();
         db::ICplxTrans mt_mu (tt.inverted () * trans * tt);
@@ -832,7 +832,7 @@ Service::transform (const db::DCplxTrans &trans, const std::vector<db::DCplxTran
           //  mt = transformation in DBU units
           db::ICplxTrans mt;
           db::ICplxTrans t (i->trans ());
-          if (p_trv != 0 && *ii < p_trv->size ()) {
+          if (p_trv != nullptr && *ii < p_trv->size ()) {
             db::ICplxTrans t_mu (tt.inverted () * (*p_trv) [*ii] * tt);
             mt = t.inverted () * t_mu * t;
           } else {
@@ -916,7 +916,7 @@ Service::mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio)
         try {
           begin_edit (p);
         } catch (...) {
-          set_edit_marker (0);
+          set_edit_marker (nullptr);
         }
       }
       if (m_editing) {
@@ -951,7 +951,7 @@ Service::mouse_press_event (const db::DPoint &p, unsigned int buttons, bool prio
       if (! m_editing) {
 
         view ()->cancel ();  //  cancel any pending edit operations and clear the selection
-        set_edit_marker (0);
+        set_edit_marker (nullptr);
         begin_edit (p);
 
       } else {
@@ -1038,7 +1038,7 @@ Service::finish_editing (bool accept)
 
   m_editing = false;
   show_toolbox (false);
-  set_edit_marker (0);
+  set_edit_marker (nullptr);
   m_alt_ac = lay::AC_Global;
 }
 
@@ -1048,7 +1048,7 @@ Service::activated ()
   if (view ()->is_editable ()) {
 
     view ()->cancel ();  //  cancel any pending edit operations and clear the selection
-    set_edit_marker (0);
+    set_edit_marker (nullptr);
 
     m_immediate = do_activated ();
     m_editing = false;
@@ -1073,7 +1073,7 @@ Service::edit_cancel ()
   if (m_editing) {
     do_cancel_edit ();
     m_editing = false;
-    set_edit_marker (0);
+    set_edit_marker (nullptr);
   }
 }
 
@@ -1156,7 +1156,7 @@ Service::click_proximity (const db::DPoint &pos, lay::Editable::SelectionMode mo
 
   //  for single-point selections either exclude the current selection or the
   //  accumulated previous selection from the search.
-  const objects *exclude = 0;
+  const objects *exclude = nullptr;
   if (mode == lay::Editable::Replace) {
     exclude = &m_previous_selection;
   } else if (mode == lay::Editable::Add) {
@@ -1483,7 +1483,7 @@ Service::clear_transient_selection ()
 {
   if (mp_transient_marker) {
     delete mp_transient_marker;
-    mp_transient_marker = 0;
+    mp_transient_marker = nullptr;
   }
 
   m_transient_selection.clear ();
@@ -1531,7 +1531,7 @@ Service::select (const db::DBox &box, lay::Editable::SelectionMode mode)
 
   //  for single-point selections either exclude the current selection or the
   //  accumulated previous selection from the search.
-  const objects *exclude = 0;
+  const objects *exclude = nullptr;
   if (mode == lay::Editable::Replace) {
     exclude = &m_previous_selection;
   } else if (mode == lay::Editable::Add) {
@@ -1841,7 +1841,7 @@ Service::do_selection_to_view ()
     if (m_cell_inst_service) {
 
       const std::vector<db::DCplxTrans> *tv_list = tv.per_cv (r->cv_index ());
-      if (tv_list == 0) {
+      if (tv_list == nullptr) {
         tv_list = &empty_tv;
       }
       
@@ -1880,7 +1880,7 @@ Service::do_selection_to_view ()
     } else {
 
       const std::vector<db::DCplxTrans> *tv_list = tv.per_cv_and_layer (r->cv_index (), r->layer ());
-      if (tv_list != 0) {
+      if (tv_list != nullptr) {
 
         lay::ShapeMarker *marker = new lay::ShapeMarker (view (), r->cv_index ());
         if (r->seq () > 0 && m_indicate_secondary_selection) { 
@@ -2090,7 +2090,7 @@ Service::toolbox_widget ()
 {
   lay::EditorOptionsPageCollection *eo_pages = view ()->editor_options_pages ();
   if (! eo_pages) {
-    return 0;
+    return nullptr;
   }
 
   auto pages = eo_pages->editor_options_pages (plugin_declaration ());
@@ -2100,7 +2100,7 @@ Service::toolbox_widget ()
     }
   }
 
-  return 0;
+  return nullptr;
 }
 
 // -------------------------------------------------------------

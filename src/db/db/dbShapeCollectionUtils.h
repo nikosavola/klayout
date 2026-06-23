@@ -72,7 +72,7 @@ public:
    *  @brief Returns the transformation reducer for building cell variants
    *  This method may return 0. In this case, not cell variants are built.
    */
-  virtual const TransformationReducer *vars () const { return 0; }
+  virtual const TransformationReducer *vars () const { return nullptr; }
 
   /**
    *  @brief Returns true, if the result of this operation can be regarded "merged" always.
@@ -336,7 +336,7 @@ public:
   virtual const db::TransformationReducer *vars () const
   {
     if (m_dx == 0 && m_dy == 0) {
-      return 0;
+      return nullptr;
     } else if (m_dx == m_dy) {
       return & m_isotropic_reducer;
     } else {

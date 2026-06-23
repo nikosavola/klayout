@@ -189,7 +189,7 @@ public:
    */
   bool is_null () const
   {
-    return mp_rule == 0;
+    return mp_rule == nullptr;
   }
 
   /**
@@ -589,7 +589,7 @@ public:
   /**
    *  @brief The constructor
    */
-  GenericSyntaxHighlighterAttributes (const GenericSyntaxHighlighterAttributes *basic_attributes = 0);
+  GenericSyntaxHighlighterAttributes (const GenericSyntaxHighlighterAttributes *basic_attributes = nullptr);
 
   /**
    *  @brief Get the iterator delivering the names and ID's (begin)

@@ -254,7 +254,7 @@ struct get_boxed_value_func
 
 void *boxed_value_ptr (gsi::BasicType type, PyObject *arg, tl::Heap &heap)
 {
-  void *value = 0;
+  void *value = nullptr;
   gsi::do_on_type<get_boxed_value_func> () (type, &value, arg, &heap);
   return value;
 }
@@ -271,14 +271,14 @@ struct writer
 {
   void operator() (gsi::SerialArgs *aa, PyObject *arg, const gsi::ArgType &atype, tl::Heap *heap)
   {
-    if (arg == Py_None || arg == NULL) {
+    if (arg == Py_None || arg == nullptr) {
 
       if (atype.is_ref () || atype.is_cref ()) {
         throw tl::Exception (tl::to_string (tr ("Arguments or return values of reference type cannot be passed None")));
       } else if (atype.is_ptr ()) {
-        aa->write<R *> ((R *)0);
+        aa->write<R *> ((R *)nullptr);
       } else if (atype.is_cptr ()) {
-        aa->write<const R *> ((const R *)0);
+        aa->write<const R *> ((const R *)nullptr);
       } else {
         aa->write<R> ((R)0);
       }
@@ -320,13 +320,13 @@ struct writer<gsi::StringType>
     //  Cannot pass ownership currently
     tl_assert (!atype.pass_obj ());
 
-    if (arg == Py_None || arg == NULL) {
+    if (arg == Py_None || arg == nullptr) {
 
       if (! (atype.is_ptr () || atype.is_cptr ())) {
         //  nil is treated as an empty string for references
         aa->write<void *> ((void *)new gsi::StringAdaptorImpl<std::string> (std::string ()));
       } else {
-        aa->write<void *> ((void *)0);
+        aa->write<void *> ((void *)nullptr);
       }
 
     } else {
@@ -334,7 +334,7 @@ struct writer<gsi::StringType>
       if (atype.is_ref () || atype.is_ptr ()) {
 
         // references or pointers require a boxed object. Pointers also allow nil.
-        void *vc = 0;
+        void *vc = nullptr;
         get_boxed_value_func<std::string> () (&vc, arg, heap);
         if (! vc && atype.is_ref ()) {
           throw tl::Exception (tl::to_string (tr ("Arguments or return values of reference or direct type cannot be passed nil or an empty boxed value object")));
@@ -369,13 +369,13 @@ struct writer<gsi::ByteArrayType>
     //  Cannot pass ownership currently
     tl_assert (!atype.pass_obj ());
 
-    if (arg == Py_None || arg == NULL) {
+    if (arg == Py_None || arg == nullptr) {
 
       if (! (atype.is_ptr () || atype.is_cptr ())) {
         //  nil is treated as an empty string for references
         aa->write<void *> ((void *)new gsi::ByteArrayAdaptorImpl<std::vector<char> > (std::vector<char> ()));
       } else {
-        aa->write<void *> ((void *)0);
+        aa->write<void *> ((void *)nullptr);
       }
 
     } else {
@@ -383,7 +383,7 @@ struct writer<gsi::ByteArrayType>
       if (atype.is_ref () || atype.is_ptr ()) {
 
         // references or pointers require a boxed object. Pointers also allow nil.
-        void *vc = 0;
+        void *vc = nullptr;
         get_boxed_value_func<std::vector<char> > () (&vc, arg, heap);
         if (! vc && atype.is_ref ()) {
           throw tl::Exception (tl::to_string (tr ("Arguments or return values of reference or direct type cannot be passed nil or an empty boxed value object")));
@@ -429,14 +429,14 @@ struct writer<gsi::VectorType>
 {
   void operator() (gsi::SerialArgs *aa, PyObject *arg, const gsi::ArgType &atype, tl::Heap *)
   {
-    if (arg == Py_None || arg == NULL) {
+    if (arg == Py_None || arg == nullptr) {
       if (! (atype.is_ptr () || atype.is_cptr ())) {
         throw tl::Exception (tl::to_string (tr ("Arguments of reference or direct type cannot be passed nil")));
       } else {
-        aa->write<void *> ((void *)0);
+        aa->write<void *> ((void *)nullptr);
       }
     } else {
-      tl_assert (atype.inner () != 0);
+      tl_assert (atype.inner () != nullptr);
       aa->write<void *> ((void *)new PythonBasedVectorAdaptor (arg, atype.inner ()));
     }
   }
@@ -450,15 +450,15 @@ struct writer<gsi::MapType>
 {
   void operator() (gsi::SerialArgs *aa, PyObject *arg, const gsi::ArgType &atype, tl::Heap *)
   {
-    if (arg == Py_None || arg == NULL) {
+    if (arg == Py_None || arg == nullptr) {
       if (! (atype.is_ptr () || atype.is_cptr ())) {
         throw tl::Exception (tl::to_string (tr ("Arguments of reference or direct type cannot be passed nil")));
       } else {
-        aa->write<void *> ((void *)0);
+        aa->write<void *> ((void *)nullptr);
       }
     } else {
-      tl_assert (atype.inner () != 0);
-      tl_assert (atype.inner_k () != 0);
+      tl_assert (atype.inner () != nullptr);
+      tl_assert (atype.inner_k () != nullptr);
       aa->write<void *> ((void *)new PythonBasedMapAdaptor (arg, atype.inner (), atype.inner_k ()));
     }
   }
@@ -475,12 +475,12 @@ struct writer<gsi::ObjectType>
   {
     const gsi::ClassBase *acls = atype.cls ();
 
-    if (arg == Py_None || arg == NULL) {
+    if (arg == Py_None || arg == nullptr) {
 
       if (! (atype.is_ptr () || atype.is_cptr ())) {
         throw tl::Exception (tl::to_string (tr ("Arguments of reference or direct type cannot be passed null")));
       } else {
-        aa->write<void *> ((void *) 0);
+        aa->write<void *> ((void *) nullptr);
         return;
       }
 
@@ -492,7 +492,7 @@ struct writer<gsi::ObjectType>
       //  for now we only check whether the number of arguments is compatible with the list given.
 
       int n = PyTuple_Check (arg) ? int (PyTuple_Size (arg)) : int (PyList_Size (arg));
-      const gsi::MethodBase *meth = 0;
+      const gsi::MethodBase *meth = nullptr;
       for (gsi::ClassBase::method_iterator c = acls->begin_constructors (); c != acls->end_constructors (); ++c) {
         if ((*c)->compatible_with_num_args (n)) {
           meth = *c;
@@ -508,9 +508,9 @@ struct writer<gsi::ObjectType>
       gsi::SerialArgs retlist (meth->retsize ());
       gsi::SerialArgs arglist (meth->argsize ());
 
-      push_args (arglist, meth, arg, NULL, *heap);
+      push_args (arglist, meth, arg, nullptr, *heap);
 
-      meth->call (0, arglist, retlist);
+      meth->call (nullptr, arglist, retlist);
 
       void *new_obj = retlist.read<void *> (*heap);
       if (new_obj && (atype.is_ptr () || atype.is_cptr () || atype.is_ref () || atype.is_cref ())) {
@@ -804,7 +804,7 @@ struct reader<gsi::VectorType>
       *ret = PythonRef (Py_None, false /*borrowed*/);
     } else {
       *ret = PyList_New (0);
-      tl_assert (atype.inner () != 0);
+      tl_assert (atype.inner () != nullptr);
       PythonBasedVectorAdaptor t (*ret, atype.inner ());
       a->copy_to (&t, *heap);
     }
@@ -824,8 +824,8 @@ struct reader<gsi::MapType>
       *ret = PythonRef (Py_None, false /*borrowed*/);
     } else {
       *ret = PyDict_New ();
-      tl_assert (atype.inner () != 0);
-      tl_assert (atype.inner_k () != 0);
+      tl_assert (atype.inner () != nullptr);
+      tl_assert (atype.inner_k () != nullptr);
       PythonBasedMapAdaptor t (*ret, atype.inner (), atype.inner_k ());
       a->copy_to (&t, *heap);
     }
@@ -899,7 +899,7 @@ PythonBasedVectorAdaptorIterator::PythonBasedVectorAdaptorIterator (const Python
 
 void PythonBasedVectorAdaptorIterator::get (gsi::SerialArgs &w, tl::Heap &heap) const
 {
-  PyObject *member = NULL;
+  PyObject *member = nullptr;
   if (PyTuple_Check (m_array.get ())) {
     member = PyTuple_GetItem (m_array.get (), m_i);
   } else if (PyList_Check (m_array.get ())) {
@@ -936,7 +936,7 @@ void PythonBasedVectorAdaptor::push (gsi::SerialArgs &r, tl::Heap &heap)
 {
   if (PyList_Check (m_array.get ())) {
     PythonRef member;
-    gsi::do_on_type<reader> () (mp_ainner->type (), &r, &member, (PYAObjectBase *) 0, *mp_ainner, &heap);
+    gsi::do_on_type<reader> () (mp_ainner->type (), &r, &member, (PYAObjectBase *) nullptr, *mp_ainner, &heap);
     PyList_Append (m_array.get (), member.get ());
   } else if (PyTuple_Check (m_array.get ())) {
     throw tl::Exception (tl::to_string (tr ("Tuples cannot be modified and cannot be used as out parameters")));
@@ -946,7 +946,7 @@ void PythonBasedVectorAdaptor::push (gsi::SerialArgs &r, tl::Heap &heap)
 void PythonBasedVectorAdaptor::clear ()
 {
   if (PyList_Check (m_array.get ())) {
-    PyList_SetSlice (m_array.get (), 0, PyList_Size (m_array.get ()), NULL);
+    PyList_SetSlice (m_array.get (), 0, PyList_Size (m_array.get ()), nullptr);
   } else if (PyTuple_Check (m_array.get ())) {
     throw tl::Exception (tl::to_string (tr ("Tuples cannot be modified and cannot be used as out parameters")));
   }
@@ -1009,8 +1009,8 @@ gsi::MapAdaptorIterator *PythonBasedMapAdaptor::create_iterator () const
 void PythonBasedMapAdaptor::insert (gsi::SerialArgs &r, tl::Heap &heap)
 {
   PythonRef k, v;
-  gsi::do_on_type<reader> () (mp_ainner_k->type (), &r, &k, (PYAObjectBase *) 0, *mp_ainner_k, &heap);
-  gsi::do_on_type<reader> () (mp_ainner->type (), &r, &v, (PYAObjectBase *) 0, *mp_ainner, &heap);
+  gsi::do_on_type<reader> () (mp_ainner_k->type (), &r, &k, (PYAObjectBase *) nullptr, *mp_ainner_k, &heap);
+  gsi::do_on_type<reader> () (mp_ainner->type (), &r, &v, (PYAObjectBase *) nullptr, *mp_ainner, &heap);
   PyDict_SetItem (m_hash.get (), k.get (), v.get ());
 }
 
@@ -1130,7 +1130,7 @@ struct test_arg_func<gsi::VectorType>
       return;
     }
 
-    tl_assert (atype.inner () != 0);
+    tl_assert (atype.inner () != nullptr);
     const gsi::ArgType &ainner = *atype.inner ();
 
     *ret = true;
@@ -1172,8 +1172,8 @@ struct test_arg_func<gsi::MapType>
       return;
     }
 
-    tl_assert (atype.inner () != 0);
-    tl_assert (atype.inner_k () != 0);
+    tl_assert (atype.inner () != nullptr);
+    tl_assert (atype.inner_k () != nullptr);
     const gsi::ArgType &ainner = *atype.inner ();
     const gsi::ArgType &ainner_k = *atype.inner ();
 

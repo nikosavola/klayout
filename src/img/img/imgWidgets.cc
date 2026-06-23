@@ -235,7 +235,7 @@ ColorBar::set_nodes (const std::vector<std::pair<double, std::pair<tl::Color, tl
 
   std::sort (m_nodes.begin (), m_nodes.end (), compare_first_of_node ());
 
-  if (m_nodes.size () == 0 || fabs (m_nodes[0].first) > epsilon) {
+  if (m_nodes.empty() || fabs (m_nodes[0].first) > epsilon) {
     m_nodes.insert (m_nodes.begin (), std::make_pair (0.0, std::make_pair (tl::Color (0, 0, 0), tl::Color (0, 0, 0))));
   } else {
     m_nodes[0].first = 0.0;
@@ -379,7 +379,7 @@ ColorBar::paintEvent (QPaintEvent *)
 
     int hbar = yb - yt;
 
-    if (m_histogram.size () > 0 && xr > xl) {
+    if (!m_histogram.empty() && xr > xl) {
 
       size_t hi = int ((m_histogram.size () - 1) * (x - xl)) / (xr - xl);
       size_t hi_next = int ((m_histogram.size () - 1) * (x + 1 - xl)) / (xr - xl);

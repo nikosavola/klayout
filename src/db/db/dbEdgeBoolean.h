@@ -87,7 +87,7 @@ struct EdgeBooleanCluster
   typedef db::Edge::coord_type coord_type;
 
   EdgeBooleanCluster (OutputContainer *output, std::set<db::Point> *dots, EdgeBoolOp op)
-    : mp_output (output), mp_output2 (0), mp_dots (dots), mp_dots2 (0), m_op (op)
+    : mp_output (output), mp_output2 (nullptr), mp_dots (dots), mp_dots2 (nullptr), m_op (op)
   {
     //  .. nothing yet ..
   }
@@ -213,7 +213,7 @@ struct EdgeBooleanCluster
     if (b.begin () == b.end ()) {
 
       //  optimize for empty b
-      OutputContainer *oc = 0;
+      OutputContainer *oc = nullptr;
       if (m_op == EdgeAndNot) {
         oc = mp_output;
       } else if (m_op != EdgeAnd) {
@@ -284,7 +284,7 @@ template <class OutputContainer>
 struct EdgeBooleanClusterCollector
   : public db::cluster_collector<db::Edge, size_t, EdgeBooleanCluster<OutputContainer> >
 {
-  EdgeBooleanClusterCollector (OutputContainer *output, EdgeBoolOp op, OutputContainer *output2 = 0)
+  EdgeBooleanClusterCollector (OutputContainer *output, EdgeBoolOp op, OutputContainer *output2 = nullptr)
     : db::cluster_collector<db::Edge, size_t, EdgeBooleanCluster<OutputContainer> > (EdgeBooleanCluster<OutputContainer> (output, output2, &m_dots, &m_dots2, op == EdgeIntersections ? EdgeAnd : op), op != EdgeAnd && op != EdgeIntersections /*report single*/),
       mp_output (output), mp_output2 (output2), m_op (op)
   {
@@ -510,7 +510,7 @@ public:
   typedef Iterator const_iterator;
 
   ShapesToOutputContainerAdaptor ()
-    : mp_shapes (0), m_prop_id (0)
+    : mp_shapes (nullptr), m_prop_id (0)
   {
     //  .. nothing yet ..
   }

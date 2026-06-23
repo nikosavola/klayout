@@ -65,7 +65,7 @@ public:
   void set_colors (tl::Color background, tl::Color color);
   void begin (const db::DPoint &pos);
 
-  bool dragging () const { return mp_box != 0; }
+  bool dragging () const { return mp_box != nullptr; }
 
   //  called by lay::Move, so these methods need to be public
   virtual bool leave_event (bool prio);

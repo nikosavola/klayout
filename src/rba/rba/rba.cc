@@ -348,7 +348,7 @@ public:
 private:
 
   static bool
-  compatible_with_args (const gsi::MethodBase *m, int argc, VALUE kwargs, std::string *why_not = 0)
+  compatible_with_args (const gsi::MethodBase *m, int argc, VALUE kwargs, std::string *why_not = nullptr)
   {
     int nargs = num_args (m);
     int nkwargs = kwargs == Qnil ? 0 : RHASH_SIZE (kwargs);
@@ -453,7 +453,7 @@ private:
   const gsi::MethodBase *find_variant (int argc, VALUE *argv, VALUE kwargs, bool block_given, bool is_ctor, bool is_static, bool is_const) const
   {
     //  get number of candidates by argument count
-    const gsi::MethodBase *meth = 0;
+    const gsi::MethodBase *meth = nullptr;
     unsigned int candidates = 0;
     for (MethodTableEntry::method_iterator m = begin (); m != end (); ++m) {
 
@@ -493,7 +493,7 @@ private:
 
     //  no method found, but the ctor was requested - implement that method as replacement for the default "initialize"
     if (! meth && argc == 0 && is_ctor && kwargs == Qnil) {
-      return 0;
+      return nullptr;
     }
 
     //  no candidate -> error
@@ -521,7 +521,7 @@ private:
     //  more than one candidate -> refine by checking the arguments
     if (candidates > 1) {
 
-      meth = 0;
+      meth = nullptr;
       candidates = 0;
       int score = 0;
       bool const_matching = true;
@@ -803,8 +803,8 @@ struct RubyInterpreterPrivateData
     saved_stdout = Qnil;
     stdout_klass = Qnil;
     stderr_klass = Qnil;
-    current_console = 0;
-    current_exec_handler = 0;
+    current_console = nullptr;
+    current_exec_handler = nullptr;
     current_exec_level = 0;
     in_trace = false;
     exit_on_next = false;
@@ -929,7 +929,7 @@ static VALUE
 destroy (VALUE self)
 {
   //  Destroy the object
-  Proxy *p = 0;
+  Proxy *p = nullptr;
   Data_Get_Struct (self, Proxy, p);
   p->destroy ();
   return Qnil;
@@ -939,7 +939,7 @@ static VALUE
 keep (VALUE self)
 {
   //  Makes the object kept by another instance
-  Proxy *p = 0;
+  Proxy *p = nullptr;
   Data_Get_Struct (self, Proxy, p);
   p->keep ();
   return Qnil;
@@ -949,7 +949,7 @@ static VALUE
 release (VALUE self)
 {
   //  Release any other ownership of the object
-  Proxy *p = 0;
+  Proxy *p = nullptr;
   Data_Get_Struct (self, Proxy, p);
   p->release ();
   return Qnil;
@@ -958,7 +958,7 @@ release (VALUE self)
 static VALUE
 create (VALUE self)
 {
-  Proxy *p = 0;
+  Proxy *p = nullptr;
   Data_Get_Struct (self, Proxy, p);
   //  this potentially instantiates the object if not done yet
   p->obj ();
@@ -969,7 +969,7 @@ static VALUE
 destroyed (VALUE self)
 {
   //  return true if the object was destroyed already
-  Proxy *p = 0;
+  Proxy *p = nullptr;
   Data_Get_Struct (self, Proxy, p);
   return c2ruby<bool> (p->destroyed ());
 }
@@ -978,7 +978,7 @@ static VALUE
 is_const (VALUE self)
 {
   //  return true if the object was destroyed already
-  Proxy *p = 0;
+  Proxy *p = nullptr;
   Data_Get_Struct (self, Proxy, p);
   return c2ruby<bool> (p->const_ref ());
 }
@@ -986,7 +986,7 @@ is_const (VALUE self)
 static VALUE
 to_const (VALUE self)
 {
-  Proxy *p = 0;
+  Proxy *p = nullptr;
   Data_Get_Struct (self, Proxy, p);
   if (! p->const_ref ()) {
     //  promote to const object
@@ -1002,7 +1002,7 @@ to_const (VALUE self)
 static VALUE
 const_cast_ (VALUE self)
 {
-  Proxy *p = 0;
+  Proxy *p = nullptr;
   Data_Get_Struct (self, Proxy, p);
   if (p->const_ref ()) {
     //  promote to non-const object
@@ -1018,7 +1018,7 @@ static VALUE
 assign (VALUE self, VALUE src)
 {
   //  Compare if the classes are identical
-  Proxy *p = 0;
+  Proxy *p = nullptr;
 
   Data_Get_Struct (src, Proxy, p);
   const gsi::ClassBase *cls_decl_src = p->cls_decl ();
@@ -1110,7 +1110,7 @@ std::string
 method_name_from_id (int mid, VALUE self)
 {
   const gsi::ClassBase *cls_decl;
-  Proxy *p = 0;
+  Proxy *p = nullptr;
 
   if (TYPE (self) == T_CLASS) {
     //  we have a static method
@@ -1205,7 +1205,7 @@ push_args (gsi::SerialArgs &arglist, const gsi::MethodBase *meth, VALUE *argv, i
     //  In case of an error upon write, pop the arguments to clean them up.
     //  Without this, there is a risk to keep dead objects on the stack.
     for (gsi::MethodBase::argument_iterator a = meth->begin_arguments (); a != meth->end_arguments () && arglist; ++a) {
-      pull_arg (*a, 0, arglist, heap);
+      pull_arg (*a, nullptr, arglist, heap);
     }
 
     if (iarg < num_args (meth)) {
@@ -1232,7 +1232,7 @@ push_args (gsi::SerialArgs &arglist, const gsi::MethodBase *meth, VALUE *argv, i
     //  In case of an error upon write, pop the arguments to clean them up.
     //  Without this, there is a risk to keep dead objects on the stack.
     for (gsi::MethodBase::argument_iterator a = meth->begin_arguments (); a != meth->end_arguments () && arglist; ++a) {
-      pull_arg (*a, 0, arglist, heap);
+      pull_arg (*a, nullptr, arglist, heap);
     }
 
     throw;
@@ -1250,7 +1250,7 @@ method_adaptor (int mid, int argc, VALUE *argv, VALUE self, bool ctor)
     tl::Heap heap;
 
     const gsi::ClassBase *cls_decl;
-    Proxy *p = 0;
+    Proxy *p = nullptr;
 
     //  this prevents side effects of callbacks raised from within the called functions -
     //  if these trigger the GC, self is protected from destruction herein.
@@ -1308,7 +1308,7 @@ method_adaptor (int mid, int argc, VALUE *argv, VALUE self, bool ctor)
 
     //  Identify the matching variant
 
-    const gsi::MethodBase *meth = mt->entry (mid).get_variant (argc, argv, kwargs, rb_block_given_p (), ctor, p == 0, p != 0 && p->const_ref ());
+    const gsi::MethodBase *meth = mt->entry (mid).get_variant (argc, argv, kwargs, rb_block_given_p (), ctor, p == nullptr, p != nullptr && p->const_ref ());
 
     if (! meth) {
 
@@ -1350,7 +1350,7 @@ method_adaptor (int mid, int argc, VALUE *argv, VALUE self, bool ctor)
 
     } else if (ctor && meth->ret_type ().type () == gsi::T_object && meth->ret_type ().pass_obj ()) {
 
-      tl_assert (p != 0);
+      tl_assert (p != nullptr);
 
       //  This is a non-static constructor ("new" renamed to "initialize"): it does not create a 
       //  new Ruby object but just a new C++ object which replaces the old one.
@@ -1360,11 +1360,11 @@ method_adaptor (int mid, int argc, VALUE *argv, VALUE self, bool ctor)
       {
         gsi::SerialArgs arglist (meth->argsize ());
         push_args (arglist, meth, argv, argc, kwargs, heap);
-        meth->call (0, arglist, retlist);
+        meth->call (nullptr, arglist, retlist);
       }
 
       void *obj = retlist.read<void *> (heap);
-      if (obj == 0) {
+      if (obj == nullptr) {
         p->reset ();
       } else {
         p->set (obj, true, false, true, self);
@@ -1407,7 +1407,7 @@ method_adaptor (int mid, int argc, VALUE *argv, VALUE self, bool ctor)
 
     } else {
 
-      void *obj = 0;
+      void *obj = nullptr;
       if (p) {
         //  Hint: this potentially instantiates the object
         obj = p->obj ();
@@ -1827,7 +1827,7 @@ stderr_winsize (VALUE self)
 // --------------------------------------------------------------------------
 //  RubyInterpreter implementation
 
-static RubyInterpreter *sp_rba_interpreter = 0;
+static RubyInterpreter *sp_rba_interpreter = nullptr;
 
 struct RubyConstDescriptor
 {
@@ -1884,14 +1884,14 @@ public:
     }
   }
 
-  VALUE make_class (const gsi::ClassBase *cls, bool as_static, VALUE parent_class = (VALUE) 0, const gsi::ClassBase *parent = 0)
+  VALUE make_class (const gsi::ClassBase *cls, bool as_static, VALUE parent_class = (VALUE) 0, const gsi::ClassBase *parent = nullptr)
   {
     if (is_registered (cls, as_static)) {
       return ruby_cls (cls, as_static);
     }
 
     VALUE super = rb_cObject;
-    if (cls->base () != 0) {
+    if (cls->base () != nullptr) {
       super = make_class (cls->base (), as_static);
     }
 
@@ -1911,7 +1911,7 @@ public:
       }
 
       //  if the base class is an extension (mixin), we cannot use it as superclass because it's a module
-      if (cls->base () != 0) {
+      if (cls->base () != nullptr) {
         rb_include_module (klass, super);
       }
 
@@ -2119,9 +2119,9 @@ public:
 
         gsi::SerialArgs retlist (c->meth->retsize ());
         gsi::SerialArgs arglist (c->meth->argsize ());
-        c->meth->call (0, arglist, retlist);
+        c->meth->call (nullptr, arglist, retlist);
         tl::Heap heap;
-        VALUE ret = pull_arg (c->meth->ret_type (), 0, retlist, heap);
+        VALUE ret = pull_arg (c->meth->ret_type (), nullptr, retlist, heap);
         rb_define_const (c->klass, c->name.c_str (), ret);
 
       } catch (tl::Exception &ex) {
@@ -2214,11 +2214,11 @@ RubyInterpreter::RubyInterpreter ()
 RubyInterpreter::~RubyInterpreter () 
 {
   delete d;
-  d = 0;
+  d = nullptr;
 
   rb_release_top_self ();
 
-  sp_rba_interpreter = 0;
+  sp_rba_interpreter = nullptr;
 }
 
 RubyInterpreter *RubyInterpreter::instance ()
@@ -2236,9 +2236,9 @@ RubyInterpreter::version () const
   }
 }
 
-static int *s_argc = 0;
-static char **s_argv = 0;
-static int (*s_main_func) (int &, char **) = 0;
+static int *s_argc = nullptr;
+static char **s_argv = nullptr;
+static int (*s_main_func) (int &, char **) = nullptr;
 
 static VALUE run_app_func (VALUE)
 {
@@ -2374,7 +2374,7 @@ RubyInterpreter::initialize (int &main_argc, char **main_argv, int (*main_func) 
       int res = ruby_run_node (ruby_options (argc, argv));
 #endif
 
-      s_argc = 0;
+      s_argc = nullptr;
       return res;
 
     }
@@ -2541,7 +2541,7 @@ RubyInterpreter::remove_console (gsi::Console *console)
   if (d->current_console == console) {
 
     if (d->consoles.empty ()) {
-      d->current_console = 0;
+      d->current_console = nullptr;
       std::swap (d->saved_stderr, rb_stderr);
       std::swap (d->saved_stdout, rb_stdout);
     } else {
@@ -2748,7 +2748,7 @@ RubyInterpreter::remove_exec_handler (gsi::ExecutionHandler *exec_handler)
     }
 
     if (d->exec_handlers.empty ()) {
-      d->current_exec_handler = 0;
+      d->current_exec_handler = nullptr;
 #if HAVE_RUBY_VERSION_CODE<20300
       rb_remove_event_hook(trace_callback);
 #else

@@ -69,7 +69,7 @@ PythonError::PythonError (const PythonError &d)
 /**
  *  @brief The python interpreter instance
  */
-PythonInterpreter *sp_interpreter = 0;
+PythonInterpreter *sp_interpreter = nullptr;
 
 // -------------------------------------------------------------------
 
@@ -104,7 +104,7 @@ public:
     : m_scope (scope)
   {
     PythonRef frame_object_ref;
-    while (frame != NULL) {
+    while (frame != nullptr) {
 
 #if PY_VERSION_HEX >= 0x030A0000
       int line = PyFrame_GetLineNumber(frame);
@@ -178,14 +178,14 @@ static const char *pya_module_name = "pya";
 static void reset_interpreter ()
 {
   delete sp_interpreter;
-  tl_assert (sp_interpreter == 0);
+  tl_assert (sp_interpreter == nullptr);
 }
 
 PythonInterpreter::PythonInterpreter (bool embedded)
   : gsi::Interpreter (0, "pya"),
-    mp_current_console (0), mp_current_exec_handler (0), m_current_exec_level (0),
+    mp_current_console (nullptr), mp_current_exec_handler (nullptr), m_current_exec_level (0),
     m_in_trace (false), m_block_exceptions (false), m_ignore_next_exception (false),
-    mp_current_frame (NULL), m_embedded (embedded)
+    mp_current_frame (nullptr), m_embedded (embedded)
 {
   //  Don't attempt any additional initialization in the standalone module case
   if (! embedded) {
@@ -371,7 +371,7 @@ PythonInterpreter::~PythonInterpreter ()
   m_stdout = PythonPtr ();
   m_stderr = PythonPtr ();
 
-  sp_interpreter = 0;
+  sp_interpreter = nullptr;
 
   if (m_embedded) {
     Py_Finalize ();
@@ -406,7 +406,7 @@ void
 PythonInterpreter::add_path (const std::string &p, bool prepend)
 {
   PyObject *path = PySys_GetObject ((char *) "path");
-  if (path != NULL && PyList_Check (path)) {
+  if (path != nullptr && PyList_Check (path)) {
     if (prepend) {
       PyList_Insert (path, 0, c2python (p));
     } else {
@@ -609,7 +609,7 @@ gsi::Inspector *
 PythonInterpreter::inspector (int context)
 {
   PythonRef globals, locals;
-  get_context (context, globals, locals, 0);
+  get_context (context, globals, locals, nullptr);
   return create_inspector (locals.get (), true /*symbolic*/);
 }
 
@@ -635,7 +635,7 @@ PythonInterpreter::initialize ()
 {
   //  Import the pya module
   PyObject *pya_module = PyImport_ImportModule (pya_module_name);
-  if (pya_module == NULL) {
+  if (pya_module == nullptr) {
     check_error ();
   }
 }
@@ -759,7 +759,7 @@ PythonInterpreter::trace_func (PyFrameObject *frame, int event, PyObject *arg)
 
     }
 
-    mp_current_frame = 0;
+    mp_current_frame = nullptr;
     m_in_trace = false;
     return 0;
 
@@ -775,7 +775,7 @@ PythonInterpreter::push_exec_handler (gsi::ExecutionHandler *exec_handler)
   if (mp_current_exec_handler) {
     m_exec_handlers.push_back (mp_current_exec_handler);
   } else {
-    PyEval_SetTrace (pya_trace_func, NULL);
+    PyEval_SetTrace (pya_trace_func, nullptr);
   }
 
   mp_current_exec_handler = exec_handler;
@@ -800,8 +800,8 @@ PythonInterpreter::remove_exec_handler (gsi::ExecutionHandler *exec_handler)
     }
 
     if (m_exec_handlers.empty ()) {
-      mp_current_exec_handler = 0;
-      PyEval_SetProfile (NULL, NULL);
+      mp_current_exec_handler = nullptr;
+      PyEval_SetProfile (nullptr, nullptr);
     } else {
       mp_current_exec_handler = m_exec_handlers.back ();
       m_exec_handlers.pop_back ();
@@ -850,7 +850,7 @@ PythonInterpreter::remove_console (gsi::Console *console)
 
     if (m_consoles.empty ()) {
 
-      mp_current_console = 0;
+      mp_current_console = nullptr;
 
       PythonPtr current_stdout (PySys_GetObject ((char *) "stdout"));
       std::swap (current_stdout, m_stdout);
@@ -885,7 +885,7 @@ std::string
 PythonInterpreter::version () const
 {
   PyObject *version = PySys_GetObject ((char *) "version");
-  if (version != NULL) {
+  if (version != nullptr) {
     return python2c<std::string> (version);
   } else {
     return std::string ();

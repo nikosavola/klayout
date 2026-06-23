@@ -167,7 +167,7 @@ MacroEditorHighlighters::highlighter_for (QObject *parent, lym::Macro::Interpret
     }
   }
 
-  return 0;
+  return nullptr;
 }
 
 lay::GenericSyntaxHighlighter *
@@ -196,7 +196,7 @@ MacroEditorHighlighters::highlighter_for_scheme (QObject *parent, const std::str
     return hl;
 
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -211,7 +211,7 @@ MacroEditorHighlighters::attributes_for (lym::Macro::Interpreter lang, const std
     }
   }
 
-  return 0;
+  return nullptr;
 }
 
 GenericSyntaxHighlighterAttributes *
@@ -548,7 +548,7 @@ void MacroEditorSidePanel::paintEvent (QPaintEvent *)
 //  MacroEditorPage implementation
 
 MacroEditorPage::MacroEditorPage (QWidget * /*parent*/, MacroEditorHighlighters *highlighters)
-  : mp_macro (0), mp_highlighters (highlighters), mp_highlighter (0),
+  : mp_macro (nullptr), mp_highlighters (highlighters), mp_highlighter (nullptr),
     m_error_line (-1), m_ntab (8), m_nindent (2), m_ignore_cursor_changed_event (false),
     dm_run_mode_changed (this, &MacroEditorPage::do_run_mode_changed)
 {
@@ -702,7 +702,7 @@ void MacroEditorPage::breakpoints_changed ()
         b.setUserData (new QTextBlockUserData ());
       } else {
         //  Right now, the user data is just used as a flag for a breakpoint
-        b.setUserData (0);
+        b.setUserData (nullptr);
       }
     }
   }
@@ -1029,7 +1029,7 @@ void MacroEditorPage::text_changed ()
   //  update the breakpoint's line numbers
   std::set<int> bl;
   for (std::set<QTextBlock>::const_iterator b = m_breakpoints.begin (); b != m_breakpoints.end (); ++b) {
-    if (b->isValid () && b->userData () != 0) {
+    if (b->isValid () && b->userData () != nullptr) {
       bl.insert (firstLineNumber (*b) + 1);
     }
   }
@@ -1083,7 +1083,7 @@ void MacroEditorPage::connect_macro (lym::Macro *macro)
 
     if (mp_highlighter) {
       delete mp_highlighter;
-      mp_highlighter = 0;
+      mp_highlighter = nullptr;
     }
 
     if (mp_macro) {

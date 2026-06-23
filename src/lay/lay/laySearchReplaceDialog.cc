@@ -1136,7 +1136,7 @@ BEGIN_PROTECTED
   progress.set_unit (100000);
   progress.set_format ("Processing ..");
 
-  db::LayoutQueryIterator iq (lq, &cv->layout (), cv.cell (), 0, &progress);
+  db::LayoutQueryIterator iq (lq, &cv->layout (), cv.cell (), nullptr, &progress);
 
   if (tl::verbosity () >= 10) {
     tl::log << tl::to_string (QObject::tr ("Running query: ")) << m_last_query;
@@ -1198,7 +1198,7 @@ BEGIN_PROTECTED
   progress.set_unit (100000);
   progress.set_format ("Processing ..");
 
-  db::LayoutQueryIterator iq (lq, &cv->layout (), cv.cell (), 0, &progress);
+  db::LayoutQueryIterator iq (lq, &cv->layout (), cv.cell (), nullptr, &progress);
 
   if (tl::verbosity () >= 10) {
     tl::log << tl::to_string (QObject::tr ("Running query: ")) << m_last_query;
@@ -1246,7 +1246,7 @@ BEGIN_PROTECTED
   progress.set_unit (100000);
   progress.set_format ("Processing ..");
 
-  db::LayoutQueryIterator iq (lq, &cv->layout (), cv.cell (), 0, &progress);
+  db::LayoutQueryIterator iq (lq, &cv->layout (), cv.cell (), nullptr, &progress);
 
   if (tl::verbosity () >= 10) {
     tl::log << tl::to_string (QObject::tr ("Running query: ")) << m_last_query;
@@ -1317,7 +1317,7 @@ BEGIN_PROTECTED
   progress.set_unit (100000);
   progress.set_format ("Processing ..");
 
-  db::LayoutQueryIterator iq (lq, &cv->layout (), cv.cell (), 0, &progress);
+  db::LayoutQueryIterator iq (lq, &cv->layout (), cv.cell (), nullptr, &progress);
 
   if (tl::verbosity () >= 10) {
     tl::log << tl::to_string (QObject::tr ("Running query: ")) << m_last_query;
@@ -1371,7 +1371,7 @@ BEGIN_PROTECTED
   progress.set_unit (100000);
   progress.set_format ("Processing ..");
 
-  db::LayoutQueryIterator iq (lq, &cv->layout (), cv.cell (), 0, &progress);
+  db::LayoutQueryIterator iq (lq, &cv->layout (), cv.cell (), nullptr, &progress);
 
   if (tl::verbosity () >= 10) {
     tl::log << tl::to_string (QObject::tr ("Running query: ")) << m_last_query;
@@ -1396,7 +1396,7 @@ sync_cbx (QComboBox *cbx, QStackedWidget *sw)
   cbx->clear ();
   for (int i = 0; i < sw->count (); ++i) {
     SearchPropertiesWidget *pw = dynamic_cast<SearchPropertiesWidget *> (sw->widget (i));
-    tl_assert (pw != 0);
+    tl_assert (pw != nullptr);
     cbx->addItem (tl::to_qstring (pw->description ()));
   }
 }
@@ -1408,7 +1408,7 @@ SearchReplaceDialog::activated ()
 
   m_find_query.clear ();
 
-  m_model.begin_changes (0);
+  m_model.begin_changes (nullptr);
   m_model.clear ();
   m_model.end_changes ();
 
@@ -1442,7 +1442,7 @@ SearchReplaceDialog::deactivated ()
   save_state ();
   remove_markers ();
 
-  m_model.begin_changes (0);
+  m_model.begin_changes (nullptr);
   m_model.clear ();
   m_model.end_changes ();
 }
@@ -1660,7 +1660,7 @@ SearchReplaceDialog::issue_query (const std::string &q, const std::set<size_t> *
       tl::log << tl::to_string (QObject::tr ("Running full query (without results): ")) << q;
     }
 
-    m_model.begin_changes (0);
+    m_model.begin_changes (nullptr);
     m_model.clear ();
     m_model.end_changes ();
   
@@ -1668,7 +1668,7 @@ SearchReplaceDialog::issue_query (const std::string &q, const std::set<size_t> *
     progress.set_unit (100000);
     progress.set_format ("Processing ..");
 
-    db::LayoutQueryIterator iq (lq, &cv->layout (), cv.cell (), 0, &progress);
+    db::LayoutQueryIterator iq (lq, &cv->layout (), cv.cell (), nullptr, &progress);
     while (! iq.at_end ()) {
       ++iq;
     }
@@ -1681,7 +1681,7 @@ SearchReplaceDialog::issue_query (const std::string &q, const std::set<size_t> *
       tl::log << tl::to_string (QObject::tr ("Running query on selection: ")) << q;
     }
 
-    m_model.begin_changes (0);
+    m_model.begin_changes (nullptr);
     m_model.clear ();
     m_model.end_changes ();
   
@@ -1690,7 +1690,7 @@ SearchReplaceDialog::issue_query (const std::string &q, const std::set<size_t> *
     progress.set_format ("Processing ..");
 
     size_t n = 0;
-    for (db::LayoutQueryIterator iq (lq, &cv->layout (), cv.cell (), 0, &progress); ! iq.at_end (); ++n) {
+    for (db::LayoutQueryIterator iq (lq, &cv->layout (), cv.cell (), nullptr, &progress); ! iq.at_end (); ++n) {
       iq.next (selected_items->find (n) == selected_items->end ());
     }
 
@@ -1717,7 +1717,7 @@ SearchReplaceDialog::cancel ()
   remove_markers ();
   results->clearSelection ();
 
-  m_model.begin_changes (0);
+  m_model.begin_changes (nullptr);
   m_model.clear ();
   m_model.end_changes ();
 
@@ -1755,7 +1755,7 @@ SearchReplaceDialog::update_results (const std::string &q)
   const lay::CellView &cv = mp_view->cellview (mp_view->active_cellview_index ());
   if (! cv.is_valid ()) {
 
-    m_model.begin_changes (0);
+    m_model.begin_changes (nullptr);
     m_model.clear ();
     m_model.end_changes ();
 
@@ -1767,7 +1767,7 @@ SearchReplaceDialog::update_results (const std::string &q)
     progress.set_unit (100000);
     progress.set_format ("Processing ..");
 
-    db::LayoutQueryIterator iq (lq, &cv->layout (), cv.cell (), 0, &progress);
+    db::LayoutQueryIterator iq (lq, &cv->layout (), cv.cell (), nullptr, &progress);
 
     if (tl::verbosity () >= 10) {
       tl::log << tl::to_string (QObject::tr ("Running query: ")) << q;
@@ -2108,7 +2108,7 @@ SearchReplaceDialog::result_selection_changed ()
             marker->set (db::Box (p, p), db::ICplxTrans (), global_trans);
           } else {
             delete marker;
-            marker = 0;
+            marker = nullptr;
           }
 
           if (marker) {
@@ -2155,7 +2155,7 @@ BEGIN_PROTECTED
   cancel_exec ();
 
   m_find_query = build_find_expression (find_properties, find_context);
-  issue_query (m_find_query, 0, true);
+  issue_query (m_find_query, nullptr, true);
 
 END_PROTECTED
 }
@@ -2169,7 +2169,7 @@ BEGIN_PROTECTED
 
   m_execute_query = build_delete_expression ();
   m_find_query = build_find_expression (delete_properties, delete_context);
-  issue_query (m_find_query, 0, true);
+  issue_query (m_find_query, nullptr, true);
 
   delete_selected_button->show ();
   delete_selected_button->setEnabled (false);
@@ -2190,7 +2190,7 @@ BEGIN_PROTECTED
     mp_view->manager ()->transaction (tl::to_string (QObject::tr ("Delete all")));
   }
   mp_view->cancel ();
-  issue_query (build_delete_expression (), 0, false);
+  issue_query (build_delete_expression (), nullptr, false);
   if (mp_view->manager ()) {
     mp_view->manager ()->commit ();
   }
@@ -2207,7 +2207,7 @@ BEGIN_PROTECTED
 
   m_execute_query = build_replace_expression ();
   m_find_query = build_find_expression (find_replace_properties, replace_context);
-  issue_query (m_find_query, 0, true);
+  issue_query (m_find_query, nullptr, true);
 
   delete_selected_button->hide ();
   replace_selected_button->show ();
@@ -2252,7 +2252,7 @@ BEGIN_PROTECTED
       mp_view->manager ()->commit ();
     }
 
-    issue_query (m_find_query, 0, true);
+    issue_query (m_find_query, nullptr, true);
 
   }
 
@@ -2273,7 +2273,7 @@ BEGIN_PROTECTED
     mp_view->manager ()->transaction (tl::to_string (QObject::tr ("Replace all")));
   }
   mp_view->cancel ();
-  issue_query (build_replace_expression (), 0, false);
+  issue_query (build_replace_expression (), nullptr, false);
   if (mp_view->manager ()) {
     mp_view->manager ()->commit ();
   }
@@ -2295,7 +2295,7 @@ BEGIN_PROTECTED
     mp_view->manager ()->transaction (tl::to_string (QObject::tr ("Execute custom query")));
   }
   mp_view->cancel ();
-  issue_query (tl::to_string (custom_query->toPlainText ()), 0, true);
+  issue_query (tl::to_string (custom_query->toPlainText ()), nullptr, true);
   if (mp_view->manager ()) {
     mp_view->manager ()->commit ();
   }

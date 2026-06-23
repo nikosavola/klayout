@@ -345,7 +345,7 @@ public:
    *  The Variant will take over the ownership over the user object.
    */
   Variant (void *object, const VariantUserClassBase *cls, bool shared)
-    : m_type (t_user), m_string (0)
+    : m_type (t_user), m_string (nullptr)
   {
     m_var.mp_user.object = object;
     m_var.mp_user.shared = shared;
@@ -360,7 +360,7 @@ public:
    *  shared is false, a weak pointer will be employed that watches the object.
    */
   Variant (tl::Object *object, const VariantUserClassBase *cls, bool shared)
-    : m_type (t_user_ref), m_string (0)
+    : m_type (t_user_ref), m_string (nullptr)
   {
     new (m_var.mp_user_ref.ptr) WeakOrSharedPtr (object, shared);
     m_var.mp_user_ref.cls = cls;
@@ -371,10 +371,10 @@ public:
    */
   template <class T>
   Variant (const T &obj)
-    : m_type (t_user), m_string (0)
+    : m_type (t_user), m_string (nullptr)
   {
     const tl::VariantUserClassBase *c = tl::VariantUserClass<T>::instance (false);
-    tl_assert (c != 0);
+    tl_assert (c != nullptr);
     m_var.mp_user.object = new T (obj);
     m_var.mp_user.shared = true;
     m_var.mp_user.cls = c;
@@ -385,7 +385,7 @@ public:
    */
   template <class T>
   Variant (const T *obj)
-    : m_type (t_nil), m_string (0)
+    : m_type (t_nil), m_string (nullptr)
   {
     if (obj) {
       *this = make_variant_ref (obj);
@@ -397,7 +397,7 @@ public:
    */
   template <class T>
   Variant (T *obj)
-    : m_type (t_nil), m_string (0)
+    : m_type (t_nil), m_string (nullptr)
   {
     if (obj) {
       *this = make_variant_ref (obj);
@@ -409,7 +409,7 @@ public:
    */
   template <class T>
   Variant (const std::vector<T> &list)
-    : m_type (t_list), m_string (0)
+    : m_type (t_list), m_string (nullptr)
   {
     m_var.m_list = new std::vector<tl::Variant> ();
     m_var.m_list->reserve (list.size ());
@@ -423,7 +423,7 @@ public:
    */
   template <class T>
   Variant (const std::list<T> &list)
-    : m_type (t_list), m_string (0)
+    : m_type (t_list), m_string (nullptr)
   {
     m_var.m_list = new std::vector<tl::Variant> ();
     m_var.m_list->reserve (list.size ());
@@ -437,7 +437,7 @@ public:
    */
   template <class T>
   Variant (const std::set<T> &list)
-    : m_type (t_list), m_string (0)
+    : m_type (t_list), m_string (nullptr)
   {
     m_var.m_list = new std::vector<tl::Variant> ();
     m_var.m_list->reserve (list.size ());
@@ -451,7 +451,7 @@ public:
    */
   template <class A, class B>
   Variant (const std::pair<A, B> &pair)
-    : m_type (t_list), m_string (0)
+    : m_type (t_list), m_string (nullptr)
   {
     m_var.m_list = new std::vector<tl::Variant> ();
     m_var.m_list->reserve (2);
@@ -464,7 +464,7 @@ public:
    */
   template <class K, class V>
   Variant (const std::map<K, V> &map)
-    : m_type (t_array), m_string (0)
+    : m_type (t_array), m_string (nullptr)
   {
     m_var.m_array = new std::map<tl::Variant, tl::Variant> ();
     for (auto i = map.begin (); i != map.end (); ++i) {
@@ -476,7 +476,7 @@ public:
    *  @brief Initialize the Variant with an explicit vector of variants
    */
   Variant (const std::vector<tl::Variant> &list)
-    : m_type (t_list), m_string (0)
+    : m_type (t_list), m_string (nullptr)
   {
     m_var.m_list = new std::vector<tl::Variant> (list);
   }
@@ -485,7 +485,7 @@ public:
    *  @brief Initialize the Variant with an explicit vector of variants (move semantics)
    */
   Variant (std::vector<tl::Variant> &&list)
-    : m_type (t_list), m_string (0)
+    : m_type (t_list), m_string (nullptr)
   {
     m_var.m_list = new std::vector<tl::Variant> (list);
   }
@@ -494,7 +494,7 @@ public:
    *  @brief Initialize the Variant with an explicit map of variants
    */
   Variant (const std::map<tl::Variant, tl::Variant> &map)
-    : m_type (t_array), m_string (0)
+    : m_type (t_array), m_string (nullptr)
   {
     m_var.m_array = new std::map<tl::Variant, tl::Variant> (map);
   }
@@ -503,7 +503,7 @@ public:
    *  @brief Initialize the Variant with an explicit map of variants (move semantics)
    */
   Variant (std::map<tl::Variant, tl::Variant> &&map)
-    : m_type (t_array), m_string (0)
+    : m_type (t_array), m_string (nullptr)
   {
     m_var.m_array = new std::map<tl::Variant, tl::Variant> (map);
   }
@@ -513,7 +513,7 @@ public:
    */
   template <class Iter>
   Variant (Iter from, Iter to)
-    : m_type (t_list), m_string (0)
+    : m_type (t_list), m_string (nullptr)
   {
     m_var.m_list = new std::vector<tl::Variant> (from, to);
   }
@@ -530,7 +530,7 @@ public:
   static tl::Variant make_variant_ref (T *t)
   {
     const tl::VariantUserClassBase *c = gsi::cls_decl<T> ()->var_cls (false);
-    tl_assert (c != 0);
+    tl_assert (c != nullptr);
     return tl::Variant ((void *) t, c, false);
   }
 
@@ -541,7 +541,7 @@ public:
   static tl::Variant make_variant_ref (const T *t)
   {
     const tl::VariantUserClassBase *c = gsi::cls_decl<T> ()->var_cls (true);
-    tl_assert (c != 0);
+    tl_assert (c != nullptr);
     return tl::Variant ((void *) t, c, false);
   }
 
@@ -552,7 +552,7 @@ public:
   static tl::Variant make_variant (T *t)
   {
     const tl::VariantUserClassBase *c = gsi::cls_decl<T> ()->var_cls (false);
-    tl_assert (c != 0);
+    tl_assert (c != nullptr);
     return tl::Variant ((void *) t, c, true);
   }
 
@@ -563,7 +563,7 @@ public:
   static tl::Variant make_variant (const T &t, bool is_const = false)
   {
     const tl::VariantUserClassBase *c = gsi::cls_decl <T> ()->var_cls (is_const);
-    tl_assert (c != 0);
+    tl_assert (c != nullptr);
     return tl::Variant ((void *) new T(t), c, true);
   }
 
@@ -981,7 +981,7 @@ public:
     } else if (m_type == t_user_ref) {
       return m_var.mp_user_ref.cls->deref_proxy_const (reinterpret_cast<const WeakOrSharedPtr *> (m_var.mp_user_ref.ptr)->get ());
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -995,7 +995,7 @@ public:
     } else if (m_type == t_user_ref) {
       return m_var.mp_user_ref.cls->deref_proxy (reinterpret_cast<WeakOrSharedPtr *> (m_var.mp_user_ref.ptr)->get ());
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -1007,7 +1007,7 @@ public:
     if (m_type == t_user_ref) {
       return reinterpret_cast<const WeakOrSharedPtr *> (m_var.mp_user_ref.ptr)->get ();
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -1029,7 +1029,7 @@ public:
     } else if (m_type == t_user_ref) {
       return m_var.mp_user_ref.cls;
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -1038,7 +1038,7 @@ public:
    */
   const gsi::ClassBase *gsi_cls () const
   {
-    return user_cls () ? user_cls ()->gsi_cls () : 0;
+    return user_cls () ? user_cls ()->gsi_cls () : nullptr;
   }
 
   /**
@@ -1096,7 +1096,7 @@ public:
   {
     if (is_user()) {
       const VariantUserClass<T> *tcls = dynamic_cast<const VariantUserClass<T> *> (user_cls ());
-      tl_assert (tcls != 0);
+      tl_assert (tcls != nullptr);
       const T *t = tcls->get (to_user ());
       tl_assert (t);
       return *t;
@@ -1688,10 +1688,10 @@ public:
   {
     if (m_type == t_user) {
       const VariantUserClass<T> *tcls = dynamic_cast<const VariantUserClass<T> *> (m_var.mp_user.cls);
-      return tcls != 0;
+      return tcls != nullptr;
     } else if (m_type == t_user_ref) {
       const VariantUserClass<T> *tcls = dynamic_cast<const VariantUserClass<T> *> (m_var.mp_user_ref.cls);
-      return tcls != 0;
+      return tcls != nullptr;
     } else {
       return false;
     }

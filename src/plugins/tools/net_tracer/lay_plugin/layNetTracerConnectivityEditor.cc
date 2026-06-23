@@ -141,7 +141,7 @@ public:
 
   QSize sizeHint (const QStyleOptionViewItem &option, const QModelIndex &index) const 
   {
-    QWidget *editor = createEditor (0, option, index);
+    QWidget *editor = createEditor (nullptr, option, index);
     QSize size = editor->sizeHint ();
     delete editor;
     return size - QSize (2, 2);
@@ -255,7 +255,7 @@ public:
 
   QSize sizeHint (const QStyleOptionViewItem &option, const QModelIndex &index) const 
   {
-    QWidget *editor = createEditor (0, option, index);
+    QWidget *editor = createEditor (nullptr, option, index);
     QSize size = editor->sizeHint ();
     delete editor;
     return size - QSize (2, 2);
@@ -309,14 +309,14 @@ NetTracerConnectivityEditor::set_connectivity (const db::NetTracerConnectivity &
   m_data = data;
 
   for (int c = 0; c < 3; ++c) {
-    if (connectivity_table->itemDelegateForColumn (c) != 0) {
+    if (connectivity_table->itemDelegateForColumn (c) != nullptr) {
       delete connectivity_table->itemDelegateForColumn (c);
     }
     connectivity_table->setItemDelegateForColumn (c, new NetTracerConnectivityColumnDelegate (connectivity_table, &m_data));
   }
 
   for (int c = 0; c < 2; ++c) {
-    if (symbol_table->itemDelegateForColumn (c) != 0) {
+    if (symbol_table->itemDelegateForColumn (c) != nullptr) {
       delete symbol_table->itemDelegateForColumn (c);
     }
     symbol_table->setItemDelegateForColumn (c, new NetTracerConnectivitySymbolColumnDelegate (symbol_table, &m_data));

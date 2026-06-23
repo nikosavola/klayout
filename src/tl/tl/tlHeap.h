@@ -68,7 +68,7 @@ public:
   template <class X>
   void set (X *x) 
   { 
-    tl_assert (mp_b == 0);
+    tl_assert (mp_b == nullptr);
     mp_b = new HeapObjectCont<X> (x); 
   }
 

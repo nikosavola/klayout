@@ -102,9 +102,9 @@ static std::map<unsigned int, unsigned int> layer_map_from_var (const db::Layout
       if (v.is_user ()) {
 
         unsigned int vi = 0;
-        if (dynamic_cast<const tl::VariantUserClass<db::Region> *> (v.user_cls ()) != 0) {
+        if (dynamic_cast<const tl::VariantUserClass<db::Region> *> (v.user_cls ()) != nullptr) {
           vi = l2n->layer_of<db::ShapeCollection> (v.to_user<db::Region> ());
-        } else if (dynamic_cast<const tl::VariantUserClass<db::Texts> *> (v.user_cls ()) != 0) {
+        } else if (dynamic_cast<const tl::VariantUserClass<db::Texts> *> (v.user_cls ()) != nullptr) {
           vi = l2n->layer_of<db::ShapeCollection> (v.to_user<db::Texts> ());
         } else {
           throw tl::Exception (tl::to_string (tr ("'lmap' argument hash values need to be ints, Region or Texts objects")));
@@ -128,7 +128,7 @@ static void build_net (const db::LayoutToNetlist *l2n, const db::Net &net, db::L
 {
   std::string p = circuit_cell_name_prefix.to_string ();
   std::string dp = device_cell_name_prefix.to_string ();
-  l2n->build_net (net, target, target_cell, layer_map_from_var (l2n, target, lmap), db::NPM_AllProperties, netname_prop, hier_mode, circuit_cell_name_prefix.is_nil () ? 0 : p.c_str (), device_cell_name_prefix.is_nil () ? 0 : dp.c_str ());
+  l2n->build_net (net, target, target_cell, layer_map_from_var (l2n, target, lmap), db::NPM_AllProperties, netname_prop, hier_mode, circuit_cell_name_prefix.is_nil () ? nullptr : p.c_str (), device_cell_name_prefix.is_nil () ? nullptr : dp.c_str ());
 }
 
 static void build_all_nets (const db::LayoutToNetlist *l2n, const db::CellMapping &cmap, db::Layout &target, const tl::Variant &lmap, const tl::Variant &net_cell_name_prefix, const tl::Variant &netname_prop, db::BuildNetHierarchyMode hier_mode, const tl::Variant &circuit_cell_name_prefix, const tl::Variant &device_cell_name_prefix)
@@ -136,7 +136,7 @@ static void build_all_nets (const db::LayoutToNetlist *l2n, const db::CellMappin
   std::string cp = circuit_cell_name_prefix.to_string ();
   std::string np = net_cell_name_prefix.to_string ();
   std::string dp = device_cell_name_prefix.to_string ();
-  l2n->build_all_nets (cmap, target, layer_map_from_var (l2n, target, lmap), net_cell_name_prefix.is_nil () ? 0 : np.c_str (), db::NPM_AllProperties, netname_prop, hier_mode, circuit_cell_name_prefix.is_nil () ? 0 : cp.c_str (), device_cell_name_prefix.is_nil () ? 0 : dp.c_str ());
+  l2n->build_all_nets (cmap, target, layer_map_from_var (l2n, target, lmap), net_cell_name_prefix.is_nil () ? nullptr : np.c_str (), db::NPM_AllProperties, netname_prop, hier_mode, circuit_cell_name_prefix.is_nil () ? nullptr : cp.c_str (), device_cell_name_prefix.is_nil () ? nullptr : dp.c_str ());
 }
 
 static void build_nets (const db::LayoutToNetlist *l2n, const std::vector<const db::Net *> &nets, const db::CellMapping &cmap, db::Layout &target, const tl::Variant &lmap, const tl::Variant &net_cell_name_prefix, const tl::Variant &netname_prop, db::BuildNetHierarchyMode hier_mode, const tl::Variant &circuit_cell_name_prefix, const tl::Variant &device_cell_name_prefix)
@@ -144,7 +144,7 @@ static void build_nets (const db::LayoutToNetlist *l2n, const std::vector<const 
   std::string cp = circuit_cell_name_prefix.to_string ();
   std::string np = net_cell_name_prefix.to_string ();
   std::string dp = device_cell_name_prefix.to_string ();
-  l2n->build_nets (&nets, cmap, target, layer_map_from_var (l2n, target, lmap), net_cell_name_prefix.is_nil () ? 0 : np.c_str (), db::NPM_AllProperties, netname_prop, hier_mode, circuit_cell_name_prefix.is_nil () ? 0 : cp.c_str (), device_cell_name_prefix.is_nil () ? 0 : dp.c_str ());
+  l2n->build_nets (&nets, cmap, target, layer_map_from_var (l2n, target, lmap), net_cell_name_prefix.is_nil () ? nullptr : np.c_str (), db::NPM_AllProperties, netname_prop, hier_mode, circuit_cell_name_prefix.is_nil () ? nullptr : cp.c_str (), device_cell_name_prefix.is_nil () ? nullptr : dp.c_str ());
 }
 
 static std::vector<std::string> l2n_layer_names (const db::LayoutToNetlist *l2n)
@@ -1091,7 +1091,7 @@ Class<db::LayoutToNetlist> decl_dbLayoutToNetlist ("db", "LayoutToNetlist",
     "\n"
     "The 'lmap' argument has been generalized in version 0.30 and became optional."
   ) +
-  gsi::method ("probe_net", (db::Net *(db::LayoutToNetlist::*) (const db::Region &, const db::DPoint &, std::vector<db::SubCircuit *> *, db::Circuit *)) &db::LayoutToNetlist::probe_net, gsi::arg ("of_layer"), gsi::arg ("point"), gsi::arg ("sc_path_out", (std::vector<db::SubCircuit *> *) 0, "nil"), gsi::arg ("initial_circuit", (db::Circuit *) 0, "nil"),
+  gsi::method ("probe_net", (db::Net *(db::LayoutToNetlist::*) (const db::Region &, const db::DPoint &, std::vector<db::SubCircuit *> *, db::Circuit *)) &db::LayoutToNetlist::probe_net, gsi::arg ("of_layer"), gsi::arg ("point"), gsi::arg ("sc_path_out", (std::vector<db::SubCircuit *> *) nullptr, "nil"), gsi::arg ("initial_circuit", (db::Circuit *) nullptr, "nil"),
     "@brief Finds the net by probing a specific location on the given layer\n"
     "\n"
     "This method will find a net looking at the given layer at the specific position.\n"
@@ -1116,7 +1116,7 @@ Class<db::LayoutToNetlist> decl_dbLayoutToNetlist ("db", "LayoutToNetlist",
     "\n"
     "The \\sc_path_out and \\initial_circuit parameters have been added in version 0.27.\n"
   ) +
-  gsi::method ("probe_net", (db::Net *(db::LayoutToNetlist::*) (const db::Region &, const db::Point &, std::vector<db::SubCircuit *> *, db::Circuit *)) &db::LayoutToNetlist::probe_net, gsi::arg ("of_layer"), gsi::arg ("point"), gsi::arg ("sc_path_out", (std::vector<db::SubCircuit *> *) 0, "nil"), gsi::arg ("initial_circuit", (db::Circuit *) 0, "nil"),
+  gsi::method ("probe_net", (db::Net *(db::LayoutToNetlist::*) (const db::Region &, const db::Point &, std::vector<db::SubCircuit *> *, db::Circuit *)) &db::LayoutToNetlist::probe_net, gsi::arg ("of_layer"), gsi::arg ("point"), gsi::arg ("sc_path_out", (std::vector<db::SubCircuit *> *) nullptr, "nil"), gsi::arg ("initial_circuit", (db::Circuit *) nullptr, "nil"),
     "@brief Finds the net by probing a specific location on the given layer\n"
     "See the description of the other \\probe_net variant.\n"
     "This variant accepts a database-unit location. The location is given in the\n"
@@ -1144,7 +1144,7 @@ Class<db::LayoutToNetlist> decl_dbLayoutToNetlist ("db", "LayoutToNetlist",
     "@brief Iterates over all log entries collected during device and netlist extraction.\n"
     "This method has been introduced in version 0.28.13."
   ) +
-  gsi::method_ext ("antenna_check", &antenna_check, gsi::arg ("gate"), gsi::arg ("metal"), gsi::arg ("ratio"), gsi::arg ("diodes", std::vector<tl::Variant> (), "[]"), gsi::arg ("texts", (db::Texts *) 0, "nil"),
+  gsi::method_ext ("antenna_check", &antenna_check, gsi::arg ("gate"), gsi::arg ("metal"), gsi::arg ("ratio"), gsi::arg ("diodes", std::vector<tl::Variant> (), "[]"), gsi::arg ("texts", (db::Texts *) nullptr, "nil"),
     "@brief Runs an antenna check on the extracted clusters\n"
     "\n"
     "The antenna check will traverse all clusters and run an antenna check\n"
@@ -1190,7 +1190,7 @@ Class<db::LayoutToNetlist> decl_dbLayoutToNetlist ("db", "LayoutToNetlist",
     "\n"
     "The 'texts' parameter has been added in version 0.27.11."
   ) +
-  gsi::method_ext ("antenna_check", &antenna_check2, gsi::arg ("gate"), gsi::arg ("gate_perimeter_factor"), gsi::arg ("metal"), gsi::arg ("metal_perimeter_factor"), gsi::arg ("ratio"), gsi::arg ("diodes", std::vector<tl::Variant> (), "[]"), gsi::arg ("texts", (db::Texts *) 0, "nil"),
+  gsi::method_ext ("antenna_check", &antenna_check2, gsi::arg ("gate"), gsi::arg ("gate_perimeter_factor"), gsi::arg ("metal"), gsi::arg ("metal_perimeter_factor"), gsi::arg ("ratio"), gsi::arg ("diodes", std::vector<tl::Variant> (), "[]"), gsi::arg ("texts", (db::Texts *) nullptr, "nil"),
     "@brief Runs an antenna check on the extracted clusters taking the perimeter into account\n"
     "\n"
     "This version of the \\antenna_check method allows taking the perimeter of gate or metal into account. "
@@ -1207,7 +1207,7 @@ Class<db::LayoutToNetlist> decl_dbLayoutToNetlist ("db", "LayoutToNetlist",
     "\n"
     "This variant has been introduced in version 0.26.6.\n"
   ) +
-  gsi::method_ext ("antenna_check", &antenna_check3, gsi::arg ("gate"), gsi::arg ("gate_area_factor"), gsi::arg ("gate_perimeter_factor"), gsi::arg ("metal"), gsi::arg ("metal_area_factor"), gsi::arg ("metal_perimeter_factor"), gsi::arg ("ratio"), gsi::arg ("diodes", std::vector<tl::Variant> (), "[]"), gsi::arg ("texts", (db::Texts *) 0, "nil"),
+  gsi::method_ext ("antenna_check", &antenna_check3, gsi::arg ("gate"), gsi::arg ("gate_area_factor"), gsi::arg ("gate_perimeter_factor"), gsi::arg ("metal"), gsi::arg ("metal_area_factor"), gsi::arg ("metal_perimeter_factor"), gsi::arg ("ratio"), gsi::arg ("diodes", std::vector<tl::Variant> (), "[]"), gsi::arg ("texts", (db::Texts *) nullptr, "nil"),
     "@brief Runs an antenna check on the extracted clusters taking the perimeter into account and providing an area factor\n"
     "\n"
     "This (most generic) version of the \\antenna_check method allows taking the perimeter of gate or metal into account and also "

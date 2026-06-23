@@ -141,7 +141,7 @@ public:
 
   QWidget *createEditor (QWidget * /*parent*/, const QStyleOptionViewItem & /*option*/, const QModelIndex & /*index*/) const 
   {
-    return 0;
+    return nullptr;
   }
 };
 
@@ -194,7 +194,7 @@ public:
 
   QSize sizeHint (const QStyleOptionViewItem &option, const QModelIndex &index) const 
   {
-    QWidget *editor = createEditor (0, option, index);
+    QWidget *editor = createEditor (nullptr, option, index);
     QSize size = editor->sizeHint ();
     delete editor;
     return size;
@@ -272,7 +272,7 @@ public:
 
   QSize sizeHint (const QStyleOptionViewItem &option, const QModelIndex &index) const 
   {
-    QWidget *editor = createEditor (0, option, index);
+    QWidget *editor = createEditor (nullptr, option, index);
     QSize size = editor->sizeHint ();
     delete editor;
     return size;
@@ -344,7 +344,7 @@ GerberImportDialog::GerberImportDialog (QWidget *parent, db::GerberImportData *d
 GerberImportDialog::~GerberImportDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -1636,7 +1636,7 @@ GerberImportDialog::update ()
     mp_ui->free_layer_mapping_tree->headerItem ()->setData (n + 1, Qt::DisplayRole, QVariant (hdr_label));
     mp_ui->free_layer_mapping_tree->headerItem ()->setData (n + 1, Qt::ToolTipRole, QVariant (tl::to_qstring (l->to_string ())));
 
-    if (mp_ui->free_layer_mapping_tree->itemDelegateForColumn (n + 1) == 0) {
+    if (mp_ui->free_layer_mapping_tree->itemDelegateForColumn (n + 1) == nullptr) {
       mp_ui->free_layer_mapping_tree->setItemDelegateForColumn (n + 1, new GerberImportDialogNoEditDelegate (mp_ui->free_layer_mapping_tree));
     }
 

@@ -39,10 +39,10 @@
 namespace lay
 {
 
-lay::HelpSource *HelpDialog::mp_help_source = 0;
+lay::HelpSource *HelpDialog::mp_help_source = nullptr;
 
 HelpDialog::HelpDialog (QWidget *parent, bool modal)
-  : QDialog (modal ? parent : 0 /*show as separate window*/, modal ? Qt::WindowFlags (0) : Qt::Window /*enabled minimize button*/),
+  : QDialog (modal ? parent : nullptr /*show as separate window*/, modal ? Qt::WindowFlags (nullptr) : Qt::Window /*enabled minimize button*/),
     m_initialized (false)
 {
   mp_ui = new Ui::HelpDialog ();

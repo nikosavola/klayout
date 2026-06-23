@@ -641,7 +641,7 @@ public:
       m_positive.reset (new FlatRegion (merged_semantics));
       m_results.push_back (& m_positive->raw_polygons ());
     } else {
-      m_results.push_back ((db::Shapes *) 0);
+      m_results.push_back ((db::Shapes *) nullptr);
     }
 
     if (output_mode == PositiveAndNegative) {
@@ -676,15 +676,15 @@ AsIfFlatRegion::in_and_out_generic (const Region &other, InteractingOutputMode o
   //  shortcut
   if (empty ()) {
     if (output_mode == Positive || output_mode == Negative) {
-      return std::make_pair (clone (), (RegionDelegate *) 0);
+      return std::make_pair (clone (), (RegionDelegate *) nullptr);
     } else {
       return std::make_pair (clone (), clone ());
     }
   } else if (other.empty ()) {
     if (output_mode == Positive) {
-      return std::make_pair (new EmptyRegion (), (RegionDelegate *) 0);
+      return std::make_pair (new EmptyRegion (), (RegionDelegate *) nullptr);
     } else if (output_mode == Negative) {
-      return std::make_pair (clone (), (RegionDelegate *) 0);
+      return std::make_pair (clone (), (RegionDelegate *) nullptr);
     } else {
       return std::make_pair (new EmptyRegion (), clone ());
     }
@@ -728,15 +728,15 @@ AsIfFlatRegion::selected_interacting_generic (const Edges &other, InteractingOut
   //  shortcut
   if (empty ()) {
     if (output_mode == Positive || output_mode == Negative) {
-      return std::make_pair (clone (), (RegionDelegate *) 0);
+      return std::make_pair (clone (), (RegionDelegate *) nullptr);
     } else {
       return std::make_pair (clone (), clone ());
     }
   } else if (max_count < min_count || other.empty ()) {
     if (output_mode == Positive) {
-      return std::make_pair (new EmptyRegion (), (RegionDelegate *) 0);
+      return std::make_pair (new EmptyRegion (), (RegionDelegate *) nullptr);
     } else if (output_mode == Negative) {
-      return std::make_pair (clone (), (RegionDelegate *) 0);
+      return std::make_pair (clone (), (RegionDelegate *) nullptr);
     } else {
       return std::make_pair (new EmptyRegion (), clone ());
     }
@@ -779,15 +779,15 @@ AsIfFlatRegion::selected_interacting_generic (const Texts &other, InteractingOut
   //  shortcut
   if (empty ()) {
     if (output_mode == Positive || output_mode == Negative) {
-      return std::make_pair (clone (), (RegionDelegate *) 0);
+      return std::make_pair (clone (), (RegionDelegate *) nullptr);
     } else {
       return std::make_pair (clone (), clone ());
     }
   } else if (max_count < min_count || other.empty ()) {
     if (output_mode == Positive) {
-      return std::make_pair (new EmptyRegion (), (RegionDelegate *) 0);
+      return std::make_pair (new EmptyRegion (), (RegionDelegate *) nullptr);
     } else if (output_mode == Negative) {
-      return std::make_pair (clone (), (RegionDelegate *) 0);
+      return std::make_pair (clone (), (RegionDelegate *) nullptr);
     } else {
       return std::make_pair (new EmptyRegion (), clone ());
     }
@@ -825,7 +825,7 @@ AsIfFlatRegion::selected_interacting_generic (const Region &other, int mode, boo
   //  shortcut
   if (empty ()) {
     if (output_mode == Positive || output_mode == Negative) {
-      return std::make_pair (clone (), (RegionDelegate *) 0);
+      return std::make_pair (clone (), (RegionDelegate *) nullptr);
     } else {
       return std::make_pair (clone (), clone ());
     }
@@ -835,17 +835,17 @@ AsIfFlatRegion::selected_interacting_generic (const Region &other, int mode, boo
     //   * mode is outside and inverse is true ("not outside")
     if ((mode <= 0)) {
       if (output_mode == Positive) {
-        return std::make_pair (new EmptyRegion (), (RegionDelegate *) 0);
+        return std::make_pair (new EmptyRegion (), (RegionDelegate *) nullptr);
       } else if (output_mode == Negative) {
-        return std::make_pair (clone (), (RegionDelegate *) 0);
+        return std::make_pair (clone (), (RegionDelegate *) nullptr);
       } else {
         return std::make_pair (new EmptyRegion (), clone ());
       }
     } else {
       if (output_mode == Positive) {
-        return std::make_pair (clone(), (RegionDelegate *) 0);
+        return std::make_pair (clone(), (RegionDelegate *) nullptr);
       } else if (output_mode == Negative) {
-        return std::make_pair (new EmptyRegion (), (RegionDelegate *) 0);
+        return std::make_pair (new EmptyRegion (), (RegionDelegate *) nullptr);
       } else {
         return std::make_pair (clone (), new EmptyRegion ());
       }
@@ -1028,7 +1028,7 @@ AsIfFlatRegion::produce_markers_for_angle_check (const db::Polygon &poly, const 
 
   for (size_t i = 0; i < poly.holes () + 1; ++i) {
 
-    const db::Polygon::contour_type *h = 0;
+    const db::Polygon::contour_type *h = nullptr;
     if (i == 0) {
       h = &poly.hull ();
     } else {
@@ -1526,7 +1526,7 @@ AsIfFlatRegion::sized_inside (const Region &inside, bool outside, coord_type dx,
 
     std::vector<db::Shapes *> results;
     db::FlatRegion *res_flat = dynamic_cast<db::FlatRegion *> (res.get ());
-    tl_assert (res_flat != 0);
+    tl_assert (res_flat != nullptr);
     results.push_back (&res_flat->raw_polygons ());
     proc.run_flat (prev ? prev->begin () : polygons, others, std::vector<bool> (), &op, results);
 
@@ -2020,7 +2020,7 @@ AsIfFlatRegion::nets (LayoutToNetlist *l2n, NetPropertyMode prop_mode, const tl:
     net_filter_set.insert (net_filter->begin (), net_filter->end ());
   }
 
-  deliver_shapes_of_nets_recursive (result->raw_polygons (), top_circuit, l2n, li.value (), prop_mode, net_prop_name, db::ICplxTrans (), net_filter ? &net_filter_set : 0);
+  deliver_shapes_of_nets_recursive (result->raw_polygons (), top_circuit, l2n, li.value (), prop_mode, net_prop_name, db::ICplxTrans (), net_filter ? &net_filter_set : nullptr);
 
   return result.release ();
 }

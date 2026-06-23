@@ -328,7 +328,7 @@ Triangulation::find_closest_edge (const db::DPoint &p, Vertex *vstart, bool insi
 
     } else {
 
-      return 0;
+      return nullptr;
 
     }
 
@@ -337,12 +337,12 @@ Triangulation::find_closest_edge (const db::DPoint &p, Vertex *vstart, bool insi
   db::DEdge line (*vstart, p);
 
   double d = -1.0;
-  Edge *edge = 0;
+  Edge *edge = nullptr;
   Vertex *v = vstart;
 
   while (v) {
 
-    Vertex *vnext = 0;
+    Vertex *vnext = nullptr;
 
     for (auto e = v->begin_edges (); e != v->end_edges (); ++e) {
 
@@ -441,7 +441,7 @@ Triangulation::insert_new_vertex (Vertex *vertex, std::list<tl::weak_ptr<Polygon
 
   //  Find closest edge
   Edge *closest_edge = find_closest_edge (*vertex);
-  tl_assert (closest_edge != 0);
+  tl_assert (closest_edge != nullptr);
 
   Edge *s1 = mp_graph->create_edge (vertex, closest_edge->v1 ());
   Edge *s2 = mp_graph->create_edge (vertex, closest_edge->v2 ());
@@ -467,17 +467,17 @@ Triangulation::add_more_triangles (std::vector<Polygon *> &new_triangles,
 {
   while (true) {
 
-    Edge *next_edge = 0;
+    Edge *next_edge = nullptr;
 
     for (auto e = from_vertex->begin_edges (); e != from_vertex->end_edges (); ++e) {
       if (! (*e)->has_vertex (to_vertex) && (*e)->is_outside ()) {
         //  TODO: remove and break
-        tl_assert (next_edge == 0);
+        tl_assert (next_edge == nullptr);
         next_edge = *e;
       }
     }
 
-    tl_assert (next_edge != 0);
+    tl_assert (next_edge != nullptr);
     Vertex *next_vertex = next_edge->other (from_vertex);
 
     db::DVector d_from_to = *to_vertex - *from_vertex;
@@ -654,8 +654,8 @@ Triangulation::remove_inside_vertex (Vertex *vertex, std::list<tl::weak_ptr<Poly
 
   while (vertex->num_edges (4) > 3) {
 
-    Edge *to_flip = 0;
-    for (auto e = vertex->begin_edges (); e != vertex->end_edges () && to_flip == 0; ++e) {
+    Edge *to_flip = nullptr;
+    for (auto e = vertex->begin_edges (); e != vertex->end_edges () && to_flip == nullptr; ++e) {
       if ((*e)->can_flip ()) {
         to_flip = *e;
       }
@@ -680,20 +680,20 @@ Triangulation::remove_inside_vertex (Vertex *vertex, std::list<tl::weak_ptr<Poly
 
     //  This case can happen if two edges attached to the vertex are collinear
     //  in this case choose the "join" strategy
-    Edge *jseg = 0;
+    Edge *jseg = nullptr;
     for (auto e = vertex->begin_edges (); e != vertex->end_edges () && !jseg; ++e) {
       if ((*e)->can_join_via (vertex)) {
         jseg = *e;
       }
     }
-    tl_assert (jseg != 0);
+    tl_assert (jseg != nullptr);
 
     Vertex *v1 = jseg->left ()->opposite (jseg);
     Edge *s1 = jseg->left ()->opposite (vertex);
     Vertex *v2 = jseg->right ()->opposite (jseg);
     Edge *s2 = jseg->right ()->opposite (vertex);
 
-    Edge *jseg_opp = 0;
+    Edge *jseg_opp = nullptr;
     for (auto e = vertex->begin_edges (); e != vertex->end_edges () && !jseg_opp; ++e) {
       if (!(*e)->has_polygon (jseg->left ()) && !(*e)->has_polygon (jseg->right ())) {
         jseg_opp = *e;
@@ -907,13 +907,13 @@ Triangulation::fill_concave_corners (const std::vector<Edge *> &edges)
     Vertex *v = terminals[0];
 
     bool any_connected = false;
-    Vertex *vp = 0;
+    Vertex *vp = nullptr;
 
     std::set<Vertex *> to_remove;
 
     while (vertex2edge [v].size () >= size_t (2) || ! vp) {
 
-      Edge *seg = 0;
+      Edge *seg = nullptr;
       std::vector<Edge *> &ee = vertex2edge [v];
       for (auto e = ee.begin (); e != ee.end (); ++e) {
         if (! (*e)->has_vertex (vp)) {
@@ -922,7 +922,7 @@ Triangulation::fill_concave_corners (const std::vector<Edge *> &edges)
         }
       }
 
-      tl_assert (seg != 0);
+      tl_assert (seg != nullptr);
       Polygon *tri = seg->left () ? seg->left () : seg->right ();
       Vertex *vn = seg->other (v);
 
@@ -932,7 +932,7 @@ Triangulation::fill_concave_corners (const std::vector<Edge *> &edges)
       }
       tl_assert (een.size () == size_t (2));
 
-      Edge *segn = 0;
+      Edge *segn = nullptr;
       for (auto e = een.begin (); e != een.end (); ++e) {
         if (! (*e)->has_vertex (v)) {
           segn = (*e);
@@ -940,7 +940,7 @@ Triangulation::fill_concave_corners (const std::vector<Edge *> &edges)
         }
       }
 
-      tl_assert (segn != 0);
+      tl_assert (segn != nullptr);
       Vertex *vnn = segn->other (vn);
       std::vector<Edge *> &eenn = vertex2edge [vnn];
 
@@ -1006,8 +1006,8 @@ Triangulation::search_edges_crossing (Vertex *from, Vertex *to)
   Vertex *vv = to;
   db::DEdge edge (*from, *to);
 
-  Polygon *current_triangle = 0;
-  Edge *next_edge = 0;
+  Polygon *current_triangle = nullptr;
+  Edge *next_edge = nullptr;
 
   std::vector<Edge *> result;
 
@@ -1026,17 +1026,17 @@ Triangulation::search_edges_crossing (Vertex *from, Vertex *to)
     }
   }
 
-  tl_assert (current_triangle != 0);
+  tl_assert (current_triangle != nullptr);
 
   while (true) {
 
     current_triangle = next_edge->other (current_triangle);
 
     //  Note that we're convex, so there has to be a path across triangles
-    tl_assert (current_triangle != 0);
+    tl_assert (current_triangle != nullptr);
 
     Edge *cs = next_edge;
-    next_edge = 0;
+    next_edge = nullptr;
     for (int i = 0; i < 3; ++i) {
       Edge *e = current_triangle->edge (i);
       if (e != cs) {
@@ -1051,7 +1051,7 @@ Triangulation::search_edges_crossing (Vertex *from, Vertex *to)
       }
     }
 
-    tl_assert (next_edge != 0);
+    tl_assert (next_edge != nullptr);
 
   }
 }
@@ -1061,9 +1061,9 @@ Triangulation::find_vertex_for_point (const db::DPoint &point) const
 {
   Edge *edge = find_closest_edge (point);
   if (!edge) {
-    return 0;
+    return nullptr;
   }
-  Vertex *v = 0;
+  Vertex *v = nullptr;
   if (is_equal (*edge->v1 (), point)) {
     v = edge->v1 ();
   } else if (is_equal (*edge->v2 (), point)) {
@@ -1077,14 +1077,14 @@ Triangulation::find_edge_for_points (const db::DPoint &p1, const db::DPoint &p2)
 {
   Vertex *v = find_vertex_for_point (p1);
   if (!v) {
-    return 0;
+    return nullptr;
   }
   for (auto e = v->begin_edges (); e != v->end_edges (); ++e) {
     if (is_equal (*(*e)->other (v), p2)) {
       return *e;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 std::vector<Vertex *>
@@ -1102,7 +1102,7 @@ Triangulation::find_vertexes_along_line (const db::DPoint &p1, const db::DPoint 
   result.push_back (v);
 
   while (v) {
-    Vertex *vn = 0;
+    Vertex *vn = nullptr;
     for (auto e = v->begin_edges (); e != v->end_edges (); ++e) {
       Vertex *vv = (*e)->other (v);
       int cs = 0;
@@ -1138,7 +1138,7 @@ Triangulation::ensure_edge_inner (Vertex *from, Vertex *to)
 
     //  no crossing edge - there should be a edge already
     Edge *res = find_edge_for_points (*from, *to);
-    tl_assert (res != 0);
+    tl_assert (res != nullptr);
     result.push_back (res);
 
   } else if (crossed_edges.size () == 1 && ! is_touching (dedge, crossed_edges.front ()->edge ())) {
@@ -1153,7 +1153,7 @@ Triangulation::ensure_edge_inner (Vertex *from, Vertex *to)
 
     //  split edge close to center
     db::DPoint split_point;
-    Edge *split_edge = 0;
+    Edge *split_edge = nullptr;
     double d = -1.0;
     double l_half = 0.25 * (*to - *from).sq_length ();
     for (auto e = crossed_edges.begin (); e != crossed_edges.end (); ++e) {
@@ -1214,7 +1214,7 @@ Triangulation::join_edges (std::vector<Edge *> &edges)
     Edge *s2 = edges [i];
     tl_assert (s1->is_segment () == s2->is_segment ());
     Vertex *cp = s1->common_vertex (s2);
-    tl_assert (cp != 0);
+    tl_assert (cp != nullptr);
 
     std::vector<Edge *> join_edges;
 
@@ -1298,7 +1298,7 @@ Triangulation::constrain (const std::vector<std::vector<Vertex *> > &contours)
     auto edges = re->second;
     for (auto e = edges.begin (); e != edges.end (); ++e) {
       (*e)->set_is_segment (true);
-      Polygon *outer_tri = 0;
+      Polygon *outer_tri = nullptr;
       int d = db::sprod_sign (edge.d (), (*e)->d ());
       if (d > 0) {
         outer_tri = (*e)->left ();
@@ -1649,7 +1649,7 @@ Triangulation::refine (const TriangulationParameters &parameters)
 
       } else {
 
-        Vertex *vstart = 0;
+        Vertex *vstart = nullptr;
         for (unsigned int i = 0; i < 3; ++i) {
           Edge *edge = (*t)->edge (i);
           vstart = (*t)->opposite (edge);
@@ -1659,9 +1659,9 @@ Triangulation::refine (const TriangulationParameters &parameters)
         }
 
         Edge *edge = find_closest_edge (center, vstart, true /*inside only*/);
-        tl_assert (edge != 0);
+        tl_assert (edge != nullptr);
 
-        if ((! edge->is_segment () && (edge->side_of (center) < 0 ? edge->left () : edge->right ()) != 0 /*center is inside*/)
+        if ((! edge->is_segment () && (edge->side_of (center) < 0 ? edge->left () : edge->right ()) != nullptr /*center is inside*/)
             || (edge->is_segment () && edge->side_of (*vstart) * edge->side_of (center) >= 0)) {
 
           if (tl::verbosity () >= parameters.base_verbosity + 20) {

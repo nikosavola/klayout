@@ -129,7 +129,7 @@ public:
   /**
    *  @brief Create a repetition with the given implementation
    */
-  Repetition (RepetitionBase *base = 0);
+  Repetition (RepetitionBase *base = nullptr);
 
   /**
    *  @brief Destructor
@@ -182,7 +182,7 @@ public:
    */
   bool is_singular () const
   {
-    return mp_base == 0;
+    return mp_base == nullptr;
   }
 
   /**
@@ -396,7 +396,7 @@ public:
    *  The name is reported in the error message. 
    *  This constructor creates an uninitialized variable.
    */
-  modal_variable (OASISDiagnostics *reader = 0, const char *name = "")
+  modal_variable (OASISDiagnostics *reader = nullptr, const char *name = "")
     : mp_diag (reader), m_name (name), m_t (), m_initialized (false)
   {
     //  .. nothing yet ..

@@ -83,7 +83,7 @@ public:
 
   virtual ~ShapeCollectionDelegateBase () { }
 
-  virtual DeepShapeCollectionDelegateBase *deep () { return 0; }
+  virtual DeepShapeCollectionDelegateBase *deep () { return nullptr; }
 
   virtual void apply_property_translator (const db::PropertiesTranslator & /*pt*/) = 0;
 

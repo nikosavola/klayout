@@ -145,7 +145,7 @@ class LAYBASIC_PUBLIC StreamPluginDeclarationBase
 {
 public:
   StreamPluginDeclarationBase (const std::string &format_name)
-    : PluginDeclaration (), m_format_name (format_name), mp_stream_fmt (0)
+    : PluginDeclaration (), m_format_name (format_name), mp_stream_fmt (nullptr)
   { 
     //  .. nothing yet ..
   }
@@ -170,7 +170,7 @@ private:
   //  don't allow overrides - use a special configuration page for that purpose.
   virtual ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
   {
-    return 0;
+    return nullptr;
   }
 };
   
@@ -200,7 +200,7 @@ public:
    */
   virtual StreamReaderOptionsPage *format_specific_options_page (QWidget * /*parent*/) const 
   {
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -210,7 +210,7 @@ public:
    */
   virtual db::FormatSpecificReaderOptions *create_specific_options () const
   {
-    return 0;
+    return nullptr;
   }
 };
 
@@ -237,7 +237,7 @@ public:
    */
   virtual const char *options_alias () const
   {
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -245,7 +245,7 @@ public:
    */
   virtual StreamWriterOptionsPage *format_specific_options_page (QWidget * /*parent*/) const 
   {
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -256,7 +256,7 @@ public:
    */
   virtual db::FormatSpecificWriterOptions *create_specific_options () const
   {
-    return 0;
+    return nullptr;
   }
 };
 

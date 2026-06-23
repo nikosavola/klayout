@@ -83,7 +83,7 @@ bool Inspector::has_children (size_t /*index*/) const
 
 Inspector *Inspector::child_inspector (size_t /*index*/) const
 {
-  return 0;
+  return nullptr;
 }
 
 bool Inspector::equiv (const gsi::Inspector * /*other*/) const

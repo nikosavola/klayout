@@ -642,7 +642,7 @@ db::Instance ChangeTargetCellApplicator::do_apply_inst (db::Cell &cell, const db
   std::set<db::cell_index_type> called;
   cell.layout ()->cell (m_cell_index).collect_called_cells (called);
   if (m_cell_index == cell.cell_index () || called.find (cell.cell_index ()) != called.end ()) {
-    throw tl::Exception (tl::to_string (QObject::tr ("Trying to build a recursive hierarchy")).c_str ());
+    throw tl::Exception (tl::to_string (QObject::tr ("Trying to build a recursive hierarchy")));
   }
 
   db::CellInstArray arr = instance.cell_inst ();

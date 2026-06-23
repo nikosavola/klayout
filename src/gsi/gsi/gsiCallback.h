@@ -53,7 +53,7 @@ struct GSI_PUBLIC Callee
 struct Callback
 {
   Callback () 
-    : id (-1), callee (0), argsize (0), retsize (0)
+    : id (-1), callee (nullptr), argsize (0), retsize (0)
   { 
     //  .. nothing yet ..
   }

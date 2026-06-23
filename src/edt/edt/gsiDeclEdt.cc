@@ -56,7 +56,7 @@ static const db::InstElement &path_nth (const lay::ObjectInstPath *p, unsigned i
 
 static db::Layout *layout_from_inst_path (const lay::ObjectInstPath *p)
 {
-  db::Cell *cell = 0;
+  db::Cell *cell = nullptr;
 
   if (p->is_cell_inst ()) {
     db::Instances *instances = p->back ().inst_ptr.instances ();
@@ -70,14 +70,14 @@ static db::Layout *layout_from_inst_path (const lay::ObjectInstPath *p)
     }
   }
 
-  return cell ? cell->layout () : 0;
+  return cell ? cell->layout () : nullptr;
 }
 
 static db::Cell *cell_from_inst_path (const lay::ObjectInstPath *p)
 {
   auto cell_index = p->cell_index_tot ();
   db::Layout *layout = layout_from_inst_path (p);
-  return layout ? &layout->cell (cell_index) : 0;
+  return layout ? &layout->cell (cell_index) : nullptr;
 }
 
 static db::DCplxTrans source_dtrans (const lay::ObjectInstPath *p)

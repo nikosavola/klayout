@@ -145,7 +145,7 @@ public:
   static const ExpressionMethodTable *method_table_by_class (const gsi::ClassBase *cls_decl)
   {
     const ExpressionMethodTable *mt = dynamic_cast<const ExpressionMethodTable *>(cls_decl->gsi_data ());
-    tl_assert (mt != 0);
+    tl_assert (mt != nullptr);
     return mt;
   }
 
@@ -237,7 +237,7 @@ inline void *get_object (tl::Variant &var)
  */
 void *get_object_raw (tl::Variant &var)
 {
-  void *obj = 0;
+  void *obj = nullptr;
   if (var.type_code () == tl::Variant::t_user) {
 
     obj = var.native_ptr ();
@@ -277,7 +277,7 @@ public:
     if (! args.empty () || kwargs) {
       throw tl::Exception (tl::to_string (tr ("Class '%s' is not a function - use 'new' to create a new object")), mp_var_cls->name ());
     }
-    out = tl::Variant ((void *) 0, mp_var_cls, false);
+    out = tl::Variant ((void *) nullptr, mp_var_cls, false);
   }
 
 private:
@@ -298,7 +298,7 @@ initialize_expressions ()
       //  skip external classes
       continue;
     } else if ((*c)->declaration () != *c) {
-      tl_assert ((*c)->parent () != 0);  //  top-level classes should be merged
+      tl_assert ((*c)->parent () != nullptr);  //  top-level classes should be merged
       continue;
     }
 
@@ -306,7 +306,7 @@ initialize_expressions ()
     ExpressionMethodTable::initialize_class (*c);
 
     //  Note: skip non-top-level classes
-    if ((*c)->parent () == 0) {
+    if ((*c)->parent () == nullptr) {
 
       //  register a function that creates a class object (use a function to avoid issues with
       //  late destruction of global variables which the class object is already gone)
@@ -323,7 +323,7 @@ initialize_expressions ()
 //  VariantUserClassImpl implementation
 
 VariantUserClassImpl::VariantUserClassImpl () 
-  : mp_cls (0), mp_self (0), mp_object_cls (0), m_is_const (false)
+  : mp_cls (nullptr), mp_self (nullptr), mp_object_cls (nullptr), m_is_const (false)
 { 
   //  .. nothing yet ..
 }
@@ -339,7 +339,7 @@ VariantUserClassImpl::initialize (const gsi::ClassBase *cls, const tl::VariantUs
 
 VariantUserClassImpl::~VariantUserClassImpl () 
 { 
-  mp_cls = 0;
+  mp_cls = nullptr;
 }
 
 bool
@@ -544,7 +544,7 @@ VariantUserClassImpl::to_double_impl (void *obj) const
 void
 VariantUserClassImpl::execute (const tl::ExpressionParserContext &context, tl::Variant &out, tl::Variant &object, const std::string &method, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> *kwargs) const
 {
-  if (mp_object_cls == 0 && method == "is_a") {
+  if (mp_object_cls == nullptr && method == "is_a") {
 
     if (args.size () != 1 || kwargs) {
       throw tl::EvalError (tl::to_string (tr ("'is_a' method requires exactly one argument (no keyword arguments)")), context);
@@ -564,7 +564,7 @@ VariantUserClassImpl::execute (const tl::ExpressionParserContext &context, tl::V
 
     out = ret;
 
-  } else if (mp_object_cls != 0 && method == "new" && args.size () == 0 && ! kwargs) {
+  } else if (mp_object_cls != nullptr && method == "new" && args.empty() && ! kwargs) {
 
     void *obj = mp_cls->create ();
     if (obj) {
@@ -586,9 +586,9 @@ VariantUserClassImpl::execute (const tl::ExpressionParserContext &context, tl::V
       out.reset ();
     }
 
-  } else if (mp_object_cls == 0 && method == "dup") {
+  } else if (mp_object_cls == nullptr && method == "dup") {
 
-    if (args.size () != 0 || kwargs) {
+    if (!args.empty() || kwargs) {
       throw tl::EvalError (tl::to_string (tr ("'dup' method does not allow arguments (no keyword arguments)")), context);
     }
 
@@ -649,7 +649,7 @@ special_method_impl (gsi::MethodBase::special_method_type smt, tl::Variant &self
   } else if (smt == gsi::MethodBase::Destroyed) {
 
     if (self.type_code () == tl::Variant::t_user) {
-      return self.to_user () == 0;
+      return self.to_user () == nullptr;
     } else if (self.type_code () == tl::Variant::t_user_ref) {
       Proxy *proxy = dynamic_cast<Proxy *> (self.to_object ());
       if (proxy) {
@@ -674,7 +674,7 @@ special_method_impl (gsi::MethodBase::special_method_type smt, tl::Variant &self
 
 static std::pair<const ExpressionMethodTable *, size_t> find_method (const gsi::ClassBase *cls, bool as_static, const std::string &method)
 {
-  const ExpressionMethodTable *mt = 0;
+  const ExpressionMethodTable *mt = nullptr;
   size_t mid = 0;
 
   while (cls) {
@@ -700,7 +700,7 @@ static std::pair<const ExpressionMethodTable *, size_t> find_method (const gsi::
 
   }
 
-  return std::make_pair ((const ExpressionMethodTable *) 0, size_t (0));
+  return std::make_pair ((const ExpressionMethodTable *) nullptr, size_t (0));
 }
 
 static const gsi::ClassBase *find_class_scope (const gsi::ClassBase *cls, const std::string &name)
@@ -728,7 +728,7 @@ static const gsi::ClassBase *find_class_scope (const gsi::ClassBase *cls, const 
 
   }
 
-  return 0;
+  return nullptr;
 }
 
 inline int
@@ -756,7 +756,7 @@ invalid_kwnames (const gsi::MethodBase *meth, const std::map<std::string, tl::Va
 }
 
 static bool
-compatible_with_args (const gsi::MethodBase *m, int argc, const std::map<std::string, tl::Variant> *kwargs, std::string *why_not = 0)
+compatible_with_args (const gsi::MethodBase *m, int argc, const std::map<std::string, tl::Variant> *kwargs, std::string *why_not = nullptr)
 {
   int nargs = num_args (m);
   int nkwargs = kwargs ? int (kwargs->size ()) : 0;
@@ -868,7 +868,7 @@ get_kwarg (const gsi::ArgType &atype, const std::map<std::string, tl::Variant> *
       return &i->second;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -885,7 +885,7 @@ VariantUserClassImpl::execute_gsi (const tl::ExpressionParserContext & /*context
     }
   }
 
-  auto m = find_method (clsact, mp_object_cls != 0 /*static*/, method);
+  auto m = find_method (clsact, mp_object_cls != nullptr /*static*/, method);
 
   const ExpressionMethodTable *mt = m.first;
   size_t mid = m.second;
@@ -903,7 +903,7 @@ VariantUserClassImpl::execute_gsi (const tl::ExpressionParserContext & /*context
       //  we found a class scope: return a reference to that
       const tl::VariantUserClassBase *scope_var_cls = scope->var_cls_cls ();
       if (scope_var_cls) {
-        out = tl::Variant ((void *) 0, scope_var_cls, false);
+        out = tl::Variant ((void *) nullptr, scope_var_cls, false);
       } else {
         out = tl::Variant ();
       }
@@ -915,7 +915,7 @@ VariantUserClassImpl::execute_gsi (const tl::ExpressionParserContext & /*context
 
   }
 
-  const gsi::MethodBase *meth = 0;
+  const gsi::MethodBase *meth = nullptr;
   int candidates = 0;
 
   for (ExpressionMethodTableEntry::method_iterator m = mt->begin (mid); m != mt->end (mid); ++m) {
@@ -939,7 +939,7 @@ VariantUserClassImpl::execute_gsi (const tl::ExpressionParserContext & /*context
   //  more than one candidate -> refine by checking the arguments
   if (candidates > 1) {
 
-    meth = 0;
+    meth = nullptr;
     candidates = 0;
     int score = 0;
     bool const_matching = true;

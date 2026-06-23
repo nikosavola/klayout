@@ -82,13 +82,13 @@ class Cell;
 DB_PUBLIC bool 
 fill_region (db::Cell *cell, const db::Polygon &fp, db::cell_index_type fill_cell_index, const db::Box &fc_box,
              const db::Point &origin, bool enhanced_fill,
-             std::vector <db::Polygon> *remaining_parts = 0, const db::Vector &fill_margin = db::Vector (),
+             std::vector <db::Polygon> *remaining_parts = nullptr, const db::Vector &fill_margin = db::Vector (),
              const db::Box &glue_box = db::Box ());
 
 DB_PUBLIC bool
 fill_region (db::Cell *cell, const db::Polygon &fp, db::cell_index_type fill_cell_index, const db::Box &fc_box,
              const db::Vector &row_step, const db::Vector &column_step, const db::Point &origin, bool enhanced_fill,
-             std::vector <db::Polygon> *remaining_parts = 0, const db::Vector &fill_margin = db::Vector (),
+             std::vector <db::Polygon> *remaining_parts = nullptr, const db::Vector &fill_margin = db::Vector (),
              const db::Box &glue_box = db::Box (), const db::Region &exclude_area = db::Region ());
 
 
@@ -105,13 +105,13 @@ fill_region (db::Cell *cell, const db::Polygon &fp, db::cell_index_type fill_cel
 DB_PUBLIC void
 fill_region (db::Cell *cell, const db::Region &fr, db::cell_index_type fill_cell_index, const db::Box &fc_box,
              const db::Point &origin, bool enhanced_fill,
-             db::Region *remaining_parts = 0, const db::Vector &fill_margin = db::Vector (), db::Region *remaining_polygons = 0,
+             db::Region *remaining_parts = nullptr, const db::Vector &fill_margin = db::Vector (), db::Region *remaining_polygons = nullptr,
              const db::Box &glue_box = db::Box (), const db::Region &exclude_area = db::Region ());
 
 DB_PUBLIC void
 fill_region (db::Cell *cell, const db::Region &fp, db::cell_index_type fill_cell_index, const db::Box &fc_box,
              const db::Vector &row_step, const db::Vector &column_step, const db::Point &origin, bool enhanced_fill,
-             db::Region *remaining_parts = 0, const db::Vector &fill_margin = db::Vector (), db::Region *remaining_polygons = 0,
+             db::Region *remaining_parts = nullptr, const db::Vector &fill_margin = db::Vector (), db::Region *remaining_polygons = nullptr,
              const db::Box &glue_box = db::Box (), const db::Region &exclude_area = db::Region ());
 
 /**
@@ -127,7 +127,7 @@ fill_region (db::Cell *cell, const db::Region &fp, db::cell_index_type fill_cell
 DB_PUBLIC void
 fill_region_repeat (db::Cell *cell, const db::Region &fr, db::cell_index_type fill_cell_index,
                     const db::Box &fc_box, const db::Vector &row_step, const db::Vector &column_step,
-                    const db::Vector &fill_margin, db::Region *remaining_polygons = 0,
+                    const db::Vector &fill_margin, db::Region *remaining_polygons = nullptr,
                     const db::Box &glue_box = db::Box (), const db::Region &exclude_area = db::Region ());
 
 }

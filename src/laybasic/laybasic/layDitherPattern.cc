@@ -611,7 +611,7 @@ void
 DitherPatternInfo::set_pattern (const uint32_t *pt, unsigned int w, unsigned int h) 
 {
   tl::MutexLocker locker (& s_mutex);
-  m_scaled_pattern.reset (0);
+  m_scaled_pattern.reset (nullptr);
 
   set_pattern_impl (pt, w, h);
 }
@@ -676,7 +676,7 @@ void
 DitherPatternInfo::set_pattern (const uint64_t *pt, unsigned int w, unsigned int h)
 {
   tl::MutexLocker locker (& s_mutex);
-  m_scaled_pattern.reset (0);
+  m_scaled_pattern.reset (nullptr);
 
   set_pattern_impl (pt, w, h);
 }
@@ -981,7 +981,7 @@ struct ReplaceDitherPatternOp
 };
 
 DitherPattern::DitherPattern () :
-    db::Object (0)
+    db::Object (nullptr)
 {
   for (unsigned int d = 0; d < sizeof (dither_strings) / sizeof (dither_strings [0]); d += 2) {
     m_pattern.push_back (DitherPatternInfo ());
@@ -996,7 +996,7 @@ DitherPattern::~DitherPattern ()
 }
 
 DitherPattern::DitherPattern (const DitherPattern &p) :
-    db::Object (0)
+    db::Object (nullptr)
 {
   m_pattern = p.m_pattern;
 }

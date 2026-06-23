@@ -210,7 +210,7 @@ bool s_in_create_plugin = false;
 
 PluginImpl::PluginImpl ()
   : lay::EditorServiceBase (),
-    mp_view (0), mp_dispatcher (0),
+    mp_view (nullptr), mp_dispatcher (nullptr),
     m_connect_ac (lay::AC_Any), m_move_ac (lay::AC_Any),
     m_snap_to_objects (true),
     m_snap_objects_to_grid (true)
@@ -309,7 +309,7 @@ db::DPoint
 PluginImpl::snap2 (const db::DPoint &p, bool visualize)
 {
   double snap_range = ui ()->mouse_event_trans ().inverted ().ctrans (lay::snap_range_pixels ());
-  auto details = lay::obj_snap (m_snap_to_objects ? view () : 0, p, m_edit_grid == db::DVector () ? m_global_grid : m_edit_grid, snap_range);
+  auto details = lay::obj_snap (m_snap_to_objects ? view () : nullptr, p, m_edit_grid == db::DVector () ? m_global_grid : m_edit_grid, snap_range);
   if (visualize) {
     mouse_cursor_from_snap_details (details);
   }
@@ -320,7 +320,7 @@ db::DPoint
 PluginImpl::snap2_from_to (const db::DPoint &p, const db::DPoint &plast, bool connect, lay::angle_constraint_type ac, bool visualize)
 {
   double snap_range = ui ()->mouse_event_trans ().inverted ().ctrans (lay::snap_range_pixels ());
-  auto details = lay::obj_snap (m_snap_to_objects ? view () : 0, plast, p, m_edit_grid == db::DVector () ? m_global_grid : m_edit_grid, connect ? connect_ac (ac) : move_ac (ac), snap_range);
+  auto details = lay::obj_snap (m_snap_to_objects ? view () : nullptr, plast, p, m_edit_grid == db::DVector () ? m_global_grid : m_edit_grid, connect ? connect_ac (ac) : move_ac (ac), snap_range);
   if (visualize) {
     mouse_cursor_from_snap_details (details);
   }
@@ -732,7 +732,7 @@ static lay::EditorOptionsPageWidget *
 get_focus_page (PluginImpl *plugin)
 {
   auto fp = plugin->focus_page ();
-  return fp ? fp->widget () : 0;
+  return fp ? fp->widget () : nullptr;
 }
 #endif
 

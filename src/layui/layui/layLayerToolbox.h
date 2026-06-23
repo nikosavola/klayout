@@ -63,7 +63,7 @@ class LCPRemitter
 Q_OBJECT
 
 public:
-  LCPRemitter (int index, QObject *parent, const char *name = 0);
+  LCPRemitter (int index, QObject *parent, const char *name = nullptr);
 
 public slots:
   void the_slot ();
@@ -89,7 +89,7 @@ class LCPColorPalette
 Q_OBJECT
 
 public:
-  LCPColorPalette (QWidget *parent, const char *name = 0); 
+  LCPColorPalette (QWidget *parent, const char *name = nullptr); 
 
   void set_palette (const lay::ColorPalette &p);
 
@@ -118,7 +118,7 @@ class LCPAnimationPalette
 Q_OBJECT
 
 public:
-  LCPAnimationPalette (QWidget *parent, const char *name = 0); 
+  LCPAnimationPalette (QWidget *parent, const char *name = nullptr); 
 
 public slots:
   void button_clicked (int index);
@@ -142,7 +142,7 @@ class LCPStylePalette
 Q_OBJECT
 
 public:
-  LCPStylePalette (QWidget *parent, const char *name = 0); 
+  LCPStylePalette (QWidget *parent, const char *name = nullptr); 
 
   void set_view (LayoutViewBase *view)
   {
@@ -182,7 +182,7 @@ class LCPDitherPalette
 Q_OBJECT
 
 public:
-  LCPDitherPalette (QWidget *parent, const char *name = 0); 
+  LCPDitherPalette (QWidget *parent, const char *name = nullptr); 
 
   void set_palette (const lay::StipplePalette &p);
 
@@ -220,7 +220,7 @@ class LCPVisibilityPalette
 Q_OBJECT
 
 public:
-  LCPVisibilityPalette (QWidget *parent, const char *name = 0); 
+  LCPVisibilityPalette (QWidget *parent, const char *name = nullptr); 
 
 public slots:
   void button_clicked (int index);

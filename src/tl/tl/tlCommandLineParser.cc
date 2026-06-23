@@ -491,7 +491,7 @@ CommandLineOptions::parse (int argc, char *argv[])
 
   for (int i = 1; i < argc; ++i) {
 
-    ArgBase *arg = 0;
+    ArgBase *arg = nullptr;
 
     std::string arg_as_utf8 = tl::to_string_from_local (argv [i]);
     tl::Extractor ex (arg_as_utf8.c_str ());

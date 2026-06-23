@@ -87,7 +87,7 @@ public:
     if (lay::has_gui ()) {
       return new BrowseShapesForm (root, view);
     } else {
-      return 0;
+      return nullptr;
     }
   }
 };
@@ -565,7 +565,7 @@ BrowseShapesForm::cell_changed (QTreeWidgetItem *item, QTreeWidgetItem *)
   bool shortened = false;
   unsigned int count = 0;
   if (m_mode == AnyTop) {
-    shortened = fill_cell_instances (db::ICplxTrans (), layout, &cell, 0, false, std::string (), items, count);
+    shortened = fill_cell_instances (db::ICplxTrans (), layout, &cell, nullptr, false, std::string (), items, count);
   } else if (m_mode == ToCellView) {
     if (m_cellview.is_valid ()) {
       shortened = fill_cell_instances (db::ICplxTrans (), layout, &cell, m_cellview.cell (), false, std::string (), items, count);
@@ -714,7 +714,7 @@ BrowseShapesForm::update ()
   if (m_mode == Local) {
     lv_cell_instance->clear ();
   } else if (lv_cell->currentItem ()) {
-    cell_changed (lv_cell->currentItem (), 0);
+    cell_changed (lv_cell->currentItem (), nullptr);
   }
 }
 
@@ -751,7 +751,7 @@ num_shape_instances (unsigned int layer, const db::Cell &cell)
 void 
 BrowseShapesForm::update_cell_list ()
 {
-  BrowseShapesFormCellLVI *sel_item = 0;
+  BrowseShapesFormCellLVI *sel_item = nullptr;
 
   lv_cell->clear ();
 
@@ -795,7 +795,7 @@ BrowseShapesForm::update_cell_list ()
 
       //  create the entries.
       QList<QTreeWidgetItem *> items;
-      BrowseShapesFormCellLVI *item = 0;
+      BrowseShapesFormCellLVI *item = nullptr;
       for (std::vector<BrowseShapesCellInfo>::const_iterator cn = cell_info.end (); cn != cell_info.begin (); ) {
         --cn;
         item = new BrowseShapesFormCellLVI (cn->name, cn->cell_index, lindex);
@@ -847,7 +847,7 @@ BrowseShapesForm::deactivated ()
 bool 
 BrowseShapesForm::fill_cell_instances (const db::ICplxTrans &t, const db::Layout &layout, const db::Cell *from, const db::Cell *to, bool to_parent, const std::string &path, QList<QTreeWidgetItem *> &items, unsigned int &count)
 {
-  if (from == to || (! to_parent && to == 0 && from->is_top ())) {
+  if (from == to || (! to_parent && to == nullptr && from->is_top ())) {
 
     if (count == m_max_inst_count) {
       return true; //  shorten list
@@ -1010,7 +1010,7 @@ BrowseShapesForm::adv_cell (bool up)
           if (i > 0) {
             litem = dynamic_cast <BrowseShapesFormLayerLVI *> (lv_cell->topLevelItem (i - 1)); // TODO: slow!
           } else {
-            litem = 0;
+            litem = nullptr;
           }
         } while (litem && litem->childCount () == 0);
         if (litem) {

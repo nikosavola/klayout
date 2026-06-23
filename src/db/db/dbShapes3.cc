@@ -80,7 +80,7 @@ Shapes::get_layer () const
 
   //  there seems to be a bug in gcc that disables
   //  the use of a simple static object here:
-  static const db::layer<Sh, StableTag> *empty_layer = 0;
+  static const db::layer<Sh, StableTag> *empty_layer = nullptr;
   if (! empty_layer) {
     empty_layer = new db::layer<Sh, StableTag> ();
   }

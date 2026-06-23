@@ -118,7 +118,7 @@ BackgroundViewObject::z_order (int z)
 //  ViewObject implementation
 
 ViewObject::ViewObject (ViewObjectUI *widget, bool _static)
-  : mp_widget (0), m_static (_static), m_visible (true), m_dismissable (false)
+  : mp_widget (nullptr), m_static (_static), m_visible (true), m_dismissable (false)
 {
   set_widget (widget);
 }
@@ -191,7 +191,7 @@ ViewObject::freeze ()
 //  ViewService implementation
 
 ViewService::ViewService (ViewObjectUI *widget)
-  : mp_widget (0), m_abs_grab (false), m_enabled (true)
+  : mp_widget (nullptr), m_abs_grab (false), m_enabled (true)
 {
   init (widget);
 }
@@ -210,7 +210,7 @@ ViewService::~ViewService ()
   if (mp_widget) {
     mp_widget->unregister_service (this);
   }
-  mp_widget = 0;
+  mp_widget = nullptr;
 }
 
 void
@@ -291,7 +291,7 @@ public:
   DragDropDataBase *get_drag_drop_data (const QMimeData *data)
   {
     if (! data || ! data->hasFormat (QString::fromUtf8 (drag_drop_mime_type ()))) {
-      return 0;
+      return nullptr;
     }
 
     QByteArray ba = data->data (QString::fromUtf8 (drag_drop_mime_type ()));
@@ -304,7 +304,7 @@ public:
 
     //  TODO: more ...
 
-    return 0;
+    return nullptr;
   }
 
   void dragEnterEvent (QDragEnterEvent *event)
@@ -525,7 +525,7 @@ ViewObjectUI::ViewObjectUI ()
   : m_view_objects_dismissed (false),
     m_needs_update_static (false),
     m_needs_update_bg (false),
-    mp_active_service (0),
+    mp_active_service (nullptr),
     m_mouse_pressed_state (false),
     m_mouse_buttons (0),
     m_in_mouse_move (false),
@@ -539,7 +539,7 @@ ViewObjectUI::ViewObjectUI ()
   m_objects.changed ().add (this, &ViewObjectUI::objects_changed);
 
 #if defined(HAVE_QT)
-  mp_widget = 0;
+  mp_widget = nullptr;
 #endif
 }
 
@@ -560,8 +560,8 @@ void
 ViewObjectUI::init_ui (QWidget *parent)
 {
   //  we rely on the parent to delete the UI widget
-  tl_assert (parent != 0);
-  tl_assert (mp_widget == 0);
+  tl_assert (parent != nullptr);
+  tl_assert (mp_widget == nullptr);
 
   mp_widget = new ViewObjectQWidget (parent, this);
   mp_widget->setMouseTracking (true);
@@ -593,7 +593,7 @@ void
 ViewObjectUI::unregister_service (lay::ViewService *svc)
 {
   if (mp_active_service == svc) {
-    mp_active_service = 0;
+    mp_active_service = nullptr;
   }
 
   //  make sure the service no longer has the mouse
@@ -616,7 +616,7 @@ BEGIN_PROTECTED
       mp_active_service->deactivated ();
 END_PROTECTED
     }
-    mp_active_service = 0;
+    mp_active_service = nullptr;
     for (std::list<lay::ViewService *>::iterator s = m_services.begin(); s != m_services.end (); ++s) {
       if (*s == service) {
         mp_active_service = service;
@@ -1425,13 +1425,13 @@ BitmapViewObjectCanvas::set_size (double resolution, double font_resolution)
 tl::PixelBuffer *
 BitmapViewObjectCanvas::bg_image ()
 {
-  return 0;
+  return nullptr;
 }
 
 tl::BitmapBuffer *
 BitmapViewObjectCanvas::bg_bitmap ()
 {
-  return 0;
+  return nullptr;
 }
 
 

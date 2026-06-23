@@ -33,9 +33,9 @@
 namespace tl
 {
 
-static void (*s_ui_exception_handler_tl) (const tl::Exception &ex, QWidget *parent) = 0;
-static void (*s_ui_exception_handler_std) (const std::exception &ex, QWidget *parent) = 0;
-static void (*s_ui_exception_handler_def) (QWidget *parent) = 0;
+static void (*s_ui_exception_handler_tl) (const tl::Exception &ex, QWidget *parent) = nullptr;
+static void (*s_ui_exception_handler_std) (const std::exception &ex, QWidget *parent) = nullptr;
+static void (*s_ui_exception_handler_def) (QWidget *parent) = nullptr;
 
 void set_ui_exception_handlers (void (*handler_tl) (const tl::Exception &, QWidget *parent),
                                 void (*handler_std) (const std::exception &, QWidget *parent),

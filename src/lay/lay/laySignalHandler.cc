@@ -421,7 +421,7 @@ void signal_handler (int signo, siginfo_t *si, void *)
     lay::ApplicationBase::instance ()->qapp_gui ()->setOverrideCursor (QCursor ());
 
     std::unique_ptr<CrashMessage> msg;
-    msg.reset (new CrashMessage (0, can_resume, tl::to_qstring (text)));
+    msg.reset (new CrashMessage (nullptr, can_resume, tl::to_qstring (text)));
 
     if (! msg->exec ()) {
 
@@ -432,7 +432,7 @@ void signal_handler (int signo, siginfo_t *si, void *)
       sigset_t x;
       sigemptyset (&x);
       sigaddset(&x, signo);
-      sigprocmask(SIG_UNBLOCK, &x, NULL);
+      sigprocmask(SIG_UNBLOCK, &x, nullptr);
 
       throw tl::CancelException ();
 
@@ -453,11 +453,11 @@ void install_signal_handlers ()
   sigemptyset (&act.sa_mask);
   act.sa_flags = SA_SIGINFO;
 
-  sigaction (SIGSEGV, &act, NULL);
-  sigaction (SIGILL, &act, NULL);
-  sigaction (SIGFPE, &act, NULL);
-  sigaction (SIGABRT, &act, NULL);
-  sigaction (SIGBUS, &act, NULL);
+  sigaction (SIGSEGV, &act, nullptr);
+  sigaction (SIGILL, &act, nullptr);
+  sigaction (SIGFPE, &act, nullptr);
+  sigaction (SIGABRT, &act, nullptr);
+  sigaction (SIGBUS, &act, nullptr);
 }
 
 #endif

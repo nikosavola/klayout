@@ -42,7 +42,7 @@ namespace db
 {
 
 GDS2WriterText::GDS2WriterText()
-  : pStream(0),siCurrentRecord(0),bIsXCoordinate(true),
+  : pStream(nullptr),siCurrentRecord(0),bIsXCoordinate(true),
     mProgress (tl::to_string (tr ("Writing GDS2 text file")), 10000)
 {
   mProgress.set_format (tl::to_string (tr ("%.0f MB")));

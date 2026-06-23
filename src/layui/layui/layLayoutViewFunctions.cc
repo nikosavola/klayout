@@ -206,7 +206,7 @@ LayoutViewFunctions::menu_activated (const std::string &symbol)
 
     if (view ()->active_cellview_index () >= 0) {
 
-      lay::CellSelectionForm form (0, view (), "cell_selection_form");
+      lay::CellSelectionForm form (nullptr, view (), "cell_selection_form");
 
       if (form.exec () == QDialog::Accepted &&
           form.selected_cellview_index () >= 0) {
@@ -437,7 +437,7 @@ LayoutViewFunctions::cm_cell_user_properties ()
   lay::LayoutViewBase::cell_path_type path;
   view ()->current_cell_path (cv_index, path);
 
-  if (cv_index >= 0 && path.size () > 0) {
+  if (cv_index >= 0 && !path.empty()) {
 
     db::Layout &layout = view ()->cellview (cv_index)->layout ();
     db::Cell &cell = layout.cell (path.back ());
@@ -462,7 +462,7 @@ LayoutViewFunctions::cm_cell_replace ()
   std::vector<lay::LayoutViewBase::cell_path_type> paths;
   view ()->selected_cells_paths (cv_index, paths);
 
-  if (cv_index >= 0 && paths.size () > 0) {
+  if (cv_index >= 0 && !paths.empty()) {
 
     if (paths.size () > 1) {
       throw tl::Exception (tl::to_string (tr ("Replace cell cannot be used when multiple cells are selected")));
@@ -597,7 +597,7 @@ LayoutViewFunctions::cm_cell_convert_to_static ()
   std::vector<lay::LayoutViewBase::cell_path_type> paths;
   view ()->selected_cells_paths (cv_index, paths);
 
-  if (cv_index >= 0 && paths.size () > 0) {
+  if (cv_index >= 0 && !paths.empty()) {
 
     db::Layout &layout = view ()->cellview (cv_index)->layout ();
 
@@ -673,7 +673,7 @@ LayoutViewFunctions::cm_cell_delete ()
   std::vector<lay::LayoutViewBase::cell_path_type> paths;
   view ()->selected_cells_paths (cv_index, paths);
 
-  if (cv_index >= 0 && paths.size () > 0) {
+  if (cv_index >= 0 && !paths.empty()) {
 
     db::Layout &layout = view ()->cellview (cv_index)->layout ();
 
@@ -807,7 +807,7 @@ LayoutViewFunctions::cm_cell_flatten ()
       }
 
       for (std::vector<HierarchyControlPanel::cell_path_type>::const_iterator p = paths.begin (); p != paths.end (); ++p) {
-        if (p->size () > 0 && cv->layout ().cell (p->back ()).is_proxy ()) {
+        if (!p->empty() && cv->layout ().cell (p->back ()).is_proxy ()) {
           throw tl::Exception (tl::to_string (tr ("Cannot use this function on a PCell or library cell")));
         }
       }
@@ -854,7 +854,7 @@ LayoutViewFunctions::cm_cell_flatten ()
 
         std::set<db::cell_index_type> child_cells;
         for (std::vector<HierarchyControlPanel::cell_path_type>::const_iterator p = paths.begin (); p != paths.end (); ++p) {
-          if (p->size () > 0) {
+          if (!p->empty()) {
             layout.cell (p->back ()).collect_called_cells (child_cells);
           }
         }
@@ -862,7 +862,7 @@ LayoutViewFunctions::cm_cell_flatten ()
         //  don't flatten cells which are child cells of the cells to flatten
         std::set<db::cell_index_type> cells_to_flatten;
         for (std::vector<HierarchyControlPanel::cell_path_type>::const_iterator p = paths.begin (); p != paths.end (); ++p) {
-          if (p->size () > 0 && child_cells.find (p->back ()) == child_cells.end ()) {
+          if (!p->empty() && child_cells.find (p->back ()) == child_cells.end ()) {
             cells_to_flatten.insert (p->back ());
           }
         }
@@ -892,7 +892,7 @@ LayoutViewFunctions::cm_cell_rename ()
   lay::LayoutViewBase::cell_path_type path;
   view ()->current_cell_path (cv_index, path);
 
-  if (cv_index >= 0 && path.size () > 0) {
+  if (cv_index >= 0 && !path.empty()) {
 
     lay::RenameCellDialog name_dialog (parent_widget ());
 
@@ -1264,7 +1264,7 @@ LayoutViewFunctions::cm_new_cell ()
   NewCellPropertiesDialog cell_prop_dia (parent_widget ());
   if (cell_prop_dia.exec_dialog (& cv->layout (), s_new_cell_cell_name, s_new_cell_window_size)) {
 
-    db::cell_index_type new_ci = view ()->new_cell (view ()->active_cellview_index (), s_new_cell_cell_name.c_str ());
+    db::cell_index_type new_ci = view ()->new_cell (view ()->active_cellview_index (), s_new_cell_cell_name);
     view ()->select_cell (new_ci, view ()->active_cellview_index ());
 
     db::DBox zb = db::DBox (-0.5 * s_new_cell_window_size, -0.5 * s_new_cell_window_size, 0.5 * s_new_cell_window_size, 0.5 * s_new_cell_window_size);
@@ -1287,7 +1287,7 @@ LayoutViewFunctions::cm_reload ()
 
   if (view ()->cellviews () > 1) {
 
-    lay::SelectCellViewForm form (0, view (), tl::to_string (tr ("Select Layouts To Reload")));
+    lay::SelectCellViewForm form (nullptr, view (), tl::to_string (tr ("Select Layouts To Reload")));
     form.select_all ();
 
     if (form.exec () == QDialog::Accepted) {
@@ -1298,7 +1298,7 @@ LayoutViewFunctions::cm_reload ()
     selected.push_back (0);
   }
 
-  if (selected.size () > 0) {
+  if (!selected.empty()) {
 
     int dirty_layouts = 0;
     std::string dirty_files;

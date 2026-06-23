@@ -273,7 +273,7 @@ HealingTileLayoutOutputReceiver::output (const db::Box &box)
 struct ResultDescriptor
 {
   ResultDescriptor ()
-    : shape_count (0), flat_shape_count (0), layer_a (-1), layer_b (-1), layer_output (-1), layout (0), top_cell (0)
+    : shape_count (0), flat_shape_count (0), layer_a (-1), layer_b (-1), layer_output (-1), layout (nullptr), top_cell (0)
   {
     //  .. nothing yet ..
   }
@@ -334,12 +334,12 @@ struct ResultDescriptor
 struct XORData
 {
   XORData ()
-    : layout_a (0), layout_b (0), cell_a (0), cell_b (0),
+    : layout_a (nullptr), layout_b (nullptr), cell_a (0), cell_b (0),
       tolerance_bump (0),
       dont_summarize_missing_layers (false), silent (false), no_summary (false),
       threads (0),
       tile_size (0.0), heal_results (false),
-      output_layout (0), output_cell (0),
+      output_layout (nullptr), output_cell (0),
       layers_missing (0)
   { }
 

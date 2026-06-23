@@ -235,7 +235,7 @@ public:
  *  @param filter An optional set of layers to show. Only layers from this set are shown.
  *  @return A layer iterator which is at_end if no specific layer was selected
  */
-lay::LayerPropertiesConstIterator popup_tap_layer_menu (lay::LayoutViewBase *view, const std::set<db::LayerProperties, db::LPLogicalLessFunc> *filter = 0, int cv_index = -1);
+lay::LayerPropertiesConstIterator popup_tap_layer_menu (lay::LayoutViewBase *view, const std::set<db::LayerProperties, db::LPLogicalLessFunc> *filter = nullptr, int cv_index = -1);
 
 } // namespace edt
 

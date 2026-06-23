@@ -80,7 +80,7 @@ CompoundRegionOperationNode::has_external_inputs () const
 
 static void translate (db::Layout *layout, const std::vector<std::unordered_set<db::PolygonWithProperties> > &in, std::vector<std::unordered_set<db::PolygonRefWithProperties> > &out)
 {
-  tl_assert (layout != 0);
+  tl_assert (layout != nullptr);
   if (out.size () <= in.size ()) {
     out.resize (in.size ());
   }
@@ -408,7 +408,7 @@ CompoundRegionMultiInputOperationNode::child (unsigned int index)
     ++c;
     --index;
   }
-  return c == m_children.end () ? 0 : c.operator-> ();
+  return c == m_children.end () ? nullptr : c.operator-> ();
 }
 
 const CompoundRegionOperationNode *
@@ -420,7 +420,7 @@ CompoundRegionMultiInputOperationNode::child (unsigned int index) const
 const TransformationReducer *
 CompoundRegionMultiInputOperationNode::vars () const
 {
-  return (m_vars.is_empty () ? 0 : &m_vars);
+  return (m_vars.is_empty () ? nullptr : &m_vars);
 }
 
 bool
@@ -1194,7 +1194,7 @@ CompoundRegionFilterOperationNode::~CompoundRegionFilterOperationNode ()
   if (m_owns_filter) {
     delete mp_filter;
   }
-  mp_filter = 0;
+  mp_filter = nullptr;
 }
 
 void
@@ -1222,7 +1222,7 @@ CompoundRegionEdgeFilterOperationNode::~CompoundRegionEdgeFilterOperationNode ()
   if (m_owns_filter) {
     delete mp_filter;
   }
-  mp_filter = 0;
+  mp_filter = nullptr;
 }
 
 void
@@ -1250,7 +1250,7 @@ CompoundRegionEdgePairFilterOperationNode::~CompoundRegionEdgePairFilterOperatio
   if (m_owns_filter) {
     delete mp_filter;
   }
-  mp_filter = 0;
+  mp_filter = nullptr;
 }
 
 void
@@ -1289,7 +1289,7 @@ CompoundRegionProcessingOperationNode::~CompoundRegionProcessingOperationNode ()
 {
   if (m_owns_proc) {
     delete mp_proc;
-    mp_proc = 0;
+    mp_proc = nullptr;
   }
 }
 
@@ -1361,7 +1361,7 @@ CompoundRegionToEdgeProcessingOperationNode::~CompoundRegionToEdgeProcessingOper
 {
   if (m_owns_proc) {
     delete mp_proc;
-    mp_proc = 0;
+    mp_proc = nullptr;
   }
 }
 
@@ -1429,7 +1429,7 @@ CompoundRegionEdgeProcessingOperationNode::~CompoundRegionEdgeProcessingOperatio
 {
   if (m_owns_proc) {
     delete mp_proc;
-    mp_proc = 0;
+    mp_proc = nullptr;
   }
 }
 
@@ -1462,7 +1462,7 @@ CompoundRegionEdgeToPolygonProcessingOperationNode::~CompoundRegionEdgeToPolygon
 {
   if (m_owns_proc) {
     delete mp_proc;
-    mp_proc = 0;
+    mp_proc = nullptr;
   }
 }
 
@@ -1507,7 +1507,7 @@ CompoundRegionToEdgePairProcessingOperationNode::~CompoundRegionToEdgePairProces
 {
   if (m_owns_proc) {
     delete mp_proc;
-    mp_proc = 0;
+    mp_proc = nullptr;
   }
 }
 
@@ -1575,7 +1575,7 @@ CompoundRegionEdgePairToPolygonProcessingOperationNode::~CompoundRegionEdgePairT
 {
   if (m_owns_proc) {
     delete mp_proc;
-    mp_proc = 0;
+    mp_proc = nullptr;
   }
 }
 
@@ -1620,7 +1620,7 @@ CompoundRegionEdgePairToEdgeProcessingOperationNode::~CompoundRegionEdgePairToEd
 {
   if (m_owns_proc) {
     delete mp_proc;
-    mp_proc = 0;
+    mp_proc = nullptr;
   }
 }
 
@@ -1658,7 +1658,7 @@ CompoundRegionCheckOperationNode::CompoundRegionCheckOperationNode (CompoundRegi
 CompoundRegionCheckOperationNode::CompoundRegionCheckOperationNode (CompoundRegionOperationNode *input, CompoundRegionOperationNode *other, db::edge_relation_type rel, bool different_polygons, db::Coord d, const db::RegionCheckOptions &options)
   : CompoundRegionMultiInputOperationNode (other), m_check (rel, d, options), m_different_polygons (different_polygons), m_options (options)
 {
-  tl_assert (input == 0);  //  input is a dummy parameter
+  tl_assert (input == nullptr);  //  input is a dummy parameter
 
   m_has_other = other->has_external_inputs ();
   // TODO: needs a concept to deal with merged/non-merged inputs

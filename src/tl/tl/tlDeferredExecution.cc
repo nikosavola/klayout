@@ -32,7 +32,7 @@
 namespace tl
 {
 
-static DeferredMethodScheduler *s_inst = 0;
+static DeferredMethodScheduler *s_inst = nullptr;
 
 // -----------------------------------------------------------------------------------
 
@@ -58,7 +58,7 @@ DeferredMethodScheduler::DeferredMethodScheduler ()
 
 DeferredMethodScheduler::~DeferredMethodScheduler ()
 {
-  s_inst = 0;
+  s_inst = nullptr;
 }
 
 DeferredMethodScheduler *

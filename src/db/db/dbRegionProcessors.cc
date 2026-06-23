@@ -124,7 +124,7 @@ void RelativeExtents::process (const db::PolygonWithProperties &poly, std::vecto
 const TransformationReducer *RelativeExtents::vars () const
 {
   if (m_dx == 0 && m_dy == 0 && fabs (m_fx1) < db::epsilon && fabs (m_fy1) < db::epsilon && fabs (1.0 - m_fx2) < db::epsilon && fabs (1.0 - m_fy2) < db::epsilon) {
-    return 0;
+    return nullptr;
   } else if (m_dx == m_dy && fabs (m_fx1 - m_fy1) < db::epsilon && fabs (1.0 - (m_fx1 + m_fx2)) < db::epsilon  && fabs (m_fx2 - m_fy2) < db::epsilon && fabs (1.0 - (m_fy1 + m_fy2)) < db::epsilon) {
     return & m_isotropic_reducer;
   } else {
@@ -148,7 +148,7 @@ void RelativeExtentsAsEdges::process (const db::PolygonWithProperties &poly, std
 const TransformationReducer *RelativeExtentsAsEdges::vars () const
 {
   if (fabs (m_fx1) < db::epsilon && fabs (m_fy1) < db::epsilon && fabs (1.0 - m_fx2) < db::epsilon && fabs (1.0 - m_fy2) < db::epsilon) {
-    return 0;
+    return nullptr;
   } else if (fabs (m_fx1 - m_fy1) < db::epsilon && fabs (1.0 - (m_fx1 + m_fx2)) < db::epsilon  && fabs (m_fx2 - m_fy2) < db::epsilon && fabs (1.0 - (m_fy1 + m_fy2)) < db::epsilon) {
     return & m_isotropic_reducer;
   } else {

@@ -199,7 +199,7 @@ struct TL_PUBLIC InternalException
   : public Exception
 {
   InternalException (const char *file, int line, const char *cond)
-    : Exception (tl::to_string (tr ("Internal error: %s:%d %s was not true")).c_str (), file, line, cond)
+    : Exception (tl::to_string (tr ("Internal error: %s:%d %s was not true")), file, line, cond)
   { }
 };
 

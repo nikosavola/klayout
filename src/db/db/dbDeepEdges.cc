@@ -459,7 +459,7 @@ DeepEdges::has_valid_merged_edges () const
 const db::RecursiveShapeIterator *
 DeepEdges::iter () const
 {
-  return 0;
+  return nullptr;
 }
 
 void DeepEdges::apply_property_translator (const db::PropertiesTranslator &pt)
@@ -665,7 +665,7 @@ DeepEdges::ensure_merged_edges_valid () const
       db::Connectivity conn;
       conn.connect (deep_layer ());
       hc.set_base_verbosity (base_verbosity() + 10);
-      hc.build (layout, deep_layer ().initial_cell (), conn, 0, deep_layer ().breakout_cells ());
+      hc.build (layout, deep_layer ().initial_cell (), conn, nullptr, deep_layer ().breakout_cells ());
 
       //  collect the clusters and merge them into larger edges
       //  NOTE: using the ClusterMerger we merge bottom-up forming bigger and bigger polygons. This is
@@ -842,8 +842,8 @@ DeepEdges::apply_filter (const EdgeFilterBase &filter, bool with_true, bool with
 
   std::map<db::cell_index_type, std::map<db::ICplxTrans, db::Shapes> > to_commit_true, to_commit_false;
 
-  std::unique_ptr<db::DeepEdges> res_true (with_true ? new db::DeepEdges (edges.derived ()) : 0);
-  std::unique_ptr<db::DeepEdges> res_false (with_false ? new db::DeepEdges (edges.derived ()) : 0);
+  std::unique_ptr<db::DeepEdges> res_true (with_true ? new db::DeepEdges (edges.derived ()) : nullptr);
+  std::unique_ptr<db::DeepEdges> res_false (with_false ? new db::DeepEdges (edges.derived ()) : nullptr);
   for (db::Layout::iterator c = layout.begin (); c != layout.end (); ++c) {
 
     const db::Shapes &s = c->shapes (edges.layer ());
@@ -853,7 +853,7 @@ DeepEdges::apply_filter (const EdgeFilterBase &filter, bool with_true, bool with
       const std::set<db::ICplxTrans> &vv = vars->variants (c->cell_index ());
       for (auto v = vv.begin (); v != vv.end (); ++v) {
 
-        db::Shapes *st_true = 0, *st_false = 0;
+        db::Shapes *st_true = nullptr, *st_false = nullptr;
         if (vv.size () == 1) {
           if (with_true) {
             st_true = & c->shapes (res_true->deep_layer ().layer ());
@@ -888,8 +888,8 @@ DeepEdges::apply_filter (const EdgeFilterBase &filter, bool with_true, bool with
 
     } else {
 
-      db::Shapes *st_true = with_true ? &c->shapes (res_true->deep_layer ().layer ()) : 0;
-      db::Shapes *st_false = with_false ? &c->shapes (res_false->deep_layer ().layer ()) : 0;
+      db::Shapes *st_true = with_true ? &c->shapes (res_true->deep_layer ().layer ()) : nullptr;
+      db::Shapes *st_false = with_false ? &c->shapes (res_false->deep_layer ().layer ()) : nullptr;
 
       for (db::Shapes::shape_iterator si = s.begin (db::ShapeIterator::Edges); ! si.at_end (); ++si) {
         if (filter.selected (si->edge (), si->prop_id ())) {
@@ -908,11 +908,11 @@ DeepEdges::apply_filter (const EdgeFilterBase &filter, bool with_true, bool with
   }
 
   if (! to_commit_true.empty () && vars.get ()) {
-    tl_assert (res_true.get () != 0);
+    tl_assert (res_true.get () != nullptr);
     vars->commit_shapes (res_true->deep_layer ().layer (), to_commit_true);
   }
   if (! to_commit_false.empty () && vars.get ()) {
-    tl_assert (res_false.get () != 0);
+    tl_assert (res_false.get () != nullptr);
     vars->commit_shapes (res_false->deep_layer ().layer (), to_commit_false);
   }
 
@@ -1403,7 +1403,7 @@ RegionDelegate *DeepEdges::extended (coord_type ext_b, coord_type ext_e, coord_t
     db::Connectivity conn (db::Connectivity::EdgesConnectByPoints);
     conn.connect (edges);
     hc.set_base_verbosity (base_verbosity () + 10);
-    hc.build (layout, edges.initial_cell (), conn, 0, edges.breakout_cells ());
+    hc.build (layout, edges.initial_cell (), conn, nullptr, edges.breakout_cells ());
 
     //  TODO: iterate only over the called cells?
     for (db::Layout::iterator c = layout.begin (); c != layout.end (); ++c) {
@@ -1876,7 +1876,7 @@ private:
 EdgePairsDelegate *
 DeepEdges::run_check (db::edge_relation_type rel, const Edges *other, db::Coord d, const db::EdgesCheckOptions &options) const
 {
-  const db::DeepEdges *other_deep = 0;
+  const db::DeepEdges *other_deep = nullptr;
   if (other) {
     other_deep = dynamic_cast<const db::DeepEdges *> (other->delegate ());
     if (! other_deep) {
@@ -1890,14 +1890,14 @@ DeepEdges::run_check (db::edge_relation_type rel, const Edges *other, db::Coord 
 
   std::unique_ptr<db::DeepEdgePairs> res (new db::DeepEdgePairs (edges.derived ()));
 
-  db::EdgesCheckLocalOperation op (check, other_deep != 0);
+  db::EdgesCheckLocalOperation op (check, other_deep != nullptr);
 
   db::local_processor<db::Edge, db::Edge, db::EdgePair> proc (const_cast<db::Layout *> (&edges.layout ()),
                                                               const_cast<db::Cell *> (&edges.initial_cell ()),
                                                               other_deep ? &other_deep->deep_layer ().layout () : const_cast<db::Layout *> (&edges.layout ()),
                                                               other_deep ? &other_deep->deep_layer ().initial_cell () : const_cast<db::Cell *> (&edges.initial_cell ()),
                                                               edges.breakout_cells (),
-                                                              other_deep ? other_deep->deep_layer ().breakout_cells () : 0);
+                                                              other_deep ? other_deep->deep_layer ().breakout_cells () : nullptr);
 
   proc.set_base_verbosity (base_verbosity ());
   proc.set_threads (edges.store ()->threads ());

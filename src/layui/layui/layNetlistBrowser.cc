@@ -113,7 +113,7 @@ NetlistBrowserConfigPage::NetlistBrowserConfigPage (QWidget *parent)
 NetlistBrowserConfigPage::~NetlistBrowserConfigPage ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -185,7 +185,7 @@ NetlistBrowserConfigPage2::NetlistBrowserConfigPage2 (QWidget *parent)
 NetlistBrowserConfigPage2::~NetlistBrowserConfigPage2 ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -400,7 +400,7 @@ public:
     if (has_gui ()) {
       return new lay::NetlistBrowserDialog (root, view);
     } else {
-      return 0;
+      return nullptr;
     }
   }
 };

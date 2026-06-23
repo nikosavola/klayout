@@ -110,7 +110,7 @@ public:
    */
   virtual const std::type_info *adapted_type_info () const 
   {
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -122,7 +122,7 @@ public:
    */
   virtual const ClassBase *declaration () const 
   {
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -271,7 +271,7 @@ public:
    *  module will be considered. However, the list may also include
    *  base classes or child classes from outside the module.
    */
-  static std::list<const gsi::ClassBase *> classes_in_definition_order (const char *mod_name = 0);
+  static std::list<const gsi::ClassBase *> classes_in_definition_order (const char *mod_name = nullptr);
 
   /**
    *  @brief Iterates the methods (begin)
@@ -360,7 +360,7 @@ public:
   virtual void *create () const 
   {
     tl_assert (false);
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -371,7 +371,7 @@ public:
   virtual void *create_from_adapted (const void * /*x*/) const
   {
     tl_assert (false);
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -383,7 +383,7 @@ public:
   virtual void *create_from_adapted_consume (void * /*x*/) const
   {
     tl_assert (false);
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -392,7 +392,7 @@ public:
   virtual const void *adapted_from_obj (const void * /*obj*/) const
   {
     tl_assert (false);
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -401,7 +401,7 @@ public:
   virtual void *create_adapted_from_obj (const void * /*obj*/) const
   {
     tl_assert (false);
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -413,7 +413,7 @@ public:
   virtual void *clone (const void * /*src*/) const 
   {
     tl_assert (false);
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -504,7 +504,7 @@ public:
   virtual const ClassBase *subclass_decl (const void * /*p*/) const 
   {
     tl_assert (false);
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -529,7 +529,7 @@ public:
   virtual gsi::ObjectBase *gsi_object (void * /*p*/, bool /*required*/ = true) const
   {
     tl_assert (false);
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -538,7 +538,7 @@ public:
   virtual const tl::VariantUserClassBase *var_cls (bool /*is_const*/) const
   {
     tl_assert (false);
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -547,7 +547,7 @@ public:
   virtual const tl::VariantUserClassBase *var_cls_cls () const
   {
     tl_assert (false);
-    return 0;
+    return nullptr;
   }
 
   /**

@@ -419,7 +419,7 @@ private:
 
         while (cc != current) {
           rec.finish (cc->first, cc->second);
-          auto s = seen.lower_bound (std::make_pair (cc->first, (const Obj *)0));
+          auto s = seen.lower_bound (std::make_pair (cc->first, (const Obj *)nullptr));
           auto s0 = s;
           while (s != seen.end () && s->first == cc->first) {
             ++s;
@@ -926,7 +926,7 @@ private:
 
         while (cc1 != current1) {
           rec.finish1 (cc1->first, cc1->second);
-          auto s = seen1.lower_bound (std::make_pair (cc1->first, (const Obj2 *)0));
+          auto s = seen1.lower_bound (std::make_pair (cc1->first, (const Obj2 *)nullptr));
           auto s0 = s;
           while (s != seen1.end () && s->first == cc1->first) {
             ++s;
@@ -937,7 +937,7 @@ private:
 
         while (cc2 != current2) {
           rec.finish2 (cc2->first, cc2->second);
-          auto s = seen2.lower_bound (std::make_pair (cc2->first, (const Obj1 *)0));
+          auto s = seen2.lower_bound (std::make_pair (cc2->first, (const Obj1 *)nullptr));
           auto s0 = s;
           while (s != seen2.end () && s->first == cc2->first) {
             ++s;

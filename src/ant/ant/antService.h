@@ -172,7 +172,7 @@ public:
 private:
   void next_valid ()
   {
-    while (m_current != m_end && dynamic_cast<const ant::Object *> (m_current->ptr ()) == 0) {
+    while (m_current != m_end && dynamic_cast<const ant::Object *> (m_current->ptr ()) == nullptr) {
       ++m_current;
     }
   }

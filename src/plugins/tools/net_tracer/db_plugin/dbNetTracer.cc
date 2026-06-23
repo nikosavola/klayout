@@ -405,19 +405,19 @@ NetTracerData::configure_l2n (db::LayoutToNetlist &l2n)
 //  NetTracerLayerExpression implementation
 
 NetTracerLayerExpression::NetTracerLayerExpression ()
-  : m_a (0), m_b (0), mp_a (0), mp_b (0), m_op (OPNone)
+  : m_a (0), m_b (0), mp_a (nullptr), mp_b (nullptr), m_op (OPNone)
 {
   //  .. nothing yet ..
 }
 
 NetTracerLayerExpression::NetTracerLayerExpression (int l)
-  : m_a (l), m_b (0), mp_a (0), mp_b (0), m_op (OPNone)
+  : m_a (l), m_b (0), mp_a (nullptr), mp_b (nullptr), m_op (OPNone)
 {
   //  .. nothing yet ..
 }
 
 NetTracerLayerExpression::NetTracerLayerExpression (const NetTracerLayerExpression &other)
-  : m_a (other.m_a), m_b (other.m_b), mp_a (0), mp_b (0), m_op (other.m_op)
+  : m_a (other.m_a), m_b (other.m_b), mp_a (nullptr), mp_b (nullptr), m_op (other.m_op)
 {
   if (other.mp_a) {
     mp_a = new NetTracerLayerExpression (*other.mp_a);
@@ -438,7 +438,7 @@ NetTracerLayerExpression::operator= (const NetTracerLayerExpression &other)
 
     if (mp_a) {
       delete mp_a;
-      mp_a = 0;
+      mp_a = nullptr;
     }
     if (other.mp_a) {
       mp_a = new NetTracerLayerExpression (*other.mp_a);
@@ -446,7 +446,7 @@ NetTracerLayerExpression::operator= (const NetTracerLayerExpression &other)
 
     if (mp_b) {
       delete mp_b;
-      mp_b = 0;
+      mp_b = nullptr;
     }
     if (other.mp_b) {
       mp_b = new NetTracerLayerExpression (*other.mp_b);
@@ -461,11 +461,11 @@ NetTracerLayerExpression::~NetTracerLayerExpression ()
 {
   if (mp_a) {
     delete mp_a;
-    mp_a = 0;
+    mp_a = nullptr;
   }
   if (mp_b) {
     delete mp_b;
-    mp_b = 0;
+    mp_b = nullptr;
   }
 }
 
@@ -595,7 +595,7 @@ NetTracerLayerExpression::compute_results (unsigned int layer, db::cell_index_ty
   std::vector<const NetTracerShape *> input_shapes;
 
   if (mp_a) {
-    mp_a->compute_results (layer, cell_index, 0, input, 0, local_shape_heap, shapes, data, ep);
+    mp_a->compute_results (layer, cell_index, nullptr, input, nullptr, local_shape_heap, shapes, data, ep);
     i1 = shapes.begin ();
     i2 = shapes.end ();
   } else {
@@ -623,7 +623,7 @@ NetTracerLayerExpression::compute_results (unsigned int layer, db::cell_index_ty
   } else {
 
     if (mp_b) {
-      mp_b->compute_results (layer, cell_index, 0, input, 0, local_shape_heap, shapes2, data, ep);
+      mp_b->compute_results (layer, cell_index, nullptr, input, nullptr, local_shape_heap, shapes2, data, ep);
       i1 = shapes2.begin ();
       i2 = shapes2.end ();
     } else {
@@ -727,7 +727,7 @@ NetTracerLayerExpression::compute_results (unsigned int layer, db::cell_index_ty
           }
         }
       } else {
-        output.insert (std::make_pair (NetTracerShape (db::ICplxTrans (), os, layer, cell_index), (const NetTracerShape *) 0));
+        output.insert (std::make_pair (NetTracerShape (db::ICplxTrans (), os, layer, cell_index), (const NetTracerShape *) nullptr));
       }
 #endif
 
@@ -759,7 +759,7 @@ NetTracerLayerExpression::compute_results (unsigned int layer, db::cell_index_ty
           }
         }
       } else {
-        output.insert (std::make_pair (NetTracerShape (db::ICplxTrans (), os, layer, cell_index), (const NetTracerShape *) 0));
+        output.insert (std::make_pair (NetTracerShape (db::ICplxTrans (), os, layer, cell_index), (const NetTracerShape *) nullptr));
       }
 
     }
@@ -850,7 +850,7 @@ NetTracerLayerExpression::make_l2n_region (db::LayoutToNetlist &l2n, std::map <u
 //  NetTracer implementation
 
 NetTracer::NetTracer ()
-  : mp_layout (0), mp_cell (0), mp_progress (0), m_name_hier_depth (-1), m_incomplete (false), m_trace_depth (0)
+  : mp_layout (nullptr), mp_cell (nullptr), mp_progress (nullptr), m_name_hier_depth (-1), m_incomplete (false), m_trace_depth (0)
 {
   //  .. nothing yet ..
 }
@@ -950,7 +950,7 @@ NetTracer::compute_results_for_next_iteration (const std::vector <const NetTrace
 
   //  collect all shapes related to that seed hull
   for (std::vector <db::Polygon>::const_iterator s = secondary_seed_hull.begin (); s != secondary_seed_hull.end (); ++s) {
-    determine_interactions (*s, 0, connected_layers, current);
+    determine_interactions (*s, nullptr, connected_layers, current);
   }
 
 #if 0 
@@ -1007,7 +1007,7 @@ NetTracer::trace (const db::Layout &layout, const db::Cell &cell, const NetTrace
     m_hit_test_queue.clear ();
 
     //  Required in order to provide a connection point for the start shape:
-    const NetTracerShape *start_shape = deliver_shape (m_start_shape, (const NetTracerShape *) 0);
+    const NetTracerShape *start_shape = deliver_shape (m_start_shape, (const NetTracerShape *) nullptr);
 
     if (! (m_start_shape == m_stop_shape)) {
 
@@ -1019,7 +1019,7 @@ NetTracer::trace (const db::Layout &layout, const db::Cell &cell, const NetTrace
         new_seeds.push_back (start_shape);
 
         std::set <std::pair<NetTracerShape, const NetTracerShape *> > new_entries;
-        new_entries.insert (std::make_pair (m_start_shape, (const NetTracerShape *) 0));
+        new_entries.insert (std::make_pair (m_start_shape, (const NetTracerShape *) nullptr));
 
         std::set<unsigned int> cl;
         cl.insert (*l);
@@ -1030,7 +1030,7 @@ NetTracer::trace (const db::Layout &layout, const db::Cell &cell, const NetTrace
       if (m_stop_shape.is_valid ()) {
 
         //  Required in order to provide a connection point for the stop shape:
-        const NetTracerShape *stop_shape = deliver_shape (m_stop_shape, (const NetTracerShape *) 0);
+        const NetTracerShape *stop_shape = deliver_shape (m_stop_shape, (const NetTracerShape *) nullptr);
         if (stop_shape) {
 
           //  Use the appropriate logical layer for the stop shape
@@ -1041,7 +1041,7 @@ NetTracer::trace (const db::Layout &layout, const db::Cell &cell, const NetTrace
             new_seeds.push_back (stop_shape);
 
             std::set <std::pair<NetTracerShape, const NetTracerShape *> > new_entries;
-            new_entries.insert (std::make_pair (m_stop_shape, (const NetTracerShape *) 0));
+            new_entries.insert (std::make_pair (m_stop_shape, (const NetTracerShape *) nullptr));
 
             std::set<unsigned int> cl;
             cl.insert (*l);
@@ -1195,7 +1195,7 @@ NetTracer::trace (const db::Layout &layout, const db::Cell &cell, const NetTrace
 
     m_hit_test_queue.clear ();
     m_incomplete = false;
-    mp_progress = 0;
+    mp_progress = nullptr;
 
   } catch (tl::BreakException &) {
 
@@ -1203,7 +1203,7 @@ NetTracer::trace (const db::Layout &layout, const db::Cell &cell, const NetTrace
 
     m_hit_test_queue.clear ();
     m_incomplete = true;
-    mp_progress = 0;
+    mp_progress = nullptr;
 
     //  on user break or depth exhausted just keep the shapes
     return;
@@ -1214,7 +1214,7 @@ NetTracer::trace (const db::Layout &layout, const db::Cell &cell, const NetTrace
 
     m_hit_test_queue.clear ();
     m_incomplete = true;
-    mp_progress = 0;
+    mp_progress = nullptr;
 
     throw;
 
@@ -1251,7 +1251,7 @@ NetTracer::trace (const db::Layout &layout, const db::Cell &cell, const NetTrace
           }
         }
 
-        const NetTracerShape *current = 0;
+        const NetTracerShape *current = nullptr;
         for (std::map<const NetTracerShape *, size_t>::iterator ac = cost.begin (); ac != cost.end (); ++ac) {
           if (ac->second == min_cost) {
             current = ac->first;
@@ -1297,7 +1297,7 @@ NetTracer::trace (const db::Layout &layout, const db::Cell &cell, const NetTrace
         m_shapes_found.insert (*s);
         std::map<const NetTracerShape *, const NetTracerShape *>::const_iterator p = previous.find (s);
         if (p == previous.end ()) {
-          s = 0;
+          s = nullptr;
         } else {
           s = p->second;
         }
@@ -1328,7 +1328,7 @@ NetTracer::evaluate_text (const db::RecursiveShapeIterator &iter)
 const NetTracerShape *
 NetTracer::deliver_shape (const NetTracerShape &net_shape, const NetTracerShape *adjacent)
 {
-  const NetTracerShape *ret = 0;
+  const NetTracerShape *ret = nullptr;
 
   if (! m_stop_shape.is_valid ()) {
 
@@ -1424,7 +1424,7 @@ NetTracer::determine_interactions (const std::vector<const NetTracerShape *> &se
       }
 
       if (interact) {
-        delivery.insert (std::make_pair (net_shape, do_seed_assignment ? seed : (const NetTracerShape *) 0));
+        delivery.insert (std::make_pair (net_shape, do_seed_assignment ? seed : (const NetTracerShape *) nullptr));
         if (! extract_full_graph) {
           break;
         }

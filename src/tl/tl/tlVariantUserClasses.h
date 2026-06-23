@@ -256,12 +256,12 @@ public:
 
   virtual const gsi::ClassBase *gsi_cls () const
   { 
-    return 0; 
+    return nullptr; 
   }
 
   virtual const tl::EvalClass *eval_cls () const 
   { 
-    return 0; 
+    return nullptr; 
   }
 };
 

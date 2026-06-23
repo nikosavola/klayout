@@ -116,7 +116,7 @@ public:
    *  The page name is optional and if not specified, a zero pointer
    *  should be returned.
    */
-  virtual const char *name () const { return 0; }
+  virtual const char *name () const { return nullptr; }
 
   /**
    *  @brief A callback to apply all values
@@ -177,7 +177,7 @@ public:
    *  @brief Returns the widget for the page
    *  The page itself is not a Qt object. To fetch the corresponding widget, use this method.
    */
-  virtual EditorOptionsPageWidget *widget () { return 0; }
+  virtual EditorOptionsPageWidget *widget () { return nullptr; }
 
   /**
    *  @brief Gets a value indicating whether the page is visible

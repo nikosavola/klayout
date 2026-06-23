@@ -242,7 +242,7 @@ public:
    *
    *  If plugins already exist, they are deleted and created again
    */
-  virtual void create_plugins (const lay::PluginDeclaration *except_this = 0);
+  virtual void create_plugins (const lay::PluginDeclaration *except_this = nullptr);
 
   /**
    *  @brief Sets the currently active layer by layer properties and cell view index
@@ -754,12 +754,12 @@ public:
   /**
    *  @brief Constructor
    */
-  LayoutViewWidget (db::Manager *mgr, bool editable, lay::Plugin *plugin_parent, QWidget *parent = 0, unsigned int options = (unsigned int) LayoutView::LV_Normal);
+  LayoutViewWidget (db::Manager *mgr, bool editable, lay::Plugin *plugin_parent, QWidget *parent = nullptr, unsigned int options = (unsigned int) LayoutView::LV_Normal);
 
   /**
    *  @brief Constructor (clone from another view)
    */
-  LayoutViewWidget (lay::LayoutView *source, db::Manager *mgr, bool editable, lay::Plugin *plugin_parent, QWidget *parent = 0, unsigned int options = (unsigned int) LayoutView::LV_Normal);
+  LayoutViewWidget (lay::LayoutView *source, db::Manager *mgr, bool editable, lay::Plugin *plugin_parent, QWidget *parent = nullptr, unsigned int options = (unsigned int) LayoutView::LV_Normal);
 
   /**
    *  @brief Destructor
@@ -921,7 +921,7 @@ private:
 inline QWidget *widget_from_view (lay::LayoutViewBase *view_base)
 {
   lay::LayoutView *view = dynamic_cast<lay::LayoutView *> (view_base);
-  return view ? view->widget () : 0;
+  return view ? view->widget () : nullptr;
 }
 
 }

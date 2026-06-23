@@ -65,7 +65,7 @@ const StreamReaderPluginDeclaration *StreamReaderPluginDeclaration::plugin_for_f
       return decl;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 // ------------------------------------------------------------------
@@ -79,7 +79,7 @@ const StreamWriterPluginDeclaration *StreamWriterPluginDeclaration::plugin_for_f
       return decl;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 }

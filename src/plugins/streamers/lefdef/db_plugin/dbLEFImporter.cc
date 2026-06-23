@@ -579,7 +579,7 @@ LEFImporter::read_viadef_by_geometry (GeometryBasedLayoutGenerator *lg, ViaDesc 
 
       if (m_routing_layers.find (layer_name) != m_routing_layers.end ()) {
 
-        if (routing_layers.size () == 0) {
+        if (routing_layers.empty()) {
           lg->set_maskshift_layer (0, layer_name);
         } else if (routing_layers.size () == 1) {
           lg->set_maskshift_layer (2, layer_name);
@@ -971,7 +971,7 @@ LEFImporter::read_macro (Layout &layout)
             }
 
           } else {
-            read_geometries (0, layout.dbu (), LEFPins, 0, 0);
+            read_geometries (nullptr, layout.dbu (), LEFPins, nullptr, 0);
           }
 
           expect ("END");
@@ -1027,7 +1027,7 @@ LEFImporter::read_macro (Layout &layout)
       if (reader_state ()->tech_comp ()->produce_obstructions ()) {
         read_geometries (mg, layout.dbu (), Obstructions);
       } else {
-        read_geometries (0, layout.dbu (), Obstructions);
+        read_geometries (nullptr, layout.dbu (), Obstructions);
       }
 
       expect ("END");

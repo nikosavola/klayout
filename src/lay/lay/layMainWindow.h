@@ -108,7 +108,7 @@ public:
   /**
    *  @brief Constructor
    */
-  MainWindow (QApplication *app = 0, const char *name = "main_window", bool undo_enabled = true);
+  MainWindow (QApplication *app = nullptr, const char *name = "main_window", bool undo_enabled = true);
 
   /**
    *  @brief Destructor

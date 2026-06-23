@@ -106,7 +106,7 @@ escape_string (const char *cp)
 inline bool 
 is_widget (QObject *o)
 {
-   return (dynamic_cast<const QDialog *> (o) != 0 || dynamic_cast<const QMainWindow *> (o) != 0 || dynamic_cast<const QWidget *> (o) != 0);
+   return (dynamic_cast<const QDialog *> (o) != nullptr || dynamic_cast<const QMainWindow *> (o) != nullptr || dynamic_cast<const QWidget *> (o) != nullptr);
 }
 
 static void 
@@ -189,14 +189,14 @@ widget_from_path (const char *p, int xml_line)
   int nwidget = 1;
   bool more = false;
 
-  QObject *w = 0;
+  QObject *w = nullptr;
   do {
 
     more = extract_widget_path (x, name, cls, nwidget);
 
     int n = nwidget;
     QObject *pw = w;
-    if (w == 0) {
+    if (w == nullptr) {
       QWidgetList tl_widgets = QApplication::topLevelWidgets ();
       for (QWidgetList::const_iterator tl = tl_widgets.begin (); tl != tl_widgets.end (); ++tl) {
         if (is_widget (*tl) && (*tl)->objectName () == tl::to_qstring (name) && (cls.empty () || cls == (*tl)->metaObject ()->className ()) && --n == 0) {
@@ -205,7 +205,7 @@ widget_from_path (const char *p, int xml_line)
         }
       }
     } else {
-      w = 0;
+      w = nullptr;
       QObjectList children = pw->children ();
       for (QObjectList::const_iterator child = children.begin (); child != children.end (); ++child) {
         if (is_widget (*child) && (*child)->objectName () == tl::to_qstring (name) && (cls.empty () || cls == (*child)->metaObject ()->className ()) && --n == 0) {
@@ -215,9 +215,9 @@ widget_from_path (const char *p, int xml_line)
       }
     }
 
-    if (w == 0) {
+    if (w == nullptr) {
       std::string names;
-      if (pw == 0) {
+      if (pw == nullptr) {
         QWidgetList tl_widgets = QApplication::topLevelWidgets ();
         for (QWidgetList::const_iterator tl = tl_widgets.begin (); tl != tl_widgets.end (); ++tl) {
           if (is_widget (*tl)) {
@@ -258,7 +258,7 @@ widget_from_path (const char *p, int xml_line)
 }
 
 static std::string 
-widget_to_path (QWidget *w, const char *pf = 0)
+widget_to_path (QWidget *w, const char *pf = nullptr)
 {
   std::string n = tl::to_string (w->objectName ());
   std::string cls = w->metaObject ()->className ();
@@ -268,7 +268,7 @@ widget_to_path (QWidget *w, const char *pf = 0)
   if (pw) {
     QObjectList children = pw->children ();
     for (QObjectList::const_iterator child = children.begin (); child != children.end (); ++child) {
-      if (dynamic_cast<QDialog *> (*child) != 0 || dynamic_cast<QMainWindow *> (*child) != 0 || dynamic_cast <QWidget *> (*child) != 0) { 
+      if (dynamic_cast<QDialog *> (*child) != nullptr || dynamic_cast<QMainWindow *> (*child) != nullptr || dynamic_cast <QWidget *> (*child) != nullptr) { 
         if (*child == w) {
           break;
         }
@@ -281,7 +281,7 @@ widget_to_path (QWidget *w, const char *pf = 0)
     QWidgetList tlw = QApplication::topLevelWidgets ();
     for (QWidgetList::const_iterator itl = tlw.begin (); itl != tlw.end (); ++itl) {
       //  only QDialog or QMainWindow ancestors count as valid top level widgets
-      if (dynamic_cast<QDialog *> (*itl) != 0 || dynamic_cast<QMainWindow *> (*itl) != 0 || dynamic_cast <QWidget *> (*itl) != 0) { 
+      if (dynamic_cast<QDialog *> (*itl) != nullptr || dynamic_cast<QMainWindow *> (*itl) != nullptr || dynamic_cast <QWidget *> (*itl) != nullptr) { 
         if (*itl == w) {
           break;
         }
@@ -354,10 +354,10 @@ MouseTrackerWidget::MouseTrackerWidget (QWidget *parent)
 MouseTrackerWidget *
 MouseTrackerWidget::instance ()
 {
-  static MouseTrackerWidget *inst = 0;
+  static MouseTrackerWidget *inst = nullptr;
 
-  if (inst == 0) {
-    inst = new MouseTrackerWidget (0);
+  if (inst == nullptr) {
+    inst = new MouseTrackerWidget (nullptr);
   }
   return inst;
 }
@@ -724,7 +724,7 @@ public:
   virtual void issue_event () 
   {
     QList<QAction *> actions = target_widget ()->findChildren<QAction *> (tl::to_qstring (m_action_name));
-    if (actions.size () == 0) {
+    if (actions.empty()) {
       throw tl::Exception (tl::to_string (QObject::tr ("'%s' is not a valid action name (line %d)")), m_action_name, m_xml_line);
     } else {
       //  trigger the specified action
@@ -890,7 +890,7 @@ public:
 
   bool equals (const LogEventBase &b) const
   {
-    return dynamic_cast <const LogErrorEvent *> (&b) != 0;
+    return dynamic_cast <const LogErrorEvent *> (&b) != nullptr;
   }
 
 private:
@@ -1086,12 +1086,12 @@ EventList::save (const std::string &filename)
 static bool
 is_valid_widget (QWidget *w)
 {
-  if (dynamic_cast <QToolBar *> (w) != 0 ||
-      dynamic_cast <QMenuBar *> (w) != 0 ||
-      dynamic_cast <QMenu *> (w) != 0) {
+  if (dynamic_cast <QToolBar *> (w) != nullptr ||
+      dynamic_cast <QMenuBar *> (w) != nullptr ||
+      dynamic_cast <QMenu *> (w) != nullptr) {
     return false;
-  } else if (w->parentWidget () == 0) {
-    return (dynamic_cast <QDialog *> (w) != 0 || dynamic_cast <QMainWindow *> (w) != 0);
+  } else if (w->parentWidget () == nullptr) {
+    return (dynamic_cast <QDialog *> (w) != nullptr || dynamic_cast <QMainWindow *> (w) != nullptr);
   } else {
     return is_valid_widget (w->parentWidget ());
   }
@@ -1116,7 +1116,7 @@ private:
   Recorder *mp_rec;
 };
 
-Recorder *Recorder::ms_instance = 0;
+Recorder *Recorder::ms_instance = nullptr;
 
 Recorder::Recorder (QObject *parent, const std::string &log_file)
   : QObject (parent), m_recording (false), m_save_incremental (false), m_log_file (log_file)
@@ -1125,17 +1125,17 @@ Recorder::Recorder (QObject *parent, const std::string &log_file)
   mp_error_channel = new ErrorLogRecorder (this);
   tl::error.add (mp_error_channel, false);
 
-  tl_assert (ms_instance == 0);
+  tl_assert (ms_instance == nullptr);
   ms_instance = this;
 }
 
 Recorder::~Recorder ()
 {
   delete mp_error_channel;
-  mp_error_channel = 0;
+  mp_error_channel = nullptr;
 
   stop ();
-  ms_instance = 0;
+  ms_instance = nullptr;
 }
 
 void 
@@ -1162,7 +1162,7 @@ Recorder::action (QAction *action)
 {
   if (m_recording) {
     QWidget *parent = dynamic_cast <QWidget *> (action->parent ());
-    tl_assert (parent != 0);
+    tl_assert (parent != nullptr);
     m_events.add (new LogActionEvent (widget_to_path (parent), tl::to_string (action->objectName ())));
   }
 }
@@ -1477,7 +1477,7 @@ Recorder::eventFilter (QObject *object, QEvent *event)
     //  handling in playing mode:
 
     //  suppress spontaneous input events in playing mode - the user may not interact
-    if (! Player::instance ()->event_issued () && dynamic_cast <QInputEvent *> (event) != 0) {
+    if (! Player::instance ()->event_issued () && dynamic_cast <QInputEvent *> (event) != nullptr) {
       return true;
     }
 
@@ -1491,12 +1491,12 @@ Recorder::eventFilter (QObject *object, QEvent *event)
 
     //  only log key events that are targeted towards widgets that do not have the focus
     //  this propagation of events is done automatically on replay in the same fashion.
-    if (dynamic_cast <QKeyEvent *> (event) != 0 && ! rec->hasFocus ()) {
+    if (dynamic_cast <QKeyEvent *> (event) != nullptr && ! rec->hasFocus ()) {
       return false;
     }
 
     //  do not log propagation events for mouse events
-    if (dynamic_cast <QMouseEvent *> (event) != 0 && ! event->spontaneous ()) {
+    if (dynamic_cast <QMouseEvent *> (event) != nullptr && ! event->spontaneous ()) {
       return false;
     }
 
@@ -1536,7 +1536,7 @@ Recorder::eventFilter (QObject *object, QEvent *event)
         QEvent event (QEvent::MaxUser);
         event.ignore ();
 
-        for (QWidget *w = rec; w != 0; w = w->parentWidget ()) {
+        for (QWidget *w = rec; w != nullptr; w = w->parentWidget ()) {
           QApplication::instance ()->sendEvent (w, &event);
           if (event.isAccepted ()) {
             tl::info << tl::to_string (QObject::tr ("Probed widget ")) << widget_to_path (w);
@@ -1545,7 +1545,7 @@ Recorder::eventFilter (QObject *object, QEvent *event)
         } 
 
         //  if there is no special handling, try the default implementation
-        for (QWidget *w = rec; w != 0; w = w->parentWidget ()) {
+        for (QWidget *w = rec; w != nullptr; w = w->parentWidget ()) {
           tl::Variant p = probe_std (w);
           if (! p.is_nil ()) {
             probe (w, p);
@@ -1582,10 +1582,10 @@ Recorder::eventFilter (QObject *object, QEvent *event)
       std::string wp = widget_to_path (rec);
 
       //  compress mouse events into a single one, if the buttons are the same
-      LogMouseEvent *me_log = 0;
+      LogMouseEvent *me_log = nullptr;
       if (mouseEvent &&
           ! m_events.empty () && 
-          (me_log = dynamic_cast <LogMouseEvent *> (m_events.back ())) != 0 &&
+          (me_log = dynamic_cast <LogMouseEvent *> (m_events.back ())) != nullptr &&
           (me_log->event ().type () == QEvent::MouseMove &&
            me_log->event ().buttons () == mouseEvent->buttons () &&
            me_log->event ().button () == mouseEvent->button () &&
@@ -1613,15 +1613,15 @@ Recorder::eventFilter (QObject *object, QEvent *event)
 
     //  resize events are logged only for top-level widgets
     QResizeEvent *resizeEvent = dynamic_cast <QResizeEvent *> (event); 
-    if (resizeEvent && rec->parentWidget () == 0 && is_valid_widget (rec)) {
+    if (resizeEvent && rec->parentWidget () == nullptr && is_valid_widget (rec)) {
 
       std::string target (widget_to_path (rec));
 
       //  compress resize events into a single event
-      LogResizeEvent *re_log = 0;
+      LogResizeEvent *re_log = nullptr;
       QSize old_size (resizeEvent->oldSize ());
       if (! m_events.empty () && 
-          (re_log = dynamic_cast <LogResizeEvent *> (m_events.back ())) != 0) {
+          (re_log = dynamic_cast <LogResizeEvent *> (m_events.back ())) != nullptr) {
         if (re_log->target () == target) {
           old_size = re_log->old_size ();
           delete m_events.back ();
@@ -1643,13 +1643,13 @@ Recorder::eventFilter (QObject *object, QEvent *event)
 // --------------------------------------------------------------
 //  Implementation of gtf::Player
 
-Player *Player::ms_instance = 0;
+Player *Player::ms_instance = nullptr;
 
 Player::Player (QObject *parent)
   : QObject (parent),
-    m_ms (0), m_playing_active (false), m_playing_index (0), m_breakpoint (-1), mp_event_issued (0), mp_event_target (0)
+    m_ms (0), m_playing_active (false), m_playing_index (0), m_breakpoint (-1), mp_event_issued (nullptr), mp_event_target (nullptr)
 {
-  tl_assert (ms_instance == 0);
+  tl_assert (ms_instance == nullptr);
   ms_instance = this;
   mp_timer = new QTimer (this);
   connect (mp_timer, SIGNAL (timeout ()), this, SLOT (timer ()));
@@ -1657,9 +1657,9 @@ Player::Player (QObject *parent)
 
 Player::~Player ()
 {
-  ms_instance = 0;
+  ms_instance = nullptr;
   delete mp_timer;
-  mp_timer = 0;
+  mp_timer = nullptr;
 }
 
 void 
@@ -1705,15 +1705,15 @@ Player::issue_event (QWidget *target, QEvent *event)
   mp_event_issued = event;
   mp_event_target = target;
   QApplication::sendEvent (target, event);
-  mp_event_issued = 0;
-  mp_event_target = 0;
+  mp_event_issued = nullptr;
+  mp_event_target = nullptr;
 }
 
 // --------------------------------------------------------------
 //  Implementation of the XML handler
 
 GtfXmlHandler::GtfXmlHandler (EventList *list)
-  : mp_locator (0),
+  : mp_locator (nullptr),
     mp_list (list),
     m_in_event (false)
 {
@@ -1745,14 +1745,14 @@ GtfXmlHandler::endElement (const QString & /*namespaceURI*/, const QString &loca
 
   } else if (localName == QString::fromUtf8 ("string")) {
 
-    tl_assert (m_data_stack.size () >= 1);
+    tl_assert (!m_data_stack.empty());
     m_data_stack.end ()[-1].push (tl::Variant (tl::to_string (m_cdata)));
 
   } else if (localName == QString::fromUtf8 ("int")) {
 
     long l = 0;
     tl::from_string (tl::to_string (m_cdata), l);
-    tl_assert (m_data_stack.size () >= 1);
+    tl_assert (!m_data_stack.empty());
     m_data_stack.end ()[-1].push (tl::Variant (l));
 
   } else if (localName == QString::fromUtf8 ("img")) {
@@ -1760,7 +1760,7 @@ GtfXmlHandler::endElement (const QString & /*namespaceURI*/, const QString &loca
     QByteArray ba (QByteArray::fromBase64 (m_cdata.toUtf8 ()));
     QImage img;
     img.loadFromData (ba);
-    tl_assert (m_data_stack.size () >= 1);
+    tl_assert (!m_data_stack.empty());
     m_data_stack.end ()[-1].push (image_to_variant (img));
 
   } else if (localName == QString::fromUtf8 ("mouse_button_release") || 
@@ -1790,8 +1790,8 @@ GtfXmlHandler::startElement (const QString & /*namespaceURI*/, const QString &lo
 
     int xpos = atts.value (QString::fromUtf8 ("xpos")).toInt ();
     int ypos = atts.value (QString::fromUtf8 ("ypos")).toInt ();
-    int button = atts.value (QString::fromUtf8 ("button")).toInt (0, 16);
-    int modifiers = atts.value (QString::fromUtf8 ("modifiers")).toInt (0, 16);
+    int button = atts.value (QString::fromUtf8 ("button")).toInt (nullptr, 16);
+    int modifiers = atts.value (QString::fromUtf8 ("modifiers")).toInt (nullptr, 16);
 
     QEvent::Type type;
     if (localName == QString::fromUtf8 ("mouse_button_release")) {
@@ -1809,8 +1809,8 @@ GtfXmlHandler::startElement (const QString & /*namespaceURI*/, const QString &lo
 
     int xpos = atts.value (QString::fromUtf8 ("xpos")).toInt ();
     int ypos = atts.value (QString::fromUtf8 ("ypos")).toInt ();
-    int buttons = atts.value (QString::fromUtf8 ("buttons")).toInt (0, 16);
-    int modifiers = atts.value (QString::fromUtf8 ("modifiers")).toInt (0, 16);
+    int buttons = atts.value (QString::fromUtf8 ("buttons")).toInt (nullptr, 16);
+    int modifiers = atts.value (QString::fromUtf8 ("modifiers")).toInt (nullptr, 16);
 
     QMouseEvent mouse_event (QEvent::MouseMove, QPoint (xpos, ypos), Qt::MouseButton (Qt::NoButton), Qt::MouseButtons (buttons), Qt::KeyboardModifiers (modifiers));
     enter_event (new LogMouseEvent (tl::to_string (atts.value (QString::fromUtf8 ("target"))), mouse_event, mp_locator->lineNumber ()));
@@ -1818,10 +1818,10 @@ GtfXmlHandler::startElement (const QString & /*namespaceURI*/, const QString &lo
   } else if (localName == QString::fromUtf8 ("key_press") ||
              localName == QString::fromUtf8 ("key_release")) {
 
-    int key = atts.value (QString::fromUtf8 ("key")).toInt (0, 16);
-    QChar text_char = QChar (atts.value (QString::fromUtf8 ("code")).toInt (0, 16));
+    int key = atts.value (QString::fromUtf8 ("key")).toInt (nullptr, 16);
+    QChar text_char = QChar (atts.value (QString::fromUtf8 ("code")).toInt (nullptr, 16));
     QString text = text_char;
-    int modifiers = atts.value (QString::fromUtf8 ("modifiers")).toInt (0, 16);
+    int modifiers = atts.value (QString::fromUtf8 ("modifiers")).toInt (nullptr, 16);
 
     QEvent::Type type;
     if (localName == QString::fromUtf8 ("key_press")) {
@@ -1909,7 +1909,7 @@ GtfXmlHandler::error (const QXmlParseException &ex)
 bool 
 GtfXmlHandler::fatalError (const std::string &msg)
 {
-  throw tl::XMLLocatedException (msg.c_str (), mp_locator->lineNumber (), mp_locator->columnNumber ());
+  throw tl::XMLLocatedException (msg, mp_locator->lineNumber (), mp_locator->columnNumber ());
 }
 
 bool 

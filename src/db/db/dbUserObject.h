@@ -140,7 +140,7 @@ public:
    *  The class name can be 0 indicating that it is not possible to create an object from a string
    *  and that the object is not registered in the generic factory.
    */
-  virtual const char *class_name () const { return 0; }
+  virtual const char *class_name () const { return nullptr; }
 
   /**
    *  @brief Fill from a string
@@ -180,7 +180,7 @@ public:
    *  The default constructor creates an empty object.
    */
   user_object ()
-    : mp_obj (0)
+    : mp_obj (nullptr)
   {
     //  .. nothing else ..
   }
@@ -201,7 +201,7 @@ public:
    *  @brief The copy constructor
    */
   user_object (const user_object<C> &d)
-    : mp_obj (0)
+    : mp_obj (nullptr)
   {
     if (d.mp_obj) {
       set_ptr (d.mp_obj->clone ());
@@ -212,11 +212,11 @@ public:
    *  @brief The move constructor
    */
   user_object (user_object<C> &&d)
-    : mp_obj (0)
+    : mp_obj (nullptr)
   {
     if (d.mp_obj) {
       set_ptr (d.mp_obj);
-      d.mp_obj = 0;
+      d.mp_obj = nullptr;
     }
   }
 
@@ -228,7 +228,7 @@ public:
     if (d.mp_obj) {
       set_ptr (d.mp_obj->clone ());
     } else {
-      set_ptr (0);
+      set_ptr (nullptr);
     }
     return *this;
   }
@@ -240,9 +240,9 @@ public:
   {
     if (d.mp_obj) {
       set_ptr (d.mp_obj);
-      d.mp_obj = 0;
+      d.mp_obj = nullptr;
     } else {
-      set_ptr (0);
+      set_ptr (nullptr);
     }
     return *this;
   }
@@ -252,7 +252,7 @@ public:
    */
   ~user_object ()
   {
-    set_ptr (0);
+    set_ptr (nullptr);
   }
 
   /**
@@ -278,7 +278,7 @@ public:
    */
   bool operator== (const user_object<C> &d) const
   {
-    if (mp_obj == 0 || d.mp_obj == 0) {
+    if (mp_obj == nullptr || d.mp_obj == nullptr) {
       return mp_obj == d.mp_obj;
     } else {
       return mp_obj->equals (d.mp_obj);
@@ -298,7 +298,7 @@ public:
    */
   bool operator< (const user_object<C> &b) const
   {
-    if (mp_obj == 0 || b.mp_obj == 0) {
+    if (mp_obj == nullptr || b.mp_obj == nullptr) {
       return mp_obj < b.mp_obj;
     } 
     if (mp_obj->class_id () != b.mp_obj->class_id ()) {
@@ -522,7 +522,7 @@ public:
   static user_object_base<C> *create (const char *class_name, const char *string, const char *base_path)
   {
     tl::Registrar< user_object_factory_base<C> > *factory = tl::Registrar< user_object_factory_base<C> >::get_instance ();
-    if (factory != 0) {
+    if (factory != nullptr) {
       for (typename tl::Registrar< user_object_factory_base<C> >::iterator i = factory->begin (); i != factory->end (); ++i) {
         if (strcmp (class_name, i->class_name ()) == 0) {
           user_object_base<C> *obj = i->create ();
@@ -531,7 +531,7 @@ public:
         }
       }
     }
-    return 0;
+    return nullptr;
   }
 };
 
@@ -539,7 +539,7 @@ public:
  *  @brief Collect memory statistics
  */
 template <class X>
-inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const user_object<X> &x, bool no_self = false, void *parent = 0)
+inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const user_object<X> &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }

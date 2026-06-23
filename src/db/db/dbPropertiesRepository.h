@@ -445,7 +445,7 @@ public:
   /**
    *  @brief Collect memory statistics
    */
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const
   {
     if (!no_self) {
       stat->add (typeid (*this), (void *) this, sizeof (*this), sizeof (*this), parent, purpose, cat);
@@ -611,7 +611,7 @@ private:
 /**
  *  @brief Collect memory statistics
  */
-inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const PropertiesRepository &x, bool no_self = false, void *parent = 0)
+inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const PropertiesRepository &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }

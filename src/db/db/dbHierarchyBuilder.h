@@ -120,7 +120,7 @@ class DB_PUBLIC ClippingHierarchyBuilderShapeReceiver
   : public HierarchyBuilderShapeReceiver
 {
 public:
-  ClippingHierarchyBuilderShapeReceiver (HierarchyBuilderShapeReceiver *pipe = 0);
+  ClippingHierarchyBuilderShapeReceiver (HierarchyBuilderShapeReceiver *pipe = nullptr);
 
   virtual void push (const db::Shape &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
   virtual void push (const db::Box &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
@@ -142,7 +142,7 @@ class DB_PUBLIC ReducingHierarchyBuilderShapeReceiver
   : public HierarchyBuilderShapeReceiver
 {
 public:
-  ReducingHierarchyBuilderShapeReceiver (HierarchyBuilderShapeReceiver *pipe = 0, double area_ratio = 3.0, size_t max_vertex_count = 16, bool reject_odd_polygons = false);
+  ReducingHierarchyBuilderShapeReceiver (HierarchyBuilderShapeReceiver *pipe = nullptr, double area_ratio = 3.0, size_t max_vertex_count = 16, bool reject_odd_polygons = false);
 
   virtual void push (const db::Shape &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
   virtual void push (const db::Box &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
@@ -279,8 +279,8 @@ public:
   typedef std::map<db::cell_index_type, std::vector<db::cell_index_type> > original_target_to_variants_map_type;
   typedef std::map<db::cell_index_type, db::cell_index_type> variant_to_original_target_map_type;
 
-  HierarchyBuilder (db::Layout *target, unsigned int target_layer, const db::ICplxTrans &trans = db::ICplxTrans (), HierarchyBuilderShapeReceiver *pipe = 0);
-  HierarchyBuilder (db::Layout *target, const db::ICplxTrans &trans = db::ICplxTrans (), HierarchyBuilderShapeReceiver *pipe = 0);
+  HierarchyBuilder (db::Layout *target, unsigned int target_layer, const db::ICplxTrans &trans = db::ICplxTrans (), HierarchyBuilderShapeReceiver *pipe = nullptr);
+  HierarchyBuilder (db::Layout *target, const db::ICplxTrans &trans = db::ICplxTrans (), HierarchyBuilderShapeReceiver *pipe = nullptr);
   virtual ~HierarchyBuilder ();
 
   /**

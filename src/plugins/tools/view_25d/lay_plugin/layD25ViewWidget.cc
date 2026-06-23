@@ -196,7 +196,7 @@ private:
 
 D25ViewWidget::D25ViewWidget (QWidget *parent)
   : QOpenGLWidget (parent),
-    m_shapes_program (0), m_lines_program (0), m_gridplane_program (0)
+    m_shapes_program (nullptr), m_lines_program (nullptr), m_gridplane_program (nullptr)
 {
   QSurfaceFormat format;
   format.setDepthBufferSize (24);
@@ -207,7 +207,7 @@ D25ViewWidget::D25ViewWidget (QWidget *parent)
   m_zmin = m_zmax = 0.0;
   m_zset = false;
   m_display_open = false;
-  mp_view = 0;
+  mp_view = nullptr;
   m_has_error = false;
 
   reset_viewport ();
@@ -231,7 +231,7 @@ D25ViewWidget::reset_viewport ()
 {
   m_scale_factor = 1.0;
   m_vscale_factor = 1.0;
-  mp_mode.reset (0);
+  mp_mode.reset (nullptr);
 
   camera_init ();
 }
@@ -307,7 +307,7 @@ D25ViewWidget::keyPressEvent (QKeyEvent *event)
 {
   if (event->key () == Qt::Key_Shift) {
 
-    mp_mode.reset (0);
+    mp_mode.reset (nullptr);
     set_top_view (true);
 
   } else if (event->key () == Qt::Key_Up || event->key () == Qt::Key_Down) {
@@ -372,7 +372,7 @@ void
 D25ViewWidget::keyReleaseEvent (QKeyEvent *event)
 {
   if (event->key () == Qt::Key_Shift) {
-    mp_mode.reset (0);
+    mp_mode.reset (nullptr);
     set_top_view (false);
   }
 }
@@ -400,7 +400,7 @@ D25ViewWidget::hit_point_with_scene (const QVector3D &line_dir)
 void
 D25ViewWidget::mousePressEvent (QMouseEvent *event)
 {
-  mp_mode.reset (0);
+  mp_mode.reset (nullptr);
 
   if (event->button () == Qt::MiddleButton) {
     mp_mode.reset (new D25PanInteractionMode (this, event->pos ()));
@@ -416,7 +416,7 @@ D25ViewWidget::mousePressEvent (QMouseEvent *event)
 void
 D25ViewWidget::mouseReleaseEvent (QMouseEvent * /*event*/)
 {
-  mp_mode.reset (0);
+  mp_mode.reset (nullptr);
 }
 
 void
@@ -579,7 +579,7 @@ D25ViewWidget::open_display (const tl::color_t *frame_color, const tl::color_t *
   color_to_gl (frame_color, info.frame_color);
   color_to_gl (fill_color, info.fill_color);
 
-  info.has_name = (name != 0 || like != 0);
+  info.has_name = (name != nullptr || like != nullptr);
   if (name) {
     info.name = *name;
   } else if (like) {
@@ -667,7 +667,7 @@ D25ViewWidget::entry (const db::Region &data, double dbu, double zstart, double 
     auto it = original->begin_iter ();
     enter (&it.first, zstart, zstop);
   } else {
-    enter (0, zstart, zstop);
+    enter (nullptr, zstart, zstop);
   }
 
   tl::AbsoluteProgress progress (tl::to_string (tr ("Rendering ...")));
@@ -683,7 +683,7 @@ D25ViewWidget::entry (const db::Edges &data, double dbu, double zstart, double z
     auto it = original->begin_iter ();
     enter (&it.first, zstart, zstop);
   } else {
-    enter (0, zstart, zstop);
+    enter (nullptr, zstart, zstop);
   }
 
   tl::AbsoluteProgress progress (tl::to_string (tr ("Rendering ...")));
@@ -699,7 +699,7 @@ D25ViewWidget::entry (const db::EdgePairs &data, double dbu, double zstart, doub
     auto it = original->begin_iter ();
     enter (&it.first, zstart, zstop);
   } else {
-    enter (0, zstart, zstop);
+    enter (nullptr, zstart, zstop);
   }
 
   tl::AbsoluteProgress progress (tl::to_string (tr ("Rendering ...")));
@@ -914,9 +914,9 @@ static std::pair<double, double> find_grid (double v)
 void
 D25ViewWidget::initializeGL ()
 {
-  tl_assert (m_shapes_program == 0);
-  tl_assert (m_gridplane_program == 0);
-  tl_assert (m_lines_program == 0);
+  tl_assert (m_shapes_program == nullptr);
+  tl_assert (m_gridplane_program == nullptr);
+  tl_assert (m_lines_program == nullptr);
 
   m_has_error = false;
 
@@ -936,11 +936,11 @@ D25ViewWidget::initializeGL ()
   if (m_has_error) {
 
     delete m_shapes_program;
-    m_shapes_program = 0;
+    m_shapes_program = nullptr;
     delete m_lines_program;
-    m_lines_program = 0;
+    m_lines_program = nullptr;
     delete m_gridplane_program;
-    m_gridplane_program = 0;
+    m_gridplane_program = nullptr;
 
     emit init_failed ();
 

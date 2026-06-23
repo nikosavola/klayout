@@ -198,7 +198,7 @@ public:
    */
   virtual ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
   {
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -315,7 +315,7 @@ public:
    */
   virtual lay::Plugin *create_plugin (db::Manager * /*manager*/, lay::Dispatcher * /*dispatcher*/, lay::LayoutViewBase * /*view*/) const
   {
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -394,7 +394,7 @@ public:
    */
   virtual const TechnologyComponentProvider *technology_component_provider () const 
   {
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -769,7 +769,7 @@ public:
    */
   virtual lay::Browser *browser_interface ()
   {
-    return 0;
+    return nullptr;
   }
 #endif
 
@@ -781,7 +781,7 @@ public:
    */
   virtual lay::ViewService *view_service_interface ()
   {
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -792,7 +792,7 @@ public:
    */
   virtual lay::Drawing *drawing_interface ()
   {
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -803,7 +803,7 @@ public:
    */
   virtual lay::Editable *editable_interface ()
   {
-    return 0;
+    return nullptr;
   }
 
   /**

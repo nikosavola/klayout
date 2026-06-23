@@ -135,7 +135,7 @@ public:
     if (m_owns_data) {
       delete [] const_cast<char *> (mp_data);
     }
-    mp_data = 0;
+    mp_data = nullptr;
   }
 
   virtual size_t read (char *b, size_t n)
@@ -1409,7 +1409,7 @@ public:
    */
   bool is_compressing () const
   {
-    return mp_delegate != 0 && mp_delegate->is_compressing ();
+    return mp_delegate != nullptr && mp_delegate->is_compressing ();
   }
 
   /**
@@ -1417,7 +1417,7 @@ public:
    */
   bool supports_seek () const
   {
-    return mp_delegate != 0 && mp_delegate->supports_seek ();
+    return mp_delegate != nullptr && mp_delegate->supports_seek ();
   }
 
   /**

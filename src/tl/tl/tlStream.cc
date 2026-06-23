@@ -136,7 +136,7 @@ public:
 class ZLibFilePrivate
 {
 public:
-  ZLibFilePrivate () : zs (NULL) { }
+  ZLibFilePrivate () : zs (nullptr) { }
   gzFile zs;
 };
 
@@ -174,7 +174,7 @@ inflating_input_stream<Base>::read (char *b, size_t n)
 
       size_t nn = std::min (n - i, m_inflating_stream.blen ());
       const char *read = m_inflating_stream.get (nn);
-      tl_assert (read != 0);
+      tl_assert (read != nullptr);
       memcpy (b, read, nn);
       b += nn;
       i += nn;
@@ -233,7 +233,7 @@ inflating_input_stream<Base>::auto_detect_gz ()
 
   if (has_fname) {
     const char *c;
-    while ((c = m_inflating_stream.get (1)) != 0 && *c)
+    while ((c = m_inflating_stream.get (1)) != nullptr && *c)
       ;
     if (! c) {
       throw tl::Exception (tl::to_string (tr ("Corrupt .gz header - missing FNAME data trailing zero byte")));
@@ -242,7 +242,7 @@ inflating_input_stream<Base>::auto_detect_gz ()
 
   if (has_comment) {
     const char *c;
-    while ((c = m_inflating_stream.get (1)) != 0 && *c)
+    while ((c = m_inflating_stream.get (1)) != nullptr && *c)
       ;
     if (! c) {
       throw tl::Exception (tl::to_string (tr ("Corrupt .gz header - missing COMMENT data trailing zero byte")));
@@ -298,7 +298,7 @@ public:
 }
 
 InputStream::InputStream (InputStreamBase &delegate)
-  : m_pos (0), mp_bptr (0), mp_delegate (&delegate), m_owns_delegate (false), mp_inflate (0), m_inflate_always (false), m_stop_after_inflate (false)
+  : m_pos (0), mp_bptr (nullptr), mp_delegate (&delegate), m_owns_delegate (false), mp_inflate (nullptr), m_inflate_always (false), m_stop_after_inflate (false)
 { 
   m_bcap = 4096; // initial buffer capacity
   m_blen = 0;
@@ -309,7 +309,7 @@ InputStream::InputStream (InputStreamBase &delegate)
 }
 
 InputStream::InputStream (InputStreamBase *delegate)
-  : m_pos (0), mp_bptr (0), mp_delegate (delegate), m_owns_delegate (true), mp_inflate (0), m_inflate_always (false), m_stop_after_inflate (false)
+  : m_pos (0), mp_bptr (nullptr), mp_delegate (delegate), m_owns_delegate (true), mp_inflate (nullptr), m_inflate_always (false), m_stop_after_inflate (false)
 {
   m_bcap = 4096; // initial buffer capacity
   m_blen = 0;
@@ -322,11 +322,11 @@ InputStream::InputStream (InputStreamBase *delegate)
 }
 
 InputStream::InputStream (const std::string &abstract_path_in, bool allow_explicit_suffix)
-  : m_pos (0), mp_bptr (0), mp_delegate (0), m_owns_delegate (false), mp_inflate (0), m_inflate_always (false), m_stop_after_inflate (false)
+  : m_pos (0), mp_bptr (nullptr), mp_delegate (nullptr), m_owns_delegate (false), mp_inflate (nullptr), m_inflate_always (false), m_stop_after_inflate (false)
 { 
   m_bcap = 4096; // initial buffer capacity
   m_blen = 0;
-  mp_buffer = 0;
+  mp_buffer = nullptr;
 
   bool needs_inflate = false;
 
@@ -440,15 +440,15 @@ InputStream::~InputStream ()
 {
   if (mp_delegate && m_owns_delegate) {
     delete mp_delegate;
-    mp_delegate = 0;
+    mp_delegate = nullptr;
   }
   if (mp_inflate) {
     delete mp_inflate;
-    mp_inflate = 0;
+    mp_inflate = nullptr;
   }
   if (mp_buffer) {
     delete[] mp_buffer;
-    mp_buffer = 0;
+    mp_buffer = nullptr;
   }
 }
 
@@ -577,18 +577,18 @@ InputStream::get (size_t n, bool bypass_inflate)
     if (! mp_inflate->at_end ()) {
 
       const char *r = mp_inflate->get (n);
-      tl_assert (r != 0);  //  since deflate did not report at_end()
+      tl_assert (r != nullptr);  //  since deflate did not report at_end()
       return r;
 
     } else if (m_stop_after_inflate) {
 
       //  report EOF after the inflator has finished
-      return 0;
+      return nullptr;
 
     } else {
 
       delete mp_inflate;
-      mp_inflate = 0;
+      mp_inflate = nullptr;
 
     }
   }
@@ -627,7 +627,7 @@ InputStream::get (size_t n, bool bypass_inflate)
     m_pos += n;
     return r;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -735,7 +735,7 @@ void InputStream::copy_to (tl::OutputStream &os)
 void
 InputStream::inflate (bool stop_after)
 {
-  tl_assert (mp_inflate == 0);
+  tl_assert (mp_inflate == nullptr);
   mp_inflate = new tl::InflateFilter (*this);
   m_stop_after_inflate = stop_after;
 }
@@ -761,7 +761,7 @@ InputStream::reset ()
   //  stop inflate
   if (mp_inflate) {
     delete mp_inflate;
-    mp_inflate = 0;
+    mp_inflate = nullptr;
   } 
 
   //  optimize for a reset in the first m_bcap bytes
@@ -774,17 +774,17 @@ InputStream::reset ()
 
   } else {
 
-    tl_assert (mp_delegate != 0);
+    tl_assert (mp_delegate != nullptr);
 
     mp_delegate->reset ();
     m_pos = 0;
 
     if (mp_buffer) {
       delete[] mp_buffer;
-      mp_buffer = 0;
+      mp_buffer = nullptr;
     }
 
-    mp_bptr = 0;
+    mp_bptr = nullptr;
     m_blen = 0;
     mp_buffer = new char [m_bcap];
 
@@ -801,7 +801,7 @@ InputStream::reset ()
 TextInputStream::TextInputStream (InputStream &stream)
   : m_line (1), m_next_line (1), m_at_end (false), m_stream (stream)
 { 
-  if (m_stream.get (1) == 0) {
+  if (m_stream.get (1) == nullptr) {
     m_at_end = true;
   } else {
     m_stream.unget (1);
@@ -864,7 +864,7 @@ TextInputStream::get_char ()
   while (true) {
     m_line = m_next_line;
     const char *c = m_stream.get (1);
-    if (c == 0) {
+    if (c == nullptr) {
       m_at_end = true;
       return 0;
     } else if (*c != '\r' && *c) {
@@ -882,7 +882,7 @@ TextInputStream::peek_char ()
   while (true) {
     m_line = m_next_line;
     const char *c = m_stream.get (1);
-    if (c == 0) {
+    if (c == nullptr) {
       return 0;
     } else if (*c != '\r' && *c) {
       char cc = *c;
@@ -910,7 +910,7 @@ TextInputStream::reset ()
   m_line = 1;
   m_next_line = 1;
 
-  if (m_stream.get (1) == 0) {
+  if (m_stream.get (1) == nullptr) {
     m_at_end = true;
   } else {
     m_at_end = false;
@@ -1017,7 +1017,7 @@ InputZLibFile::InputZLibFile (const std::string &path)
 #else
   mp_d->zs = gzopen (tl::string_to_system (source).c_str (), "rb");
 #endif
-  if (mp_d->zs == NULL) {
+  if (mp_d->zs == nullptr) {
     throw FileOpenErrorException (source, errno);
   }
 }
@@ -1026,22 +1026,22 @@ InputZLibFile::~InputZLibFile ()
 {
   close ();
   delete mp_d;
-  mp_d = 0;
+  mp_d = nullptr;
 }
 
 void
 InputZLibFile::close ()
 {
-  if (mp_d->zs != NULL) {
+  if (mp_d->zs != nullptr) {
     gzclose (mp_d->zs);
-    mp_d->zs = NULL;
+    mp_d->zs = nullptr;
   }  
 }
 
 size_t 
 InputZLibFile::read (char *b, size_t n)
 {
-  tl_assert (mp_d->zs != NULL);
+  tl_assert (mp_d->zs != nullptr);
   int ret = gzread (mp_d->zs, b, (unsigned int) n);
   if (ret < 0) {
     int gz_err = 0;
@@ -1059,7 +1059,7 @@ InputZLibFile::read (char *b, size_t n)
 void 
 InputZLibFile::reset ()
 {
-  if (mp_d->zs != NULL) {
+  if (mp_d->zs != nullptr) {
     gzrewind (mp_d->zs);
   }
 }
@@ -1120,7 +1120,7 @@ OutputStreamBase *create_file_stream (const std::string &path, OutputStream::Out
 }
 
 OutputStream::OutputStream (const std::string &abstract_path, OutputStreamMode om, bool as_text, int keep_backups)
-  : m_pos (0), mp_delegate (0), m_owns_delegate (false), m_as_text (as_text), m_path (abstract_path)
+  : m_pos (0), mp_delegate (nullptr), m_owns_delegate (false), m_as_text (as_text), m_path (abstract_path)
 {
   //  Determine output mode
   om = output_mode_from_filename (abstract_path, om);
@@ -1161,22 +1161,22 @@ OutputStream::close ()
 
     if (mp_delegate && m_owns_delegate) {
       delete mp_delegate;
-      mp_delegate = 0;
+      mp_delegate = nullptr;
     }
     if (mp_buffer) {
       delete[] mp_buffer;
-      mp_buffer = 0;
+      mp_buffer = nullptr;
     }
 
   } catch (...) {
 
     if (mp_delegate && m_owns_delegate) {
       delete mp_delegate;
-      mp_delegate = 0;
+      mp_delegate = nullptr;
     }
     if (mp_buffer) {
       delete[] mp_buffer;
-      mp_buffer = 0;
+      mp_buffer = nullptr;
     }
 
     throw;
@@ -1479,25 +1479,25 @@ OutputZLibFile::OutputZLibFile (const std::string &p, int keep_backups)
 #else
   mp_d->zs = gzopen (tl::string_to_system (path ()).c_str (), "wb");
 #endif
-  if (mp_d->zs == NULL) {
+  if (mp_d->zs == nullptr) {
     throw FileOpenErrorException (path (), errno);
   }
 }
 
 OutputZLibFile::~OutputZLibFile ()
 {
-  if (mp_d->zs != NULL) {
+  if (mp_d->zs != nullptr) {
     gzclose (mp_d->zs);
-    mp_d->zs = NULL;
+    mp_d->zs = nullptr;
   }  
   delete mp_d;
-  mp_d = 0;
+  mp_d = nullptr;
 }
 
 void 
 OutputZLibFile::write_file (const char *b, size_t n)
 {
-  tl_assert (mp_d->zs != NULL);
+  tl_assert (mp_d->zs != nullptr);
   int ret = gzwrite (mp_d->zs, (char *) b, (unsigned int) n);
   if (ret < 0) {
     int gz_err = 0;
@@ -1607,11 +1607,11 @@ OutputPipe::write (const char *b, size_t n)
 //  InputPipe delegate implementation
 
 InputPipe::InputPipe (const std::string &source)
-  : m_file (NULL)
+  : m_file (nullptr)
 {
   m_source = source;
   m_file = popen (tl::string_to_system (source).c_str (), "r");
-  if (m_file == NULL) {
+  if (m_file == nullptr) {
     throw FilePOpenErrorException (m_source, errno);
   }
 }
@@ -1630,9 +1630,9 @@ InputPipe::close ()
 int InputPipe::wait ()
 {
   int ret = 0;
-  if (m_file != NULL) {
+  if (m_file != nullptr) {
     ret = pclose (m_file);
-    m_file = NULL;
+    m_file = nullptr;
   }
   return ret;
 }
@@ -1640,7 +1640,7 @@ int InputPipe::wait ()
 size_t 
 InputPipe::read (char *b, size_t n)
 {
-  tl_assert (m_file != NULL);
+  tl_assert (m_file != nullptr);
 
   bool retry = true;
   size_t ret = 0;
@@ -1673,27 +1673,27 @@ InputPipe::reset ()
 //  OutputPipe delegate implementation
 
 OutputPipe::OutputPipe (const std::string &path)
-  : m_file (NULL)
+  : m_file (nullptr)
 {
   m_source = path;
   m_file = popen (tl::string_to_system (path).c_str (), "w");
-  if (m_file == NULL) {
+  if (m_file == nullptr) {
     throw FilePOpenErrorException (m_source, errno);
   }
 }
 
 OutputPipe::~OutputPipe ()
 {
-  if (m_file != NULL) {
+  if (m_file != nullptr) {
     pclose (m_file);
-    m_file = NULL;
+    m_file = nullptr;
   }  
 }
 
 void 
 OutputPipe::write (const char *b, size_t n)
 {
-  tl_assert (m_file != NULL);
+  tl_assert (m_file != nullptr);
 
   size_t ret = fwrite (b, 1, n, m_file);
   if (ret < n) {

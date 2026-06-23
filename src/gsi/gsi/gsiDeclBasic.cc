@@ -86,10 +86,10 @@ static gsi::Interpreter *interpreter_by_name (const std::string &name)
 {
   for (tl::Registrar<gsi::Interpreter>::iterator i = gsi::interpreters.begin (); i != gsi::interpreters.end (); ++i) {
     if (i.current_name () == name) {
-      return i->available () ? i.operator-> () : 0;
+      return i->available () ? i.operator-> () : nullptr;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 static gsi::Interpreter *python_interpreter ()
@@ -107,11 +107,11 @@ Class<Interpreter> decl_Interpreter ("tl", "Interpreter",
     "@brief Loads the given file into the interpreter\n"
     "This will execute the code inside the file.\n"
   ) +
-  gsi::method_ext ("eval_string", &eval_string_impl, gsi::arg ("string"), gsi::arg ("filename", (const char *) 0, "nil"), gsi::arg ("line", 1),
+  gsi::method_ext ("eval_string", &eval_string_impl, gsi::arg ("string"), gsi::arg ("filename", (const char *) nullptr, "nil"), gsi::arg ("line", 1),
     "@brief Executes the code inside the given string\n"
     "Use 'filename' and 'line' to indicate the original source for the error messages.\n"
   ) +
-  gsi::method_ext ("eval_expr", &eval_expr_impl, gsi::arg ("string"), gsi::arg ("filename", (const char *) 0, "nil"), gsi::arg ("line", 1),
+  gsi::method_ext ("eval_expr", &eval_expr_impl, gsi::arg ("string"), gsi::arg ("filename", (const char *) nullptr, "nil"), gsi::arg ("line", 1),
     "@brief Executes the expression inside the given string and returns the result value\n"
     "Use 'filename' and 'line' to indicate the original source for the error messages.\n"
   ) +

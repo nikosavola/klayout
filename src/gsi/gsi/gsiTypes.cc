@@ -112,30 +112,30 @@ ArgType::to_string () const
 }
 
 ArgType::ArgType ()
-  : m_type (T_void), mp_spec (0), mp_inner (0), mp_inner_k (0),
+  : m_type (T_void), mp_spec (nullptr), mp_inner (nullptr), mp_inner_k (nullptr),
     m_is_ref (false), m_is_ptr (false), m_is_cref (false), m_is_cptr (false), m_is_iter (false), 
     m_owns_spec (false), m_pass_obj (false), m_prefer_copy (false),
-    mp_cls (0), m_size (0)
+    mp_cls (nullptr), m_size (0)
 { }
 
 ArgType::~ArgType ()
 {
   if (mp_inner) {
     delete mp_inner;
-    mp_inner = 0;
+    mp_inner = nullptr;
   }
   if (mp_inner_k) {
     delete mp_inner_k;
-    mp_inner_k = 0;
+    mp_inner_k = nullptr;
   }
   release_spec ();
 }
 
 ArgType::ArgType (const ArgType &other)
-  : m_type (T_void), mp_spec (0), mp_inner (0), mp_inner_k (0),
+  : m_type (T_void), mp_spec (nullptr), mp_inner (nullptr), mp_inner_k (nullptr),
     m_is_ref (false), m_is_ptr (false), m_is_cref (false), m_is_cptr (false), m_is_iter (false), 
     m_owns_spec (false), m_pass_obj (false), m_prefer_copy (false),
-    mp_cls (0), m_size (0)
+    mp_cls (nullptr), m_size (0)
 {
   operator= (other);
 }
@@ -169,7 +169,7 @@ ArgType::operator= (const ArgType &other)
 
     if (mp_inner) {
       delete mp_inner;
-      mp_inner = 0;
+      mp_inner = nullptr;
     }
 
     if (other.mp_inner) {
@@ -178,7 +178,7 @@ ArgType::operator= (const ArgType &other)
 
     if (mp_inner_k) {
       delete mp_inner_k;
-      mp_inner_k = 0;
+      mp_inner_k = nullptr;
     }
 
     if (other.mp_inner_k) {
@@ -193,13 +193,13 @@ ArgType::operator= (const ArgType &other)
 bool 
 ArgType::operator== (const ArgType &b) const
 {
-  if ((mp_inner == 0) != (b.mp_inner == 0)) {
+  if ((mp_inner == nullptr) != (b.mp_inner == nullptr)) {
     return false;
   }
   if (mp_inner && *mp_inner != *b.mp_inner) {
     return false;
   }
-  if ((mp_inner_k == 0) != (b.mp_inner_k == 0)) {
+  if ((mp_inner_k == nullptr) != (b.mp_inner_k == nullptr)) {
     return false;
   }
   if (mp_inner_k && *mp_inner_k != *b.mp_inner_k) {
@@ -216,7 +216,7 @@ ArgType::release_spec ()
   if (mp_spec && m_owns_spec) {
     delete mp_spec;
   }
-  mp_spec = 0;
+  mp_spec = nullptr;
   m_owns_spec = false;
 }
 

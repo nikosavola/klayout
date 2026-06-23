@@ -37,13 +37,13 @@ static std::vector <std::string> get_names ()
 static lay::LayoutHandleRef *find (const std::string &name)
 {
   auto h = lay::LayoutHandle::find (name);
-  return h ? new lay::LayoutHandleRef (h) : 0;
+  return h ? new lay::LayoutHandleRef (h) : nullptr;
 }
 
 static lay::LayoutHandleRef *find_layout (const db::Layout *layout)
 {
   auto h = lay::LayoutHandle::find_layout (layout);
-  return h ? new lay::LayoutHandleRef (h) : 0;
+  return h ? new lay::LayoutHandleRef (h) : nullptr;
 }
 
 static lay::LayoutHandleRef *new_handle1 (const std::string &filename, const db::LoadLayoutOptions &options, const std::string &technology)
@@ -60,61 +60,61 @@ static lay::LayoutHandleRef *new_handle2 (db::Layout *layout)
 
 static bool is_valid (const lay::LayoutHandleRef *ref)
 {
-  return ref->get () != 0;
+  return ref->get () != nullptr;
 }
 
 static const std::string &name (const lay::LayoutHandleRef *ref)
 {
-  tl_assert (ref->get () != 0);
+  tl_assert (ref->get () != nullptr);
   return ref->get ()->name ();
 }
 
 static void set_name (lay::LayoutHandleRef *ref, const std::string &name)
 {
-  tl_assert (ref->get () != 0);
+  tl_assert (ref->get () != nullptr);
   ref->get ()->rename (name, true);
 }
 
 static db::Layout *layout (const lay::LayoutHandleRef *ref)
 {
-  tl_assert (ref->get () != 0);
+  tl_assert (ref->get () != nullptr);
   return &ref->get ()->layout ();
 }
 
 static const std::string &filename (const lay::LayoutHandleRef *ref)
 {
-  tl_assert (ref->get () != 0);
+  tl_assert (ref->get () != nullptr);
   return ref->get ()->filename ();
 }
 
 static int get_ref_count (const lay::LayoutHandleRef *ref)
 {
-  tl_assert (ref->get () != 0);
+  tl_assert (ref->get () != nullptr);
   return ref->get ()->get_ref_count ();
 }
 
 static bool is_dirty (const lay::LayoutHandleRef *ref)
 {
-  tl_assert (ref->get () != 0);
+  tl_assert (ref->get () != nullptr);
   return ref->get ()->is_dirty ();
 }
 
 static void save_as (lay::LayoutHandleRef *ref, const std::string &filename, const db::SaveLayoutOptions &options, int keep_backups)
 {
-  tl_assert (ref->get () != 0);
+  tl_assert (ref->get () != nullptr);
   ref->get ()->save_as (filename, tl::OutputStream::OM_Auto, options, true, keep_backups);
   ref->get ()->set_save_options (options, true);
 }
 
 static tl::Variant save_options (const lay::LayoutHandleRef *ref)
 {
-  tl_assert (ref->get () != 0);
+  tl_assert (ref->get () != nullptr);
   return ref->get ()->save_options_valid () ? tl::Variant (ref->get ()->save_options ()) : tl::Variant ();
 }
 
 static const db::LoadLayoutOptions &load_options (const lay::LayoutHandleRef *ref)
 {
-  tl_assert (ref->get () != 0);
+  tl_assert (ref->get () != nullptr);
   return ref->get ()->load_options ();
 }
 

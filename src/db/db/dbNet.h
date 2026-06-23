@@ -656,7 +656,7 @@ public:
    */
   bool is_internal () const
   {
-    return m_pins.size () == 0 && m_subcircuit_pins.size () == 0 && m_terminals.size () == 2;
+    return m_pins.empty() && m_subcircuit_pins.empty() && m_terminals.size () == 2;
   }
 
   /**
@@ -686,7 +686,7 @@ public:
   /**
    *  @brief Generate memory statistics
    */
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const
   {
     if (! no_self) {
       stat->add (typeid (*this), (void *) this, sizeof (*this), sizeof (*this), parent, purpose, cat);

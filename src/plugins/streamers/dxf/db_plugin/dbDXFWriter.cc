@@ -37,7 +37,7 @@ namespace db
 //  DXFWriter implementation
 
 DXFWriter::DXFWriter ()
-  : mp_stream (0),
+  : mp_stream (nullptr),
     m_progress (tl::to_string (tr ("Writing DXF file")), 10000)
 {
   m_progress.set_format (tl::to_string (tr ("%.0f MB")));
@@ -170,7 +170,7 @@ DXFWriter::write (db::Layout &layout, tl::OutputStream &stream, const db::SaveLa
   //  create a cell index vector sorted bottom-up
   std::vector <db::cell_index_type> cells;
   cells.reserve (cell_set.size ());
-  const db::Cell *top_cell = 0;
+  const db::Cell *top_cell = nullptr;
 
   for (db::Layout::bottom_up_const_iterator cell = layout.begin_bottom_up (); cell != layout.end_bottom_up (); ++cell) {
 

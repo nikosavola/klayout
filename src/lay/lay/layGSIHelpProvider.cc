@@ -519,7 +519,7 @@ GSIHelpProvider::get (lay::HelpSource *src, const std::string &path) const
 
   std::string text;
   if (url_path == QString::fromUtf8 ("/code/index.xml")) {
-    text = produce_class_index (src, 0);
+    text = produce_class_index (src, nullptr);
   } else if (module_index_url.indexIn (url_path) == 0) {
     text = produce_class_index (src, from_encoded_class_name (tl::to_string (module_index_url.cap (1))).c_str ());
   } else if (class_doc_url.indexIn (url_path) == 0) {
@@ -915,7 +915,7 @@ find_child_with_declaration (const gsi::ClassBase *pc, const gsi::ClassBase *dec
 
   }
 
-  return 0;
+  return nullptr;
 }
 
 std::string
@@ -923,7 +923,7 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
 {
   std::ostringstream os;
 
-  const gsi::ClassBase *cls_obj = 0;
+  const gsi::ClassBase *cls_obj = nullptr;
 
   std::vector<std::string> comp = tl::split (cls, "::");
   if (comp.empty ()) {
@@ -948,7 +948,7 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
 
     const gsi::ClassBase *pc = cls_obj;
 
-    cls_obj = 0;
+    cls_obj = nullptr;
     while (pc && !cls_obj) {
 
       for (tl::weak_collection<gsi::ClassBase>::const_iterator sc = pc->begin_child_classes (); sc != pc->end_child_classes (); ++sc) {
@@ -971,7 +971,7 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
 
   }
 
-  const gsi::ClassBase *tl_alias = 0;
+  const gsi::ClassBase *tl_alias = nullptr;
 
   if (cls_obj != cls_obj->declaration ()) {
 

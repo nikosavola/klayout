@@ -43,8 +43,8 @@ public:
   EmptyEdges (const EmptyEdges &other);
   EdgesDelegate *clone () const;
 
-  virtual EdgesIteratorDelegate *begin () const { return 0; }
-  virtual EdgesIteratorDelegate *begin_merged () const { return 0; }
+  virtual EdgesIteratorDelegate *begin () const { return nullptr; }
+  virtual EdgesIteratorDelegate *begin_merged () const { return nullptr; }
 
   virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const { return std::make_pair (db::RecursiveShapeIterator (), db::ICplxTrans ()); }
   virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_merged_iter () const { return std::make_pair (db::RecursiveShapeIterator (), db::ICplxTrans ()); }
@@ -123,7 +123,7 @@ public:
   virtual bool has_valid_edges () const { return true; }
   virtual bool has_valid_merged_edges () const { return true; }
 
-  virtual const db::RecursiveShapeIterator *iter () const { return 0; }
+  virtual const db::RecursiveShapeIterator *iter () const { return nullptr; }
   virtual void apply_property_translator (const db::PropertiesTranslator &) { }
 
   virtual bool equals (const Edges &other) const;

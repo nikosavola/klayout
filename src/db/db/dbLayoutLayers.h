@@ -248,7 +248,7 @@ public:
   /**
    *  @brief Collects memory statistics
    */
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const;
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const;
 
 private:
   std::vector<unsigned int> m_free_indices;

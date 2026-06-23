@@ -145,7 +145,7 @@ RedrawThread::start (int workers, const std::vector <lay::RedrawLayerInfo> &laye
   double epsilon = m_vp_trans.inverted ().ctrans (1e-3);
 
   db::Vector sv;
-  db::Vector *shift_vector = 0;
+  db::Vector *shift_vector = nullptr;
 
   //  test, if we can shift the current image and redraw only the missing parts
   if (! force_redraw && mp_canvas->shift_supported () &&
@@ -195,7 +195,7 @@ RedrawThread::restart (const std::vector<int> &restart)
   m_redraw_regions.push_back (db::Box (db::Point (0, 0), db::Point (m_width, m_height)));
   m_valid_region = m_stored_region = db::DBox ();
 
-  do_start (false, 0, 0, restart, -1);
+  do_start (false, nullptr, nullptr, restart, -1);
 }
 
 void  
@@ -264,7 +264,7 @@ RedrawThread::do_start (bool clear, const db::Vector *shift_vector, const std::v
 
       if (clear) {
 
-        mp_canvas->prepare (m_nlayers * planes_per_layer + special_planes_before + special_planes_after, m_width, m_height, m_resolution, m_font_resolution, shift_vector, 0, mp_view->drawings ());
+        mp_canvas->prepare (m_nlayers * planes_per_layer + special_planes_before + special_planes_after, m_width, m_height, m_resolution, m_font_resolution, shift_vector, nullptr, mp_view->drawings ());
         m_boxes_already_drawn = false;
         m_custom_already_drawn = false;
 
@@ -318,7 +318,7 @@ RedrawThread::do_start (bool clear, const db::Vector *shift_vector, const std::v
       }
 
     } else {
-      mp_canvas->prepare (1, m_width, m_height, m_resolution, m_font_resolution, 0, 0, mp_view->drawings ());
+      mp_canvas->prepare (1, m_width, m_height, m_resolution, m_font_resolution, nullptr, nullptr, mp_view->drawings ());
     }
 
   }
@@ -377,7 +377,7 @@ void
 RedrawThread::done ()
 {
   //  stop timer if there is one 
-  m_main_timer.reset (0);
+  m_main_timer.reset (nullptr);
 
   wakeup ();
 

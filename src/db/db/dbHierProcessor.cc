@@ -529,7 +529,7 @@ private:
       db::ICplxTrans tni1 = tn1.inverted ();
       db::Box ibox1 = (tn1 * cell1.bbox (m_subject_layer)).enlarged (db::Vector (m_dist, m_dist));
 
-      std::set<db::CellInstArray> *insts = 0;
+      std::set<db::CellInstArray> *insts = nullptr;
 
       if (! ibox1.empty ()) {
 
@@ -552,7 +552,7 @@ private:
 
             db::ICplxTrans tn21 = tni1 * tn2;
 
-            std::list<std::pair<db::cell_index_type, db::ICplxTrans> > *interactions = 0;
+            std::list<std::pair<db::cell_index_type, db::ICplxTrans> > *interactions = nullptr;
 
             std::unordered_map<db::ICplxTrans, std::list<std::pair<db::cell_index_type, db::ICplxTrans> > >::iterator ic = interactions_cache.find (tn21);
             if (ic != interactions_cache.end ()) {
@@ -657,7 +657,7 @@ private:
         db::ICplxTrans tni = tn.inverted ();
         m_rt.set_trans (tni);
 
-        std::set<TI> *shapes = 0;
+        std::set<TI> *shapes = nullptr;
 
         //  not very strong, but already useful: the cells interact if there is a layer in cell
         //  in the common box
@@ -745,7 +745,7 @@ local_processor_result_computation_task<TS, TI, TR>::perform ()
 
 LocalProcessorBase::LocalProcessorBase ()
   : m_report_progress (true), m_nthreads (0), m_max_vertex_count (0), m_area_ratio (0.0), m_top_down (false), m_boolean_core (false),
-    m_base_verbosity (30), mp_vars (0), mp_current_cell (0)
+    m_base_verbosity (30), mp_vars (nullptr), mp_current_cell (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -778,7 +778,7 @@ local_processor<TS, TI, TR>::local_processor (db::Layout *layout, db::Cell *top,
   : mp_subject_layout (layout), mp_intruder_layout (layout),
     mp_subject_top (top), mp_intruder_top (top),
     mp_subject_breakout_cells (breakout_cells), mp_intruder_breakout_cells (breakout_cells),
-    m_progress (0), mp_progress (0)
+    m_progress (0), mp_progress (nullptr)
 {
   set_boolean_core (default_boolean_core<TR> () ());
 }
@@ -788,7 +788,7 @@ local_processor<TS, TI, TR>::local_processor (db::Layout *subject_layout, db::Ce
   : mp_subject_layout (subject_layout), mp_intruder_layout (intruder_layout),
     mp_subject_top (subject_top), mp_intruder_top (intruder_top),
     mp_subject_breakout_cells (subject_breakout_cells), mp_intruder_breakout_cells (intruder_breakout_cells),
-    m_progress (0), mp_progress (0)
+    m_progress (0), mp_progress (nullptr)
 {
   set_boolean_core (default_boolean_core<TR> () ());
 }
@@ -848,7 +848,7 @@ void local_processor<TS, TI, TR>::run (local_operation<TS, TI, TR> *op, unsigned
 {
   tl::SelfTimer timer (tl::verbosity () > base_verbosity (), tl::to_string (tr ("Executing ")) + description (op));
 
-  set_vars_owned (0);
+  set_vars_owned (nullptr);
 
   //  Prepare cell variants if needed
   if (make_variants) {
@@ -893,7 +893,7 @@ void local_processor<TS, TI, TR>::compute_contexts (local_processor_contexts<TS,
     if (threads () > 0) {
       mp_cc_job.reset (new tl::Job<local_processor_context_computation_worker<TS, TI, TR> > (threads ()));
     } else {
-      mp_cc_job.reset (0);
+      mp_cc_job.reset (nullptr);
     }
 
     contexts.clear ();
@@ -901,7 +901,7 @@ void local_processor<TS, TI, TR>::compute_contexts (local_processor_contexts<TS,
     contexts.set_subject_layer (subject_layer);
 
     typename local_processor_cell_contexts<TS, TI, TR>::context_key_type intruders;
-    issue_compute_contexts (contexts, 0, 0, mp_subject_top, db::ICplxTrans (), mp_intruder_top, intruders, op->dist ());
+    issue_compute_contexts (contexts, nullptr, nullptr, mp_subject_top, db::ICplxTrans (), mp_intruder_top, intruders, op->dist ());
 
     if (mp_cc_job.get ()) {
       mp_cc_job->start ();
@@ -909,7 +909,7 @@ void local_processor<TS, TI, TR>::compute_contexts (local_processor_contexts<TS,
     }
 
   } catch (...) {
-    mp_cc_job.reset (0);
+    mp_cc_job.reset (nullptr);
     throw;
   }
 }
@@ -955,7 +955,7 @@ void local_processor<TS, TI, TR>::compute_contexts (local_processor_contexts<TS,
 
   db::Coord dist = dist_for_cell (subject_cell->cell_index (), dist_top);
 
-  db::local_processor_cell_context<TS, TI, TR> *cell_context = 0;
+  db::local_processor_cell_context<TS, TI, TR> *cell_context = nullptr;
 
   //  prepare a new cell context: this has to happen in a thread-safe way as we share the contexts
   //  object between threads
@@ -1125,7 +1125,7 @@ void local_processor<TS, TI, TR>::compute_contexts (local_processor_contexts<TS,
     for (typename interactions_type::iterator i = interactions.begin (); i != interactions.end (); ++i) {
 
       db::Cell *subject_child_cell = &mp_subject_layout->cell (i->first.first);
-      db::Cell *intruder_child_cell = (subject_cell == intruder_cell ? subject_child_cell : 0);
+      db::Cell *intruder_child_cell = (subject_cell == intruder_cell ? subject_child_cell : nullptr);
 
       issue_compute_contexts (contexts, cell_context, subject_cell, subject_child_cell, i->first.second, intruder_child_cell, i->second, dist);
 
@@ -1160,7 +1160,7 @@ local_processor<TS, TI, TR>::compute_results (local_processor_contexts<TS, TI, T
 
   tl::RelativeProgress progress (description (op), comp_effort, 1);
   m_progress = 0;
-  mp_progress = 0;
+  mp_progress = nullptr;
 
   if (threads () > 0) {
 
@@ -1240,7 +1240,7 @@ local_processor<TS, TI, TR>::compute_results (local_processor_contexts<TS, TI, T
 
     try {
 
-      mp_progress = report_progress () ? &progress : 0;
+      mp_progress = report_progress () ? &progress : nullptr;
 
       for (db::Layout::bottom_up_const_iterator bu = mp_subject_layout->begin_bottom_up (); bu != mp_subject_layout->end_bottom_up (); ++bu) {
 
@@ -1252,10 +1252,10 @@ local_processor<TS, TI, TR>::compute_results (local_processor_contexts<TS, TI, T
 
       }
 
-      mp_progress = 0;
+      mp_progress = nullptr;
 
     } catch (...) {
-      mp_progress = 0;
+      mp_progress = nullptr;
       throw;
     }
 
@@ -1415,11 +1415,11 @@ local_processor<TS, TI, TR>::compute_local_cell (const db::local_processor_conte
     unsigned int ail = contexts.actual_intruder_layer (*il);
     bool foreign = contexts.is_foreign (*il);
 
-    const db::Shapes *intruder_shapes = 0;
+    const db::Shapes *intruder_shapes = nullptr;
     if (intruder_cell) {
       intruder_shapes = &intruder_cell->shapes (ail);
       if (intruder_shapes->empty ()) {
-        intruder_shapes = 0;
+        intruder_shapes = nullptr;
       }
     }
 
@@ -1438,7 +1438,7 @@ local_processor<TS, TI, TR>::compute_local_cell (const db::local_processor_conte
 
       } else {
 
-        db::Layout *target_layout = (mp_subject_layout == mp_intruder_layout ? 0 : mp_subject_layout);
+        db::Layout *target_layout = (mp_subject_layout == mp_intruder_layout ? nullptr : mp_subject_layout);
         scan_shape2shape_different_layers<TS, TI> () (target_layout, subject_shapes, intruder_shapes, subject_id0, &(ipl == intruders.second.end () ? empty_intruders : ipl->second), il_index, interactions, dist);
 
       }
@@ -1604,8 +1604,8 @@ local_processor<TS, TI, TR>::run_flat (const generic_shape_iterator<TS> &subject
     return;
   }
 
-  tl_assert (mp_subject_top == 0);
-  tl_assert (mp_intruder_top == 0);
+  tl_assert (mp_subject_top == nullptr);
+  tl_assert (mp_intruder_top == nullptr);
 
   std::string process_description, scan_description;
 
@@ -1683,7 +1683,7 @@ local_processor<TS, TI, TR>::run_flat (const generic_shape_iterator<TS> &subject
         } else {
 
           db::box_scanner2<TS, unsigned int, TI, unsigned int> scanner (report_progress (), scan_description);
-          interaction_registration_shape2shape<TS, TI> rec (0 /*layout*/, &interactions, il_index);
+          interaction_registration_shape2shape<TS, TI> rec (nullptr /*layout*/, &interactions, il_index);
 
           for (typename shape_interactions<TS, TI>::subject_iterator s = interactions.begin_subjects (); s != interactions.end_subjects (); ++s) {
             scanner.insert1 (&s->second, s->first);
@@ -1752,7 +1752,7 @@ local_processor<TS, TI, TR>::run_flat (const generic_shape_iterator<TS> &subject
         } else {
 
           db::box_scanner2<TS, unsigned int, TI, unsigned int> scanner (report_progress (), scan_description);
-          interaction_registration_shape2shape<TS, TI> rec (0 /*layout*/, &interactions, il_index);
+          interaction_registration_shape2shape<TS, TI> rec (nullptr /*layout*/, &interactions, il_index);
 
           if (*il == subjects) {
 
@@ -1808,7 +1808,7 @@ local_processor<TS, TI, TR>::run_flat (const generic_shape_iterator<TS> &subject
 
     std::vector<std::unordered_set<TR> > result;
     result.resize (result_shapes.size ());
-    op->compute_local (mp_subject_layout, 0, interactions, result, this);
+    op->compute_local (mp_subject_layout, nullptr, interactions, result, this);
 
     for (std::vector<db::Shapes *>::const_iterator r = result_shapes.begin (); r != result_shapes.end (); ++r) {
       if (*r) {

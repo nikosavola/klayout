@@ -133,7 +133,7 @@ Edge2EdgeCheckBase::finish (const Edge *o, size_t p)
 
       std::set<db::Edge> partial_edges;
 
-      db::EdgeBooleanCluster<std::set<db::Edge> > ec (&partial_edges, 0, db::EdgeNot);
+      db::EdgeBooleanCluster<std::set<db::Edge> > ec (&partial_edges, nullptr, db::EdgeNot);
       ec.add (o, 0);
 
       for (std::multimap<std::pair<db::Edge, size_t>, size_t>::const_iterator i = i0; i != m_e2ep.end () && i->first == k; ++i) {
@@ -404,7 +404,7 @@ poly2poly_check<PolygonType>::poly2poly_check (Edge2EdgeCheckBase &output)
 
 template <class PolygonType>
 poly2poly_check<PolygonType>::poly2poly_check ()
-  : mp_output (0)
+  : mp_output (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -551,7 +551,7 @@ template <class PolygonType, class EdgeType, class OutputType>
 void
 region_to_edge_interaction_filter_base<PolygonType, EdgeType, OutputType>::add (const PolygonType *p, size_t, const EdgeType *e, size_t)
 {
-  const OutputType *o = 0;
+  const OutputType *o = nullptr;
   tl::select (o, p, e);
 
   if (m_get_all || (m_seen.find (o) == m_seen.end ()) != m_inverse) {
@@ -623,7 +623,7 @@ template <class PolygonType, class TextType, class OutputType>
 void
 region_to_text_interaction_filter_base<PolygonType, TextType, OutputType>::add (const PolygonType *p, size_t, const TextType *t, size_t)
 {
-  const OutputType *o = 0;
+  const OutputType *o = nullptr;
   tl::select (o, p, t);
 
   if (m_get_all || (m_seen.find (o) == m_seen.end ()) != m_inverse) {

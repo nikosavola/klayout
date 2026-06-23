@@ -216,7 +216,7 @@ void
 RuleBasedViaGenerator::create_cell (LEFDEFReaderState &reader, Layout &layout, db::Cell &cell, const std::vector<std::string> *maskshift_layers, const std::vector<unsigned int> &masks, const LEFDEFNumberOfMasks *nm)
 {
   //  will not be used with an external maskshift layer stack
-  tl_assert (maskshift_layers == 0);
+  tl_assert (maskshift_layers == nullptr);
 
   unsigned int mask_bottom = mask (masks, 0), mask_cut = mask (masks, 1), mask_top = mask (masks, 2);
 
@@ -565,7 +565,7 @@ LEFDEFReaderOptions::LEFDEFReaderOptions ()
     m_produce_regions (true),
     m_region_layer ("REGIONS"),
     m_produce_via_geometry (true),
-    m_via_geometry_suffix (""),
+    
     m_via_geometry_datatype (0),
     m_via_cellname_prefix ("VIA_"),
     m_produce_pins (true),
@@ -590,10 +590,10 @@ LEFDEFReaderOptions::LEFDEFReaderOptions ()
     m_lef_labels_suffix (".LABEL"),
     m_lef_labels_datatype (1),
     m_produce_routing (true),
-    m_routing_suffix (""),
+    
     m_routing_datatype (0),
     m_produce_special_routing (true),
-    m_special_routing_suffix (""),
+    
     m_special_routing_datatype (0),
     m_separate_groups (false),
     m_joined_paths (false),
@@ -958,7 +958,7 @@ void
 LEFDEFReaderOptions::set_lef_context_enabled (bool f)
 {
   if (f != m_lef_context_enabled) {
-    mp_reader_state.reset (0);
+    mp_reader_state.reset (nullptr);
     m_lef_context_enabled = f;
   }
 }
@@ -978,7 +978,7 @@ LEFDEFReaderOptions::reader_state (db::Layout &layout, const std::string &base_p
 //  LEFDEFLayerDelegate implementation
 
 LEFDEFReaderState::LEFDEFReaderState (const LEFDEFReaderOptions *tc)
-  : mp_importer (0), m_create_layers (true), m_has_explicit_layer_mapping (false), m_laynum (1), mp_tech_comp (tc)
+  : mp_importer (nullptr), m_create_layers (true), m_has_explicit_layer_mapping (false), m_laynum (1), mp_tech_comp (tc)
 {
   //  .. nothing yet ..
 }
@@ -1076,7 +1076,7 @@ LEFDEFReaderState::ensure_lef_importer (int warn_level)
 db::LEFImporter &
 LEFDEFReaderState::lef_importer ()
 {
-  tl_assert (mp_lef_importer.get () != 0);
+  tl_assert (mp_lef_importer.get () != nullptr);
   return *mp_lef_importer;
 }
 
@@ -1569,7 +1569,7 @@ std::set<unsigned int> LEFDEFReaderState::open_layer_uncached(db::Layout &layout
 
       //  If the layer map provides a target, use that one for the layer
       db::LayerProperties lp_new = lp;
-      const db::LayerProperties *lpp = (l == ll.end () ? 0 : m_layer_map.target (*l));
+      const db::LayerProperties *lpp = (l == ll.end () ? nullptr : m_layer_map.target (*l));
       if (lpp) {
         if (! lpp->name.empty ()) {
           lp_new.name = lpp->name;
@@ -1733,7 +1733,7 @@ std::set<unsigned int> LEFDEFReaderState::open_layer_uncached(db::Layout &layout
 
       //  If the layer map provides a target, use that one for the layer
       db::LayerProperties lp_new = lp;
-      const db::LayerProperties *lpp = (l == ll.end () ? 0 : m_layer_map.target (*l));
+      const db::LayerProperties *lpp = (l == ll.end () ? nullptr : m_layer_map.target (*l));
       if (lpp) {
         lp_new = *lpp;
         if (lp_new.datatype < 0) {
@@ -1960,7 +1960,7 @@ LEFDEFReaderState::via_cell (const std::string &vn, const std::string &nondefaul
   std::map<ViaKey, db::Cell *>::const_iterator i = m_via_cells.find (vk);
   if (i == m_via_cells.end ()) {
 
-    db::Cell *cell = 0;
+    db::Cell *cell = nullptr;
 
     if (vg) {
 
@@ -1981,7 +1981,7 @@ LEFDEFReaderState::via_cell (const std::string &vn, const std::string &nondefaul
       }
 
       std::string cn = mp_tech_comp->via_cellname_prefix () + n;
-      cell = &layout.cell (make_cell (layout, cn.c_str ()));
+      cell = &layout.cell (make_cell (layout, cn));
 
       std::vector<unsigned int> masks;
       masks.reserve (3);
@@ -1989,7 +1989,7 @@ LEFDEFReaderState::via_cell (const std::string &vn, const std::string &nondefaul
       masks.push_back (mask_cut);
       masks.push_back (mask_top);
 
-      vg->create_cell (*this, layout, *cell, 0, masks, nm);
+      vg->create_cell (*this, layout, *cell, nullptr, masks, nm);
 
     } else {
 
@@ -2026,7 +2026,7 @@ LEFDEFReaderState::macro_generator (const std::string &mn)
   if (g != m_macro_generators.end ()) {
     return g->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -2044,7 +2044,7 @@ LEFDEFReaderState::foreign_cell (Layout &layout, const std::string &name)
   if (cc.first) {
     ci = cc.second;
   } else {
-    ci = make_cell (layout, name.c_str ());
+    ci = make_cell (layout, name);
     layout.cell (ci).set_ghost_cell (true);
   }
 
@@ -2057,7 +2057,7 @@ LEFDEFReaderState::macro_cell (const std::string &mn, Layout &layout, const std:
 {
   std::map<std::string, LEFDEFLayoutGenerator *>::const_iterator g = m_macro_generators.find (mn);
   if (g == m_macro_generators.end ()) {
-    return std::make_pair ((db::Cell *) 0, db::Trans ());
+    return std::make_pair ((db::Cell *) nullptr, db::Trans ());
   }
 
   LEFDEFLayoutGenerator *mg = g->second;
@@ -2075,7 +2075,7 @@ LEFDEFReaderState::macro_cell (const std::string &mn, Layout &layout, const std:
     return i->second;
   }
 
-  db::Cell *cell = 0;
+  db::Cell *cell = nullptr;
   db::Trans tr;
 
   if (! macro_desc.foreign_name.empty ()) {
@@ -2086,7 +2086,7 @@ LEFDEFReaderState::macro_cell (const std::string &mn, Layout &layout, const std:
     if (macro_desc.foreign_name != mn) {
 
       //  create an indirection for renaming the cell
-      cell = &layout.cell (make_cell (layout, mn.c_str ()));
+      cell = &layout.cell (make_cell (layout, mn));
       cell->insert (db::CellInstArray (db::CellInst (foreign_cell->cell_index ()), db::Trans (db::Point () - macro_desc.origin) * macro_desc.foreign_trans));
 
     } else {
@@ -2118,10 +2118,10 @@ LEFDEFReaderState::macro_cell (const std::string &mn, Layout &layout, const std:
 
     std::string cn = mn + mask_suffix;
 
-    cell = &layout.cell (make_cell (layout, cn.c_str ()));
+    cell = &layout.cell (make_cell (layout, cn));
 
     if (mg->is_fixedmask ()) {
-      mg->create_cell (*this, layout, *cell, 0, std::vector<unsigned int> (), nm);
+      mg->create_cell (*this, layout, *cell, nullptr, std::vector<unsigned int> (), nm);
     } else {
       mg->create_cell (*this, layout, *cell, &maskshift_layers, masks, nm);
     }
@@ -2136,7 +2136,7 @@ LEFDEFReaderState::macro_cell (const std::string &mn, Layout &layout, const std:
 //  LEFDEFImporter implementation
 
 LEFDEFImporter::LEFDEFImporter (int warn_level)
-  : mp_progress (0), mp_stream (0), mp_reader_state (0),
+  : mp_progress (nullptr), mp_stream (nullptr), mp_reader_state (nullptr),
     m_produce_net_props (false), m_net_prop_name_id (0),
     m_produce_inst_props (false), m_inst_prop_name_id (0),
     m_produce_pin_props (false), m_pin_prop_name_id (0),
@@ -2206,16 +2206,16 @@ LEFDEFImporter::read (tl::InputStream &stream, db::Layout &layout, LEFDEFReaderS
 
     do_read (layout); 
 
-    mp_reader_state->attach_reader (0);
+    mp_reader_state->attach_reader (nullptr);
     delete mp_stream;
-    mp_stream = 0;
-    mp_progress = 0;
+    mp_stream = nullptr;
+    mp_progress = nullptr;
 
   } catch (...) {
-    mp_reader_state->attach_reader (0);
+    mp_reader_state->attach_reader (nullptr);
     delete mp_stream;
-    mp_stream = 0;
-    mp_progress = 0;
+    mp_stream = nullptr;
+    mp_progress = nullptr;
     throw;
   }
 }

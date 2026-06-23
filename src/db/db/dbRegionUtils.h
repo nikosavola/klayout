@@ -490,7 +490,7 @@ public:
 
   virtual void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &res) const;
 
-  virtual const TransformationReducer *vars () const { return 0; }
+  virtual const TransformationReducer *vars () const { return nullptr; }
   virtual bool result_is_merged () const { return false; }
   virtual bool requires_raw_input () const { return true; }
   virtual bool wants_variants () const { return true; }
@@ -557,7 +557,7 @@ public:
 
   virtual void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &res) const;
 
-  virtual const TransformationReducer *vars () const { return 0; }
+  virtual const TransformationReducer *vars () const { return nullptr; }
   virtual bool result_is_merged () const { return false; }  //  isn't merged for nested holes :(
   virtual bool requires_raw_input () const { return false; }
   virtual bool wants_variants () const { return true; }
@@ -576,7 +576,7 @@ public:
 
   virtual void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &res) const;
 
-  virtual const TransformationReducer *vars () const { return 0; }
+  virtual const TransformationReducer *vars () const { return nullptr; }
   virtual bool result_is_merged () const { return false; }   //  isn't merged for nested hulls :(
   virtual bool requires_raw_input () const { return false; }
   virtual bool wants_variants () const { return true; }

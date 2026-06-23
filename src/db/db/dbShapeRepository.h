@@ -117,7 +117,7 @@ private:
  *  @brief Collect memory statistics
  */
 template <class Sh>
-inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const repository<Sh> &x, bool no_self = false, void *parent = 0)
+inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const repository<Sh> &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }
@@ -195,7 +195,7 @@ private:
  *  @brief Collect memory statistics
  */
 template <class C>
-inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const generic_repository<C> &x, bool no_self = false, void *parent = 0)
+inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const generic_repository<C> &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }
@@ -228,7 +228,7 @@ struct shape_ref
    *  The default constructor creates a invalid polygon reference
    */
   shape_ref ()
-    : m_ptr (0)
+    : m_ptr (nullptr)
   {
     // .. nothing yet ..
   }
@@ -248,7 +248,7 @@ struct shape_ref
    *  @brief The constructor creating a reference from an actual shape
    */
   shape_ref (const shape_type &p, repository_type &rep)
-    : m_ptr (0)
+    : m_ptr (nullptr)
   {
     shape_type p_red (p);
     p_red.reduce (m_trans);
@@ -262,7 +262,7 @@ struct shape_ref
    *  repository to another
    */
   shape_ref (const shape_ref<Sh, Trans> &ref, repository_type &rep)
-    : m_ptr (0)
+    : m_ptr (nullptr)
   {
     if (! ref.is_null ()) {
       m_trans = ref.trans ();
@@ -282,7 +282,7 @@ struct shape_ref
       m_trans = ref.trans ();
       m_ptr = rep.repository (typename Sh::tag ()).insert (ref.obj ());
     } else {
-      m_ptr = 0;
+      m_ptr = nullptr;
     }
   }
 
@@ -303,7 +303,7 @@ struct shape_ref
       m_ptr = rep.repository (typename Sh::tag ()).insert (p_red);
 
     } else {
-      m_ptr = 0;
+      m_ptr = nullptr;
     }
   }
 
@@ -317,7 +317,7 @@ struct shape_ref
     if (! is_null ()) {
       m_ptr = rep.repository (typename Sh::tag ()).insert (obj ());
     } else {
-      m_ptr = 0;
+      m_ptr = nullptr;
     }
   }
 
@@ -361,7 +361,7 @@ struct shape_ref
    */
   db::box<coord_type> box () const
   {
-    tl_assert (m_ptr != 0);
+    tl_assert (m_ptr != nullptr);
     return m_trans * m_ptr->box ();
   }
 
@@ -370,7 +370,7 @@ struct shape_ref
    */
   bool is_null () const
   {
-    return m_ptr == 0;
+    return m_ptr == nullptr;
   }
 
   /**
@@ -378,7 +378,7 @@ struct shape_ref
    */
   const shape_type &obj () const
   {
-    tl_assert (m_ptr != 0);
+    tl_assert (m_ptr != nullptr);
     return *m_ptr;
   }
 
@@ -461,7 +461,7 @@ private:
  *  @brief Collect memory statistics
  */
 template <class Sh, class Tr>
-inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const shape_ref<Sh, Tr> &x, bool no_self = false, void *parent = 0)
+inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const shape_ref<Sh, Tr> &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }

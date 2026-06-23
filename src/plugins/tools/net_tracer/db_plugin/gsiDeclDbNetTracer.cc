@@ -177,10 +177,10 @@ static void trace2 (db::NetTracer *net_tracer, const db::NetTracerConnectivity &
 static db::NetTracerData get_tracer_data_from_tech (const std::string &tech_name, const db::Layout &layout)
 {
   const db::Technology *tech = db::Technologies::instance ()->technology_by_name (tech_name);
-  tl_assert (tech != 0);
+  tl_assert (tech != nullptr);
 
   const db::NetTracerTechnologyComponent *tech_component = dynamic_cast <const db::NetTracerTechnologyComponent *> (tech->component_by_name (db::net_tracer_component_name ()));
-  tl_assert (tech_component != 0);
+  tl_assert (tech_component != nullptr);
 
   if (tech_component->size () < 1) {
     throw tl::Exception (tl::to_string (tr ("No connectivity setup exists for technology '%s'")), tech_name);
@@ -195,10 +195,10 @@ static db::NetTracerData get_tracer_data_from_tech (const std::string &tech_name
 static db::NetTracerData get_tracer_data_from_tech (const std::string &tech_name, const std::string &name, const db::Layout &layout)
 {
   const db::Technology *tech = db::Technologies::instance ()->technology_by_name (tech_name);
-  tl_assert (tech != 0);
+  tl_assert (tech != nullptr);
 
   const db::NetTracerTechnologyComponent *tech_component = dynamic_cast <const db::NetTracerTechnologyComponent *> (tech->component_by_name (db::net_tracer_component_name ()));
-  tl_assert (tech_component != 0);
+  tl_assert (tech_component != nullptr);
 
   for (auto t = tech_component->begin (); t != tech_component->end (); ++t) {
     if (t->name () == name) {

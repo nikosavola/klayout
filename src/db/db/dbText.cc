@@ -84,7 +84,7 @@ static db::VAlign extract_valign (tl::Extractor &ex)
 //  StringRepository implementation
 
 static StringRepository s_repository;
-static StringRepository *sp_repository = 0;
+static StringRepository *sp_repository = nullptr;
 static tl::Mutex s_repository_lock;
 
 StringRepository *
@@ -101,7 +101,7 @@ StringRepository::StringRepository ()
 StringRepository::~StringRepository ()
 {
   if (sp_repository == this) {
-    sp_repository = 0;
+    sp_repository = nullptr;
   }
 
   for (std::set<StringRef *>::const_iterator s = m_string_refs.begin (); s != m_string_refs.end (); ++s) {

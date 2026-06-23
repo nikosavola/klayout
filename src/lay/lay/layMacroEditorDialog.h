@@ -272,7 +272,7 @@ protected:
 
 private:
   lay::MacroEditorTree *current_macro_tree ();
-  lym::Macro *create_macro_here(const char *name = 0);
+  lym::Macro *create_macro_here(const char *name = nullptr);
   void move_subfolder (lym::MacroCollection *source, lym::MacroCollection *target);
   lay::MacroEditorPage *create_page (lym::Macro *macro);
   void open_macro (lym::Macro *macro);

@@ -40,7 +40,7 @@ public:
     : lay::Plugin (view), mp_view (view)
   {
     if (lay::has_gui ()) {
-      mp_dialog = new lay::DiffToolDialog (0);
+      mp_dialog = new lay::DiffToolDialog (nullptr);
     }
   }
 
@@ -90,7 +90,7 @@ public:
   virtual lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
   {
     // .. nothing yet ..
-    return 0;
+    return nullptr;
   }
 
   virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const

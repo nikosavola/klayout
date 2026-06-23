@@ -141,7 +141,7 @@ ProgressBarWidget::resizeEvent (QResizeEvent *)
 
 ProgressWidget::ProgressWidget (ProgressReporter *pr, QWidget *parent, bool fw)
   : QFrame (parent),
-    mp_widget (0), mp_pr (pr), m_log_file (0, true), m_log_visible (false)
+    mp_widget (nullptr), mp_pr (pr), m_log_file (0, true), m_log_visible (false)
 {
   QVBoxLayout *top_layout = new QVBoxLayout (this);
   top_layout->addStretch (1);
@@ -247,8 +247,8 @@ ProgressWidget::ProgressWidget (ProgressReporter *pr, QWidget *parent, bool fw)
 void
 ProgressWidget::set_log_visible (tl::Progress *progress)
 {
-  if ((progress != 0) != m_log_visible) {
-    m_log_visible = (progress != 0);
+  if ((progress != nullptr) != m_log_visible) {
+    m_log_visible = (progress != nullptr);
     mp_log_frame->setVisible (m_log_visible);
     mp_log_label->setText (progress ? tl::to_qstring (progress->desc ()) : QString ());
     set_full_width (m_full_width);
@@ -293,7 +293,7 @@ ProgressWidget::remove_widget ()
 {
   if (mp_widget) {
     delete mp_widget;
-    mp_widget = 0;
+    mp_widget = nullptr;
   }
 }
 
@@ -343,7 +343,7 @@ ProgressWidget::set_progress (tl::Progress *progress)
       pb->set_value (v, value);
 
       if (progress->final ()) {
-        progress = 0;
+        progress = nullptr;
       } else {
         progress = progress->next ();
       }

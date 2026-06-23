@@ -552,7 +552,7 @@ CellSelectionForm::hide_cell ()
 
 LibraryCellSelectionForm::LibraryCellSelectionForm (QWidget *parent, db::Layout *layout, const char *name, bool all_cells, bool top_cells_only, bool hide_private)
   : QDialog (parent),
-    mp_lib (0), mp_layout (layout),
+    mp_lib (nullptr), mp_layout (layout),
     m_name_cb_enabled (true),
     m_cells_cb_enabled (true),
     m_cell_index (-1),
@@ -589,7 +589,7 @@ LibraryCellSelectionForm::LibraryCellSelectionForm (QWidget *parent, db::Layout 
 
 LibraryCellSelectionForm::LibraryCellSelectionForm (QWidget *parent, const char *name, bool all_cells, bool top_cells_only, bool hide_private)
   : QDialog (parent),
-    mp_lib (0), mp_layout (0),
+    mp_lib (nullptr), mp_layout (nullptr),
     m_name_cb_enabled (true),
     m_cells_cb_enabled (true),
     m_cell_index (-1),
@@ -638,7 +638,7 @@ void
 LibraryCellSelectionForm::lib_changed ()
 {
   mp_lib = mp_ui->lib_cb->current_library ();
-  mp_layout = mp_lib ? &mp_lib->layout () : 0;
+  mp_layout = mp_lib ? &mp_lib->layout () : nullptr;
   update_cell_list ();  
 }
 
@@ -646,7 +646,7 @@ void
 LibraryCellSelectionForm::set_current_library (db::Library *lib)
 {
   mp_lib = lib;
-  mp_layout = mp_lib ? &mp_lib->layout () : 0;
+  mp_layout = mp_lib ? &mp_lib->layout () : nullptr;
   update_cell_list ();
 }
 

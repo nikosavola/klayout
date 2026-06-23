@@ -290,7 +290,7 @@ std::string combine_path (const std::string &p1, const std::string &p2, bool alw
 std::string dirname (const std::string &s)
 {
   std::vector<std::string> parts = split_path (s, true /*keep last part*/);
-  if (parts.size () > 0) {
+  if (!parts.empty()) {
     parts.pop_back ();
   }
 
@@ -304,7 +304,7 @@ std::string dirname (const std::string &s)
 std::string filename (const std::string &s)
 {
   std::vector<std::string> parts = split_path (s, true /*keep last part*/);
-  if (parts.size () > 0) {
+  if (!parts.empty()) {
     return trimmed_part (parts.back ());
   } else {
     return std::string ();
@@ -314,7 +314,7 @@ std::string filename (const std::string &s)
 std::string basename (const std::string &s)
 {
   std::vector<std::string> fnp = split_filename (filename (s));
-  if (fnp.size () > 0) {
+  if (!fnp.empty()) {
     return fnp.front ();
   } else {
     return std::string ();
@@ -324,7 +324,7 @@ std::string basename (const std::string &s)
 std::string complete_basename (const std::string &s)
 {
   std::vector<std::string> fnp = split_filename (filename (s));
-  if (fnp.size () > 0) {
+  if (!fnp.empty()) {
     fnp.pop_back ();
     return tl::join (fnp, ".");
   } else {
@@ -335,7 +335,7 @@ std::string complete_basename (const std::string &s)
 std::string extension (const std::string &s)
 {
   std::vector<std::string> fnp = split_filename (filename (s));
-  if (fnp.size () > 0) {
+  if (!fnp.empty()) {
     fnp.erase (fnp.begin ());
   }
   return tl::join (fnp, ".");
@@ -408,7 +408,7 @@ std::vector<std::string> dir_entries (const std::string &s, bool with_files, boo
   if (h) {
 
     struct dirent *d;
-    while ((d = readdir (h)) != NULL) {
+    while ((d = readdir (h)) != nullptr) {
 
       std::string e = tl::to_string_from_local (d->d_name);
       if (e.empty () || e == "." || e == "..") {
@@ -689,7 +689,7 @@ mv_dir_recursive (const std::string &source, const std::string &target)
 std::string absolute_path (const std::string &s)
 {
   std::vector<std::string> parts = split_path (absolute_file_path (s));
-  if (parts.size () > 0) {
+  if (!parts.empty()) {
     parts.pop_back ();
   }
 
@@ -711,8 +711,8 @@ std::string current_dir ()
 
 #else
 
-  char *cwd = getcwd (NULL, 0);
-  if (cwd == NULL) {
+  char *cwd = getcwd (nullptr, 0);
+  if (cwd == nullptr) {
     return std::string ();
   } else {
     std::string cwds (tl::to_string_from_local (cwd));
@@ -748,8 +748,8 @@ static std::pair<std::string, bool> absolute_path_of_existing (const std::string
 #else
 
   char *fp;
-  fp = realpath (tl::to_local (s).c_str (), NULL);
-  if (fp == NULL) {
+  fp = realpath (tl::to_local (s).c_str (), nullptr);
+  if (fp == nullptr) {
     return std::make_pair (std::string (), false);
   } else {
     std::string fps (tl::to_string_from_local (fp));
@@ -763,7 +763,7 @@ static std::pair<std::string, bool> absolute_path_of_existing (const std::string
 bool is_absolute (const std::string &s)
 {
   //  ~ paths are always absolute, because the home directory is
-  if (s.size () > 0 && s[0] == '~') {
+  if (!s.empty() && s[0] == '~') {
     return true;
   }
 
@@ -780,7 +780,7 @@ bool is_absolute (const std::string &s)
 std::string absolute_file_path (const std::string &s)
 {
   //  ~ paths are always absolute, because the home directory is
-  if (s.size () > 0 && s[0] == '~') {
+  if (!s.empty() && s[0] == '~') {
     return get_home_path () + std::string (s, 1);
   }
 
@@ -1170,7 +1170,7 @@ tmpdir (const std::string &domain)
     throw tl::Exception (tl::to_string (tr ("Unable to create temporary folder in %s")), tmp);
   }
 #else
-  if (mkdtemp (tmpstr) == NULL) {
+  if (mkdtemp (tmpstr) == nullptr) {
     free (tmpstr);
     throw tl::Exception (tl::to_string (tr ("Unable to create temporary folder in %s")), tmp);
   }

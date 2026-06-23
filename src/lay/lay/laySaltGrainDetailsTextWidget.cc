@@ -49,7 +49,7 @@ SaltGrainDetailsTextWidget::set_grain (const SaltGrain *g)
   if (g) {
     mp_grain.reset (new SaltGrain (*g));
   } else {
-    mp_grain.reset (0);
+    mp_grain.reset (nullptr);
   }
   setHtml (details_text ());
 }

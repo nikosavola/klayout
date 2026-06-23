@@ -158,8 +158,8 @@ PluginDeclaration::init_menu (lay::Dispatcher *dispatcher)
 {
   lay::AbstractMenu &menu = *dispatcher->menu ();
 
-  mp_editable_mode_action.reset ((Action *) 0);
-  mp_mouse_mode_action.reset ((Action *) 0);
+  mp_editable_mode_action.reset ((Action *) nullptr);
+  mp_mouse_mode_action.reset ((Action *) nullptr);
 
   std::string title;
 
@@ -216,7 +216,7 @@ PluginDeclaration::init_menu (lay::Dispatcher *dispatcher)
 
     } else {
 
-      Action *action = 0;
+      Action *action = nullptr;
 
       if (! m->cname.empty ()) {
         action = new ConfigureAction (m->title, m->cname, m->cvalue);
@@ -341,7 +341,7 @@ PluginDeclaration::get_editor_options_pages (std::vector<lay::EditorOptionsPage 
 
   auto reg = tl::Registrar<lay::EditorOptionsPageFactoryBase>::get_instance ();
   for (auto i = reg->begin (); i != reg->end (); ++i) {
-    lay::EditorOptionsPage *page = 0;
+    lay::EditorOptionsPage *page = nullptr;
     if (i->name () == n) {
       page = i->create_page (view, dispatcher);
       if (page) {
@@ -383,13 +383,13 @@ PluginDeclaration::get_additional_editor_options_pages (std::vector<EditorOption
 //  Plugin implementation
 
 Plugin::Plugin (Plugin *parent, bool standalone)
-  : mp_parent (0), mp_plugin_declaration (0), dm_finalize_config (this, &lay::Plugin::config_end), m_standalone (false)
+  : mp_parent (nullptr), mp_plugin_declaration (nullptr), dm_finalize_config (this, &lay::Plugin::config_end), m_standalone (false)
 {
   init (parent, standalone);
 }
 
 Plugin::Plugin ()
-  : mp_parent (0), mp_plugin_declaration (0), dm_finalize_config (this, &lay::Plugin::config_end), m_standalone (false)
+  : mp_parent (nullptr), mp_plugin_declaration (nullptr), dm_finalize_config (this, &lay::Plugin::config_end), m_standalone (false)
 {
   //  .. nothing yet (waiting for init) ..
 }
@@ -422,7 +422,7 @@ Plugin::~Plugin ()
   }
   //  remove us from the children's parent
   for (auto c = m_children.begin (); c != m_children.end (); ++c) {
-    c->mp_parent = 0;
+    c->mp_parent = nullptr;
   }
 }
 

@@ -182,7 +182,7 @@ CIFValidNameGenerator<ID>::clear ()
 //  CIFWriter implementation
 
 CIFWriter::CIFWriter ()
-  : mp_stream (0),
+  : mp_stream (nullptr),
     m_progress (tl::to_string (tr ("Writing CIF file")), 10000),
     m_needs_emit (false)
 {
@@ -247,7 +247,7 @@ CIFWriter::write (db::Layout &layout, tl::OutputStream &stream, const db::SaveLa
     }
   }
 
-  time_t t = time(NULL);
+  time_t t = time(nullptr);
   struct tm tt = *localtime(&t);
 
   char timestr[100];

@@ -54,19 +54,19 @@ void LayoutToNetlistWriterBase::write (const db::LayoutToNetlist *l2n)
 //  TokenizedOutput implementation
 
 TokenizedOutput::TokenizedOutput (tl::OutputStream &s)
-  : mp_stream (&s), mp_parent (0), m_first (true), m_inline (false), m_newline (false), m_indent (-1)
+  : mp_stream (&s), mp_parent (nullptr), m_first (true), m_inline (false), m_newline (false), m_indent (-1)
 {
   //  .. nothing yet ..
 }
 
 TokenizedOutput::TokenizedOutput (tl::OutputStream &s, const std::string &token)
-  : mp_stream (&s), mp_parent (0), m_first (true), m_inline (false), m_newline (false), m_indent (0)
+  : mp_stream (&s), mp_parent (nullptr), m_first (true), m_inline (false), m_newline (false), m_indent (0)
 {
   stream () << token << "(";
 }
 
 TokenizedOutput::TokenizedOutput (tl::OutputStream &s, int indent, const std::string &token)
-  : mp_stream (&s), mp_parent (0), m_first (true), m_inline (false), m_newline (false)
+  : mp_stream (&s), mp_parent (nullptr), m_first (true), m_inline (false), m_newline (false)
 {
   m_indent = indent;
   for (int i = 0; i < m_indent; ++i) {
@@ -170,7 +170,7 @@ namespace l2n_std_format
 
 template <class Keys>
 std_writer_impl<Keys>::std_writer_impl (tl::OutputStream &stream, double dbu, const std::string &progress_description)
-  : mp_stream (&stream), m_dbu (dbu), mp_netlist (0),
+  : mp_stream (&stream), m_dbu (dbu), mp_netlist (nullptr),
     m_progress (progress_description.empty () ? tl::to_string (tr ("Writing L2N database")) : progress_description, 10000)
 {
   m_progress.set_format (tl::to_string (tr ("%.0f MB")));
@@ -248,15 +248,15 @@ void std_writer_impl<Keys>::write (const db::LayoutToNetlist *l2n)
 
     {
       TokenizedOutput stream (*mp_stream);
-      write (false, stream, 0);
+      write (false, stream, nullptr);
     }
 
-    mp_netlist = 0;
-    mp_l2n = 0;
+    mp_netlist = nullptr;
+    mp_l2n = nullptr;
 
   } catch (...) {
-    mp_netlist = 0;
-    mp_l2n = 0;
+    mp_netlist = nullptr;
+    mp_l2n = nullptr;
     throw;
   }
 }
@@ -271,12 +271,12 @@ void std_writer_impl<Keys>::write (TokenizedOutput &stream, bool nested, const d
 
     write (nested, stream, net2id_per_circuit);
 
-    mp_netlist = 0;
-    mp_l2n = 0;
+    mp_netlist = nullptr;
+    mp_l2n = nullptr;
 
   } catch (...) {
-    mp_netlist = 0;
-    mp_l2n = 0;
+    mp_netlist = nullptr;
+    mp_l2n = nullptr;
     throw;
   }
 }
@@ -346,7 +346,7 @@ void std_writer_impl<Keys>::write (bool nested, TokenizedOutput &stream, std::ma
 {
   const int version = 0;
 
-  const db::Layout *ly = mp_l2n ? mp_l2n->internal_layout () : 0;
+  const db::Layout *ly = mp_l2n ? mp_l2n->internal_layout () : nullptr;
 
   if (! nested) {
     stream << Keys::l2n_magic_string << endl;
@@ -861,7 +861,7 @@ void std_writer_impl<Keys>::write (TokenizedOutput &stream, const db::DCplxTrans
 template <class Keys>
 void std_writer_impl<Keys>::write (TokenizedOutput &stream, const db::Device &device, std::map<const Net *, unsigned int> &net2id)
 {
-  tl_assert (device.device_class () != 0);
+  tl_assert (device.device_class () != nullptr);
   const std::vector<DeviceTerminalDefinition> &td = device.device_class ()->terminal_definitions ();
   const std::vector<DeviceParameterDefinition> &pd = device.device_class ()->parameter_definitions ();
 

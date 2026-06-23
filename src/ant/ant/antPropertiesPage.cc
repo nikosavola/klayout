@@ -155,7 +155,7 @@ PropertiesPage::get_points (db::DPoint &p1, db::DPoint &p2)
 
   try {
     tl::from_string_ext (tl::to_string (x1->text ()), dx1);
-    lay::indicate_error (x1, (tl::Exception *) 0);
+    lay::indicate_error (x1, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (x1, &ex);
     has_error = true;
@@ -163,7 +163,7 @@ PropertiesPage::get_points (db::DPoint &p1, db::DPoint &p2)
 
   try {
     tl::from_string_ext (tl::to_string (x2->text ()), dx2);
-    lay::indicate_error (x2, (tl::Exception *) 0);
+    lay::indicate_error (x2, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (x2, &ex);
     has_error = true;
@@ -171,7 +171,7 @@ PropertiesPage::get_points (db::DPoint &p1, db::DPoint &p2)
 
   try {
     tl::from_string_ext (tl::to_string (y1->text ()), dy1);
-    lay::indicate_error (y1, (tl::Exception *) 0);
+    lay::indicate_error (y1, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (y1, &ex);
     has_error = true;
@@ -179,7 +179,7 @@ PropertiesPage::get_points (db::DPoint &p1, db::DPoint &p2)
 
   try {
     tl::from_string_ext (tl::to_string (y2->text ()), dy2);
-    lay::indicate_error (y2, (tl::Exception *) 0);
+    lay::indicate_error (y2, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (y2, &ex);
     has_error = true;
@@ -201,7 +201,7 @@ PropertiesPage::get_point (db::DPoint &p)
 
   try {
     tl::from_string_ext (tl::to_string (x0->text ()), dx);
-    lay::indicate_error (x0, (tl::Exception *) 0);
+    lay::indicate_error (x0, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (x0, &ex);
     has_error = true;
@@ -209,7 +209,7 @@ PropertiesPage::get_point (db::DPoint &p)
 
   try {
     tl::from_string_ext (tl::to_string (y0->text ()), dy);
-    lay::indicate_error (y0, (tl::Exception *) 0);
+    lay::indicate_error (y0, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (y0, &ex);
     has_error = true;
@@ -241,7 +241,7 @@ PropertiesPage::get_points (ant::Object::point_list &points)
       points.push_back (db::DPoint (x, y));
     }
 
-    lay::indicate_error (points_edit, (tl::Exception *) 0);
+    lay::indicate_error (points_edit, (tl::Exception *) nullptr);
 
   } catch (tl::Exception &ex) {
     lay::indicate_error (points_edit, &ex);
@@ -284,7 +284,7 @@ PropertiesPage::snap_to_layout_clicked ()
   }
 
   ant::Service *service = dynamic_cast<ant::Service *> (editable ());
-  tl_assert (service != 0);
+  tl_assert (service != nullptr);
 
   db::DPoint p1, p2;
   get_points (p1, p2);
@@ -465,18 +465,18 @@ PropertiesPage::update_with (const ant::Object &obj)
 
   //  change tabs if required
   if (segments_tab->currentIndex () == 1) {
-    if (obj.points ().size () > 2 || obj.points ().size () == 0) {
+    if (obj.points ().size () > 2 || obj.points ().empty()) {
       segments_tab->setCurrentIndex (2);
     }
   } else if (segments_tab->currentIndex () == 0) {
-    if (obj.points ().size () > 2 || obj.points ().size () == 0) {
+    if (obj.points ().size () > 2 || obj.points ().empty()) {
       segments_tab->setCurrentIndex (2);
     } else if (obj.points ().size () > 1) {
       segments_tab->setCurrentIndex (1);
     }
   }
   segments_tab->setTabEnabled (0, obj.points ().size () == 1);
-  segments_tab->setTabEnabled (1, obj.points ().size () <= 2 && obj.points ().size () > 0);
+  segments_tab->setTabEnabled (1, obj.points ().size () <= 2 && !obj.points ().empty());
 
   point_list->clear ();
   for (auto p = obj.points ().begin (); p != obj.points ().end (); ++p) {

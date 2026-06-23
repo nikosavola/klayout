@@ -338,8 +338,8 @@ Object::seg_p2 (size_t seg_index, const db::DPoint &p)
 void
 Object::p1 (const db::DPoint &p)
 {
-  if (m_points.size () < 1 || ! p1 ().equal (p)) {
-    if (m_points.size () < 1) {
+  if (m_points.empty() || ! p1 ().equal (p)) {
+    if (m_points.empty()) {
       m_points.push_back (p);
     } else {
       m_points.front () = p;
@@ -451,7 +451,7 @@ public:
 
   void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector <tl::Variant> &vv, const std::map<std::string, tl::Variant> * /*kwargs*/) const
   {
-    if (vv.size () != 0) {
+    if (!vv.empty()) {
       throw tl::EvalError (tl::to_string (tr ("Annotation function must not have arguments")), context);
     }
 

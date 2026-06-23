@@ -68,7 +68,7 @@ struct DB_PUBLIC TextStringFilter
    */
   virtual const TransformationReducer *vars () const
   {
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -128,7 +128,7 @@ struct DB_PUBLIC TextPatternFilter
    */
   virtual const TransformationReducer *vars () const
   {
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -174,7 +174,7 @@ public:
 
   void add (const db::TextRef *t, size_t, const db::Polygon *p, size_t)
   {
-    const OutputType *tt = 0;
+    const OutputType *tt = nullptr;
     tl::select (tt, t, p);
 
     if (m_seen.find (tt) == m_seen.end ()) {
@@ -187,7 +187,7 @@ public:
 
   void add (const db::Text *t, size_t, const db::Polygon *p, size_t)
   {
-    const OutputType *tt = 0;
+    const OutputType *tt = nullptr;
     tl::select (tt, t, p);
 
     if (m_seen.find (tt) == m_seen.end ()) {

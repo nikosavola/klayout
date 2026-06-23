@@ -55,7 +55,7 @@ TL_PUBLIC RegistrarBase *registrar_instance_by_type (const std::type_info &ti)
   if (im != map.end ()) {
     return im->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 

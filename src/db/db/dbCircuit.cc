@@ -58,7 +58,7 @@ join_names (const std::string &n1, const std::string &n2)
 //  Circuit class implementation
 
 Circuit::Circuit ()
-  : db::NetlistObject (), gsi::ObjectBase (), m_dont_purge (false), m_cell_index (0), mp_netlist (0),
+  : db::NetlistObject (), gsi::ObjectBase (), m_dont_purge (false), m_cell_index (0), mp_netlist (nullptr),
     m_device_by_id (this, &Circuit::begin_devices, &Circuit::end_devices),
     m_subcircuit_by_id (this, &Circuit::begin_subcircuits, &Circuit::end_subcircuits),
     m_net_by_cluster_id (this, &Circuit::begin_nets, &Circuit::end_nets),
@@ -73,7 +73,7 @@ Circuit::Circuit ()
 }
 
 Circuit::Circuit (const db::Layout &layout, db::cell_index_type ci)
-  : db::NetlistObject (), gsi::ObjectBase (), m_name (layout.cell_name (ci)), m_dont_purge (false), m_cell_index (ci), mp_netlist (0),
+  : db::NetlistObject (), gsi::ObjectBase (), m_name (layout.cell_name (ci)), m_dont_purge (false), m_cell_index (ci), mp_netlist (nullptr),
     m_device_by_id (this, &Circuit::begin_devices, &Circuit::end_devices),
     m_subcircuit_by_id (this, &Circuit::begin_subcircuits, &Circuit::end_subcircuits),
     m_net_by_cluster_id (this, &Circuit::begin_nets, &Circuit::end_nets),
@@ -90,7 +90,7 @@ Circuit::Circuit (const db::Layout &layout, db::cell_index_type ci)
 }
 
 Circuit::Circuit (const Circuit &other)
-  : db::NetlistObject (other), gsi::ObjectBase (other), m_dont_purge (false), m_cell_index (0), mp_netlist (0),
+  : db::NetlistObject (other), gsi::ObjectBase (other), m_dont_purge (false), m_cell_index (0), mp_netlist (nullptr),
     m_device_by_id (this, &Circuit::begin_devices, &Circuit::end_devices),
     m_subcircuit_by_id (this, &Circuit::begin_subcircuits, &Circuit::end_subcircuits),
     m_net_by_cluster_id (this, &Circuit::begin_nets, &Circuit::end_nets),
@@ -191,11 +191,11 @@ void Circuit::set_netlist (Netlist *netlist)
 const Pin *Circuit::pin_by_id (size_t id) const
 {
   if (id >= m_pin_by_id.size ()) {
-    return 0;
+    return nullptr;
   } else {
     pin_list::iterator pi = m_pin_by_id [id];
     if (tl::is_null_iterator (pi)) {
-      return 0;
+      return nullptr;
     } else {
       return pi.operator-> ();
     }
@@ -218,7 +218,7 @@ const Pin *Circuit::pin_by_name (const std::string &name) const
       return p.operator-> ();
     }
   }
-  return 0;
+  return nullptr;
 }
 
 void Circuit::devices_changed ()
@@ -282,49 +282,49 @@ void Circuit::set_cell_index (const db::cell_index_type ci)
 
 Circuit::child_circuit_iterator Circuit::begin_children ()
 {
-  tl_assert (mp_netlist != 0);
+  tl_assert (mp_netlist != nullptr);
   return mp_netlist->child_circuits (this).begin ();
 }
 
 Circuit::child_circuit_iterator Circuit::end_children ()
 {
-  tl_assert (mp_netlist != 0);
+  tl_assert (mp_netlist != nullptr);
   return mp_netlist->child_circuits (this).end ();
 }
 
 Circuit::const_child_circuit_iterator Circuit::begin_children () const
 {
-  tl_assert (mp_netlist != 0);
+  tl_assert (mp_netlist != nullptr);
   return reinterpret_cast<const tl::vector<const Circuit *> &> (mp_netlist->child_circuits (const_cast <Circuit *> (this))).begin ();
 }
 
 Circuit::const_child_circuit_iterator Circuit::end_children () const
 {
-  tl_assert (mp_netlist != 0);
+  tl_assert (mp_netlist != nullptr);
   return reinterpret_cast<const tl::vector<const Circuit *> &> (mp_netlist->child_circuits (const_cast <Circuit *> (this))).end ();
 }
 
 Circuit::child_circuit_iterator Circuit::begin_parents ()
 {
-  tl_assert (mp_netlist != 0);
+  tl_assert (mp_netlist != nullptr);
   return mp_netlist->parent_circuits (this).begin ();
 }
 
 Circuit::child_circuit_iterator Circuit::end_parents ()
 {
-  tl_assert (mp_netlist != 0);
+  tl_assert (mp_netlist != nullptr);
   return mp_netlist->parent_circuits (this).end ();
 }
 
 Circuit::const_child_circuit_iterator Circuit::begin_parents () const
 {
-  tl_assert (mp_netlist != 0);
+  tl_assert (mp_netlist != nullptr);
   return reinterpret_cast<const tl::vector<const Circuit *> &> (mp_netlist->parent_circuits (const_cast <Circuit *> (this))).begin ();
 }
 
 Circuit::const_child_circuit_iterator Circuit::end_parents () const
 {
-  tl_assert (mp_netlist != 0);
+  tl_assert (mp_netlist != nullptr);
   return reinterpret_cast<const tl::vector<const Circuit *> &> (mp_netlist->parent_circuits (const_cast <Circuit *> (this))).end ();
 }
 
@@ -436,7 +436,7 @@ void Circuit::add_device (Device *device)
 
   size_t id = 0;
   if (! m_devices.empty ()) {
-    tl_assert (m_devices.back () != 0);
+    tl_assert (m_devices.back () != nullptr);
     id = m_devices.back ()->id ();
   }
   device->set_id (id + 1);
@@ -474,7 +474,7 @@ void Circuit::add_subcircuit (SubCircuit *subcircuit)
 
   size_t id = 0;
   if (! m_subcircuits.empty ()) {
-    tl_assert (m_subcircuits.back () != 0);
+    tl_assert (m_subcircuits.back () != nullptr);
     id = m_subcircuits.back ()->id ();
   }
   subcircuit->set_id (id + 1);
@@ -526,7 +526,7 @@ void Circuit::flatten_subcircuit (SubCircuit *subcircuit)
 
   for (db::Circuit::const_net_iterator n = c->begin_nets (); n != c->end_nets (); ++n) {
 
-    db::Net *outside_net = 0;
+    db::Net *outside_net = nullptr;
 
     if (n->pin_count () > 0) {
 
@@ -653,7 +653,7 @@ bool Circuit::is_empty () const
 
 void Circuit::blank ()
 {
-  tl_assert (netlist () != 0);
+  tl_assert (netlist () != nullptr);
 
   std::set<db::Circuit *> cs;
   for (subcircuit_iterator i = m_subcircuits.begin (); i != m_subcircuits.end (); ++i) {
@@ -688,7 +688,7 @@ const Net *Circuit::net_for_pin (size_t pin_id) const
       return p->net ();
     }
   }
-  return 0;
+  return nullptr;
 }
 
 void Circuit::connect_pin (size_t pin_id, Net *net)
@@ -867,12 +867,12 @@ void Circuit::purge_devices ()
  */
 static void check_device_before_remove (db::Circuit *c, const db::Device *d)
 {
-  if (d->device_class () == 0) {
+  if (d->device_class () == nullptr) {
     throw tl::Exception (tl::to_string (tr ("Internal error: No device class after removing device in device combination")) + ": name=" + d->name () + ", circuit=" + c->name ());
   }
   const std::vector<db::DeviceTerminalDefinition> &pd = d->device_class ()->terminal_definitions ();
   for (std::vector<db::DeviceTerminalDefinition>::const_iterator p = pd.begin (); p != pd.end (); ++p) {
-    if (d->net_for_terminal (p->id ()) != 0) {
+    if (d->net_for_terminal (p->id ()) != nullptr) {
       throw tl::Exception (tl::to_string (tr ("Internal error: Terminal still connected after removing device in device combination")) + ": name=" + d->name () + ", circuit=" + c->name () + ", terminal=" + p->name ());
     }
   }
@@ -934,28 +934,28 @@ bool Circuit::combine_parallel_devices (const db::DeviceClass &cls)
 static std::pair<db::Device *, db::Device *> attached_two_devices (db::Net &net, const db::DeviceClass &cls)
 {
   if (net.begin_pins () != net.end_pins ()) {
-    return std::make_pair ((db::Device *) 0, (db::Device *) 0);
+    return std::make_pair ((db::Device *) nullptr, (db::Device *) nullptr);
   }
 
-  db::Device *d1 = 0, *d2 = 0;
+  db::Device *d1 = nullptr, *d2 = nullptr;
 
   Net::terminal_iterator p = net.begin_terminals ();
   if (p == net.end_terminals () || tl::id_of (p->device_class ()) != tl::id_of (&cls)) {
-    return std::make_pair ((db::Device *) 0, (db::Device *) 0);
+    return std::make_pair ((db::Device *) nullptr, (db::Device *) nullptr);
   } else {
     d1 = p->device ();
   }
 
   ++p;
   if (p == net.end_terminals () || tl::id_of (p->device_class ()) != tl::id_of (&cls)) {
-    return std::make_pair ((db::Device *) 0, (db::Device *) 0);
+    return std::make_pair ((db::Device *) nullptr, (db::Device *) nullptr);
   } else {
     d2 = p->device ();
   }
 
   ++p;
   if (p != net.end_terminals () || d1 == d2 || !d1 || !d2) {
-    return std::make_pair ((db::Device *) 0, (db::Device *) 0);
+    return std::make_pair ((db::Device *) nullptr, (db::Device *) nullptr);
   } else {
     return std::make_pair (d1, d2);
   }
@@ -1020,7 +1020,7 @@ bool Circuit::combine_serial_devices(const db::DeviceClass &cls)
 
 void Circuit::combine_devices ()
 {
-  tl_assert (netlist () != 0);
+  tl_assert (netlist () != nullptr);
 
   for (Netlist::device_class_iterator dc = netlist ()->begin_device_classes (); dc != netlist ()->end_device_classes (); ++dc) {
 

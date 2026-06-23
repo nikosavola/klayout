@@ -149,19 +149,19 @@ private:
 
 //  Some standard templates to collect the information
 template <class X>
-void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const X &x, bool no_self = false, void *parent = 0)
+void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const X &x, bool no_self = false, void *parent = nullptr)
 {
   if (! no_self) {
     stat->add (typeid (X), (void *) &x, sizeof (X), sizeof (X), parent, purpose, cat);
   }
 }
 
-void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::string &x, bool no_self = false, void *parent = 0);
+void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::string &x, bool no_self = false, void *parent = nullptr);
 
-void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const tl::Variant &x, bool no_self = false, void *parent = 0);
+void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const tl::Variant &x, bool no_self = false, void *parent = nullptr);
 
 template <class X>
-void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const tl::reuse_vector<X> &v, bool no_self = false, void *parent = 0)
+void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const tl::reuse_vector<X> &v, bool no_self = false, void *parent = nullptr)
 {
   if (! no_self) {
     stat->add (typeid (v), (void *) &v, sizeof (v), sizeof (v), parent, purpose, cat);
@@ -178,7 +178,7 @@ void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, c
 }
 
 template <class X>
-void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const tl::vector<X> &v, bool no_self = false, void *parent = 0)
+void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const tl::vector<X> &v, bool no_self = false, void *parent = nullptr)
 {
   if (! no_self) {
     stat->add (typeid (v), (void *) &v, sizeof (v), sizeof (v), parent, purpose, cat);
@@ -192,7 +192,7 @@ void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, c
 }
 
 template <class X>
-void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::vector<X> &v, bool no_self = false, void *parent = 0)
+void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::vector<X> &v, bool no_self = false, void *parent = nullptr)
 {
   if (! no_self) {
     stat->add (typeid (v), (void *) &v, sizeof (v), sizeof (v), parent, purpose, cat);
@@ -205,10 +205,10 @@ void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, c
   }
 }
 
-void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::vector<bool> &x, bool no_self = false, void *parent = 0);
+void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::vector<bool> &x, bool no_self = false, void *parent = nullptr);
 
 template <class X, class Y>
-void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::map<X, Y> &v, bool no_self = false, void *parent = 0)
+void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::map<X, Y> &v, bool no_self = false, void *parent = nullptr)
 {
   if (! no_self) {
     stat->add (typeid (v), (void *) &v, sizeof (v), sizeof (v), parent, purpose, cat);
@@ -223,7 +223,7 @@ void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, c
 }
 
 template <class X, class Y>
-void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::unordered_map<X, Y> &v, bool no_self = false, void *parent = 0)
+void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::unordered_map<X, Y> &v, bool no_self = false, void *parent = nullptr)
 {
   if (! no_self) {
     stat->add (typeid (v), (void *) &v, sizeof (v), sizeof (v), parent, purpose, cat);
@@ -236,7 +236,7 @@ void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, c
 }
 
 template <class X>
-void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::set<X> &v, bool no_self = false, void *parent = 0)
+void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::set<X> &v, bool no_self = false, void *parent = nullptr)
 {
   if (! no_self) {
     stat->add (typeid (v), (void *) &v, sizeof (v), sizeof (v), parent, purpose, cat);
@@ -251,7 +251,7 @@ void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, c
 }
 
 template <class X>
-void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::unordered_set<X> &v, bool no_self = false, void *parent = 0)
+void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::unordered_set<X> &v, bool no_self = false, void *parent = nullptr)
 {
   if (! no_self) {
     stat->add (typeid (v), (void *) &v, sizeof (v), sizeof (v), parent, purpose, cat);
@@ -263,7 +263,7 @@ void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, c
 }
 
 template <class X>
-void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::list<X> &v, bool no_self = false, void *parent = 0)
+void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::list<X> &v, bool no_self = false, void *parent = nullptr)
 {
   if (! no_self) {
     stat->add (typeid (v), (void *) &v, sizeof (v), sizeof (v), parent, purpose, cat);
@@ -278,7 +278,7 @@ void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, c
 }
 
 template <class X, class Y>
-void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::pair<X, Y> &v, bool no_self = false, void *parent = 0)
+void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const std::pair<X, Y> &v, bool no_self = false, void *parent = nullptr)
 {
   if (! no_self) {
     stat->add (typeid (v), (void *) &v, sizeof (v), sizeof (v), parent, purpose, cat);
@@ -288,7 +288,7 @@ void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, c
 }
 
 template <class X>
-void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const tl::shared_collection<X> &v, bool no_self = false, void *parent = 0)
+void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const tl::shared_collection<X> &v, bool no_self = false, void *parent = nullptr)
 {
   if (! no_self) {
     stat->add (typeid (v), (void *) &v, sizeof (v), sizeof (v), parent, purpose, cat);
@@ -301,7 +301,7 @@ void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, c
 }
 
 template <class X>
-void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const tl::weak_collection <X> &v, bool no_self = false, void *parent = 0)
+void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const tl::weak_collection <X> &v, bool no_self = false, void *parent = nullptr)
 {
   if (! no_self) {
     stat->add (typeid (v), (void *) &v, sizeof (v), sizeof (v), parent, purpose, cat);

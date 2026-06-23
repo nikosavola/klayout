@@ -41,7 +41,7 @@ public:
 
   virtual void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
   {
-    if (args.size () != 0) {
+    if (!args.empty()) {
       throw tl::EvalError (tl::to_string (tr ("'shape' function does not take arguments")), context);
     }
     out = mp_eval->shape_func ();
@@ -129,7 +129,7 @@ public:
 
   virtual void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
   {
-    if (args.size () != 0) {
+    if (!args.empty()) {
       throw tl::EvalError (tl::to_string (tr ("Property getter function does not take arguments")), context);
     }
     out = mp_eval->value_func (m_name_id);
@@ -168,7 +168,7 @@ private:
 MeasureEval::MeasureEval (double dbu, bool with_put)
   : m_shape_type (None), m_prop_id (0), m_skip (false), m_dbu (dbu), m_with_put (with_put)
 {
-  mp_shape.any = 0;
+  mp_shape.any = nullptr;
 }
 
 void
@@ -505,7 +505,7 @@ public:
 
   virtual void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
   {
-    if (args.size () != 0) {
+    if (!args.empty()) {
       throw tl::EvalError (tl::to_string (tr ("'db' function does not take any argument")), context);
     }
     out = mp_eval->db_func ();
@@ -527,7 +527,7 @@ public:
 
   virtual void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
   {
-    if (args.size () != 0) {
+    if (!args.empty()) {
       throw tl::EvalError (tl::to_string (tr ("'net' function does not take any argument")), context);
     }
     out = mp_eval->net_func ();
@@ -552,7 +552,7 @@ public:
     if (args.size () > 1) {
       throw tl::EvalError (tl::to_string (tr ("'area' function takes one optional argument (layer symbol)")), context);
     }
-    out = mp_eval->area_func (args.size () == 0 ? 0 : args [0].to_int ());
+    out = mp_eval->area_func (args.empty() ? 0 : args [0].to_int ());
   }
 
 private:
@@ -574,7 +574,7 @@ public:
     if (args.size () > 1) {
       throw tl::EvalError (tl::to_string (tr ("'perimeter' function takes one optional argument (layer symbol)")), context);
     }
-    out = mp_eval->perimeter_func (args.size () == 0 ? 0 : args [0].to_int ());
+    out = mp_eval->perimeter_func (args.empty() ? 0 : args [0].to_int ());
   }
 
 private:

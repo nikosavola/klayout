@@ -214,7 +214,7 @@ struct DB_PUBLIC_TEMPLATE hershey
   {
     m_linestarts.clear ();
 
-    if (m_string.size () > 0) {
+    if (!m_string.empty()) {
 
       if (! scale) {
 

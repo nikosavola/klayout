@@ -401,8 +401,8 @@ class LAYUI_PUBLIC SimpleColorButton
 Q_OBJECT
 
 public:
-  SimpleColorButton (QPushButton *&to_replace, const char *name = 0);
-  SimpleColorButton (QWidget *parent, const char *name = 0);
+  SimpleColorButton (QPushButton *&to_replace, const char *name = nullptr);
+  SimpleColorButton (QWidget *parent, const char *name = nullptr);
 
   QColor get_color () const;
 
@@ -433,7 +433,7 @@ class LAYUI_PUBLIC MarginWidget
 Q_OBJECT
 
 public:
-  MarginWidget (QWidget *parent, const char *name = 0);
+  MarginWidget (QWidget *parent, const char *name = nullptr);
 
   lay::Margin get_margin () const;
   void set_margin (const lay::Margin &margin);
@@ -461,8 +461,8 @@ class LAYUI_PUBLIC ColorButton
 Q_OBJECT
 
 public:
-  ColorButton (QPushButton *&to_replace, const char *name = 0);
-  ColorButton (QWidget *parent, const char *name = 0);
+  ColorButton (QPushButton *&to_replace, const char *name = nullptr);
+  ColorButton (QWidget *parent, const char *name = nullptr);
 
   QColor get_color () const;
   static void build_color_menu (QMenu *menu, QObject *receiver, const char *browse_slot, const char *selected_slot);
@@ -629,7 +629,7 @@ public:
   /**
    *  @brief Constructor
    */
-  InteractiveListWidget (QWidget *parent = 0);
+  InteractiveListWidget (QWidget *parent = nullptr);
 
   /**
    *  @brief Sets the items in the widget

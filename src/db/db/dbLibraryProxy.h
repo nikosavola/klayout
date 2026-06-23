@@ -80,7 +80,7 @@ public:
   /**
    *  @brief Update the layout
    */
-  virtual void update (ImportLayerMapping *layer_mapping = 0);
+  virtual void update (ImportLayerMapping *layer_mapping = nullptr);
 
   /**
    *  @brief Tell, if this cell is a proxy cell

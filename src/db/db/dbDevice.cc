@@ -32,7 +32,7 @@ namespace db
 //  Device class implementation
 
 Device::Device ()
-  : db::NetlistObject (), mp_device_class (0), mp_device_abstract (0), m_id (0), mp_circuit (0)
+  : db::NetlistObject (), mp_device_class (nullptr), mp_device_abstract (nullptr), m_id (0), mp_circuit (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -47,19 +47,19 @@ Device::~Device ()
 }
 
 Device::Device (DeviceClass *device_class, const std::string &name)
-  : db::NetlistObject (), mp_device_class (device_class), mp_device_abstract (0), m_name (name), m_id (0), mp_circuit (0)
+  : db::NetlistObject (), mp_device_class (device_class), mp_device_abstract (nullptr), m_name (name), m_id (0), mp_circuit (nullptr)
 {
   //  .. nothing yet ..
 }
 
 Device::Device (DeviceClass *device_class, DeviceAbstract *device_abstract, const std::string &name)
-  : db::NetlistObject (), mp_device_class (device_class), mp_device_abstract (device_abstract), m_name (name), m_id (0), mp_circuit (0)
+  : db::NetlistObject (), mp_device_class (device_class), mp_device_abstract (device_abstract), m_name (name), m_id (0), mp_circuit (nullptr)
 {
   //  .. nothing yet ..
 }
 
 Device::Device (const Device &other)
-  : db::NetlistObject (other), mp_device_class (0), mp_device_abstract (0), m_id (0), mp_circuit (0)
+  : db::NetlistObject (other), mp_device_class (nullptr), mp_device_abstract (nullptr), m_id (0), mp_circuit (nullptr)
 {
   operator= (other);
 }
@@ -93,12 +93,12 @@ void Device::set_circuit (Circuit *circuit)
 
 const Netlist *Device::netlist () const
 {
-  return mp_circuit ? mp_circuit->netlist () : 0;
+  return mp_circuit ? mp_circuit->netlist () : nullptr;
 }
 
 Netlist *Device::netlist ()
 {
-  return mp_circuit ? mp_circuit->netlist () : 0;
+  return mp_circuit ? mp_circuit->netlist () : nullptr;
 }
 
 void Device::set_name (const std::string &n)
@@ -130,7 +130,7 @@ const Net *Device::net_for_terminal (size_t terminal_id) const
       return p->net ();
     }
   }
-  return 0;
+  return nullptr;
 }
 
 const NetTerminalRef *Device::terminal_ref_for_terminal (size_t terminal_id) const
@@ -141,7 +141,7 @@ const NetTerminalRef *Device::terminal_ref_for_terminal (size_t terminal_id) con
       return p.operator-> ();
     }
   }
-  return 0;
+  return nullptr;
 }
 
 void Device::connect_terminal (size_t terminal_id, Net *net)
@@ -250,7 +250,7 @@ void Device::join_terminals (unsigned int this_terminal, db::Device *other, unsi
     init_terminal_routes ();
   }
 
-  other->connect_terminal (other_terminal, 0);
+  other->connect_terminal (other_terminal, nullptr);
 
   add_others_terminals (this_terminal, other, other_terminal);
 }
@@ -271,8 +271,8 @@ void Device::reroute_terminal (unsigned int this_terminal, db::Device *other, un
 
   connect_terminal (this_terminal, other->net_for_terminal (other_terminal));
 
-  other->connect_terminal (from_other_terminal, 0);
-  other->connect_terminal (other_terminal, 0);
+  other->connect_terminal (from_other_terminal, nullptr);
+  other->connect_terminal (other_terminal, nullptr);
 }
 
 void Device::join_device (db::Device *other)
@@ -292,7 +292,7 @@ void Device::join_device (db::Device *other)
 static db::DeviceAbstract *map_da (const std::map<const DeviceAbstract *, DeviceAbstract *> &map, const db::DeviceAbstract *da)
 {
   if (! da) {
-    return 0;
+    return nullptr;
   } else {
     std::map<const DeviceAbstract *, DeviceAbstract *>::const_iterator m = map.find (da);
     tl_assert (m != map.end ());

@@ -92,7 +92,7 @@ merge_layouts (db::Layout &target, const db::Layout &source, const db::ICplxTran
                const std::vector<db::cell_index_type> &source_cells, 
                const std::map<db::cell_index_type, db::cell_index_type> &cell_mapping,
                const std::map<unsigned int, unsigned int> &layer_mapping,
-               std::map<db::cell_index_type, db::cell_index_type> *final_cell_mapping = 0);
+               std::map<db::cell_index_type, db::cell_index_type> *final_cell_mapping = nullptr);
 
 /**
  *  @brief An interface for the shape inserter
@@ -125,7 +125,7 @@ copy_shapes (db::Layout &target,
              const std::vector<db::cell_index_type> &source_cells, 
              const std::map<db::cell_index_type, db::cell_index_type> &cell_mapping,
              const std::map<unsigned int, unsigned int> &layer_mapping,
-             const ShapesTransformer *transformer = 0);
+             const ShapesTransformer *transformer = nullptr);
 
 /**
  *  @brief Move shapes from one layout to another
@@ -143,7 +143,7 @@ move_shapes (db::Layout &target,
              const std::vector<db::cell_index_type> &source_cells, 
              const std::map<db::cell_index_type, db::cell_index_type> &cell_mapping,
              const std::map<unsigned int, unsigned int> &layer_mapping,
-             const ShapesTransformer *transformer = 0);
+             const ShapesTransformer *transformer = nullptr);
 
 /**
  *  @brief Find an example cell instance from a child to a top cell

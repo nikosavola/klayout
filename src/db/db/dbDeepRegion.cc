@@ -498,7 +498,7 @@ DeepRegion::has_valid_merged_polygons () const
 const db::RecursiveShapeIterator *
 DeepRegion::iter () const
 {
-  return 0;
+  return nullptr;
 }
 
 void DeepRegion::apply_property_translator (const db::PropertiesTranslator &pt)
@@ -764,7 +764,7 @@ DeepRegion::ensure_merged_polygons_valid () const
       db::Connectivity conn;
       conn.connect (deep_layer ());
       hc.set_base_verbosity (base_verbosity () + 10);
-      hc.build (layout, deep_layer ().initial_cell (), conn, 0, deep_layer ().breakout_cells (), ! join_properties_on_merge ());
+      hc.build (layout, deep_layer ().initial_cell (), conn, nullptr, deep_layer ().breakout_cells (), ! join_properties_on_merge ());
 
       //  collect the clusters and merge them into big polygons
       //  NOTE: using the ClusterMerger we merge bottom-up forming bigger and bigger polygons. This is
@@ -1895,8 +1895,8 @@ DeepRegion::apply_filter (const PolygonFilterBase &filter, bool with_true, bool 
 
   std::map<db::cell_index_type, std::map<db::ICplxTrans, db::Shapes> > to_commit_true, to_commit_false;
 
-  std::unique_ptr<db::DeepRegion> res_true (with_true ? new db::DeepRegion (polygons.derived ()) : 0);
-  std::unique_ptr<db::DeepRegion> res_false (with_false ? new db::DeepRegion (polygons.derived ()) : 0);
+  std::unique_ptr<db::DeepRegion> res_true (with_true ? new db::DeepRegion (polygons.derived ()) : nullptr);
+  std::unique_ptr<db::DeepRegion> res_false (with_false ? new db::DeepRegion (polygons.derived ()) : nullptr);
   for (db::Layout::iterator c = layout.begin (); c != layout.end (); ++c) {
 
     const db::Shapes &s = c->shapes (polygons.layer ());
@@ -1906,7 +1906,7 @@ DeepRegion::apply_filter (const PolygonFilterBase &filter, bool with_true, bool 
       const std::set<db::ICplxTrans> &vv = vars->variants (c->cell_index ());
       for (auto v = vv.begin (); v != vv.end (); ++v) {
 
-        db::Shapes *st_true = 0, *st_false = 0;
+        db::Shapes *st_true = nullptr, *st_false = nullptr;
         if (vv.size () == 1) {
           if (with_true) {
             st_true = & c->shapes (res_true->deep_layer ().layer ());
@@ -1943,8 +1943,8 @@ DeepRegion::apply_filter (const PolygonFilterBase &filter, bool with_true, bool 
 
     } else {
 
-      db::Shapes *st_true = with_true ? &c->shapes (res_true->deep_layer ().layer ()) : 0;
-      db::Shapes *st_false = with_false ? &c->shapes (res_false->deep_layer ().layer ()) : 0;
+      db::Shapes *st_true = with_true ? &c->shapes (res_true->deep_layer ().layer ()) : nullptr;
+      db::Shapes *st_false = with_false ? &c->shapes (res_false->deep_layer ().layer ()) : nullptr;
 
       for (db::Shapes::shape_iterator si = s.begin (db::ShapeIterator::All); ! si.at_end (); ++si) {
         db::Polygon poly;
@@ -1965,11 +1965,11 @@ DeepRegion::apply_filter (const PolygonFilterBase &filter, bool with_true, bool 
   }
 
   if (! to_commit_true.empty () && vars.get ()) {
-    tl_assert (res_true.get () != 0);
+    tl_assert (res_true.get () != nullptr);
     vars->commit_shapes (res_true->deep_layer ().layer (), to_commit_true);
   }
   if (! to_commit_false.empty () && vars.get ()) {
-    tl_assert (res_false.get () != 0);
+    tl_assert (res_false.get () != nullptr);
     vars->commit_shapes (res_false->deep_layer ().layer (), to_commit_false);
   }
 
@@ -2045,7 +2045,7 @@ DeepRegion::merged (bool min_coherence, unsigned int min_wc, bool join_propertie
   db::Connectivity conn;
   conn.connect (deep_layer ());
   hc.set_base_verbosity (base_verbosity () + 10);
-  hc.build (layout, deep_layer ().initial_cell (), conn, 0, 0, ! join_properties_on_merge);
+  hc.build (layout, deep_layer ().initial_cell (), conn, nullptr, nullptr, ! join_properties_on_merge);
 
   //  collect the clusters and merge them into big polygons
   //  NOTE: using the ClusterMerger we merge bottom-up forming bigger and bigger polygons. This is
@@ -2271,11 +2271,11 @@ DeepRegion::sized_inside (const Region &inside, bool outside, coord_type dx, coo
     //  result is granular for better deep mode performance
     if (steps > 0) {
       prev.reset (dynamic_cast<db::DeepRegion *> (res->merged ()));
-      tl_assert (prev.get () != 0);
+      tl_assert (prev.get () != nullptr);
       res.reset (new db::DeepRegion (polygons.derived ()));
     } else {
       res.reset (dynamic_cast<db::DeepRegion *> (res->processed (db::PolygonBreaker (proc.max_vertex_count (), proc.area_ratio ()))));
-      tl_assert (res.get () != 0);
+      tl_assert (res.get () != nullptr);
     }
 
   }
@@ -2291,7 +2291,7 @@ Output *region_cop_with_properties_impl (DeepRegion *region, db::CompoundRegionO
   std::vector<db::Region *> inputs = node.inputs ();
   for (std::vector<db::Region *>::const_iterator i = inputs.begin (); i != inputs.end (); ++i) {
     if (! is_subject_regionptr (*i) && ! dynamic_cast<const db::DeepRegion *> ((*i)->delegate ())) {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -2317,7 +2317,7 @@ Output *region_cop_with_properties_impl (DeepRegion *region, db::CompoundRegionO
       }
     } else {
       const db::DeepRegion *other_deep = dynamic_cast<const db::DeepRegion *> ((*i)->delegate ());
-      tl_assert (other_deep != 0);
+      tl_assert (other_deep != nullptr);
       if (&other_deep->deep_layer ().layout () != &region->deep_layer ().layout () || &other_deep->deep_layer ().initial_cell () != &region->deep_layer ().initial_cell ()) {
         throw tl::Exception (tl::to_string (tr ("Complex DeepRegion operations need to use the same layout and top cell for all inputs")));
       }
@@ -2380,7 +2380,7 @@ DeepRegion::run_check (db::edge_relation_type rel, bool different_polygons, cons
     different_polygons = true;
   }
 
-  const db::DeepRegion *other_deep = 0;
+  const db::DeepRegion *other_deep = nullptr;
   unsigned int other_layer = 0;
   bool other_is_merged = true;
 
@@ -2422,11 +2422,11 @@ DeepRegion::run_check (db::edge_relation_type rel, bool different_polygons, cons
   const db::Layout *intruder_layout = other_deep ? &other_deep->deep_layer ().layout () : &polygons.layout ();
   const db::Cell *intruder_top = other_deep ? &other_deep->deep_layer ().initial_cell () : &polygons.initial_cell ();
   const std::set<db::cell_index_type> *subject_breakout_cells = deep_layer ().breakout_cells ();
-  const std::set<db::cell_index_type> *intruder_breakout_cells = other_deep ? other_deep->deep_layer ().breakout_cells () : 0;
+  const std::set<db::cell_index_type> *intruder_breakout_cells = other_deep ? other_deep->deep_layer ().breakout_cells () : nullptr;
 
   if (options.prop_constraint == db::IgnoreProperties) {
 
-    db::CheckLocalOperation op (check, different_polygons, primary_is_merged, other_deep != 0, other_is_merged, options);
+    db::CheckLocalOperation op (check, different_polygons, primary_is_merged, other_deep != nullptr, other_is_merged, options);
 
     db::local_processor<db::PolygonRef, db::PolygonRef, db::EdgePair> proc (subject_layout, subject_top,
                                                                             intruder_layout, intruder_top,
@@ -2439,7 +2439,7 @@ DeepRegion::run_check (db::edge_relation_type rel, bool different_polygons, cons
 
   } else {
 
-    db::check_local_operation_with_properties<db::PolygonRef, db::PolygonRef> op (check, different_polygons, primary_is_merged, other_deep != 0, other_is_merged, options);
+    db::check_local_operation_with_properties<db::PolygonRef, db::PolygonRef> op (check, different_polygons, primary_is_merged, other_deep != nullptr, other_is_merged, options);
 
     db::local_processor<db::PolygonRefWithProperties, db::PolygonRefWithProperties, db::EdgePairWithProperties> proc (subject_layout, subject_top,
                                                                                                                 intruder_layout, intruder_top,
@@ -2558,20 +2558,20 @@ std::pair<RegionDelegate *, RegionDelegate *>
 DeepRegion::in_and_out_generic (const Region &other, InteractingOutputMode output_mode) const
 {
   if (output_mode == None) {
-    return std::pair<RegionDelegate *, RegionDelegate *> ((RegionDelegate *) 0, (RegionDelegate *) 0);
+    return std::pair<RegionDelegate *, RegionDelegate *> ((RegionDelegate *) nullptr, (RegionDelegate *) nullptr);
   } else if (empty ()) {
     if (output_mode == PositiveAndNegative) {
       return std::make_pair (clone (), clone ());
     } else {
-      return std::make_pair (clone (), (RegionDelegate *) 0);
+      return std::make_pair (clone (), (RegionDelegate *) nullptr);
     }
   } else if (other.empty ()) {
     if (output_mode == PositiveAndNegative) {
       return std::make_pair (new DeepRegion (deep_layer ().derived ()), clone ());
     } else if (output_mode == Negative) {
-      return std::make_pair (clone (), (RegionDelegate *) 0);
+      return std::make_pair (clone (), (RegionDelegate *) nullptr);
     } else {
-      return std::make_pair (new DeepRegion (deep_layer ().derived ()), (RegionDelegate *) 0);
+      return std::make_pair (new DeepRegion (deep_layer ().derived ()), (RegionDelegate *) nullptr);
     }
   }
 
@@ -2587,9 +2587,9 @@ DeepRegion::in_and_out_generic (const Region &other, InteractingOutputMode outpu
     if (output_mode == PositiveAndNegative) {
       return std::make_pair (clone (), new DeepRegion (deep_layer ().derived ()));
     } else if (output_mode == Negative) {
-      return std::make_pair (new DeepRegion (deep_layer ().derived ()), (RegionDelegate *) 0);
+      return std::make_pair (new DeepRegion (deep_layer ().derived ()), (RegionDelegate *) nullptr);
     } else {
-      return std::make_pair (clone (), (RegionDelegate *) 0);
+      return std::make_pair (clone (), (RegionDelegate *) nullptr);
     }
   }
 
@@ -2613,29 +2613,29 @@ std::pair<RegionDelegate *, RegionDelegate *>
 DeepRegion::selected_interacting_generic (const Region &other, int mode, bool touching, InteractingOutputMode output_mode, size_t min_count, size_t max_count) const
 {
   if (output_mode == None) {
-    return std::pair<RegionDelegate *, RegionDelegate *> ((RegionDelegate *) 0, (RegionDelegate *) 0);
+    return std::pair<RegionDelegate *, RegionDelegate *> ((RegionDelegate *) nullptr, (RegionDelegate *) nullptr);
   } else if (empty ()) {
     if (output_mode == PositiveAndNegative) {
       return std::make_pair (clone (), clone ());
     } else {
-      return std::make_pair (clone (), (RegionDelegate *) 0);
+      return std::make_pair (clone (), (RegionDelegate *) nullptr);
     }
   } else if (other.empty ()) {
     if (mode > 0 /*outside*/) {
       if (output_mode == PositiveAndNegative) {
         return std::make_pair (clone (), new DeepRegion (deep_layer ().derived ()));
       } else if (output_mode == Negative) {
-        return std::make_pair (new DeepRegion (deep_layer ().derived ()), (RegionDelegate *) 0);
+        return std::make_pair (new DeepRegion (deep_layer ().derived ()), (RegionDelegate *) nullptr);
       } else {
-        return std::make_pair (clone (), (RegionDelegate *) 0);
+        return std::make_pair (clone (), (RegionDelegate *) nullptr);
       }
     } else {
       if (output_mode == PositiveAndNegative) {
         return std::make_pair (new DeepRegion (deep_layer ().derived ()), clone ());
       } else if (output_mode == Negative) {
-        return std::make_pair (clone (), (RegionDelegate *) 0);
+        return std::make_pair (clone (), (RegionDelegate *) nullptr);
       } else {
-        return std::make_pair (new DeepRegion (deep_layer ().derived ()), (RegionDelegate *) 0);
+        return std::make_pair (new DeepRegion (deep_layer ().derived ()), (RegionDelegate *) nullptr);
       }
     }
   }
@@ -2659,17 +2659,17 @@ DeepRegion::selected_interacting_generic (const Region &other, int mode, bool to
       if (output_mode == PositiveAndNegative) {
         return std::make_pair (clone (), new DeepRegion (deep_layer ().derived ()));
       } else if (output_mode == Negative) {
-        return std::make_pair (new DeepRegion (deep_layer ().derived ()), (RegionDelegate *) 0);
+        return std::make_pair (new DeepRegion (deep_layer ().derived ()), (RegionDelegate *) nullptr);
       } else {
-        return std::make_pair (clone (), (RegionDelegate *) 0);
+        return std::make_pair (clone (), (RegionDelegate *) nullptr);
       }
     } else {
       if (output_mode == PositiveAndNegative) {
         return std::make_pair (new DeepRegion (deep_layer ().derived ()), clone ());
       } else if (output_mode == Negative) {
-        return std::make_pair (clone (), (RegionDelegate *) 0);
+        return std::make_pair (clone (), (RegionDelegate *) nullptr);
       } else {
-        return std::make_pair (new DeepRegion (deep_layer ().derived ()), (RegionDelegate *) 0);
+        return std::make_pair (new DeepRegion (deep_layer ().derived ()), (RegionDelegate *) nullptr);
       }
     }
   }
@@ -2706,20 +2706,20 @@ std::pair<RegionDelegate *, RegionDelegate *>
 DeepRegion::selected_interacting_generic (const Edges &other, InteractingOutputMode output_mode, size_t min_count, size_t max_count) const
 {
   if (output_mode == None) {
-    return std::pair<RegionDelegate *, RegionDelegate *> ((RegionDelegate *) 0, (RegionDelegate *) 0);
+    return std::pair<RegionDelegate *, RegionDelegate *> ((RegionDelegate *) nullptr, (RegionDelegate *) nullptr);
   } else if (empty ()) {
     if (output_mode == PositiveAndNegative) {
       return std::make_pair (clone (), clone ());
     } else {
-      return std::make_pair (clone (), (RegionDelegate *) 0);
+      return std::make_pair (clone (), (RegionDelegate *) nullptr);
     }
   } else if (other.empty ()) {
     if (output_mode == PositiveAndNegative) {
       return std::make_pair (new DeepRegion (deep_layer ().derived ()), clone ());
     } else if (output_mode == Negative) {
-      return std::make_pair (clone (), (RegionDelegate *) 0);
+      return std::make_pair (clone (), (RegionDelegate *) nullptr);
     } else {
-      return std::make_pair (new DeepRegion (deep_layer ().derived ()), (RegionDelegate *) 0);
+      return std::make_pair (new DeepRegion (deep_layer ().derived ()), (RegionDelegate *) nullptr);
     }
   }
 
@@ -2873,20 +2873,20 @@ std::pair<RegionDelegate *, RegionDelegate *>
 DeepRegion::selected_interacting_generic (const Texts &other, InteractingOutputMode output_mode, size_t min_count, size_t max_count) const
 {
   if (output_mode == None) {
-    return std::pair<RegionDelegate *, RegionDelegate *> ((RegionDelegate *) 0, (RegionDelegate *) 0);
+    return std::pair<RegionDelegate *, RegionDelegate *> ((RegionDelegate *) nullptr, (RegionDelegate *) nullptr);
   } else if (empty ()) {
     if (output_mode == PositiveAndNegative) {
       return std::make_pair (clone (), clone ());
     } else {
-      return std::make_pair (clone (), (RegionDelegate *) 0);
+      return std::make_pair (clone (), (RegionDelegate *) nullptr);
     }
   } else if (other.empty ()) {
     if (output_mode == PositiveAndNegative) {
       return std::make_pair (new DeepRegion (deep_layer ().derived ()), clone ());
     } else if (output_mode == Negative) {
-      return std::make_pair (clone (), (RegionDelegate *) 0);
+      return std::make_pair (clone (), (RegionDelegate *) nullptr);
     } else {
-      return std::make_pair (new DeepRegion (deep_layer ().derived ()), (RegionDelegate *) 0);
+      return std::make_pair (new DeepRegion (deep_layer ().derived ()), (RegionDelegate *) nullptr);
     }
   }
 

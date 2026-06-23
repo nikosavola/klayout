@@ -415,24 +415,24 @@ inline bool interact (const db::DSimplePolygon &poly,   const db::DText &text)  
  *  @param fallback Fallback algorithm (less strict) if true 
  *  @return True, if the extraction was successful
  */
-bool DB_PUBLIC extract_rad_from_contour (db::Polygon::polygon_contour_iterator from, db::Polygon::polygon_contour_iterator to, double &rinner, double &router, unsigned int &n, std::vector <db::Point> *new_pts = 0, bool fallback = false);
+bool DB_PUBLIC extract_rad_from_contour (db::Polygon::polygon_contour_iterator from, db::Polygon::polygon_contour_iterator to, double &rinner, double &router, unsigned int &n, std::vector <db::Point> *new_pts = nullptr, bool fallback = false);
 
 /**
  *  @brief Extract a corner radius from a contour (version for double coordinates)
  */
-bool DB_PUBLIC extract_rad_from_contour (db::DPolygon::polygon_contour_iterator from, db::DPolygon::polygon_contour_iterator to, double &rinner, double &router, unsigned int &n, std::vector <db::DPoint> *new_pts = 0, bool fallback = false);
+bool DB_PUBLIC extract_rad_from_contour (db::DPolygon::polygon_contour_iterator from, db::DPolygon::polygon_contour_iterator to, double &rinner, double &router, unsigned int &n, std::vector <db::DPoint> *new_pts = nullptr, bool fallback = false);
 
 /**
  *  @brief Extract the radius (better: radii) from a polygon and if requested, compute the new polygon without the rounding
  *
  *  See extract_rad_from_contour for details.
  */
-bool DB_PUBLIC extract_rad (const db::Polygon &polygon, double &rinner, double &router, unsigned int &n, db::Polygon *new_polygon = 0);
+bool DB_PUBLIC extract_rad (const db::Polygon &polygon, double &rinner, double &router, unsigned int &n, db::Polygon *new_polygon = nullptr);
 
 /**
  *  @brief Extract a corner radius from a polygon (version for double coordinates)
  */
-bool DB_PUBLIC extract_rad (const db::DPolygon &polygon, double &rinner, double &router, unsigned int &n, db::DPolygon *new_polygon = 0);
+bool DB_PUBLIC extract_rad (const db::DPolygon &polygon, double &rinner, double &router, unsigned int &n, db::DPolygon *new_polygon = nullptr);
 
 /**
  *  @brief Compute the rounded version of a polygon contour
@@ -491,7 +491,7 @@ db::Polygon DB_PUBLIC smooth (const db::Polygon &poly, db::Coord d, bool keep_hv
  *  If "error_parts" is given it will receive markers indicating the parts which violate
  *  this wrap count condition.
  */
-bool DB_PUBLIC is_strange_polygon (const db::Polygon &poly, std::vector<db::Polygon> *error_parts = 0);
+bool DB_PUBLIC is_strange_polygon (const db::Polygon &poly, std::vector<db::Polygon> *error_parts = nullptr);
 
 /**
  *  @brief Returns a value indicating whether the polygon is "non-orientable"
@@ -499,7 +499,7 @@ bool DB_PUBLIC is_strange_polygon (const db::Polygon &poly, std::vector<db::Poly
  *  If "error_parts" is given it will receive markers indicating the parts which are
  *  non-orientable.
  */
-bool DB_PUBLIC is_non_orientable_polygon (const db::Polygon &poly, std::vector<db::Polygon> *error_parts = 0);
+bool DB_PUBLIC is_non_orientable_polygon (const db::Polygon &poly, std::vector<db::Polygon> *error_parts = nullptr);
 
 /**
  *  @brief A area collector

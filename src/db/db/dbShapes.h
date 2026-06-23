@@ -194,7 +194,7 @@ public:
    *  @param shapes The shapes container to iterate over
    *  @param flags The kind of shapes to iterate over (or-ed constants of flags_type)
    */
-  ShapeIterator (const shapes_type &shapes, unsigned int flags = All, const property_selector *prop_sel = 0, bool inv_prop_sel = false);
+  ShapeIterator (const shapes_type &shapes, unsigned int flags = All, const property_selector *prop_sel = nullptr, bool inv_prop_sel = false);
 
   /**
    *  @brief The region iterator
@@ -214,7 +214,7 @@ public:
    *  @param prop_sel The property selection
    *  @param inv_prop_sel True, if shapes not matching the property selection shall be reported
    */
-  ShapeIterator (const shapes_type &shapes, const box_type &box, region_mode mode, unsigned int flags = All, const property_selector *prop_sel = 0, bool inv_prop_sel = false);
+  ShapeIterator (const shapes_type &shapes, const box_type &box, region_mode mode, unsigned int flags = All, const property_selector *prop_sel = nullptr, bool inv_prop_sel = false);
 
   /**
    *  @brief The destructor
@@ -544,7 +544,7 @@ public:
    *  are created in editable mode to allow insertion and deletion of shapes by default.
    */
   Shapes ()
-    : db::Object (0), mp_cell (0)
+    : db::Object (nullptr), mp_cell (nullptr)
   {
     set_editable (true);
   }
@@ -557,7 +557,7 @@ public:
    *  or insert-once mode.
    */
   Shapes (bool editable)
-    : db::Object (0), mp_cell (0)
+    : db::Object (nullptr), mp_cell (nullptr)
   {
     set_editable (editable);
   }
@@ -585,7 +585,7 @@ public:
   ~Shapes () 
   {
     clear ();
-    mp_cell = 0;
+    mp_cell = nullptr;
   }
 
   /**
@@ -709,7 +709,7 @@ public:
 
     } else {
 
-      if (layout () == 0) {
+      if (layout () == nullptr) {
         //  deference and transform into this
         for (tl::vector<LayerBase *>::const_iterator l = d.m_layers.begin (); l != d.m_layers.end (); ++l) {
           (*l)->deref_and_transform_into (this, trans);
@@ -750,7 +750,7 @@ public:
 
       tl::func_delegate <PropIdMap, db::properties_id_type> pm_delegate (pm);
 
-      if (layout () == 0) {
+      if (layout () == nullptr) {
         //  deference and transform into this
         for (tl::vector<LayerBase *>::const_iterator l = d.m_layers.begin (); l != d.m_layers.end (); ++l) {
           (*l)->deref_and_transform_into (this, trans, pm_delegate);
@@ -791,7 +791,7 @@ public:
 
       tl::func_delegate <PropIdMap, db::properties_id_type> pm_delegate (pm);
 
-      if (layout () == 0) {
+      if (layout () == nullptr) {
         //  deference and transform into this
         for (tl::vector<LayerBase *>::const_iterator l = d.m_layers.begin (); l != d.m_layers.end (); ++l) {
           (*l)->deref_into (this, pm_delegate);
@@ -1414,7 +1414,7 @@ public:
    *  
    *  @return The generic iterator
    */
-  shape_iterator begin (unsigned int flags, const shape_iterator::property_selector *prop_sel = 0, bool inv_prop_sel = false) const
+  shape_iterator begin (unsigned int flags, const shape_iterator::property_selector *prop_sel = nullptr, bool inv_prop_sel = false) const
   {
     //  ensure that the box tree is established for stable shape containers in editable mode 
     //  (in this case, the iterator uses the flat_iterator which accesses the elements through the sorted 
@@ -1436,7 +1436,7 @@ public:
    *  
    *  @return The generic iterator
    */
-  shape_iterator begin_touching (const box_type &box, unsigned int flags, const shape_iterator::property_selector *prop_sel = 0, bool inv_prop_sel = false) const
+  shape_iterator begin_touching (const box_type &box, unsigned int flags, const shape_iterator::property_selector *prop_sel = nullptr, bool inv_prop_sel = false) const
   {
     //  ensure that the box tree is established
     (const_cast <Shapes *> (this))->sort ();
@@ -1454,7 +1454,7 @@ public:
    *  
    *  @return The generic iterator
    */
-  shape_iterator begin_overlapping (const box_type &box, unsigned int flags, const shape_iterator::property_selector *prop_sel = 0, bool inv_prop_sel = false) const
+  shape_iterator begin_overlapping (const box_type &box, unsigned int flags, const shape_iterator::property_selector *prop_sel = nullptr, bool inv_prop_sel = false) const
   {
     //  ensure that the box tree is established
     (const_cast <Shapes *> (this))->sort ();
@@ -1549,7 +1549,7 @@ public:
   /**
    *  @brief Collect memory usage
    */
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const;
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const;
 
 private:
   friend class ShapeIterator;
@@ -1832,7 +1832,7 @@ public:
   {
     if (m_owns_layer) {
       delete mp_layer;
-      mp_layer = 0;
+      mp_layer = nullptr;
     }
   }
 

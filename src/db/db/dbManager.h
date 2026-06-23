@@ -340,7 +340,7 @@ public:
       if (mp_manager->transacting ()) {
         mp_manager->commit ();
       }
-      mp_manager = 0;
+      mp_manager = nullptr;
     }
   }
 
@@ -349,7 +349,7 @@ public:
     if (mp_manager) {
       open ();
       mp_manager->cancel ();
-      mp_manager = 0;
+      mp_manager = nullptr;
     }
   }
 
@@ -369,7 +369,7 @@ public:
 
   bool is_empty () const
   {
-    return ! mp_manager || mp_manager->last_queued (0) == 0;
+    return ! mp_manager || mp_manager->last_queued (nullptr) == nullptr;
   }
 
   db::Manager::transaction_id_t id () const

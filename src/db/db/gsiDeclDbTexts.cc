@@ -474,7 +474,7 @@ static void insert_t (db::Texts *t, const db::Texts &a)
 
 static bool is_deep (const db::Texts *t)
 {
-  return dynamic_cast<const db::DeepTexts *> (t->delegate ()) != 0;
+  return dynamic_cast<const db::DeepTexts *> (t->delegate ()) != nullptr;
 }
 
 static size_t data_id (const db::Texts *t)

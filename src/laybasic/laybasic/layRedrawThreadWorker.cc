@@ -130,12 +130,12 @@ copy_bitmap (const lay::Bitmap *from, lay::Bitmap *to, int dx, int dy)
 RedrawThreadWorker::RedrawThreadWorker (RedrawThread *redraw_thread)
   : mp_redraw_thread (redraw_thread)
 {
-  mp_layout = 0;
-  mp_cell_var_cache = 0;
+  mp_layout = nullptr;
+  mp_cell_var_cache = nullptr;
   m_cache_hits = 0;
   m_cache_misses = 0;
   m_cv_index = -1;
-  mp_canvas = 0;
+  mp_canvas = nullptr;
   m_test_count = 0;
   m_from_level = 0;
   m_to_level = 0;
@@ -161,12 +161,12 @@ RedrawThreadWorker::RedrawThreadWorker (RedrawThread *redraw_thread)
   m_child_context_enabled = false;
   m_layer = 0;
   m_xfill = false;
-  mp_prop_sel = 0;
+  mp_prop_sel = nullptr;
   m_inv_prop_sel = false;
   m_clock = tl::Clock::current ();
 
   for (unsigned int i = 0; i < sizeof (m_planes) / sizeof (m_planes[0]); ++i) {
-    m_planes[i] = 0;
+    m_planes[i] = nullptr;
   }
 }
 
@@ -175,7 +175,7 @@ RedrawThreadWorker::~RedrawThreadWorker ()
   for (unsigned int i = 0; i < sizeof (m_planes) / sizeof (m_planes[0]); ++i) {
     if (m_planes[i]) {
       delete m_planes[i];
-      m_planes[i] = 0;
+      m_planes[i] = nullptr;
     }
   }
 }
@@ -272,7 +272,7 @@ RedrawThreadWorker::perform_task (tl::Task *task)
         m_inv_prop_sel = li.inverse_prop_sel;
         if (mp_prop_sel->empty () && m_inv_prop_sel) {
           //  no property selection
-          mp_prop_sel = 0;
+          mp_prop_sel = nullptr;
         }
 
         if (li.layer_index >= 0) {
@@ -320,7 +320,7 @@ RedrawThreadWorker::perform_task (tl::Task *task)
 
         }
 
-        mp_prop_sel = 0;
+        mp_prop_sel = nullptr;
         m_inv_prop_sel = false;
 
       }
@@ -522,7 +522,7 @@ RedrawThreadWorker::perform_task (tl::Task *task)
         m_cv_index = b->second;
 
         db::CplxTrans trans = m_vp_trans * b->first * db::CplxTrans (mp_layout->dbu ());
-        mp_prop_sel = 0;
+        mp_prop_sel = nullptr;
         m_inv_prop_sel = false;
         //  draw one level more to show the guiding shapes as part of the instance
         m_to_level += 1; //  TODO: modifying this basic setting is a hack!
@@ -593,7 +593,7 @@ RedrawThreadWorker::perform_task (tl::Task *task)
 
       //  currently, all cellviews are painted over each other ..
       for (unsigned int i = 0; i < m_cellviews.size (); ++i) {
-        test_snapshot (0); 
+        test_snapshot (nullptr); 
         const lay::CellView &cv = m_cellviews [i];
         if (cv.is_valid () && ! cv->layout ().under_construction () && ! (cv->layout ().manager () && cv->layout ().manager ()->transacting ())) {
           db::CplxTrans trans (m_vp_trans * cv->layout ().dbu ());
@@ -602,7 +602,7 @@ RedrawThreadWorker::perform_task (tl::Task *task)
       }
 
       //  do the non-cv-related painting
-      test_snapshot (0); 
+      test_snapshot (nullptr); 
       (*d)->paint_on_planes (m_vp_trans, tmp_planes, *mp_renderer);
 
       for (unsigned int i = 0; i < (*d)->num_planes (); ++i) {
@@ -643,7 +643,7 @@ RedrawThreadWorker::finish ()
   for (unsigned int i = 0; i < sizeof (m_planes) / sizeof (m_planes[0]); ++i) {
     if (m_planes[i]) {
       delete m_planes[i];
-      m_planes[i] = 0;
+      m_planes[i] = nullptr;
     }
   }
 }
@@ -703,7 +703,7 @@ RedrawThreadWorker::setup (LayoutViewBase *view, RedrawThreadCanvas *canvas, con
   m_child_context_enabled = view->child_context_enabled ();
   m_test_count = 0;
 
-  mp_prop_sel = 0;
+  mp_prop_sel = nullptr;
   m_inv_prop_sel = false;
 
   m_hidden_cells = view->hidden_cells ();
@@ -784,12 +784,12 @@ RedrawThreadWorker::draw_cell (bool drawing_context, int level, const db::CplxTr
   lay::CanvasPlane *vertices = m_planes[3 + plane_group * (planes_per_layer / 3)];
 
   if (empty_cell) {
-    r.draw (dbox, 0, contour, vertices, 0);
+    r.draw (dbox, nullptr, contour, vertices, nullptr);
     if (opt_bitmap) {
-      r.draw (dbox, 0, 0, opt_bitmap, 0);
+      r.draw (dbox, nullptr, nullptr, opt_bitmap, nullptr);
     }
   } else {
-    r.draw (dbox, fill, contour, 0, 0);
+    r.draw (dbox, fill, contour, nullptr, nullptr);
   }
 
   db::DBox dbox_for_label = trans * box_for_label;
@@ -800,7 +800,7 @@ RedrawThreadWorker::draw_cell (bool drawing_context, int level, const db::CplxTr
             db::HAlignCenter,
             db::VAlignCenter,
             //  TODO: apply "real" transformation?
-            db::DFTrans (m_box_text_transform ? trans.fp_trans ().rot () : db::DFTrans::r0), 0, 0, 0, contour);
+            db::DFTrans (m_box_text_transform ? trans.fp_trans ().rot () : db::DFTrans::r0), nullptr, nullptr, nullptr, contour);
   }
 }
 
@@ -1069,14 +1069,14 @@ RedrawThreadWorker::draw_boxes_impl (bool drawing_context, db::cell_index_type c
 
                   if (empty_inst_cell) {
                     lay::CanvasPlane *vertices  = m_planes[3 + plane_group * (planes_per_layer / 3)];
-                    r.draw (cell_inst.bbox (bc), trans, 0, 0, vertices, 0);
+                    r.draw (cell_inst.bbox (bc), trans, nullptr, nullptr, vertices, nullptr);
                     if (opt_bitmap) {
-                      r.draw (cell_inst.bbox (bc), trans, opt_bitmap, 0, 0, 0);
+                      r.draw (cell_inst.bbox (bc), trans, opt_bitmap, nullptr, nullptr, nullptr);
                     }
                   }
 
                   lay::CanvasPlane *contour  = m_planes[1 + plane_group * (planes_per_layer / 3)];
-                  r.draw (cell_inst.bbox (bc), trans, contour, contour, 0, 0);
+                  r.draw (cell_inst.bbox (bc), trans, contour, contour, nullptr, nullptr);
 
                 }
 
@@ -1087,7 +1087,7 @@ RedrawThreadWorker::draw_boxes_impl (bool drawing_context, db::cell_index_type c
                 //  The array (or single instance) must be iterated instance by instance
                 for (db::CellInstArray::iterator p = cell_inst.begin_touching (*v, bc); ! p.at_end (); ) {
 
-                  test_snapshot (0);
+                  test_snapshot (nullptr);
 
                   db::ICplxTrans t (cell_inst.complex_trans (*p));
                   db::Box new_vp = safe_transformed_box (*v, t.inverted ());
@@ -1276,7 +1276,7 @@ RedrawThreadWorker::draw_box_properties_impl (bool drawing_context, db::cell_ind
                 //  by instance
                 for (db::CellInstArray::iterator p = cell_inst.begin_touching (*v, bc); ! p.at_end (); ++p) {
               
-                  test_snapshot (0); 
+                  test_snapshot (nullptr); 
                   db::ICplxTrans t (cell_inst.complex_trans (*p));
                   db::Box new_vp = safe_transformed_box (*v, t.inverted ());
                   draw_box_properties_impl (drawing_context, new_ci, trans * t, new_vp, level + 1, cell_inst_prop, for_ghosts);
@@ -1461,7 +1461,7 @@ RedrawThreadWorker::draw_text_layer (bool drawing_context, db::cell_index_type c
     plane_group = 1;
   }
 
-  lay::CanvasPlane *fill = 0, *frame = 0, *text = 0, *vertex = 0;
+  lay::CanvasPlane *fill = nullptr, *frame = nullptr, *text = nullptr, *vertex = nullptr;
   fill   = m_planes[0 + plane_group * (planes_per_layer / 3)];
   frame  = m_planes[1 + plane_group * (planes_per_layer / 3)];
   text   = m_planes[2 + plane_group * (planes_per_layer / 3)];
@@ -1489,7 +1489,7 @@ RedrawThreadWorker::draw_text_layer (bool drawing_context, db::cell_index_type c
 void
 RedrawThreadWorker::draw_text_layer (bool drawing_context, db::cell_index_type ci, const db::CplxTrans &trans, const db::Box &vp, int level, CanvasPlane *fill, CanvasPlane *frame, CanvasPlane *vertex, CanvasPlane *text, lay::Bitmap *opt_bitmap)
 {
-  test_snapshot (0);
+  test_snapshot (nullptr);
 
   const db::Cell &cell = mp_layout->cell (ci);
   lay::Renderer &r = *mp_renderer;
@@ -1524,9 +1524,9 @@ RedrawThreadWorker::draw_text_layer (bool drawing_context, db::cell_index_type c
 
         //  paint the simplified box
         if (anything) {
-          r.draw (trans * bbox, 0, frame, vertex, 0);
+          r.draw (trans * bbox, nullptr, frame, vertex, nullptr);
           if (opt_bitmap) {
-            r.draw (trans * bbox, 0, 0, opt_bitmap, 0);
+            r.draw (trans * bbox, nullptr, nullptr, opt_bitmap, nullptr);
           }
         }
 
@@ -1560,11 +1560,11 @@ RedrawThreadWorker::draw_text_layer (bool drawing_context, db::cell_index_type c
             db::ShapeIterator shape = shapes.begin_touching (*v, db::ShapeIterator::Texts, mp_prop_sel, m_inv_prop_sel);
             while (! shape.at_end () && ntexts > 0) {
 
-              test_snapshot (0); 
+              test_snapshot (nullptr); 
 
               r.draw (*shape, trans, fill, frame, vertex, text);
               if (opt_bitmap) {
-                r.draw (*shape, trans, 0, 0, opt_bitmap, 0);
+                r.draw (*shape, trans, nullptr, nullptr, opt_bitmap, nullptr);
               }
               ++shape;
 
@@ -1579,7 +1579,7 @@ RedrawThreadWorker::draw_text_layer (bool drawing_context, db::cell_index_type c
             shape = shapes.begin_touching (*v, db::ShapeIterator::AllWithProperties, mp_prop_sel, m_inv_prop_sel);
             while (! shape.at_end () && ntexts > 0) {
 
-              test_snapshot (0); 
+              test_snapshot (nullptr); 
 
               r.draw_propstring (*shape, text, trans);
               ++shape;
@@ -1682,7 +1682,7 @@ RedrawThreadWorker::draw_text_layer (bool drawing_context, db::cell_index_type c
 
                   db::Box bbox = cell_inst.bbox (bc);
                   if (vertex) {
-                    r.draw (bbox, trans, vertex, vertex, 0, 0);
+                    r.draw (bbox, trans, vertex, vertex, nullptr, nullptr);
                   }
 
                 } else if (anything) {
@@ -1742,8 +1742,8 @@ bool draw_array_simplified (lay::Renderer *r, const db::Shape &array_shape, lay:
           (nb <= 1 || trans.ctrans (b.length ()) < 1.5)) {
 
         db::Box array_box = array_shape.bbox ();
-        r->draw (array_box, trans, frame, frame, 0, 0);
-        r->draw (array_box, trans, vertex, vertex, 0, 0);
+        r->draw (array_box, trans, frame, frame, nullptr, nullptr);
+        r->draw (array_box, trans, vertex, vertex, nullptr, nullptr);
         return true;
 
       } else if (is_regular && 
@@ -1753,8 +1753,8 @@ bool draw_array_simplified (lay::Renderer *r, const db::Shape &array_shape, lay:
         Array a1 (array->object (), array->front (), a, db::Vector (0, 0), na, 1);
         db::Box abox = a1.bbox (bc);
         for (unsigned long i = 0; i < nb; ++i) {
-          r->draw (abox, trans, frame, frame, 0, 0);
-          r->draw (abox, trans, vertex, vertex, 0, 0);
+          r->draw (abox, trans, frame, frame, nullptr, nullptr);
+          r->draw (abox, trans, vertex, vertex, nullptr, nullptr);
           abox.move (b);
         }
         return true;
@@ -1766,8 +1766,8 @@ bool draw_array_simplified (lay::Renderer *r, const db::Shape &array_shape, lay:
         Array a1 (array->object (), array->front (), db::Vector (0, 0), b, 1, nb);
         db::Box abox = a1.bbox (bc);
         for (unsigned long i = 0; i < na; ++i) {
-          r->draw (abox, trans, frame, frame, 0, 0);
-          r->draw (abox, trans, vertex, vertex, 0, 0);
+          r->draw (abox, trans, frame, frame, nullptr, nullptr);
+          r->draw (abox, trans, vertex, vertex, nullptr, nullptr);
           abox.move (a);
         }
         return true;
@@ -1777,8 +1777,8 @@ bool draw_array_simplified (lay::Renderer *r, const db::Shape &array_shape, lay:
         db::DBox array_box_trans = trans * array_shape.bbox ();
         if ((array_box_trans.height () < 1.5 && array_box_trans.width () < 3.5) ||
             (array_box_trans.height () < 3.5 && array_box_trans.width () < 1.5)) {
-          r->draw (array_box_trans, frame, frame, 0, 0);
-          r->draw (array_box_trans, vertex, vertex, 0, 0);
+          r->draw (array_box_trans, frame, frame, nullptr, nullptr);
+          r->draw (array_box_trans, vertex, vertex, nullptr, nullptr);
           return true;
         }
 
@@ -1982,10 +1982,10 @@ RedrawThreadWorker::draw_layer_wo_cache (int from_level, int to_level, db::cell_
 
               db::Box bbox = cell_inst.bbox (bc);
               if (frame) {
-                r.draw (bbox, trans, frame, frame, 0, 0);
+                r.draw (bbox, trans, frame, frame, nullptr, nullptr);
               }
               if (vertex) {
-                r.draw (bbox, trans, vertex, vertex, 0, 0);
+                r.draw (bbox, trans, vertex, vertex, nullptr, nullptr);
               }
 
             } else if (anything) {
@@ -2130,7 +2130,7 @@ RedrawThreadWorker::draw_layer (int from_level, int to_level, db::cell_index_typ
 
         if (anything) {
           //  any shapes here: paint bbox for simplification
-          mp_renderer->draw (dbbox, 0, frame, vertex, 0);
+          mp_renderer->draw (dbbox, nullptr, frame, vertex, nullptr);
         }
 
       }
@@ -2142,7 +2142,7 @@ RedrawThreadWorker::draw_layer (int from_level, int to_level, db::cell_index_typ
 
       //  use the presence of a lay::Bitmap for the drawing plane as an indicator that we can cache the 
       //  drawings
-      bool can_cache = (m_bitmap_caching && dynamic_cast<lay::Bitmap *> (fill) != 0);
+      bool can_cache = (m_bitmap_caching && dynamic_cast<lay::Bitmap *> (fill) != nullptr);
 
       //  don't cache if the cell is not fully inside the search region
       if (vv.size () > 1 || ! cell_bbox.inside (vv.front ())) {
@@ -2228,14 +2228,14 @@ RedrawThreadWorker::draw_layer (bool drawing_context, db::cell_index_type ci, co
 
     if (m_to_level > m_from_level) {
 
-      lay::CanvasPlane *fill = 0, *frame = 0, *text = 0, *vertex = 0;
+      lay::CanvasPlane *fill = nullptr, *frame = nullptr, *text = nullptr, *vertex = nullptr;
       int plane_group = 0;
       fill   = m_planes[0 + plane_group * (planes_per_layer / 3)];
       frame  = m_planes[1 + plane_group * (planes_per_layer / 3)];
       text   = m_planes[2 + plane_group * (planes_per_layer / 3)];
       vertex = m_planes[3 + plane_group * (planes_per_layer / 3)];
 
-      draw_layer (m_from_level, m_to_level, ci, trans, redraw_regions, level, fill, frame, vertex, text, 0);
+      draw_layer (m_from_level, m_to_level, ci, trans, redraw_regions, level, fill, frame, vertex, text, nullptr);
 
     }
 
@@ -2243,14 +2243,14 @@ RedrawThreadWorker::draw_layer (bool drawing_context, db::cell_index_type ci, co
 
     if (m_to_level > m_from_level) {
 
-      lay::CanvasPlane *fill = 0, *frame = 0, *text = 0, *vertex = 0;
+      lay::CanvasPlane *fill = nullptr, *frame = nullptr, *text = nullptr, *vertex = nullptr;
       int plane_group = 2;
       fill   = m_planes[0 + plane_group * (planes_per_layer / 3)];
       frame  = m_planes[1 + plane_group * (planes_per_layer / 3)];
       text   = m_planes[2 + plane_group * (planes_per_layer / 3)];
       vertex = m_planes[3 + plane_group * (planes_per_layer / 3)];
 
-      draw_layer (m_from_level, m_to_level, ci, trans, redraw_regions, level, fill, frame, vertex, text, 0);
+      draw_layer (m_from_level, m_to_level, ci, trans, redraw_regions, level, fill, frame, vertex, text, nullptr);
 
     }
 
@@ -2258,27 +2258,27 @@ RedrawThreadWorker::draw_layer (bool drawing_context, db::cell_index_type ci, co
 
     if (1 > m_from_level) {
 
-      lay::CanvasPlane *fill = 0, *frame = 0, *text = 0, *vertex = 0;
+      lay::CanvasPlane *fill = nullptr, *frame = nullptr, *text = nullptr, *vertex = nullptr;
       int plane_group = 2;
       fill   = m_planes[0 + plane_group * (planes_per_layer / 3)];
       frame  = m_planes[1 + plane_group * (planes_per_layer / 3)];
       text   = m_planes[2 + plane_group * (planes_per_layer / 3)];
       vertex = m_planes[3 + plane_group * (planes_per_layer / 3)];
 
-      draw_layer (m_from_level, 1, ci, trans, redraw_regions, level, fill, frame, vertex, text, 0);
+      draw_layer (m_from_level, 1, ci, trans, redraw_regions, level, fill, frame, vertex, text, nullptr);
 
     }
 
     if (m_to_level > 1) {
 
-      lay::CanvasPlane *fill = 0, *frame = 0, *text = 0, *vertex = 0;
+      lay::CanvasPlane *fill = nullptr, *frame = nullptr, *text = nullptr, *vertex = nullptr;
       int plane_group = 1;
       fill   = m_planes[0 + plane_group * (planes_per_layer / 3)];
       frame  = m_planes[1 + plane_group * (planes_per_layer / 3)];
       text   = m_planes[2 + plane_group * (planes_per_layer / 3)];
       vertex = m_planes[3 + plane_group * (planes_per_layer / 3)];
 
-      draw_layer (1, m_to_level, ci, trans, redraw_regions, level, fill, frame, vertex, text, 0);
+      draw_layer (1, m_to_level, ci, trans, redraw_regions, level, fill, frame, vertex, text, nullptr);
 
     }
 
@@ -2361,7 +2361,7 @@ RedrawThreadWorker::iterate_variants (const std::vector <db::Box> &redraw_region
     cell_var_cache.clear ();
 
     //  draw the current instance without context (using a minimum of from_level=0 for this)
-    mp_cell_var_cache = 0;
+    mp_cell_var_cache = nullptr;
     int fl = m_from_level;
     if (m_from_level < 0) {
       m_from_level = 0;
@@ -2374,7 +2374,7 @@ RedrawThreadWorker::iterate_variants (const std::vector <db::Box> &redraw_region
     }
 
   } else {
-    mp_cell_var_cache = 0;
+    mp_cell_var_cache = nullptr;
     iterate_variants_rec (redraw_regions, ci, trans, 0, what, false);
   }
 

@@ -551,7 +551,7 @@ public:
    */
   bool is_null () const
   {
-    return mp_base == 0;
+    return mp_base == nullptr;
   }
 
 private:

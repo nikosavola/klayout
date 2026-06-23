@@ -77,7 +77,7 @@ get_fallback_default (const db::NetTracerTechnologyComponent &tc)
     }
   }
 
-  return 0;
+  return nullptr;
 }
 
 static const db::NetTracerConnectivity *

@@ -87,7 +87,7 @@ tl::Variant ruby2c<tl::Variant> (VALUE rval)
   } else if (TYPE (rval) == T_DATA) {
 
     //  some types are supported through "complex" tl::Variant's
-    Proxy *p = 0;
+    Proxy *p = nullptr;
     Data_Get_Struct (rval, Proxy, p);
 
     //  employ the tl::Variant binding capabilities of the Expression binding to derive the
@@ -103,7 +103,7 @@ tl::Variant ruby2c<tl::Variant> (VALUE rval)
     if (cls->is_managed ()) {
 
       const tl::VariantUserClassBase *var_cls = cls->var_cls (p->const_ref ());
-      tl_assert (var_cls != 0);
+      tl_assert (var_cls != nullptr);
 
       gsi::Proxy *gsi_proxy = cls->gsi_object (obj)->find_client<gsi::Proxy> ();
       if (!gsi_proxy) {
@@ -179,7 +179,7 @@ object_to_ruby (void *obj, Proxy *self, const gsi::ClassBase *cls, bool pass_obj
   }
 
   //  Derive a Proxy reference if the object is already bound
-  Proxy *rba_data = 0;
+  Proxy *rba_data = nullptr;
   if (self && self->obj () == obj) {
 
     //  reuse "self" if the object to convert is self.
@@ -193,9 +193,9 @@ object_to_ruby (void *obj, Proxy *self, const gsi::ClassBase *cls, bool pass_obj
       //  Don't use objects that are T_ZOMBIE or otherwise unusable
       if (BUILTIN_TYPE (rba_data->self ()) != T_DATA) {
         rba_data->detach ();
-        rba_data = 0;
+        rba_data = nullptr;
         //  must be the last and only Proxy for this object
-        tl_assert (clsact->gsi_object (obj)->find_client<Proxy> () == 0);
+        tl_assert (clsact->gsi_object (obj)->find_client<Proxy> () == nullptr);
       }
 
     }
@@ -224,7 +224,7 @@ object_to_ruby (void *obj, Proxy *self, const gsi::ClassBase *cls, bool pass_obj
 
     //  create a instance and copy the value
     ret = rb_obj_alloc (ruby_cls (clsact, false));
-    Proxy *p = 0;
+    Proxy *p = nullptr;
     Data_Get_Struct (ret, Proxy, p);
     clsact->assign (p->obj (), obj);
 
@@ -254,7 +254,7 @@ object_to_ruby (void *obj, Proxy *self, const gsi::ClassBase *cls, bool pass_obj
     //  reference to the existing object to the Ruby object. This is not quite
     //  efficient - we should avoid creating and deleting a dummy object first.
     ret = rb_obj_alloc (ruby_cls (clsact, false));
-    Proxy *p = 0;
+    Proxy *p = nullptr;
     Data_Get_Struct (ret, Proxy, p);
     p->set (obj, pass_obj, is_const /*const*/, can_destroy /*can_destroy*/, ret);
 
@@ -299,10 +299,10 @@ VALUE c2ruby<tl::Variant> (const tl::Variant &c)
     if (cls) {
       if (! c.user_is_ref () && cls->is_managed ()) {
         void *obj = c.user_unshare ();
-        return object_to_ruby (obj, 0, c.user_cls ()->gsi_cls (), true, c.user_is_const (), false, false);
+        return object_to_ruby (obj, nullptr, c.user_cls ()->gsi_cls (), true, c.user_is_const (), false, false);
       } else {
         void *obj = const_cast<void *> (c.to_user ());
-        return object_to_ruby (obj, 0, c.user_cls ()->gsi_cls (), false, false, true, false);
+        return object_to_ruby (obj, nullptr, c.user_cls ()->gsi_cls (), false, false, true, false);
       }
     } else {
       //  not a known type -> return nil

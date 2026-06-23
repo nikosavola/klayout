@@ -39,7 +39,7 @@ class ViewWidgetStack
   : public QWidget
 {
 public:
-  ViewWidgetStack (QWidget *parent = 0, const char *name = 0);
+  ViewWidgetStack (QWidget *parent = nullptr, const char *name = nullptr);
 
   void add_widget (lay::LayoutViewWidget *w);
   void remove_widget (size_t index);

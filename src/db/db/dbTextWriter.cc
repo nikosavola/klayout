@@ -165,7 +165,7 @@ TextWriter::write (const db::Layout &layout)
 {
   //  write header
   
-  std::string pfx = "";
+  std::string pfx;
 
   if (layout.prop_id () != 0) {
     pfx = "p $props";
@@ -182,7 +182,7 @@ TextWriter::write (const db::Layout &layout)
 
     //  cell header 
 
-    std::string pfx = "";
+    std::string pfx;
 
     if (cref.prop_id () != 0) {
       pfx = "p $props";
@@ -206,7 +206,7 @@ TextWriter::write (const db::Layout &layout)
 
       for (db::CellInstArray::iterator i = inst->begin (); ! i.at_end (); ++i) {
 
-        std::string pfx = "";
+        std::string pfx;
 
         if (inst->has_prop_id () && inst->prop_id () != 0) {
           pfx = "p $props";
@@ -264,7 +264,7 @@ TextWriter::write (const db::Layout &layout)
         db::ShapeIterator shape (cref.shapes (l).begin (db::ShapeIterator::Boxes | db::ShapeIterator::Polygons | db::ShapeIterator::Edges | db::ShapeIterator::Paths | db::ShapeIterator::Texts));
         while (! shape.at_end ()) {
 
-          std::string pfx = "";
+          std::string pfx;
 
           if (shape->has_prop_id () && shape->prop_id () != 0) {
             pfx = "p $props";

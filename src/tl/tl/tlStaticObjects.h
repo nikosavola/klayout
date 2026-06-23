@@ -64,9 +64,9 @@ public:
   {
     if (mp_x) {
       delete *mp_x;
-      *mp_x = 0;
+      *mp_x = nullptr;
     }
-    mp_x = 0;
+    mp_x = nullptr;
   }
 
 private:

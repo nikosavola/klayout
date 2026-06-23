@@ -137,7 +137,7 @@ tl::Variant Recipe::make (const std::string &generator, const std::map<std::stri
     params.insert (*p);
   }
 
-  tl::Recipe *recipe_obj = 0;
+  tl::Recipe *recipe_obj = nullptr;
   for (tl::Registrar<tl::Recipe>::iterator r = tl::Registrar<tl::Recipe>::begin (); r != tl::Registrar<tl::Recipe>::end (); ++r) {
     if (r->name () == recipe) {
       recipe_obj = r.operator-> ();

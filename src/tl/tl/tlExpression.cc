@@ -71,7 +71,7 @@ NoMethodError::NoMethodError (const std::string &cls_name, const std::string &me
 //  Implementation of ExpressionParserContext
 
 ExpressionParserContext::ExpressionParserContext ()
-  : mp_expr (0)
+  : mp_expr (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -216,7 +216,7 @@ class TL_PUBLIC EvalTarget
 {
 public:
   EvalTarget ()
-    : mp_lvalue (0), m_rvalue ()
+    : mp_lvalue (nullptr), m_rvalue ()
   {
     //  .. nothing yet ..
   }
@@ -225,19 +225,19 @@ public:
   {
     if (mp_lvalue) {
       m_rvalue = *mp_lvalue;
-      mp_lvalue = 0;
+      mp_lvalue = nullptr;
     }
   }
 
   void set (const tl::Variant &v) 
   {
     m_rvalue = v;
-    mp_lvalue = 0;
+    mp_lvalue = nullptr;
   }
 
   tl::Variant &get () 
   {
-    if (mp_lvalue != 0) {
+    if (mp_lvalue != nullptr) {
       return *mp_lvalue;
     } else {
       return m_rvalue;
@@ -257,7 +257,7 @@ public:
 
   const tl::Variant *operator-> () const
   {
-    if (mp_lvalue != 0) {
+    if (mp_lvalue != nullptr) {
       return mp_lvalue;
     } else {
       return &m_rvalue;
@@ -266,7 +266,7 @@ public:
 
   const tl::Variant &operator* () const
   {
-    if (mp_lvalue != 0) {
+    if (mp_lvalue != nullptr) {
       return *mp_lvalue;
     } else {
       return m_rvalue;
@@ -281,7 +281,7 @@ public:
 
   inline tl::Variant make_result ()
   {
-    if (mp_lvalue != 0) {
+    if (mp_lvalue != nullptr) {
       //  Make reference from ownership relation
       tl::Object *tl_object = mp_lvalue->to_object ();
       if (tl_object && !mp_lvalue->user_is_ref ()) {
@@ -319,7 +319,7 @@ public:
 
     } else if (method == "size") {
       
-      if (args.size () != 0 || kwargs) {
+      if (!args.empty() || kwargs) {
         throw EvalError (tl::to_string (tr ("'size' method does not accept an argument")), context);
       }
 
@@ -356,7 +356,7 @@ public:
 
     } else if (method == "size") {
       
-      if (args.size () != 0 || kwargs) {
+      if (!args.empty() || kwargs) {
         throw EvalError (tl::to_string (tr ("'size' method does not accept an argument")), context);
       }
 
@@ -364,7 +364,7 @@ public:
     
     } else if (method == "keys") {
 
-      if (args.size () != 0 || kwargs) {
+      if (!args.empty() || kwargs) {
         throw EvalError (tl::to_string (tr ("'keys' method does not accept an argument")), context);
       }
 
@@ -375,7 +375,7 @@ public:
 
     } else if (method == "values") {
 
-      if (args.size () != 0 || kwargs) {
+      if (!args.empty() || kwargs) {
         throw EvalError (tl::to_string (tr ("'keys' method does not accept an argument")), context);
       }
 
@@ -509,7 +509,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -517,7 +517,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), "<", vv, 0);
+      c->execute (m_context, o, v.get (), "<", vv, nullptr);
       v.swap (o);
 
     } else {
@@ -559,7 +559,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -567,7 +567,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), "<=", vv, 0);
+      c->execute (m_context, o, v.get (), "<=", vv, nullptr);
       v.swap (o);
 
     } else {
@@ -609,7 +609,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -617,7 +617,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), ">", vv, 0);
+      c->execute (m_context, o, v.get (), ">", vv, nullptr);
       v.swap (o);
 
     } else {
@@ -659,7 +659,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -667,7 +667,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), ">=", vv, 0);
+      c->execute (m_context, o, v.get (), ">=", vv, nullptr);
       v.swap (o);
 
     } else {
@@ -709,7 +709,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -717,7 +717,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), "==", vv, 0);
+      c->execute (m_context, o, v.get (), "==", vv, nullptr);
       v.swap (o);
 
     } else {
@@ -759,7 +759,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -767,7 +767,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), "!=", vv, 0);
+      c->execute (m_context, o, v.get (), "!=", vv, nullptr);
       v.swap (o);
 
     } else {
@@ -809,7 +809,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -817,7 +817,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), "~", vv, 0);
+      c->execute (m_context, o, v.get (), "~", vv, nullptr);
       v.swap (o);
 
       mp_eval->match_substrings ().clear ();
@@ -906,7 +906,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -914,7 +914,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), "!~", vv, 0);
+      c->execute (m_context, o, v.get (), "!~", vv, nullptr);
       v.swap (o);
 
     } else {
@@ -1077,7 +1077,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -1085,7 +1085,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), "<<", vv, 0);
+      c->execute (m_context, o, v.get (), "<<", vv, nullptr);
       v.swap (o);
 
     } else if (v->is_longlong ()) {
@@ -1133,7 +1133,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -1141,7 +1141,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), ">>", vv, 0);
+      c->execute (m_context, o, v.get (), ">>", vv, nullptr);
       v.swap (o);
 
     } else if (v->is_longlong ()) {
@@ -1189,7 +1189,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -1197,7 +1197,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), "+", vv, 0);
+      c->execute (m_context, o, v.get (), "+", vv, nullptr);
       v.swap (o);
 
     } else if (v->is_a_string () || b->is_a_string ()) {
@@ -1251,7 +1251,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -1259,7 +1259,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), "-", vv, 0);
+      c->execute (m_context, o, v.get (), "-", vv, nullptr);
       v.swap (o);
 
     } else if (v->is_double () || b->is_double ()) {
@@ -1311,7 +1311,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -1319,7 +1319,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), "*", vv, 0);
+      c->execute (m_context, o, v.get (), "*", vv, nullptr);
       v.swap (o);
 
     } else if (v->is_a_string ()) {
@@ -1401,7 +1401,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -1409,7 +1409,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), "/", vv, 0);
+      c->execute (m_context, o, v.get (), "/", vv, nullptr);
       v.swap (o);
 
     } else if (v->is_double () || b->is_double ()) {
@@ -1485,7 +1485,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -1493,7 +1493,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), "%", vv, 0);
+      c->execute (m_context, o, v.get (), "%", vv, nullptr);
       v.swap (o);
 
     } else if (v->is_ulonglong () || b->is_ulonglong ()) {
@@ -1557,7 +1557,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -1565,7 +1565,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), "&", vv, 0);
+      c->execute (m_context, o, v.get (), "&", vv, nullptr);
       v.swap (o);
 
     } else if (v->is_ulonglong () || b->is_ulonglong ()) {
@@ -1613,7 +1613,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -1621,7 +1621,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), "|", vv, 0);
+      c->execute (m_context, o, v.get (), "|", vv, nullptr);
       v.swap (o);
 
     } else if (v->is_ulonglong () || b->is_ulonglong ()) {
@@ -1669,7 +1669,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -1677,7 +1677,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*b);
-      c->execute (m_context, o, v.get (), "^", vv, 0);
+      c->execute (m_context, o, v.get (), "^", vv, nullptr);
       v.swap (o);
 
     } else if (v->is_ulonglong () || b->is_ulonglong ()) {
@@ -1725,7 +1725,7 @@ public:
 
     if (v->is_user ()) {
 
-      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      const EvalClass *c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::to_string (tr ("Not a valid object for a method call (not an object)")), m_context);
       }
@@ -1733,7 +1733,7 @@ public:
       tl::Variant o;
       std::vector <tl::Variant> vv;
       vv.push_back (*e);
-      c->execute (m_context, o, v.get (), "[]", vv, 0);
+      c->execute (m_context, o, v.get (), "[]", vv, nullptr);
       v.swap (o);
 
     } else if (v->is_list ()) {
@@ -2038,14 +2038,14 @@ public:
       }
     }
 
-    const EvalClass *c = 0;
+    const EvalClass *c = nullptr;
     
     if (v->is_list ()) {
       c = &ListClass::instance;
     } else if (v->is_array ()) {
       c = &ArrayClass::instance;
     } else if (v->is_user ()) {
-      c = v->user_cls () ? v->user_cls ()->eval_cls () : 0;
+      c = v->user_cls () ? v->user_cls ()->eval_cls () : nullptr;
       if (! c) {
         throw EvalError (tl::sprintf (tl::to_string (tr ("Not a valid object for a method call (not an object) - value is %s")), v->to_parsable_string ()), m_context);
       }
@@ -2054,7 +2054,7 @@ public:
     }
 
     tl::Variant o;
-    c->execute (m_context, o, v.get (), m_method, vv, kwargs.empty () ? 0 : &kwargs);
+    c->execute (m_context, o, v.get (), m_method, vv, kwargs.empty () ? nullptr : &kwargs);
     v.swap (o);
   }
 
@@ -2213,7 +2213,7 @@ public:
     }
 
     tl::Variant o;
-    mp_func->execute (m_context, o, vv, kwargs.empty () ? 0 : &kwargs);
+    mp_func->execute (m_context, o, vv, kwargs.empty () ? nullptr : &kwargs);
     v.swap (o);
   }
 
@@ -2802,7 +2802,7 @@ split_f (const ExpressionParserContext &context, tl::Variant &out, const std::ve
 static void
 true_f (const ExpressionParserContext &context, tl::Variant &out, const std::vector <tl::Variant> &vv)
 {
-  if (vv.size () != 0) {
+  if (!vv.empty()) {
     throw EvalError (tl::to_string (tr ("'true' function must not have arguments")), context);
   }
 
@@ -2812,7 +2812,7 @@ true_f (const ExpressionParserContext &context, tl::Variant &out, const std::vec
 static void
 false_f (const ExpressionParserContext &context, tl::Variant &out, const std::vector <tl::Variant> &vv)
 {
-  if (vv.size () != 0) {
+  if (!vv.empty()) {
     throw EvalError (tl::to_string (tr ("'false' function must not have arguments")), context);
   }
 
@@ -2822,7 +2822,7 @@ false_f (const ExpressionParserContext &context, tl::Variant &out, const std::ve
 static void
 nil_f (const ExpressionParserContext &context, tl::Variant &out, const std::vector <tl::Variant> &vv)
 {
-  if (vv.size () != 0) {
+  if (!vv.empty()) {
     throw EvalError (tl::to_string (tr ("'nil' function must not have arguments")), context);
   }
 
@@ -2937,7 +2937,7 @@ combine_f (const ExpressionParserContext &context, tl::Variant &out, const std::
 static void
 sprintf_f (const ExpressionParserContext &context, tl::Variant &out, const std::vector <tl::Variant> &vv)
 {
-  if (vv.size () < 1) {
+  if (vv.empty()) {
     throw EvalError (tl::to_string (tr ("'sprintf' function expects at least one argument")), context);
   }
 
@@ -2947,7 +2947,7 @@ sprintf_f (const ExpressionParserContext &context, tl::Variant &out, const std::
 static void
 printf_f (const ExpressionParserContext &context, tl::Variant &, const std::vector <tl::Variant> &vv)
 {
-  if (vv.size () < 1) {
+  if (vv.empty()) {
     throw EvalError (tl::to_string (tr ("'printf' function expects at least one argument")), context);
   }
 
@@ -2986,7 +2986,7 @@ public:
     if (f != ms_functions.end ()) {
       return f->second;
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -3083,7 +3083,7 @@ public:
     if (c != ms_constants.end ()) {
       return &c->second;
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -3106,19 +3106,19 @@ static EvalStaticConstant c2 ("M_E", tl::Variant (M_E));
 //  Implementation of Expression
 
 Expression::Expression ()
-  : mp_text (0), mp_eval (0)
+  : mp_text (nullptr), mp_eval (nullptr)
 {
   // .. nothing yet ..
 }
 
 Expression::Expression (const Expression &d)
-  : mp_text (0), mp_eval (0)
+  : mp_text (nullptr), mp_eval (nullptr)
 {
   operator= (d);
 }
 
 Expression::Expression (Eval *eval, const std::string &expr)
-  : mp_text (0), m_local_text (expr), mp_eval (eval)
+  : mp_text (nullptr), m_local_text (expr), mp_eval (eval)
 {
   // .. nothing yet ..
 }
@@ -3139,7 +3139,7 @@ Expression::operator= (const Expression &d)
     if (d.m_root) {
       m_root.reset (d.m_root->clone (this));
     } else {
-      m_root.reset (0);
+      m_root.reset (nullptr);
     }
   }
   return *this;
@@ -3164,16 +3164,16 @@ Expression::execute (EvalTarget &v) const
 // ----------------------------------------------------------------------------
 //  Implementation of Eval
 
-Eval Eval::m_global (0, 0, false);
+Eval Eval::m_global (nullptr, nullptr, false);
 
 Eval::Eval (Eval *parent, bool sloppy)
-  : mp_parent (parent), mp_global (&Eval::m_global), m_sloppy (sloppy), mp_ctx_handler (0)
+  : mp_parent (parent), mp_global (&Eval::m_global), m_sloppy (sloppy), mp_ctx_handler (nullptr)
 {
   // .. nothing yet ..
 }
 
 Eval::Eval (Eval *global, Eval *parent, bool sloppy)
-  : mp_parent (parent), mp_global (global), m_sloppy (sloppy), mp_ctx_handler (0)
+  : mp_parent (parent), mp_global (global), m_sloppy (sloppy), mp_ctx_handler (nullptr)
 {
   // .. nothing yet ..
 }
@@ -3199,15 +3199,15 @@ Eval::var (const std::string &name)
   if (f != m_local_vars.end ()) {
     return &f->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
 void 
 Eval::define_function (const std::string &name, EvalFunction *function)
 {
-  EvalFunction *&f = m_local_functions.insert (std::make_pair (name, (EvalFunction *) 0)).first->second;
-  if (f != 0) {
+  EvalFunction *&f = m_local_functions.insert (std::make_pair (name, (EvalFunction *) nullptr)).first->second;
+  if (f != nullptr) {
     delete f;
   }
   f = function;
@@ -3220,7 +3220,7 @@ Eval::function (const std::string &name)
   if (f != m_local_functions.end ()) {
     return f->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -3559,7 +3559,7 @@ static const char *operator_methods[] =
   "==", "[]", "()",
   "&&", "&", "||", "|", ">>", ">=", ">", "<<", "<=", "<",
   "++", "+", "--", "-", "^", "!~", "!=", "!", "~", "%", "*", "/",
-  0
+  nullptr
 };
 
 void
@@ -3965,9 +3965,9 @@ Eval::eval_atomic (ExpressionParserContext &ex, std::unique_ptr<ExpressionNode> 
 
   } else if (get_variable_name (ex, t)) {
 
-    const EvalFunction *function = 0;
-    const tl::Variant *value = 0;
-    tl::Variant *var = 0;
+    const EvalFunction *function = nullptr;
+    const tl::Variant *value = nullptr;
+    tl::Variant *var = nullptr;
 
     if (am == 2) {
       resolve_var_name (t, var);
@@ -4038,7 +4038,7 @@ Eval::eval_atomic (ExpressionParserContext &ex, std::unique_ptr<ExpressionNode> 
 void 
 Eval::resolve_var_name (const std::string &t, tl::Variant *&value) 
 {
-  value = 0;
+  value = nullptr;
 
   std::map<std::string, tl::Variant>::iterator v;
   v = m_local_vars.find (t);
@@ -4050,15 +4050,15 @@ Eval::resolve_var_name (const std::string &t, tl::Variant *&value)
 void 
 Eval::resolve_name (const std::string &t, const EvalFunction *&function, const tl::Variant *&value, tl::Variant *&var)
 {
-  function = 0;
-  value = 0;
-  var = 0;
+  function = nullptr;
+  value = nullptr;
+  var = nullptr;
 
   std::map <std::string, EvalFunction *>::const_iterator f;
   f = m_local_functions.find (t);
   if (f != m_local_functions.end ()) {
     function = f->second;
-  } else if ((function = EvalStaticFunction::function_by_name (t)) == 0) {
+  } else if ((function = EvalStaticFunction::function_by_name (t)) == nullptr) {
     std::map<std::string, tl::Variant>::iterator v;
     v = m_local_vars.find (t);
     if (v != m_local_vars.end ()) {
@@ -4129,7 +4129,7 @@ Eval::parse_expr (tl::Extractor &ex, bool top)
 {
   ex.skip ();
 
-  tl::Eval eval (0, true);
+  tl::Eval eval (nullptr, true);
   Expression expr (&eval, ex.get ());
 
   tl::Extractor ex0 = ex;

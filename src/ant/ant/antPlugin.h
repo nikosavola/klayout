@@ -56,8 +56,8 @@ public:
 
   virtual std::vector<std::string> additional_editor_options_pages (lay::LayoutViewBase *view) const;
 
-  void register_annotation_template (const ant::Template &t, lay::Plugin *plugin = 0);
-  void unregister_annotation_template (const std::string &category, lay::Plugin *plugin = 0);
+  void register_annotation_template (const ant::Template &t, lay::Plugin *plugin = nullptr);
+  void unregister_annotation_template (const std::string &category, lay::Plugin *plugin = nullptr);
 
   static PluginDeclaration *instance ();
 

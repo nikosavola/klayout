@@ -1024,7 +1024,7 @@ public:
    *  This method needs to be implemented mainly if the object is to be created from the
    *  generic factory.
    */
-  virtual void from_string (const char *str, const char *base_dir = 0);
+  virtual void from_string (const char *str, const char *base_dir = nullptr);
 
   /**
    *  @brief Convert to a string

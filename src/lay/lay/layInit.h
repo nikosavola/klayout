@@ -48,7 +48,7 @@ struct PluginDescriptor
   std::string description;
 
   PluginDescriptor ()
-    : autorun (0), autorun_early (0)
+    : autorun (nullptr), autorun_early (nullptr)
   { }
 };
 

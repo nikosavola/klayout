@@ -129,7 +129,7 @@ MarkerBrowserDialog::~MarkerBrowserDialog ()
   tl::Object::detach_from_all_events ();
 
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -272,7 +272,7 @@ BEGIN_PROTECTED
 
   try {
 
-    db::Transaction transaction (view ()->is_editable () ? view ()->manager () : 0, tl::to_string (QObject::tr ("Export Markers")));
+    db::Transaction transaction (view ()->is_editable () ? view ()->manager () : nullptr, tl::to_string (QObject::tr ("Export Markers")));
 
     std::vector <const Category *> categories;
     for (rdb::Categories::const_iterator cat = rdb->categories ().begin (); cat != rdb->categories ().end (); ++cat) {
@@ -404,7 +404,7 @@ MarkerBrowserDialog::apply_waiver_db_clicked ()
 {
 BEGIN_PROTECTED
 
-  rdb::Database *rdb = 0;
+  rdb::Database *rdb = nullptr;
   if (m_rdb_index < int (view ()->num_rdbs ()) && m_rdb_index >= 0) {
     rdb = view ()->get_rdb (m_rdb_index);
   }
@@ -435,7 +435,7 @@ BEGIN_PROTECTED
   rdb::Database wdb;
   wdb.load (wdb_filename);
 
-  mp_ui->browser_frame->set_rdb (0);
+  mp_ui->browser_frame->set_rdb (nullptr);
   rdb->apply (wdb);
   mp_ui->browser_frame->set_rdb (rdb);
 
@@ -447,7 +447,7 @@ MarkerBrowserDialog::saveas_waiver_db_clicked ()
 {
 BEGIN_PROTECTED
 
-  rdb::Database *rdb = 0;
+  rdb::Database *rdb = nullptr;
   if (m_rdb_index < int (view ()->num_rdbs ()) && m_rdb_index >= 0) {
     rdb = view ()->get_rdb (m_rdb_index);
   }
@@ -497,7 +497,7 @@ END_PROTECTED
 void
 MarkerBrowserDialog::info_clicked ()
 {
-  rdb::Database *rdb = 0;
+  rdb::Database *rdb = nullptr;
   if (m_rdb_index < int (view ()->num_rdbs ()) && m_rdb_index >= 0) {
     rdb = view ()->get_rdb (m_rdb_index);
   }
@@ -539,7 +539,7 @@ BEGIN_PROTECTED
     rdb::Database *rdb = view ()->get_rdb (m_rdb_index);
     if (rdb && ! rdb->filename ().empty ()) {
 
-      mp_ui->browser_frame->set_rdb (0);
+      mp_ui->browser_frame->set_rdb (nullptr);
       rdb->load (rdb->filename ());
       mp_ui->browser_frame->set_rdb (rdb);
 
@@ -810,7 +810,7 @@ MarkerBrowserDialog::activated ()
     m_cv_index = view ()->active_cellview_index ();
   }
 
-  if (m_rdb_index < 0 && view ()->get_rdb (0) != 0) {
+  if (m_rdb_index < 0 && view ()->get_rdb (0) != nullptr) {
 
     m_rdb_name = view ()->get_rdb (0)->name ();
     rdbs_changed ();
@@ -829,18 +829,18 @@ MarkerBrowserDialog::update_content ()
     mp_ui->central_stack->setCurrentIndex (1);
   }
 
-  mp_ui->save_action->setEnabled (rdb != 0);
-  mp_ui->saveas_action->setEnabled (rdb != 0);
-  mp_ui->saveas_waiver_db_action->setEnabled (rdb != 0);
-  mp_ui->apply_waiver_db_action->setEnabled (rdb != 0);
-  mp_ui->export_action->setEnabled (rdb != 0);
-  mp_ui->unload_action->setEnabled (rdb != 0);
-  mp_ui->unload_all_action->setEnabled (rdb != 0);
-  mp_ui->reload_action->setEnabled (rdb != 0);
-  mp_ui->info_action->setEnabled (rdb != 0);
+  mp_ui->save_action->setEnabled (rdb != nullptr);
+  mp_ui->saveas_action->setEnabled (rdb != nullptr);
+  mp_ui->saveas_waiver_db_action->setEnabled (rdb != nullptr);
+  mp_ui->apply_waiver_db_action->setEnabled (rdb != nullptr);
+  mp_ui->export_action->setEnabled (rdb != nullptr);
+  mp_ui->unload_action->setEnabled (rdb != nullptr);
+  mp_ui->unload_all_action->setEnabled (rdb != nullptr);
+  mp_ui->reload_action->setEnabled (rdb != nullptr);
+  mp_ui->info_action->setEnabled (rdb != nullptr);
 
   mp_ui->browser_frame->enable_updates (false);  //  Avoid building the internal lists several times ...
-  mp_ui->browser_frame->set_rdb (0);    //  force update
+  mp_ui->browser_frame->set_rdb (nullptr);    //  force update
   mp_ui->browser_frame->set_rdb (rdb);
   mp_ui->browser_frame->set_max_marker_count (m_max_marker_count);
   mp_ui->browser_frame->set_marker_style (m_marker_color, m_marker_line_width, m_marker_vertex_size, m_marker_halo, m_marker_dither_pattern);
@@ -884,8 +884,8 @@ MarkerBrowserDialog::deactivated ()
     }
   }
 
-  mp_ui->browser_frame->set_rdb (0);
-  mp_ui->browser_frame->set_view (0, 0);
+  mp_ui->browser_frame->set_rdb (nullptr);
+  mp_ui->browser_frame->set_view (nullptr, 0);
 }
 
 void 

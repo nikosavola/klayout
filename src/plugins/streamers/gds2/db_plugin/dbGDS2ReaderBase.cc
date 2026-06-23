@@ -305,7 +305,7 @@ GDS2ReaderBase::do_read (db::Layout &layout)
 
       }
       
-      db::Cell *cell = 0;
+      db::Cell *cell = nullptr;
       if (! ignore_cell) {
         cell = &layout.cell (cell_index);
       }
@@ -318,7 +318,7 @@ GDS2ReaderBase::do_read (db::Layout &layout)
 
         progress_checkpoint ();
 
-        if (cell == 0) {
+        if (cell == nullptr) {
 
           //  ignore everything in proxy cells: these are created from the libraries or PCells.
 

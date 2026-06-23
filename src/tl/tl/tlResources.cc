@@ -61,7 +61,7 @@ public:
   {
     if (id < m_entries.size ()) {
       m_entries [id].name.clear ();
-      m_entries [id].data = 0;
+      m_entries [id].data = nullptr;
       m_entries [id].data_size = 0;
     }
   }
@@ -72,7 +72,7 @@ public:
     if (i != m_dict.end () && i->second < m_entries.size ()) {
       return &m_entries [i->second];
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -93,7 +93,7 @@ private:
 
 }
 
-static ResourceDict *ms_dict = 0;
+static ResourceDict *ms_dict = nullptr;
 
 resource_id_type register_resource (const char *name, bool compressed, const unsigned char *data, size_t data_size)
 {
@@ -142,7 +142,7 @@ tl::InputStream *get_resource (const char *name)
 {
   std::pair<tl::InputStreamBase *, bool> rr = get_resource_reader (name);
   if (! rr.first) {
-    return 0;
+    return nullptr;
   } else {
     auto stream = new tl::InputStream (rr.first);
     if (rr.second) {

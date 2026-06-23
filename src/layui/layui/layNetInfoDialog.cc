@@ -44,7 +44,7 @@ NetInfoDialog::NetInfoDialog (QWidget *parent)
 NetInfoDialog::~NetInfoDialog ()
 {
   delete ui;
-  ui = 0;
+  ui = nullptr;
 }
 
 void NetInfoDialog::needs_update ()

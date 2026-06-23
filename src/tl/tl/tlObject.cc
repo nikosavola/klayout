@@ -32,7 +32,7 @@ namespace tl
 //  Object implementation
 
 Object::Object ()
-  : mp_ptrs (0)
+  : mp_ptrs (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -51,13 +51,13 @@ Object::reset ()
   //  But this will easily create deadlocks and the
   //  destructor should not be called while other threads
   //  are accessing this object anyway.
-  while ((ptrs = reinterpret_cast<WeakOrSharedPtr *> (size_t (mp_ptrs) & ~size_t (1))) != 0) {
+  while ((ptrs = reinterpret_cast<WeakOrSharedPtr *> (size_t (mp_ptrs) & ~size_t (1))) != nullptr) {
     ptrs->reset_object ();
   }
 }
 
 Object::Object (const Object & /*other*/)
-  : mp_ptrs (0)
+  : mp_ptrs (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -70,8 +70,8 @@ Object &Object::operator= (const Object & /*other*/)
 
 void Object::register_ptr (WeakOrSharedPtr *p)
 {
-  tl_assert (p->mp_next == 0);
-  tl_assert (p->mp_prev == 0);
+  tl_assert (p->mp_next == nullptr);
+  tl_assert (p->mp_prev == nullptr);
 
   WeakOrSharedPtr *ptrs = (WeakOrSharedPtr *)(size_t (mp_ptrs) & ~size_t (1));
   bool kept = (size_t (mp_ptrs) & size_t(1));
@@ -98,7 +98,7 @@ void Object::unregister_ptr (WeakOrSharedPtr *p)
   if (p->mp_next) {
     p->mp_next->mp_prev = p->mp_prev;
   }
-  p->mp_prev = p->mp_next = 0;
+  p->mp_prev = p->mp_next = nullptr;
 }
 
 void Object::detach_from_all_events ()
@@ -149,25 +149,25 @@ void Object::release_object ()
 //  WeakOrSharedPtr implementation
 
 WeakOrSharedPtr::WeakOrSharedPtr ()
-  : mp_next (0), mp_prev (0), mp_t (0), m_is_shared (true), m_is_event (false)
+  : mp_next (nullptr), mp_prev (nullptr), mp_t (nullptr), m_is_shared (true), m_is_event (false)
 {
 }
 
 WeakOrSharedPtr::WeakOrSharedPtr (const WeakOrSharedPtr &o)
-  : mp_next (0), mp_prev (0), mp_t (0), m_is_shared (true), m_is_event (false)
+  : mp_next (nullptr), mp_prev (nullptr), mp_t (nullptr), m_is_shared (true), m_is_event (false)
 {
   operator= (o);
 }
 
 WeakOrSharedPtr::WeakOrSharedPtr (Object *t, bool shared, bool is_event)
-  : mp_next (0), mp_prev (0), mp_t (0), m_is_shared (true), m_is_event (false)
+  : mp_next (nullptr), mp_prev (nullptr), mp_t (nullptr), m_is_shared (true), m_is_event (false)
 {
   reset (t, shared, is_event);
 }
 
 WeakOrSharedPtr::~WeakOrSharedPtr ()
 {
-  reset (0, true, false);
+  reset (nullptr, true, false);
 }
 
 WeakOrSharedPtr &WeakOrSharedPtr::operator= (const WeakOrSharedPtr &o) 
@@ -199,7 +199,7 @@ namespace {
     static tl::Mutex *sp_lock;
   };
 
-  tl::Mutex *GlobalLockInitializer::sp_lock = 0;
+  tl::Mutex *GlobalLockInitializer::sp_lock = nullptr;
 
   //  This ensures the instance is created in the initialization code
   static GlobalLockInitializer s_gl_init;
@@ -238,11 +238,11 @@ void WeakOrSharedPtr::reset_object ()
 
   if (mp_t) {
     mp_t->unregister_ptr (this);
-    mp_t = 0;
+    mp_t = nullptr;
   }
 
-  tl_assert (mp_prev == 0);
-  tl_assert (mp_next == 0);
+  tl_assert (mp_prev == nullptr);
+  tl_assert (mp_next == nullptr);
 
   m_is_shared = true;
 }
@@ -253,7 +253,7 @@ void WeakOrSharedPtr::reset (Object *t, bool is_shared, bool is_event)
     return;
   }
 
-  Object *to_delete = 0;
+  Object *to_delete = nullptr;
 
   {
     tl::MutexLocker locker (&lock ());
@@ -261,14 +261,14 @@ void WeakOrSharedPtr::reset (Object *t, bool is_shared, bool is_event)
     if (mp_t) {
       Object *told = mp_t;
       mp_t->unregister_ptr (this);
-      mp_t = 0;
+      mp_t = nullptr;
       if (m_is_shared && told && !told->has_strong_references ()) {
         to_delete = told;
       }
     }
 
-    tl_assert (mp_prev == 0);
-    tl_assert (mp_next == 0);
+    tl_assert (mp_prev == nullptr);
+    tl_assert (mp_next == nullptr);
 
     mp_t = t;
     m_is_shared = is_shared;

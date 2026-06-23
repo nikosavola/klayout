@@ -48,7 +48,7 @@ NetlistSpiceReaderExpressionParser::NetlistSpiceReaderExpressionParser (const va
   : m_def_scale (def_scale)
 {
   mp_variables1 = vars;
-  mp_variables2 = 0;
+  mp_variables2 = nullptr;
 }
 
 NetlistSpiceReaderExpressionParser::NetlistSpiceReaderExpressionParser (const variables_type *vars1, const variables_type *vars2, double def_scale)
@@ -87,7 +87,7 @@ static double int_f (double v)    { return sgn_f (v) * floor (sgn_f (v) * v); }
 tl::Variant
 NetlistSpiceReaderExpressionParser::eval_func (const std::string &name, const std::vector<tl::Variant> &params, bool * /*status*/) const
 {
-  double (*f) (double) = 0;
+  double (*f) (double) = nullptr;
 
   if (name == "SQRT") { f = sqrt_f; } else
   if (name == "SIN") { f = sin_f; } else
@@ -112,9 +112,9 @@ NetlistSpiceReaderExpressionParser::eval_func (const std::string &name, const st
   if (name == "SGN") { f = sgn_f; } else
   if (name == "INT") { f = int_f; }
 
-  if (f != 0) {
+  if (f != nullptr) {
 
-    if (params.size () < 1 || ! params.front ().can_convert_to_double ()) {
+    if (params.empty() || ! params.front ().can_convert_to_double ()) {
       return tl::Variant ();
     } else {
       return tl::Variant ((*f) (params.front ().to_double ()));
@@ -138,7 +138,7 @@ NetlistSpiceReaderExpressionParser::eval_func (const std::string &name, const st
 
   } else if (name == "MIN") {
 
-    if (params.size () < 1) {
+    if (params.empty()) {
       return tl::Variant ();
     }
 
@@ -152,7 +152,7 @@ NetlistSpiceReaderExpressionParser::eval_func (const std::string &name, const st
 
   } else if (name == "MAX") {
 
-    if (params.size () < 1) {
+    if (params.empty()) {
       return tl::Variant ();
     }
 
@@ -521,7 +521,7 @@ static const char *start_quote (tl::Extractor &ex)
   } else if (ex.test ("{")) {
     return "}";
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -536,7 +536,7 @@ tl::Variant NetlistSpiceReaderExpressionParser::read (tl::Extractor &ex) const
   tl::Variant res;
 
   const char *endquote = start_quote (ex);
-  res = read_tl_expr (ex, 0);
+  res = read_tl_expr (ex, nullptr);
   if (endquote) {
     ex.test (endquote);
   }

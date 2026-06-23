@@ -44,9 +44,9 @@ public:
   EmptyRegion (const EmptyRegion &other);
   RegionDelegate *clone () const;
 
-  virtual RegionIteratorDelegate *begin () const { return 0; }
-  virtual RegionIteratorDelegate *begin_merged () const { return 0; }
-  virtual RegionIteratorDelegate *begin_unmerged () const { return 0; }
+  virtual RegionIteratorDelegate *begin () const { return nullptr; }
+  virtual RegionIteratorDelegate *begin_merged () const { return nullptr; }
+  virtual RegionIteratorDelegate *begin_unmerged () const { return nullptr; }
 
   virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const { return std::make_pair (db::RecursiveShapeIterator (), db::ICplxTrans ()); }
   virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_merged_iter () const { return std::make_pair (db::RecursiveShapeIterator (), db::ICplxTrans ()); }
@@ -147,7 +147,7 @@ public:
   virtual const db::Polygon *nth (size_t) const { tl_assert (false); }
   virtual db::properties_id_type nth_prop_id (size_t) const { tl_assert (false); }
 
-  virtual const db::RecursiveShapeIterator *iter () const { return 0; }
+  virtual const db::RecursiveShapeIterator *iter () const { return nullptr; }
   virtual void apply_property_translator (const db::PropertiesTranslator &) { }
 
   virtual bool equals (const Region &other) const;

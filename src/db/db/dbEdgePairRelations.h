@@ -241,7 +241,7 @@ struct DB_PUBLIC EdgeRelationFilter
    *  If the output pointer is non-null, the object will receive the edge pair that
    *  represents the marker for this type of check.
    */
-  bool check (const db::Edge &a, const db::Edge &b, db::EdgePair *output = 0) const;
+  bool check (const db::Edge &a, const db::Edge &b, db::EdgePair *output = nullptr) const;
 
   /**
    *  @brief Sets a flag indicating whether to report whole edges instead of partial ones

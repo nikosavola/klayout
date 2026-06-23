@@ -406,7 +406,7 @@ const db::Polygon *FlatRegion::nth (size_t n) const
   //  NOTE: this assumes that we iterate over non-property polygons first and then over polygons with properties
 
   if (n >= mp_polygons->size ()) {
-    return 0;
+    return nullptr;
   }
 
   const db::layer<db::Polygon, db::unstable_layer_tag> &l = mp_polygons->get_layer<db::Polygon, db::unstable_layer_tag> ();
@@ -420,7 +420,7 @@ const db::Polygon *FlatRegion::nth (size_t n) const
     return &lp.begin () [n];
   }
 
-  return 0;
+  return nullptr;
 }
 
 db::properties_id_type FlatRegion::nth_prop_id (size_t n) const
@@ -457,7 +457,7 @@ bool FlatRegion::has_valid_merged_polygons () const
 
 const db::RecursiveShapeIterator *FlatRegion::iter () const
 {
-  return 0;
+  return nullptr;
 }
 
 void FlatRegion::apply_property_translator (const db::PropertiesTranslator &pt)

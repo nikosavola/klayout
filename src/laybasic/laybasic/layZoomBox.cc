@@ -34,7 +34,7 @@ namespace lay
 ZoomService::ZoomService (lay::LayoutViewBase *view)
   : lay::ViewService (view->canvas ()), lay::Plugin (view),
     mp_view (view),
-    mp_box (0),
+    mp_box (nullptr),
     m_color (0)
 { }
 
@@ -48,7 +48,7 @@ ZoomService::drag_cancel ()
 {
   if (mp_box) {
     delete mp_box;
-    mp_box = 0;
+    mp_box = nullptr;
   }
   ui ()->ungrab_mouse (this);
 }
@@ -137,7 +137,7 @@ ZoomService::mouse_release_event (const db::DPoint & /*p*/, unsigned int /*butto
     if (mp_box) {
 
       delete mp_box;
-      mp_box = 0;
+      mp_box = nullptr;
 
       db::DBox vp = ui ()->mouse_event_viewport ();
       db::DVector d = (vp.p2 () - vp.p1 ()) * 0.5;
@@ -257,7 +257,7 @@ ZoomService::begin_pan (const db::DPoint &pos)
   if (mp_box) {
     delete mp_box;
   }
-  mp_box = 0;
+  mp_box = nullptr;
 
   m_p1 = pos;
   m_vp = ui ()->mouse_event_viewport ();

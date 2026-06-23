@@ -79,7 +79,7 @@ private:
 
 static LayoutQueryIteratorWrapper iterate1 (const db::LayoutQuery *q, const db::Layout *layout, tl::Eval *eval)
 {
-  return LayoutQueryIteratorWrapper (*q, layout, 0, eval);
+  return LayoutQueryIteratorWrapper (*q, layout, nullptr, eval);
 }
 
 static LayoutQueryIteratorWrapper iterate2 (const db::LayoutQuery *q, const db::Layout *layout, const db::Cell *cell, tl::Eval *eval)
@@ -165,7 +165,7 @@ Class<db::LayoutQueryIterator> decl_LayoutQueryIterator ("db", "LayoutQueryItera
 
 static void execute1 (db::LayoutQuery *q, db::Layout &layout, tl::Eval *context)
 {
-  q->execute (layout, 0, context);
+  q->execute (layout, nullptr, context);
 }
 
 static void execute2 (db::LayoutQuery *q, db::Layout &layout, db::Cell *cell, tl::Eval *context)
@@ -183,7 +183,7 @@ Class<db::LayoutQuery> decl_LayoutQuery ("db", "LayoutQuery",
     "This method allows detection of the properties available. Within the query, all of these "
     "properties can be obtained from the query iterator using \\LayoutQueryIterator#get.\n"
   ) +
-  gsi::method_ext ("execute", &execute1, gsi::arg("layout"), gsi::arg ("context", (tl::Eval *) 0, "nil"),
+  gsi::method_ext ("execute", &execute1, gsi::arg("layout"), gsi::arg ("context", (tl::Eval *) nullptr, "nil"),
     "@brief Executes the query\n"
     "\n"
     "This method can be used to execute \"active\" queries such\n"
@@ -194,14 +194,14 @@ Class<db::LayoutQuery> decl_LayoutQuery ("db", "LayoutQuery",
     "The context argument allows supplying an expression execution context. This context can be used for "
     "example to supply variables for the execution. It has been added in version 0.26.\n"
   ) +
-  gsi::method_ext ("execute", &execute2, gsi::arg("layout"), gsi::arg("cell"), gsi::arg ("context", (tl::Eval *) 0, "nil"),
+  gsi::method_ext ("execute", &execute2, gsi::arg("layout"), gsi::arg("cell"), gsi::arg ("context", (tl::Eval *) nullptr, "nil"),
     "@brief Executes the query\n"
     "\n"
     "This version allows specifying a context cell. This cell can be used as a default cell for cell expressions.\n"
     "\n"
     "This variant has been introduced in version 0.30."
   ) +
-  gsi::iterator_ext ("each", &iterate1, gsi::arg ("layout"), gsi::arg ("context", (tl::Eval *) 0, "nil"),
+  gsi::iterator_ext ("each", &iterate1, gsi::arg ("layout"), gsi::arg ("context", (tl::Eval *) nullptr, "nil"),
     "@brief Executes the query and delivered the results iteratively.\n"
     "The argument to the block is a \\LayoutQueryIterator object which can be "
     "asked for specific results.\n"
@@ -209,7 +209,7 @@ Class<db::LayoutQuery> decl_LayoutQuery ("db", "LayoutQuery",
     "The context argument allows supplying an expression execution context. This context can be used for "
     "example to supply variables for the execution. It has been added in version 0.26.\n"
   ) +
-  gsi::iterator_ext ("each", &iterate2, gsi::arg ("layout"), gsi::arg("cell"), gsi::arg ("context", (tl::Eval *) 0, "nil"),
+  gsi::iterator_ext ("each", &iterate2, gsi::arg ("layout"), gsi::arg("cell"), gsi::arg ("context", (tl::Eval *) nullptr, "nil"),
     "@brief Executes the query and delivered the results iteratively.\n"
     "\n"
     "This version allows specifying a context cell. This cell can be used as a default cell for cell expressions.\n"

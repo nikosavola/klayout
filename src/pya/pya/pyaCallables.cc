@@ -66,7 +66,7 @@ int
 pya_object_init (PyObject * /*self*/, PyObject *args, PyObject *kwds)
 {
   //  no particular initialization
-  static char *kwlist[] = {NULL};
+  static char *kwlist[] = {nullptr};
   if (! PyArg_ParseTupleAndKeywords (args, kwds, "", kwlist)) {
     return -1;
   } else {
@@ -96,7 +96,7 @@ pya_object_new (PyTypeObject *type, PyObject * /*args*/, PyObject * /*kwds*/)
 std::string
 method_name_from_id (int mid, PyObject *self)
 {
-  const gsi::ClassBase *cls_decl = 0;
+  const gsi::ClassBase *cls_decl = nullptr;
 
   if (! PyType_Check (self)) {
     PYAObjectBase *p = PYAObjectBase::from_pyobject (self);
@@ -105,7 +105,7 @@ method_name_from_id (int mid, PyObject *self)
     cls_decl = PythonModule::cls_for_type ((PyTypeObject *) self);
   }
 
-  tl_assert (cls_decl != 0);
+  tl_assert (cls_decl != nullptr);
 
   const MethodTable *mt = MethodTable::method_table_by_class (cls_decl);
   tl_assert (mt);
@@ -129,7 +129,7 @@ method_name_from_id (int mid, PyObject *self)
 std::string
 property_name_from_id (int mid, PyObject *self)
 {
-  const gsi::ClassBase *cls_decl = 0;
+  const gsi::ClassBase *cls_decl = nullptr;
 
   if (! PyType_Check (self)) {
     PYAObjectBase *p = PYAObjectBase::from_pyobject (self);
@@ -138,7 +138,7 @@ property_name_from_id (int mid, PyObject *self)
     cls_decl = PythonModule::cls_for_type ((PyTypeObject *) self);
   }
 
-  tl_assert (cls_decl != 0);
+  tl_assert (cls_decl != nullptr);
 
   const MethodTable *mt = MethodTable::method_table_by_class (cls_decl);
   tl_assert (mt);
@@ -168,14 +168,14 @@ static gsi::ArgType s_void_type = create_void_type ();
 static PyObject *
 get_return_value (PYAObjectBase *self, gsi::SerialArgs &retlist, const gsi::MethodBase *meth, tl::Heap &heap)
 {
-  PyObject *ret = NULL;
+  PyObject *ret = nullptr;
 
   if (meth->ret_type ().is_iter ()) {
 
     gsi::IterAdaptorAbstractBase *iter = (gsi::IterAdaptorAbstractBase *) retlist.read<gsi::IterAdaptorAbstractBase *> (heap);
-    ret = (PyObject *) PYAIteratorObject::create (self ? self->py_object () : 0, iter, &meth->ret_type ());
+    ret = (PyObject *) PYAIteratorObject::create (self ? self->py_object () : nullptr, iter, &meth->ret_type ());
 
-  } else if (meth->ret_type () == s_void_type && self != 0) {
+  } else if (meth->ret_type () == s_void_type && self != nullptr) {
 
     //  simple, yet magical :)
     ret = self->py_object ();
@@ -219,10 +219,10 @@ invalid_kwnames (const gsi::MethodBase *meth, PyObject *kwargs)
 }
 
 static bool
-compatible_with_args (const gsi::MethodBase *m, int argc, PyObject *kwargs, std::string *why_not = 0)
+compatible_with_args (const gsi::MethodBase *m, int argc, PyObject *kwargs, std::string *why_not = nullptr)
 {
   int nargs = num_args (m);
-  int nkwargs = kwargs == NULL ? 0 : int (PyDict_Size (kwargs));
+  int nkwargs = kwargs == nullptr ? 0 : int (PyDict_Size (kwargs));
 
   if (argc > nargs) {
     if (why_not) {
@@ -241,7 +241,7 @@ compatible_with_args (const gsi::MethodBase *m, int argc, PyObject *kwargs, std:
     }
   }
 
-  if (kwargs != NULL) {
+  if (kwargs != nullptr) {
 
     int kwargs_taken = 0;
 
@@ -324,19 +324,19 @@ describe_overloads (const MethodTable *mt, int mid, int argc, PyObject *kwargs)
 static PyObject *
 get_kwarg (const gsi::ArgType &atype, PyObject *kwargs)
 {
-  if (kwargs != NULL) {
+  if (kwargs != nullptr) {
     return PyDict_GetItemString (kwargs, atype.spec ()->name ().c_str ());
   } else {
-    return NULL;
+    return nullptr;
   }
 }
 
 static const gsi::MethodBase *
 match_method (int mid, PyObject *self, PyObject *args, PyObject *kwargs, bool strict)
 {
-  const gsi::ClassBase *cls_decl = 0;
+  const gsi::ClassBase *cls_decl = nullptr;
 
-  PYAObjectBase *p = 0;
+  PYAObjectBase *p = nullptr;
   if (! PyType_Check (self)) {
     p = PYAObjectBase::from_pyobject (self);
     cls_decl = p->cls_decl ();
@@ -344,13 +344,13 @@ match_method (int mid, PyObject *self, PyObject *args, PyObject *kwargs, bool st
     cls_decl = PythonModule::cls_for_type ((PyTypeObject *) self);
   }
 
-  tl_assert (cls_decl != 0);
+  tl_assert (cls_decl != nullptr);
 
   bool is_tuple = PyTuple_Check (args);
-  int argc = args == NULL ? 0 : (is_tuple ? int (PyTuple_Size (args)) : int (PyList_Size (args)));
+  int argc = args == nullptr ? 0 : (is_tuple ? int (PyTuple_Size (args)) : int (PyList_Size (args)));
 
   //  get number of candidates by argument count
-  const gsi::MethodBase *meth = 0;
+  const gsi::MethodBase *meth = nullptr;
   unsigned int candidates = 0;
 
   const MethodTable *mt = MethodTable::method_table_by_class (cls_decl);
@@ -384,7 +384,7 @@ match_method (int mid, PyObject *self, PyObject *args, PyObject *kwargs, bool st
   //  no candidate -> error
   if (! meth) {
     if (! strict) {
-      return 0;
+      return nullptr;
     } else {
       throw tl::TypeError (tl::to_string (tr ("Can't match arguments. Variants are:\n")) + describe_overloads (mt, mid, argc, kwargs));
     }
@@ -393,7 +393,7 @@ match_method (int mid, PyObject *self, PyObject *args, PyObject *kwargs, bool st
   //  more than one candidate -> refine by checking the arguments
   if (candidates > 1) {
 
-    meth = 0;
+    meth = nullptr;
     candidates = 0;
     int score = 0;
     bool const_matching = true;
@@ -470,7 +470,7 @@ match_method (int mid, PyObject *self, PyObject *args, PyObject *kwargs, bool st
     for (gsi::MethodBase::argument_iterator a = meth->begin_arguments (); a != meth->end_arguments (); ++a, ++i) {
       PythonPtr arg (i >= argc ? get_kwarg (*a, kwargs) : (is_tuple ? PyTuple_GetItem (args, i) : PyList_GetItem (args, i)));
       if (arg && ! test_arg (*a, arg.get (), true /*loose*/, true /*object substitution*/)) {
-        return 0;
+        return nullptr;
       }
     }
 
@@ -478,7 +478,7 @@ match_method (int mid, PyObject *self, PyObject *args, PyObject *kwargs, bool st
 
   if (! meth) {
     if (! strict || mt->fallback_not_implemented (mid)) {
-      return 0;
+      return nullptr;
     } else {
       throw tl::TypeError (tl::to_string (tr ("No overload with matching arguments. Variants are:\n")) + describe_overloads (mt, mid, argc, kwargs));
     }
@@ -486,7 +486,7 @@ match_method (int mid, PyObject *self, PyObject *args, PyObject *kwargs, bool st
 
   if (candidates > 1) {
     if (! strict || mt->fallback_not_implemented (mid)) {
-      return 0;
+      return nullptr;
     } else {
       throw tl::TypeError (tl::to_string (tr ("Ambiguous overload variants - multiple method declarations match arguments. Variants are:\n")) + describe_overloads (mt, mid, argc, kwargs));
     }
@@ -502,10 +502,10 @@ static PyObject *
 object_dup (PyObject *self, PyObject *args)
 {
   const gsi::ClassBase *cls_decl_self = PythonModule::cls_for_type (Py_TYPE (self));
-  tl_assert (cls_decl_self != 0);
+  tl_assert (cls_decl_self != nullptr);
 
   if (! PyArg_ParseTuple (args, "")) {
-    return NULL;
+    return nullptr;
   }
 
   if (! cls_decl_self->can_copy ()) {
@@ -528,15 +528,15 @@ static PyObject *
 object_assign (PyObject *self, PyObject *args)
 {
   const gsi::ClassBase *cls_decl_self = PythonModule::cls_for_type (Py_TYPE (self));
-  tl_assert (cls_decl_self != 0);
+  tl_assert (cls_decl_self != nullptr);
 
-  PyObject *src = NULL;
+  PyObject *src = nullptr;
   if (! PyArg_ParseTuple (args, "O", &src)) {
-    return NULL;
+    return nullptr;
   }
 
   const gsi::ClassBase *cls_decl_src = PythonModule::cls_for_type (Py_TYPE (src));
-  tl_assert (cls_decl_src != 0);
+  tl_assert (cls_decl_src != nullptr);
 
   if (cls_decl_src != cls_decl_self) {
     throw tl::Exception (tl::to_string (tr ("Type is not identical on assign")));
@@ -558,10 +558,10 @@ PyObject *
 object_default_deepcopy_impl (PyObject *self, PyObject * /*args*/)
 {
   PyObject *copy_method = PyObject_GetAttrString (self, "__copy__");
-  tl_assert (copy_method != NULL);
+  tl_assert (copy_method != nullptr);
 
   PythonRef empty_args (PyTuple_New (0));
-  return PyObject_Call (copy_method, empty_args.get (), NULL);
+  return PyObject_Call (copy_method, empty_args.get (), nullptr);
 }
 
 /**
@@ -571,11 +571,11 @@ PyObject *
 object_default_ne_impl (PyObject *self, PyObject *args)
 {
   PyObject *eq_method = PyObject_GetAttrString (self, "__eq__");
-  tl_assert (eq_method != NULL);
+  tl_assert (eq_method != nullptr);
 
-  PythonRef res (PyObject_Call (eq_method, args, NULL));
+  PythonRef res (PyObject_Call (eq_method, args, nullptr));
   if (! res) {
-    return NULL;
+    return nullptr;
   } else {
     return c2python (! python2c<bool> (res.get ()));
   }
@@ -588,11 +588,11 @@ PyObject *
 object_default_ge_impl (PyObject *self, PyObject *args)
 {
   PyObject *eq_method = PyObject_GetAttrString (self, "__lt__");
-  tl_assert (eq_method != NULL);
+  tl_assert (eq_method != nullptr);
 
-  PythonRef res (PyObject_Call (eq_method, args, NULL));
+  PythonRef res (PyObject_Call (eq_method, args, nullptr));
   if (! res) {
-    return NULL;
+    return nullptr;
   } else {
     return c2python (! python2c<bool> (res.get ()));
   }
@@ -605,18 +605,18 @@ PyObject *
 object_default_le_impl (PyObject *self, PyObject *args)
 {
   PyObject *eq_method = PyObject_GetAttrString (self, "__eq__");
-  tl_assert (eq_method != NULL);
+  tl_assert (eq_method != nullptr);
 
   PyObject *lt_method = PyObject_GetAttrString (self, "__lt__");
-  tl_assert (lt_method != NULL);
+  tl_assert (lt_method != nullptr);
 
-  PythonRef eq_res (PyObject_Call (eq_method, args, NULL));
+  PythonRef eq_res (PyObject_Call (eq_method, args, nullptr));
   if (! eq_res) {
-    return NULL;
+    return nullptr;
   }
-  PythonRef lt_res (PyObject_Call (lt_method, args, NULL));
+  PythonRef lt_res (PyObject_Call (lt_method, args, nullptr));
   if (! lt_res) {
-    return NULL;
+    return nullptr;
   }
   return c2python (python2c<bool> (eq_res.get ()) || python2c<bool> (lt_res.get ()));
 }
@@ -628,18 +628,18 @@ PyObject *
 object_default_gt_impl (PyObject *self, PyObject *args)
 {
   PyObject *eq_method = PyObject_GetAttrString (self, "__eq__");
-  tl_assert (eq_method != NULL);
+  tl_assert (eq_method != nullptr);
 
   PyObject *lt_method = PyObject_GetAttrString (self, "__lt__");
-  tl_assert (lt_method != NULL);
+  tl_assert (lt_method != nullptr);
 
-  PythonRef eq_res (PyObject_Call (eq_method, args, NULL));
+  PythonRef eq_res (PyObject_Call (eq_method, args, nullptr));
   if (! eq_res) {
-    return NULL;
+    return nullptr;
   }
-  PythonRef lt_res (PyObject_Call (lt_method, args, NULL));
+  PythonRef lt_res (PyObject_Call (lt_method, args, nullptr));
   if (! lt_res) {
-    return NULL;
+    return nullptr;
   }
   return c2python (! (python2c<bool> (eq_res.get ()) || python2c<bool> (lt_res.get ())));
 }
@@ -651,7 +651,7 @@ static PyObject *
 object_create (PyObject *self, PyObject *args)
 {
   if (! PyArg_ParseTuple (args, "")) {
-    return NULL;
+    return nullptr;
   }
 
   (PYAObjectBase::from_pyobject (self))->obj ();
@@ -665,7 +665,7 @@ static PyObject *
 object_release (PyObject *self, PyObject *args)
 {
   if (! PyArg_ParseTuple (args, "")) {
-    return NULL;
+    return nullptr;
   }
 
   (PYAObjectBase::from_pyobject (self))->release ();
@@ -679,7 +679,7 @@ static PyObject *
 object_keep (PyObject *self, PyObject *args)
 {
   if (! PyArg_ParseTuple (args, "")) {
-    return NULL;
+    return nullptr;
   }
 
   (PYAObjectBase::from_pyobject (self))->keep ();
@@ -693,7 +693,7 @@ static PyObject *
 object_destroy (PyObject *self, PyObject *args)
 {
   if (! PyArg_ParseTuple (args, "")) {
-    return NULL;
+    return nullptr;
   }
 
   (PYAObjectBase::from_pyobject (self))->destroy ();
@@ -707,7 +707,7 @@ static PyObject *
 object_destroyed (PyObject *self, PyObject *args)
 {
   if (! PyArg_ParseTuple (args, "")) {
-    return NULL;
+    return nullptr;
   }
 
   return c2python (PYAObjectBase::from_pyobject (self)->destroyed ());
@@ -720,7 +720,7 @@ static PyObject *
 object_is_const (PyObject *self, PyObject *args)
 {
   if (! PyArg_ParseTuple (args, "")) {
-    return NULL;
+    return nullptr;
   }
 
   return c2python (PYAObjectBase::from_pyobject (self)->const_ref ());
@@ -737,10 +737,10 @@ object_change_const (PyObject *self, PyObject *args, bool to_const)
   }
 
   const gsi::ClassBase *cls_decl_self = PythonModule::cls_for_type (Py_TYPE (self));
-  tl_assert (cls_decl_self != 0);
+  tl_assert (cls_decl_self != nullptr);
 
   if (! PyArg_ParseTuple (args, "")) {
-    return NULL;
+    return nullptr;
   }
 
   PyObject *new_object = Py_TYPE (self)->tp_alloc (Py_TYPE (self), 0);
@@ -803,9 +803,9 @@ push_args (gsi::SerialArgs &arglist, const gsi::MethodBase *meth, PyObject *args
 {
   bool is_tuple = PyTuple_Check (args);
   int iarg = 0;
-  int argc = args == NULL ? 0 : (is_tuple ? int (PyTuple_Size (args)) : int (PyList_Size (args)));
+  int argc = args == nullptr ? 0 : (is_tuple ? int (PyTuple_Size (args)) : int (PyList_Size (args)));
   int kwargs_taken = 0;
-  int nkwargs = kwargs == NULL ? 0 : int (PyDict_Size (kwargs));
+  int nkwargs = kwargs == nullptr ? 0 : int (PyDict_Size (kwargs));
 
   try {
 
@@ -850,7 +850,7 @@ push_args (gsi::SerialArgs &arglist, const gsi::MethodBase *meth, PyObject *args
     //  In case of an error upon write, pop the arguments to clean them up.
     //  Without this, there is a risk to keep dead objects on the stack.
     for (gsi::MethodBase::argument_iterator a = meth->begin_arguments (); a != meth->end_arguments () && arglist; ++a) {
-      pull_arg (*a, arglist, 0, heap);
+      pull_arg (*a, arglist, nullptr, heap);
     }
 
     if (iarg < num_args (meth)) {
@@ -877,7 +877,7 @@ push_args (gsi::SerialArgs &arglist, const gsi::MethodBase *meth, PyObject *args
     //  In case of an error upon write, pop the arguments to clean them up.
     //  Without this, there is a risk to keep dead objects on the stack.
     for (gsi::MethodBase::argument_iterator a = meth->begin_arguments (); a != meth->end_arguments () && arglist; ++a) {
-      pull_arg (*a, arglist, 0, heap);
+      pull_arg (*a, arglist, nullptr, heap);
     }
 
     throw;
@@ -888,7 +888,7 @@ push_args (gsi::SerialArgs &arglist, const gsi::MethodBase *meth, PyObject *args
 static PyObject *
 method_adaptor (int mid, PyObject *self, PyObject *args, PyObject *kwargs)
 {
-  PyObject *ret = NULL;
+  PyObject *ret = nullptr;
 
   PYA_TRY
 
@@ -907,7 +907,7 @@ method_adaptor (int mid, PyObject *self, PyObject *args, PyObject *kwargs)
     //  handle special methods
     if (meth->smt () != gsi::MethodBase::None) {
 
-      if (kwargs != NULL && PyDict_Size (kwargs) > 0) {
+      if (kwargs != nullptr && PyDict_Size (kwargs) > 0) {
         throw tl::Exception (tl::to_string (tr ("Keyword arguments not permitted")));
       }
 
@@ -915,7 +915,7 @@ method_adaptor (int mid, PyObject *self, PyObject *args, PyObject *kwargs)
 
     } else {
 
-      PYAObjectBase *p = 0;
+      PYAObjectBase *p = nullptr;
       if (! PyType_Check (self)) {
         //  non-static method
         p = PYAObjectBase::from_pyobject (self);
@@ -927,7 +927,7 @@ method_adaptor (int mid, PyObject *self, PyObject *args, PyObject *kwargs)
         throw tl::Exception (tl::to_string (tr ("Cannot call non-const method on a const reference")));
       }
 
-      void *obj = 0;
+      void *obj = nullptr;
       if (p) {
         //  Hint: this potentially instantiates the object
         obj = p->obj ();
@@ -942,7 +942,7 @@ method_adaptor (int mid, PyObject *self, PyObject *args, PyObject *kwargs)
 
       ret = get_return_value (p, retlist, meth, heap);
 
-      if (ret == NULL) {
+      if (ret == nullptr) {
         Py_INCREF (Py_None);
         ret = Py_None;
       }
@@ -959,11 +959,11 @@ static PyObject *property_getter_impl (int mid, PyObject *self);
 static PyObject *
 property_getter_adaptor (int mid, PyObject *self, PyObject *args)
 {
-  PyObject *ret = NULL;
+  PyObject *ret = nullptr;
 
   PYA_TRY
 
-    int argc = args == NULL ? 0 : (PyTuple_Check (args) ? int (PyTuple_Size (args)) : int (PyList_Size (args)));
+    int argc = args == nullptr ? 0 : (PyTuple_Check (args) ? int (PyTuple_Size (args)) : int (PyList_Size (args)));
     if (argc != 0) {
       throw tl::Exception (tl::to_string (tr ("Property getters must not have an argument")));
     }
@@ -980,11 +980,11 @@ static PyObject *property_setter_impl (int mid, PyObject *self, PyObject *value)
 static PyObject *
 property_setter_adaptor (int mid, PyObject *self, PyObject *args)
 {
-  PyObject *ret = NULL;
+  PyObject *ret = nullptr;
 
   PYA_TRY
 
-    int argc = args == NULL ? 0 : (PyTuple_Check (args) ? int (PyTuple_Size (args)) : int (PyList_Size (args)));
+    int argc = args == nullptr ? 0 : (PyTuple_Check (args) ? int (PyTuple_Size (args)) : int (PyList_Size (args)));
     if (argc != 1) {
       throw tl::Exception (tl::to_string (tr ("Property setter needs exactly one argument")));
     }
@@ -1015,7 +1015,7 @@ method_init_adaptor (int mid, PyObject *self, PyObject *args, PyObject *kwargs)
     }
 
     int argc = PyTuple_Check (args) ? int (PyTuple_Size (args)) : int (PyList_Size (args));
-    bool has_kwargs = kwargs != NULL && PyDict_Size (kwargs) > 0;
+    bool has_kwargs = kwargs != nullptr && PyDict_Size (kwargs) > 0;
     bool strict_matching = argc > 0 || has_kwargs || ! p->cls_decl ()->can_default_create ();
 
     const gsi::MethodBase *meth = match_method (mid, self, args, kwargs, strict_matching);
@@ -1029,7 +1029,7 @@ method_init_adaptor (int mid, PyObject *self, PyObject *args, PyObject *kwargs)
 
       push_args (arglist, meth, args, kwargs, heap);
 
-      meth->call (0, arglist, retlist);
+      meth->call (nullptr, arglist, retlist);
 
       void *obj = retlist.read<void *> (heap);
       if (obj) {
@@ -1038,13 +1038,13 @@ method_init_adaptor (int mid, PyObject *self, PyObject *args, PyObject *kwargs)
 
     } else {
 
-      if (kwargs != NULL && PyDict_Size (kwargs) > 0) {
+      if (kwargs != nullptr && PyDict_Size (kwargs) > 0) {
         throw tl::Exception (tl::to_string (tr ("Keyword arguments not permitted")));
       }
 
       //  No action required - the object is default-created later once it is really required.
       if (! PyArg_ParseTuple (args, "")) {
-        return NULL;
+        return nullptr;
       }
 
     }
@@ -1053,7 +1053,7 @@ method_init_adaptor (int mid, PyObject *self, PyObject *args, PyObject *kwargs)
 
   PYA_CATCH(method_name_from_id (mid, self))
 
-  return NULL;
+  return nullptr;
 }
 
 
@@ -1062,7 +1062,7 @@ property_getter_impl (int mid, PyObject *self)
 {
   const gsi::ClassBase *cls_decl;
 
-  PYAObjectBase *p = 0;
+  PYAObjectBase *p = nullptr;
   if (! PyType_Check (self)) {
     p = PYAObjectBase::from_pyobject (self);
     cls_decl = p->cls_decl ();
@@ -1084,7 +1084,7 @@ property_getter_impl (int mid, PyObject *self)
   }
 
   //  fetch the (only) getter method
-  const gsi::MethodBase *meth = 0;
+  const gsi::MethodBase *meth = nullptr;
   if (mt->begin_getters (mid) != mt->end_getters (mid)) {
     meth = *mt->begin_getters (mid);
   } else {
@@ -1095,7 +1095,7 @@ property_getter_impl (int mid, PyObject *self)
 
     //  a signal getter is implemented as returning a proxy object for the signal which allows manipulation
     //  of the signal
-    tl_assert (p != 0);  //  no static signals
+    tl_assert (p != nullptr);  //  no static signals
     return PYASignal::create (self, p->signal_handler (meth));
 
   } else {
@@ -1105,7 +1105,7 @@ property_getter_impl (int mid, PyObject *self)
       throw tl::Exception (tl::to_string (tr ("Internal error: getters must not have arguments")));
     }
 
-    void *obj = 0;
+    void *obj = nullptr;
     if (p) {
       //  Hint: this potentially instantiates the object
       obj = p->obj ();
@@ -1119,7 +1119,7 @@ property_getter_impl (int mid, PyObject *self)
 
     PyObject *ret = get_return_value (p, retlist, meth, heap);
 
-    if (ret == NULL) {
+    if (ret == nullptr) {
       Py_INCREF (Py_None);
       ret = Py_None;
     }
@@ -1132,7 +1132,7 @@ property_getter_impl (int mid, PyObject *self)
 PyObject *
 property_getter_func (PyObject *self, void *closure)
 {
-  PyObject *ret = NULL;
+  PyObject *ret = nullptr;
   PYA_TRY
     ret = property_getter_impl (getter_from_closure (closure), self);
   PYA_CATCH(property_name_from_id (getter_from_closure (closure), self))
@@ -1144,7 +1144,7 @@ property_setter_impl (int mid, PyObject *self, PyObject *value)
 {
   const gsi::ClassBase *cls_decl;
 
-  PYAObjectBase *p = 0;
+  PYAObjectBase *p = nullptr;
   if (! PyType_Check (self)) {
     p = PYAObjectBase::from_pyobject (self);
     cls_decl = p->cls_decl ();
@@ -1173,7 +1173,7 @@ property_setter_impl (int mid, PyObject *self, PyObject *value)
     throw tl::Exception (tl::to_string (tr ("Internal error: cannot locate setter method")));
   }
 
-  const gsi::MethodBase *meth = 0;
+  const gsi::MethodBase *meth = nullptr;
   int candidates = 0;
 
   //  Find the setter among the methods
@@ -1207,7 +1207,7 @@ property_setter_impl (int mid, PyObject *self, PyObject *value)
 
     do {
 
-      meth = 0;
+      meth = nullptr;
       candidates = 0;
 
       for (MethodTableEntry::method_iterator m = mt->begin_setters (mid); m != mt->end_setters (mid); ++m) {
@@ -1239,7 +1239,7 @@ property_setter_impl (int mid, PyObject *self, PyObject *value)
     throw tl::Exception (tl::to_string (tr ("Ambiguous overload variants - multiple setter declarations match arguments")));
   }
 
-  void *obj = 0;
+  void *obj = nullptr;
   if (p) {
     //  Hint: this potentially instantiates the object
     obj = p->obj ();
@@ -1290,7 +1290,7 @@ property_setter_impl (int mid, PyObject *self, PyObject *value)
 
     PyObject *ret = get_return_value (p, retlist, meth, heap);
 
-    if (ret == NULL) {
+    if (ret == nullptr) {
       Py_INCREF (Py_None);
       ret = Py_None;
     }
@@ -1310,7 +1310,7 @@ property_setter_func (PyObject *self, PyObject *value, void *closure)
     PyObject *ret = property_setter_impl (setter_from_closure (closure), self, value);
 
     //  ignore the result
-    if (ret != NULL) {
+    if (ret != nullptr) {
       Py_DECREF (ret);
     }
 

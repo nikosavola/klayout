@@ -41,9 +41,9 @@ CallbackFunction::CallbackFunction (PythonRef pym, const gsi::MethodBase *m)
   //  A solution is to take a bound instance method apart and store a weak
   //  reference to self plus a real reference to the function.
 
-  if (pym && PyMethod_Check (pym.get ()) && PyMethod_Self (pym.get ()) != NULL) {
+  if (pym && PyMethod_Check (pym.get ()) && PyMethod_Self (pym.get ()) != nullptr) {
 
-    m_weak_self = PythonRef (PyWeakref_NewRef (PyMethod_Self (pym.get ()), NULL));
+    m_weak_self = PythonRef (PyWeakref_NewRef (PyMethod_Self (pym.get ()), nullptr));
     m_callable = PythonRef (PyMethod_Function (pym.get ()), false /* borrowed ref */);
 #if PY_MAJOR_VERSION < 3
     m_class = PythonRef (PyMethod_Class (pym.get ()), false /* borrowed ref */);
@@ -130,7 +130,7 @@ void SignalHandler::call (const gsi::MethodBase *meth, gsi::SerialArgs &args, gs
     int args_avail = int (std::distance (meth->begin_arguments (), meth->end_arguments ()));
     PythonRef argv (PyTuple_New (args_avail));
     for (gsi::MethodBase::argument_iterator a = meth->begin_arguments (); args && a != meth->end_arguments (); ++a) {
-      PyTuple_SetItem (argv.get (), int (a - meth->begin_arguments ()), pull_arg (*a, args, 0, heap).release ());
+      PyTuple_SetItem (argv.get (), int (a - meth->begin_arguments ()), pull_arg (*a, args, nullptr, heap).release ());
     }
 
     //  NOTE: in case one event handler deletes the object, it's safer to first collect the handlers and
@@ -167,7 +167,7 @@ void SignalHandler::call (const gsi::MethodBase *meth, gsi::SerialArgs &args, gs
 
       //  use less arguments if applicable
       if (arg_count == 0) {
-        result = PythonRef (PyObject_CallObject (c->get (), NULL));
+        result = PythonRef (PyObject_CallObject (c->get (), nullptr));
       } else if (arg_count < args_avail) {
         PythonRef argv_less (PyTuple_GetSlice (argv.get (), 0, arg_count));
         result = PythonRef (PyObject_CallObject (c->get (), argv_less.get ()));
@@ -192,7 +192,7 @@ void SignalHandler::call (const gsi::MethodBase *meth, gsi::SerialArgs &args, gs
 void SignalHandler::add (PyObject *callable)
 {
   remove (callable);
-  m_cbfuncs.push_back (CallbackFunction (PythonPtr (callable), 0));
+  m_cbfuncs.push_back (CallbackFunction (PythonPtr (callable), nullptr));
 }
 
 void SignalHandler::remove (PyObject *callable)
@@ -200,7 +200,7 @@ void SignalHandler::remove (PyObject *callable)
   //  To avoid cyclic references, the CallbackFunction holder is employed. However, the
   //  "true" callable no longer is the original one. Hence, we need to do a strict compare
   //  against the effective one.
-  CallbackFunction cbref (PythonPtr (callable), 0);
+  CallbackFunction cbref (PythonPtr (callable), nullptr);
   for (std::vector<CallbackFunction>::iterator c = m_cbfuncs.begin (); c != m_cbfuncs.end (); ++c) {
     if (*c == cbref) {
       m_cbfuncs.erase (c);

@@ -605,7 +605,7 @@ template class instance_iterator<OverlappingInstanceIteratorTraits>;
 //  NormalInstanceIteratorTraits implementation
 
 NormalInstanceIteratorTraits::NormalInstanceIteratorTraits ()
-  : mp_insts (0)
+  : mp_insts (nullptr)
 { }
 
 NormalInstanceIteratorTraits::NormalInstanceIteratorTraits (const instances_type *insts)
@@ -615,7 +615,7 @@ NormalInstanceIteratorTraits::NormalInstanceIteratorTraits (const instances_type
 void 
 NormalInstanceIteratorTraits::init (instance_iterator<NormalInstanceIteratorTraits> *iter) const
 {
-  tl_assert (mp_insts != 0);
+  tl_assert (mp_insts != nullptr);
   if (iter->m_stable && ! iter->m_unsorted) {
     if (iter->m_with_props) {
       cell_inst_wp_array_type::tag tag = cell_inst_wp_array_type::tag ();
@@ -647,7 +647,7 @@ NormalInstanceIteratorTraits::init (instance_iterator<NormalInstanceIteratorTrai
 //  TouchingInstanceIteratorTraits implementation
 
 TouchingInstanceIteratorTraits::TouchingInstanceIteratorTraits ()
-  : mp_insts (0), mp_layout (0)
+  : mp_insts (nullptr), mp_layout (nullptr)
 { }
 
 TouchingInstanceIteratorTraits::TouchingInstanceIteratorTraits (const instances_type *insts, const box_type &box, const layout_type *layout)
@@ -666,7 +666,7 @@ TouchingInstanceIteratorTraits::init (instance_iterator<TouchingInstanceIterator
 void 
 TouchingInstanceIteratorTraits::init (instance_iterator<TouchingInstanceIteratorTraits> *iter) const
 {
-  tl_assert (mp_insts != 0);
+  tl_assert (mp_insts != nullptr);
   if (iter->m_stable) {
     if (iter->m_with_props) {
       init<cell_inst_wp_array_type, InstancesEditableTag> (iter);
@@ -686,7 +686,7 @@ TouchingInstanceIteratorTraits::init (instance_iterator<TouchingInstanceIterator
 //  OverlappingInstanceIteratorTraits implementation
 
 OverlappingInstanceIteratorTraits::OverlappingInstanceIteratorTraits ()
-  : mp_insts (0), mp_layout (0)
+  : mp_insts (nullptr), mp_layout (nullptr)
 { }
 
 OverlappingInstanceIteratorTraits::OverlappingInstanceIteratorTraits (const instances_type *insts, const box_type &box, const layout_type *layout)
@@ -705,7 +705,7 @@ OverlappingInstanceIteratorTraits::init (instance_iterator<OverlappingInstanceIt
 void 
 OverlappingInstanceIteratorTraits::init (instance_iterator<OverlappingInstanceIteratorTraits> *iter) const
 {
-  tl_assert (mp_insts != 0);
+  tl_assert (mp_insts != nullptr);
   if (iter->m_stable) {
     if (iter->m_with_props) {
       init<cell_inst_wp_array_type, InstancesEditableTag> (iter);
@@ -775,7 +775,7 @@ ChildCellIterator::operator++()
 //  Instance implementation
 
 Instance::Instance ()
-  : mp_instances (0), m_with_props (false), m_stable (false), m_type (TNull)
+  : mp_instances (nullptr), m_with_props (false), m_stable (false), m_type (TNull)
 { }
 
 Instance::~Instance ()
@@ -898,8 +898,8 @@ Instance::box_type
 Instance::bbox () const
 {
   const db::Instances *i = instances ();
-  const db::Cell *c = i ? i->cell () : 0;
-  const db::Layout *g = c ? c->layout () : 0;
+  const db::Cell *c = i ? i->cell () : nullptr;
+  const db::Layout *g = c ? c->layout () : nullptr;
   if (g) {
     return bbox (db::box_convert<cell_inst_type> (*g));
   } else {
@@ -911,8 +911,8 @@ Instance::box_type
 Instance::bbox_with_empty () const
 {
   const db::Instances *i = instances ();
-  const db::Cell *c = i ? i->cell () : 0;
-  const db::Layout *g = c ? c->layout () : 0;
+  const db::Cell *c = i ? i->cell () : nullptr;
+  const db::Layout *g = c ? c->layout () : nullptr;
   if (g) {
     return bbox (db::box_convert<cell_inst_type, false> (*g));
   } else {
@@ -934,8 +934,8 @@ check_is_editable_for_undo_redo (const Instances *instances)
 Instances::Instances (cell_type *cell)
   : mp_cell (cell)
 {
-  m_generic.any = 0;
-  m_generic_wp.any = 0;
+  m_generic.any = nullptr;
+  m_generic_wp.any = nullptr;
 }
 
 Instances::~Instances ()
@@ -952,7 +952,7 @@ Instances::operator= (const Instances &d)
       clear_insts ();
     }
 
-    db::ArrayRepository *rep = layout () ? &layout ()->array_repository () : 0;
+    db::ArrayRepository *rep = layout () ? &layout ()->array_repository () : nullptr;
 
     if (is_editable ()) {
 
@@ -1042,7 +1042,7 @@ Instances::is_editable () const
 db::Layout *
 Instances::layout () const
 {
-  return cell () ? cell ()->layout () : 0;
+  return cell () ? cell ()->layout () : nullptr;
 }
 
 void
@@ -1353,7 +1353,7 @@ Instances::clear (Instances::cell_inst_array_type::tag)
     } else {
       delete m_generic.unstable_tree;
     }
-    m_generic.any = 0;
+    m_generic.any = nullptr;
   }
 }
 
@@ -1368,7 +1368,7 @@ Instances::clear (Instances::cell_inst_wp_array_type::tag)
     } else {
       delete m_generic_wp.unstable_tree;
     }
-    m_generic_wp.any = 0;
+    m_generic_wp.any = nullptr;
   }
 }
 
@@ -1742,7 +1742,7 @@ Instances::do_clear_insts ()
     } else {
       delete m_generic.unstable_tree;
     }
-    m_generic.any = 0;
+    m_generic.any = nullptr;
   }
   if (m_generic_wp.any) {
     if (is_editable ()) {
@@ -1750,7 +1750,7 @@ Instances::do_clear_insts ()
     } else {
       delete m_generic_wp.unstable_tree;
     }
-    m_generic_wp.any = 0;
+    m_generic_wp.any = nullptr;
   }
 }
 
@@ -1802,14 +1802,14 @@ Instances::do_insert (const Instances::instance_type &ref,
 
     if (! ref.has_prop_id ()) {
 
-      cell_inst_array_type inst (*ref.basic_ptr (cell_inst_array_type::tag ()), layout () ? &layout ()->array_repository () : 0);
+      cell_inst_array_type inst (*ref.basic_ptr (cell_inst_array_type::tag ()), layout () ? &layout ()->array_repository () : nullptr);
       inst.object () = cell_inst_type (im (ref.cell_index ()));
 
       return insert (inst);
 
     } else {
 
-      cell_inst_array_type inst (*ref.basic_ptr (cell_inst_wp_array_type::tag ()), layout () ? &layout ()->array_repository () : 0);
+      cell_inst_array_type inst (*ref.basic_ptr (cell_inst_wp_array_type::tag ()), layout () ? &layout ()->array_repository () : nullptr);
       inst.object () = cell_inst_type (im (ref.cell_index ()));
 
       return insert (cell_inst_wp_array_type (inst, ref.prop_id ()));

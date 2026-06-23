@@ -61,14 +61,14 @@ static bool is_marked_alive (QObject *obj)
 const double visibility_delay = 1.0;
 
 ProgressReporter::ProgressReporter ()
-  : mp_pb (0), m_pw_visible (false)
+  : mp_pb (nullptr), m_pw_visible (false)
 {
   //  .. nothing yet ..
 }
 
 ProgressReporter::~ProgressReporter ()
 {
-  mp_pb = 0;
+  mp_pb = nullptr;
 }
 
 void
@@ -131,7 +131,7 @@ ProgressReporter::unregister_object (tl::Progress *progress)
     }
 
     if (mp_pb) {
-      mp_pb->update_progress (0);
+      mp_pb->update_progress (nullptr);
     }
     process_events ();
 
@@ -202,7 +202,7 @@ ProgressReporter::update_and_yield ()
     } else if (begin () != end ()) {
       mp_pb->update_progress (begin ().operator-> ());
     } else {
-      mp_pb->update_progress (0);
+      mp_pb->update_progress (nullptr);
     }
   }
 

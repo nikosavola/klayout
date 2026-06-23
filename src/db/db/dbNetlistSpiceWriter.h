@@ -82,7 +82,7 @@ class DB_PUBLIC NetlistSpiceWriter
   : public NetlistWriter
 {
 public:
-  NetlistSpiceWriter (NetlistSpiceWriterDelegate *delegate = 0);
+  NetlistSpiceWriter (NetlistSpiceWriterDelegate *delegate = nullptr);
   virtual ~NetlistSpiceWriter ();
 
   virtual void write (tl::OutputStream &stream, const db::Netlist &netlist, const std::string &description);

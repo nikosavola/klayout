@@ -83,7 +83,7 @@ bool has_color (const lay::ManagedDMarker *marker)
 }
 
 Class<lay::ManagedDMarker> decl_Marker ("lay", "Marker",
-  gsi::constructor ("new", &create_marker, gsi::arg ("view", (lay::LayoutViewBase *) 0, "nil"),
+  gsi::constructor ("new", &create_marker, gsi::arg ("view", (lay::LayoutViewBase *) nullptr, "nil"),
     "@brief Creates a marker\n"
     "\n"
     "A marker is always associated with a view, in which it is shown. The "

@@ -209,14 +209,14 @@ public:
   static std::string enum_to_string_ext (const E *e)
   {
     const Enum<E> *ecls = dynamic_cast<const Enum<E> *> (cls_decl<E> ());
-    tl_assert (ecls != 0);
+    tl_assert (ecls != nullptr);
     return ecls->enum_to_string (*e);
   }
 
   static std::string enum_to_string_inspect_ext (const E *e)
   {
     const Enum<E> *ecls = dynamic_cast<const Enum<E> *> (cls_decl<E> ());
-    tl_assert (ecls != 0);
+    tl_assert (ecls != nullptr);
     return ecls->enum_to_string_inspect (*e);
   }
 
@@ -263,7 +263,7 @@ public:
   static E *new_enum_from_string (const std::string &s)
   {
     const Enum<E> *ecls = dynamic_cast<const Enum<E> *> (cls_decl<E> ());
-    tl_assert (ecls != 0);
+    tl_assert (ecls != nullptr);
     return new E (ecls->enum_from_string (s));
   }
 
@@ -489,7 +489,7 @@ public:
     QFlags<E> flags;
 
     const Enum<E> *ecls = dynamic_cast<const Enum<E> *> (cls_decl<E> ());
-    tl_assert (ecls != 0);
+    tl_assert (ecls != nullptr);
 
     tl::Extractor ex (s.c_str ());
     while (! ex.at_end ()) {
@@ -519,7 +519,7 @@ public:
     std::string res;
 
     const Enum<E> *ecls = dynamic_cast<const Enum<E> *> (cls_decl<E> ());
-    tl_assert (ecls != 0);
+    tl_assert (ecls != nullptr);
     for (typename EnumSpecs<E>::iterator s = ecls->specs ().begin (); s != ecls->specs ().end (); ++s) {
       if (self->testFlag (s->evalue)) {
         if (! res.empty ()) {

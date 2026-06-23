@@ -43,31 +43,31 @@ namespace plc
 //  Vertex implementation
 
 Vertex::Vertex (Graph *graph)
-  : DPoint (), mp_graph (graph), mp_ids (0)
+  : DPoint (), mp_graph (graph), mp_ids (nullptr)
 {
   //  .. nothing yet ..
 }
 
 Vertex::Vertex (Graph *graph, const db::DPoint &p)
-  : DPoint (p), mp_graph (graph), mp_ids (0)
+  : DPoint (p), mp_graph (graph), mp_ids (nullptr)
 {
   //  .. nothing yet ..
 }
 
 Vertex::Vertex (Graph *graph, const Vertex &v)
-  : DPoint (), mp_graph (graph), mp_ids (0)
+  : DPoint (), mp_graph (graph), mp_ids (nullptr)
 {
   operator= (v);
 }
 
 Vertex::Vertex (Graph *graph, db::DCoord x, db::DCoord y)
-  : DPoint (x, y), mp_graph (graph), mp_ids (0)
+  : DPoint (x, y), mp_graph (graph), mp_ids (nullptr)
 {
   //  .. nothing yet ..
 }
 
 Vertex::Vertex (const Vertex &v)
-  : DPoint (), mp_graph (v.mp_graph), mp_ids (0)
+  : DPoint (), mp_graph (v.mp_graph), mp_ids (nullptr)
 {
   operator= (v);
 }
@@ -76,7 +76,7 @@ Vertex::~Vertex ()
 {
   if (mp_ids) {
     delete mp_ids;
-    mp_ids = 0;
+    mp_ids = nullptr;
   }
 }
 
@@ -89,7 +89,7 @@ Vertex &Vertex::operator= (const Vertex &v)
 
     if (mp_ids) {
       delete mp_ids;
-      mp_ids = 0;
+      mp_ids = nullptr;
     }
     if (v.mp_ids) {
       mp_ids = new std::set<unsigned int> (*v.mp_ids);
@@ -132,7 +132,7 @@ Vertex::set_is_precious (bool f, unsigned int id)
   } else {
     if (mp_ids) {
       delete mp_ids;
-      mp_ids = 0;
+      mp_ids = nullptr;
     }
   }
 }
@@ -140,13 +140,13 @@ Vertex::set_is_precious (bool f, unsigned int id)
 bool
 Vertex::is_precious () const
 {
-  return mp_ids != 0;
+  return mp_ids != nullptr;
 }
 
 const std::set<unsigned int> &
 Vertex::ids () const
 {
-  if (mp_ids != 0) {
+  if (mp_ids != nullptr) {
     return *mp_ids;
   } else {
     static std::set<unsigned int> empty;
@@ -226,7 +226,7 @@ Vertex::in_circle (const DPoint &point, const DPoint &center, double radius)
 //  Edge implementation
 
 Edge::Edge (Graph *graph)
-  : mp_graph (graph), mp_v1 (0), mp_v2 (0), mp_left (), mp_right (), m_level (0), m_id (0), m_is_segment (false)
+  : mp_graph (graph), mp_v1 (nullptr), mp_v2 (nullptr), mp_left (), mp_right (), m_level (0), m_id (0), m_is_segment (false)
 {
   // .. nothing yet ..
 }
@@ -273,7 +273,7 @@ Edge::unlink ()
   if (mp_v2) {
     mp_v2->remove_edge (m_ec_v2);
   }
-  mp_v1 = mp_v2 = 0;
+  mp_v1 = mp_v2 = nullptr;
 }
 
 Polygon *
@@ -286,7 +286,7 @@ Edge::other (const Polygon *t) const
     return mp_left;
   }
   tl_assert (false);
-  return 0;
+  return nullptr;
 }
 
 Vertex *
@@ -299,7 +299,7 @@ Edge::other (const Vertex *t) const
     return mp_v1;
   }
   tl_assert (false);
-  return 0;
+  return nullptr;
 }
 
 bool
@@ -317,7 +317,7 @@ Edge::common_vertex (const Edge *other) const
   if (has_vertex (other->v2 ())) {
     return (other->v2 ());
   }
-  return 0;
+  return nullptr;
 }
 
 std::string
@@ -409,7 +409,7 @@ Edge::can_join_via (const Vertex *vertex) const
 bool
 Edge::is_outside () const
 {
-  return left () == 0 || right () == 0;
+  return left () == nullptr || right () == nullptr;
 }
 
 bool
@@ -421,7 +421,7 @@ Edge::is_for_outside_triangles () const
 bool
 Edge::has_polygon (const Polygon *t) const
 {
-  return t != 0 && (left () == t || right () == t);
+  return t != nullptr && (left () == t || right () == t);
 }
 
 // -------------------------------------------------------------------------------------
@@ -518,8 +518,8 @@ Polygon::init ()
 Polygon::Polygon (Graph *graph, Edge *e1, Edge *e2, Edge *e3)
   : mp_graph (graph), m_is_outside (false), m_id (0)
 {
-  mp_e.resize (3, 0);
-  mp_v.resize (3, 0);
+  mp_e.resize (3, nullptr);
+  mp_v.resize (3, nullptr);
 
   mp_e[0] = e1;
   mp_v[0] = e1->v1 ();
@@ -574,10 +574,10 @@ Polygon::unlink ()
 {
   for (auto e = mp_e.begin (); e != mp_e.end (); ++e) {
     if ((*e)->left () == this) {
-      (*e)->set_left (0);
+      (*e)->set_left (nullptr);
     }
     if ((*e)->right () == this) {
-      (*e)->set_right (0);
+      (*e)->set_right (nullptr);
     }
   }
 }
@@ -718,7 +718,7 @@ Polygon::common_edge (const Polygon *other) const
       return *e;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 int
@@ -759,7 +759,7 @@ Polygon::next_edge (const Edge *edge, const Vertex *vertex) const
       return *e;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 double
@@ -834,7 +834,7 @@ Graph::create_vertex (const db::DPoint &pt)
 Edge *
 Graph::create_edge (Vertex *v1, Vertex *v2)
 {
-  Edge *edge = 0;
+  Edge *edge = nullptr;
 
   if (! m_returned_edges.empty ()) {
     edge = m_returned_edges.back ();
@@ -864,7 +864,7 @@ void
 Graph::remove_polygon (Polygon *poly)
 {
   std::vector<Edge *> edges;
-  edges.resize (poly->size (), 0);
+  edges.resize (poly->size (), nullptr);
   for (int i = 0; i < int (poly->size ()); ++i) {
     edges [i] = poly->edge (i);
   }
@@ -873,7 +873,7 @@ Graph::remove_polygon (Polygon *poly)
 
   //  clean up edges we do no longer need
   for (auto e = edges.begin (); e != edges.end (); ++e) {
-    if ((*e) && (*e)->left () == 0 && (*e)->right () == 0 && (*e)->v1 ()) {
+    if ((*e) && (*e)->left () == nullptr && (*e)->right () == nullptr && (*e)->v1 ()) {
       (*e)->unlink ();
       m_returned_edges.push_back (*e);
     }

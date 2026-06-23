@@ -828,7 +828,7 @@ MALYReader::create_masks (const MALYReaderMaskData &cmask, const std::list<MALYR
 
     bool maskmirror = (i->parameters.maskmirror != cmask.parameters.maskmirror);
 
-    const MALYReaderTitleSpec *date_spec = 0;
+    const MALYReaderTitleSpec *date_spec = nullptr;
     if (i->title.date_spec.given) {
       date_spec = &i->title.date_spec;
     } else if (cmask.title.date_spec.given) {
@@ -838,7 +838,7 @@ MALYReader::create_masks (const MALYReaderMaskData &cmask, const std::list<MALYR
       m.titles.push_back (create_title (MALYTitle::Date, *date_spec, font, maskmirror, std::string ("<DATE>")));
     }
 
-    const MALYReaderTitleSpec *serial_spec = 0;
+    const MALYReaderTitleSpec *serial_spec = nullptr;
     if (i->title.serial_spec.given) {
       serial_spec = &i->title.serial_spec;
     } else if (cmask.title.serial_spec.given) {

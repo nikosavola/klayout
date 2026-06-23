@@ -63,7 +63,7 @@ LoadLayoutOptionsDialog::LoadLayoutOptionsDialog (QWidget *parent, const std::st
 
   for (tl::Registrar<db::StreamFormatDeclaration>::iterator fmt = tl::Registrar<db::StreamFormatDeclaration>::begin (); fmt != tl::Registrar<db::StreamFormatDeclaration>::end (); ++fmt) {
 
-    StreamReaderOptionsPage *page = 0;
+    StreamReaderOptionsPage *page = nullptr;
 
     //  obtain the config page from the plugin which we identify by format name
     const StreamReaderPluginDeclaration *decl = StreamReaderPluginDeclaration::plugin_for_format (fmt->format_name ());
@@ -72,7 +72,7 @@ LoadLayoutOptionsDialog::LoadLayoutOptionsDialog (QWidget *parent, const std::st
     page_host->setFrameStyle (QFrame::NoFrame);
     page_host->setWidgetResizable (true);
 
-    page = decl ? decl->format_specific_options_page (mp_ui->options_tab) : 0;
+    page = decl ? decl->format_specific_options_page (mp_ui->options_tab) : nullptr;
     if (page) {
       page_host->setWidget (page);
     } else {
@@ -85,7 +85,7 @@ LoadLayoutOptionsDialog::LoadLayoutOptionsDialog (QWidget *parent, const std::st
 #else
       //  Drop empty pages
       delete page_host;
-      page_host = 0;
+      page_host = nullptr;
 #endif
     }
 
@@ -109,7 +109,7 @@ LoadLayoutOptionsDialog::LoadLayoutOptionsDialog (QWidget *parent, const std::st
 LoadLayoutOptionsDialog::~LoadLayoutOptionsDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -279,7 +279,7 @@ LoadLayoutOptionsDialog::get_options (db::LoadLayoutOptions &options)
   m_opt_array.clear ();
   m_opt_array.push_back (options);
   m_tech_array.clear ();
-  m_tech_array.push_back (0);
+  m_tech_array.push_back (nullptr);
   m_technology_index = 0;
 
   if (get_options_internal ()) {
@@ -307,7 +307,7 @@ LoadLayoutOptionsDialog::get_options_internal ()
 
 SpecificLoadLayoutOptionsDialog::SpecificLoadLayoutOptionsDialog (QWidget *parent, db::LoadLayoutOptions *options, const std::string &format_name)
   : QDialog (parent),
-    m_format_name (format_name), mp_options (options), mp_specific_options (0), mp_editor (0)
+    m_format_name (format_name), mp_options (options), mp_specific_options (nullptr), mp_editor (nullptr)
 {
   setObjectName (QString::fromUtf8 ("specific_load_layout_options_dialog"));
 
@@ -331,7 +331,7 @@ SpecificLoadLayoutOptionsDialog::SpecificLoadLayoutOptionsDialog (QWidget *paren
       mp_ui->content_frame->setLayout (layout);
 
       mp_editor->show ();
-      mp_editor->setup (specific_options, 0);
+      mp_editor->setup (specific_options, nullptr);
 
     }
   }
@@ -340,10 +340,10 @@ SpecificLoadLayoutOptionsDialog::SpecificLoadLayoutOptionsDialog (QWidget *paren
 SpecificLoadLayoutOptionsDialog::~SpecificLoadLayoutOptionsDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 
   delete mp_specific_options;
-  mp_specific_options = 0;
+  mp_specific_options = nullptr;
 }
 
 void
@@ -351,9 +351,9 @@ SpecificLoadLayoutOptionsDialog::accept ()
 {
 BEGIN_PROTECTED
   if (mp_editor && mp_options && mp_specific_options) {
-    mp_editor->commit (mp_specific_options, 0);
+    mp_editor->commit (mp_specific_options, nullptr);
     mp_options->set_options (mp_specific_options);
-    mp_specific_options = 0;
+    mp_specific_options = nullptr;
   }
 
   QDialog::accept ();

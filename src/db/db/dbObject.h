@@ -48,7 +48,7 @@ public:
    *
    *  Attach the object to a manager if required
    */
-  Object (db::Manager *manager = 0);
+  Object (db::Manager *manager = nullptr);
 
   /**
    *  @brief Destructor

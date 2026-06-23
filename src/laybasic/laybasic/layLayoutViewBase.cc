@@ -241,7 +241,7 @@ const double animation_interval = 0.5;
 
 LayoutViewBase::LayoutViewBase (db::Manager *manager, bool editable, lay::Plugin *plugin_parent, unsigned int options)
   : lay::Dispatcher (plugin_parent, false /*not standalone*/),
-    mp_ui (0),
+    mp_ui (nullptr),
     dm_redraw (this, &LayoutViewBase::redraw),
     dm_update_layer_sources (this, &LayoutViewBase::do_update_layer_sources),
     m_editable (editable),
@@ -249,7 +249,7 @@ LayoutViewBase::LayoutViewBase (db::Manager *manager, bool editable, lay::Plugin
     m_annotation_shapes (manager)
 {
   //  either it's us or the parent has a dispatcher
-  tl_assert (dispatcher () != 0);
+  tl_assert (dispatcher () != nullptr);
 
   init (manager);
 }
@@ -264,7 +264,7 @@ LayoutViewBase::LayoutViewBase (lay::LayoutView *ui, db::Manager *manager, bool 
     m_annotation_shapes (manager)
 {
   //  either it's us or the parent has a dispatcher
-  tl_assert (dispatcher () != 0);
+  tl_assert (dispatcher () != nullptr);
 }
 
 void
@@ -376,10 +376,10 @@ LayoutViewBase::init (db::Manager *mgr)
   m_stipple_palette = lay::StipplePalette::default_palette ();
   m_display_state_ptr = 0;
   m_mode = std::numeric_limits<int>::min (); // nothing selected yet.
-  mp_tracker = 0;
-  mp_zoom_service = 0;
-  mp_selection_service = 0;
-  mp_move_service = 0;
+  mp_tracker = nullptr;
+  mp_zoom_service = nullptr;
+  mp_selection_service = nullptr;
+  mp_move_service = nullptr;
   m_marker_line_width = 0;
   m_marker_vertex_size = 0;
   m_marker_dither_pattern = 1;
@@ -480,10 +480,10 @@ LayoutViewBase::shutdown ()
   }
 
   //  NOTE: this must happen before the services are deleted
-  mp_move_service = 0;
-  mp_selection_service = 0;
-  mp_tracker = 0;
-  mp_zoom_service = 0;
+  mp_move_service = nullptr;
+  mp_selection_service = nullptr;
+  mp_tracker = nullptr;
+  mp_zoom_service = nullptr;
 
   //  delete all plugins
   std::vector<lay::Plugin *> plugins;
@@ -493,7 +493,7 @@ LayoutViewBase::shutdown ()
   }
 
   //  detach from the manager, so we can safely delete the manager
-  manager (0);
+  manager (nullptr);
 
   stop ();
 }
@@ -506,7 +506,7 @@ LayoutViewBase::~LayoutViewBase ()
   //  ruler objects for example, it is safer to explicitly delete the
   //  LayoutCanvas object here:
   delete mp_canvas;
-  mp_canvas = 0;
+  mp_canvas = nullptr;
 }
 
 void LayoutViewBase::unregister_plugin (lay::Plugin *pi)
@@ -589,7 +589,7 @@ void LayoutViewBase::clear_plugins ()
   for (std::vector<lay::Plugin *>::iterator p = plugins.begin (); p != plugins.end (); ++p) {
     delete *p;
   }
-  mp_active_plugin = 0;
+  mp_active_plugin = nullptr;
 }
 
 void LayoutViewBase::create_plugins (const lay::PluginDeclaration *except_this)
@@ -665,7 +665,7 @@ lay::Plugin *LayoutViewBase::create_plugin (const lay::PluginDeclaration *cls)
 
 Plugin *LayoutViewBase::get_plugin_by_name (const std::string &name) const
 {
-  lay::PluginDeclaration *decl = 0;
+  lay::PluginDeclaration *decl = nullptr;
   for (tl::Registrar<lay::PluginDeclaration>::iterator cls = tl::Registrar<lay::PluginDeclaration>::begin (); !decl && cls != tl::Registrar<lay::PluginDeclaration>::end (); ++cls) {
     if (cls.current_name () == name) {
       decl = cls.operator-> ();
@@ -680,7 +680,7 @@ Plugin *LayoutViewBase::get_plugin_by_name (const std::string &name) const
     }
   }
 
-  return 0;
+  return nullptr;
 }
 
 void
@@ -1358,7 +1358,7 @@ LayoutViewBase::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_sel_halo) {
 
-    bool halo = 0;
+    bool halo = false;
     tl::from_string (value, halo);
 
     //  Change the vertex_size
@@ -1436,7 +1436,7 @@ LayoutViewBase::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_transient_sel_halo) {
 
-    bool halo = 0;
+    bool halo = false;
     tl::from_string (value, halo);
 
     //  Change the vertex_size
@@ -1716,7 +1716,7 @@ single_bitmap_to_image (const lay::ViewOp &view_op, lay::Bitmap &bitmap,
   std::vector <lay::Bitmap *> pbitmaps;
   pbitmaps.push_back (&bitmap);
 
-  lay::bitmaps_to_image (view_ops, pbitmaps, dither_pattern, line_styles, dpr, pimage, width, height, false, 0);
+  lay::bitmaps_to_image (view_ops, pbitmaps, dither_pattern, line_styles, dpr, pimage, width, height, false, nullptr);
 }
 
 tl::PixelBuffer
@@ -5206,7 +5206,7 @@ LayoutViewBase::select_cell_dispatch (const cell_path_type &path, int cellview_i
 void 
 LayoutViewBase::select_cell_fit (const cell_path_type &path, int index)
 { 
-  if (index >= 0 && int (m_cellviews.size ()) > index && (cellview_iter (index)->specific_path ().size () > 0 || cellview_iter (index)->unspecific_path () != path)) {
+  if (index >= 0 && int (m_cellviews.size ()) > index && (!cellview_iter (index)->specific_path ().empty() || cellview_iter (index)->unspecific_path () != path)) {
 
     cellview_about_to_change_event (index);
 
@@ -5296,7 +5296,7 @@ LayoutViewBase::select_cellview (int index, const CellView &cv)
 void
 LayoutViewBase::select_cell (const cell_path_type &path, int index)
 { 
-  if (index >= 0 && int (m_cellviews.size ()) > index && (cellview_iter (index)->specific_path ().size () > 0 || cellview_iter (index)->unspecific_path () != path)) {
+  if (index >= 0 && int (m_cellviews.size ()) > index && (!cellview_iter (index)->specific_path ().empty() || cellview_iter (index)->unspecific_path () != path)) {
 
     cellview_about_to_change_event (index);
 
@@ -5962,7 +5962,7 @@ LayoutViewBase::mode (int m)
   if (m != m_mode) {
 
     m_mode = m;
-    mp_active_plugin = 0;
+    mp_active_plugin = nullptr;
 
     for (std::vector<lay::Plugin *>::iterator p = mp_plugins.begin (); p != mp_plugins.end (); ++p) {
       if ((*p)->plugin_declaration ()->id () == m) {
@@ -6377,7 +6377,7 @@ LayoutViewBase::new_cell (int cv_index, const std::string &cell_name)
     }
 
     transaction (tl::to_string (tr ("New cell")));
-    new_ci = layout.add_cell (cell_name.empty () ? 0 : cell_name.c_str ());
+    new_ci = layout.add_cell (cell_name.empty () ? nullptr : cell_name.c_str ());
     commit ();
 
   }
@@ -6406,7 +6406,7 @@ static void make_unique_name (T *object, Iter from, Iter to)
 
     n = object->name () + tl::sprintf ("[%d]", ++nn);
 
-  } while (1);
+  } while (true);
 
   object->set_name (n);
 }
@@ -6428,7 +6428,7 @@ LayoutViewBase::add_l2ndb (db::LayoutToNetlist *l2ndb)
 unsigned int
 LayoutViewBase::replace_l2ndb (unsigned int db_index, db::LayoutToNetlist *l2ndb)
 {
-  tl_assert (l2ndb != 0);
+  tl_assert (l2ndb != nullptr);
 
   if (db_index < m_l2ndbs.size ()) {
 
@@ -6457,7 +6457,7 @@ LayoutViewBase::get_l2ndb (int index)
   if (index >= 0 && index < int (m_l2ndbs.size ())) {
     return m_l2ndbs [index];
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -6467,7 +6467,7 @@ LayoutViewBase::get_l2ndb (int index) const
   if (index >= 0 && index < int (m_l2ndbs.size ())) {
     return m_l2ndbs [index];
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -6498,7 +6498,7 @@ LayoutViewBase::add_rdb (rdb::Database *rdb)
 unsigned int
 LayoutViewBase::replace_rdb (unsigned int db_index, rdb::Database *rdb)
 {
-  tl_assert (rdb != 0);
+  tl_assert (rdb != nullptr);
 
   if (db_index < m_rdbs.size ()) {
 
@@ -6527,7 +6527,7 @@ LayoutViewBase::get_rdb (int index)
   if (index >= 0 && index < int (m_rdbs.size ())) {
     return m_rdbs [index];
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -6537,7 +6537,7 @@ LayoutViewBase::get_rdb (int index) const
   if (index >= 0 && index < int (m_rdbs.size ())) {
     return m_rdbs [index];
   } else {
-    return 0;
+    return nullptr;
   }
 }
 

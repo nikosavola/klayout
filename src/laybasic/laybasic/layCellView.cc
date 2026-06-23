@@ -30,7 +30,7 @@ namespace lay
 //  CellView implementation
 
 CellView::CellView () 
-  : mp_ctx_cell (0), m_ctx_cell_index (0), mp_cell (0), m_cell_index (cell_index_type (-1))
+  : mp_ctx_cell (nullptr), m_ctx_cell_index (0), mp_cell (nullptr), m_cell_index (cell_index_type (-1))
 { }
 
 bool 
@@ -45,7 +45,7 @@ CellView::operator== (const CellView &cv) const
 bool 
 CellView::is_valid () const
 {
-  if (m_layout_href.get () == 0 || mp_cell == 0) {
+  if (m_layout_href.get () == nullptr || mp_cell == nullptr) {
     return false;
   }
 
@@ -67,14 +67,14 @@ CellView::is_valid () const
 void 
 CellView::set_unspecific_path (const unspecific_cell_path_type &p)
 {
-  tl_assert (m_layout_href.get () != 0);
+  tl_assert (m_layout_href.get () != nullptr);
 
-  mp_cell = 0;
+  mp_cell = nullptr;
   m_cell_index = 0;
   m_unspecific_path = p;
   m_specific_path.clear ();
 
-  if (p.size () > 0 && m_layout_href.get () && p.back () < m_layout_href->layout ().cells ()) {
+  if (!p.empty() && m_layout_href.get () && p.back () < m_layout_href->layout ().cells ()) {
     m_cell_index = p.back ();
     mp_cell = &m_layout_href->layout ().cell (p.back ());
   }
@@ -86,7 +86,7 @@ CellView::set_unspecific_path (const unspecific_cell_path_type &p)
 void 
 CellView::set_specific_path (const specific_cell_path_type &p)
 {
-  tl_assert (m_layout_href.get () != 0);
+  tl_assert (m_layout_href.get () != nullptr);
 
   m_specific_path = p;
   for (specific_cell_path_type::iterator pp = m_specific_path.begin (); pp != m_specific_path.end (); ++pp) {
@@ -123,7 +123,7 @@ CellView::combined_unspecific_path () const
 void
 CellView::set_cell (cell_index_type index)
 {
-  tl_assert (m_layout_href.get () != 0);
+  tl_assert (m_layout_href.get () != nullptr);
 
   db::Layout &layout = m_layout_href->layout ();
   
@@ -156,7 +156,7 @@ CellView::set_cell (cell_index_type index)
 void 
 CellView::set_cell (const std::string &name)
 {
-  tl_assert (m_layout_href.get () != 0);
+  tl_assert (m_layout_href.get () != nullptr);
 
   std::pair<bool, db::cell_index_type> cp = m_layout_href->layout ().cell_by_name (name.c_str ());
   if (cp.first) {
@@ -169,9 +169,9 @@ CellView::set_cell (const std::string &name)
 void 
 CellView::reset_cell ()
 {
-  mp_cell = 0;
+  mp_cell = nullptr;
   m_cell_index = cell_index_type (-1);
-  mp_ctx_cell = 0;
+  mp_ctx_cell = nullptr;
   m_ctx_cell_index = 0;
   m_unspecific_path.clear ();
   m_specific_path.clear ();
@@ -208,7 +208,7 @@ CellView::context_trans () const
 db::DCplxTrans
 CellView::context_dtrans () const
 {
-  tl_assert (m_layout_href.get () != 0);
+  tl_assert (m_layout_href.get () != nullptr);
 
   db::CplxTrans dbu_trans (m_layout_href->layout ().dbu ());
   return dbu_trans * context_trans () * dbu_trans.inverted ();
@@ -267,7 +267,7 @@ CellViewRef::operator-> () const
   if (mp_cv) {
     return mp_cv->handle ();
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -332,13 +332,13 @@ CellViewRef::reset_cell ()
 db::Cell *
 CellViewRef::ctx_cell () const
 {
-  return is_valid () ? mp_cv->ctx_cell () : 0;
+  return is_valid () ? mp_cv->ctx_cell () : nullptr;
 }
 
 db::Cell *
 CellViewRef::cell () const
 {
-  return is_valid () ? mp_cv->cell () : 0;
+  return is_valid () ? mp_cv->cell () : nullptr;
 }
 
 CellViewRef::unspecific_cell_path_type

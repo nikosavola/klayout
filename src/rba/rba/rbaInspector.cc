@@ -335,7 +335,7 @@ class RBADataInspector
 {
 public:
   RBADataInspector (VALUE obj)
-    : m_obj (obj), mp_cls (0), m_members (Qnil)
+    : m_obj (obj), mp_cls (nullptr), m_members (Qnil)
   {
     rb_gc_register_address (&m_obj);
     mp_cls = find_cclass_maybe_null (rb_class_of (m_obj));
@@ -401,9 +401,9 @@ public:
 
       const gsi::MethodBase *meth = m_getters[index].second;
 
-      Proxy *p = 0;
+      Proxy *p = nullptr;
       Data_Get_Struct (m_obj, Proxy, p);
-      void *obj = 0;
+      void *obj = nullptr;
       if (p) {
         //  Hint: this potentially instantiates the object
         obj = p->obj ();
@@ -476,7 +476,7 @@ public:
     : m_class (cls), m_members (Qnil)
   {
     rb_gc_register_address (&m_class);
-    m_members = rb_mod_class_variables (0, NULL, m_class);
+    m_members = rb_mod_class_variables (0, nullptr, m_class);
     rb_gc_register_address (&m_members);
   }
 
@@ -560,7 +560,7 @@ public:
   RBABindingInspector (int context)
     : m_context (context)
   {
-    m_local_variables = rba_eval_string_in_context ("local_variables", 0, 0, m_context);
+    m_local_variables = rba_eval_string_in_context ("local_variables", nullptr, 0, m_context);
     rb_gc_register_address (&m_local_variables);
   }
 
@@ -582,7 +582,7 @@ public:
 
   VALUE rb_value (size_t index) const
   {
-    return rba_eval_string_in_context (key (index).c_str (), 0, 0, m_context);
+    return rba_eval_string_in_context (key (index).c_str (), nullptr, 0, m_context);
   }
 
   virtual std::string type (size_t index) const
@@ -644,7 +644,7 @@ static gsi::Inspector *create_inspector_for_object (VALUE value)
   } else if (TYPE (value) == T_CLASS) {
     return new RBAClassInspector (value);
   } else {
-    return 0;
+    return nullptr;
   }
 }
 

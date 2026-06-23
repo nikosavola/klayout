@@ -43,9 +43,9 @@ namespace lay
 // --------------------------------------------------------------------------------
 //  Help link registration implementation
 
-QObject *s_help_handler = 0;
-const char *s_help_slot = 0;
-const char *s_modal_help_slot = 0;
+QObject *s_help_handler = nullptr;
+const char *s_help_slot = nullptr;
+const char *s_modal_help_slot = nullptr;
 
 void activate_help_links (QLabel *label)
 {
@@ -184,7 +184,7 @@ indicate_error (QWidget *le, bool f)
     pl.setColor (QPalette::Active, QPalette::Base, QColor (Qt::red).lighter (180));
   } else {
     QWidget *pw = dynamic_cast<QWidget *> (le->parent ());
-    tl_assert (pw != 0);
+    tl_assert (pw != nullptr);
     pl.setColor (QPalette::Active, QPalette::Text, pw->palette ().color (QPalette::Text));
     pl.setColor (QPalette::Active, QPalette::Base, pw->palette ().color (QPalette::Base));
   }

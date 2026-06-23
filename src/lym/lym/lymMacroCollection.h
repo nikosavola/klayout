@@ -293,7 +293,7 @@ public:
    *
    *  If a name is given, it is used as a prefix to create a unique name for a macro with that format.
    */
-  lym::Macro *create (const char *name = 0, Macro::Format format = Macro::NoFormat);
+  lym::Macro *create (const char *name = nullptr, Macro::Format format = Macro::NoFormat);
 
   /**
    *  @brief Creates a new macro collection in that collection (with a new name)
@@ -302,7 +302,7 @@ public:
    *  This method will also create the directory for this folder.
    *  If not successful, it will return 0.
    */
-  lym::MacroCollection *create_folder (const char *name = 0, bool mkdir = true);
+  lym::MacroCollection *create_folder (const char *name = nullptr, bool mkdir = true);
 
   /**
    *  @brief Gets the begin iterator of the macros

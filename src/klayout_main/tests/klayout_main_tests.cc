@@ -39,7 +39,7 @@ void run_rubytest (tl::TestBase * /*_this*/, const std::string &fn)
   std::string fp (tl::testsrc ());
   fp += "/testdata/klayout_main/";
   fp += fn;
-  rba::RubyInterpreter::instance ()->load_file (fp.c_str ());
+  rba::RubyInterpreter::instance ()->load_file (fp);
 }
 
 #define RUBYTEST(n, file) \

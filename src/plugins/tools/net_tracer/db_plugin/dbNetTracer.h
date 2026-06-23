@@ -272,7 +272,7 @@ public:
   {
   public:
     RegionHolder ()
-      : mp_region (0)
+      : mp_region (nullptr)
     { }
 
     RegionHolder (db::Region *region)
@@ -282,7 +282,7 @@ public:
     ~RegionHolder ()
     {
       delete mp_region;
-      mp_region = 0;
+      mp_region = nullptr;
     }
 
     db::Region *get ()
@@ -367,7 +367,7 @@ public:
    */
   bool is_alias_for (int a) const
   {
-    return m_op == OPNone && mp_a == 0 && m_a == a;
+    return m_op == OPNone && mp_a == nullptr && m_a == a;
   }
 
   /**
@@ -375,7 +375,7 @@ public:
    */
   bool is_alias () const
   {
-    return m_op == OPNone && mp_a == 0;
+    return m_op == OPNone && mp_a == nullptr;
   }
 
   /**
@@ -383,7 +383,7 @@ public:
    */
   int alias_for () const
   {
-    if (m_op == OPNone && mp_a == 0) {
+    if (m_op == OPNone && mp_a == nullptr) {
       return m_a;
     } else {
       return -1;

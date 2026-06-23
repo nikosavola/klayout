@@ -35,7 +35,7 @@ struct CircuitPairData
   typedef db::Circuit object_type;
 
   CircuitPairData (const db::Circuit *a, const db::Circuit *b, db::NetlistCrossReference::Status s) : pair (a, b), status (s) { }
-  CircuitPairData () : pair ((const db::Circuit *)0, (const db::Circuit *)0), status (db::NetlistCrossReference::None) { }
+  CircuitPairData () : pair ((const db::Circuit *)nullptr, (const db::Circuit *)nullptr), status (db::NetlistCrossReference::None) { }
 
   std::pair<const db::Circuit *, const db::Circuit *> pair;
   db::NetlistCrossReference::Status status;
@@ -194,7 +194,7 @@ public:
 
   bool at_end () const
   {
-    return m_xref.get () == 0 || m_iter == m_end_iter;
+    return m_xref.get () == nullptr || m_iter == m_end_iter;
   }
 
   CircuitPairIterator &operator++ ()
@@ -207,7 +207,7 @@ public:
   {
     m_data.pair = *m_iter;
     const db::NetlistCrossReference::PerCircuitData *data = m_xref->per_circuit_data_for (*m_iter);
-    tl_assert (data != 0);
+    tl_assert (data != nullptr);
     m_data.status = data->status;
     return &m_data;
   }
@@ -243,7 +243,7 @@ public:
 
   bool at_end () const
   {
-    return m_xref.get () == 0 || m_iter == m_end_iter;
+    return m_xref.get () == nullptr || m_iter == m_end_iter;
   }
 
   pair_data_iterator &operator++ ()
@@ -270,13 +270,13 @@ public:
 
 static CircuitPairIterator each_circuit_pair (db::NetlistCrossReference *xref)
 {
-  tl_assert (xref->netlist_a () != 0 && xref->netlist_b () != 0);
+  tl_assert (xref->netlist_a () != nullptr && xref->netlist_b () != nullptr);
   return CircuitPairIterator (xref);
 }
 
 static pair_data_iterator<db::NetlistCrossReference::NetPairData, db::NetlistCrossReference::PerCircuitData::net_pairs_const_iterator> each_net_pair (db::NetlistCrossReference *xref, const CircuitPairData &circuit_pair)
 {
-  tl_assert (xref->netlist_a () != 0 && xref->netlist_b () != 0);
+  tl_assert (xref->netlist_a () != nullptr && xref->netlist_b () != nullptr);
   typedef pair_data_iterator<db::NetlistCrossReference::NetPairData, db::NetlistCrossReference::PerCircuitData::net_pairs_const_iterator> iter_type;
 
   const db::NetlistCrossReference::PerCircuitData *data = xref->per_circuit_data_for (circuit_pair.pair);
@@ -289,7 +289,7 @@ static pair_data_iterator<db::NetlistCrossReference::NetPairData, db::NetlistCro
 
 static pair_data_iterator<db::NetlistCrossReference::NetPairData, db::NetlistCrossReference::PerCircuitData::net_pairs_const_iterator> each_net_pair1 (db::NetlistCrossReference *xref, const db::Circuit *circuit)
 {
-  tl_assert (xref->netlist_a () != 0 && xref->netlist_b () != 0);
+  tl_assert (xref->netlist_a () != nullptr && xref->netlist_b () != nullptr);
   typedef pair_data_iterator<db::NetlistCrossReference::NetPairData, db::NetlistCrossReference::PerCircuitData::net_pairs_const_iterator> iter_type;
 
   const db::NetlistCrossReference::PerCircuitData *data = xref->per_circuit_data_for (std::make_pair (circuit, circuit));
@@ -302,7 +302,7 @@ static pair_data_iterator<db::NetlistCrossReference::NetPairData, db::NetlistCro
 
 static pair_data_iterator<db::NetlistCrossReference::DevicePairData, db::NetlistCrossReference::PerCircuitData::device_pairs_const_iterator> each_device_pair (db::NetlistCrossReference *xref, const CircuitPairData &circuit_pair)
 {
-  tl_assert (xref->netlist_a () != 0 && xref->netlist_b () != 0);
+  tl_assert (xref->netlist_a () != nullptr && xref->netlist_b () != nullptr);
   typedef pair_data_iterator<db::NetlistCrossReference::DevicePairData, db::NetlistCrossReference::PerCircuitData::device_pairs_const_iterator> iter_type;
 
   const db::NetlistCrossReference::PerCircuitData *data = xref->per_circuit_data_for (circuit_pair.pair);
@@ -315,7 +315,7 @@ static pair_data_iterator<db::NetlistCrossReference::DevicePairData, db::Netlist
 
 static pair_data_iterator<db::NetlistCrossReference::DevicePairData, db::NetlistCrossReference::PerCircuitData::device_pairs_const_iterator> each_device_pair1 (db::NetlistCrossReference *xref, const db::Circuit *circuit)
 {
-  tl_assert (xref->netlist_a () != 0 && xref->netlist_b () != 0);
+  tl_assert (xref->netlist_a () != nullptr && xref->netlist_b () != nullptr);
   typedef pair_data_iterator<db::NetlistCrossReference::DevicePairData, db::NetlistCrossReference::PerCircuitData::device_pairs_const_iterator> iter_type;
 
   const db::NetlistCrossReference::PerCircuitData *data = xref->per_circuit_data_for (std::make_pair (circuit, circuit));
@@ -328,7 +328,7 @@ static pair_data_iterator<db::NetlistCrossReference::DevicePairData, db::Netlist
 
 static pair_data_iterator<db::NetlistCrossReference::PinPairData, db::NetlistCrossReference::PerCircuitData::pin_pairs_const_iterator> each_pin_pair (db::NetlistCrossReference *xref, const CircuitPairData &circuit_pair)
 {
-  tl_assert (xref->netlist_a () != 0 && xref->netlist_b () != 0);
+  tl_assert (xref->netlist_a () != nullptr && xref->netlist_b () != nullptr);
   typedef pair_data_iterator<db::NetlistCrossReference::PinPairData, db::NetlistCrossReference::PerCircuitData::pin_pairs_const_iterator> iter_type;
 
   const db::NetlistCrossReference::PerCircuitData *data = xref->per_circuit_data_for (circuit_pair.pair);
@@ -341,7 +341,7 @@ static pair_data_iterator<db::NetlistCrossReference::PinPairData, db::NetlistCro
 
 static pair_data_iterator<db::NetlistCrossReference::PinPairData, db::NetlistCrossReference::PerCircuitData::pin_pairs_const_iterator> each_pin_pair1 (db::NetlistCrossReference *xref, const db::Circuit *circuit)
 {
-  tl_assert (xref->netlist_a () != 0 && xref->netlist_b () != 0);
+  tl_assert (xref->netlist_a () != nullptr && xref->netlist_b () != nullptr);
   typedef pair_data_iterator<db::NetlistCrossReference::PinPairData, db::NetlistCrossReference::PerCircuitData::pin_pairs_const_iterator> iter_type;
 
   const db::NetlistCrossReference::PerCircuitData *data = xref->per_circuit_data_for (std::make_pair (circuit, circuit));
@@ -354,7 +354,7 @@ static pair_data_iterator<db::NetlistCrossReference::PinPairData, db::NetlistCro
 
 static pair_data_iterator<db::NetlistCrossReference::SubCircuitPairData, db::NetlistCrossReference::PerCircuitData::subcircuit_pairs_const_iterator> each_subcircuit_pair (db::NetlistCrossReference *xref, const CircuitPairData &circuit_pair)
 {
-  tl_assert (xref->netlist_a () != 0 && xref->netlist_b () != 0);
+  tl_assert (xref->netlist_a () != nullptr && xref->netlist_b () != nullptr);
   typedef pair_data_iterator<db::NetlistCrossReference::SubCircuitPairData, db::NetlistCrossReference::PerCircuitData::subcircuit_pairs_const_iterator> iter_type;
 
   const db::NetlistCrossReference::PerCircuitData *data = xref->per_circuit_data_for (circuit_pair.pair);
@@ -367,7 +367,7 @@ static pair_data_iterator<db::NetlistCrossReference::SubCircuitPairData, db::Net
 
 static pair_data_iterator<db::NetlistCrossReference::SubCircuitPairData, db::NetlistCrossReference::PerCircuitData::subcircuit_pairs_const_iterator> each_subcircuit_pair1 (db::NetlistCrossReference *xref, const db::Circuit *circuit)
 {
-  tl_assert (xref->netlist_a () != 0 && xref->netlist_b () != 0);
+  tl_assert (xref->netlist_a () != nullptr && xref->netlist_b () != nullptr);
   typedef pair_data_iterator<db::NetlistCrossReference::SubCircuitPairData, db::NetlistCrossReference::PerCircuitData::subcircuit_pairs_const_iterator> iter_type;
 
   const db::NetlistCrossReference::PerCircuitData *data = xref->per_circuit_data_for (std::make_pair (circuit, circuit));
@@ -380,7 +380,7 @@ static pair_data_iterator<db::NetlistCrossReference::SubCircuitPairData, db::Net
 
 static pair_data_iterator<std::pair<const db::NetTerminalRef *, const db::NetTerminalRef *>, db::NetlistCrossReference::PerNetData::terminal_pairs_const_iterator> each_net_terminal_pair (db::NetlistCrossReference *xref, const db::NetlistCrossReference::NetPairData &net_pair)
 {
-  tl_assert (xref->netlist_a () != 0 && xref->netlist_b () != 0);
+  tl_assert (xref->netlist_a () != nullptr && xref->netlist_b () != nullptr);
   typedef pair_data_iterator<std::pair<const db::NetTerminalRef *, const db::NetTerminalRef *>, db::NetlistCrossReference::PerNetData::terminal_pairs_const_iterator> iter_type;
 
   const db::NetlistCrossReference::PerNetData *data = xref->per_net_data_for (net_pair.pair);
@@ -393,7 +393,7 @@ static pair_data_iterator<std::pair<const db::NetTerminalRef *, const db::NetTer
 
 static pair_data_iterator<std::pair<const db::NetTerminalRef *, const db::NetTerminalRef *>, db::NetlistCrossReference::PerNetData::terminal_pairs_const_iterator> each_net_terminal_pair1 (db::NetlistCrossReference *xref, const db::Net *net)
 {
-  tl_assert (xref->netlist_a () != 0 && xref->netlist_b () != 0);
+  tl_assert (xref->netlist_a () != nullptr && xref->netlist_b () != nullptr);
   typedef pair_data_iterator<std::pair<const db::NetTerminalRef *, const db::NetTerminalRef *>, db::NetlistCrossReference::PerNetData::terminal_pairs_const_iterator> iter_type;
 
   const db::NetlistCrossReference::PerNetData *data = xref->per_net_data_for_net (net);
@@ -406,7 +406,7 @@ static pair_data_iterator<std::pair<const db::NetTerminalRef *, const db::NetTer
 
 static pair_data_iterator<std::pair<const db::NetPinRef *, const db::NetPinRef *>, db::NetlistCrossReference::PerNetData::pin_pairs_const_iterator> each_net_pin_pair (db::NetlistCrossReference *xref, const db::NetlistCrossReference::NetPairData &net_pair)
 {
-  tl_assert (xref->netlist_a () != 0 && xref->netlist_b () != 0);
+  tl_assert (xref->netlist_a () != nullptr && xref->netlist_b () != nullptr);
   typedef pair_data_iterator<std::pair<const db::NetPinRef *, const db::NetPinRef *>, db::NetlistCrossReference::PerNetData::pin_pairs_const_iterator> iter_type;
 
   const db::NetlistCrossReference::PerNetData *data = xref->per_net_data_for (net_pair.pair);
@@ -419,7 +419,7 @@ static pair_data_iterator<std::pair<const db::NetPinRef *, const db::NetPinRef *
 
 static pair_data_iterator<std::pair<const db::NetPinRef *, const db::NetPinRef *>, db::NetlistCrossReference::PerNetData::pin_pairs_const_iterator> each_net_pin_pair1 (db::NetlistCrossReference *xref, const db::Net *net)
 {
-  tl_assert (xref->netlist_a () != 0 && xref->netlist_b () != 0);
+  tl_assert (xref->netlist_a () != nullptr && xref->netlist_b () != nullptr);
   typedef pair_data_iterator<std::pair<const db::NetPinRef *, const db::NetPinRef *>, db::NetlistCrossReference::PerNetData::pin_pairs_const_iterator> iter_type;
 
   const db::NetlistCrossReference::PerNetData *data = xref->per_net_data_for_net (net);
@@ -432,7 +432,7 @@ static pair_data_iterator<std::pair<const db::NetPinRef *, const db::NetPinRef *
 
 static pair_data_iterator<std::pair<const db::NetSubcircuitPinRef *, const db::NetSubcircuitPinRef *>, db::NetlistCrossReference::PerNetData::subcircuit_pin_pairs_const_iterator> each_net_subcircuit_pin_pair (db::NetlistCrossReference *xref, const db::NetlistCrossReference::NetPairData &net_pair)
 {
-  tl_assert (xref->netlist_a () != 0 && xref->netlist_b () != 0);
+  tl_assert (xref->netlist_a () != nullptr && xref->netlist_b () != nullptr);
   typedef pair_data_iterator<std::pair<const db::NetSubcircuitPinRef *, const db::NetSubcircuitPinRef *>, db::NetlistCrossReference::PerNetData::subcircuit_pin_pairs_const_iterator> iter_type;
 
   const db::NetlistCrossReference::PerNetData *data = xref->per_net_data_for (net_pair.pair);
@@ -445,7 +445,7 @@ static pair_data_iterator<std::pair<const db::NetSubcircuitPinRef *, const db::N
 
 static pair_data_iterator<std::pair<const db::NetSubcircuitPinRef *, const db::NetSubcircuitPinRef *>, db::NetlistCrossReference::PerNetData::subcircuit_pin_pairs_const_iterator> each_net_subcircuit_pin_pair1 (db::NetlistCrossReference *xref, const db::Net *net)
 {
-  tl_assert (xref->netlist_a () != 0 && xref->netlist_b () != 0);
+  tl_assert (xref->netlist_a () != nullptr && xref->netlist_b () != nullptr);
   typedef pair_data_iterator<std::pair<const db::NetSubcircuitPinRef *, const db::NetSubcircuitPinRef *>, db::NetlistCrossReference::PerNetData::subcircuit_pin_pairs_const_iterator> iter_type;
 
   const db::NetlistCrossReference::PerNetData *data = xref->per_net_data_for_net (net);

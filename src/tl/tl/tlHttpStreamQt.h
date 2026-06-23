@@ -87,7 +87,7 @@ public:
 
   bool data_available ()
   {
-    return mp_reply != 0;
+    return mp_reply != nullptr;
   }
 
   virtual size_t read (char *b, size_t n);

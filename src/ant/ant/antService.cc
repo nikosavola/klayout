@@ -147,10 +147,10 @@ draw_ruler (const db::DPoint &q1,
       db::DBox b (q1 - db::DVector (sel_width * 0.5, sel_width * 0.5),
                   q2 + db::DVector (sel_width * 0.5, sel_width * 0.5));
 
-      renderer.draw (b, bitmap, bitmap, 0, 0);
+      renderer.draw (b, bitmap, bitmap, nullptr, nullptr);
       
     } else {
-      renderer.draw (db::DEdge (q1, q1), 0, bitmap, 0, 0);
+      renderer.draw (db::DEdge (q1, q1), nullptr, bitmap, nullptr, nullptr);
     }
 
   } else {
@@ -227,11 +227,11 @@ draw_ruler (const db::DPoint &q1,
           db::DPoint (q1 + dq1 - qw),
         };
         p.assign_hull (points, points + sizeof (points) / sizeof (points [0]));
-        renderer.draw (p, bitmap, bitmap, 0, 0);
+        renderer.draw (p, bitmap, bitmap, nullptr, nullptr);
 
       } else {
 
-        renderer.draw (db::DEdge (q1, q2), 0, bitmap, 0, 0);
+        renderer.draw (db::DEdge (q1, q2), nullptr, bitmap, nullptr, nullptr);
 
       }
 
@@ -250,7 +250,7 @@ draw_ruler (const db::DPoint &q1,
         db::DPoint (q2 - qq * double (arrow_width * 0.5) - qu * double (arrow_length)),
       };
       p.assign_hull (points, points + sizeof (points) / sizeof (points [0]));
-      renderer.draw (p, bitmap, bitmap, 0, 0);
+      renderer.draw (p, bitmap, bitmap, nullptr, nullptr);
 
     } else if (style == ant::Object::STY_cross_end || style == ant::Object::STY_cross_both) {
 
@@ -264,7 +264,7 @@ draw_ruler (const db::DPoint &q1,
         db::DPoint (q2 - qu * double (arrow_width)),
       };
       p.assign_hull (points, points + sizeof (points) / sizeof (points [0]), false /*don't compress*/);
-      renderer.draw (p, bitmap, bitmap, 0, 0);
+      renderer.draw (p, bitmap, bitmap, nullptr, nullptr);
 
     }
     
@@ -281,7 +281,7 @@ draw_ruler (const db::DPoint &q1,
         db::DPoint (q1 - qq * double (arrow_width * 0.5) + qu * double (arrow_length))
       };
       p.assign_hull (points, points + sizeof (points) / sizeof (points [0]));
-      renderer.draw (p, bitmap, bitmap, 0, 0);
+      renderer.draw (p, bitmap, bitmap, nullptr, nullptr);
 
     } else if (style == ant::Object::STY_cross_start || style == ant::Object::STY_cross_both) {
 
@@ -295,7 +295,7 @@ draw_ruler (const db::DPoint &q1,
         db::DPoint (q1 - qu * double (arrow_width)),
       };
       p.assign_hull (points, points + sizeof (points) / sizeof (points [0]), false /*don't compress*/);
-      renderer.draw (p, bitmap, bitmap, 0, 0);
+      renderer.draw (p, bitmap, bitmap, nullptr, nullptr);
 
     }
 
@@ -306,8 +306,8 @@ draw_ruler (const db::DPoint &q1,
     db::DVector tv_long  = qq * tf;
 
     if (tick_length > 0) {
-      renderer.draw (db::DEdge (q1, q1 + tv_long), 0, bitmap, 0, 0);
-      renderer.draw (db::DEdge (q2, q2 + tv_long), 0, bitmap, 0, 0);
+      renderer.draw (db::DEdge (q1, q1 + tv_long), nullptr, bitmap, nullptr, nullptr);
+      renderer.draw (db::DEdge (q2, q2 + tv_long), nullptr, bitmap, nullptr, nullptr);
     }
     
     if (minor_ticks > 0 && ticks > 0.0) {
@@ -323,9 +323,9 @@ draw_ruler (const db::DPoint &q1,
         qq = db::DPoint (floor (qq.x () + 0.5), floor (qq.y () + 0.5));
 
         if (n % minor_ticks == 0) {
-          renderer.draw (db::DEdge (qq, qq + tv_long), 0, bitmap, 0, 0);
+          renderer.draw (db::DEdge (qq, qq + tv_long), nullptr, bitmap, nullptr, nullptr);
         } else {
-          renderer.draw (db::DEdge (qq, qq + tv_short), 0, bitmap, 0, 0);
+          renderer.draw (db::DEdge (qq, qq + tv_short), nullptr, bitmap, nullptr, nullptr);
         }
 
       }
@@ -382,7 +382,7 @@ draw_text (const db::DPoint &q1,
                      db::DefaultFont,
                      db::HAlignLeft,
                      db::VAlignBottom,
-                     db::DFTrans (db::DFTrans::r0), 0, 0, 0, bitmap);
+                     db::DFTrans (db::DFTrans::r0), nullptr, nullptr, nullptr, bitmap);
 
   } else {
 
@@ -504,7 +504,7 @@ draw_text (const db::DPoint &q1,
                    db::DefaultFont,
                    text_halign,
                    text_valign,
-                   db::DFTrans (db::DFTrans::r0), 0, 0, 0, bitmap);
+                   db::DFTrans (db::DFTrans::r0), nullptr, nullptr, nullptr, bitmap);
 
   }
 }
@@ -540,10 +540,10 @@ draw_ellipse (const db::DPoint &q1,
       db::DBox b (q1 - db::DVector (sel_width * 0.5, sel_width * 0.5),
                   q2 + db::DVector (sel_width * 0.5, sel_width * 0.5));
 
-      renderer.draw (b, bitmap, bitmap, 0, 0);
+      renderer.draw (b, bitmap, bitmap, nullptr, nullptr);
 
     } else {
-      renderer.draw (db::DEdge (q1, q1), 0, bitmap, 0, 0);
+      renderer.draw (db::DEdge (q1, q1), nullptr, bitmap, nullptr, nullptr);
     }
 
   } else {
@@ -566,12 +566,12 @@ draw_ellipse (const db::DPoint &q1,
     if (sel) {
 
       db::DPath p (pts.begin (), pts.end (), sel_width);
-      renderer.draw (p, bitmap, bitmap, 0, 0);
+      renderer.draw (p, bitmap, bitmap, nullptr, nullptr);
 
     } else {
 
       for (size_t i = 0; i + 1 < pts.size (); ++i) {
-        renderer.draw (db::DEdge (pts [i], pts [i + 1]), 0, bitmap, 0, 0);
+        renderer.draw (db::DEdge (pts [i], pts [i + 1]), nullptr, bitmap, nullptr, nullptr);
       }
 
     }
@@ -802,7 +802,7 @@ draw_ruler_angle (const ant::Object &ruler, const db::DCplxTrans &trans, bool se
       auto q1 = v.first;
       auto q2 = v.second + tv * l;
 
-      renderer.draw (db::DEdge (q1, q2), 0, bitmap, 0, 0);
+      renderer.draw (db::DEdge (q1, q2), nullptr, bitmap, nullptr, nullptr);
 
     }
 
@@ -1058,8 +1058,8 @@ Service::Service (db::Manager *manager, lay::LayoutViewBase *view)
     m_grid_snap (false), m_obj_snap (false), m_snap_range (1),
     m_max_number_of_rulers (-1 /*unlimited*/),
     mp_view (view),
-    mp_active_ruler (0),
-    mp_transient_ruler (0),
+    mp_active_ruler (nullptr),
+    mp_transient_ruler (nullptr),
     m_drawing (false), m_current (),
     m_move_mode (MoveNone),
     m_seg_index (0),
@@ -1191,7 +1191,7 @@ Service::show_toolbox (bool visible)
 lay::EditorOptionsPage *
 Service::toolbox_widget ()
 {
-  return mp_view->editor_options_pages () ? mp_view->editor_options_pages ()->page_with_name (editor_options_name ()) : 0;
+  return mp_view->editor_options_pages () ? mp_view->editor_options_pages ()->page_with_name (editor_options_name ()) : nullptr;
 }
 
 void
@@ -1276,7 +1276,7 @@ Service::drag_cancel ()
 
   if (mp_active_ruler) {
     delete mp_active_ruler;
-    mp_active_ruler = 0;
+    mp_active_ruler = nullptr;
   }
 }
 
@@ -1435,7 +1435,7 @@ Service::begin_move (lay::Editable::MoveMode mode, const db::DPoint &p, lay::ang
 
     double dmin = std::numeric_limits <double>::max ();
 
-    const ant::Object *robj_min = 0;
+    const ant::Object *robj_min = nullptr;
     for (auto r = m_selected.begin (); r != m_selected.end (); ++r) {
       const ant::Object *robj = dynamic_cast<const ant::Object *> ((*r)->ptr ());
       if (robj) {
@@ -1490,7 +1490,7 @@ Service::begin_move (lay::Editable::MoveMode mode, const db::DPoint &p, lay::ang
     double dmin = std::numeric_limits <double>::max ();
 
     lay::AnnotationShapes::touching_iterator r = mp_view->annotation_shapes ().begin_touching (search_dbox);
-    const ant::Object *robj_min = 0;
+    const ant::Object *robj_min = nullptr;
     while (! r.at_end ()) {
       const ant::Object *robj = dynamic_cast<const ant::Object *> ((*r).ptr ());
       if (robj) {
@@ -2340,7 +2340,7 @@ Service::snap1_details (const db::DPoint &p, bool obj_snap)
   }
 
   double snap_range = ui ()->mouse_event_trans ().inverted ().ctrans (m_snap_range);
-  return lay::obj_snap (obj_snap ? mp_view : 0, p, g, snap_range);
+  return lay::obj_snap (obj_snap ? mp_view : nullptr, p, g, snap_range);
 }
 
 std::pair<bool, db::DPoint>
@@ -2362,7 +2362,7 @@ Service::snap2_details (const db::DPoint &p1, const db::DPoint &p2, const ant::O
   double snap_range = ui ()->mouse_event_trans ().inverted ().ctrans (m_snap_range);
   lay::angle_constraint_type snap_mode = ac == lay::AC_Global ? (obj->angle_constraint () == lay::AC_Global ? m_snap_mode : obj->angle_constraint ()) : ac;
 
-  return lay::obj_snap (m_obj_snap && obj->snap () ? mp_view : 0, p1, p2, g, snap_mode, snap_range);
+  return lay::obj_snap (m_obj_snap && obj->snap () ? mp_view : nullptr, p1, p2, g, snap_mode, snap_range);
 }
 
 db::DPoint
@@ -2541,7 +2541,7 @@ Service::selection_size ()
 bool
 Service::has_transient_selection ()
 {
-  return mp_transient_ruler != 0;
+  return mp_transient_ruler != nullptr;
 }
 
 bool 
@@ -2586,7 +2586,7 @@ Service::click_proximity (const db::DPoint &pos, lay::Editable::SelectionMode mo
 
   //  for single-point selections either exclude the current selection or the
   //  accumulated previous selection from the search.
-  const std::set<obj_iterator> *exclude = 0;
+  const std::set<obj_iterator> *exclude = nullptr;
   if (mode == lay::Editable::Replace) {
     exclude = &m_previous_selection;
   } else if (mode == lay::Editable::Add) {
@@ -2665,7 +2665,7 @@ Service::timeout ()
 
   //  transiently create an auto-metric ruler if requested
 
-  ant::Object *ruler = 0;
+  ant::Object *ruler = nullptr;
 
   const ant::Template &tpl = current_template ();
   if (tpl.mode () == ant::Template::RulerAutoMetric) {
@@ -2756,7 +2756,7 @@ Service::clear_transient_selection ()
 {
   if (mp_transient_ruler) {
     delete mp_transient_ruler;
-    mp_transient_ruler = 0;
+    mp_transient_ruler = nullptr;
   }
 }
 
@@ -2797,7 +2797,7 @@ Service::select (const db::DBox &box, lay::Editable::SelectionMode mode)
 
   //  for single-point selections either exclude the current selection or the
   //  accumulated previous selection from the search.
-  const std::set<obj_iterator> *exclude = 0;
+  const std::set<obj_iterator> *exclude = nullptr;
   if (mode == lay::Editable::Replace) {
     exclude = &m_previous_selection;
   } else if (mode == lay::Editable::Add) {
@@ -2903,7 +2903,7 @@ Service::select (const db::DBox &box, lay::Editable::SelectionMode mode)
 void 
 Service::display_status (bool transient)
 {
-  View *selected_view = transient ? mp_transient_ruler : (m_rulers.size () == 1 ? m_rulers [0] : 0);
+  View *selected_view = transient ? mp_transient_ruler : (m_rulers.size () == 1 ? m_rulers [0] : nullptr);
   if (! selected_view) {
     view ()->message (std::string ());
   } else {
@@ -2974,7 +2974,7 @@ Service::change_ruler (obj_iterator pos, const ant::Object &to)
   //  replace the object, keep the ID:
   ant::Object *new_ruler = new ant::Object (to);
   const ant::Object *current_ruler = dynamic_cast <const ant::Object *> (pos->ptr ());
-  tl_assert (current_ruler != 0);
+  tl_assert (current_ruler != nullptr);
 
   int new_id = current_ruler->id ();
   new_ruler->id (new_id);

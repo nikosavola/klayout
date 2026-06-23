@@ -51,11 +51,11 @@ public:
 
   NavigatorService (LayoutView *view)
     : ViewService (view->canvas ()), 
-      mp_view (view), mp_source_view (0),
-      mp_viewport_marker (0),
+      mp_view (view), mp_source_view (nullptr),
+      mp_viewport_marker (nullptr),
       m_drag_mode (DM_none),
       m_dragging (false),
-      mp_box (0), 
+      mp_box (nullptr), 
       m_color (0)
   {
     //  .. nothing yet ..
@@ -65,7 +65,7 @@ public:
   {
     if (mp_viewport_marker) {
       delete mp_viewport_marker;
-      mp_viewport_marker = 0;
+      mp_viewport_marker = nullptr;
     }
     drag_cancel ();
   }
@@ -99,7 +99,7 @@ public:
 
       //  finish zoom box selection
       delete mp_box;
-      mp_box = 0;
+      mp_box = nullptr;
 
       ui ()->ungrab_mouse (this);
 
@@ -341,7 +341,7 @@ public:
   {
     if (mp_viewport_marker) {
       delete mp_viewport_marker;
-      mp_viewport_marker = 0;
+      mp_viewport_marker = nullptr;
       m_box = db::DBox ();
     } 
 
@@ -387,7 +387,7 @@ public:
     //  cancel zoom box dragging
     if (mp_box) {
       delete mp_box;
-      mp_box = 0;
+      mp_box = nullptr;
     }
     ui ()->ungrab_mouse (this);
   }
@@ -423,7 +423,7 @@ private:
     if (mp_box) {
       delete mp_box;
     }
-    mp_box = 0;
+    mp_box = nullptr;
 
     m_p1 = pos;
     m_vp = ui ()->mouse_event_viewport ();
@@ -457,8 +457,8 @@ Navigator::Navigator (MainWindow *main_window)
     m_update_layers_needed (true),
     m_update_needed (true),
     mp_main_window (main_window), 
-    mp_source_view (0), 
-    mp_service (0),
+    mp_source_view (nullptr), 
+    mp_service (nullptr),
     m_do_view_changed (this, &Navigator::attach_view),
     m_do_layers_changed (this, &Navigator::update_layers),
     m_do_content_changed (this, &Navigator::update),
@@ -470,8 +470,8 @@ Navigator::Navigator (MainWindow *main_window)
   mp_menu_bar->setFrameShape (QFrame::NoFrame);
   mp_menu_bar->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-  mp_view = 0;
-  mp_service = 0;
+  mp_view = nullptr;
+  mp_service = nullptr;
 
   mp_placeholder_label = new QLabel (this);
   mp_placeholder_label->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -498,12 +498,12 @@ Navigator::~Navigator ()
 {
   if (mp_service) {
     delete mp_service;
-    mp_service = 0;
+    mp_service = nullptr;
   }
 
   if (mp_view) {
     delete mp_view;
-    mp_view = 0;
+    mp_view = nullptr;
   }
 }
 
@@ -588,7 +588,7 @@ Navigator::view_changed ()
     m_do_view_changed ();
   } else {
     //  force attach view, when the window is opened again
-    attach_view (0);
+    attach_view (nullptr);
   }
 }
 
@@ -624,7 +624,7 @@ Navigator::view_closed (int index)
   LayoutView *view = mp_main_window->view ((unsigned int) index);
 
   if (view == mp_source_view) {
-    attach_view (0);
+    attach_view (nullptr);
   }
 }
 
@@ -649,14 +649,14 @@ Navigator::attach_view (LayoutView *view)
     mp_source_view = view;
 
     delete mp_service;
-    mp_service = 0;
+    mp_service = nullptr;
 
     LayoutViewWidget *old_view = mp_view;
-    mp_view = 0;
+    mp_view = nullptr;
 
     if (mp_source_view) {
 
-      mp_view = new LayoutViewWidget (0, false, mp_source_view, this, LayoutView::LV_Naked + LayoutView::LV_NoZoom + LayoutView::LV_NoServices + LayoutView::LV_NoGrid);
+      mp_view = new LayoutViewWidget (nullptr, false, mp_source_view, this, LayoutView::LV_Naked + LayoutView::LV_NoZoom + LayoutView::LV_NoServices + LayoutView::LV_NoGrid);
       mp_view->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Expanding);
       mp_view->setMinimumWidth (100);
       mp_view->setMinimumHeight (100);

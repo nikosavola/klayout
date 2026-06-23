@@ -64,7 +64,7 @@ private:
   const tl::VariantUserClassBase *mp_self, *mp_object_cls;
   bool m_is_const;
 
-  virtual void execute_gsi (const tl::ExpressionParserContext &context, tl::Variant &out, tl::Variant &object, const std::string &method, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> *kwargs = 0) const;
+  virtual void execute_gsi (const tl::ExpressionParserContext &context, tl::Variant &out, tl::Variant &object, const std::string &method, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> *kwargs = nullptr) const;
 
   bool has_method (const std::string &method) const;
 };

@@ -52,7 +52,7 @@ tl::weak_ptr<HttpCredentialProvider> sp_credential_provider;
 //  AuthenticationHandler implementation
 
 AuthenticationHandler::AuthenticationHandler ()
-  : QObject (0), m_retry (0), m_proxy_retry (0)
+  : QObject (nullptr), m_retry (0), m_proxy_retry (0)
 {
   //  .. nothing yet ..
 }
@@ -132,13 +132,13 @@ AuthenticationHandler::proxyAuthenticationRequired (const QNetworkProxy &proxy, 
 InputHttpStream::InputHttpStream (const std::string &url)
 {
   mp_data = new InputHttpStreamPrivateData (this, url);
-  mp_callback = 0;
+  mp_callback = nullptr;
 }
 
 InputHttpStream::~InputHttpStream ()
 {
   delete mp_data;
-  mp_data = 0;
+  mp_data = nullptr;
 }
 
 void
@@ -255,15 +255,15 @@ InputHttpStream::timeout () const
 // ---------------------------------------------------------------
 //  InputHttpStreamPrivateData implementation
 
-static QNetworkAccessManager *s_network_manager (0);
-static AuthenticationHandler *s_auth_handler (0);
+static QNetworkAccessManager *s_network_manager (nullptr);
+static AuthenticationHandler *s_auth_handler (nullptr);
 
 InputHttpStreamPrivateData::InputHttpStreamPrivateData (InputHttpStream *stream, const std::string &url)
-  : m_url (url), mp_reply (0), m_request ("GET"), mp_buffer (0), mp_resend_timer (new QTimer (this)), m_timeout (InputHttpStream::get_default_timeout ()), mp_stream (stream)
+  : m_url (url), mp_reply (nullptr), m_request ("GET"), mp_buffer (nullptr), mp_resend_timer (new QTimer (this)), m_timeout (InputHttpStream::get_default_timeout ()), mp_stream (stream)
 {
   if (! s_network_manager) {
 
-    s_network_manager = new QNetworkAccessManager (0);
+    s_network_manager = new QNetworkAccessManager (nullptr);
     s_auth_handler = new AuthenticationHandler ();
     connect (s_network_manager, SIGNAL (authenticationRequired (QNetworkReply *, QAuthenticator *)), s_auth_handler, SLOT (authenticationRequired (QNetworkReply *, QAuthenticator *)));
     connect (s_network_manager, SIGNAL (proxyAuthenticationRequired (const QNetworkProxy &, QAuthenticator *)), s_auth_handler, SLOT (proxyAuthenticationRequired (const QNetworkProxy &, QAuthenticator *)));
@@ -305,7 +305,7 @@ InputHttpStreamPrivateData::close ()
     reply->abort ();
     reply->deleteLater ();
   }
-  mp_reply = 0;
+  mp_reply = nullptr;
 }
 
 void
@@ -380,7 +380,7 @@ void
 InputHttpStreamPrivateData::issue_request (const QUrl &url)
 {
   delete mp_buffer;
-  mp_buffer = 0;
+  mp_buffer = nullptr;
 
   m_ssl_errors.clear ();
 
@@ -436,7 +436,7 @@ InputHttpStreamPrivateData::issue_request (const QUrl &url)
 void
 InputHttpStreamPrivateData::send ()
 {
-  if (mp_reply == 0) {
+  if (mp_reply == nullptr) {
     issue_request (QUrl (tl::to_qstring (m_url)));
   }
 }
@@ -447,14 +447,14 @@ InputHttpStreamPrivateData::read (char *b, size_t n)
   //  Prevents deferred methods to be executed during the processEvents below (undesired side effects)
   tl::NoDeferredMethods silent;
 
-  if (mp_reply == 0) {
+  if (mp_reply == nullptr) {
     issue_request (QUrl (tl::to_qstring (m_url)));
   }
 
   const unsigned long tick_ms = 10;
   double time_waited = 0.0;
 
-  while (mp_reply == 0 && (m_timeout <= 0.0 || time_waited < m_timeout)) {
+  while (mp_reply == nullptr && (m_timeout <= 0.0 || time_waited < m_timeout)) {
 
     mp_stream->tick ();
 

@@ -29,7 +29,7 @@ namespace lay
 {
 
 ControlWidgetStack::ControlWidgetStack(QWidget *parent, const char *name, bool size_follows_content)
-  : QFrame (parent), mp_current_widget (0), m_size_follows_content (size_follows_content)
+  : QFrame (parent), mp_current_widget (nullptr), m_size_follows_content (size_follows_content)
 {
   setObjectName (QString::fromUtf8 (name));
 
@@ -116,11 +116,11 @@ void ControlWidgetStack::remove_widget(size_t index)
 {
   if (index < m_widgets.size ()) {
     if (mp_current_widget == m_widgets [index]) {
-      mp_current_widget = 0;
+      mp_current_widget = nullptr;
     }
     m_widgets.erase (m_widgets.begin () + index);
   }
-  if (m_widgets.size () == 0) {
+  if (m_widgets.empty()) {
     mp_bglabel->show ();
   }
 
@@ -129,7 +129,7 @@ void ControlWidgetStack::remove_widget(size_t index)
 
 void ControlWidgetStack::raise_widget(size_t index)
 {
-  mp_current_widget = 0;
+  mp_current_widget = nullptr;
   bool any_visible = false;
   for (size_t i = 0; i < m_widgets.size (); ++i) {
     if (m_widgets [i]) {
@@ -157,7 +157,7 @@ QWidget *ControlWidgetStack::widget(size_t index)
   if (index < m_widgets.size ()) {
     return m_widgets [index];
   } else {
-    return 0;
+    return nullptr;
   }
 }
 

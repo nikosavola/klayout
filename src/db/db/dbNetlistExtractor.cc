@@ -30,7 +30,7 @@ namespace db
 {
 
 NetlistExtractor::NetlistExtractor ()
-  : mp_clusters (0), mp_layout (0), mp_cell (0), m_include_floating_subcircuits (false)
+  : mp_clusters (nullptr), mp_layout (nullptr), mp_cell (nullptr), m_include_floating_subcircuits (false)
 {
   //  .. nothing yet ..
 }
@@ -257,7 +257,7 @@ NetlistExtractor::extract_nets (const db::DeepShapeStore &dss, unsigned int layo
 
     //  a cell makes a new circuit (or uses an existing one)
 
-    db::Circuit *circuit = 0;
+    db::Circuit *circuit = nullptr;
 
     std::map<db::cell_index_type, db::Circuit *>::const_iterator k = circuits.find (*cid);
     if (k == circuits.end ()) {
@@ -499,7 +499,7 @@ bool NetlistExtractor::instance_is_device (db::properties_id_type prop_id) const
 db::Device *NetlistExtractor::device_from_instance (db::properties_id_type prop_id, db::Circuit *circuit) const
 {
   if (! prop_id || ! m_device_annot_name_id.first) {
-    return 0;
+    return nullptr;
   }
 
   const db::PropertiesSet &ps = db::properties (prop_id);
@@ -509,7 +509,7 @@ db::Device *NetlistExtractor::device_from_instance (db::properties_id_type prop_
     }
   }
 
-  return 0;
+  return nullptr;
 }
 
 void NetlistExtractor::connect_devices (db::Circuit *circuit,
@@ -564,7 +564,7 @@ db::SubCircuit * NetlistExtractor::make_subcircuit (db::Circuit *circuit,
                                                     std::map<std::pair<db::cell_index_type, db::ICplxTrans>, db::SubCircuit *> &subcircuits,
                                                     const std::map<db::cell_index_type, db::Circuit *> &circuits)
 {
-  db::SubCircuit *subcircuit = 0;
+  db::SubCircuit *subcircuit = nullptr;
 
   std::pair<db::cell_index_type, db::ICplxTrans> subcircuit_key (inst_cell_index, inst_trans);
 
@@ -575,7 +575,7 @@ db::SubCircuit * NetlistExtractor::make_subcircuit (db::Circuit *circuit,
 
     std::map<db::cell_index_type, db::Circuit *>::const_iterator k = circuits.find (inst_cell_index);
     if (k == circuits.end ()) {
-      return 0;
+      return nullptr;
     }
 
     subcircuit = new db::SubCircuit (k->second);
@@ -612,7 +612,7 @@ void NetlistExtractor::make_and_connect_subcircuits (db::Circuit *circuit,
     }
 
     db::SubCircuit *subcircuit = make_subcircuit (circuit, inst_cell_index, inst_trans, subcircuits, circuits);
-    tl_assert (subcircuit != 0);
+    tl_assert (subcircuit != nullptr);
 
     //  create the pin connection to the subcircuit
     std::map<db::cell_index_type, std::map<size_t, size_t> >::const_iterator icc2p = pins_per_cluster.find (inst_cell_index);

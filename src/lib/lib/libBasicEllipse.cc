@@ -143,7 +143,7 @@ BasicEllipse::coerce_parameters (const db::Layout & /*layout*/, db::pcell_parame
 void 
 BasicEllipse::produce (const db::Layout &layout, const std::vector<unsigned int> &layer_ids, const db::pcell_parameters_type &parameters, db::Cell &cell) const
 {
-  if (parameters.size () < p_total || layer_ids.size () < 1) {
+  if (parameters.size () < p_total || layer_ids.empty()) {
     return;
   }
 

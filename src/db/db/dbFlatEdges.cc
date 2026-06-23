@@ -364,7 +364,7 @@ const db::Edge *FlatEdges::nth (size_t n) const
   //  NOTE: this assumes that we iterate over non-property edges first and then over edges with properties
 
   if (n >= mp_edges->size ()) {
-    return 0;
+    return nullptr;
   }
 
   const db::layer<db::Edge, db::unstable_layer_tag> &l = mp_edges->get_layer<db::Edge, db::unstable_layer_tag> ();
@@ -378,7 +378,7 @@ const db::Edge *FlatEdges::nth (size_t n) const
     return &lp.begin () [n];
   }
 
-  return 0;
+  return nullptr;
 }
 
 db::properties_id_type FlatEdges::nth_prop_id (size_t n) const
@@ -415,7 +415,7 @@ bool FlatEdges::has_valid_merged_edges () const
 
 const db::RecursiveShapeIterator *FlatEdges::iter () const
 {
-  return 0;
+  return nullptr;
 }
 
 void FlatEdges::apply_property_translator (const db::PropertiesTranslator &pt)

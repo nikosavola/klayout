@@ -26,13 +26,13 @@ namespace db
 {
 
 NetlistObject::NetlistObject ()
-  : tl::Object (), mp_properties (0)
+  : tl::Object (), mp_properties (nullptr)
 {
   //  .. nothing yet ..
 }
 
 NetlistObject::NetlistObject (const db::NetlistObject &other)
-  : tl::Object (other), mp_properties (0)
+  : tl::Object (other), mp_properties (nullptr)
 {
   if (other.mp_properties) {
     mp_properties = new std::map<tl::Variant, tl::Variant> (*other.mp_properties);
@@ -42,7 +42,7 @@ NetlistObject::NetlistObject (const db::NetlistObject &other)
 NetlistObject::~NetlistObject ()
 {
   delete mp_properties;
-  mp_properties = 0;
+  mp_properties = nullptr;
 }
 
 NetlistObject &NetlistObject::operator= (const NetlistObject &other)
@@ -52,7 +52,7 @@ NetlistObject &NetlistObject::operator= (const NetlistObject &other)
     tl::Object::operator= (other);
 
     delete mp_properties;
-    mp_properties = 0;
+    mp_properties = nullptr;
 
     if (other.mp_properties) {
       mp_properties = new std::map<tl::Variant, tl::Variant> (*other.mp_properties);
@@ -85,7 +85,7 @@ NetlistObject::set_property (const tl::Variant &key, const tl::Variant &value)
       mp_properties->erase (key);
       if (mp_properties->empty ()) {
         delete mp_properties;
-        mp_properties = 0;
+        mp_properties = nullptr;
       }
     }
 

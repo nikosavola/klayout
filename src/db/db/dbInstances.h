@@ -259,7 +259,7 @@ public:
    *  This method is basically provided for convenience
    *  and is equivalent to ->cell_inst ().is_iterated_array ().
    */
-  bool is_iterated_array (std::vector<cell_inst_array_type::vector_type> *v = 0) const
+  bool is_iterated_array (std::vector<cell_inst_array_type::vector_type> *v = nullptr) const
   {
     return cell_inst ().is_iterated_array (v);
   }
@@ -430,7 +430,7 @@ public:
   const cell_inst_wp_array_type *basic_ptr (cell_inst_wp_array_type::tag /*tag*/) const
   {
     if (m_type != TInstance || ! m_with_props) {
-      return 0;
+      return nullptr;
     } else if (m_stable) {
       return ((cell_inst_wp_array_iterator_type *) (m_generic.piter))->operator-> ();
     } else {
@@ -446,7 +446,7 @@ public:
   const cell_inst_array_type *basic_ptr (cell_inst_array_type::tag /*tag*/) const
   {
     if (m_type != TInstance || m_with_props) {
-      return 0;
+      return nullptr;
     } else if (m_stable) {
       return ((cell_inst_array_iterator_type *) (m_generic.iter))->operator-> ();
     } else {
@@ -462,7 +462,7 @@ public:
   const cell_inst_wp_array_iterator_type *basic_iter (cell_inst_wp_array_type::tag /*tag*/) const
   {
     if (m_type != TInstance || ! m_with_props || ! m_stable) {
-      return 0;
+      return nullptr;
     } else {
       return (cell_inst_wp_array_iterator_type *) m_generic.piter;
     }
@@ -476,7 +476,7 @@ public:
   const cell_inst_array_iterator_type *basic_iter (cell_inst_array_type::tag /*tag*/) const
   {
     if (m_type != TInstance || m_with_props || ! m_stable) {
-      return 0;
+      return nullptr;
     } else {
       return (cell_inst_array_iterator_type *) m_generic.iter;
     }
@@ -1094,7 +1094,7 @@ public:
   /**
    *  @brief The default ctor
    */
-  ParentInstRep (const layout_type *layout = 0)
+  ParentInstRep (const layout_type *layout = nullptr)
     : ParentInst (), mp_layout (layout)
   {
     //  .. nothing yet ..
@@ -1163,7 +1163,7 @@ public:
    *  @brief Default ctor
    */
   ParentInstIterator ()
-    : mp_layout (0), m_iter (), m_end ()
+    : mp_layout (nullptr), m_iter (), m_end ()
   { }
 
   /**
@@ -1550,7 +1550,7 @@ public:
   template <class Trans>
   instance_type transform (const instance_type &ref, const Trans &t)
   {
-    return replace (ref, ref.cell_inst ().transformed (t, 0 /*don't consider array repository*/));
+    return replace (ref, ref.cell_inst ().transformed (t, nullptr /*don't consider array repository*/));
   }
 
   /**
@@ -1565,7 +1565,7 @@ public:
   template <class Trans>
   instance_type transform_into (const instance_type &ref, const Trans &t)
   {
-    return replace (ref, ref.cell_inst ().transformed_into (t, 0 /*don't consider array repository*/));
+    return replace (ref, ref.cell_inst ().transformed_into (t, nullptr /*don't consider array repository*/));
   }
 
   /**

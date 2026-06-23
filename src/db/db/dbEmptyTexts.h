@@ -45,7 +45,7 @@ public:
 
   virtual std::string to_string (size_t) const { return std::string (); }
 
-  virtual TextsIteratorDelegate *begin () const { return 0; }
+  virtual TextsIteratorDelegate *begin () const { return nullptr; }
   virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const { return std::make_pair (db::RecursiveShapeIterator (), db::ICplxTrans ()); }
 
   virtual bool empty () const { return true; }
@@ -74,7 +74,7 @@ public:
   virtual db::properties_id_type nth_prop_id (size_t) const { tl_assert (false); }
   virtual bool has_valid_texts () const { return true; }
 
-  virtual const db::RecursiveShapeIterator *iter () const { return 0; }
+  virtual const db::RecursiveShapeIterator *iter () const { return nullptr; }
   virtual void apply_property_translator (const db::PropertiesTranslator &) { }
 
   virtual bool equals (const Texts &other) const;

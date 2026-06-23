@@ -119,7 +119,7 @@ MainConfigPage::MainConfigPage (QWidget *parent)
 MainConfigPage::~MainConfigPage ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -153,7 +153,7 @@ MainConfigPage6::MainConfigPage6 (QWidget *parent)
 MainConfigPage6::~MainConfigPage6 ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -188,7 +188,7 @@ MainConfigPage7::MainConfigPage7 (QWidget *parent)
 MainConfigPage7::~MainConfigPage7 ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -235,7 +235,7 @@ MainConfigPage2::MainConfigPage2 (QWidget *parent)
 MainConfigPage2::~MainConfigPage2 ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -265,7 +265,7 @@ MainConfigPage3::MainConfigPage3 (QWidget *parent)
 MainConfigPage3::~MainConfigPage3 ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -295,7 +295,7 @@ MainConfigPage4::MainConfigPage4 (QWidget *parent)
 MainConfigPage4::~MainConfigPage4 ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -325,7 +325,7 @@ MainConfigPage5::MainConfigPage5 (QWidget *parent)
 MainConfigPage5::~MainConfigPage5 ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -351,7 +351,7 @@ MainConfigPage5::commit (lay::Dispatcher *root)
 //  The "key bindings" config page
 
 CustomizeMenuConfigPage::CustomizeMenuConfigPage (QWidget *parent)
-  : lay::ConfigPage (parent), m_enable_event (true), mp_dispatcher (0)
+  : lay::ConfigPage (parent), m_enable_event (true), mp_dispatcher (nullptr)
 {
   mp_ui = new Ui::CustomizeMenuConfigPage ();
   mp_ui->setupUi (this);
@@ -371,7 +371,7 @@ CustomizeMenuConfigPage::CustomizeMenuConfigPage (QWidget *parent)
 CustomizeMenuConfigPage::~CustomizeMenuConfigPage ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -528,7 +528,7 @@ CustomizeMenuConfigPage::setup (lay::Dispatcher *dispatcher)
 void 
 CustomizeMenuConfigPage::commit (lay::Dispatcher *dispatcher)
 {
-  current_changed (0, mp_ui->bindings_list->currentItem ());
+  current_changed (nullptr, mp_ui->bindings_list->currentItem ());
 
   //  Because the available menu items change in edit and viewer mode, we always extend the key bindings/hidden flags
   //  but never reduce them.
@@ -608,7 +608,7 @@ void
 CustomizeMenuConfigPage::filter_changed ()
 {
   mp_ui->bindings_list->clearSelection ();
-  current_changed (0, mp_ui->bindings_list->currentItem ());
+  current_changed (nullptr, mp_ui->bindings_list->currentItem ());
 
   QString filter = mp_ui->filter->text ();
 

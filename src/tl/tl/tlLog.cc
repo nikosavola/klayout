@@ -236,7 +236,7 @@ ChannelProxy::~ChannelProxy ()
 {
   if (mp_channel) {
     mp_channel->release_proxy ();
-    mp_channel = 0;
+    mp_channel = nullptr;
   }
 }
 
@@ -246,7 +246,7 @@ ChannelProxy::operator= (const ChannelProxy &d)
   if (mp_channel != d.mp_channel) {
     mp_channel = d.mp_channel;
     // transfer channel to the assigned object
-    (const_cast<ChannelProxy &> (d)).mp_channel = 0;
+    (const_cast<ChannelProxy &> (d)).mp_channel = nullptr;
   }
   return *this;
 }
@@ -255,7 +255,7 @@ ChannelProxy::ChannelProxy (const ChannelProxy &d)
   : mp_channel (d.mp_channel)
 {
   // transfer channel to the assigned object
-  (const_cast<ChannelProxy &> (d)).mp_channel = 0;
+  (const_cast<ChannelProxy &> (d)).mp_channel = nullptr;
 }
 
 // ------------------------------------------------

@@ -89,7 +89,7 @@ public:
    */
   bool is_attached () const
   {
-    return m_obj != 0;
+    return m_obj != nullptr;
   }
 
   /**

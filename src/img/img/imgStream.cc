@@ -34,7 +34,7 @@ namespace img
 class ImageProxy
 {
 public:
-  ImageProxy (const img::Object *img = 0)
+  ImageProxy (const img::Object *img = nullptr)
     : mp_img (img),
       m_width (1), m_height (1),
       m_min_value (0.0), m_max_value (1.0),
@@ -312,7 +312,7 @@ ImageProxy::init ()
       const unsigned char *m = mp_img->mask ();
 
       for (size_t i = 0; i < h; ++i) {
-        m_byte_data.push_back (data_to_string (s, w, r + i * w, g + i * w, b + i * w, m ? (m + i * w) : 0));
+        m_byte_data.push_back (data_to_string (s, w, r + i * w, g + i * w, b + i * w, m ? (m + i * w) : nullptr));
       }
 
     } else {
@@ -323,7 +323,7 @@ ImageProxy::init ()
       const unsigned char *m = mp_img->mask ();
 
       for (size_t i = 0; i < h; ++i) {
-        m_data.push_back (data_to_string (s, w, r + i * w, g + i * w, b + i * w, m ? (m + i * w) : 0));
+        m_data.push_back (data_to_string (s, w, r + i * w, g + i * w, b + i * w, m ? (m + i * w) : nullptr));
       }
 
     }
@@ -336,7 +336,7 @@ ImageProxy::init ()
       const unsigned char *m = mp_img->mask ();
 
       for (size_t i = 0; i < h; ++i) {
-        m_byte_data.push_back (data_to_string (s, w, g + i * w, (const unsigned char *) 0, (const unsigned char *) 0, m ? (m + i * w) : 0));
+        m_byte_data.push_back (data_to_string (s, w, g + i * w, (const unsigned char *) nullptr, (const unsigned char *) nullptr, m ? (m + i * w) : nullptr));
       }
 
     } else {
@@ -345,7 +345,7 @@ ImageProxy::init ()
       const unsigned char *m = mp_img->mask ();
 
       for (size_t i = 0; i < h; ++i) {
-        m_data.push_back (data_to_string (s, w, g + i * w, (const float *) 0, (const float *) 0, m ? (m + i * w) : 0));
+        m_data.push_back (data_to_string (s, w, g + i * w, (const float *) nullptr, (const float *) nullptr, m ? (m + i * w) : nullptr));
       }
 
     }

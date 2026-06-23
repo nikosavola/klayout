@@ -413,7 +413,7 @@ private:
 //  trureHandler implementation
 
 SAXHandler::SAXHandler (XMLStructureHandler *sh)
-  : QXmlDefaultHandler (), mp_locator (0), mp_struct_handler (sh)
+  : QXmlDefaultHandler (), mp_locator (nullptr), mp_struct_handler (sh)
 {
   // .. nothing yet ..
 }
@@ -539,7 +539,7 @@ public:
 //  XMLSource implementation
 
 XMLSource::XMLSource ()
-  : mp_source (0)
+  : mp_source (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -547,7 +547,7 @@ XMLSource::XMLSource ()
 XMLSource::~XMLSource ()
 {
   delete mp_source;
-  mp_source = 0;
+  mp_source = nullptr;
 }
 
 void
@@ -594,7 +594,7 @@ class StreamIODevice
 public:
   StreamIODevice (tl::InputStream &stream)
     : mp_stream (&stream),
-      mp_progress (0),
+      mp_progress (nullptr),
       m_has_error (false)
   {
     open (QIODevice::ReadOnly);
@@ -612,7 +612,7 @@ public:
 
   StreamIODevice (const std::string &path)
     : mp_stream_holder (new tl::InputStream (path)),
-      mp_progress (0),
+      mp_progress (nullptr),
       m_has_error (false)
   {
     mp_stream = mp_stream_holder.get ();
@@ -634,7 +634,7 @@ public:
   {
     if (mp_progress) {
       delete mp_progress;
-      mp_progress = 0;
+      mp_progress = nullptr;
     }
   }
 
@@ -657,7 +657,7 @@ public:
       }
 
       qint64 n0 = n;
-      for (const char *rd = 0; n > 0 && (rd = mp_stream->get (1)) != 0; ) {
+      for (const char *rd = nullptr; n > 0 && (rd = mp_stream->get (1)) != nullptr; ) {
         //  NOTE: we skip CR to compensate for Windows CRLF line terminators (issue #419).
         if (*rd != '\r') {
           *data++ = *rd;
@@ -772,7 +772,7 @@ XMLParser::XMLParser ()
 XMLParser::~XMLParser ()
 {
   delete mp_data;
-  mp_data = 0;
+  mp_data = nullptr;
 }
 
 void 
@@ -939,7 +939,7 @@ XMLElementProxy::XMLElementProxy (XMLElementBase *d)
 XMLElementProxy::~XMLElementProxy ()
 {
   delete mp_ptr;
-  mp_ptr = 0;
+  mp_ptr = nullptr;
 }
 
 //  XMLElementBase implementation
@@ -987,10 +987,10 @@ XMLStructureHandler::XMLStructureHandler (const XMLElementBase *root, XMLReaderS
 void
 XMLStructureHandler::start_element (const std::string &uri, const std::string &lname, const std::string &qname)
 {
-  const XMLElementBase *new_element = 0;
-  const XMLElementBase *parent = 0;
+  const XMLElementBase *new_element = nullptr;
+  const XMLElementBase *parent = nullptr;
 
-  if (m_stack.size () == 0) {
+  if (m_stack.empty()) {
     if (! mp_root->check_name (uri, lname, qname)) {
       throw tl::XMLException (tl::to_string (tr ("Root element must be ")) + mp_root->name ());
     }
@@ -1026,8 +1026,8 @@ XMLStructureHandler::end_element (const std::string &uri, const std::string &lna
 
   if (! element) {
     //  inside unknown element
-  } else if (m_stack.size () == 0) {
-    element->finish (0, *mp_state, uri, lname, qname);
+  } else if (m_stack.empty()) {
+    element->finish (nullptr, *mp_state, uri, lname, qname);
   } else {
     element->finish (m_stack.back (), *mp_state, uri, lname, qname);
   }

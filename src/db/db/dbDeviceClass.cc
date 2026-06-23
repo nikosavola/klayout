@@ -36,8 +36,8 @@ namespace db
  */
 static const db::DeviceClass *primary_device_class (const db::Device &a, const db::Device &b)
 {
-  tl_assert (a.device_class () != 0);
-  tl_assert (b.device_class () != 0);
+  tl_assert (a.device_class () != nullptr);
+  tl_assert (b.device_class () != nullptr);
 
   const db::DeviceClass *dca = a.device_class ()->primary_class () ? a.device_class ()->primary_class () : a.device_class ();
   const db::DeviceClass *dcb = b.device_class ()->primary_class () ? b.device_class ()->primary_class () : b.device_class ();
@@ -181,13 +181,13 @@ bool AllDeviceParametersAreEqual::less (const db::Device &a, const db::Device &b
 //  DeviceClass class implementation
 
 DeviceClass::DeviceClass ()
-  : m_strict (false), mp_netlist (0), m_supports_parallel_combination (false), m_supports_serial_combination (false), mp_primary_class (0)
+  : m_strict (false), mp_netlist (nullptr), m_supports_parallel_combination (false), m_supports_serial_combination (false), mp_primary_class (nullptr)
 {
   // .. nothing yet ..
 }
 
 DeviceClass::DeviceClass (const DeviceClass &other)
-  : gsi::ObjectBase (other), tl::Object (other), tl::UniqueId (other), m_strict (false), mp_netlist (0), m_supports_parallel_combination (false), m_supports_serial_combination (false), mp_primary_class (0)
+  : gsi::ObjectBase (other), tl::Object (other), tl::UniqueId (other), m_strict (false), mp_netlist (nullptr), m_supports_parallel_combination (false), m_supports_serial_combination (false), mp_primary_class (nullptr)
 {
   operator= (other);
 }
@@ -228,7 +228,7 @@ const DeviceTerminalDefinition *DeviceClass::terminal_definition (size_t id) con
   if (id < m_terminal_definitions.size ()) {
     return & m_terminal_definitions [id];
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -249,7 +249,7 @@ const DeviceParameterDefinition *DeviceClass::parameter_definition (size_t id) c
   if (id < m_parameter_definitions.size ()) {
     return & m_parameter_definitions [id];
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -258,7 +258,7 @@ DeviceParameterDefinition *DeviceClass::parameter_definition_non_const (size_t i
   if (id < m_parameter_definitions.size ()) {
     return & m_parameter_definitions [id];
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -311,8 +311,8 @@ static EqualDeviceParameters default_compare;
 
 bool DeviceClass::less (const db::Device &a, const db::Device &b)
 {
-  tl_assert (a.device_class () != 0);
-  tl_assert (b.device_class () != 0);
+  tl_assert (a.device_class () != nullptr);
+  tl_assert (b.device_class () != nullptr);
 
   const db::DeviceParameterCompareDelegate *pcd = primary_device_class (a, b)->parameter_compare_delegate ();
   if (! pcd) {
@@ -324,8 +324,8 @@ bool DeviceClass::less (const db::Device &a, const db::Device &b)
 
 bool DeviceClass::equal (const db::Device &a, const db::Device &b)
 {
-  tl_assert (a.device_class () != 0);
-  tl_assert (b.device_class () != 0);
+  tl_assert (a.device_class () != nullptr);
+  tl_assert (b.device_class () != nullptr);
 
   const db::DeviceParameterCompareDelegate *pcd = primary_device_class (a, b)->parameter_compare_delegate ();
   if (! pcd) {
@@ -346,7 +346,7 @@ DeviceClassTemplateBase::template_by_name (const std::string &name)
       return i.operator-> ();
     }
   }
-  return 0;
+  return nullptr;
 }
 
 DeviceClassTemplateBase *
@@ -357,7 +357,7 @@ DeviceClassTemplateBase::is_a (const db::DeviceClass *dc)
       return i.operator-> ();
     }
   }
-  return 0;
+  return nullptr;
 }
 
 }

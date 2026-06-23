@@ -72,18 +72,18 @@ EditorOptionsPages::EditorOptionsPages (QWidget *parent, lay::LayoutViewBase *vi
     p->set_owner (this);
   }
 
-  update (0);
+  update (nullptr);
   setup ();
 }
 
 EditorOptionsPages::~EditorOptionsPages ()
 {
-  while (m_pages.size () > 0) {
+  while (!m_pages.empty()) {
     delete m_pages.front ();
   }
 
   delete mp_modal_pages;
-  mp_modal_pages = 0;
+  mp_modal_pages = nullptr;
 }
 
 void
@@ -174,7 +174,7 @@ EditorOptionsPages::activate (const lay::Plugin *plugin)
 {
   m_update_enabled = false;
 
-  lay::EditorOptionsPage *page = 0;
+  lay::EditorOptionsPage *page = nullptr;
 
   for (auto op = m_pages.begin (); op != m_pages.end (); ++op) {
 
@@ -183,7 +183,7 @@ EditorOptionsPages::activate (const lay::Plugin *plugin)
     bool is_active = plugin && op->for_plugin_declaration (plugin->plugin_declaration ());
 
     //  The zero order page is picked as the initial one
-    if (is_active && ! op->active () && (op->order () == 0 || page == 0)) {
+    if (is_active && ! op->active () && (op->order () == 0 || page == nullptr)) {
       page = op.operator-> ();
     }
 
@@ -202,7 +202,7 @@ void
 EditorOptionsPages::unregister_page (lay::EditorOptionsPage *page)
 {
   m_pages.erase (page);
-  update (0);
+  update (nullptr);
 }
 
 lay::EditorOptionsPage *
@@ -213,7 +213,7 @@ EditorOptionsPages::page_with_name (const std::string &name)
       return p.operator-> ();
     }
   }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -298,7 +298,7 @@ EditorOptionsPages::update (lay::EditorOptionsPage *page)
       }
 
     } else {
-      (*p)->setParent (0);
+      (*p)->setParent (nullptr);
     }
 
   }
@@ -364,12 +364,12 @@ END_PROTECTED_W (this)
 //  EditorOptionsModalPages implementation
 
 EditorOptionsModalPages::EditorOptionsModalPages (EditorOptionsPages *parent)
-  : QDialog (parent), mp_parent (parent), mp_single_page (0)
+  : QDialog (parent), mp_parent (parent), mp_single_page (nullptr)
 {
   QVBoxLayout *ly = new QVBoxLayout (this);
   ly->setContentsMargins (0, 0, 0, 0);
 
-  QVBoxLayout *ly4 = new QVBoxLayout (0);
+  QVBoxLayout *ly4 = new QVBoxLayout (nullptr);
   ly4->setContentsMargins (6, 6, 6, 0);
   ly->addLayout (ly4);
   mp_pages = new QTabWidget (this);
@@ -385,7 +385,7 @@ EditorOptionsModalPages::EditorOptionsModalPages (EditorOptionsPages *parent)
   ly->addWidget (mp_single_page_frame, 1);
   mp_single_page_frame->hide ();
 
-  QVBoxLayout *ly3 = new QVBoxLayout (0);
+  QVBoxLayout *ly3 = new QVBoxLayout (nullptr);
   ly3->setContentsMargins (6, 6, 6, 6);
   ly->addLayout (ly3);
   mp_button_box = new QDialogButtonBox (this);
@@ -443,7 +443,7 @@ EditorOptionsModalPages::add_page (EditorOptionsPageWidget *page)
     mp_single_page_frame->layout ()->removeWidget (mp_single_page);
     mp_single_page_frame->hide ();
     mp_pages->addTab (mp_single_page, tl::to_qstring (mp_single_page->title ()));
-    mp_single_page = 0;
+    mp_single_page = nullptr;
     mp_pages->addTab (page, tl::to_qstring (page->title ()));
     mp_pages->show ();
   }
@@ -456,8 +456,8 @@ EditorOptionsModalPages::remove_page (int index)
 {
   if (mp_single_page) {
     if (index == 0) {
-      mp_single_page->setParent (0);
-      mp_single_page = 0;
+      mp_single_page->setParent (nullptr);
+      mp_single_page = nullptr;
       mp_single_page_frame->hide ();
       mp_single_page_frame->layout ()->removeWidget (mp_single_page);
     }
@@ -490,7 +490,7 @@ EditorOptionsPage *
 EditorOptionsModalPages::widget (int index)
 {
   if (mp_single_page) {
-    return index == 0 ? mp_single_page : 0;
+    return index == 0 ? mp_single_page : nullptr;
   } else {
     return dynamic_cast<EditorOptionsPage *> (mp_pages->widget (index));
   }

@@ -46,7 +46,7 @@ CommonReaderOptionPage::CommonReaderOptionPage (QWidget *parent)
 CommonReaderOptionPage::~CommonReaderOptionPage ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void

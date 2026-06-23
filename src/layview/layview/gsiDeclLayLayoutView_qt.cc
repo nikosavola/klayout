@@ -47,7 +47,7 @@ namespace gsi
 
 static lay::LayoutViewWidget *new_view_widget (QWidget *parent, bool editable, db::Manager *manager, unsigned int options)
 {
-  lay::LayoutViewWidget *lv = new lay::LayoutViewWidget (manager, editable, 0 /*plugin parent*/, parent, options);
+  lay::LayoutViewWidget *lv = new lay::LayoutViewWidget (manager, editable, nullptr /*plugin parent*/, parent, options);
   if (parent) {
     //  transfer ownership to the parent
     lv->keep ();
@@ -86,7 +86,7 @@ static QWidget *bookmarks_frame (lay::LayoutViewWidget *lv)
 }
 
 Class<lay::LayoutViewWidget> decl_LayoutViewWidget (QT_EXTERNAL_BASE (QFrame) "lay", "LayoutViewWidget",
-  gsi::constructor ("new", &new_view_widget, gsi::arg ("parent"), gsi::arg ("editable", false), gsi::arg ("manager", (db::Manager *) 0, "nil"), gsi::arg ("options", (unsigned int) 0),
+  gsi::constructor ("new", &new_view_widget, gsi::arg ("parent"), gsi::arg ("editable", false), gsi::arg ("manager", (db::Manager *) nullptr, "nil"), gsi::arg ("options", (unsigned int) 0),
     "@brief Creates a standalone view widget\n"
     "\n"
     "@param parent The parent widget in which to embed the view\n"
@@ -147,13 +147,13 @@ Class<lay::LayoutViewWidget> decl_LayoutViewWidget (QT_EXTERNAL_BASE (QFrame) "l
 
 static lay::LayoutView *new_view (bool editable, db::Manager *manager, unsigned int options)
 {
-  return new lay::LayoutView (manager, editable, 0 /*plugin parent*/, options);
+  return new lay::LayoutView (manager, editable, nullptr /*plugin parent*/, options);
 }
 
 extern LAYBASIC_PUBLIC Class<lay::LayoutViewBase> decl_LayoutViewBase;
 
 Class<lay::LayoutView> decl_LayoutView (decl_LayoutViewBase, "lay", "LayoutView",
-  gsi::constructor ("new", &new_view, gsi::arg ("editable", false), gsi::arg ("manager", (db::Manager *) 0, "nil"), gsi::arg ("options", (unsigned int) 0),
+  gsi::constructor ("new", &new_view, gsi::arg ("editable", false), gsi::arg ("manager", (db::Manager *) nullptr, "nil"), gsi::arg ("options", (unsigned int) 0),
     "@brief Creates a standalone view\n"
     "\n"
     "This constructor creates a non-GUI, standalone layout view. It is not attached to a Qt object and can be used for generating "

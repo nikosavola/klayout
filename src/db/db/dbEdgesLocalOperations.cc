@@ -63,7 +63,7 @@ EdgeBoolAndOrNotLocalOperation::do_compute_local (db::Layout * /*layout*/, db::C
 
   std::unordered_set<db::Edge> &result = results.front ();
 
-  std::unordered_set<db::Edge> *result2 = 0;
+  std::unordered_set<db::Edge> *result2 = nullptr;
   if (results.size () > 1) {
     result2 = &results[1];
   }
@@ -149,7 +149,7 @@ EdgeToPolygonLocalOperation::do_compute_local (db::Layout * /*layout*/, db::Cell
 
   std::unordered_set<db::Edge> &result = results.front ();
 
-  std::unordered_set<db::Edge> *result2 = 0;
+  std::unordered_set<db::Edge> *result2 = nullptr;
   if (results.size () > 1) {
     result2 = &results[1];
   }
@@ -223,7 +223,7 @@ void Edge2EdgeInteractingLocalOperation::do_compute_local (db::Layout * /*layout
 
   std::unordered_set<db::Edge> &result = results.front ();
 
-  std::unordered_set<db::Edge> *result2 = 0;
+  std::unordered_set<db::Edge> *result2 = nullptr;
   if (m_output_mode == Both) {
     result2 = &results[1];
   }
@@ -378,7 +378,7 @@ void edge_to_polygon_interacting_local_operation<TI>::do_compute_local (db::Layo
 
   std::unordered_set<db::Edge> &result = results.front ();
 
-  std::unordered_set<db::Edge> *result2 = 0;
+  std::unordered_set<db::Edge> *result2 = nullptr;
   if (m_output_mode == Both) {
     result2 = &results[1];
   }

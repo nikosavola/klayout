@@ -60,7 +60,7 @@ void LayoutVsSchematicStandardReader::read_netlist (db::LayoutVsSchematic *lvs)
   if (lvs->internal_layout ()->cells () == 0) {
     lvs->internal_layout ()->add_cell ("TOP");
   }
-  tl_assert (lvs->internal_top_cell () != 0);
+  tl_assert (lvs->internal_top_cell () != nullptr);
 
   lvs->make_netlist ();
 
@@ -81,14 +81,14 @@ void LayoutVsSchematicStandardReader::read_netlist (db::LayoutVsSchematic *lvs)
     } else if (test (skeys::layout_key) || test (lkeys::layout_key)) {
 
       Brace br (this);
-      LayoutToNetlistStandardReader::read_netlist (0, lvs, &br, &m_map_per_circuit_a);
+      LayoutToNetlistStandardReader::read_netlist (nullptr, lvs, &br, &m_map_per_circuit_a);
       br.done ();
 
     } else if (test (skeys::reference_key) || test (lkeys::reference_key)) {
 
       Brace br (this);
       std::unique_ptr<db::Netlist> netlist (new db::Netlist ());
-      LayoutToNetlistStandardReader::read_netlist (netlist.get (), 0, &br, &m_map_per_circuit_b);
+      LayoutToNetlistStandardReader::read_netlist (netlist.get (), nullptr, &br, &m_map_per_circuit_b);
       lvs->set_reference_netlist (netlist.release ());
       br.done ();
 
@@ -213,7 +213,7 @@ void LayoutVsSchematicStandardReader::read_xref (db::NetlistCrossReference *xref
       non_a = read_non ();
       non_b = read_non ();
 
-      const db::Circuit *circuit_a = 0;
+      const db::Circuit *circuit_a = nullptr;
       if (non_a.second) {
         circuit_a = xref->netlist_a ()->circuit_by_name (non_a.first);
         if (! circuit_a) {
@@ -221,7 +221,7 @@ void LayoutVsSchematicStandardReader::read_xref (db::NetlistCrossReference *xref
         }
       }
 
-      const db::Circuit *circuit_b = 0;
+      const db::Circuit *circuit_b = nullptr;
       if (non_b.second) {
         circuit_b = xref->netlist_b ()->circuit_by_name (non_b.first);
         if (! circuit_b) {
@@ -307,7 +307,7 @@ static const db::Net *net_by_numerical_id (const db::Circuit *circuit, const std
 
   }
 
-  return 0;
+  return nullptr;
 }
 
 static const db::Device *device_by_numerical_id (const db::Circuit *circuit, const std::pair<unsigned int, bool> &ion, std::map<const db::Circuit *, db::LayoutToNetlistStandardReader::ObjectMap> &map_per_circuit)
@@ -328,7 +328,7 @@ static const db::Device *device_by_numerical_id (const db::Circuit *circuit, con
 
   }
 
-  return 0;
+  return nullptr;
 }
 
 static const db::SubCircuit *subcircuit_by_numerical_id (const db::Circuit *circuit, const std::pair<unsigned int, bool> &ion, std::map<const db::Circuit *, db::LayoutToNetlistStandardReader::ObjectMap> &map_per_circuit)
@@ -349,7 +349,7 @@ static const db::SubCircuit *subcircuit_by_numerical_id (const db::Circuit *circ
 
   }
 
-  return 0;
+  return nullptr;
 }
 
 static const db::Pin *pin_by_numerical_id (const db::Circuit *circuit, const std::pair<unsigned int, bool> &ion)
@@ -364,7 +364,7 @@ static const db::Pin *pin_by_numerical_id (const db::Circuit *circuit, const std
     return pin;
 
   } else {
-    return 0;
+    return nullptr;
   }
 }
 

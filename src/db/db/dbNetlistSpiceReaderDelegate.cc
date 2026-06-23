@@ -45,7 +45,7 @@ NetlistSpiceReaderOptions::NetlistSpiceReaderOptions ()
 // ------------------------------------------------------------------------------------------------------
 
 NetlistSpiceReaderDelegate::NetlistSpiceReaderDelegate ()
-  : mp_netlist (0), m_options ()
+  : mp_netlist (nullptr), m_options ()
 {
   //  .. nothing yet ..
 }
@@ -105,7 +105,7 @@ template <class Cls>
 static db::DeviceClass *make_device_class (db::Circuit *circuit, const std::string &name)
 {
   if (! circuit || ! circuit->netlist ()) {
-    return 0;
+    return nullptr;
   }
 
   db::DeviceClass *cls = circuit->netlist ()->device_class_by_name (name);

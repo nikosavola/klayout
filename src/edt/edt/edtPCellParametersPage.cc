@@ -195,10 +195,10 @@ PCellParametersPage::init ()
   QPalette palette;
   QFont font;
 
-  mp_pcell_decl.reset (0);
-  mp_view = 0;
+  mp_pcell_decl.reset (nullptr);
+  mp_view = nullptr;
   m_cv_index = 0;
-  mp_parameters_area = 0;
+  mp_parameters_area = nullptr;
 
   QGridLayout *frame_layout = new QGridLayout (this);
   //  spacing and margin for tool windows
@@ -443,8 +443,8 @@ PCellParametersPage::setup (lay::LayoutViewBase *view, int cv_index, const db::P
     m_all_widgets.push_back (std::vector<QWidget *> ());
 
     if (p->get_type () == db::PCellParameterDeclaration::t_shape) {
-      m_widgets.push_back (0);
-      m_icon_widgets.push_back (0);
+      m_widgets.push_back (nullptr);
+      m_icon_widgets.push_back (nullptr);
       continue;
     }
 
@@ -645,7 +645,7 @@ PCellParametersPage::setup (lay::LayoutViewBase *view, int cv_index, const db::P
         break;
 
       default:
-        m_widgets.push_back (0);
+        m_widgets.push_back (nullptr);
         break;
       }
 
@@ -771,7 +771,7 @@ PCellParametersPage::parameter_changed ()
   }
 
   const std::vector<db::PCellParameterDeclaration> &pcp = mp_pcell_decl->parameter_declarations ();
-  const db::PCellParameterDeclaration *pd = 0;
+  const db::PCellParameterDeclaration *pd = nullptr;
   for (auto w = m_widgets.begin (); w != m_widgets.end (); ++w) {
     if (*w == sender ()) {
       pd = &pcp [w - m_widgets.begin ()];
@@ -881,7 +881,7 @@ PCellParametersPage::get_parameters_internal (db::ParameterStates &states, bool 
               tl::from_string_ext (tl::to_string (le->text ()), v);
 
               ps.set_value (tl::Variant (v));
-              lay::indicate_error (le, (tl::Exception *) 0);
+              lay::indicate_error (le, (tl::Exception *) nullptr);
 
               check_range(tl::Variant (v), *p);
 
@@ -907,7 +907,7 @@ PCellParametersPage::get_parameters_internal (db::ParameterStates &states, bool 
               tl::from_string_ext (tl::to_string (le->text ()), v);
 
               ps.set_value (tl::Variant (v));
-              lay::indicate_error (le, (tl::Exception *) 0);
+              lay::indicate_error (le, (tl::Exception *) nullptr);
 
               check_range(tl::Variant (v), *p);
 

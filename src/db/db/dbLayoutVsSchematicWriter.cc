@@ -111,7 +111,7 @@ void std_writer_impl<Keys>::write (const db::LayoutVsSchematic *lvs)
     }
     TokenizedOutput o (out, Keys::reference_key);
     o << endl;
-    l2n_std_format::std_writer_impl<typename Keys::l2n_keys>::write (o, true, lvs->reference_netlist (), 0, &m_net2id_per_circuit_b);
+    l2n_std_format::std_writer_impl<typename Keys::l2n_keys>::write (o, true, lvs->reference_netlist (), nullptr, &m_net2id_per_circuit_b);
   }
 
   if (lvs->cross_ref ()) {
@@ -215,7 +215,7 @@ void std_writer_impl<Keys>::write (TokenizedOutput &stream, const db::NetlistCro
   for (auto c = xref->begin_circuits (); c != xref->end_circuits (); ++c) {
 
     const db::NetlistCrossReference::PerCircuitData *pcd = xref->per_circuit_data_for (*c);
-    tl_assert (pcd != 0);
+    tl_assert (pcd != nullptr);
 
     TokenizedOutput out (stream, Keys::circuit_key);
     out << name_to_s (c->first) << name_to_s (c->second) << status_to_s (pcd->status) << this->message_to_s (pcd->msg);

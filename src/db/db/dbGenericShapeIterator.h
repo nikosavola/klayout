@@ -300,7 +300,7 @@ public:
   { }
 
   generic_shape_iterator ()
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   { }
 
   generic_shape_iterator (generic_shape_iterator_delegate_base<T> *delegate)
@@ -312,11 +312,11 @@ public:
   { }
 
   generic_shape_iterator (const generic_shape_iterator &other)
-    : mp_delegate (other.mp_delegate ? other.mp_delegate->clone () : 0)
+    : mp_delegate (other.mp_delegate ? other.mp_delegate->clone () : nullptr)
   { }
 
   generic_shape_iterator (generic_shape_iterator &&other)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     std::swap (mp_delegate, other.mp_delegate);
   }
@@ -324,7 +324,7 @@ public:
   ~generic_shape_iterator ()
   {
     delete mp_delegate;
-    mp_delegate = 0;
+    mp_delegate = nullptr;
   }
 
   generic_shape_iterator &set_delegate (generic_shape_iterator_delegate_base<T> *delegate)
@@ -338,7 +338,7 @@ public:
   {
     if (this != &other) {
       delete mp_delegate;
-      mp_delegate = other.mp_delegate ? other.mp_delegate->clone () : 0;
+      mp_delegate = other.mp_delegate ? other.mp_delegate->clone () : nullptr;
     }
     return *this;
   }

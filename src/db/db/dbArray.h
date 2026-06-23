@@ -121,7 +121,7 @@ struct ArrayBase
 
   virtual bool fuzzy_less (const ArrayBase *) const = 0;
 
-  virtual void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const = 0;
+  virtual void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const = 0;
 
   bool in_repository;
 };
@@ -284,7 +284,7 @@ public:
     }
   }
 
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const;
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const;
 
 private:
   repositories m_reps;
@@ -295,7 +295,7 @@ private:
 /**
  *  @brief Collect memory statistics
  */
-inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const ArrayRepository &x, bool no_self = false, void *parent = 0)
+inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const ArrayRepository &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }
@@ -1253,13 +1253,13 @@ struct single_complex_inst
   virtual std::pair <basic_array_iterator <Coord> *, bool>
   begin_touching (const box_type &b) const
   {
-    return std::make_pair ((basic_array_iterator <Coord> *) 0, ! b.contains (point_type (0, 0))); 
+    return std::make_pair ((basic_array_iterator <Coord> *) nullptr, ! b.contains (point_type (0, 0))); 
   }
   
   virtual std::pair <basic_array_iterator <Coord> *, bool>
   begin () const
   {
-    return std::make_pair ((basic_array_iterator <Coord> *) 0, false);
+    return std::make_pair ((basic_array_iterator <Coord> *) nullptr, false);
   }
 
   virtual basic_array <Coord> *clone () const 
@@ -1399,7 +1399,7 @@ struct array_iterator
    *  @brief The default constructor
    */
   array_iterator ()
-    : m_trans (), mp_base (0), m_done (true)
+    : m_trans (), mp_base (nullptr), m_done (true)
   { 
     // .. nothing yet ..
   }
@@ -1436,7 +1436,7 @@ struct array_iterator
    *  zero (true) or one (false) instance.
    */
   array_iterator (const trans_type &trans, bool done)
-    : m_trans (trans), mp_base (0), m_done (done)
+    : m_trans (trans), mp_base (nullptr), m_done (done)
   { 
     // .. nothing yet ..
   }
@@ -1445,12 +1445,12 @@ struct array_iterator
    *  @brief The copy constructor
    */
   array_iterator (const array_iterator &d)
-    : m_trans (d.m_trans), mp_base (0), m_done (d.m_done)
+    : m_trans (d.m_trans), mp_base (nullptr), m_done (d.m_done)
   {
     if (mp_base) {
       delete mp_base;
     }
-    mp_base = d.mp_base ? d.mp_base->clone () : 0;
+    mp_base = d.mp_base ? d.mp_base->clone () : nullptr;
   }
 
   /**
@@ -1464,7 +1464,7 @@ struct array_iterator
       if (mp_base) {
         delete mp_base;
       }
-      mp_base = d.mp_base ? d.mp_base->clone () : 0;
+      mp_base = d.mp_base ? d.mp_base->clone () : nullptr;
     }
     return *this;
   }
@@ -1480,7 +1480,7 @@ struct array_iterator
     if (mp_base) {
       delete mp_base;
     }
-    mp_base = 0;
+    mp_base = nullptr;
   }
 
   /**
@@ -1579,7 +1579,7 @@ struct array_iterator
    */
   bool is_singular () const
   {
-    return mp_base == 0;
+    return mp_base == nullptr;
   }
 
 private:
@@ -1629,7 +1629,7 @@ struct array
    *  @brief The default constructor
    */
   array ()
-    : m_obj (), m_trans (), mp_base (0)
+    : m_obj (), m_trans (), mp_base (nullptr)
   {
     //  .. nothing yet ..
   }
@@ -1684,7 +1684,7 @@ struct array
    */
   explicit 
   array (const Obj &obj, const trans_type &trans)
-    : m_obj (obj), m_trans (trans), mp_base (0)
+    : m_obj (obj), m_trans (trans), mp_base (nullptr)
   {
     //  .. nothing yet ..
   }
@@ -1788,7 +1788,7 @@ struct array
    */
   explicit 
   array (const Obj &obj, const complex_trans_type &ct)
-    : m_obj (obj), m_trans (ct), mp_base (ct.is_complex () ? new single_complex_inst <coord_type> (ct.rcos (), ct.mag ()) : 0)
+    : m_obj (obj), m_trans (ct), mp_base (ct.is_complex () ? new single_complex_inst <coord_type> (ct.rcos (), ct.mag ()) : nullptr)
   {
     //  .. nothing yet ..
   }
@@ -1818,7 +1818,7 @@ struct array
    */
   explicit 
   array (const Obj &obj, const complex_trans_type &ct, ArrayRepository &rep)
-    : m_obj (obj), m_trans (ct), mp_base (ct.is_complex () ? rep.insert (single_complex_inst <coord_type> (ct.rcos (), ct.mag ())) : 0)
+    : m_obj (obj), m_trans (ct), mp_base (ct.is_complex () ? rep.insert (single_complex_inst <coord_type> (ct.rcos (), ct.mag ())) : nullptr)
   {
     //  .. nothing yet ..
   }
@@ -1834,14 +1834,14 @@ struct array
     if (mp_base && ! mp_base->in_repository) {
       delete mp_base;
     }
-    mp_base = 0;
+    mp_base = nullptr;
   }
 
   /**
    *  @brief The copy constructor
    */
   array (const array &d)
-    : m_obj (d.m_obj), m_trans (d.m_trans), mp_base (0)
+    : m_obj (d.m_obj), m_trans (d.m_trans), mp_base (nullptr)
   {
     if (d.mp_base) {
       mp_base = d.mp_base->in_repository ? d.mp_base : d.mp_base->clone ();
@@ -1855,7 +1855,7 @@ struct array
    *  Otherwise it will be translated to the given repository.
    */
   array (const array &d, ArrayRepository *rep)
-    : m_obj (d.m_obj), m_trans (d.m_trans), mp_base (0)
+    : m_obj (d.m_obj), m_trans (d.m_trans), mp_base (nullptr)
   {
     if (d.mp_base) {
       if (rep) {
@@ -1880,7 +1880,7 @@ struct array
       if (d.mp_base) {
         mp_base = d.mp_base->in_repository ? d.mp_base : d.mp_base->clone ();
       } else {
-        mp_base = 0;
+        mp_base = nullptr;
       }
     }
     return *this;
@@ -2331,7 +2331,7 @@ struct array
    *  Returns true and the array parameters if the array is a iterated
    *  one. If v is 0, no vector of points is returned
    */
-  bool is_iterated_array (std::vector<vector_type> *v = 0) const
+  bool is_iterated_array (std::vector<vector_type> *v = nullptr) const
   {
     return mp_base && mp_base->is_iterated_array (v);
   }
@@ -2354,7 +2354,7 @@ struct array
     if (d.mp_base) {
       mp_base = d.mp_base->in_repository ? array_rep.insert (*d.mp_base) : d.mp_base->clone ();
     } else {
-      mp_base = 0;
+      mp_base = nullptr;
     }
   }
 
@@ -2373,7 +2373,7 @@ struct array
     //  remove the current delegate
     if (mp_base && ! mp_base->in_repository) {
       delete mp_base;
-      mp_base = 0;
+      mp_base = nullptr;
     }
 
     //  transform the delegate 
@@ -2438,7 +2438,7 @@ struct array
    *  shape arrays and references which are based on unit or disp transformations.
    */
   template <class T>
-  void transform (const T &tr, db::ArrayRepository *array_rep = 0) 
+  void transform (const T &tr, db::ArrayRepository *array_rep = nullptr) 
   {
     transform_from (tr, *this);
     if (mp_base) {
@@ -2452,7 +2452,7 @@ struct array
    *
    *  This is equivalent to transforming with a displacement
    */
-  void move (const vector_type &pt, db::ArrayRepository *array_rep = 0)
+  void move (const vector_type &pt, db::ArrayRepository *array_rep = nullptr)
   {
     transform (disp_trans_type (pt), array_rep);
   }
@@ -2473,7 +2473,7 @@ struct array
    *  @param rep The repository where to enter the new array or 0 if no repository should be used
    */
   template <class T>
-  void transform_into (const T &tr, db::ArrayRepository *array_rep = 0) 
+  void transform_into (const T &tr, db::ArrayRepository *array_rep = nullptr) 
   {
     transform_into_from (tr, *this);
     if (mp_base) {
@@ -2486,7 +2486,7 @@ struct array
    *  @brief Transformation of an array
    */
   template <class T>
-  array transformed (const T &tr, db::ArrayRepository *array_rep = 0) const 
+  array transformed (const T &tr, db::ArrayRepository *array_rep = nullptr) const 
   {
     array a (*this);
     a.transform (tr, array_rep);
@@ -2507,7 +2507,7 @@ struct array
    *  See the "transform_into" method for details about this transformation.
    */
   template <class T>
-  array transformed_into (const T &tr, db::ArrayRepository *array_rep = 0) const 
+  array transformed_into (const T &tr, db::ArrayRepository *array_rep = nullptr) const 
   {
     array a (*this);
     a.transform_into (tr, array_rep);
@@ -2639,7 +2639,7 @@ private:
 
   void set_complex (double mag, double rcos, const array<Obj, Trans> &d)
   {
-    basic_array <coord_type> *new_base = 0;
+    basic_array <coord_type> *new_base = nullptr;
 
     //  if we finally have a complex transformation, set a new base object
     if (fabs (mag - 1.0) > epsilon || fabs (rcos - 1.0) > epsilon) {
@@ -2679,7 +2679,7 @@ private:
         if (mp_base && ! mp_base->in_repository) {
           delete mp_base;
         }
-        mp_base = 0;
+        mp_base = nullptr;
       }
 
     }
@@ -2725,7 +2725,7 @@ private:
  *  @brief Collect memory statistics
  */
 template <class Obj, class Trans>
-inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const array<Obj, Trans> &x, bool no_self = false, void *parent = 0)
+inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const array<Obj, Trans> &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }

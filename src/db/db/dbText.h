@@ -93,7 +93,7 @@ public:
     return m_value;
   }
 
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const
   {
     if (! no_self) {
       stat->add (typeid (*this), (void *) this, sizeof (*this), sizeof (*this), parent, purpose, cat);
@@ -128,7 +128,7 @@ private:
 /**
  *  @brief Collect memory usage
  */
-inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const StringRef &x, bool no_self = false, void *parent = 0)
+inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const StringRef &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }
@@ -232,7 +232,7 @@ public:
    *  @param f The font id
    */
   text (const trans_type &t, coord_type h = 0, Font f = NoFont, HAlign halign = NoHAlign, VAlign valign = NoVAlign)
-    : mp_ptr (0), m_trans (t), m_size (h), m_font (f), m_halign (halign), m_valign (valign)
+    : mp_ptr (nullptr), m_trans (t), m_size (h), m_font (f), m_halign (halign), m_valign (valign)
   {
     //  .. nothing yet ..
   }
@@ -291,7 +291,7 @@ public:
   text (const std::string &s, const trans_type &t, coord_type h = 0, Font f = NoFont, HAlign halign = NoHAlign, VAlign valign = NoVAlign)
     : m_trans (t), m_size (h), m_font (f), m_halign (halign), m_valign (valign)
   {
-    set_string_internal (s.c_str ());
+    set_string_internal (s);
   }
 
   /** 
@@ -300,7 +300,7 @@ public:
    *  Creates an empty text object at (0,0) with empty text.
    */
   text ()
-    : mp_ptr (0), m_trans (), m_size (0), m_font (NoFont), m_halign (NoHAlign), m_valign (NoVAlign)
+    : mp_ptr (nullptr), m_trans (), m_size (0), m_font (NoFont), m_halign (NoHAlign), m_valign (NoVAlign)
   {
     // .. nothing yet ..
   }
@@ -309,7 +309,7 @@ public:
    *  @brief Copy constructor
    */
   text (const text &d)
-    : mp_ptr (0), m_trans (), m_size (0), m_font (NoFont), m_halign (NoHAlign), m_valign (NoVAlign)
+    : mp_ptr (nullptr), m_trans (), m_size (0), m_font (NoFont), m_halign (NoHAlign), m_valign (NoVAlign)
   {
     operator= (d);
   }
@@ -319,7 +319,7 @@ public:
    */
   template <class D>
   explicit text (const text<D> &d)
-    : mp_ptr (0), m_trans (), m_size (0), m_font (NoFont), m_halign (NoHAlign), m_valign (NoVAlign)
+    : mp_ptr (nullptr), m_trans (), m_size (0), m_font (NoFont), m_halign (NoHAlign), m_valign (NoVAlign)
   {
     operator= (d);
   }
@@ -515,7 +515,7 @@ public:
     if (p & 1) {
       return reinterpret_cast<const StringRef *> (p - 1);
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -746,7 +746,7 @@ public:
       stat->add (typeid (text<C>), (void *) this, sizeof (text<C>), sizeof (text<C>), parent, purpose, cat);
     }
     size_t p = (size_t) mp_ptr;
-    if (! (p & 1) && mp_ptr != 0) {
+    if (! (p & 1) && mp_ptr != nullptr) {
       stat->add (typeid (char *), (void *) mp_ptr, strlen (mp_ptr) + 1, strlen (mp_ptr) + 1, (void *) this, purpose, cat);
     }
   }
@@ -763,7 +763,7 @@ private:
 
   void cleanup ()
   {
-    if (mp_ptr != 0) {
+    if (mp_ptr != nullptr) {
       if (((size_t) mp_ptr & 1) == 0) {
         delete [] mp_ptr;
       } else {
@@ -771,7 +771,7 @@ private:
       }
     }
 
-    mp_ptr = 0;
+    mp_ptr = nullptr;
   }
 
   void set_string_internal (const std::string &s)
@@ -1013,7 +1013,7 @@ typedef text_ref<DText, DUnitTrans> DTextPtr;
  *  @brief Collect memory usage
  */
 template <class X>
-inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const text<X> &x, bool no_self = false, void *parent = 0)
+inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const text<X> &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }

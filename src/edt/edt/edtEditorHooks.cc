@@ -33,7 +33,7 @@ namespace edt
 
 class EditorHooksManager;
 
-static EditorHooksManager *sp_instance = 0;
+static EditorHooksManager *sp_instance = nullptr;
 static bool sp_instance_initialized = false;
 
 class EditorHooksManager
@@ -46,7 +46,7 @@ public:
 
   ~EditorHooksManager ()
   {
-    sp_instance = 0;
+    sp_instance = nullptr;
   }
 
   static EditorHooksManager *instance ()

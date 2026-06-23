@@ -156,7 +156,7 @@ public:
         description = std::string (description, sep + 2);
       } 
 
-      QTreeWidgetItem *item = 0;
+      QTreeWidgetItem *item = nullptr;
       if (group_title.empty ()) {
         item = new QTreeWidgetItem (templateView);
       } else {
@@ -192,7 +192,7 @@ public:
 
   int exec_dialog ()
   {
-    templateView->setCurrentItem (0);
+    templateView->setCurrentItem (nullptr);
     if (m_template_count <= 1) {
       return m_default_id;
     } else if (exec ()) {
@@ -244,15 +244,15 @@ public:
 // ----------------------------------------------------------------------------------------------
 //  MacroEditorDialog implementation
 
-static lay::MacroEditorDialog *s_macro_editor_instance = 0;
+static lay::MacroEditorDialog *s_macro_editor_instance = nullptr;
 
 MacroEditorDialog::MacroEditorDialog (lay::Dispatcher *pr, lym::MacroCollection *root)
-  : QDialog (0 /*show as individual top widget*/, Qt::Window),
+  : QDialog (nullptr /*show as individual top widget*/, Qt::Window),
     lay::Plugin (pr, true),
     mp_plugin_root (pr),
     mp_root (root),
     m_first_show (true), m_debugging_on (true),
-    mp_run_macro (0),
+    mp_run_macro (nullptr),
     md_update_console_text (this, &MacroEditorDialog::update_console_text),
     m_in_event_handler (false),
     m_os (OS_none),
@@ -261,8 +261,8 @@ MacroEditorDialog::MacroEditorDialog (lay::Dispatcher *pr, lym::MacroCollection 
     m_in_exec (false), 
     m_in_breakpoint (false), 
     m_ignore_exec_events (false),
-    mp_exec_controller (0),
-    mp_current_interpreter (0),
+    mp_exec_controller (nullptr),
+    mp_current_interpreter (nullptr),
     m_continue (false),
     m_trace_count (0), m_current_stack_depth (-1), m_stop_stack_depth (-1),
     m_eval_context (-1),
@@ -375,7 +375,7 @@ MacroEditorDialog::MacroEditorDialog (lay::Dispatcher *pr, lym::MacroCollection 
   m_stderr_format.setForeground (QColor (255, 0, 0));
   m_stderr_format.setFontWeight (QFont::Bold);
 
-  input_field->setCompleter (0);
+  input_field->setCompleter (nullptr);
 
   forwardButton->setEnabled (false);
   backwardButton->setEnabled (false);
@@ -668,7 +668,7 @@ MacroEditorDialog::MacroEditorDialog (lay::Dispatcher *pr, lym::MacroCollection 
 MacroEditorDialog::~MacroEditorDialog ()
 {
   if (s_macro_editor_instance == this) {
-    s_macro_editor_instance = 0;
+    s_macro_editor_instance = nullptr;
   }
 
   for (std::vector<lym::Macro *>::iterator t = m_macro_templates.begin (); t != m_macro_templates.end (); ++t) {
@@ -803,7 +803,7 @@ lay::MacroEditorTree *
 MacroEditorDialog::current_macro_tree ()
 {
   lay::MacroEditorTree *t = dynamic_cast<lay::MacroEditorTree *> (treeTab->currentWidget ());
-  tl_assert (t != 0);
+  tl_assert (t != nullptr);
   return t;
 }
 
@@ -1190,7 +1190,7 @@ MacroEditorDialog::can_exit ()
 
   //  simulate close event so we do a clean shut down and save the console MRU list for example
   if (isVisible ()) {
-    closeEvent (0);
+    closeEvent (nullptr);
   }
 
   return true;
@@ -1310,7 +1310,7 @@ MacroEditorDialog::execute (const QString &cmd)
     write_str (tl::to_string (cmd).c_str (), OS_echo);
     write_str ("\n", OS_echo);
 
-    gsi::Interpreter *interpreter = 0;
+    gsi::Interpreter *interpreter = nullptr;
     if (rubyLangSel->isChecked ()) {
       interpreter = &lay::ApplicationBase::instance ()->ruby_interpreter ();
     } else if (pythonLangSel->isChecked ()) {
@@ -1319,7 +1319,7 @@ MacroEditorDialog::execute (const QString &cmd)
 
     if (interpreter) {
       int context = m_in_breakpoint ? m_eval_context : -1;
-      interpreter->eval_string_and_print (tl::to_string (cmd).c_str (), 0, 1, context);
+      interpreter->eval_string_and_print (tl::to_string (cmd).c_str (), nullptr, 1, context);
     }
 
     update_inspected ();
@@ -1353,11 +1353,11 @@ void
 MacroEditorDialog::update_inspected ()
 {
   if (! m_in_breakpoint || ! m_in_exec || ! mp_current_interpreter) {
-    variableList->set_inspector (0);
+    variableList->set_inspector (nullptr);
   } else {
 
     std::unique_ptr<gsi::Inspector> ci (mp_current_interpreter->inspector (m_eval_context));
-    variableListFrame->setVisible (ci != 0);
+    variableListFrame->setVisible (ci != nullptr);
     variableList->set_inspector (ci.release ());
 
     update_watches ();
@@ -1389,7 +1389,7 @@ MacroEditorDialog::update_watches ()
       value = tr ("(inactive)");
     } else {
       try {
-        value = pretty_print (w->first->eval_expr (w->second.c_str (), 0, 1, m_eval_context));
+        value = pretty_print (w->first->eval_expr (w->second.c_str (), nullptr, 1, m_eval_context));
       } catch (tl::ScriptError &ex) {
         value = tr ("Error") + QString::fromUtf8 (": ") + tl::to_qstring (ex.basic_msg ());
       } catch (tl::Exception &ex) {
@@ -1511,7 +1511,7 @@ MacroEditorDialog::eventFilter (QObject *obj, QEvent *event)
 
     if (lay::BusySection::is_busy ()) {
 
-      if (m_in_breakpoint && (dynamic_cast <QInputEvent *> (event) != 0 || dynamic_cast <QPaintEvent *> (event) != 0)) {
+      if (m_in_breakpoint && (dynamic_cast <QInputEvent *> (event) != nullptr || dynamic_cast <QPaintEvent *> (event) != nullptr)) {
 
         //  In breakpoint mode and while processing the events inside the debugger,
         //  ignore all input or paint events targeted to widgets which are not children of this or the assistant dialog.
@@ -1614,7 +1614,7 @@ MacroEditorDialog::eventFilter (QObject *obj, QEvent *event)
 
     }
 
-  } else if (obj == tab_bar_of (tabWidget) && dynamic_cast<QMouseEvent *> (event) != 0) {
+  } else if (obj == tab_bar_of (tabWidget) && dynamic_cast<QMouseEvent *> (event) != nullptr) {
 
     //  just spy on the events, don't eat them
     QMouseEvent *mouse_event = dynamic_cast<QMouseEvent *> (event);
@@ -1743,14 +1743,14 @@ MacroEditorDialog::macro_collection_deleted (lym::MacroCollection *collection)
   for (std::set <lym::Macro *>::iterator mc = used_macros.begin (); mc != used_macros.end (); ++mc) {
 
     if (mp_run_macro == *mc) {
-      mp_run_macro = 0;
+      mp_run_macro = nullptr;
     }
 
     std::map <lym::Macro *, MacroEditorPage *>::iterator p = m_tab_widgets.find (*mc);
     if (p != m_tab_widgets.end ()) {
       //  disable the macro on the page - we'll ask for updates when the file
       //  watcher becomes active. So long, the macro is "zombie".
-      p->second->connect_macro (0);
+      p->second->connect_macro (nullptr);
       m_tab_widgets.erase (p);
     }
 
@@ -1764,7 +1764,7 @@ void
 MacroEditorDialog::macro_deleted (lym::Macro *macro)
 {
   if (mp_run_macro == macro) {
-    mp_run_macro = 0;
+    mp_run_macro = nullptr;
   }
 
   std::map <lym::Macro *, MacroEditorPage *>::iterator page = m_tab_widgets.find (macro);
@@ -2320,7 +2320,7 @@ MacroEditorDialog::new_macro ()
   lay::MacroTemplateSelectionDialog template_dialog (this, m_macro_templates, cat);
   int template_index = template_dialog.exec_dialog ();
   if (template_index < 0) {
-    return 0;
+    return nullptr;
   }
 
   lym::Macro *m = create_macro_here (m_macro_templates [template_index]->name ().c_str ());
@@ -2357,7 +2357,7 @@ BEGIN_PROTECTED
 
   for (std::map <lym::Macro *, MacroEditorPage *>::iterator p = m_tab_widgets.begin (); p != m_tab_widgets.end (); ++p) {
     if (p->second) {
-      p->second->connect_macro (0);
+      p->second->connect_macro (nullptr);
     }
     delete p->second;
   }
@@ -2420,7 +2420,7 @@ BEGIN_PROTECTED
       new_widgets.insert (*p);
     } else {
       if (p->second) {
-        p->second->connect_macro (0);
+        p->second->connect_macro (nullptr);
       }
       delete p->second;
     }
@@ -2468,7 +2468,7 @@ BEGIN_PROTECTED
     }
   }
 
-  page->connect_macro (0);
+  page->connect_macro (nullptr);
   delete page;
 
   refresh_file_watcher ();
@@ -2958,7 +2958,7 @@ BEGIN_PROTECTED
   }
 
   //  TODO: risky: file_dialog might be deleted because the MainWindow is deleted (it's the parent)
-  static lay::FileDialog *file_dialog = 0;
+  static lay::FileDialog *file_dialog = nullptr;
   if (! file_dialog) {
 
     std::string filters = tl::to_string (QObject::tr ("All files (*);;KLayout macro files (*.lym);;Ruby files (*.rb);;Python files (*.py)"));
@@ -3148,7 +3148,7 @@ MacroEditorDialog::end_exec (gsi::Interpreter *ec)
   try {
 
     m_in_exec = false;
-    mp_exec_controller = 0;
+    mp_exec_controller = nullptr;
     m_continue = false;
     m_current_stack_depth = -1;
 
@@ -3184,7 +3184,7 @@ MacroEditorDialog::id_for_path (gsi::Interpreter *, const std::string &path)
 
   lym::Macro *macro = mp_root->find_macro (path);
   if (macro) {
-    m_file_to_widget.push_back (std::make_pair (macro, (MacroEditorPage *) 0));
+    m_file_to_widget.push_back (std::make_pair (macro, (MacroEditorPage *) nullptr));
     return m_file_to_widget.size ();
   }
 
@@ -3221,7 +3221,7 @@ MacroEditorDialog::translate_pseudo_id (size_t &file_id, int &line)
         std::map<std::string, size_t>::const_iterator i = m_include_paths_to_ids.find (fp.first);
         if (i == m_include_paths_to_ids.end ()) {
 
-          size_t new_id = id_for_path (0, fp.first);
+          size_t new_id = id_for_path (nullptr, fp.first);
           if (new_id < pseudo_file_offset) {
             file_id = new_id;
           } else {
@@ -3351,7 +3351,7 @@ MacroEditorDialog::exit_if_needed ()
   //  NOTE: we must not raise ExitException from outside events (e.g. PyQt5 events)
   //  as ExitException would otherwise terminate the application.
   //  "mp_exec_controller" is 0 in that case.
-  if (! m_in_exec && mp_exec_controller != 0) {
+  if (! m_in_exec && mp_exec_controller != nullptr) {
     throw tl::ExitException ();
   }
 }
@@ -3481,9 +3481,9 @@ MacroEditorDialog::leave_breakpoint_mode ()
 {
   m_in_breakpoint = false;
   m_eval_context = -1;
-  mp_current_interpreter = 0;
+  mp_current_interpreter = nullptr;
   do_update_ui_to_run_mode ();
-  set_exec_point (0, -1, -1);
+  set_exec_point (nullptr, -1, -1);
 
   //  refresh UI that might have been spoiled because we filter events
   auto tl_widgets = QApplication::topLevelWidgets ();
@@ -3573,7 +3573,7 @@ MacroEditorDialog::do_update_ui_to_run_mode ()
   } else {
 
     variableListFrame->setVisible (false);
-    variableList->set_inspector (0);
+    variableList->set_inspector (nullptr);
     runtimeFrame->hide ();
 
   }
@@ -3631,7 +3631,7 @@ MacroEditorDialog::editor_for_macro (lym::Macro *macro)
     (*mt)->set_current (macro); 
   }
 
-  MacroEditorPage *editor = 0;
+  MacroEditorPage *editor = nullptr;
 
   std::map <lym::Macro *, MacroEditorPage *>::iterator page = m_tab_widgets.find (macro);
   if (page == m_tab_widgets.end ()) {
@@ -3674,14 +3674,14 @@ MacroEditorDialog::editor_for_file (const std::string &path)
   if (macro) {
     return editor_for_macro (macro);
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
 void
 MacroEditorDialog::set_exec_point (const std::string *file, int line, int eval_context)
 {
-  MacroEditorPage *editor = 0;
+  MacroEditorPage *editor = nullptr;
   if (file) {
     editor = editor_for_file (*file);
   }
@@ -3768,7 +3768,7 @@ void
 MacroEditorDialog::run_this_button_clicked ()
 {
 BEGIN_PROTECTED
-  run (-1, 0);
+  run (-1, nullptr);
 END_PROTECTED
 }
 
@@ -3785,7 +3785,7 @@ MacroEditorDialog::current_run_macro ()
   if (macros.find (mp_run_macro) != macros.end ()) {
     return mp_run_macro;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 

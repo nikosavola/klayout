@@ -83,7 +83,7 @@ public:
    */
   bool is_empty () const 
   {
-    return mp_first == 0;
+    return mp_first == nullptr;
   }
   
   /**
@@ -428,7 +428,7 @@ public:
    *  @brief Default ctor
    */
   Task () 
-    : mp_next (0), mp_last (0)
+    : mp_next (nullptr), mp_last (nullptr)
   { }
 
   /**

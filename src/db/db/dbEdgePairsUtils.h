@@ -101,8 +101,8 @@ public:
 
   void finish1 (const db::EdgePair *o, size_t /*p*/)
   {
-    const OutputType *ep = 0;
-    tl::select (ep, o, (const db::Polygon *) 0);
+    const OutputType *ep = nullptr;
+    tl::select (ep, o, (const db::Polygon *) nullptr);
     if (ep) {
       finish (ep);
     }
@@ -110,8 +110,8 @@ public:
 
   void finish2 (const db::Polygon *o, size_t /*p*/)
   {
-    const OutputType *ep = 0;
-    tl::select (ep, (const db::EdgePair *) 0, o);
+    const OutputType *ep = nullptr;
+    tl::select (ep, (const db::EdgePair *) nullptr, o);
     if (ep) {
       finish (ep);
     }
@@ -119,7 +119,7 @@ public:
 
   void add (const db::EdgePair *e, size_t, const db::Polygon *p, size_t)
   {
-    const OutputType *ep = 0;
+    const OutputType *ep = nullptr;
     tl::select (ep, e, p);
 
     if (m_counting) {
@@ -205,8 +205,8 @@ public:
 
   void finish1 (const db::EdgePair *o, size_t /*p*/)
   {
-    const OutputType *ep = 0;
-    tl::select (ep, o, (const db::Edge *) 0);
+    const OutputType *ep = nullptr;
+    tl::select (ep, o, (const db::Edge *) nullptr);
     if (ep) {
       finish (ep);
     }
@@ -214,8 +214,8 @@ public:
 
   void finish2 (const db::Edge *o, size_t /*p*/)
   {
-    const OutputType *ep = 0;
-    tl::select (ep, (const db::EdgePair *) 0, o);
+    const OutputType *ep = nullptr;
+    tl::select (ep, (const db::EdgePair *) nullptr, o);
     if (ep) {
       finish (ep);
     }
@@ -223,7 +223,7 @@ public:
 
   void add (const db::EdgePair *e, size_t, const db::Edge *p, size_t)
   {
-    const OutputType *ep = 0;
+    const OutputType *ep = nullptr;
     tl::select (ep, e, p);
 
     if (m_counting) {

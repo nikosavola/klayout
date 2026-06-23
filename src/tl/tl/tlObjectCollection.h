@@ -54,7 +54,7 @@ public:
    *  @brief Default constructor
    */
   weak_or_shared_collection_iterator ()
-    : mp_holder (0)
+    : mp_holder (nullptr)
   {
     //  .. nothing yet ..
   }
@@ -90,7 +90,7 @@ public:
    */
   reference operator* () const
   {
-    tl_assert (mp_holder != 0);
+    tl_assert (mp_holder != nullptr);
     return mp_holder->operator* ();
   }
 
@@ -99,7 +99,7 @@ public:
    */
   pointer operator-> () const
   {
-    tl_assert (mp_holder != 0);
+    tl_assert (mp_holder != nullptr);
     return mp_holder->operator-> ();
   }
 
@@ -179,7 +179,7 @@ public:
     }
 
     holder_type (weak_or_shared_collection<T, Shared> *_collection, T *t)
-      : weak_or_shared_ptr<T, Shared> (t), next (0), prev (0), collection (_collection)
+      : weak_or_shared_ptr<T, Shared> (t), next (nullptr), prev (nullptr), collection (_collection)
     {
       //  .. nothing yet ..
     }
@@ -214,7 +214,7 @@ public:
    *  @brief The default constructor
    */
   weak_or_shared_collection ()
-    : mp_first (0), mp_last (0), m_size (0)
+    : mp_first (nullptr), mp_last (nullptr), m_size (0)
   {
   }
 
@@ -222,7 +222,7 @@ public:
    *  @brief The copy constructor
    */
   weak_or_shared_collection (const weak_or_shared_collection<T, Shared> &other)
-    : mp_first (0), mp_last (0), m_size (0)
+    : mp_first (nullptr), mp_last (nullptr), m_size (0)
   {
     operator= (other);
   }
@@ -231,7 +231,7 @@ public:
    *  @brief The move constructor
    */
   weak_or_shared_collection (weak_or_shared_collection<T, Shared> &&other)
-    : mp_first (0), mp_last (0), m_size (0)
+    : mp_first (nullptr), mp_last (nullptr), m_size (0)
   {
     swap (other);
   }
@@ -282,7 +282,7 @@ public:
    */
   bool empty () const
   {
-    return mp_first == 0;
+    return mp_first == nullptr;
   }
 
   /**
@@ -366,7 +366,7 @@ public:
   void push_back (T *object)
   {
     m_about_to_change ();
-    insert (0, new holder_type (this, object));
+    insert (nullptr, new holder_type (this, object));
     m_changed ();
   }
 
@@ -440,7 +440,7 @@ public:
    */
   iterator end ()
   {
-    return iterator (0);
+    return iterator (nullptr);
   }
   
   /**
@@ -456,7 +456,7 @@ public:
    */
   const_iterator end () const
   {
-    return const_iterator (0);
+    return const_iterator (nullptr);
   }
 
   /**
@@ -513,7 +513,7 @@ private:
     if (! before) {
 
       h->prev = mp_last;
-      h->next = 0;
+      h->next = nullptr;
       if (mp_last) {
         mp_last->next = h;
       }

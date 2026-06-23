@@ -84,7 +84,7 @@ interpolated_color2 (const std::pair<double, std::pair<tl::Color, tl::Color> > &
 tl::Color
 interpolated_color (const DataMapping::false_color_nodes_type &nodes, double x)
 {
-  if (nodes.size () < 1) {
+  if (nodes.empty()) {
 
     return tl::Color ();
 
@@ -260,7 +260,7 @@ DataMapping::create_data_mapping (bool monochrome, double xmin, double xmax, uns
 
   }
 
-  tl::DataMappingBase *dm = 0;
+  tl::DataMappingBase *dm = nullptr;
 
   if (monochrome && false_color_nodes.size () > 1) {
 
@@ -353,13 +353,13 @@ public:
   {
     size_t n = m_width * m_height;
 
-    mp_mask = 0;
+    mp_mask = nullptr;
 
-    mp_data = 0;
-    mp_byte_data = 0;
+    mp_data = nullptr;
+    mp_byte_data = nullptr;
     for (unsigned int i = 0; i < 3; ++i) {
-      mp_color_data [i] = 0;
-      mp_color_byte_data [i] = 0;
+      mp_color_data [i] = nullptr;
+      mp_color_byte_data [i] = nullptr;
     }
 
     if (color) {
@@ -406,55 +406,55 @@ public:
 
   }
 
-  DataHeader (size_t w, size_t h, unsigned char *data, unsigned char *mask = 0)
+  DataHeader (size_t w, size_t h, unsigned char *data, unsigned char *mask = nullptr)
     : m_width (w), m_height (h), m_ref_count (0)
   {
     mp_mask = mask;
     mp_byte_data = data;
-    mp_data = 0;
+    mp_data = nullptr;
     for (unsigned int i = 0; i < 3; ++i) {
-      mp_color_data [i] = 0;
-      mp_color_byte_data [i] = 0;
+      mp_color_data [i] = nullptr;
+      mp_color_byte_data [i] = nullptr;
     }
   }
 
-  DataHeader (size_t w, size_t h, unsigned char *red, unsigned char *green, unsigned char *blue, unsigned char *mask = 0)
+  DataHeader (size_t w, size_t h, unsigned char *red, unsigned char *green, unsigned char *blue, unsigned char *mask = nullptr)
     : m_width (w), m_height (h), m_ref_count (0)
   {
     mp_mask = mask;
-    mp_byte_data = 0;
-    mp_data = 0;
+    mp_byte_data = nullptr;
+    mp_data = nullptr;
     mp_color_byte_data[0] = red;
     mp_color_byte_data[1] = green;
     mp_color_byte_data[2] = blue;
     for (unsigned int i = 0; i < 3; ++i) {
-      mp_color_data [i] = 0;
+      mp_color_data [i] = nullptr;
     }
   }
 
-  DataHeader (size_t w, size_t h, float *data, unsigned char *mask = 0)
+  DataHeader (size_t w, size_t h, float *data, unsigned char *mask = nullptr)
     : m_width (w), m_height (h), m_ref_count (0)
   {
     mp_mask = mask;
-    mp_byte_data = 0;
+    mp_byte_data = nullptr;
     mp_data = data;
     for (unsigned int i = 0; i < 3; ++i) {
-      mp_color_data [i] = 0;
-      mp_color_byte_data [i] = 0;
+      mp_color_data [i] = nullptr;
+      mp_color_byte_data [i] = nullptr;
     }
   }
 
-  DataHeader (size_t w, size_t h, float *red, float *green, float *blue, unsigned char *mask = 0)
+  DataHeader (size_t w, size_t h, float *red, float *green, float *blue, unsigned char *mask = nullptr)
     : m_width (w), m_height (h), m_ref_count (0)
   {
     mp_mask = mask;
-    mp_byte_data = 0;
-    mp_data = 0;
+    mp_byte_data = nullptr;
+    mp_data = nullptr;
     mp_color_data[0] = red;
     mp_color_data[1] = green;
     mp_color_data[2] = blue;
     for (unsigned int i = 0; i < 3; ++i) {
-      mp_color_byte_data [i] = 0;
+      mp_color_byte_data [i] = nullptr;
     }
   }
 
@@ -523,17 +523,17 @@ public:
 
   bool has_mask () const
   {
-    return mp_mask != 0;
+    return mp_mask != nullptr;
   }
 
   bool is_byte_data () const
   {
-    return mp_byte_data != 0 || mp_color_byte_data [0] != 0;
+    return mp_byte_data != nullptr || mp_color_byte_data [0] != nullptr;
   }
 
   bool is_color () const
   {
-    return mp_color_data [0] != 0 || mp_color_byte_data [0] != 0;
+    return mp_color_data [0] != nullptr || mp_color_byte_data [0] != nullptr;
   }
 
   bool less (const DataHeader &d) const
@@ -733,26 +733,26 @@ private:
   { 
     if (mp_mask) {
       delete [] mp_mask;
-      mp_mask = 0;
+      mp_mask = nullptr;
     }
 
     if (mp_data) {
       delete [] mp_data;
-      mp_data = 0;
+      mp_data = nullptr;
     }
     if (mp_byte_data) {
       delete [] mp_byte_data;
-      mp_byte_data = 0;
+      mp_byte_data = nullptr;
     }
     
     for (unsigned int i = 0; i < 3; ++i) {
       if (mp_color_data [i]) {
         delete [] mp_color_data [i];
-        mp_color_data [i] = 0;
+        mp_color_data [i] = nullptr;
       }
       if (mp_color_byte_data [i]) {
         delete [] mp_color_byte_data [i];
-        mp_color_byte_data [i] = 0;
+        mp_color_byte_data [i] = nullptr;
       }
     } 
   }
@@ -787,17 +787,17 @@ static size_t make_id ()
 }
 
 Object::Object ()
-  : m_trans (1.0), mp_data (0), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
+  : m_trans (1.0), mp_data (nullptr), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
+  mp_pixel_data = nullptr;
 }
 
 Object::Object (size_t w, size_t h, const db::DCplxTrans &trans, bool color, bool byte_data)
   : m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
+  mp_pixel_data = nullptr;
 
   mp_data = new DataHeader (w, h, color, byte_data);
   mp_data->add_ref ();
@@ -809,8 +809,8 @@ Object::Object (size_t w, size_t h, const db::DCplxTrans &trans, unsigned char *
   : m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (255.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
-  mp_data = 0;
+  mp_pixel_data = nullptr;
+  mp_data = nullptr;
   set_data (w, h, d);
   m_updates_enabled = true;
 }
@@ -819,8 +819,8 @@ Object::Object (size_t w, size_t h, const db::DCplxTrans &trans, float *d)
   : m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
-  mp_data = 0;
+  mp_pixel_data = nullptr;
+  mp_data = nullptr;
   set_data (w, h, d);
   m_updates_enabled = true;
 }
@@ -829,8 +829,8 @@ Object::Object (size_t w, size_t h, const db::DCplxTrans &trans, const std::vect
   : m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
-  mp_data = 0;
+  mp_pixel_data = nullptr;
+  mp_data = nullptr;
   set_data (w, h, d);
   m_updates_enabled = true;
 }
@@ -839,8 +839,8 @@ Object::Object (size_t w, size_t h, const db::DCplxTrans &trans, unsigned char *
   : m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
-  mp_data = 0;
+  mp_pixel_data = nullptr;
+  mp_data = nullptr;
   set_data (w, h, red, green, blue);
   m_updates_enabled = true;
 }
@@ -849,8 +849,8 @@ Object::Object (size_t w, size_t h, const db::DCplxTrans &trans, float *red, flo
   : m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
-  mp_data = 0;
+  mp_pixel_data = nullptr;
+  mp_data = nullptr;
   set_data (w, h, red, green, blue);
   m_updates_enabled = true;
 }
@@ -859,8 +859,8 @@ Object::Object (size_t w, size_t h, const db::DCplxTrans &trans, const std::vect
   : m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
-  mp_data = 0;
+  mp_pixel_data = nullptr;
+  mp_data = nullptr;
   set_data (w, h, red, green, blue);
   m_updates_enabled = true;
 }
@@ -869,9 +869,9 @@ Object::Object (const std::string &filename, const db::DCplxTrans &trans)
   : m_filename (filename), m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
+  mp_pixel_data = nullptr;
 
-  mp_data = 0;
+  mp_data = nullptr;
   read_file ();
   m_updates_enabled = true;
 }
@@ -880,9 +880,9 @@ Object::Object (const tl::PixelBuffer &pixel_buffer, const db::DCplxTrans &trans
   : m_filename ("<object>"), m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
+  mp_pixel_data = nullptr;
 
-  mp_data = 0;
+  mp_data = nullptr;
   create_from_pixel_buffer (pixel_buffer);
   m_updates_enabled = true;
 }
@@ -892,9 +892,9 @@ Object::Object (const QImage &qimage, const db::DCplxTrans &trans)
   : m_filename ("<object>"), m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
+  mp_pixel_data = nullptr;
 
-  mp_data = 0;
+  mp_data = nullptr;
   create_from_qimage (qimage);
   m_updates_enabled = true;
 }
@@ -904,7 +904,7 @@ Object::Object (size_t w, size_t h, const db::Matrix3d &trans, bool color, bool 
   : m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
+  mp_pixel_data = nullptr;
 
   mp_data = new DataHeader (w, h, color, byte_data);
   mp_data->add_ref ();
@@ -916,8 +916,8 @@ Object::Object (size_t w, size_t h, const db::Matrix3d &trans, unsigned char *d)
   : m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
-  mp_data = 0;
+  mp_pixel_data = nullptr;
+  mp_data = nullptr;
   set_data (w, h, d);
   m_updates_enabled = true;
 }
@@ -926,8 +926,8 @@ Object::Object (size_t w, size_t h, const db::Matrix3d &trans, float *d)
   : m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
-  mp_data = 0;
+  mp_pixel_data = nullptr;
+  mp_data = nullptr;
   set_data (w, h, d);
   m_updates_enabled = true;
 }
@@ -936,8 +936,8 @@ Object::Object (size_t w, size_t h, const db::Matrix3d &trans, const std::vector
   : m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
-  mp_data = 0;
+  mp_pixel_data = nullptr;
+  mp_data = nullptr;
   set_data (w, h, d);
   m_updates_enabled = true;
 }
@@ -946,8 +946,8 @@ Object::Object (size_t w, size_t h, const db::Matrix3d &trans, unsigned char *re
   : m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
-  mp_data = 0;
+  mp_pixel_data = nullptr;
+  mp_data = nullptr;
   set_data (w, h, red, green, blue);
   m_updates_enabled = true;
 }
@@ -956,8 +956,8 @@ Object::Object (size_t w, size_t h, const db::Matrix3d &trans, float *red, float
   : m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
-  mp_data = 0;
+  mp_pixel_data = nullptr;
+  mp_data = nullptr;
   set_data (w, h, red, green, blue);
   m_updates_enabled = true;
 }
@@ -966,8 +966,8 @@ Object::Object (size_t w, size_t h, const db::Matrix3d &trans, const std::vector
   : m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
-  mp_data = 0;
+  mp_pixel_data = nullptr;
+  mp_data = nullptr;
   set_data (w, h, red, green, blue);
   m_updates_enabled = true;
 }
@@ -976,9 +976,9 @@ Object::Object (const std::string &filename, const db::Matrix3d &trans)
   : m_filename (filename), m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
+  mp_pixel_data = nullptr;
 
-  mp_data = 0;
+  mp_data = nullptr;
   read_file ();
   m_updates_enabled = true;
 }
@@ -987,9 +987,9 @@ Object::Object (const tl::PixelBuffer &pixel_buffer, const db::Matrix3d &trans)
   : m_filename ("<object>"), m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
+  mp_pixel_data = nullptr;
 
-  mp_data = 0;
+  mp_data = nullptr;
   create_from_pixel_buffer (pixel_buffer);
   read_file ();
   m_updates_enabled = true;
@@ -1000,9 +1000,9 @@ Object::Object (const QImage &qimage, const db::Matrix3d &trans)
   : m_filename ("<object>"), m_trans (trans), m_id (make_id ()), m_min_value (0.0), m_max_value (1.0), m_min_value_set (false), m_max_value_set (false), m_visible (true), m_z_position (0)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
+  mp_pixel_data = nullptr;
 
-  mp_data = 0;
+  mp_data = nullptr;
   create_from_qimage (qimage);
   m_updates_enabled = true;
 }
@@ -1011,9 +1011,9 @@ Object::Object (const QImage &qimage, const db::Matrix3d &trans)
 Object::Object (const img::Object &d)
 {
   m_updates_enabled = false;
-  mp_pixel_data = 0;
+  mp_pixel_data = nullptr;
 
-  mp_data = 0;
+  mp_data = nullptr;
   *this = d;
   m_updates_enabled = true;
 }
@@ -1066,14 +1066,14 @@ bool
 Object::equals (const db::DUserObjectBase *d) const
 {
   const img::Object *img_object = dynamic_cast <const img::Object *> (d);
-  return img_object != 0 && *this == *img_object;
+  return img_object != nullptr && *this == *img_object;
 }
 
 bool 
 Object::less (const db::DUserObjectBase *d) const
 {
   const img::Object *img_object = dynamic_cast <const img::Object *> (d);
-  tl_assert (img_object != 0);
+  tl_assert (img_object != nullptr);
 
   if (m_z_position != img_object->m_z_position) {
     return m_z_position < img_object->m_z_position;
@@ -1113,10 +1113,10 @@ Object::less (const db::DUserObjectBase *d) const
   }
 
   if (mp_data != img_object->mp_data) {
-    if ((mp_data == 0) != (img_object->mp_data == 0)) {
-      return ((mp_data == 0) < (img_object->mp_data == 0));
+    if ((mp_data == nullptr) != (img_object->mp_data == nullptr)) {
+      return ((mp_data == nullptr) < (img_object->mp_data == nullptr));
     }
-    if (mp_data != 0) {
+    if (mp_data != nullptr) {
       return mp_data->less (*img_object->mp_data);
     } else {
       return false;
@@ -1168,10 +1168,10 @@ Object::operator== (const img::Object &d) const
   }
 
   if (mp_data != d.mp_data) {
-    if ((mp_data == 0) != (d.mp_data == 0)) {
+    if ((mp_data == nullptr) != (d.mp_data == nullptr)) {
       return false;
     }
-    if (mp_data != 0) {
+    if (mp_data != nullptr) {
       return mp_data->equals (*d.mp_data);
     } else {
       return true;
@@ -1706,7 +1706,7 @@ Object::create_from_qimage (const QImage &qimage)
     unsigned char *red   = mp_data->byte_data (0);
     unsigned char *green = mp_data->byte_data (1);
     unsigned char *blue  = mp_data->byte_data (2);
-    unsigned char *msk   = qimage.hasAlphaChannel () ? mp_data->set_mask () : 0;
+    unsigned char *msk   = qimage.hasAlphaChannel () ? mp_data->set_mask () : nullptr;
 
     for (size_t y = 0; y < h; ++y) {
       for (size_t x = 0; x < w; ++x) {
@@ -1724,7 +1724,7 @@ Object::create_from_qimage (const QImage &qimage)
   } else {
 
     unsigned char *d = mp_data->byte_data ();
-    unsigned char *msk = qimage.hasAlphaChannel () ? mp_data->set_mask () : 0;
+    unsigned char *msk = qimage.hasAlphaChannel () ? mp_data->set_mask () : nullptr;
 
     for (size_t y = 0; y < h; ++y) {
       for (size_t x = 0; x < w; ++x) {
@@ -1775,7 +1775,7 @@ Object::create_from_pixel_buffer (const tl::PixelBuffer &img)
     unsigned char *red   = mp_data->byte_data (0);
     unsigned char *green = mp_data->byte_data (1);
     unsigned char *blue  = mp_data->byte_data (2);
-    unsigned char *msk   = img.transparent () ? mp_data->set_mask () : 0;
+    unsigned char *msk   = img.transparent () ? mp_data->set_mask () : nullptr;
 
     for (unsigned int y = 0; y < h; ++y) {
       const tl::color_t *d = img.scan_line (h - y - 1);
@@ -1794,7 +1794,7 @@ Object::create_from_pixel_buffer (const tl::PixelBuffer &img)
   } else {
 
     unsigned char *mono = mp_data->byte_data ();
-    unsigned char *msk = img.transparent () ? mp_data->set_mask () : 0;
+    unsigned char *msk = img.transparent () ? mp_data->set_mask () : nullptr;
 
     for (unsigned int y = 0; y < h; ++y) {
       const tl::color_t *d = img.scan_line (h - y - 1);
@@ -1816,7 +1816,7 @@ Object::release ()
 {
   if (mp_data) {
     mp_data->release_ref ();
-    mp_data = 0;
+    mp_data = nullptr;
   }
 
   invalidate_pixel_data ();
@@ -2033,7 +2033,7 @@ Object::data_length () const
 bool 
 Object::is_empty () const
 {
-  return mp_data == 0;
+  return mp_data == nullptr;
 }
 
 bool 
@@ -2051,33 +2051,33 @@ Object::is_color () const
 const unsigned char *
 Object::mask () const
 {
-  return mp_data ? mp_data->mask () : 0;
+  return mp_data ? mp_data->mask () : nullptr;
 }
 
 const unsigned char *
 Object::byte_data () const
 {
-  return mp_data ? mp_data->byte_data () : 0;
+  return mp_data ? mp_data->byte_data () : nullptr;
 }
 
 const unsigned char *
 Object::byte_data (unsigned int component) const
 {
   tl_assert (component < 3);
-  return mp_data ? mp_data->byte_data (component) : 0;
+  return mp_data ? mp_data->byte_data (component) : nullptr;
 }
 
 const float *
 Object::float_data () const
 {
-  return mp_data ? mp_data->float_data () : 0;
+  return mp_data ? mp_data->float_data () : nullptr;
 }
 
 const float *
 Object::float_data (unsigned int component) const
 {
   tl_assert (component < 3);
-  return mp_data ? mp_data->float_data (component) : 0;
+  return mp_data ? mp_data->float_data (component) : nullptr;
 }
 
 bool
@@ -2338,7 +2338,7 @@ void get_min_max (const float *data, size_t n, double &min, double &max)
 void 
 Object::validate_pixel_data () const
 {
-  if (mp_data != 0 && mp_pixel_data == 0 && ! is_empty ()) {
+  if (mp_data != nullptr && mp_pixel_data == nullptr && ! is_empty ()) {
 
     size_t n = data_length ();
 
@@ -2471,9 +2471,9 @@ Object::validate_pixel_data () const
 void
 Object::invalidate_pixel_data ()
 {
-  if (mp_pixel_data != 0) {
+  if (mp_pixel_data != nullptr) {
     delete [] mp_pixel_data;
-    mp_pixel_data = 0;
+    mp_pixel_data = nullptr;
   }
 }
 

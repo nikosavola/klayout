@@ -69,8 +69,8 @@ ShapeIterator::ShapeIterator ()
     m_type (Null),
     m_box (),
     m_flags (0),
-    mp_shapes (0),
-    mp_prop_sel (0),
+    mp_shapes (nullptr),
+    mp_prop_sel (nullptr),
     m_inv_prop_sel (false),
     m_array_iterator_valid (false),
     m_editable (false),
@@ -85,8 +85,8 @@ ShapeIterator::ShapeIterator (const ShapeIterator &d)
     m_type (Null),
     m_box (),
     m_flags (0),
-    mp_shapes (0),
-    mp_prop_sel (0),
+    mp_shapes (nullptr),
+    mp_prop_sel (nullptr),
     m_inv_prop_sel (false),
     m_array_iterator_valid (false),
     m_editable (false),
@@ -113,7 +113,7 @@ ShapeIterator::ShapeIterator (const shapes_type &shapes, unsigned int flags, con
   //            any property selection and not inverse = only shapes with properties
   if (mp_prop_sel) {
     if (mp_prop_sel->empty () && m_inv_prop_sel) {
-      mp_prop_sel = 0;
+      mp_prop_sel = nullptr;
       m_inv_prop_sel = false;
     } else if (! m_inv_prop_sel) {
       m_flags |= Properties;
@@ -146,7 +146,7 @@ ShapeIterator::ShapeIterator (const shapes_type &shapes, const box_type &box, re
   //            any property selection and not inverse = only shapes with properties
   if (mp_prop_sel) {
     if (mp_prop_sel->empty () && m_inv_prop_sel) {
-      mp_prop_sel = 0;
+      mp_prop_sel = nullptr;
       m_inv_prop_sel = false;
     } else if (! m_inv_prop_sel) {
       m_flags |= Properties;

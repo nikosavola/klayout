@@ -115,7 +115,7 @@ LayoutPropertiesForm::commit ()
   //  get the selected technology name
   std::string technology;
   int technology_index = tech_cbx->currentIndex ();
-  const db::Technology *tech = 0;
+  const db::Technology *tech = nullptr;
   if (technology_index >= 0 && technology_index < (int) db::Technologies::instance ()->technologies ()) {
     tech = &(db::Technologies::instance ()->begin () [technology_index]);
     technology = tech->name ();

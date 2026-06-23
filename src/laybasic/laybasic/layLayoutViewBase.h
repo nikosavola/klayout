@@ -1104,7 +1104,7 @@ public:
    */
   virtual QWidget *widget ()
   {
-    return 0;
+    return nullptr;
   }
 #endif
 
@@ -1942,7 +1942,7 @@ public:
    */
   virtual lay::LayerControlPanel *control_panel ()
   {
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -1950,7 +1950,7 @@ public:
    */
   virtual lay::HierarchyControlPanel *hierarchy_panel ()
   {
-    return 0;
+    return nullptr;
   }
 #endif
 
@@ -1959,7 +1959,7 @@ public:
    */
   virtual lay::EditorOptionsPageCollection *editor_options_pages ()
   {
-    return 0;
+    return nullptr;
   }
 
   /**
@@ -2201,7 +2201,7 @@ public:
   template <class PI>
   PI *get_plugin () const
   {
-    PI *pi = 0;
+    PI *pi = nullptr;
     for (std::vector<lay::Plugin *>::const_iterator p = mp_plugins.begin (); p != mp_plugins.end () && !pi; ++p) {
       pi = dynamic_cast<PI *> (*p);
     }
@@ -2218,7 +2218,7 @@ public:
   {
     std::vector<PI *> pi;
     for (std::vector<lay::Plugin *>::const_iterator p = mp_plugins.begin (); p != mp_plugins.end (); ++p) {
-      if (dynamic_cast<PI *> (*p) != 0) {
+      if (dynamic_cast<PI *> (*p) != nullptr) {
         pi.push_back (dynamic_cast<PI *> (*p));
       }
     }
@@ -3232,7 +3232,7 @@ protected:
 
   lay::Plugin *create_plugin (const lay::PluginDeclaration *cls);
   void clear_plugins ();
-  virtual void create_plugins (const lay::PluginDeclaration *except_this = 0);
+  virtual void create_plugins (const lay::PluginDeclaration *except_this = nullptr);
 
   void free_resources ();
   void shutdown ();

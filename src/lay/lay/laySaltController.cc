@@ -38,7 +38,7 @@ namespace lay
 static const std::string cfg_salt_manager_window_state ("salt-manager-window-state");
 
 SaltController::SaltController ()
-  : mp_salt_dialog (0), mp_mw (0), mp_plugin_root (0), m_file_watcher (0),
+  : mp_salt_dialog (nullptr), mp_mw (nullptr), mp_plugin_root (nullptr), m_file_watcher (nullptr),
     dm_sync_file_watcher (this, &SaltController::sync_file_watcher),
     dm_sync_files (this, &SaltController::sync_files)
 {
@@ -72,12 +72,12 @@ SaltController::uninitialize (lay::Dispatcher * /*root*/)
     disconnect (m_file_watcher, SIGNAL (fileChanged (const QString &)), this, SLOT (file_watcher_triggered ()));
     disconnect (m_file_watcher, SIGNAL (fileRemoved (const QString &)), this, SLOT (file_watcher_triggered ()));
     delete m_file_watcher;
-    m_file_watcher = 0;
+    m_file_watcher = nullptr;
   }
 
   delete mp_salt_dialog;
-  mp_salt_dialog = 0;
-  mp_mw = 0;
+  mp_salt_dialog = nullptr;
+  mp_mw = nullptr;
 }
 
 void
@@ -236,7 +236,7 @@ SaltController::install_packages (const std::vector<std::string> &packages, bool
     //  while running the dialog, don't watch file events - that would interfere with
     //  the changes applied by the dialog itself.
     tl::FileSystemWatcherDisabled disable_file_watcher;  //  disable file watcher
-    result = manager.execute (0, m_salt);
+    result = manager.execute (nullptr, m_salt);
   }
 
   sync_file_watcher ();
@@ -289,7 +289,7 @@ SaltController::instance ()
       return sc;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 //  The singleton instance of the salt controller

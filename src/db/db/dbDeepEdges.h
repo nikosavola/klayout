@@ -96,12 +96,12 @@ public:
 
   virtual EdgePairsDelegate *width_check (db::Coord d, const db::EdgesCheckOptions &options) const
   {
-    return run_check (db::WidthRelation, 0, d, options);
+    return run_check (db::WidthRelation, nullptr, d, options);
   }
     
   virtual EdgePairsDelegate *space_check (db::Coord d, const db::EdgesCheckOptions &options) const
   {
-    return run_check (db::SpaceRelation, 0, d, options);
+    return run_check (db::SpaceRelation, nullptr, d, options);
   }
 
   virtual EdgePairsDelegate *enclosing_check (const Edges &other, db::Coord d, const db::EdgesCheckOptions &options) const

@@ -108,7 +108,7 @@ public:
    *  @brief Constructor from a box
    */
   explicit Region (const db::Box &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -117,7 +117,7 @@ public:
    *  @brief Constructor from a box with properties
    */
   explicit Region (const db::BoxWithProperties &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -126,7 +126,7 @@ public:
    *  @brief Constructor from a polygon
    */
   explicit Region (const db::Polygon &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -135,7 +135,7 @@ public:
    *  @brief Constructor from a polygon with properties
    */
   explicit Region (const db::PolygonWithProperties &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -144,7 +144,7 @@ public:
    *  @brief Constructor from a simple polygon
    */
   explicit Region (const db::SimplePolygon &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -153,7 +153,7 @@ public:
    *  @brief Constructor from a simple polygon with properties
    */
   explicit Region (const db::SimplePolygonWithProperties &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -162,7 +162,7 @@ public:
    *  @brief Constructor from a path
    */
   explicit Region (const db::Path &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -171,7 +171,7 @@ public:
    *  @brief Constructor from a path with properties
    */
   explicit Region (const db::PathWithProperties &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -185,7 +185,7 @@ public:
    */
   template <class Iter>
   explicit Region (const Iter &b, const Iter &e)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     reserve (e - b);
     for (Iter i = b; i != e; ++i) {
@@ -291,7 +291,7 @@ public:
   RegionDelegate *take_delegate ()
   {
     RegionDelegate *delegate = mp_delegate;
-    mp_delegate = 0;
+    mp_delegate = nullptr;
     return delegate;
   }
 
@@ -852,7 +852,7 @@ public:
    */
   Edges edges () const
   {
-    return Edges (mp_delegate->edges (0, 0));
+    return Edges (mp_delegate->edges (nullptr, nullptr));
   }
 
   /**
@@ -865,7 +865,7 @@ public:
    */
   Edges edges (const EdgeFilterBase &filter) const
   {
-    return mp_delegate->edges (&filter, 0);
+    return mp_delegate->edges (&filter, nullptr);
   }
 
   /**
@@ -877,7 +877,7 @@ public:
    */
   Edges edges (const db::PolygonToEdgeProcessorBase &proc) const
   {
-    return Edges (mp_delegate->edges (0, &proc));
+    return Edges (mp_delegate->edges (nullptr, &proc));
   }
 
   /**
@@ -2022,7 +2022,7 @@ public:
    *  Netlist names will be attached as properties according to prop_mode and net_prop_name.
    *  A net filter can be provided so that only certain nets are produced.
    */
-  Region nets (LayoutToNetlist &l2n, NetPropertyMode prop_mode = db::NPM_NoProperties, const tl::Variant &net_prop_name = tl::Variant (0), const std::vector<const db::Net *> *nets = 0) const
+  Region nets (LayoutToNetlist &l2n, NetPropertyMode prop_mode = db::NPM_NoProperties, const tl::Variant &net_prop_name = tl::Variant (0), const std::vector<const db::Net *> *nets = nullptr) const
   {
     return Region (mp_delegate->nets (&l2n, prop_mode, net_prop_name, nets));
   }

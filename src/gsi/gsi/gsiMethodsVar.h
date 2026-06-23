@@ -51,7 +51,7 @@ class _NAME(MethodVoid)
   : public MethodSpecificBase <X>
 {
 public:
-  _NAME(MethodVoid) (const std::string &name, void (X::*m) (_FUNCARGLIST),  const std::string &doc, gsi::Callback X::*cb = 0)
+  _NAME(MethodVoid) (const std::string &name, void (X::*m) (_FUNCARGLIST),  const std::string &doc, gsi::Callback X::*cb = nullptr)
     : MethodSpecificBase <X> (name, doc, false, false, cb), m_m (m) 
   { 
   }
@@ -94,7 +94,7 @@ class _NAME(ConstMethodVoid)
   : public MethodSpecificBase <X>
 {
 public:
-  _NAME(ConstMethodVoid) (const std::string &name, void (X::*m) (_FUNCARGLIST) const, const std::string &doc, gsi::Callback X::*cb = 0)
+  _NAME(ConstMethodVoid) (const std::string &name, void (X::*m) (_FUNCARGLIST) const, const std::string &doc, gsi::Callback X::*cb = nullptr)
     : MethodSpecificBase <X> (name, doc, true, false, cb), m_m (m)
   { 
   }
@@ -137,7 +137,7 @@ class _NAME(ExtMethodVoid)
   : public MethodSpecificBase <X>
 {
 public:
-  _NAME(ExtMethodVoid) (const std::string &name, void (*xm) (X * _COMMA _FUNCARGLIST), const std::string &doc, gsi::Callback X::*cb = 0)
+  _NAME(ExtMethodVoid) (const std::string &name, void (*xm) (X * _COMMA _FUNCARGLIST), const std::string &doc, gsi::Callback X::*cb = nullptr)
     : MethodSpecificBase <X> (name, doc, is_const_x<X>::value (), false, cb), m_xm (xm)
   { 
   }
@@ -225,7 +225,7 @@ class _NAME(Method)
   : public MethodSpecificBase <X>
 {
 public:
-  _NAME(Method) (const std::string &name, R (X::*m) (_FUNCARGLIST), const std::string &doc, gsi::Callback X::*cb = 0)
+  _NAME(Method) (const std::string &name, R (X::*m) (_FUNCARGLIST), const std::string &doc, gsi::Callback X::*cb = nullptr)
     : MethodSpecificBase <X> (name, doc, false, false, cb), m_m (m)
   { 
   }
@@ -269,7 +269,7 @@ class _NAME(ConstMethod)
   : public MethodSpecificBase <X>
 {
 public:
-  _NAME(ConstMethod) (const std::string &name, R (X::*m) (_FUNCARGLIST) const, const std::string &doc, gsi::Callback X::*cb = 0)
+  _NAME(ConstMethod) (const std::string &name, R (X::*m) (_FUNCARGLIST) const, const std::string &doc, gsi::Callback X::*cb = nullptr)
     : MethodSpecificBase <X> (name, doc, true, false, cb), m_m (m)
   { 
   }
@@ -408,7 +408,7 @@ public:
   typedef IterPtrAdaptor<value_type> iter_adaptor_type;
 
   _NAME(MethodPtrIter) (const std::string &name, R *(X::*b) (_FUNCARGLIST), R *(X::*e) (_FUNCARGLIST), const std::string &doc)
-    : MethodSpecificBase <X> (name, doc, false, false, 0), m_b (b), m_e (e)
+    : MethodSpecificBase <X> (name, doc, false, false, nullptr), m_b (b), m_e (e)
   { 
   }
 
@@ -555,7 +555,7 @@ public:
   typedef ConstIterPtrAdaptor<value_type> iter_adaptor_type;
 
   _NAME(ConstMethodPtrConstIter) (const std::string &name, R const *(X::*b) (_FUNCARGLIST) const, R const *(X::*e) (_FUNCARGLIST) const, const std::string &doc)
-    : MethodSpecificBase <X> (name, doc, true, false, 0), m_b (b), m_e (e)
+    : MethodSpecificBase <X> (name, doc, true, false, nullptr), m_b (b), m_e (e)
   { 
   }
 
@@ -653,7 +653,7 @@ public:
   typedef ConstIterPtrAdaptor<value_type> iter_adaptor_type;
 
   _NAME(ExtMethodPtrConstIter) (const std::string &name, R const *(*xb) (X * _COMMA _FUNCARGLIST), R const *(*xe) (X * _COMMA _FUNCARGLIST), const std::string &doc)
-    : MethodSpecificBase <X> (name, doc, is_const_x<X>::value (), false, 0), m_xb (xb), m_xe (xe)
+    : MethodSpecificBase <X> (name, doc, is_const_x<X>::value (), false, nullptr), m_xb (xb), m_xe (xe)
   { 
   }
 
@@ -801,7 +801,7 @@ public:
   typedef IterAdaptor<I> iter_adaptor_type;
 
   _NAME(MethodBiIter) (const std::string &name, I (X::*b) (_FUNCARGLIST), I (X::*e) (_FUNCARGLIST), const std::string &doc)
-    : MethodSpecificBase <X> (name, doc, false, false, 0), m_b (b), m_e (e)
+    : MethodSpecificBase <X> (name, doc, false, false, nullptr), m_b (b), m_e (e)
   { 
   }
 
@@ -849,7 +849,7 @@ public:
   typedef IterAdaptor<I> iter_adaptor_type;
 
   _NAME(ConstMethodBiIter) (const std::string &name, I (X::*b) (_FUNCARGLIST) const, I (X::*e) (_FUNCARGLIST) const, const std::string &doc)
-    : MethodSpecificBase <X> (name, doc, true, false, 0), m_b (b), m_e (e)
+    : MethodSpecificBase <X> (name, doc, true, false, nullptr), m_b (b), m_e (e)
   { 
   }
 
@@ -897,7 +897,7 @@ public:
   typedef IterAdaptor<I> iter_adaptor_type;
 
   _NAME(ExtMethodBiIter) (const std::string &name, I (*xb) (X * _COMMA _FUNCARGLIST), I (*xe) (X * _COMMA _FUNCARGLIST), const std::string &doc)
-    : MethodSpecificBase <X> (name, doc, is_const_x<X>::value (), false, 0), m_xb (xb), m_xe (xe)
+    : MethodSpecificBase <X> (name, doc, is_const_x<X>::value (), false, nullptr), m_xb (xb), m_xe (xe)
   { 
   }
 
@@ -997,7 +997,7 @@ public:
   typedef FreeIterAdaptor<I> iter_adaptor_type;
 
   _NAME(MethodFreeIter) (const std::string &name, I (X::*i) (_FUNCARGLIST), const std::string &doc)
-    : MethodSpecificBase <X> (name, doc, false, false, 0), m_i (i)
+    : MethodSpecificBase <X> (name, doc, false, false, nullptr), m_i (i)
   { 
   }
 
@@ -1044,7 +1044,7 @@ public:
   typedef FreeIterAdaptor<I> iter_adaptor_type;
 
   _NAME(ConstMethodFreeIter) (const std::string &name, I (X::*i) (_FUNCARGLIST) const, const std::string &doc)
-    : MethodSpecificBase <X> (name, doc, true, false, 0), m_i (i)
+    : MethodSpecificBase <X> (name, doc, true, false, nullptr), m_i (i)
   { 
   }
 
@@ -1091,7 +1091,7 @@ public:
   typedef FreeIterAdaptor<I> iter_adaptor_type;
 
   _NAME(ExtMethodFreeIter) (const std::string &name, I (*xi) (X * _COMMA _FUNCARGLIST), const std::string &doc)
-    : MethodSpecificBase <X> (name, doc, is_const_x<X>::value (), false, 0), m_xi (xi)
+    : MethodSpecificBase <X> (name, doc, is_const_x<X>::value (), false, nullptr), m_xi (xi)
   { 
   }
 

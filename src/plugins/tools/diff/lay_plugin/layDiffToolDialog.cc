@@ -121,7 +121,7 @@ RdbDifferenceReceiver::RdbDifferenceReceiver (const db::Layout &layout_a, const 
   : mp_layout_a (&layout_a), 
     mp_layout_b (&layout_b), 
     mp_rdb (rdb), 
-    mp_cell (0), 
+    mp_cell (nullptr), 
     m_cellname (), 
     m_layer (), 
     m_layer_index_a (0), 
@@ -160,10 +160,10 @@ RdbDifferenceReceiver::RdbDifferenceReceiver (const db::Layout &layout_a, const 
     for (std::map<db::LayerProperties, std::pair<int, int>, db::LPLogicalLessFunc>::const_iterator l = layers.begin (); l != layers.end (); ++l) {
 
       while ((int) mp_a_only_per_layer_cat.size () <= l->second.first) {
-        mp_a_only_per_layer_cat.push_back (0);
+        mp_a_only_per_layer_cat.push_back (nullptr);
       }
       while ((int) mp_b_only_per_layer_cat.size () <= l->second.second) {
-        mp_b_only_per_layer_cat.push_back (0);
+        mp_b_only_per_layer_cat.push_back (nullptr);
       }
 
       rdb::Category *layer_cat = rdb->create_category (l->first.to_string ());
@@ -182,8 +182,8 @@ RdbDifferenceReceiver::RdbDifferenceReceiver (const db::Layout &layout_a, const 
     }
 
   } else {
-    mp_a_only_cat = 0;
-    mp_b_only_cat = 0;
+    mp_a_only_cat = nullptr;
+    mp_b_only_cat = nullptr;
   }
 
   if (run_xor) {
@@ -509,7 +509,7 @@ template <class SH>
 void 
 RdbDifferenceReceiver::shape_diffs (const std::vector <std::pair <SH, db::properties_id_type> > &a, const std::vector <std::pair <SH, db::properties_id_type> > &b)
 {
-  if (m_detailed && m_is_valid_layer_index_a && mp_a_only_per_layer_cat [m_layer_index_a] != 0) {
+  if (m_detailed && m_is_valid_layer_index_a && mp_a_only_per_layer_cat [m_layer_index_a] != nullptr) {
     produce_diffs (a, b, mp_layout_a->dbu (), mp_a_only_per_layer_cat [m_layer_index_a]);
   }
 
@@ -522,7 +522,7 @@ RdbDifferenceReceiver::shape_diffs (const std::vector <std::pair <SH, db::proper
     }
   }
 
-  if (m_detailed && m_is_valid_layer_index_b && mp_b_only_per_layer_cat [m_layer_index_b] != 0) {
+  if (m_detailed && m_is_valid_layer_index_b && mp_b_only_per_layer_cat [m_layer_index_b] != nullptr) {
     produce_diffs (b, a, mp_layout_b->dbu (), mp_b_only_per_layer_cat [m_layer_index_b]);
   }
 
@@ -594,7 +594,7 @@ RdbDifferenceReceiver::detailed_diff (const std::vector <std::pair <db::Text, db
 //  DiffToolDialog definition
 
 DiffToolDialog::DiffToolDialog (QWidget *parent)
-  : QDialog (parent), mp_view (0)
+  : QDialog (parent), mp_view (nullptr)
 {
   mp_ui = new Ui::DiffToolDialog ();
   mp_ui->setupUi (this);
@@ -605,7 +605,7 @@ DiffToolDialog::DiffToolDialog (QWidget *parent)
 DiffToolDialog::~DiffToolDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 int 
@@ -663,7 +663,7 @@ DiffToolDialog::exec_dialog (lay::LayoutViewBase *view)
     run_diff ();
   }
 
-  mp_view = 0;
+  mp_view = nullptr;
   return ret;
 }
 
@@ -754,7 +754,7 @@ DiffToolDialog::run_diff ()
   db::Coord tolerance = 0;
 
   //  Create the report database or identify the output layout
-  rdb::Database *rdb = 0;
+  rdb::Database *rdb = nullptr;
   int rdb_index = 0;
 
   rdb = new rdb::Database ();

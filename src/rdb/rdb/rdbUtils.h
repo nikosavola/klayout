@@ -55,7 +55,7 @@ namespace rdb
  *  If "with_properties" is true, user properties are translated into values with tags corresponding
  *  to the property names.
  */
-RDB_PUBLIC void scan_layer (rdb::Category *cat, const db::Layout &layout, unsigned int layer, const db::Cell *from_cell = 0, int levels = -1, bool with_properties = true);
+RDB_PUBLIC void scan_layer (rdb::Category *cat, const db::Layout &layout, unsigned int layer, const db::Cell *from_cell = nullptr, int levels = -1, bool with_properties = true);
 
 /**
  *  @brief Scans a recursive shape iterator into a RDB category

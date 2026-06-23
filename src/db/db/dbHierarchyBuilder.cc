@@ -39,11 +39,11 @@ static HierarchyBuilder::cell_map_type::const_iterator null_iterator = Hierarchy
 int
 compare_iterators_with_respect_to_target_hierarchy (const db::RecursiveShapeIterator &iter1, const db::RecursiveShapeIterator &iter2)
 {
-  if ((iter1.layout () == 0) != (iter2.layout () == 0)) {
-    return (iter1.layout () == 0) < (iter2.layout () == 0) ? -1 : 1;
+  if ((iter1.layout () == nullptr) != (iter2.layout () == nullptr)) {
+    return (iter1.layout () == nullptr) < (iter2.layout () == nullptr) ? -1 : 1;
   }
-  if ((iter1.top_cell () == 0) != (iter2.top_cell () == 0)) {
-    return (iter1.top_cell () == 0) < (iter2.top_cell () == 0) ? -1 : 1;
+  if ((iter1.top_cell () == nullptr) != (iter2.top_cell () == nullptr)) {
+    return (iter1.top_cell () == nullptr) < (iter2.top_cell () == nullptr) ? -1 : 1;
   }
 
   //  basic source (layout, top_cell) needs to be the same of course
@@ -182,7 +182,7 @@ HierarchyBuilder::reset ()
   m_initial_pass = true;
   m_cm_new_entry = false;
 
-  mp_initial_cell = 0;
+  mp_initial_cell = nullptr;
 
   m_cells_to_be_filled.clear ();
   m_cell_map.clear ();
@@ -303,7 +303,7 @@ HierarchyBuilder::end (const RecursiveShapeIterator *iter)
 
   m_initial_pass = false;
   m_cells_seen.clear ();
-  mp_initial_cell = m_cell_stack.empty () ? 0 : m_cell_stack.front ().second.front ();
+  mp_initial_cell = m_cell_stack.empty () ? nullptr : m_cell_stack.front ().second.front ();
   m_cell_stack.clear ();
   m_cm_entry = null_iterator;
   m_cm_new_entry = false;
@@ -519,13 +519,13 @@ ClippingHierarchyBuilderShapeReceiver::push (const db::Shape &shape, db::propert
 
   if (region == world || is_inside (shape.bbox (), region, complex_region)) {
 
-    mp_pipe->push (shape, prop_id, trans, world, 0, target);
+    mp_pipe->push (shape, prop_id, trans, world, nullptr, target);
 
   } else if (! is_outside (shape.bbox (), region, complex_region)) {
 
     //  clip the shape if required
     if (shape.is_text () || shape.is_edge () || shape.is_edge_pair ()) {
-      mp_pipe->push (shape, prop_id, trans, world, 0, target);
+      mp_pipe->push (shape, prop_id, trans, world, nullptr, target);
     } else if (shape.is_box ()) {
       insert_clipped (shape.box (), prop_id, trans, region, complex_region, target);
     } else if (shape.is_polygon () || shape.is_simple_polygon () || shape.is_path ()) {
@@ -545,7 +545,7 @@ ClippingHierarchyBuilderShapeReceiver::push (const db::Box &shape, db::propertie
   if (! complex_region) {
     db::Box r = shape & region;
     if (! r.empty()) {
-      mp_pipe->push (r, prop_id, trans, world, 0, target);
+      mp_pipe->push (r, prop_id, trans, world, nullptr, target);
     }
   } else {
     insert_clipped (shape, prop_id, trans, region, complex_region, target);
@@ -558,7 +558,7 @@ ClippingHierarchyBuilderShapeReceiver::push (const db::Polygon &shape, db::prope
   static db::Box world = db::Box::world ();
 
   if (region == world || (shape.box ().inside (region) && ! complex_region)) {
-    mp_pipe->push (shape, prop_id, trans, world, 0, target);
+    mp_pipe->push (shape, prop_id, trans, world, nullptr, target);
   } else {
     insert_clipped (shape, prop_id, trans, region, complex_region, target);
   }
@@ -627,11 +627,11 @@ ClippingHierarchyBuilderShapeReceiver::insert_clipped (const db::Box &box, db::p
     for (db::RecursiveShapeReceiver::box_tree_type::overlapping_iterator cr = complex_region->begin_overlapping (bb, db::box_convert<db::Box> ()); ! cr.at_end (); ++cr) {
       db::Box bc = *cr & bb;
       if (! bc.empty ()) {
-        mp_pipe->push (bc, prop_id, trans, world, 0, target);
+        mp_pipe->push (bc, prop_id, trans, world, nullptr, target);
       }
     }
   } else if (! bb.empty ()) {
-    mp_pipe->push (bb, prop_id, trans, world, 0, target);
+    mp_pipe->push (bb, prop_id, trans, world, nullptr, target);
   }
 }
 
@@ -651,7 +651,7 @@ ClippingHierarchyBuilderShapeReceiver::insert_clipped (const db::Polygon &poly, 
   }
 
   for (std::vector<db::Polygon>::const_iterator p = clipped_poly.begin (); p != clipped_poly.end (); ++p) {
-    mp_pipe->push (*p, prop_id, trans, world, 0, target);
+    mp_pipe->push (*p, prop_id, trans, world, nullptr, target);
   }
 }
 

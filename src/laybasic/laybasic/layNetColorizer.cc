@@ -54,7 +54,7 @@ NetColorizer::configure (const tl::Color &marker_color, const lay::ColorPalette 
 bool
 NetColorizer::has_color_for_net (const db::Net *net)
 {
-  return net != 0 && (m_auto_colors_enabled || m_custom_color.find (net) != m_custom_color.end ());
+  return net != nullptr && (m_auto_colors_enabled || m_custom_color.find (net) != m_custom_color.end ());
 }
 
 void

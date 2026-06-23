@@ -380,7 +380,7 @@ NetTracerDialog::get_net_tracer_setup_from_tech (const std::string &tech_name, c
     return false;
   }
 
-  const db::NetTracerConnectivity *connectivity = 0;
+  const db::NetTracerConnectivity *connectivity = nullptr;
   for (auto d = tech_component->begin (); d != tech_component->end () && ! connectivity; ++d) {
     if (d->name () == stack_name) {
       connectivity = d.operator-> ();
@@ -417,13 +417,13 @@ NetTracerDialog::do_trace (const db::DBox &start_search_box, const db::DBox &sto
   //  determine the cellview
   lay::CellView cv = view ()->cellview (m_cv_index);
   if (! cv.is_valid ()) {
-    return 0;
+    return nullptr;
   }
 
   //  Set up the net tracer environment
   db::NetTracerData tracer_data;
   if (! get_net_tracer_setup (cv, tracer_data)) {
-    return 0;
+    return nullptr;
   }
 
   std::set<unsigned int> original_layers = tracer_data.original_layers ();
@@ -449,7 +449,7 @@ NetTracerDialog::do_trace (const db::DBox &start_search_box, const db::DBox &sto
     //  return, if no shape was found
     lay::ShapeFinder::iterator r = finder.begin ();
     if (r == finder.end ()) {
-      return 0;
+      return nullptr;
     }
 
     m_cv_index = r->cv_index ();
@@ -464,7 +464,7 @@ NetTracerDialog::do_trace (const db::DBox &start_search_box, const db::DBox &sto
 
     std::vector<db::DCplxTrans> tv = view ()->cv_transform_variants (m_cv_index, start_layer);
     if (tv.empty ()) {
-      return 0;
+      return nullptr;
     }
 
     db::CplxTrans tt = tv.front () * db::CplxTrans (cv->layout ().dbu ()) * cv.context_trans ();
@@ -474,7 +474,7 @@ NetTracerDialog::do_trace (const db::DBox &start_search_box, const db::DBox &sto
     //  stop if the center start point is not inside the start polygon
     db::Polygon poly;
     if (start_shape.polygon (poly) && db::inside_poly (poly.begin_edge (), start_trans.inverted () * start_point) < 0) {
-      return 0;
+      return nullptr;
     }
 
   }
@@ -499,7 +499,7 @@ NetTracerDialog::do_trace (const db::DBox &start_search_box, const db::DBox &sto
     //  return, if no shape was found
     lay::ShapeFinder::iterator r = finder.begin ();
     if (r == finder.end ()) {
-      return 0;
+      return nullptr;
     }
 
     if (r->cv_index () != m_cv_index) {
@@ -508,7 +508,7 @@ NetTracerDialog::do_trace (const db::DBox &start_search_box, const db::DBox &sto
 
     std::vector<db::DCplxTrans> tv = view ()->cv_transform_variants (m_cv_index, r->layer ());
     if (tv.empty ()) {
-      return 0;
+      return nullptr;
     }
 
     db::CplxTrans tt = tv.front () * db::CplxTrans (cv->layout ().dbu ()) * cv.context_trans ();
@@ -520,7 +520,7 @@ NetTracerDialog::do_trace (const db::DBox &start_search_box, const db::DBox &sto
     //  stop if the center stop point is not inside the stop polygon
     db::Polygon poly;
     if (r->shape ().polygon (poly) && db::inside_poly (poly.begin_edge (), stop_trans.inverted () * stop_point) < 0) {
-      return 0;
+      return nullptr;
     }
 
   }
@@ -537,7 +537,7 @@ NetTracerDialog::do_trace (const db::DBox &start_search_box, const db::DBox &sto
 
   if (net_tracer.begin () == net_tracer.end ()) {
 
-    return 0;
+    return nullptr;
 
   } else {
 
@@ -778,7 +778,7 @@ NetTracerDialog::update_info ()
 
   QList<QListWidgetItem *> selected_items = net_list->selectedItems ();
 
-  if (selected_items.size () == 0) {
+  if (selected_items.empty()) {
 
     info.start_element ("p");
     info.cdata (tl::to_string (QObject::tr ("No net selected")));
@@ -1222,7 +1222,7 @@ NetTracerDialog::update_list ()
 
   for (size_t i = 0; i < mp_nets.size (); ++i) {
 
-    QListWidgetItem *item = 0;
+    QListWidgetItem *item = nullptr;
 
     if (net_list->count () > int (i)) {
       item = net_list->item (int (i));
@@ -1262,7 +1262,7 @@ NetTracerDialog::trace_path_button_clicked ()
 {
 BEGIN_PROTECTED
   commit ();
-  net_list->setCurrentItem (0);
+  net_list->setCurrentItem (nullptr);
   m_mouse_state = 2;
   view ()->message (tl::to_string (QObject::tr ("Click on the first point in the net")), -1 /*infinitely*/, 10);
   ui ()->grab_mouse (this, false);
@@ -1274,7 +1274,7 @@ NetTracerDialog::trace_net_button_clicked ()
 {
 BEGIN_PROTECTED
   commit ();
-  net_list->setCurrentItem (0);
+  net_list->setCurrentItem (nullptr);
   m_mouse_state = 1;
   view ()->message (tl::to_string (QObject::tr ("Click on a point in the net")), -1 /*infinitely*/, 10);
   ui ()->grab_mouse (this, false);
@@ -1399,7 +1399,7 @@ BEGIN_PROTECTED
   if (cv.is_valid ()) {
 
     QList<QListWidgetItem *> selected_items = net_list->selectedItems ();
-    if (selected_items.size () == 0) {
+    if (selected_items.empty()) {
       throw tl::Exception (tl::to_string (QObject::tr ("No net selected to export")));
     }
 
@@ -1502,7 +1502,7 @@ BEGIN_PROTECTED
   if (cv.is_valid ()) {
 
     QList<QListWidgetItem *> selected_items = net_list->selectedItems ();
-    if (selected_items.size () == 0) {
+    if (selected_items.empty()) {
       throw tl::Exception (tl::to_string (QObject::tr ("No net selected to export")));
     }
 

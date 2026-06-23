@@ -370,7 +370,7 @@ Circuit *Netlist::top_circuit ()
 {
   size_t ntop = top_circuit_count ();
   if (ntop == 0) {
-    return 0;
+    return nullptr;
   } else if (ntop > 1) {
     throw tl::Exception (tl::to_string (tr ("Netlist contains more than a single top circuit")));
   } else {
@@ -468,7 +468,7 @@ void Netlist::remove_circuit (Circuit *circuit)
     throw tl::Exception (tl::to_string (tr ("Circuit not within given netlist")));
   }
 
-  circuit->set_netlist (0);
+  circuit->set_netlist (nullptr);
   m_circuits.erase (circuit);
 }
 
@@ -557,7 +557,7 @@ DeviceClass *Netlist::device_class_by_name (const std::string &name)
       return d.operator-> ();
     }
   }
-  return 0;
+  return nullptr;
 }
 
 void Netlist::add_device_class (DeviceClass *device_class)
@@ -582,7 +582,7 @@ void Netlist::remove_device_class (DeviceClass *device_class)
     throw tl::Exception (tl::to_string (tr ("Device class not within given netlist")));
   }
 
-  device_class->set_netlist (0);
+  device_class->set_netlist (nullptr);
   m_device_classes.erase (device_class);
 }
 
@@ -608,7 +608,7 @@ void Netlist::remove_device_abstract (DeviceAbstract *device_abstract)
     throw tl::Exception (tl::to_string (tr ("Device abstract not within given netlist")));
   }
 
-  device_abstract->set_netlist (0);
+  device_abstract->set_netlist (nullptr);
   m_device_abstracts.erase (device_abstract);
 }
 
@@ -830,7 +830,7 @@ static db::Net *read_net (tl::Extractor &ex, db::Circuit *circuit, std::map<std:
     ex.expect ("null");
     ex.expect (")");
 
-    return 0;
+    return nullptr;
 
   } else if (ex.test ("$")) {
 
@@ -913,7 +913,7 @@ static void read_pins (tl::Extractor &ex, db::Circuit *circuit, std::map<std::st
 
   if (circuit->pin_count () < org_pins.size ()) {
     ex.error (tl::to_string (tr ("Circuit defines less pins that subcircuit")));
-  } else if (org_pins.size () > 0 && circuit->pin_count () > org_pins.size ()) {
+  } else if (!org_pins.empty() && circuit->pin_count () > org_pins.size ()) {
     ex.error (tl::to_string (tr ("Circuit defines more pins that subcircuit")));
   }
 }
@@ -996,7 +996,7 @@ static void read_device (tl::Extractor &ex, db::Circuit *circuit, std::map<std::
 
   std::string dcn;
   ex.read_word_or_quoted (dcn);
-  db::DeviceClass *dc = 0;
+  db::DeviceClass *dc = nullptr;
   for (db::Netlist::device_class_iterator i = netlist->begin_device_classes (); i != netlist->end_device_classes (); ++i) {
     if (i->name () == dcn) {
       dc = i.operator-> ();
@@ -1071,7 +1071,7 @@ static void read_subcircuit (tl::Extractor &ex, db::Circuit *circuit, std::map<s
   std::string cn;
   ex.read_word_or_quoted (cn);
 
-  db::Circuit *cc = 0;
+  db::Circuit *cc = nullptr;
   std::map<std::string, db::Circuit *>::const_iterator ic = c2n.find (cn);
   if (ic == c2n.end ()) {
 
@@ -1110,7 +1110,7 @@ void Netlist::from_string (const std::string &s)
     std::string n;
     ex.read_word_or_quoted (n);
 
-    db::Circuit *circuit = 0;
+    db::Circuit *circuit = nullptr;
 
     std::map<std::string, db::Circuit *>::const_iterator ic = c2n.find (n);
     if (ic == c2n.end ()) {

@@ -101,7 +101,7 @@ Boss::stop_all ()
 //  tl::TaskList implementation
 
 TaskList::TaskList ()
-  : mp_first (0), mp_last (0)
+  : mp_first (nullptr), mp_last (nullptr)
 {
   // .. nothing yet ..
 }
@@ -120,13 +120,13 @@ TaskList::fetch ()
 
   mp_first = task->mp_next;
   if (! mp_first) {
-    mp_last = 0;
+    mp_last = nullptr;
   } else {
-    mp_first->mp_last = 0;
+    mp_first->mp_last = nullptr;
   }
 
-  tl_assert (task->mp_last == 0);
-  task->mp_next = 0;
+  tl_assert (task->mp_last == nullptr);
+  task->mp_next = nullptr;
 
   return task;
 }
@@ -134,7 +134,7 @@ TaskList::fetch ()
 void 
 TaskList::put (Task *task)
 {
-  task->mp_next = 0;
+  task->mp_next = nullptr;
   task->mp_last = mp_last;
 
   mp_last = task;
@@ -148,7 +148,7 @@ TaskList::put (Task *task)
 void 
 TaskList::put_front (Task *task)
 {
-  task->mp_last = 0;
+  task->mp_last = nullptr;
   task->mp_next = mp_first;
 
   mp_first = task;
@@ -178,7 +178,7 @@ JobBase::JobBase (int nworkers)
   if (nworkers > 0) {
     mp_per_worker_task_lists = new TaskList[nworkers];
   } else {
-    mp_per_worker_task_lists = 0;
+    mp_per_worker_task_lists = nullptr;
   }
 }
 
@@ -192,7 +192,7 @@ JobBase::~JobBase ()
 
   if (mp_per_worker_task_lists) {
     delete[] mp_per_worker_task_lists;
-    mp_per_worker_task_lists = 0;
+    mp_per_worker_task_lists = nullptr;
   }
 }
 
@@ -245,7 +245,7 @@ JobBase::set_num_workers (int nworkers)
   if (nworkers > 0) {
     mp_per_worker_task_lists = new TaskList[nworkers];
   } else {
-    mp_per_worker_task_lists = 0;
+    mp_per_worker_task_lists = nullptr;
   }
 }
 
@@ -511,7 +511,7 @@ JobBase::get_task (int worker)
 
     } 
 
-    Task *task = 0;
+    Task *task = nullptr;
     if (! mp_per_worker_task_lists [worker].is_empty ()) {
       task = mp_per_worker_task_lists [worker].fetch ();
     } else if (! m_task_list.is_empty ()) {
@@ -520,11 +520,11 @@ JobBase::get_task (int worker)
 
     m_lock.unlock ();
 
-    if (dynamic_cast <ExitTask *> (task) != 0) {
+    if (dynamic_cast <ExitTask *> (task) != nullptr) {
       delete task;
       //  stops the thread
       throw WorkerTerminatedException ();
-    } else if (dynamic_cast <StartTask *> (task) != 0) {
+    } else if (dynamic_cast <StartTask *> (task) != nullptr) {
       delete task;
       //  dummy task for synchronization - wait for new tasks to arrive.
     } else if (task) {
@@ -575,7 +575,7 @@ void WorkerProgressAdaptor::yield (Progress * /*progress*/)
 //  tl::Worker implementation
 
 Worker::Worker ()
-  : mp_job (0), m_worker_index (-1), m_stop_requested (false), m_is_idle (false)
+  : mp_job (nullptr), m_worker_index (-1), m_stop_requested (false), m_is_idle (false)
 {
   // .. nothing yet ..
 }

@@ -147,8 +147,8 @@ invert (unsigned char *data, unsigned int width, unsigned int height)
 LayoutCanvas::LayoutCanvas (lay::LayoutViewBase *view)
   : lay::ViewObjectUI (),
     mp_view (view),
-    mp_image (0), mp_image_bg (0),
-    mp_image_fg (0),
+    mp_image (nullptr), mp_image_bg (nullptr),
+    mp_image_fg (nullptr),
     m_background (0), m_foreground (0), m_active (0),
     m_oversampling (1),
     m_hrm (false),
@@ -182,19 +182,19 @@ LayoutCanvas::~LayoutCanvas ()
 
   if (mp_image) {
     delete mp_image;
-    mp_image = 0;
+    mp_image = nullptr;
   }
   if (mp_image_bg) {
     delete mp_image_bg;
-    mp_image_bg = 0;
+    mp_image_bg = nullptr;
   }
   if (mp_image_fg) {
     delete mp_image_fg;
-    mp_image_fg = 0;
+    mp_image_fg = nullptr;
   }
   if (mp_redraw_thread) {
     delete mp_redraw_thread;
-    mp_redraw_thread = 0;
+    mp_redraw_thread = nullptr;
   }
 
   clear_fg_bitmaps ();
@@ -271,7 +271,7 @@ bool
 LayoutCanvas::shortcut_override_event (unsigned int key, unsigned int /*buttons*/)
 {
   if (int (key) == lay::KeyTab || int (key) == lay::KeyBacktab) {
-    return first_toolbox_widget () != 0;
+    return first_toolbox_widget () != nullptr;
   } else {
     return false;
   }
@@ -282,7 +282,7 @@ LayoutCanvas::first_toolbox_widget ()
 {
   auto pages = mp_view->editor_options_pages ();
   if (! pages) {
-    return 0;
+    return nullptr;
   }
 
   auto pv = pages->editor_options_pages ();
@@ -291,7 +291,7 @@ LayoutCanvas::first_toolbox_widget ()
       return *p;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -352,7 +352,7 @@ LayoutCanvas::set_colors (tl::Color background, tl::Color foreground, tl::Color 
   if (mp_image_bg) {
     delete mp_image_bg;
   }
-  mp_image_bg = 0;
+  mp_image_bg = nullptr;
 
   update_image ();
 }
@@ -422,7 +422,7 @@ LayoutCanvas::prepare_drawing ()
       mp_image = new tl::PixelBuffer (m_viewport_l.width (), m_viewport_l.height ());
       if (mp_image_fg) {
         delete mp_image_fg;
-        mp_image_fg = 0;
+        mp_image_fg = nullptr;
       }
     }
 
@@ -531,7 +531,7 @@ LayoutCanvas::free_resources ()
 {
   if (mp_image_fg) {
     delete mp_image_fg;
-    mp_image_fg = 0;
+    mp_image_fg = nullptr;
   }
 }
 
@@ -572,7 +572,7 @@ LayoutCanvas::paint_event ()
 
       if (mp_image_fg) {
         delete mp_image_fg;
-        mp_image_fg = 0;
+        mp_image_fg = nullptr;
       }
 
       m_update_image = false;
@@ -695,7 +695,7 @@ public:
       mp_image_l->set_transparent (img->transparent ());
       mp_image_l->fill (bg.rgb ());
     } else {
-      mp_image_l = 0;
+      mp_image_l = nullptr;
     }
   }
 
@@ -705,7 +705,7 @@ public:
 
     if (mp_image_l) {
       delete mp_image_l;
-      mp_image_l = 0;
+      mp_image_l = nullptr;
     }
   }
 
@@ -734,10 +734,10 @@ public:
     if (mp_image_l) {
       unsigned int os = mp_image_l->width () / width;
       mp_image->blowup (*mp_image_l, os);
-      bitmaps_to_image (fg_view_op_vector (), fg_bitmap_vector (), dp, ls, 1.0 / resolution (), mp_image_l, mp_image_l->width (), mp_image_l->height (), false, 0);
+      bitmaps_to_image (fg_view_op_vector (), fg_bitmap_vector (), dp, ls, 1.0 / resolution (), mp_image_l, mp_image_l->width (), mp_image_l->height (), false, nullptr);
       mp_image_l->subsample (*mp_image, os, m_gamma);
     } else {
-      bitmaps_to_image (fg_view_op_vector (), fg_bitmap_vector (), dp, ls, 1.0 / resolution (), mp_image, width, height, false, 0);
+      bitmaps_to_image (fg_view_op_vector (), fg_bitmap_vector (), dp, ls, 1.0 / resolution (), mp_image, width, height, false, nullptr);
     }
     clear_fg_bitmaps ();
   }

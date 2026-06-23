@@ -349,8 +349,8 @@ PropertiesSet::hash () const
 // ----------------------------------------------------------------------------------
 //  PropertiesRepository implementation
 
-static PropertiesRepository *sp_global_instance = 0;
-static PropertiesRepository *sp_temp_instance = 0;
+static PropertiesRepository *sp_global_instance = nullptr;
+static PropertiesRepository *sp_temp_instance = nullptr;
 
 PropertiesRepository &
 PropertiesRepository::instance ()

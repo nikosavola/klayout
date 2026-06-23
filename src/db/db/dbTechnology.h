@@ -809,7 +809,7 @@ public:
   typedef tl::pass_by_ref_tag tag;
 
   TechnologyComponentReadAdaptor (const std::string &name)
-    : m_name (name), mp_t (0), m_done (false)
+    : m_name (name), mp_t (nullptr), m_done (false)
   {
     // .. nothing yet ..
   }
@@ -863,7 +863,7 @@ public:
   void operator () (db::Technology &t, tl::XMLReaderState &reader) const
   {
     const TechnologyComponent *tc_basic = t.component_by_name (m_name);
-    TC *tc = 0;
+    TC *tc = nullptr;
     if (! tc_basic) {
       tc = new TC ();
     } else {

@@ -35,7 +35,7 @@ has_gui ()
 #if QT_VERSION < 0x50000
   return (QApplication::type () != QApplication::Tty);
 #else
-  return (dynamic_cast<QGuiApplication *> (QCoreApplication::instance ()) != 0);
+  return (dynamic_cast<QGuiApplication *> (QCoreApplication::instance ()) != nullptr);
 #endif
 #else
   return false;

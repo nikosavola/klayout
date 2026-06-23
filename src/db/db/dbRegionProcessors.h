@@ -55,11 +55,11 @@ class DB_PUBLIC CornerRectDelivery
 {
 public:
   CornerRectDelivery (db::Coord dim, std::vector<db::Polygon> &result)
-    : m_d (dim, dim), mp_result (&result), mp_result_wp (0)
+    : m_d (dim, dim), mp_result (&result), mp_result_wp (nullptr)
   { }
 
   CornerRectDelivery (db::Coord dim, std::vector<db::PolygonWithProperties> &result_wp)
-    : m_d (dim, dim), mp_result (0), mp_result_wp (&result_wp)
+    : m_d (dim, dim), mp_result (nullptr), mp_result_wp (&result_wp)
   { }
 
   virtual void make_point (const db::Point &pt, const db::Edge &, const db::Edge &) const
@@ -90,11 +90,11 @@ class DB_PUBLIC CornerDotDelivery
 {
 public:
   CornerDotDelivery (std::vector<db::Edge> &result)
-    : mp_result (&result), mp_result_wp (0)
+    : mp_result (&result), mp_result_wp (nullptr)
   { }
 
   CornerDotDelivery (std::vector<db::EdgeWithProperties> &result)
-    : mp_result (0), mp_result_wp (&result)
+    : mp_result (nullptr), mp_result_wp (&result)
   { }
 
   virtual void make_point (const db::Point &pt, const db::Edge &, const db::Edge &) const
@@ -125,11 +125,11 @@ class DB_PUBLIC CornerEdgePairDelivery
 {
 public:
   CornerEdgePairDelivery (std::vector<db::EdgePair> &result)
-    : mp_result (&result), mp_result_wp (0)
+    : mp_result (&result), mp_result_wp (nullptr)
   { }
 
   CornerEdgePairDelivery (std::vector<db::EdgePairWithProperties> &result)
-    : mp_result (0), mp_result_wp (&result)
+    : mp_result (nullptr), mp_result_wp (&result)
   { }
 
   virtual void make_point (const db::Point &, const db::Edge &e1, const db::Edge &e2) const
@@ -214,7 +214,7 @@ public:
     detect_corners (poly, CornerDotDelivery (result));
   }
 
-  virtual const TransformationReducer *vars () const { return 0; }
+  virtual const TransformationReducer *vars () const { return nullptr; }
   virtual bool result_is_merged () const { return false; }
   virtual bool result_must_not_be_merged () const { return true; }  //  to preserve dots
   virtual bool requires_raw_input () const { return false; }
@@ -239,7 +239,7 @@ public:
     detect_corners (poly, CornerEdgePairDelivery (result));
   }
 
-  virtual const TransformationReducer *vars () const { return 0; }
+  virtual const TransformationReducer *vars () const { return nullptr; }
   virtual bool result_is_merged () const { return false; }
   virtual bool result_must_not_be_merged () const { return true; }  //  to preserve dots
   virtual bool requires_raw_input () const { return false; }
@@ -263,7 +263,7 @@ public:
 
   void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const;
 
-  virtual const TransformationReducer *vars () const { return 0; }
+  virtual const TransformationReducer *vars () const { return nullptr; }
   virtual bool result_is_merged () const { return false; }
   virtual bool result_must_not_be_merged () const { return false; }
   virtual bool requires_raw_input () const { return false; }
@@ -419,7 +419,7 @@ public:
 
   void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const;
 
-  virtual const TransformationReducer *vars () const { return 0; }
+  virtual const TransformationReducer *vars () const { return nullptr; }
   virtual bool result_is_merged () const { return false; }
   virtual bool result_must_not_be_merged () const { return true; }  //  would spoil the decomposition otherwise
   virtual bool requires_raw_input () const { return true; }  //  acts on original shapes

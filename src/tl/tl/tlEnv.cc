@@ -40,7 +40,7 @@
 namespace tl
 {
 
-static tl::Mutex *s_env_lock = 0;
+static tl::Mutex *s_env_lock = nullptr;
 static std::map<std::string, std::string> s_env_map;
 
 std::string get_env (const std::string &name, const std::string &def_value)
@@ -123,7 +123,7 @@ bool has_env (const std::string &name)
   return env != 0;
 #else
   char *env = getenv (name.c_str ());
-  return env != 0;
+  return env != nullptr;
 #endif
 }
 

@@ -378,8 +378,8 @@ struct A
   std::string a10_csref (const std::string &f) { return f; }
 
   Enum get_e () const { return e; }
-  Enum *get_eptr () { return int (e) == 0 ? 0 : &e; }
-  const Enum *get_ecptr () const { return int (e) == 0 ? 0 : &e; }
+  Enum *get_eptr () { return int (e) == 0 ? nullptr : &e; }
+  const Enum *get_ecptr () const { return int (e) == 0 ? nullptr : &e; }
   Enum &get_eref () { return e; }
   const Enum &get_ecref () const { return e; }
   void set_e (Enum _e) { e = _e; }
@@ -394,8 +394,8 @@ struct A
 
 #if defined(HAVE_QT)
   QFlags<Enum> get_ef () const { return ef; }
-  QFlags<Enum> *get_efptr () { return int (ef) == 0 ? 0 : &ef; }
-  const QFlags<Enum> *get_efcptr () const { return int (ef) == 0 ? 0 : &ef; }
+  QFlags<Enum> *get_efptr () { return int (ef) == 0 ? nullptr : &ef; }
+  const QFlags<Enum> *get_efcptr () const { return int (ef) == 0 ? nullptr : &ef; }
   QFlags<Enum> &get_efref () { return ef; }
   const QFlags<Enum> &get_efcref () const { return ef; }
   void set_ef (QFlags<Enum> _ef) { ef = _ef; }
@@ -743,7 +743,7 @@ struct B
     return m_avc_nc.end ();
   }
 
-  A *amember_or_nil (bool nn) { return nn ? &m_a : 0; }
+  A *amember_or_nil (bool nn) { return nn ? &m_a : nullptr; }
   A *amember_ptr () { return &m_a; }
   A &amember_ref () { return m_a; }
   const A *amember_cptr () const { return &m_a; }
@@ -751,7 +751,7 @@ struct B
 
   bool arg_is_not_nil (A *a)
   {
-    return a != 0;
+    return a != nullptr;
   }
 
   std::vector <A> av () const
@@ -877,18 +877,18 @@ struct B
 
   tl::Variant var () const { return m_vars.back (); }
   const tl::Variant &var_cref () const { return m_vars.back (); }
-  const tl::Variant *var_cptr () const { return m_vars.empty () ? 0 : &m_vars.back (); }
+  const tl::Variant *var_cptr () const { return m_vars.empty () ? nullptr : &m_vars.back (); }
   tl::Variant &var_ref () { return m_vars.back (); }
-  tl::Variant *var_ptr () { return m_vars.empty () ? 0 : &m_vars.back (); }
+  tl::Variant *var_ptr () { return m_vars.empty () ? nullptr : &m_vars.back (); }
 
    std::vector<tl::Variant> b23a () { return m_vars; }
   const std::vector<tl::Variant> &b23b () const { return m_vars; }
   std::vector<tl::Variant> &b23c () { return m_vars; }
   tl::Variant b23d () { return tl::Variant (m_vars.begin (), m_vars.end ()); }
   const std::vector<tl::Variant> *b23e () const { return &m_vars; }
-  const std::vector<tl::Variant> *b23e_null () const { return 0; }
+  const std::vector<tl::Variant> *b23e_null () const { return nullptr; }
   std::vector<tl::Variant> *b23f () { return &m_vars; }
-  std::vector<tl::Variant> *b23f_null () { return 0; }
+  std::vector<tl::Variant> *b23f_null () { return nullptr; }
 
   std::vector<tl::Variant>::const_iterator b24b () { return m_vars.begin (); }
   std::vector<tl::Variant>::const_iterator b24e () { return m_vars.end (); }
@@ -903,10 +903,10 @@ struct B
   std::map<int, std::string> map1 () const { return m_map1; }
   const std::map<int, std::string> &map1_cref () const { return m_map1; }
   const std::map<int, std::string> *map1_cptr () const { return &m_map1; }
-  const std::map<int, std::string> *map1_cptr_null () const { return 0; }
+  const std::map<int, std::string> *map1_cptr_null () const { return nullptr; }
   std::map<int, std::string> &map1_ref () { return m_map1; }
   std::map<int, std::string> *map1_ptr () { return &m_map1; }
-  std::map<int, std::string> *map1_ptr_null () { return 0; }
+  std::map<int, std::string> *map1_ptr_null () { return nullptr; }
   void set_map1_cref (const std::map<int, std::string> &m) { m_map1 = m; }
   void set_map1_ref (std::map<int, std::string> &m) { m_map1 = m; }
   void set_map1_cptr (const std::map<int, std::string> *m) { if (m) { m_map1 = *m; } }
@@ -915,7 +915,7 @@ struct B
 
   void insert_map2 (const tl::Variant &k, const tl::Variant &v) { m_map2[k] = v; }
   const std::map<tl::Variant, tl::Variant> *map2 () const { return &m_map2; }
-  const std::map<tl::Variant, tl::Variant> *map2_null () const { return 0; }
+  const std::map<tl::Variant, tl::Variant> *map2_null () const { return nullptr; }
   void set_map2 (const std::map<tl::Variant, tl::Variant> &m) { m_map2 = m; }
 
   FreeIter<std::vector <B>::const_iterator> each_b_copy () const
@@ -1386,7 +1386,7 @@ public:
   GFactory ();
   virtual ~GFactory ();
 
-  virtual GObject *f (int /*z*/) { return 0; }
+  virtual GObject *f (int /*z*/) { return nullptr; }
   static GObject *create_f (GFactory *g_factory, int z)
   {
     return g_factory->f (z);

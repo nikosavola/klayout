@@ -127,7 +127,7 @@ public:
    *  Creates an empty list.
    */
   SerialArgs ()
-    : mp_buffer (0)
+    : mp_buffer (nullptr)
   {
     mp_write = mp_read = mp_buffer;
   }
@@ -137,7 +137,7 @@ public:
    *  Creates a buffer with space for len bytes.
    */
   SerialArgs (size_t len)
-    : mp_buffer (0)
+    : mp_buffer (nullptr)
   {
     //  use the internal buffer for small argument lists (which are quite common)
     if (len > sizeof (m_buffer)) {
@@ -156,7 +156,7 @@ public:
     if (mp_buffer && mp_buffer != m_buffer) {
       delete [] mp_buffer;
     }
-    mp_buffer = 0;
+    mp_buffer = nullptr;
   }
 
   /**
@@ -230,7 +230,7 @@ public:
   template <class X>
   inline X read (tl::Heap &heap)
   {
-    return this->read_impl<X> (typename type_traits<X>::tag (), heap, 0);
+    return this->read_impl<X> (typename type_traits<X>::tag (), heap, nullptr);
   }
 
   /**
@@ -338,7 +338,7 @@ private:
   template <class X>
   void write_impl (const pod_cptr_tag &, const X *x)
   {
-    *(bool *)mp_write = (x != 0);
+    *(bool *)mp_write = (x != nullptr);
     mp_write += item_size<bool> ();
     if (x) {
       *(X *)mp_write = *x;
@@ -386,7 +386,7 @@ private:
     if (x) {
       *((void **)mp_write) = adaptor_factory<typename gsi::type_traits<X *>::tag, X *>::get (x);
     } else {
-      *((void **)mp_write) = 0;
+      *((void **)mp_write) = nullptr;
     }
     mp_write += item_size<void *> ();
   }
@@ -397,7 +397,7 @@ private:
     if (x) {
       *((void **)mp_write) = adaptor_factory<typename gsi::type_traits<const X *>::tag, const X *>::get (x);
     } else {
-      *((void **)mp_write) = 0;
+      *((void **)mp_write) = nullptr;
     }
     mp_write += item_size<void *> ();
   }
@@ -552,7 +552,7 @@ private:
     AdaptorBase *p = *(AdaptorBase **)mp_read;
     mp_read += item_size<AdaptorBase *> ();
 
-    tl_assert (p != 0);
+    tl_assert (p != nullptr);
     //  late-destroy the adaptor since the new X object may still need data from there (e.g. QLatin1String)
     heap.push (p);
 
@@ -571,7 +571,7 @@ private:
     AdaptorBase *p = *(AdaptorBase **)mp_read;
     mp_read += item_size<AdaptorBase *> ();
 
-    tl_assert (p != 0);
+    tl_assert (p != nullptr);
     //  late-destroy the adaptor since the new X object may still need data from there (e.g. QLatin1String)
     heap.push (p);
 
@@ -591,7 +591,7 @@ private:
 
     AdaptorBase *p = *(AdaptorBase **)mp_read;
     mp_read += item_size<AdaptorBase *> ();
-    tl_assert (p != 0);
+    tl_assert (p != nullptr);
 
     x_type *x = new x_type ();
     heap.push (x);
@@ -610,8 +610,8 @@ private:
     AdaptorBase *p = *(AdaptorBase **) mp_read;
     mp_read += item_size<AdaptorBase *> ();
 
-    x_type *x = 0;
-    if (p != 0) {
+    x_type *x = nullptr;
+    if (p != nullptr) {
 
       //  late-destroy the adaptor since the new X object may still need data from there (e.g. QLatin1String)
       heap.push (p);
@@ -635,8 +635,8 @@ private:
     AdaptorBase *p = *(AdaptorBase **)mp_read;
     mp_read += item_size<AdaptorBase *> ();
 
-    x_type *x = 0;
-    if (p != 0) {
+    x_type *x = nullptr;
+    if (p != nullptr) {
 
       x = new x_type ();
       heap.push (x);
@@ -1149,7 +1149,7 @@ public:
   StringAdaptorImplCCP (CP s) 
     : m_is_const (false), m_s ((const char *) s) 
   { 
-    mp_s = 0; 
+    mp_s = nullptr; 
   }
 
   StringAdaptorImplCCP () 

@@ -91,7 +91,7 @@ void
 SelectCellViewForm::tell_cellview (const lay::CellView &cv)
 {
   mp_ui->cvs_lb->addItem (tl::to_qstring (cv->name ()));
-  mp_ui->cvs_lb->setCurrentItem (0);
+  mp_ui->cvs_lb->setCurrentItem (nullptr);
   mp_ui->cvs_lb->item (0)->setSelected (true);
 }
 

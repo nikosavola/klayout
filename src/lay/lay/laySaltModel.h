@@ -62,7 +62,7 @@ public:
   /**
    *  @brief Constructor
    */
-  SaltModel (QObject *parent, lay::Salt *salt, Salt *salt_filtered = 0, bool salt_exclude = false);
+  SaltModel (QObject *parent, lay::Salt *salt, Salt *salt_filtered = nullptr, bool salt_exclude = false);
 
   /**
    *  @brief Implementation of the QAbstractItemModel interface

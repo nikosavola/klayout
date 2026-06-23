@@ -54,8 +54,8 @@ public:
    */
   HuffmannDecoder ()
   {
-    mp_codes = 0;
-    mp_bitmasks = 0;
+    mp_codes = nullptr;
+    mp_bitmasks = nullptr;
     m_max_bits = 0;
     m_num_codes = 0;
   }
@@ -68,11 +68,11 @@ public:
     if (mp_codes) {
       delete [] mp_codes;
     }
-    mp_codes = 0;
+    mp_codes = nullptr;
     if (mp_bitmasks) {
       delete [] mp_bitmasks;
     }
-    mp_bitmasks = 0;
+    mp_bitmasks = nullptr;
   }
 
   /**
@@ -182,7 +182,7 @@ public:
    */
   unsigned short decode (BitStream &s) const
   {
-    tl_assert (mp_codes != 0);
+    tl_assert (mp_codes != nullptr);
 
     unsigned int m = m_num_codes / 2;
     
@@ -242,12 +242,12 @@ InflateFilter::InflateFilter (tl::InputStream &input)
 InflateFilter::~InflateFilter ()
 {
   delete[] m_buffer;
-  m_buffer = 0;
+  m_buffer = nullptr;
   m_blen = 0;
   delete mp_dist_decoder;
-  mp_dist_decoder = 0;
+  mp_dist_decoder = nullptr;
   delete mp_lit_decoder;
-  mp_lit_decoder = 0;
+  mp_lit_decoder = nullptr;
 }
 
 const char * 
@@ -528,10 +528,10 @@ DeflateFilter::DeflateFilter (tl::OutputStream &output)
   : m_finished (false), mp_output (&output), m_uc (0), m_cc (0)
 {
   mp_stream = new z_stream ();
-  mp_stream->zalloc = (alloc_func)0;
-  mp_stream->zfree = (free_func)0;
-  mp_stream->opaque = (voidpf)0;
-  mp_stream->next_in = (Byte *)0;
+  mp_stream->zalloc = (alloc_func)nullptr;
+  mp_stream->zfree = (free_func)nullptr;
+  mp_stream->opaque = (voidpf)nullptr;
+  mp_stream->next_in = (Byte *)nullptr;
   mp_stream->avail_in = 0;
   mp_stream->next_out = (Byte *)m_buffer;
   mp_stream->avail_out = sizeof (m_buffer);

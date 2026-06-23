@@ -119,16 +119,16 @@ protected:
     db::DPolygon c;
     if (! m_solid) {
       make_circle<size_t (16)> (rad, m_pt, c, false);
-      r.draw (c, vp.trans (), 0, plane, 0, 0);
+      r.draw (c, vp.trans (), nullptr, plane, nullptr, nullptr);
     } else {
       make_circle<size_t (16)> (rad * 2, m_pt, c, false);
-      r.draw (c, vp.trans (), 0, plane, 0, 0);
+      r.draw (c, vp.trans (), nullptr, plane, nullptr, nullptr);
       make_circle<size_t (16)> (rad, m_pt, c, false);
-      r.draw (c, vp.trans (), 0, plane, 0, 0);
+      r.draw (c, vp.trans (), nullptr, plane, nullptr, nullptr);
     }
 
-    r.draw (db::DEdge (m_pt + db::DVector (0, -rad * 4), m_pt + db::DVector (0, rad * 4)), vp.trans (), 0, cross_plane, 0, 0);
-    r.draw (db::DEdge (m_pt + db::DVector (-rad * 4, 0), m_pt + db::DVector (rad * 4, 0)), vp.trans (), 0, cross_plane, 0, 0);
+    r.draw (db::DEdge (m_pt + db::DVector (0, -rad * 4), m_pt + db::DVector (0, rad * 4)), vp.trans (), nullptr, cross_plane, nullptr, nullptr);
+    r.draw (db::DEdge (m_pt + db::DVector (-rad * 4, 0), m_pt + db::DVector (rad * 4, 0)), vp.trans (), nullptr, cross_plane, nullptr, nullptr);
   }
 
 private:
@@ -165,7 +165,7 @@ protected:
     lay::CanvasPlane *edge_plane = canvas.plane (ops);
 
     lay::Renderer &r = canvas.renderer ();
-    r.draw (m_edge, vp.trans (), 0, edge_plane, 0, 0);
+    r.draw (m_edge, vp.trans (), nullptr, edge_plane, nullptr, nullptr);
 
     double arrow_length = 12.0 / canvas.resolution () / vp.trans ().mag ();
 
@@ -175,8 +175,8 @@ protected:
 
     if (m_edge.length () < 2 * arrow_length) {
 
-      r.draw (db::DEdge (m_edge.p1 () - n, m_edge.p1 () + n), vp.trans (), 0, arrow_plane, 0, 0);
-      r.draw (db::DEdge (m_edge.p2 () - n, m_edge.p2 () + n), vp.trans (), 0, arrow_plane, 0, 0);
+      r.draw (db::DEdge (m_edge.p1 () - n, m_edge.p1 () + n), vp.trans (), nullptr, arrow_plane, nullptr, nullptr);
+      r.draw (db::DEdge (m_edge.p2 () - n, m_edge.p2 () + n), vp.trans (), nullptr, arrow_plane, nullptr, nullptr);
 
     } else {
 
@@ -188,14 +188,14 @@ protected:
       pts[2] = m_edge.p1 () + d + n;
 
       p.assign_hull (pts, pts + 3);
-      r.draw (p, vp.trans (), 0, arrow_plane, 0, 0);
+      r.draw (p, vp.trans (), nullptr, arrow_plane, nullptr, nullptr);
 
       pts[0] = m_edge.p2 ();
       pts[1] = m_edge.p2 () - d + n;
       pts[2] = m_edge.p2 () - d - n;
 
       p.assign_hull (pts, pts + 3);
-      r.draw (p, vp.trans (), 0, arrow_plane, 0, 0);
+      r.draw (p, vp.trans (), nullptr, arrow_plane, nullptr, nullptr);
 
     }
   }
@@ -208,7 +208,7 @@ private:
 // --------------------------------------------------------------------------------------
 
 EditorServiceBase::EditorServiceBase (LayoutViewBase *view)
-  : lay::ViewService (view ? view->canvas () : 0),
+  : lay::ViewService (view ? view->canvas () : nullptr),
     lay::Editable (view),
     lay::Plugin (view),
     mp_view (view),
@@ -224,7 +224,7 @@ EditorServiceBase::init (LayoutViewBase *view)
 {
   mp_view = view;
   lay::Plugin::init (view);
-  lay::ViewService::init (view ? view->canvas () : 0);
+  lay::ViewService::init (view ? view->canvas () : nullptr);
   lay::Editable::init (view);
 }
 
@@ -365,7 +365,7 @@ EditorServiceBase::focus_page ()
     }
   }
 
-  return 0;
+  return nullptr;
 }
 
 bool

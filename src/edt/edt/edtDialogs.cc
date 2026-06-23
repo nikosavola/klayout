@@ -42,7 +42,7 @@ namespace edt {
 //  edt::InstantiationForm implementation
 
 InstantiationForm::InstantiationForm (QWidget *parent)
-  : QDialog (parent), mp_view (0), mp_path (0), mp_marker (0), m_enable_cb_callbacks (false)
+  : QDialog (parent), mp_view (nullptr), mp_path (nullptr), mp_marker (nullptr), m_enable_cb_callbacks (false)
 {
   setObjectName (QString::fromUtf8 ("instantiation_form"));
 
@@ -57,7 +57,7 @@ InstantiationForm::~InstantiationForm ()
 {
   if (mp_marker) {
     delete mp_marker;
-    mp_marker = 0;
+    mp_marker = nullptr;
   }
 }
 
@@ -131,8 +131,8 @@ InstantiationForm::show (lay::LayoutViewBase *view, const lay::ObjectInstPath &p
   update ();
   exec ();
 
-  mp_view = 0;
-  mp_path = 0;
+  mp_view = nullptr;
+  mp_path = nullptr;
 }
 
 void 
@@ -521,7 +521,7 @@ MakeCellOptionsDialog::button_clicked ()
 //  RoundCornerOptionsDialog implementation
 
 RoundCornerOptionsDialog::RoundCornerOptionsDialog (QWidget *parent)
-  : QDialog (parent), mp_layout (0), m_router_extracted (0.0), m_rinner_extracted (0.0), m_npoints_extracted (64), m_has_extracted (false)
+  : QDialog (parent), mp_layout (nullptr), m_router_extracted (0.0), m_rinner_extracted (0.0), m_npoints_extracted (64), m_has_extracted (false)
 {
   setObjectName (QString::fromUtf8 ("round_corners_options_dialog"));
 
@@ -588,11 +588,11 @@ RoundCornerOptionsDialog::exec_dialog (const db::Layout &layout, double &router,
     }
     tl::from_string_ext (tl::to_string (points_le->text ()), npoints);
 
-    mp_layout = 0;
+    mp_layout = nullptr;
     return true;
 
   } else {
-    mp_layout = 0;
+    mp_layout = nullptr;
     return false;
   }
 }
@@ -757,7 +757,7 @@ popup_tap_layer_menu (lay::LayoutViewBase *view, const std::set<db::LayerPropert
   lay::ShapeFinder finder (true,    //  point mode
                            false,   //  all hierarchy levels
                            db::ShapeIterator::flags_type (db::ShapeIterator::All - db::ShapeIterator::Texts),  //  do not consider texts - their bounding box may be too large
-                           0,       //  no excludes
+                           nullptr,       //  no excludes
                            true     //  capture all shapes
                           );
 

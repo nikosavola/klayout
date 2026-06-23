@@ -99,10 +99,10 @@ void render_cell_inst (const db::Layout &layout, const db::CellInstArray &inst, 
       db::CplxTrans tbox (trans * inst.complex_trans ());
 
       //  one representative instance
-      r.draw (cell_box, tbox, fill, contour, 0, text);
-      r.draw (cell_box, db::CplxTrans (trans * (av * long (amax - 1))) * tbox, fill, contour, 0, text);
-      r.draw (cell_box, db::CplxTrans (trans * (bv * long (bmax - 1))) * tbox, fill, contour, 0, text);
-      r.draw (cell_box, db::CplxTrans (trans * (av * long (amax - 1) + bv * long (bmax - 1))) * tbox, fill, contour, 0, text);
+      r.draw (cell_box, tbox, fill, contour, nullptr, text);
+      r.draw (cell_box, db::CplxTrans (trans * (av * long (amax - 1))) * tbox, fill, contour, nullptr, text);
+      r.draw (cell_box, db::CplxTrans (trans * (bv * long (bmax - 1))) * tbox, fill, contour, nullptr, text);
+      r.draw (cell_box, db::CplxTrans (trans * (av * long (amax - 1) + bv * long (bmax - 1))) * tbox, fill, contour, nullptr, text);
 
       db::DBox cb (tbox * cell_box);
       db::DPolygon p;
@@ -113,12 +113,12 @@ void render_cell_inst (const db::Layout &layout, const db::CellInstArray &inst, 
         db::DPoint (cb.lower_left () + trans * (bv * long (bmax - 1))),
       };
       p.assign_hull (points, points + sizeof (points) / sizeof (points[0]));
-      r.draw (p, fill, contour, 0, text);
+      r.draw (p, fill, contour, nullptr, text);
 
       if (text) {
         db::DBox arr_box (db::DPoint (), db::DPoint () + trans * (av * long (amax - 1) + bv * long (bmax - 1)));
         arr_box *= cb;
-        r.draw (arr_box, tl::sprintf (tl::to_string (tr ("Array %ldx%ld")), amax, bmax), db::Font (font), db::HAlignCenter, db::VAlignCenter, db::DFTrans (db::DFTrans::r0), 0, 0, 0, text);
+        r.draw (arr_box, tl::sprintf (tl::to_string (tr ("Array %ldx%ld")), amax, bmax), db::Font (font), db::HAlignCenter, db::VAlignCenter, db::DFTrans (db::DFTrans::r0), nullptr, nullptr, nullptr, text);
       }
 
     } else {
@@ -128,7 +128,7 @@ void render_cell_inst (const db::Layout &layout, const db::CellInstArray &inst, 
         //  fallback to simpler representation using a description text
         db::CplxTrans tbox (trans * inst.complex_trans ());
 
-        r.draw (cell_box, tbox, fill, contour, 0, 0);
+        r.draw (cell_box, tbox, fill, contour, nullptr, nullptr);
 
         db::DBox dbox = tbox * cell_box;
         if (text && ! cell_name.empty () && dbox.width () > min_size_for_label && dbox.height () > min_size_for_label) {
@@ -139,7 +139,7 @@ void render_cell_inst (const db::Layout &layout, const db::CellInstArray &inst, 
                   db::HAlignCenter,
                   db::VAlignCenter,
                   //  TODO: apply "real" transformation?
-                  db::DFTrans (cell_name_text_transform ? tbox.fp_trans ().rot () : db::DFTrans::r0), 0, 0, 0, contour);
+                  db::DFTrans (cell_name_text_transform ? tbox.fp_trans ().rot () : db::DFTrans::r0), nullptr, nullptr, nullptr, contour);
 
         }
 
@@ -162,7 +162,7 @@ void render_cell_inst (const db::Layout &layout, const db::CellInstArray &inst, 
       while (! shapes.at_end ()) {
 
         for (db::CellInstArray::iterator arr = inst.begin (); ! arr.at_end (); ++arr) {
-          r.draw (*shapes, trans * inst.complex_trans (*arr) * shapes.trans (), fill, contour, 0 /*use vertex for origin*/, text);
+          r.draw (*shapes, trans * inst.complex_trans (*arr) * shapes.trans (), fill, contour, nullptr /*use vertex for origin*/, text);
         }
 
         ++shapes;
@@ -178,7 +178,7 @@ void render_cell_inst (const db::Layout &layout, const db::CellInstArray &inst, 
 
     for (db::CellInstArray::iterator arr = inst.begin (); ! arr.at_end (); ++arr) {
       db::DPoint dp = db::DPoint () + (trans * inst.complex_trans (*arr)).disp ();
-      r.draw (db::DEdge (dp, dp), 0, 0, vertex, 0);
+      r.draw (db::DEdge (dp, dp), nullptr, nullptr, vertex, nullptr);
     }
 
   }
@@ -187,7 +187,7 @@ void render_cell_inst (const db::Layout &layout, const db::CellInstArray &inst, 
 // ------------------------------------------------------------------------
 
 MarkerBase::MarkerBase (lay::LayoutViewBase *view)
-  : lay::ViewObject (view ? view->canvas () : 0),
+  : lay::ViewObject (view ? view->canvas () : nullptr),
     m_line_width (-1), m_vertex_size (-1), m_halo (-1), m_text_enabled (true), m_text_frame_enabled (true), m_vertex_shape (lay::ViewOp::Rect), m_line_style (-1), m_dither_pattern (-1), m_frame_pattern (0), mp_view (view)
 { 
   // .. nothing yet ..
@@ -338,7 +338,7 @@ MarkerBase::get_bitmaps (const Viewport & /*vp*/, ViewObjectCanvas &canvas, lay:
       ops[1] = lay::ViewOp (color.rgb (), lay::ViewOp::Copy, 0, (unsigned int) dither_pattern, 0, lay::ViewOp::Rect, basic_width, 1);
       fill = canvas.plane (ops);
     } else {
-      fill = 0;
+      fill = nullptr;
     }
 
     ops[0] = lay::ViewOp (canvas.background_color ().rgb (), lay::ViewOp::Copy, (unsigned int) line_style, (unsigned int) m_frame_pattern, 0, lay::ViewOp::Rect, line_width > 0 ? (line_width + 2) * basic_width : 0, 0);
@@ -346,7 +346,7 @@ MarkerBase::get_bitmaps (const Viewport & /*vp*/, ViewObjectCanvas &canvas, lay:
     contour = canvas.plane (ops);
 
     if (! m_text_enabled) {
-      text = 0;
+      text = nullptr;
     } else if (line_width == 1) {
       text = contour;
     } else {
@@ -371,13 +371,13 @@ MarkerBase::get_bitmaps (const Viewport & /*vp*/, ViewObjectCanvas &canvas, lay:
     if (dither_pattern >= 0) {
       fill = canvas.plane (lay::ViewOp (color.rgb (), lay::ViewOp::Copy, 0, (unsigned int) dither_pattern, 0, lay::ViewOp::Rect, basic_width));
     } else {
-      fill = 0;
+      fill = nullptr;
     }
 
     contour = canvas.plane (lay::ViewOp (frame_color.rgb (), lay::ViewOp::Copy, (unsigned int) line_style, (unsigned int) m_frame_pattern, 0, lay::ViewOp::Rect, line_width * basic_width));
     vertex = canvas.plane (lay::ViewOp (frame_color.rgb (), lay::ViewOp::Copy, 0, 0, 0, m_vertex_shape, vertex_size * basic_width));
     if (! m_text_enabled) {
-      text = 0;
+      text = nullptr;
     } else if (line_width == 1) {
       text = contour;
     } else {
@@ -390,7 +390,7 @@ MarkerBase::get_bitmaps (const Viewport & /*vp*/, ViewObjectCanvas &canvas, lay:
 // ------------------------------------------------------------------------
 
 GenericMarkerBase::GenericMarkerBase (lay::LayoutViewBase *view, unsigned int cv_index)
-  : MarkerBase (view), mp_trans_vector (0), m_cv_index (cv_index)
+  : MarkerBase (view), mp_trans_vector (nullptr), m_cv_index (cv_index)
 { 
   // .. nothing yet ..
 }
@@ -399,7 +399,7 @@ GenericMarkerBase::~GenericMarkerBase ()
 {
   if (mp_trans_vector) {
     delete mp_trans_vector;
-    mp_trans_vector = 0;
+    mp_trans_vector = nullptr;
   }
 }
 
@@ -417,7 +417,7 @@ GenericMarkerBase::set (const db::ICplxTrans &t1)
 {
   if (mp_trans_vector) {
     delete mp_trans_vector;
-    mp_trans_vector = 0;
+    mp_trans_vector = nullptr;
   }
   m_trans = db::CplxTrans (dbu ()) * t1;
   redraw ();
@@ -428,7 +428,7 @@ GenericMarkerBase::set (const db::DCplxTrans &t1)
 {
   if (mp_trans_vector) {
     delete mp_trans_vector;
-    mp_trans_vector = 0;
+    mp_trans_vector = nullptr;
   }
   //  Note: this cast is not really correct but we handle float and integer types in the same fashion now.
   m_trans = db::CplxTrans (db::DCplxTrans (dbu ()) * t1);
@@ -440,7 +440,7 @@ GenericMarkerBase::set (const db::ICplxTrans &t1, const std::vector<db::DCplxTra
 {
   if (mp_trans_vector) {
     delete mp_trans_vector;
-    mp_trans_vector = 0;
+    mp_trans_vector = nullptr;
   }
   if (trans.size () == 1) {
     m_trans = trans [0] * db::CplxTrans (dbu ()) * t1;
@@ -456,7 +456,7 @@ GenericMarkerBase::set (const db::DCplxTrans &t1, const std::vector<db::DCplxTra
 {
   if (mp_trans_vector) {
     delete mp_trans_vector;
-    mp_trans_vector = 0;
+    mp_trans_vector = nullptr;
   }
   if (trans.size () == 1) {
     //  Note: this cast is not really correct but we handle float and integer types in the same fashion now.
@@ -493,12 +493,12 @@ const db::Layout *
 GenericMarkerBase::layout () const
 {
   if (m_cv_index >= (unsigned int) (view ()->cellviews ())) {
-    return 0;
+    return nullptr;
   }
 
   const lay::CellView &cv = view ()->cellview (m_cv_index);
   if (! cv.is_valid ()) {
-    return 0;
+    return nullptr;
   } else {
     return &cv->layout ();
   }
@@ -548,7 +548,7 @@ InstanceMarker::render (const Viewport &vp, ViewObjectCanvas &canvas)
 
   lay::CanvasPlane *fill, *contour, *vertex, *text;
   get_bitmaps (vp, canvas, fill, contour, vertex, text);
-  if (contour == 0 && vertex == 0 && fill == 0 && text == 0) {
+  if (contour == nullptr && vertex == nullptr && fill == nullptr && text == nullptr) {
     return;
   }
 
@@ -633,7 +633,7 @@ ShapeMarker::render (const Viewport &vp, ViewObjectCanvas &canvas)
 
   lay::CanvasPlane *fill, *contour, *vertex, *text; 
   get_bitmaps (vp, canvas, fill, contour, vertex, text);
-  if (contour == 0 && vertex == 0 && fill == 0 && text == 0) {
+  if (contour == nullptr && vertex == nullptr && fill == nullptr && text == nullptr) {
     return;
   }
 
@@ -655,7 +655,7 @@ ShapeMarker::render (const Viewport &vp, ViewObjectCanvas &canvas)
         m_shape.text (t);
         db::DBox box = ti.bbox (trans () * t, vp_trans).enlarged (text_box_enlargement (vp_trans));
         if (! box.is_point ()) {
-          r.draw (box, vp_trans, 0, text, 0, 0);
+          r.draw (box, vp_trans, nullptr, text, nullptr, nullptr);
         }
       }
       r.draw (m_shape, t, fill, contour, vertex, text);
@@ -670,7 +670,7 @@ ShapeMarker::render (const Viewport &vp, ViewObjectCanvas &canvas)
       m_shape.text (t);
       db::DBox box = ti.bbox (trans () * t, vp.trans ()).enlarged (text_box_enlargement (vp.trans ()));
       if (! box.is_point ()) {
-        r.draw (box, vp.trans (), 0, text, 0, 0);
+        r.draw (box, vp.trans (), nullptr, text, nullptr, nullptr);
       }
     }
     r.draw (m_shape, t, fill, contour, vertex, text);
@@ -690,7 +690,7 @@ Marker::Marker (lay::LayoutViewBase *view, unsigned int cv_index, bool draw_outl
   : GenericMarkerBase (view, cv_index), m_draw_outline (draw_outline), m_max_shapes (max_shapes) 
 { 
   m_type = None;
-  m_object.any = 0;
+  m_object.any = nullptr;
 }
 
 Marker::~Marker ()
@@ -1103,7 +1103,7 @@ Marker::remove_object ()
   } 
 
   m_type = None;
-  m_object.any = 0;
+  m_object.any = nullptr;
 }
 
 void 
@@ -1133,7 +1133,7 @@ Marker::draw (lay::Renderer &r, const db::CplxTrans &t, lay::CanvasPlane *fill, 
       db::DCplxTrans dt (t);
       db::DBox box = ti.bbox (*m_object.dtext, dt).enlarged (text_box_enlargement (dt));
       if (! box.is_point ()) {
-        r.draw (box, dt, 0, text, 0, 0);
+        r.draw (box, dt, nullptr, text, nullptr, nullptr);
       }
     }
     r.draw (*m_object.dtext, db::DCplxTrans (t), fill, contour, vertex, text);
@@ -1145,12 +1145,12 @@ Marker::draw (lay::Renderer &r, const db::CplxTrans &t, lay::CanvasPlane *fill, 
     r.draw (m_object.edge_pair->first (), t, fill, contour, vertex, text);
     r.draw (m_object.edge_pair->second (), t, fill, contour, vertex, text);
     db::Polygon poly = m_object.edge_pair->normalized ().to_polygon (0);
-    r.draw (poly, t, fill, 0, 0, 0);
+    r.draw (poly, t, fill, nullptr, nullptr, nullptr);
   } else if (m_type == DEdgePair) {
     r.draw (m_object.dedge_pair->first (), db::DCplxTrans (t), fill, contour, vertex, text);
     r.draw (m_object.dedge_pair->second (), db::DCplxTrans (t), fill, contour, vertex, text);
     db::DPolygon poly = m_object.dedge_pair->normalized ().to_polygon (0);
-    r.draw (poly, db::DCplxTrans (t), fill, 0, 0, 0);
+    r.draw (poly, db::DCplxTrans (t), fill, nullptr, nullptr, nullptr);
   } else if (m_type == Instance) {
     const lay::CellView &cv = view ()->cellview (cv_index ());
     bool label_transform = view ()->cell_box_text_transform ();
@@ -1164,7 +1164,7 @@ Marker::render (const Viewport &vp, ViewObjectCanvas &canvas)
 { 
   lay::CanvasPlane *fill, *contour, *vertex, *text; 
   get_bitmaps (vp, canvas, fill, contour, vertex, text);
-  if (contour == 0 && vertex == 0 && fill == 0 && text == 0) {
+  if (contour == nullptr && vertex == nullptr && fill == nullptr && text == nullptr) {
     return;
   }
 
@@ -1192,7 +1192,7 @@ DMarker::DMarker (LayoutViewBase *view)
   : MarkerBase (view)
 { 
   m_type = None;
-  m_object.any = 0;
+  m_object.any = nullptr;
 }
 
 DMarker::~DMarker ()
@@ -1304,7 +1304,7 @@ DMarker::remove_object ()
   } 
 
   m_type = None;
-  m_object.any = 0;
+  m_object.any = nullptr;
 }
 
 void 
@@ -1312,7 +1312,7 @@ DMarker::render (const Viewport &vp, ViewObjectCanvas &canvas)
 { 
   lay::CanvasPlane *fill, *contour, *vertex, *text; 
   get_bitmaps (vp, canvas, fill, contour, vertex, text);
-  if (contour == 0 && vertex == 0 && fill == 0 && text == 0) {
+  if (contour == nullptr && vertex == nullptr && fill == nullptr && text == nullptr) {
     return;
   }
 
@@ -1337,7 +1337,7 @@ DMarker::render (const Viewport &vp, ViewObjectCanvas &canvas)
       lay::TextInfo ti (view ());
       db::DBox box = ti.bbox (*m_object.text, t).enlarged (text_box_enlargement (t));
       if (! box.is_point ()) {
-        r.draw (box, t, 0, text, 0, 0);
+        r.draw (box, t, nullptr, text, nullptr, nullptr);
       }
     }
     r.draw (*m_object.text, t, fill, contour, vertex, text);
@@ -1347,7 +1347,7 @@ DMarker::render (const Viewport &vp, ViewObjectCanvas &canvas)
     r.draw (m_object.edge_pair->first (), t, fill, contour, vertex, text);
     r.draw (m_object.edge_pair->second (), t, fill, contour, vertex, text);
     db::DPolygon poly = m_object.edge_pair->normalized ().to_polygon (0);
-    r.draw (poly, t, fill, 0, 0, 0);
+    r.draw (poly, t, fill, nullptr, nullptr, nullptr);
   }
 
 }

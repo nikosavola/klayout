@@ -202,7 +202,7 @@ db::Layout *
 Shapes::layout () const 
 {
   db::Cell *c = cell ();
-  return c ? c->layout () : 0;
+  return c ? c->layout () : nullptr;
 }
 
 void
@@ -259,7 +259,7 @@ Shapes::do_insert (const Shapes &d, unsigned int flags)
       }
     }
 
-  } else if (layout () == 0) {
+  } else if (layout () == nullptr) {
 
     //  the target is standalone - dereference
     for (tl::vector<LayerBase *>::const_iterator l = d.m_layers.begin (); l != d.m_layers.end (); ++l) {
@@ -377,7 +377,7 @@ Shapes::do_insert (const Shapes::shape_type &shape, const Shapes::unit_trans_typ
       }
     }
   case shape_type::PolygonPtrArray:
-    tl_assert (layout () != 0);  //  cannot translate the array members
+    tl_assert (layout () != nullptr);  //  cannot translate the array members
     return shape_type (insert_array_by_tag (shape_type::polygon_ptr_array_type::tag (), shape, shape_repository (), pm));
   case shape_type::SimplePolygon:
     return (insert_by_tag (shape_type::simple_polygon_type::tag (), shape, pm));
@@ -403,7 +403,7 @@ Shapes::do_insert (const Shapes::shape_type &shape, const Shapes::unit_trans_typ
       }
     }
   case shape_type::SimplePolygonPtrArray:
-    tl_assert (layout () != 0);  //  cannot translate the array members
+    tl_assert (layout () != nullptr);  //  cannot translate the array members
     return (insert_array_by_tag (shape_type::simple_polygon_ptr_array_type::tag (), shape, shape_repository (), pm));
   case shape_type::Edge:
     return (insert_by_tag (shape_type::edge_type::tag (), shape, pm));
@@ -435,7 +435,7 @@ Shapes::do_insert (const Shapes::shape_type &shape, const Shapes::unit_trans_typ
       }
     }
   case shape_type::PathPtrArray:
-    tl_assert (layout () != 0);  //  cannot translate the array members
+    tl_assert (layout () != nullptr);  //  cannot translate the array members
     return (insert_array_by_tag (shape_type::path_ptr_array_type::tag (), shape, shape_repository (), pm));
   case shape_type::Box:
     return (insert_by_tag (shape_type::box_type::tag (), shape, pm));
@@ -467,7 +467,7 @@ Shapes::do_insert (const Shapes::shape_type &shape, const Shapes::unit_trans_typ
     return (insert_by_tag (shape_type::short_box_array_type::tag (), shape, pm));
   case shape_type::Text:
     {
-      if (shape.text ().string_ref () != 0) {
+      if (shape.text ().string_ref () != nullptr) {
         return safe_insert_text (*this, shape, pm);
       } else {
         return (insert_by_tag (shape_type::text_type::tag (), shape, pm));
@@ -483,7 +483,7 @@ Shapes::do_insert (const Shapes::shape_type &shape, const Shapes::unit_trans_typ
         } else {
           return insert (db::object_with_properties<shape_type::text_type> (t, pm (shape.prop_id ())));
         }
-      } else if (shape.text_ref ().obj ().string_ref () != 0) {
+      } else if (shape.text_ref ().obj ().string_ref () != nullptr) {
         return safe_insert_text (*this, shape, pm);
       } else {
         return (insert_by_tag (shape_type::text_ref_type::tag (), shape, shape_repository (), pm));
@@ -492,7 +492,7 @@ Shapes::do_insert (const Shapes::shape_type &shape, const Shapes::unit_trans_typ
   case shape_type::TextPtrArrayMember:
     return safe_insert_text (*this, shape, pm);
   case shape_type::TextPtrArray:
-    tl_assert (layout () != 0);  //  cannot translate the array members
+    tl_assert (layout () != nullptr);  //  cannot translate the array members
     return insert_array_by_tag (shape_type::text_ptr_array_type::tag (), shape, shape_repository (), pm);
   case shape_type::UserObject:
     return insert_by_tag (shape_type::user_object_type::tag (), shape, pm);
@@ -1202,7 +1202,7 @@ void Shapes::update ()
 
   //  If not in a layout context, we should lock here against multiple calls from different threads.
   //  In a layout context, the Layout object will do that for us.
-  if (layout () == 0) {
+  if (layout () == nullptr) {
     static tl::Mutex lock;
     locker.reset (new tl::MutexLocker (&lock));
   }

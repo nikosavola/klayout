@@ -341,7 +341,7 @@ PolygonGenerator::PolygonGenerator (PolygonSink &psink, bool resolve_holes, bool
     m_y (std::numeric_limits<db::Coord>::min ()),
     m_open_pos (m_open.end ()), 
     mp_psink (&psink),
-    mp_spsink (0),
+    mp_spsink (nullptr),
     m_resolve_holes (resolve_holes),
     m_open_contours (false),
     m_min_coherence (min_coherence),
@@ -355,7 +355,7 @@ PolygonGenerator::PolygonGenerator (SimplePolygonSink &spsink, bool min_coherenc
     mp_contours (new PGContourList ()),
     m_y (std::numeric_limits<db::Coord>::min ()),
     m_open_pos (m_open.end ()), 
-    mp_psink (0),
+    mp_psink (nullptr),
     mp_spsink (&spsink),
     m_resolve_holes (true),
     m_open_contours (false),
@@ -368,7 +368,7 @@ PolygonGenerator::PolygonGenerator (SimplePolygonSink &spsink, bool min_coherenc
 PolygonGenerator::~PolygonGenerator ()
 {
   delete mp_contours;
-  mp_contours = 0;
+  mp_contours = nullptr;
 }
 
 void
@@ -981,7 +981,7 @@ TrapezoidGenerator::TrapezoidGenerator (PolygonSink &psink)
   : EdgeSink (),
     m_y (std::numeric_limits<db::Coord>::min ()),
     mp_psink (&psink),
-    mp_spsink (0)
+    mp_spsink (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -989,7 +989,7 @@ TrapezoidGenerator::TrapezoidGenerator (PolygonSink &psink)
 TrapezoidGenerator::TrapezoidGenerator (SimplePolygonSink &spsink)
   : EdgeSink (),
     m_y (std::numeric_limits<db::Coord>::min ()),
-    mp_psink (0),
+    mp_psink (nullptr),
     mp_spsink (&spsink)
 {
   //  .. nothing yet ..

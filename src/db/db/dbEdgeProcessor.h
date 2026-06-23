@@ -171,14 +171,14 @@ public:
   /**
    *  @brief Constructor connecting this receiver to an external edge vector
    */
-  EdgeContainer (std::vector<db::Edge> &edges, bool clear = false, int tag = 0, EdgeContainer *chained = 0)
+  EdgeContainer (std::vector<db::Edge> &edges, bool clear = false, int tag = 0, EdgeContainer *chained = nullptr)
     : EdgeSink (), mp_edges (&edges), m_clear (clear), m_tag (tag), mp_chained (chained)
   { }
 
   /**
    *  @brief Constructor using an internal edge vector
    */
-  EdgeContainer (int tag = 0, EdgeContainer *chained = 0)
+  EdgeContainer (int tag = 0, EdgeContainer *chained = nullptr)
     : EdgeSink (), mp_edges (&m_edges), m_clear (false), m_tag (tag), mp_chained (chained)
   { }
 

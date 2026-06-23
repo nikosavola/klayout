@@ -63,7 +63,7 @@ static int inst_point_sel_tests = 10000;
 
 Finder::Finder (bool point_mode, bool top_level_sel)
   : m_min_level (0), m_max_level (0),
-    mp_layout (0), mp_view (0), m_cv_index (0), m_point_mode (point_mode), m_catch_all (false), m_consider_viewport (true), m_top_level_sel (top_level_sel)
+    mp_layout (nullptr), mp_view (nullptr), m_cv_index (0), m_point_mode (point_mode), m_catch_all (false), m_consider_viewport (true), m_top_level_sel (top_level_sel)
 {
   m_distance = std::numeric_limits<double>::max ();
 }
@@ -261,10 +261,10 @@ Finder::do_find (const db::Cell &cell, int level, const db::DCplxTrans &vp, cons
 
 ShapeFinder::ShapeFinder (bool point_mode, bool top_level_sel, db::ShapeIterator::flags_type flags, const std::set<lay::ObjectInstPath> *excludes, bool capture_all_shapes)
   : Finder (point_mode, top_level_sel), 
-    mp_excludes ((excludes && !excludes->empty ()) ? excludes : 0),
+    mp_excludes ((excludes && !excludes->empty ()) ? excludes : nullptr),
     m_flags (flags), m_cv_index (0), m_topcell (0), 
-    mp_text_info (0),
-    mp_prop_sel (0), m_inv_prop_sel (false), mp_progress (0),
+    mp_text_info (nullptr),
+    mp_prop_sel (nullptr), m_inv_prop_sel (false), mp_progress (nullptr),
     m_capture_all_shapes (capture_all_shapes)
 {
   m_try_counter = m_tries = point_sel_tests;
@@ -330,7 +330,7 @@ ShapeFinder::find (LayoutViewBase *view, const db::DBox &region_mu)
   m_cells_with_context.clear ();
 
   lay::TextInfo text_info (view);
-  mp_text_info = (m_flags & db::ShapeIterator::Texts) != 0 && point_mode () ? &text_info : 0;
+  mp_text_info = (m_flags & db::ShapeIterator::Texts) != 0 && point_mode () ? &text_info : nullptr;
 
   std::vector<lay::LayerPropertiesConstIterator> lprops;
   for (lay::LayerPropertiesConstIterator lp = view->begin_layers (); ! lp.at_end (); ++lp) {
@@ -378,11 +378,11 @@ ShapeFinder::find (LayoutViewBase *view, const db::DBox &region_mu)
     std::vector<db::DCplxTrans> trans;
     trans.push_back (v->first);
 
-    find_internal (view, (unsigned int) v->second, 0, false, lay::HierarchyLevelSelection (), trans, layers, region_mu);
+    find_internal (view, (unsigned int) v->second, nullptr, false, lay::HierarchyLevelSelection (), trans, layers, region_mu);
 
   }
 
-  mp_progress = 0;
+  mp_progress = nullptr;
   m_cells_with_context.clear ();
   m_context_layers.clear ();
 
@@ -401,7 +401,7 @@ ShapeFinder::find (lay::LayoutViewBase *view, const lay::LayerProperties &lprops
   m_context_layers.clear ();
 
   lay::TextInfo text_info (view);
-  mp_text_info = (m_flags & db::ShapeIterator::Texts) != 0 ? &text_info : 0;
+  mp_text_info = (m_flags & db::ShapeIterator::Texts) != 0 ? &text_info : nullptr;
 
   std::vector<unsigned int> layers;
   int li = lprops.layer_index ();
@@ -410,7 +410,7 @@ ShapeFinder::find (lay::LayoutViewBase *view, const lay::LayerProperties &lprops
   }
   bool result = find_internal (view, lprops.cellview_index (), &lprops.prop_sel (), lprops.inverse_prop_sel (), lprops.hier_levels (), lprops.trans (), layers, region_mu);
 
-  mp_progress = 0;
+  mp_progress = nullptr;
   return result;
 }
 
@@ -570,7 +570,7 @@ ShapeFinder::visit_cell (const db::Cell &cell, const db::Box &hit_box, const db:
             m_founds.back ().set_shape (*shape);
 
             //  Remove the selection if it's part of the excluded set
-            if (mp_excludes != 0 && mp_excludes->find (m_founds.back ()) != mp_excludes->end ()) {
+            if (mp_excludes != nullptr && mp_excludes->find (m_founds.back ()) != mp_excludes->end ()) {
               m_founds.pop_back ();
             }
 
@@ -743,14 +743,14 @@ ShapeFinder::visit_cell (const db::Cell &cell, const db::Box &hit_box, const db:
 InstFinder::InstFinder (bool point_mode, bool top_level_sel, bool full_arrays, bool enclose_inst, const std::set<lay::ObjectInstPath> *excludes, bool visible_layers)
   : Finder (point_mode, top_level_sel), 
     m_cv_index (0), m_topcell (0), 
-    mp_excludes ((excludes && !excludes->empty ()) ? excludes : 0),
+    mp_excludes ((excludes && !excludes->empty ()) ? excludes : nullptr),
     m_full_arrays (full_arrays), 
     m_enclose_insts (enclose_inst), 
     m_visible_layers (visible_layers),
     m_consider_ghost_cells (true),
     m_consider_normal_cells (true),
-    mp_view (0), 
-    mp_progress (0)
+    mp_view (nullptr), 
+    mp_progress (nullptr)
 {
   m_tries = inst_point_sel_tests;
 }
@@ -768,7 +768,7 @@ InstFinder::find (lay::LayoutViewBase *view, const db::DBox &region_mu)
     find (view, v->second, v->first, region_mu);
   }
 
-  mp_progress = 0;
+  mp_progress = nullptr;
   return ! m_founds.empty ();
 }
 
@@ -782,7 +782,7 @@ InstFinder::find (LayoutViewBase *view, unsigned int cv_index, const db::DCplxTr
 
   bool result = find_internal (view, cv_index, trans_mu, region_mu);
 
-  mp_progress = 0;
+  mp_progress = nullptr;
   return result;
 }
 
@@ -918,7 +918,7 @@ InstFinder::visit_cell (const db::Cell &cell, const db::Box &search_box, const d
               m_founds.back ().add_path (el);
 
               //  Remove the selection if it's part of the excluded set
-              if (mp_excludes != 0 && mp_excludes->find (m_founds.back ()) != mp_excludes->end ()) {
+              if (mp_excludes != nullptr && mp_excludes->find (m_founds.back ()) != mp_excludes->end ()) {
                 m_founds.pop_back ();
               }
 

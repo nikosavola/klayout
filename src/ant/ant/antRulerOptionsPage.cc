@@ -52,7 +52,7 @@ RulerOptionsPage::RulerOptionsPage (lay::LayoutViewBase *view, lay::Dispatcher *
 RulerOptionsPage::~RulerOptionsPage ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 std::string

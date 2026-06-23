@@ -63,13 +63,13 @@ public:
   struct chunk {
   public:
     chunk ()
-      : m_len (0), m_next (0)
+      : m_len (0), m_next (nullptr)
     {
       //  .. nothing yet ..
     }
 
     chunk (const chunk &other)
-      : m_len (0), m_next (0)
+      : m_len (0), m_next (nullptr)
     {
       operator= (other);
     }
@@ -98,7 +98,7 @@ public:
   class iterator
   {
   public:
-    iterator (chunk *ch = 0)
+    iterator (chunk *ch = nullptr)
       : mp_chunk (ch)
     {
       //  .. nothing yet ..
@@ -138,7 +138,7 @@ public:
    *  Creates an empty array
    */
   mem_chunks ()
-    : mp_chunks (0), mp_last_chunk (0)
+    : mp_chunks (nullptr), mp_last_chunk (nullptr)
   {
     //  .. nothing yet ..
   }
@@ -155,7 +155,7 @@ public:
    *  @brief Copy constructor
    */
   mem_chunks (const mem_chunks &other)
-    : mp_chunks (0), mp_last_chunk (0)
+    : mp_chunks (nullptr), mp_last_chunk (nullptr)
   {
     operator= (other);
   }
@@ -188,8 +188,8 @@ public:
   void clear ()
   {
     chunk *ch = mp_chunks;
-    mp_chunks = 0;
-    mp_last_chunk = 0;
+    mp_chunks = nullptr;
+    mp_last_chunk = nullptr;
     while (ch) {
       chunk *del = ch;
       ch = ch->m_next;

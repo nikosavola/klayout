@@ -82,7 +82,7 @@ MoveTrackerService::issue_edit_events ()
       db::CplxTrans gt = db::CplxTrans (dbu) * cv.context_trans () * r->trans ();
 
       //  get one representative global transformation
-      const std::vector<db::DCplxTrans> *tv_list = 0;
+      const std::vector<db::DCplxTrans> *tv_list = nullptr;
       if (r->is_cell_inst ()) {
         tv_list = tv.per_cv (r->cv_index ());
       } else {

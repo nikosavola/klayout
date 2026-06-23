@@ -1223,7 +1223,7 @@ do_compare_layouts (const db::Layout &a, const db::Cell *top_a, const db::Layout
 bool
 compare_layouts (const db::Layout &a, const db::Layout &b, unsigned int flags, db::Coord tolerance, DifferenceReceiver &r)
 {
-  return do_compare_layouts (a, 0, b, 0, flags, tolerance, r);
+  return do_compare_layouts (a, nullptr, b, nullptr, flags, tolerance, r);
 }
 
 bool

@@ -41,7 +41,7 @@ GDS2Reader::GDS2Reader (tl::InputStream &s)
     m_recnum (0),
     m_reclen (0),
     m_recptr (0),
-    mp_rec_buf (0),
+    mp_rec_buf (nullptr),
     m_stored_rec (0),
     m_allow_big_records (true),
     m_progress (tl::to_string (tr ("Reading GDS2 file")), 10000)
@@ -120,7 +120,7 @@ GDS2Reader::get_record ()
       error (tl::to_string (tr ("Unexpected end-of-file")));
     }
   } else {
-    mp_rec_buf = 0;
+    mp_rec_buf = nullptr;
   }
    
   m_recptr = 0; 
@@ -282,7 +282,7 @@ GDS2Reader::path () const
 void 
 GDS2Reader::error (const std::string &msg)
 {
-  throw GDS2ReaderException (msg, m_stream.pos (), m_recnum, cellname ().c_str (), m_stream.source ());
+  throw GDS2ReaderException (msg, m_stream.pos (), m_recnum, cellname (), m_stream.source ());
 }
 
 void 

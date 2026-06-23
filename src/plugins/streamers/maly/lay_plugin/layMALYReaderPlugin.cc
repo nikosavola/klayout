@@ -46,7 +46,7 @@ MALYReaderOptionPage::MALYReaderOptionPage (QWidget *parent)
 MALYReaderOptionPage::~MALYReaderOptionPage ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 

@@ -333,7 +333,7 @@ public:
    */
   const char *text () const
   {
-    return mp_text != 0 ? mp_text : m_local_text.c_str ();
+    return mp_text != nullptr ? mp_text : m_local_text.c_str ();
   }
 
   /**
@@ -391,7 +391,7 @@ public:
    *  @param parent The parent evaluation context
    *  @param sloppy True to enable sloppy evaluation for pure parsing
    */
-  explicit Eval (Eval *parent = 0, bool sloppy = false);
+  explicit Eval (Eval *parent = nullptr, bool sloppy = false);
 
   /**
    *  @brief Create a new object for expression evaluation
@@ -431,7 +431,7 @@ public:
     } else if (mp_parent) {
       return mp_parent->ctx_handler ();
     } else {
-      return 0;
+      return nullptr;
     }
   }
 

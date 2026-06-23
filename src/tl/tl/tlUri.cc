@@ -78,7 +78,7 @@ static std::string escape (const std::string &s)
 
   std::string res;
   for (const char *cp = s.c_str (); *cp; ++cp) {
-    if ((unsigned char) *cp <= 32 || (unsigned char) *cp >= 128 || strchr (special, *cp) != 0) {
+    if ((unsigned char) *cp <= 32 || (unsigned char) *cp >= 128 || strchr (special, *cp) != nullptr) {
       res += "%";
       res += int2hex (*cp >> 4);
       res += int2hex (*cp);

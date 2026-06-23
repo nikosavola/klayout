@@ -42,7 +42,7 @@ namespace lay
 // -------------------------------------------------------------------------------------------
 
 LibraryController::LibraryController ()
-  : m_file_watcher (0),
+  : m_file_watcher (nullptr),
     dm_sync_files (this, &LibraryController::sync_files_maybe),
     m_sync (false), m_sync_once (false)
 {
@@ -79,7 +79,7 @@ LibraryController::uninitialize (lay::Dispatcher * /*root*/)
     disconnect (m_file_watcher, SIGNAL (fileChanged (const QString &)), this, SLOT (file_watcher_triggered ()));
     disconnect (m_file_watcher, SIGNAL (fileRemoved (const QString &)), this, SLOT (file_watcher_triggered ()));
     delete m_file_watcher;
-    m_file_watcher = 0;
+    m_file_watcher = nullptr;
   }
 
   if (lay::SaltController::instance ()) {
@@ -325,7 +325,7 @@ public:
 
   virtual void execute (const tl::ExpressionParserContext &context, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> *kwargs) const
   {
-    if (args.size () < 1 || args.size () > 2) {
+    if (args.empty() || args.size () > 2) {
       throw tl::EvalError (tl::to_string (tr ("'define' function needs one or two arguments (a path or a name and path)")), context);
     }
 
@@ -583,7 +583,7 @@ LibraryController::instance ()
       return sc;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 //  The singleton instance of the library controller

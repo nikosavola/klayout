@@ -40,7 +40,7 @@ namespace lay
 {
 
 LayerMappingWidget::LayerMappingWidget (QWidget *parent)
-  : QFrame (parent), mp_layer_table_file_dialog (0), mp_ui (0)
+  : QFrame (parent), mp_layer_table_file_dialog (nullptr), mp_ui (nullptr)
 {
   mp_ui = new Ui::LayerMappingWidget ();
   mp_ui->setupUi (this);
@@ -64,10 +64,10 @@ LayerMappingWidget::LayerMappingWidget (QWidget *parent)
 LayerMappingWidget::~LayerMappingWidget ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 
   delete mp_layer_table_file_dialog;
-  mp_layer_table_file_dialog = 0;
+  mp_layer_table_file_dialog = nullptr;
 }
 
 void 

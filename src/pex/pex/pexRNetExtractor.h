@@ -69,7 +69,7 @@ public:
    */
   struct ViaPort
   {
-    ViaPort () : node (0) { }
+    ViaPort () : node (nullptr) { }
     ViaPort (const db::Point &p, RNode *n) : position (p), node (n) { }
     db::Point position;
     RNode *node;

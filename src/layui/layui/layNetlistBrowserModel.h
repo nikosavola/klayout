@@ -141,7 +141,7 @@ public:
   typedef std::list<const db::SubCircuit *> path_type;
   typedef path_type::const_iterator path_iterator;
 
-  NetlistObjectPath () : root (0), net (0), device (0) { }
+  NetlistObjectPath () : root (nullptr), net (nullptr), device (nullptr) { }
 
   bool is_null () const
   {
@@ -324,7 +324,7 @@ private:
 
   std::pair<const db::Netlist *, const db::Netlist *> netlists () const
   {
-    return std::pair<const db::Netlist *, const db::Netlist *> (mp_l2ndb->netlist (), (const db::Netlist *)0);
+    return std::pair<const db::Netlist *, const db::Netlist *> (mp_l2ndb->netlist (), (const db::Netlist *)nullptr);
   }
 
   void show_or_hide_items (QTreeView *view, const QModelIndex &parent, bool show_all, bool with_warnings, int levels);

@@ -55,7 +55,7 @@ public:
   /**
    *  @brief Constructor
    */
-  FileSystemWatcher (QObject *parent = 0);
+  FileSystemWatcher (QObject *parent = nullptr);
 
   /**
    *  @brief Global enable/disable

@@ -32,7 +32,7 @@ namespace db
 //  RS274ApertureBase implementation
 
 RS274XApertureBase::RS274XApertureBase ()
-  : mp_ep (0), mp_reader (0), m_needs_update (true)
+  : mp_ep (nullptr), mp_reader (nullptr), m_needs_update (true)
 { 
   // .. nothing yet ..
 }
@@ -60,8 +60,8 @@ RS274XApertureBase::produce_flash (const db::DCplxTrans &d, RS274XReader &reader
 
     m_needs_update = false;
 
-    mp_reader = 0;
-    mp_ep = 0;
+    mp_reader = nullptr;
+    mp_ep = nullptr;
 
   }
 
@@ -132,8 +132,8 @@ RS274XApertureBase::produce_linear (const db::DCplxTrans &d, const db::DVector &
     mp_reader->produce_line (p->transformed (trans), clear);
   }
 
-  mp_reader = 0;
-  mp_ep = 0;
+  mp_reader = nullptr;
+  mp_ep = nullptr;
 
   l.swap (m_lines);
   p.swap (m_polygons);

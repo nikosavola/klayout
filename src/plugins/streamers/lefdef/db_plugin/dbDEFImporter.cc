@@ -565,11 +565,11 @@ DEFImporter::read_single_net (std::string &nondefaultrule, Layout &layout, db::C
     std::string ln = get ();
 
     taperrule.clear ();
-    const std::string *rulename = 0;
+    const std::string *rulename = nullptr;
 
     std::pair<db::Coord, db::Coord> w (0, 0);
 
-    const db::Polygon *style = 0;
+    const db::Polygon *style = nullptr;
 
     int sn = std::numeric_limits<int>::max ();
 
@@ -1156,7 +1156,7 @@ DEFImporter::read_vias (db::Layout &layout, db::Cell & /*design*/, double scale)
 
           if (seen_layers.find (ln) == seen_layers.end ()) {
 
-            if (routing_layers.size () == 0) {
+            if (routing_layers.empty()) {
               geo_based_vg->set_maskshift_layer (0, ln);
             } else if (routing_layers.size () == 1) {
               geo_based_vg->set_maskshift_layer (2, ln);
@@ -1471,7 +1471,7 @@ void
 DEFImporter::read_fills (db::Layout &layout, db::Cell &design, double scale)
 {
   std::map <std::pair<std::string, unsigned int>, std::vector <db::Polygon> > geometry;
-  db::Cell *fill_cell = 0;
+  db::Cell *fill_cell = nullptr;
 
   while (test ("-")) {
 
@@ -1645,7 +1645,7 @@ DEFImporter::read_components (db::Layout &layout, std::list<std::pair<std::strin
     bool is_placed = false;
     std::string maskshift;
 
-    const MacroDesc *m = 0;
+    const MacroDesc *m = nullptr;
 
     std::map<std::string, MacroDesc>::const_iterator im = reader_state ()->lef_importer ().macros ().find (model);
     if (im == reader_state ()->lef_importer ().macros ().end ()) {
@@ -1950,7 +1950,7 @@ DEFImporter::do_read (db::Layout &layout)
 
     for (std::list<DEFImporterGroup>::const_iterator g = groups.begin (); g != groups.end (); ++g) {
 
-      db::Cell *group_cell = &layout.cell (reader_state ()->make_cell (layout, ("GROUP_" + g->name).c_str ()));
+      db::Cell *group_cell = &layout.cell (reader_state ()->make_cell (layout, "GROUP_" + g->name));
       design.insert (db::CellInstArray (group_cell->cell_index (), db::Trans ()));
 
       if (! g->region_name.empty ()) {

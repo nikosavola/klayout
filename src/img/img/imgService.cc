@@ -261,7 +261,7 @@ struct SortImagePtrByZOrder
 
 View::View (img::Service *service, obj_iterator image_ref, img::View::Mode mode)
   : lay::ViewObject (service->widget ()), 
-    mp_service (service), m_mode (mode), mp_image_object (0), m_image_ref (image_ref)
+    mp_service (service), m_mode (mode), mp_image_object (nullptr), m_image_ref (image_ref)
 {
   //  .. nothing else ..
 }
@@ -332,7 +332,7 @@ View::render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
     plane = canvas.plane (vops);
 
     for (std::vector <db::Polygon>::const_iterator r = result.begin (); r != result.end (); ++r) {
-      canvas.renderer ().draw (*r, db::CplxTrans (), plane, 0, 0, 0);
+      canvas.renderer ().draw (*r, db::CplxTrans (), plane, nullptr, nullptr, nullptr);
     }
 
   } else if (m_mode == mode_transient_move) {
@@ -348,7 +348,7 @@ View::render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
       ops.push_back (lay::ViewOp (canvas.foreground_color ().rgb (), lay::ViewOp::Copy, 0, 0, 0, lay::ViewOp::Rect, 1, 4));
       plane_landmarks = canvas.plane (ops);
 
-      canvas.renderer ().draw (image_box_poly, db::DCplxTrans (), 0, plane_frame, 0, 0);
+      canvas.renderer ().draw (image_box_poly, db::DCplxTrans (), nullptr, plane_frame, nullptr, nullptr);
 
       const std::vector <db::DPoint> &handles = image->landmarks ();
       for (std::vector <db::DPoint>::const_iterator hb = handles.begin (); hb != handles.end (); ++hb)
@@ -356,9 +356,9 @@ View::render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
         db::DPoint p (hb->transformed (t));
         db::DBox box (p, p);
         double d = 2 / canvas.resolution ();
-        canvas.renderer ().draw (box.enlarged (db::DVector (d, d)), db::DCplxTrans (), 0, plane_landmarks, 0, 0);
-        canvas.renderer ().draw (db::DEdge (p + db::DVector (3.0 * d, 0), p - db::DVector (3.0 * d, 0)), db::DCplxTrans (), 0, plane_landmarks, 0, 0);
-        canvas.renderer ().draw (db::DEdge (p + db::DVector (0, 3.0 * d), p - db::DVector (0, 3.0 * d)), db::DCplxTrans (), 0, plane_landmarks, 0, 0);
+        canvas.renderer ().draw (box.enlarged (db::DVector (d, d)), db::DCplxTrans (), nullptr, plane_landmarks, nullptr, nullptr);
+        canvas.renderer ().draw (db::DEdge (p + db::DVector (3.0 * d, 0), p - db::DVector (3.0 * d, 0)), db::DCplxTrans (), nullptr, plane_landmarks, nullptr, nullptr);
+        canvas.renderer ().draw (db::DEdge (p + db::DVector (0, 3.0 * d), p - db::DVector (0, 3.0 * d)), db::DCplxTrans (), nullptr, plane_landmarks, nullptr, nullptr);
       }
 
     } else {
@@ -369,7 +369,7 @@ View::render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
       //  plane_fill is prio 3 to be above the normal selection which is 1 and 2
       plane_fill = canvas.plane (lay::ViewOp (canvas.foreground_color ().rgb (), lay::ViewOp::Copy, 0, 0, 0, lay::ViewOp::Rect, 1, 3));
 
-      canvas.renderer ().draw (image_box_poly, db::DCplxTrans (), 0, plane, 0, 0);
+      canvas.renderer ().draw (image_box_poly, db::DCplxTrans (), nullptr, plane, nullptr, nullptr);
 
       db::DCoord cl = -0.5 * image->width ();
       db::DCoord cb = -0.5 * image->height ();
@@ -391,7 +391,7 @@ View::render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
       {
         db::DBox box (hb->transformed (t), hb->transformed (t));
         db::DPolygon handle_box_poly (box.enlarged (db::DVector (3 / canvas.resolution (), 3 / canvas.resolution ())));
-        canvas.renderer ().draw (handle_box_poly, db::DCplxTrans (), plane_fill, plane, 0, 0);
+        canvas.renderer ().draw (handle_box_poly, db::DCplxTrans (), plane_fill, plane, nullptr, nullptr);
       }
 
     }
@@ -402,7 +402,7 @@ View::render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
     lay::CanvasPlane *plane;
     plane = canvas.plane (lay::ViewOp (canvas.foreground_color ().rgb (), lay::ViewOp::Copy, 0, 0, 0));
 
-    canvas.renderer ().draw (image_box_poly, db::DCplxTrans (), 0, plane, 0, 0);
+    canvas.renderer ().draw (image_box_poly, db::DCplxTrans (), nullptr, plane, nullptr, nullptr);
 
   }
 }
@@ -416,7 +416,7 @@ Service::Service (db::Manager *manager, lay::LayoutViewBase *view)
     lay::Plugin (view),
     db::Object (manager),
     mp_view (view),
-    mp_transient_view (0),
+    mp_transient_view (nullptr),
     m_move_mode (Service::move_none),
     m_moved_landmark (0),
     m_ac (lay::AC_Global),
@@ -1013,7 +1013,7 @@ const db::DUserObject *
 Service::find_image (const db::DPoint &p, const db::DBox &search_box, double l, double &dmin, const std::set<img::Service::obj_iterator> *exclude)
 {
   if (! m_images_visible) {
-    return 0;
+    return nullptr;
   }
 
   std::vector <const db::DUserObject *> images;
@@ -1032,7 +1032,7 @@ Service::find_image (const db::DPoint &p, const db::DBox &search_box, double l, 
 
   //  look for the "closest" image to the search box
   dmin = std::numeric_limits <double>::max ();
-  const db::DUserObject *found = 0;
+  const db::DUserObject *found = nullptr;
 
   for (std::vector <const db::DUserObject *>::const_iterator robj = images.begin (); robj != images.end (); ++robj) {
     double d = std::numeric_limits <double>::max ();
@@ -1207,7 +1207,7 @@ Service::selection_size ()
 bool
 Service::has_transient_selection ()
 {
-  return mp_transient_view != 0;
+  return mp_transient_view != nullptr;
 }
 
 void
@@ -1282,7 +1282,7 @@ Service::click_proximity (const db::DPoint &pos, lay::Editable::SelectionMode mo
 
   //  for single-point selections either exclude the current selection or the
   //  accumulated previous selection from the search.
-  const std::set<obj_iterator> *exclude = 0;
+  const std::set<obj_iterator> *exclude = nullptr;
   if (mode == lay::Editable::Replace) {
     exclude = &m_previous_selection;
   } else if (mode == lay::Editable::Add) {
@@ -1382,7 +1382,7 @@ Service::clear_transient_selection ()
 {
   if (mp_transient_view) {
     delete mp_transient_view;
-    mp_transient_view = 0;
+    mp_transient_view = nullptr;
   }
 }
 
@@ -1406,7 +1406,7 @@ Service::select (const db::DBox &box, lay::Editable::SelectionMode mode)
 
   //  for single-point selections either exclude the current selection or the
   //  accumulated previous selection from the search.
-  const std::set<obj_iterator> *exclude = 0;
+  const std::set<obj_iterator> *exclude = nullptr;
   if (mode == lay::Editable::Replace) {
     exclude = &m_previous_selection;
   } else if (mode == lay::Editable::Add) {
@@ -1496,7 +1496,7 @@ Service::select (const db::DBox &box, lay::Editable::SelectionMode mode)
 void 
 Service::display_status (bool transient, const std::string &data_string)
 {
-  View *selected_view = transient ? mp_transient_view : (m_selected_image_views.size () == 1 ? m_selected_image_views [0] : 0);
+  View *selected_view = transient ? mp_transient_view : (m_selected_image_views.size () == 1 ? m_selected_image_views [0] : nullptr);
   if (! selected_view) {
 
     view ()->message (std::string ());
@@ -1794,7 +1794,7 @@ Service::object_by_id (size_t id) const
 {
   obj_iterator i = object_iter_by_id (id);
   if (i == mp_view->annotation_shapes ().end ()) {
-    return 0;
+    return nullptr;
   } else {
     return dynamic_cast <const img::Object *> (i->ptr ());
   }

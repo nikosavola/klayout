@@ -146,7 +146,7 @@ BasicText::coerce_parameters (const db::Layout &layout, db::pcell_parameters_typ
 void 
 BasicText::produce (const db::Layout &layout, const std::vector<unsigned int> &layer_ids, const db::pcell_parameters_type &parameters, db::Cell &cell) const
 {
-  if (parameters.size () < 6 || layer_ids.size () < 1 || db::TextGenerator::generators ().empty ()) {
+  if (parameters.size () < 6 || layer_ids.empty() || db::TextGenerator::generators ().empty ()) {
     return;
   }
 

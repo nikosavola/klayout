@@ -923,7 +923,7 @@ static db::pcell_id_type pcell_id (const db::Layout *layout, const char *name)
 static const db::PCellDeclaration *pcell_declaration (const db::Layout *layout, const char *name)
 {
   std::pair<bool, db::pcell_id_type> pc = layout->pcell_by_name (name);
-  return pc.first ? layout->pcell_declaration (pc.second) : 0;
+  return pc.first ? layout->pcell_declaration (pc.second) : nullptr;
 }
 
 static std::vector<db::pcell_id_type> pcell_ids (const db::Layout *layout)
@@ -978,7 +978,7 @@ static db::Cell *cell_from_name (db::Layout *ly, const std::string &name)
   if (cn.first) {
     return &ly->cell (cn.second);
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -1028,7 +1028,7 @@ static std::vector<const db::Cell *> top_cells_const (const db::Layout *layout)
 
 static db::Cell *top_cell (db::Layout *layout)
 {
-  db::Cell *tc = 0;
+  db::Cell *tc = nullptr;
   db::Layout::top_down_iterator td = layout->begin_top_down ();
   while (td != layout->end_top_cells ()) {
     if (! tc) {
@@ -1055,7 +1055,7 @@ static db::Cell *create_cell2 (db::Layout *layout, const std::string &name, cons
 {
   std::pair<bool, db::pcell_id_type> pc = layout->pcell_by_name (name.c_str ());
   if (! pc.first) {
-    return 0;
+    return nullptr;
   }
 
   return &layout->cell (layout->get_pcell_variant_dict (pc.second, params));
@@ -1065,12 +1065,12 @@ static db::Cell *create_cell3 (db::Layout *layout, const std::string &name, cons
 {
   db::Library *lib = db::LibraryManager::instance ().lib_ptr_by_name (libname, layout->technology_name ());
   if (! lib) {
-    return 0;
+    return nullptr;
   }
 
   std::pair<bool, db::cell_index_type> lc = lib->layout ().cell_by_name (name.c_str ());
   if (! lc.first) {
-    return 0;
+    return nullptr;
   }
 
   return &layout->cell (layout->get_lib_proxy (lib, lc.second));
@@ -1080,12 +1080,12 @@ static db::Cell *create_cell4 (db::Layout *layout, const std::string &name, cons
 {
   db::Library *lib = db::LibraryManager::instance ().lib_ptr_by_name (libname, layout->technology_name ());
   if (! lib) {
-    return 0;
+    return nullptr;
   }
 
   std::pair<bool, db::pcell_id_type> pc = lib->layout ().pcell_by_name (name.c_str ());
   if (! pc.first) {
-    return 0;
+    return nullptr;
   }
 
   db::cell_index_type lib_cell = lib->layout ().get_pcell_variant_dict (pc.second, params);
@@ -1103,7 +1103,7 @@ static MetaInfo *layout_get_meta_info (db::Layout *layout, const std::string &na
     const db::MetaInfo &value = layout->meta_info (name);
     return new MetaInfo (name, value);
   } else {
-    return 0;
+    return nullptr;
   }
 }
 

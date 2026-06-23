@@ -194,7 +194,7 @@ public:
     }
   }
 
-  box_tree_node *clone (box_tree_node *parent = 0, unsigned int quad = 0) const
+  box_tree_node *clone (box_tree_node *parent = nullptr, unsigned int quad = 0) const
   {
     box_tree_node *n = new box_tree_node (parent, m_center, m_corner, quad);
     n->m_lenq = m_lenq;
@@ -215,7 +215,7 @@ public:
     if ((m_childrefs [i] & 1) == 0) {
       return reinterpret_cast<box_tree_node *> (m_childrefs [i]);
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -349,7 +349,7 @@ public:
   typedef object_type value_type;
 
   box_tree_flat_it ()
-    : mp_tree (0)
+    : mp_tree (nullptr)
   { 
     m_index = 0;
   }
@@ -396,7 +396,7 @@ public:
    */
   bool at_end () const
   {
-    return mp_tree == 0 || m_index == mp_tree->elements ().size ();
+    return mp_tree == nullptr || m_index == mp_tree->elements ().size ();
   }
 
 private:
@@ -428,9 +428,9 @@ public:
   typedef db::box_tree_node<Tree> box_tree_node;
 
   box_tree_it ()
-    : mp_tree (0), m_picker (), m_compare () 
+    : mp_tree (nullptr), m_picker (), m_compare () 
   { 
-    mp_node = 0;
+    mp_node = nullptr;
     m_index = 0;
     m_offset = 0;
     m_quad = -1;
@@ -446,7 +446,7 @@ public:
 
     while (mp_node && mp_node->lenq (m_quad) == 0) {
       if (! next ()) {
-        mp_node = 0;
+        mp_node = nullptr;
       } else {
         down ();
       }
@@ -500,7 +500,7 @@ public:
    */
   bool at_end () const
   {
-    return mp_tree == 0 || m_index + m_offset == mp_tree->elements ().size ();
+    return mp_tree == nullptr || m_index + m_offset == mp_tree->elements ().size ();
   }
 
   /**
@@ -603,7 +603,7 @@ private:
       return true;
 
     } else {
-      mp_node = 0;
+      mp_node = nullptr;
       return false;
     }
   }
@@ -746,7 +746,7 @@ public:
    *  @brief Creates a empty box tree object 
    */
   box_tree ()
-    : mp_root (0)
+    : mp_root (nullptr)
   {
     // .. nothing else ..
   }
@@ -755,7 +755,7 @@ public:
    *  @brief Copy constructor
    */
   box_tree (const box_tree &b)
-    : m_objects (b.m_objects), m_elements (b.m_elements), mp_root (b.mp_root ? b.mp_root->clone () : 0)
+    : m_objects (b.m_objects), m_elements (b.m_elements), mp_root (b.mp_root ? b.mp_root->clone () : nullptr)
   {
     // .. nothing else ..
   }
@@ -766,7 +766,7 @@ public:
   box_tree (box_tree &&b)
     : m_objects (b.m_objects), m_elements (b.m_elements), mp_root (b.mp_root)
   {
-    b.mp_root = 0;
+    b.mp_root = nullptr;
   }
 
   /**
@@ -806,7 +806,7 @@ public:
     if (mp_root) {
       delete mp_root;
     }
-    mp_root = 0;
+    mp_root = nullptr;
   }
 
   /**
@@ -956,7 +956,7 @@ public:
     if (mp_root) {
       delete mp_root;
     }
-    mp_root = 0;
+    mp_root = nullptr;
   }
 
   /**
@@ -1176,7 +1176,7 @@ public:
   /**
    *  @brief Collect memory statistics
    */
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const
   {
     if (!no_self) {
       stat->add (typeid (*this), (void *) this, sizeof (*this), sizeof (*this), parent, purpose, cat);
@@ -1202,7 +1202,7 @@ private:
     if (mp_root) {
       delete mp_root;
     }
-    mp_root = 0;
+    mp_root = nullptr;
 
     if (! m_objects.empty ()) {
 
@@ -1217,7 +1217,7 @@ private:
 
       //  TODO: resize m_elements to actual size ?
 
-      tree_sort (0, m_elements.begin (), m_elements.end (), picker, bbox, 0);
+      tree_sort (nullptr, m_elements.begin (), m_elements.end (), picker, bbox, 0);
 
     }
   }
@@ -1232,7 +1232,7 @@ private:
     if (mp_root) {
       delete mp_root;
     }
-    mp_root = 0;
+    mp_root = nullptr;
 
     if (! m_objects.empty ()) {
 
@@ -1244,7 +1244,7 @@ private:
 
       //  TODO: resize m_elements to actual size ?
 
-      tree_sort (0, m_elements.begin (), m_elements.end (), picker, picker.bbox (), 0);
+      tree_sort (nullptr, m_elements.begin (), m_elements.end (), picker, picker.bbox (), 0);
 
     }
   }
@@ -1318,7 +1318,7 @@ private:
 
       //  create a new node representing this tree
       box_tree_node *node = new box_tree_node (parent, center, bbox, quad);
-      if (parent == 0) {
+      if (parent == nullptr) {
         mp_root = node;
       }
 
@@ -1348,7 +1348,7 @@ private:
  *  @brief Collect memory statistics
  */
 template <class Box, class Obj, class BoxConv, size_t min_bin, size_t min_quads>
-inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const box_tree<Box, Obj, BoxConv, min_bin, min_quads> &x, bool no_self = false, void *parent = 0)
+inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const box_tree<Box, Obj, BoxConv, min_bin, min_quads> &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }
@@ -1379,7 +1379,7 @@ public:
   typedef typename Tree::size_type size_type;
 
   unstable_box_tree_flat_it ()
-    : mp_tree (0)
+    : mp_tree (nullptr)
   { 
     m_index = 0;
   }
@@ -1421,7 +1421,7 @@ public:
    */
   bool at_end () const
   {
-    return mp_tree == 0 || m_index == mp_tree->size ();
+    return mp_tree == nullptr || m_index == mp_tree->size ();
   }
 
 private:
@@ -1451,9 +1451,9 @@ public:
   typedef db::box_tree_node<Tree> box_tree_node;
 
   unstable_box_tree_it ()
-    : mp_tree (0), m_picker (), m_compare () 
+    : mp_tree (nullptr), m_picker (), m_compare () 
   { 
-    mp_node = 0;
+    mp_node = nullptr;
     m_index = 0;
     m_offset = 0;
     m_quad = -1;
@@ -1469,7 +1469,7 @@ public:
 
     while (mp_node && mp_node->lenq (m_quad) == 0) {
       if (! next ()) {
-        mp_node = 0;
+        mp_node = nullptr;
       } else {
         down ();
       }
@@ -1634,7 +1634,7 @@ private:
       return true;
 
     } else {
-      mp_node = 0;
+      mp_node = nullptr;
       return false;
     }
   }
@@ -1742,7 +1742,7 @@ public:
    *  @brief Creates a empty box tree object 
    */
   unstable_box_tree ()
-    : mp_root (0)
+    : mp_root (nullptr)
   {
     // .. nothing else ..
   }
@@ -1751,7 +1751,7 @@ public:
    *  @brief Copy constructor
    */
   unstable_box_tree (const unstable_box_tree &b)
-    : m_objects (b.m_objects), mp_root (b.mp_root ? b.mp_root->clone () : 0)
+    : m_objects (b.m_objects), mp_root (b.mp_root ? b.mp_root->clone () : nullptr)
   {
     // .. nothing else ..
   }
@@ -1762,7 +1762,7 @@ public:
   unstable_box_tree (unstable_box_tree &&b)
     : m_objects (b.m_objects), mp_root (b.mp_root)
   {
-    b.mp_root = 0;
+    b.mp_root = nullptr;
   }
 
   /**
@@ -1800,7 +1800,7 @@ public:
     if (mp_root) {
       delete mp_root;
     }
-    mp_root = 0;
+    mp_root = nullptr;
   }
 
   /**
@@ -1991,7 +1991,7 @@ public:
     if (mp_root) {
       delete mp_root;
     }
-    mp_root = 0;
+    mp_root = nullptr;
   }
 
   /**
@@ -2149,7 +2149,7 @@ public:
   /**
    *  @brief Collect memory statistics
    */
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const
   {
     if (! no_self) {
       stat->add (typeid (*this), (void *) this, sizeof (*this), sizeof (*this), parent, purpose, cat);
@@ -2175,7 +2175,7 @@ private:
     if (mp_root) {
       delete mp_root;
     }
-    mp_root = 0;
+    mp_root = nullptr;
 
     box_type bbox;
     for (typename obj_vector_type::const_iterator o = m_objects.begin (); o != m_objects.end (); ++o) {
@@ -2185,7 +2185,7 @@ private:
       }
     }
 
-    tree_sort (0, m_objects.begin (), m_objects.end (), picker, bbox, 0);
+    tree_sort (nullptr, m_objects.begin (), m_objects.end (), picker, bbox, 0);
   }
 
   /// Sort implementation for complex bboxes - with caching
@@ -2201,9 +2201,9 @@ private:
     if (mp_root) {
       delete mp_root;
     }
-    mp_root = 0;
+    mp_root = nullptr;
 
-    tree_sort (0, m_objects.begin (), m_objects.end (), picker, picker.bbox (), 0);
+    tree_sort (nullptr, m_objects.begin (), m_objects.end (), picker, picker.bbox (), 0);
   }
 
   template <class CoordPicker>
@@ -2280,7 +2280,7 @@ private:
 
       //  create a new node representing this tree
       box_tree_node *node = new box_tree_node (parent, center, bbox, quad);
-      if (parent == 0) {
+      if (parent == nullptr) {
         mp_root = node;
       }
 
@@ -2310,7 +2310,7 @@ private:
  *  @brief Collect memory statistics
  */
 template <class Box, class Obj, class BoxConv>
-inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const db::unstable_box_tree<Box, Obj, BoxConv> &x, bool no_self = false, void *parent = 0)
+inline void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const db::unstable_box_tree<Box, Obj, BoxConv> &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }

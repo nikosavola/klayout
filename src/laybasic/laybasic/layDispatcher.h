@@ -128,14 +128,14 @@ public:
    *  @param parent Usually 0, but a dispatcher may have parents. In this case, the dispatcher is not the actual dispatcher, but the real plugin chain's root is.
    *  @param standalone The standalone flag passed to the plugin constructor.
    */
-  Dispatcher (Plugin *parent = 0, bool standalone = false);
+  Dispatcher (Plugin *parent = nullptr, bool standalone = false);
 
   /**
    *  @brief The root constructor
    *
    *  @param delegate The notification receiver for dispatcher events
    */
-  Dispatcher (DispatcherDelegate *delegate, Plugin *parent = 0, bool standalone = false);
+  Dispatcher (DispatcherDelegate *delegate, Plugin *parent = nullptr, bool standalone = false);
 
   /**
    *  @brief Destructor
@@ -232,7 +232,7 @@ public:
   /**
    *  @brief Returns true, if the dispatcher supplies a user interface
    */
-  bool has_ui () { return menu_parent_widget () != 0; }
+  bool has_ui () { return menu_parent_widget () != nullptr; }
 
 #else
   /**

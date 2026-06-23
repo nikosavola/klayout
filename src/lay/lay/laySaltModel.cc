@@ -221,7 +221,7 @@ SaltModel::grain_from_index (const QModelIndex &index) const
   if (index.isValid () && index.row () >= 0 && index.row () < int (m_ordered_grains.size ())) {
     return m_ordered_grains [index.row ()];
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -368,7 +368,7 @@ SaltModel::create_ordered_list ()
 
     for (Salt::flat_iterator i = mp_salt->begin_flat (); i != mp_salt->end_flat (); ++i) {
       //  filter the grains by looking them up in the reference salt
-      if (mp_salt_filtered && (mp_salt_filtered->grain_by_name ((*i)->name ()) != 0) == m_salt_exclude) {
+      if (mp_salt_filtered && (mp_salt_filtered->grain_by_name ((*i)->name ()) != nullptr) == m_salt_exclude) {
         continue;
       }
       m_ordered_grains.push_back (*i);
@@ -389,7 +389,7 @@ SaltModel::create_ordered_list ()
     for (int o = min_order; o <= max_order; ++o) {
       for (Salt::flat_iterator i = mp_salt->begin_flat (); i != mp_salt->end_flat (); ++i) {
         //  filter the grains by looking them up in the reference salt
-        if (mp_salt_filtered && (mp_salt_filtered->grain_by_name ((*i)->name ()) != 0) == m_salt_exclude) {
+        if (mp_salt_filtered && (mp_salt_filtered->grain_by_name ((*i)->name ()) != nullptr) == m_salt_exclude) {
           continue;
         }
         std::map<std::string, int>::const_iterator d = m_display_order.find ((*i)->name ());

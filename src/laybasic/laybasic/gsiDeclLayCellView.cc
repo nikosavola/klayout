@@ -36,7 +36,7 @@ static db::Layout *get_layout (const lay::CellViewRef *cv)
   if (cv->handle ()) {
     return &cv->handle ()->layout ();
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -45,7 +45,7 @@ static lay::LayoutHandleRef *get_layout_handle (const lay::CellViewRef *cv)
   if (cv->handle ()) {
     return new lay::LayoutHandleRef (cv->handle ());
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -123,7 +123,7 @@ static void close_cellview (lay::CellViewRef *cv)
 
 static std::string get_cell_name (const lay::CellViewRef *cv)
 {
-  if (cv->cell () == 0) {
+  if (cv->cell () == nullptr) {
     return std::string ();
   } else {
     return (*cv)->layout ().cell_name (cv->cell_index ());

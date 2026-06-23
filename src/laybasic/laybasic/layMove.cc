@@ -190,7 +190,7 @@ MoveService::show_toolbox (bool visible)
 lay::EditorOptionsPage *
 MoveService::toolbox_widget ()
 {
-  return mp_view->editor_options_pages () ? mp_view->editor_options_pages ()->page_with_name (move_editor_options_name) : 0;
+  return mp_view->editor_options_pages () ? mp_view->editor_options_pages ()->page_with_name (move_editor_options_name) : nullptr;
 }
 
 bool 
@@ -246,7 +246,7 @@ MoveService::mouse_click_event (const db::DPoint &p, unsigned int buttons, bool 
     return true;
   } 
   if (prio && (buttons & lay::LeftButton) != 0) {
-    if (handle_click (p, buttons, false, 0)) {
+    if (handle_click (p, buttons, false, nullptr)) {
       return true;
     }
   } 
@@ -266,7 +266,7 @@ MoveService::mouse_double_click_event (const db::DPoint &p, unsigned int buttons
 
     //  stop dragging if required
     if (m_dragging) {
-      handle_click (p, buttons, false, 0);
+      handle_click (p, buttons, false, nullptr);
     }
 
     if (is_active ()) {
@@ -309,7 +309,7 @@ bool
 MoveService::mouse_press_event (const db::DPoint &p, unsigned int buttons, bool prio)
 {
   if (prio && (buttons & lay::LeftButton) != 0) {
-    if (handle_click (p, buttons, false, 0)) {
+    if (handle_click (p, buttons, false, nullptr)) {
       return true;
     }
   } 
@@ -381,7 +381,7 @@ void
 MoveService::finish_move ()
 {
   if (m_dragging) {
-    handle_click (m_mouse_pos, 0, false, 0);
+    handle_click (m_mouse_pos, 0, false, nullptr);
   }
 }
 
@@ -453,7 +453,7 @@ MoveService::cancel_transaction ()
     if (mp_transaction) {
       mp_transaction->cancel ();
     }
-    mp_transaction.reset (0);
+    mp_transaction.reset (nullptr);
   }
 }
 
@@ -461,7 +461,7 @@ void
 MoveService::finish_transaction ()
 {
   if (m_dragging) {
-    mp_transaction.reset (0);
+    mp_transaction.reset (nullptr);
   }
 }
 

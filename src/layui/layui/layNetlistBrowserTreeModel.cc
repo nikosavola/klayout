@@ -123,7 +123,7 @@ static std::string search_string_from_names (const std::pair<const Obj *, const 
 
 
 NetlistBrowserTreeModel::NetlistBrowserTreeModel (QWidget *parent, db::Netlist *netlist)
-  : QAbstractItemModel (parent), mp_l2ndb (0), mp_lvsdb (0)
+  : QAbstractItemModel (parent), mp_l2ndb (nullptr), mp_lvsdb (nullptr)
 {
   mp_indexer.reset (new SingleIndexedNetlistModel (netlist));
 
@@ -132,7 +132,7 @@ NetlistBrowserTreeModel::NetlistBrowserTreeModel (QWidget *parent, db::Netlist *
 }
 
 NetlistBrowserTreeModel::NetlistBrowserTreeModel (QWidget *parent, db::LayoutToNetlist *l2ndb)
-  : QAbstractItemModel (parent), mp_l2ndb (l2ndb), mp_lvsdb (0)
+  : QAbstractItemModel (parent), mp_l2ndb (l2ndb), mp_lvsdb (nullptr)
 {
   mp_indexer.reset (new SingleIndexedNetlistModel (l2ndb->netlist ()));
 
@@ -141,7 +141,7 @@ NetlistBrowserTreeModel::NetlistBrowserTreeModel (QWidget *parent, db::LayoutToN
 }
 
 NetlistBrowserTreeModel::NetlistBrowserTreeModel (QWidget *parent, db::LayoutVsSchematic *lvsdb)
-  : QAbstractItemModel (parent), mp_l2ndb (0), mp_lvsdb (lvsdb)
+  : QAbstractItemModel (parent), mp_l2ndb (nullptr), mp_lvsdb (lvsdb)
 {
   mp_indexer.reset (new NetlistCrossReferenceModel (lvsdb->cross_ref ()));
 
@@ -224,7 +224,7 @@ NetlistBrowserTreeModel::cp_status_from_index (const QModelIndex &index, size_t 
   typedef std::pair<std::pair<const db::Circuit *, const db::Circuit *>, std::pair<db::NetlistCrossReference::Status, std::string> > cp_status;
 
   void *id = index.internalPointer ();
-  tl_assert (id != 0);
+  tl_assert (id != nullptr);
 
   nprod = 1;
   nnlast = 1;
@@ -234,7 +234,7 @@ NetlistBrowserTreeModel::cp_status_from_index (const QModelIndex &index, size_t 
   nprod *= nlast;
   cp_status cps = mp_indexer->top_circuit_from_index (i - 1);
 
-  while (id != 0) {
+  while (id != nullptr) {
     nnlast = nlast;
     nlast = mp_indexer->child_circuit_count (cps.first) + 1;
     i = pop (id, nlast);
@@ -292,7 +292,7 @@ NetlistBrowserTreeModel::index_from_netpath (const NetlistObjectsPath &path) con
 
   for (NetlistObjectsPath::path_iterator p = path.path.begin (); p != path.path.end () && idx.isValid (); ++p) {
 
-    std::pair<const db::Circuit *, const db::Circuit *> sc (p->first ? p->first->circuit_ref () : 0, p->second ? p->second->circuit_ref (): 0);
+    std::pair<const db::Circuit *, const db::Circuit *> sc (p->first ? p->first->circuit_ref () : nullptr, p->second ? p->second->circuit_ref (): nullptr);
     std::pair<const db::Circuit *, const db::Circuit *> circuit = circuits_from_index (idx);
 
     size_t count = mp_indexer->child_circuit_count (circuit);
@@ -349,14 +349,14 @@ NetlistBrowserTreeModel::tooltip (const QModelIndex &index) const
   std::string hint;
 
   void *id = index.internalPointer ();
-  tl_assert (id != 0);
+  tl_assert (id != nullptr);
 
   nlast = mp_indexer->top_circuit_count () + 1;
   size_t i = pop (id, nlast);
   hint = mp_indexer->top_circuit_status_hint (i - 1);
   cp_status cps = mp_indexer->top_circuit_from_index (i - 1);
 
-  while (id != 0) {
+  while (id != nullptr) {
     nlast = mp_indexer->child_circuit_count (cps.first) + 1;
     i = pop (id, nlast);
     hint = mp_indexer->child_circuit_status_hint (cps.first, i - 1);

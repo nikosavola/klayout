@@ -51,7 +51,7 @@ struct CurrentPatternOp
 };
 
 EditStipplesForm::EditStipplesForm (QWidget *parent, lay::LayoutViewBase *view, const lay::DitherPattern &pattern)
-  : QDialog (parent), db::Object (0),
+  : QDialog (parent), db::Object (nullptr),
     m_selected (-1), m_pattern (pattern), m_manager (true), mp_view (view)
 {
   m_selection_changed_enabled = false;
@@ -104,12 +104,12 @@ EditStipplesForm::EditStipplesForm (QWidget *parent, lay::LayoutViewBase *view, 
 
 EditStipplesForm::~EditStipplesForm ()
 {
-  m_pattern.manager (0);
-  mp_ui->editor->manager (0);
-  manager (0);
+  m_pattern.manager (nullptr);
+  mp_ui->editor->manager (nullptr);
+  manager (nullptr);
 
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 static 

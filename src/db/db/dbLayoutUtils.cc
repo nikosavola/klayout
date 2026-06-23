@@ -166,7 +166,7 @@ merge_layouts (db::Layout &target,
       if (nc != new_cell_mapping.end ()) {
 
         db::CellInstArray new_inst_array (inst->cell_inst ());
-        new_inst_array.transform_into (trans, 0 /*no array repository*/);
+        new_inst_array.transform_into (trans, nullptr /*no array repository*/);
 
         new_inst_array.object ().cell_index (nc->second);
 

@@ -132,7 +132,7 @@ LibraryProxy::get_layer_indices (db::Layout &layout, db::ImportLayerMapping *lay
   std::vector<int> m_layer_indices; // TODO: should be somewhere "global" ..
 
   Library *lib = LibraryManager::instance ().lib (lib_id ());
-  tl_assert (lib != 0);
+  tl_assert (lib != nullptr);
   tl_assert (lib->layout ().is_valid_cell_index (library_cell_index ()));
 
   const db::Cell &cell = lib->layout ().cell (library_cell_index ());
@@ -191,7 +191,7 @@ LibraryProxy::get_layer_indices (db::Layout &layout, db::ImportLayerMapping *lay
 void 
 LibraryProxy::update (db::ImportLayerMapping *layer_mapping)
 {
-  tl_assert (layout () != 0);
+  tl_assert (layout () != nullptr);
   std::vector<int> layer_indices (get_layer_indices (*layout (), layer_mapping));
 
   Library *lib = LibraryManager::instance ().lib (lib_id ());
@@ -216,7 +216,7 @@ LibraryProxy::update (db::ImportLayerMapping *layer_mapping)
     //  use the "final lib", so we refer to the actual lib instead
     //  of building chains of lib references
     LibraryProxy *lp;
-    while ((lp = dynamic_cast<LibraryProxy *> (&real_lib->layout ().cell (real_cil))) != 0) {
+    while ((lp = dynamic_cast<LibraryProxy *> (&real_lib->layout ().cell (real_cil))) != nullptr) {
       real_cil = lp->library_cell_index ();
       real_lib = db::LibraryManager::instance ().lib (lp->lib_id ());
     }

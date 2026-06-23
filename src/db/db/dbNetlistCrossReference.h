@@ -62,7 +62,7 @@ public:
     typedef db::Net object_type;
 
     NetPairData (const db::Net *a, const db::Net *b, Status s, const std::string &m) : pair (a, b), status (s), msg (m) { }
-    NetPairData () : pair ((const db::Net *)0, (const db::Net *)0), status (None) { }
+    NetPairData () : pair ((const db::Net *)nullptr, (const db::Net *)nullptr), status (None) { }
 
     std::pair<const db::Net *, const db::Net *> pair;
     Status status;
@@ -74,7 +74,7 @@ public:
     typedef db::Device object_type;
 
     DevicePairData (const db::Device *a, const db::Device *b, Status s, const std::string &m) : pair (a, b), status (s), msg (m) { }
-    DevicePairData () : pair ((const db::Device *)0, (const db::Device *)0), status (None) { }
+    DevicePairData () : pair ((const db::Device *)nullptr, (const db::Device *)nullptr), status (None) { }
 
     std::pair<const db::Device *, const db::Device *> pair;
     Status status;
@@ -86,7 +86,7 @@ public:
     typedef db::Pin object_type;
 
     PinPairData (const db::Pin *a, const db::Pin *b, Status s, const std::string &m) : pair (a, b), status (s), msg (m) { }
-    PinPairData () : pair ((const db::Pin *)0, (const db::Pin *)0), status (None) { }
+    PinPairData () : pair ((const db::Pin *)nullptr, (const db::Pin *)nullptr), status (None) { }
 
     std::pair<const db::Pin *, const db::Pin *> pair;
     Status status;
@@ -98,7 +98,7 @@ public:
     typedef db::SubCircuit object_type;
 
     SubCircuitPairData (const db::SubCircuit *a, const db::SubCircuit *b, Status s, const std::string &m) : pair (a, b), status (s), msg (m) { }
-    SubCircuitPairData () : pair ((const db::SubCircuit *)0, (const db::SubCircuit *)0), status (None) { }
+    SubCircuitPairData () : pair ((const db::SubCircuit *)nullptr, (const db::SubCircuit *)nullptr), status (None) { }
 
     std::pair<const db::SubCircuit *, const db::SubCircuit *> pair;
     Status status;

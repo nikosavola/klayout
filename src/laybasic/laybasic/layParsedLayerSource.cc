@@ -257,7 +257,7 @@ public:
   ~PropertySelectorNot ()
   {
     delete mp_arg;
-    mp_arg = 0;
+    mp_arg = nullptr;
   }
 
   virtual std::string to_string (bool /*inner*/, size_t max_len) const
@@ -482,13 +482,13 @@ extract_top (tl::Extractor &ex)
 //  PropertySelector implementation
 
 PropertySelector::PropertySelector ()
-  : mp_base (0)
+  : mp_base (nullptr)
 {
   //  .. nothing yet ..
 }
 
 PropertySelector::PropertySelector (const PropertySelector &sel)
-  : mp_base (0)
+  : mp_base (nullptr)
 {
   operator= (sel);
 }
@@ -499,7 +499,7 @@ PropertySelector::operator= (const PropertySelector &sel)
   if (this != &sel) {
     if (mp_base) {
       delete mp_base;
-      mp_base = 0;
+      mp_base = nullptr;
     }
     if (sel.mp_base) {
       mp_base = sel.mp_base->clone ();
@@ -511,7 +511,7 @@ PropertySelector::operator= (const PropertySelector &sel)
 bool 
 PropertySelector::operator== (const PropertySelector &sel) const
 {
-  if (mp_base == 0 && sel.mp_base == 0) {
+  if (mp_base == nullptr && sel.mp_base == nullptr) {
     return true;
   } else if (mp_base && sel.mp_base) {
     return mp_base->compare (sel.mp_base) == 0;
@@ -523,12 +523,12 @@ PropertySelector::operator== (const PropertySelector &sel) const
 bool 
 PropertySelector::operator< (const PropertySelector &sel) const
 {
-  if (mp_base == 0 && sel.mp_base == 0) {
+  if (mp_base == nullptr && sel.mp_base == nullptr) {
     return false;
   } else if (mp_base && sel.mp_base) {
     return mp_base->compare (sel.mp_base) < 0;
   } else {
-    return mp_base == 0;
+    return mp_base == nullptr;
   }
 }
 
@@ -537,7 +537,7 @@ PropertySelector::~PropertySelector ()
   if (mp_base) {
     delete mp_base;
   }
-  mp_base = 0;
+  mp_base = nullptr;
 }
 
 void 
@@ -603,7 +603,7 @@ PropertySelector::matching (std::set<db::properties_id_type> &ids) const
 //  PartialTreeSelector implementation
 
 PartialTreeSelector::PartialTreeSelector ()
-  : mp_layout (0), m_state (0), m_selected (false)
+  : mp_layout (nullptr), m_state (0), m_selected (false)
 {
   //  .. nothing yet ..
 }

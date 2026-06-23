@@ -59,7 +59,7 @@ RNetExtractor::extract (const RExtractorTech &tech,
   for (auto g = geo.begin (); g != geo.end (); ++g) {
 
     //  Find the conductor spec for the given layer
-    const RExtractorTechConductor *cond = 0;
+    const RExtractorTechConductor *cond = nullptr;
     for (auto c = tech.conductors.begin (); c != tech.conductors.end () && !cond; ++c) {
       if (c->layer == g->first) {
         cond = c.operator-> ();
@@ -356,7 +356,7 @@ private:
     for (auto n = local_network.begin_nodes (); n != local_network.end_nodes (); ++n) {
 
       const RNode *local = n.operator-> ();
-      RNode *global = 0;
+      RNode *global = nullptr;
 
       if (local->type == RNode::Internal) {
 
@@ -402,7 +402,7 @@ private:
 
       }
 
-      tl_assert (global != 0);
+      tl_assert (global != nullptr);
       n2n.insert (std::make_pair (local, global));
 
     }

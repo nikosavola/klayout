@@ -52,7 +52,7 @@ DeepLayer::DeepLayer (const Region &region)
   : mp_store (), m_layout (0), m_layer (0)
 {
   const db::DeepRegion *dr = dynamic_cast<const db::DeepRegion *> (region.delegate ());
-  tl_assert (dr != 0);
+  tl_assert (dr != nullptr);
   *this = dr->deep_layer ();
 }
 
@@ -60,7 +60,7 @@ DeepLayer::DeepLayer (const Texts &texts)
   : mp_store (), m_layout (0), m_layer (0)
 {
   const db::DeepTexts *dr = dynamic_cast<const db::DeepTexts *> (texts.delegate ());
-  tl_assert (dr != 0);
+  tl_assert (dr != nullptr);
   *this = dr->deep_layer ();
 }
 
@@ -68,7 +68,7 @@ DeepLayer::DeepLayer (const Edges &edges)
   : mp_store (), m_layout (0), m_layer (0)
 {
   const db::DeepEdges *dr = dynamic_cast<const db::DeepEdges *> (edges.delegate ());
-  tl_assert (dr != 0);
+  tl_assert (dr != nullptr);
   *this = dr->deep_layer ();
 }
 
@@ -76,7 +76,7 @@ DeepLayer::DeepLayer (const EdgePairs &edge_pairs)
   : mp_store (), m_layout (0), m_layer (0)
 {
   const db::DeepEdgePairs *dr = dynamic_cast<const db::DeepEdgePairs *> (edge_pairs.delegate ());
-  tl_assert (dr != 0);
+  tl_assert (dr != nullptr);
   *this = dr->deep_layer ();
 }
 
@@ -157,7 +157,7 @@ DeepLayer::add_from (const DeepLayer &dl)
 
     //  create or reuse a layout mapping
 
-    const db::CellMapping *cell_mapping = 0;
+    const db::CellMapping *cell_mapping = nullptr;
     db::CellMapping cm;
     if (store () == dl.store ()) {
       cell_mapping = &const_cast<db::DeepShapeStore *> (mp_store.get ())->internal_cell_mapping (layout_index (), dl.layout_index ());
@@ -271,7 +271,7 @@ DeepLayer::initial_cell () const
 void
 DeepLayer::check_dss () const
 {
-  if (mp_store.get () == 0) {
+  if (mp_store.get () == nullptr) {
     throw tl::Exception (tl::to_string (tr ("Heap lost: the DeepShapeStore container no longer exists")));
   }
 }
@@ -454,7 +454,7 @@ DeepShapeStoreState::breakout_cells (unsigned int layout_index) const
 {
   const std::pair<std::set<db::cell_index_type>, size_t> &boc = (const_cast<DeepShapeStoreState *> (this))->ensure_breakout_cells (layout_index);
   if (boc.first.empty ()) {
-    return 0;
+    return nullptr;
   } else {
     return &boc.first;
   }
@@ -633,7 +633,7 @@ DeepLayer DeepShapeStore::create_from_flat (const db::Region &region, bool for_n
     if (for_netlist && ii.first->is_text () && ii.first.layout () && ii.first.cell () != ii.first.top_cell ()) {
       //  Skip texts on levels below top cell. For the reasoning see the description of this method.
     } else {
-      red.push (*ii.first, ii.first.prop_id (), ttop * ii.first.trans (), world, 0, shapes);
+      red.push (*ii.first, ii.first.prop_id (), ttop * ii.first.trans (), world, nullptr, shapes);
     }
 
     ++ii.first;
@@ -666,7 +666,7 @@ DeepLayer DeepShapeStore::create_from_flat (const db::Edges &edges, const db::IC
 
   db::EdgeBuildingHierarchyBuilderShapeReceiver eb (false);
   while (! ii.first.at_end ()) {
-    eb.push (*ii.first, ii.first.prop_id (), ttop * ii.first.trans (), world, 0, shapes);
+    eb.push (*ii.first, ii.first.prop_id (), ttop * ii.first.trans (), world, nullptr, shapes);
     ++ii.first;
   }
 
@@ -697,7 +697,7 @@ DeepLayer DeepShapeStore::create_from_flat (const db::Texts &texts, const db::IC
   db::TextBuildingHierarchyBuilderShapeReceiver tb (&layout ());
 
   while (! ii.first.at_end ()) {
-    tb.push (*ii.first, ii.first.prop_id (), ttop * ii.first.trans (), world, 0, shapes);
+    tb.push (*ii.first, ii.first.prop_id (), ttop * ii.first.trans (), world, nullptr, shapes);
     ++ii.first;
   }
 
@@ -910,7 +910,7 @@ void DeepShapeStore::pop_state ()
 
 bool DeepShapeStore::is_valid_layout_index (unsigned int n) const
 {
-  return (n < (unsigned int) m_layouts.size () && m_layouts[n] != 0);
+  return (n < (unsigned int) m_layouts.size () && m_layouts[n] != nullptr);
 }
 
 const db::Layout &DeepShapeStore::const_layout (unsigned int n) const
@@ -944,7 +944,7 @@ void DeepShapeStore::add_ref (unsigned int layout, unsigned int layer)
 {
   tl::MutexLocker locker (&m_lock);
 
-  tl_assert (layout < (unsigned int) m_layouts.size () && m_layouts[layout] != 0);
+  tl_assert (layout < (unsigned int) m_layouts.size () && m_layouts[layout] != nullptr);
 
   m_layouts[layout]->refs += 1;
   m_layouts[layout]->add_layer_ref (layer);
@@ -954,7 +954,7 @@ void DeepShapeStore::remove_ref (unsigned int layout, unsigned int layer)
 {
   tl::MutexLocker locker (&m_lock);
 
-  tl_assert (layout < (unsigned int) m_layouts.size () && m_layouts[layout] != 0);
+  tl_assert (layout < (unsigned int) m_layouts.size () && m_layouts[layout] != nullptr);
 
   if (m_layouts[layout]->remove_layer_ref (layer)) {
 
@@ -969,7 +969,7 @@ void DeepShapeStore::remove_ref (unsigned int layout, unsigned int layer)
 
   if ((m_layouts[layout]->refs -= 1) <= 0 && ! m_keep_layouts) {
     delete m_layouts[layout];
-    m_layouts[layout] = 0;
+    m_layouts[layout] = nullptr;
     clear_breakout_cells (layout);
   }
 }
@@ -980,7 +980,7 @@ DeepShapeStore::layout_for_iter (const db::RecursiveShapeIterator &si, const db:
   size_t gen_id = si.layout () ? si.layout ()->hier_generation_id () : 0;
 
   layout_map_type::iterator l = m_layout_map.find (std::make_pair (si, std::make_pair (gen_id, trans)));
-  if (l == m_layout_map.end () || m_layouts[l->second] == 0) {
+  if (l == m_layout_map.end () || m_layouts[l->second] == nullptr) {
 
     unsigned int layout_index;
 
@@ -1012,7 +1012,7 @@ void DeepShapeStore::make_layout (unsigned int layout_index, const db::Recursive
   tl_assert (m_layout_map.find (std::make_pair (si, std::make_pair (gen_id, trans))) == m_layout_map.end ());
 
   while (m_layouts.size () <= layout_index) {
-    m_layouts.push_back (0);
+    m_layouts.push_back (nullptr);
   }
 
   m_layouts[layout_index] = new LayoutHolder (trans);
@@ -1058,10 +1058,10 @@ DeepLayer DeepShapeStore::create_polygon_layer (const db::RecursiveShapeIterator
 
     builder.set_shape_receiver (&clip);
     db::RecursiveShapeIterator (si).push (& builder);
-    builder.set_shape_receiver (0);
+    builder.set_shape_receiver (nullptr);
 
   } catch (...) {
-    builder.set_shape_receiver (0);
+    builder.set_shape_receiver (nullptr);
     throw;
   }
 
@@ -1089,10 +1089,10 @@ DeepLayer DeepShapeStore::create_custom_layer (const db::RecursiveShapeIterator 
 
     builder.set_shape_receiver (pipe);
     db::RecursiveShapeIterator (si).push (& builder);
-    builder.set_shape_receiver (0);
+    builder.set_shape_receiver (nullptr);
 
   } catch (...) {
-    builder.set_shape_receiver (0);
+    builder.set_shape_receiver (nullptr);
     throw;
   }
 
@@ -1118,7 +1118,7 @@ DeepLayer DeepShapeStore::create_copy (const DeepLayer &source, HierarchyBuilder
     db::Shapes &into = c->shapes (layer_index);
     const db::Shapes &from = c->shapes (from_layer_index);
     for (db::Shapes::shape_iterator s = from.begin (db::ShapeIterator::All); ! s.at_end (); ++s) {
-      pipe->push (*s, s->prop_id (), trans, region, 0, &into);
+      pipe->push (*s, s->prop_id (), trans, region, nullptr, &into);
     }
   }
 

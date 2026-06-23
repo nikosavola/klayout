@@ -663,10 +663,10 @@ Compressor<Obj>::flush (db::OASISWriter *writer)
 //  OASISWriter implementation
 
 OASISWriter::OASISWriter ()
-  : mp_stream (0),
+  : mp_stream (nullptr),
     m_sf (1.0),
-    mp_layout (0),
-    mp_cell (0),
+    mp_layout (nullptr),
+    mp_cell (nullptr),
     m_layer (0), m_datatype (0),
     m_write_context_info (false),
     m_in_cblock (false),
@@ -1469,7 +1469,7 @@ OASISWriter::write (db::Layout &layout, tl::OutputStream &stream, const db::Save
   typedef db::coord_traits<db::Coord>::distance_type coord_distance_type;
 
   mp_layout = &layout;
-  mp_cell = 0;
+  mp_cell = nullptr;
   m_layer = m_datatype = 0;
   m_in_cblock = false;
   m_cblock_buffer.clear ();
@@ -1639,7 +1639,7 @@ OASISWriter::write (db::Layout &layout, tl::OutputStream &stream, const db::Save
     //  build cell name table now in non-strict mode (in strict mode it is written at the
     //  end because then we have the cell positions fo S_CELL_OFFSET)
     if (! m_options.strict_mode) {
-      write_cellname_table (cellnames_table_pos, cells_by_index, 0, layout);
+      write_cellname_table (cellnames_table_pos, cells_by_index, nullptr, layout);
     }
 
     write_textstring_table (textstrings_table_pos, cells, layout, layers);
@@ -2280,7 +2280,7 @@ OASISWriter::write_property_def (const char *name_str, const std::vector<tl::Var
 void
 OASISWriter::write_pointlist (const std::vector<db::Vector> &pointlist, bool for_polygons)
 {
-  tl_assert ((for_polygons && pointlist.size () > 1) || (! for_polygons && pointlist.size () > 0));
+  tl_assert ((for_polygons && pointlist.size () > 1) || (! for_polygons && !pointlist.empty()));
 
   //  determine type: 0 (manhattan, horizontal first), 1 (manhattan, vert. first), -1 other
   db::Vector plast (0, 0);

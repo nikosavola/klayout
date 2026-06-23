@@ -439,7 +439,7 @@ public:
 
   void parse (const std::string &e)
   {
-    mp_expr.reset (0);
+    mp_expr.reset (nullptr);
 
     std::unique_ptr<tl::Expression> ex (new tl::Expression ());
     tl::Eval::parse (*ex, e);
@@ -688,7 +688,7 @@ public:
     if (executable_cb.can_issue ()) {
       return executable_cb.issue<tl::Recipe, tl::Executable *, const std::map<std::string, tl::Variant> &> (&tl::Recipe::executable, params);
     } else {
-      return 0;
+      return nullptr;
     }
   }
 

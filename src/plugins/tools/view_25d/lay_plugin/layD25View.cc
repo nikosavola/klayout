@@ -104,7 +104,7 @@ D25View::D25View (Dispatcher *root, LayoutViewBase *view)
 D25View::~D25View ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 
   if (view ()) {
     view ()->cellviews_changed_event.remove (this, &D25View::cellviews_changed);
@@ -421,7 +421,7 @@ D25View::material_item_changed (QListWidgetItem *item)
 void
 D25View::deactivated ()
 {
-  mp_ui->d25_view->attach_view (0);
+  mp_ui->d25_view->attach_view (nullptr);
 }
 
 void

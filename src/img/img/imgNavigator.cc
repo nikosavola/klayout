@@ -42,8 +42,8 @@ namespace img
 
 Navigator::Navigator (QWidget *parent)
   : QFrame (parent), 
-    mp_view (0),
-    mp_zoom_service (0)
+    mp_view (nullptr),
+    mp_zoom_service (nullptr)
 {
   setObjectName (QString::fromUtf8 ("img_navigator"));
 }
@@ -51,7 +51,7 @@ Navigator::Navigator (QWidget *parent)
 img::Object *
 Navigator::setup (lay::Dispatcher *root, img::Object *img)
 {
-  mp_view = new lay::LayoutViewWidget (0, false, root, this, lay::LayoutView::LV_Naked + lay::LayoutView::LV_NoZoom + lay::LayoutView::LV_NoServices + lay::LayoutView::LV_NoGrid);
+  mp_view = new lay::LayoutViewWidget (nullptr, false, root, this, lay::LayoutView::LV_Naked + lay::LayoutView::LV_NoZoom + lay::LayoutView::LV_NoServices + lay::LayoutView::LV_NoGrid);
   mp_view->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Expanding);
   mp_view->setMinimumWidth (100);
   mp_view->setMinimumHeight (100);
@@ -73,7 +73,7 @@ Navigator::setup (lay::Dispatcher *root, img::Object *img)
     view ()->zoom_fit ();
     return img_object;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -81,12 +81,12 @@ Navigator::~Navigator ()
 {
   if (mp_zoom_service) {
     delete mp_zoom_service;
-    mp_zoom_service = 0;
+    mp_zoom_service = nullptr;
   }
 
   if (mp_view) {
     delete mp_view;
-    mp_view = 0;
+    mp_view = nullptr;
   }
 }
 

@@ -46,7 +46,7 @@ public:
   /**
    *  @brief Constructor
    */
-  EditorServiceBase (lay::LayoutViewBase *view = 0);
+  EditorServiceBase (lay::LayoutViewBase *view = nullptr);
 
   /**
    *  @brief Initialize after constructor was called with null view pointer

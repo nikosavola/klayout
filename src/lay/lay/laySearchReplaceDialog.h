@@ -157,12 +157,12 @@ public:
   int rowCount (const QModelIndex &parent) const;
   void has_more (bool hm);
 
-  void export_csv (const std::string &file, const std::set<int> *rows = 0);
-  void export_csv_to_clipboard (const std::set<int> *rows = 0);
-  void export_csv (tl::OutputStream &os, const std::set<int> *rows = 0);
-  void export_layout (db::Layout &layout, const std::set<int> *rows = 0);
-  void export_rdb (rdb::Database &rdb, double dbu, const std::set<int> *rows = 0);
-  void select_items (LayoutViewBase *view, int cv_index, const std::set<int> *rows = 0);
+  void export_csv (const std::string &file, const std::set<int> *rows = nullptr);
+  void export_csv_to_clipboard (const std::set<int> *rows = nullptr);
+  void export_csv (tl::OutputStream &os, const std::set<int> *rows = nullptr);
+  void export_layout (db::Layout &layout, const std::set<int> *rows = nullptr);
+  void export_rdb (rdb::Database &rdb, double dbu, const std::set<int> *rows = nullptr);
+  void select_items (LayoutViewBase *view, int cv_index, const std::set<int> *rows = nullptr);
 
 private:
   std::vector<tl::Variant> m_data_result;

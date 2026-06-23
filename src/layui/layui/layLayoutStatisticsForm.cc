@@ -340,7 +340,7 @@ StatisticsTemplateProcessor::process (const QDomElement &element, tl::Eval &eval
 
       db::LayoutQuery q (tl::to_string (element.attribute (template_name_expr, template_value_empty_query)));
 
-      db::LayoutQueryIterator qi (q, mp_layout, 0, &eval);
+      db::LayoutQueryIterator qi (q, mp_layout, nullptr, &eval);
 
       process_child_nodes (begin_node, qi.eval (), writer);
 
@@ -889,7 +889,7 @@ StatisticsSource::get_impl (const std::string &url)
 // ------------------------------------------------------------
 
 LayoutStatisticsForm::LayoutStatisticsForm (QWidget *parent, lay::LayoutViewBase *view, const char *name)
-  : QDialog (parent), Ui::LayoutStatisticsForm (), mp_source (0)
+  : QDialog (parent), Ui::LayoutStatisticsForm (), mp_source (nullptr)
 {
   setObjectName (QString::fromUtf8 (name));
 
@@ -920,10 +920,10 @@ LayoutStatisticsForm::LayoutStatisticsForm (QWidget *parent, lay::LayoutViewBase
 
 LayoutStatisticsForm::~LayoutStatisticsForm ()
 {
-  browser->set_source (0);
-  if (mp_source != 0) {
+  browser->set_source (nullptr);
+  if (mp_source != nullptr) {
     delete mp_source;
-    mp_source = 0;
+    mp_source = nullptr;
   }
 }
 
@@ -934,8 +934,8 @@ LayoutStatisticsForm::layout_selected (int index)
     return;
   }
 
-  browser->set_source (0);
-  if (mp_source != 0) {
+  browser->set_source (nullptr);
+  if (mp_source != nullptr) {
     delete mp_source;
   }
 

@@ -490,7 +490,7 @@ bitmaps_to_image (const std::vector<lay::ViewOp> &view_ops_in,
     const lay::ViewOp &vop = view_ops_in [i];
 
     unsigned int bi = (use_bitmap_index && vop.bitmap_index () >= 0) ? (unsigned int) vop.bitmap_index () : i;
-    const lay::Bitmap *pb = bi < pbitmaps_in.size () ? pbitmaps_in [bi] : 0;
+    const lay::Bitmap *pb = bi < pbitmaps_in.size () ? pbitmaps_in [bi] : nullptr;
 
     if ((vop.ormask () | ~vop.andmask ()) != 0 && pb && ! pb->empty ()) {
       vo_map.push_back (i);
@@ -542,7 +542,7 @@ bitmaps_to_image (const std::vector<lay::ViewOp> &view_ops_in,
         const lay::ViewOp &vop = view_ops_in [vo_map[i]];
         unsigned int w = vop.width ();
 
-        const lay::Bitmap *pb = 0;
+        const lay::Bitmap *pb = nullptr;
         unsigned int bm_index = bm_map[i];
         if (bm_map [i] < pbitmaps_in.size ()) {
           if (w > 1 && ls.style (vop.line_style_index ()).width () > 0) {
@@ -553,7 +553,7 @@ bitmaps_to_image (const std::vector<lay::ViewOp> &view_ops_in,
           }
         }
 
-        if (pb != 0 
+        if (pb != nullptr 
             && w > 0
             && ((pb->first_scanline () < y + slice && pb->last_scanline () > y) || w > 1)
             && (vop.ormask () | ~vop.andmask ()) != 0) {
@@ -595,7 +595,7 @@ bitmaps_to_image (const std::vector<lay::ViewOp> &view_ops_in,
         const LineStyleInfo &ls_info = ls.style (op.line_style_index ()).scaled (op.width ());
         const DitherPatternInfo &dp_info = dp.pattern (op.dither_index ()).scaled (dpr);
         const uint32_t *dither = dp_info.pattern () [(y + op.dither_offset ()) % dp_info.height ()];
-        if (dither != 0) {
+        if (dither != nullptr) {
 
           unsigned int dither_stride = dp_info.pattern_stride ();
 
@@ -631,7 +631,7 @@ bitmaps_to_image (const std::vector<lay::ViewOp> &view_ops_in,
 
     //  .. and do the actual transfer.
 
-    if (masks.size () > 0) {
+    if (!masks.empty()) {
 
       tl::color_t *pt = (tl::color_t *) pimage->scan_line (height - 1 - y);
       uint32_t *dptr_end = dptr; 
@@ -729,7 +729,7 @@ bitmaps_to_image (const std::vector<lay::ViewOp> &view_ops_in,
     const lay::ViewOp &vop = view_ops_in [i];
 
     unsigned int bi = (use_bitmap_index && vop.bitmap_index () >= 0) ? (unsigned int) vop.bitmap_index () : i;
-    const lay::Bitmap *pb = bi < pbitmaps_in.size () ? pbitmaps_in [bi] : 0;
+    const lay::Bitmap *pb = bi < pbitmaps_in.size () ? pbitmaps_in [bi] : nullptr;
 
     if ((vop.ormask () | ~vop.andmask ()) != 0 && pb && ! pb->empty ()) {
       vo_map.push_back (i);
@@ -781,7 +781,7 @@ bitmaps_to_image (const std::vector<lay::ViewOp> &view_ops_in,
         const lay::ViewOp &vop = view_ops_in [vo_map[i]];
         unsigned int w = vop.width ();
 
-        const lay::Bitmap *pb = 0;
+        const lay::Bitmap *pb = nullptr;
         unsigned int bm_index = bm_map[i];
         if (bm_map [i] < pbitmaps_in.size ()) {
           if (w > 1 && ls.style (vop.line_style_index ()).width () > 0) {
@@ -792,7 +792,7 @@ bitmaps_to_image (const std::vector<lay::ViewOp> &view_ops_in,
           }
         }
 
-        if (pb != 0
+        if (pb != nullptr
             && w > 0
             && ((pb->first_scanline () < y + slice && pb->last_scanline () > y) || w > 1)
             && (vop.ormask () | ~vop.andmask ()) != 0) {
@@ -833,7 +833,7 @@ bitmaps_to_image (const std::vector<lay::ViewOp> &view_ops_in,
         const LineStyleInfo &ls_info = ls.style (op.line_style_index ()).scaled (op.width ());
         const DitherPatternInfo &dp_info = dp.pattern (op.dither_index ()).scaled (dpr);
         const uint32_t *dither = dp_info.pattern () [(y + op.dither_offset ()) % dp_info.height ()];
-        if (dither != 0) {
+        if (dither != nullptr) {
 
           unsigned int dither_stride = dp_info.pattern_stride ();
 
@@ -869,7 +869,7 @@ bitmaps_to_image (const std::vector<lay::ViewOp> &view_ops_in,
 
     //  .. and do the actual transfer.
 
-    if (masks.size () > 0) {
+    if (!masks.empty()) {
 
       tl::color_t *pt = (tl::color_t *) pimage->scan_line (height - 1 - y);
       uint32_t *dptr_end = dptr; 

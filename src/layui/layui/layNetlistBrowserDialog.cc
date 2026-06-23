@@ -132,7 +132,7 @@ NetlistBrowserDialog::~NetlistBrowserDialog ()
   tl::Object::detach_from_all_events ();
 
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 db::LayoutToNetlist *
@@ -304,8 +304,8 @@ NetlistBrowserDialog::probe_net (const db::DPoint &p, bool trace_path)
 
   }
 
-  db::Net *net = 0;
-  db::Circuit *root = 0;
+  db::Net *net = nullptr;
+  db::Circuit *root = nullptr;
   std::vector<db::SubCircuit *> sc_path;
 
   db::LayoutToNetlist *l2ndb = view ()->get_l2ndb (m_l2n_index);
@@ -491,7 +491,7 @@ BEGIN_PROTECTED
       tl::log << tl::to_string (QObject::tr ("Loading file: ")) << l2ndb->filename ();
       tl::SelfTimer timer (tl::verbosity () >= 11, tl::to_string (QObject::tr ("Loading")));
 
-      mp_ui->browser_page->set_db (0);
+      mp_ui->browser_page->set_db (nullptr);
       try {
 
         m_l2ndb_name = l2ndb->name ();
@@ -651,7 +651,7 @@ NetlistBrowserDialog::configure (const std::string &name, const std::string &val
   if (active () && need_update) {
     mp_ui->browser_page->set_max_shape_count (m_max_shape_count);
     mp_ui->browser_page->set_window (m_window, m_window_dim);
-    mp_ui->browser_page->set_highlight_style (m_marker_color, m_marker_line_width, m_marker_vertex_size, m_marker_halo, m_marker_dither_pattern, m_marker_intensity, m_use_original_colors, m_auto_color_enabled ? &m_auto_colors : 0);
+    mp_ui->browser_page->set_highlight_style (m_marker_color, m_marker_line_width, m_marker_vertex_size, m_marker_halo, m_marker_dither_pattern, m_marker_intensity, m_use_original_colors, m_auto_color_enabled ? &m_auto_colors : nullptr);
   }
 
   mp_ui->browser_page->show_all (show_all);
@@ -771,7 +771,7 @@ NetlistBrowserDialog::activated ()
     m_cv_index = view ()->active_cellview_index ();
   }
 
-  if (m_l2n_index < 0 && view ()->get_l2ndb (0) != 0) {
+  if (m_l2n_index < 0 && view ()->get_l2ndb (0) != nullptr) {
 
     m_l2ndb_name = view ()->get_l2ndb (0)->name ();
     l2ndbs_changed ();
@@ -788,7 +788,7 @@ NetlistBrowserDialog::update_content ()
 
   db::LayoutToNetlist *l2ndb = view ()->get_l2ndb (m_l2n_index);
 
-  mp_ui->probe_pb->setEnabled (l2ndb != 0);
+  mp_ui->probe_pb->setEnabled (l2ndb != nullptr);
   release_mouse ();
 
   if (! l2ndb) {
@@ -797,16 +797,16 @@ NetlistBrowserDialog::update_content ()
 
   bool db_changed = false;
 
-  m_saveas_action->setEnabled (l2ndb != 0);
-  m_export_action->setEnabled (l2ndb != 0);
-  m_unload_action->setEnabled (l2ndb != 0);
-  m_unload_all_action->setEnabled (l2ndb != 0);
-  m_reload_action->setEnabled (l2ndb != 0);
+  m_saveas_action->setEnabled (l2ndb != nullptr);
+  m_export_action->setEnabled (l2ndb != nullptr);
+  m_unload_action->setEnabled (l2ndb != nullptr);
+  m_unload_all_action->setEnabled (l2ndb != nullptr);
+  m_reload_action->setEnabled (l2ndb != nullptr);
 
   mp_ui->browser_page->enable_updates (false);  //  Avoid building the internal lists several times ...
   db_changed = mp_ui->browser_page->set_db (l2ndb);
   mp_ui->browser_page->set_max_shape_count (m_max_shape_count);
-  mp_ui->browser_page->set_highlight_style (m_marker_color, m_marker_line_width, m_marker_vertex_size, m_marker_halo, m_marker_dither_pattern, m_marker_intensity, m_use_original_colors, m_auto_color_enabled ? &m_auto_colors : 0);
+  mp_ui->browser_page->set_highlight_style (m_marker_color, m_marker_line_width, m_marker_vertex_size, m_marker_halo, m_marker_dither_pattern, m_marker_intensity, m_use_original_colors, m_auto_color_enabled ? &m_auto_colors : nullptr);
   mp_ui->browser_page->set_window (m_window, m_window_dim);
   mp_ui->browser_page->set_view (view (), m_cv_index);
   mp_ui->browser_page->enable_updates (true);
@@ -846,11 +846,11 @@ NetlistBrowserDialog::deactivated ()
   }
 
   bool db_changed = false;
-  if (mp_ui->browser_page->db () != 0) {
+  if (mp_ui->browser_page->db () != nullptr) {
     db_changed = true;
-    mp_ui->browser_page->set_db (0);
+    mp_ui->browser_page->set_db (nullptr);
   }
-  mp_ui->browser_page->set_view (0, 0);
+  mp_ui->browser_page->set_view (nullptr, 0);
 
   if (db_changed) {
     current_db_changed_event ();

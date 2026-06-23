@@ -124,7 +124,7 @@ public:
 
   void detach ()
   {
-    mp_view.reset (0);
+    mp_view.reset (nullptr);
   }
 
   bool is_valid () const
@@ -402,21 +402,21 @@ static AnnotationRef get_annotation (lay::LayoutViewBase *view, int id)
 static tl::Event &get_annotations_changed_event (lay::LayoutViewBase *view)
 {
   ant::Service *ant_service = view->get_plugin <ant::Service> ();
-  tl_assert (ant_service != 0);
+  tl_assert (ant_service != nullptr);
   return ant_service->annotations_changed_event;
 }
 
 static tl::Event &get_annotation_selection_changed_event (lay::LayoutViewBase *view)
 {
   ant::Service *ant_service = view->get_plugin <ant::Service> ();
-  tl_assert (ant_service != 0);
+  tl_assert (ant_service != nullptr);
   return ant_service->annotation_selection_changed_event;
 }
 
 static tl::event<int> &get_annotation_changed_event (lay::LayoutViewBase *view)
 {
   ant::Service *ant_service = view->get_plugin <ant::Service> ();
-  tl_assert (ant_service != 0);
+  tl_assert (ant_service != nullptr);
   return ant_service->annotation_changed_event;
 }
 
@@ -1134,7 +1134,7 @@ gsi::Class<AnnotationRef> decl_Annotation (decl_BasicAnnotation, "lay", "Annotat
 static std::vector<std::vector<tl::Variant> > get_annotation_templates (lay::LayoutViewBase *view)
 {
   ant::Service *ant_service = view->get_plugin <ant::Service> ();
-  tl_assert (ant_service != 0);
+  tl_assert (ant_service != nullptr);
 
   std::vector<std::vector<tl::Variant> > ant_objects;
   const std::vector<ant::Template> &ruler_templates = ant_service->ruler_templates ();
@@ -1142,7 +1142,7 @@ static std::vector<std::vector<tl::Variant> > get_annotation_templates (lay::Lay
   ant_objects.reserve (ruler_templates.size ());
   for (auto i = ruler_templates.begin (); i != ruler_templates.end (); ++i) {
     ant_objects.push_back (std::vector<tl::Variant> ());
-    ant_objects.back ().push_back (tl::Variant (gsi::AnnotationRef (ant::Object (db::DPoint (), db::DPoint (), 0, *i), 0)));
+    ant_objects.back ().push_back (tl::Variant (gsi::AnnotationRef (ant::Object (db::DPoint (), db::DPoint (), 0, *i), nullptr)));
     ant_objects.back ().push_back (tl::Variant (i->title ()));
     ant_objects.back ().push_back (tl::Variant (int (i->mode ())));
   }

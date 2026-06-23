@@ -106,7 +106,7 @@ static std::map<std::string, bool> unpack_menu_items_hidden (const std::string &
 
 static lay::AbstractMenu *new_menu ()
 {
-  return new lay::AbstractMenu (0);
+  return new lay::AbstractMenu (nullptr);
 }
 
 Class<lay::AbstractMenu> decl_AbstractMenu ("lay", "AbstractMenu",

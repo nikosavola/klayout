@@ -49,7 +49,7 @@ template <class TS, class TI, class TR> class local_processor;
 template <class TS, class TI, class TR> class local_processor_cell_context;
 template <class TS, class TI, class TR> class local_processor_contexts;
 
-inline const db::Shapes *subject_idptr () { return (const db::Shapes *) 0; }
+inline const db::Shapes *subject_idptr () { return (const db::Shapes *) nullptr; }
 inline const db::Shapes *foreign_idptr () { return (const db::Shapes *) 1; }
 
 inline unsigned int subject_idlayer() { return std::numeric_limits<unsigned int>::max (); }
@@ -548,8 +548,8 @@ class DB_PUBLIC local_processor
   : public LocalProcessorBase
 {
 public:
-  local_processor (db::Layout *layout = 0, db::Cell *top = 0, const std::set<db::cell_index_type> *breakout_cells = 0);
-  local_processor (db::Layout *subject_layout, db::Cell *subject_top, const db::Layout *intruder_layout, const db::Cell *intruder_cell, const std::set<db::cell_index_type> *subject_breakout_cells = 0, const std::set<db::cell_index_type> *intruder_breakout_cells = 0);
+  local_processor (db::Layout *layout = nullptr, db::Cell *top = nullptr, const std::set<db::cell_index_type> *breakout_cells = nullptr);
+  local_processor (db::Layout *subject_layout, db::Cell *subject_top, const db::Layout *intruder_layout, const db::Cell *intruder_cell, const std::set<db::cell_index_type> *subject_breakout_cells = nullptr, const std::set<db::cell_index_type> *intruder_breakout_cells = nullptr);
 
   void run (local_operation<TS, TI, TR> *op, unsigned int subject_layer, unsigned int intruder_layer, unsigned int output_layers, bool make_variants = true);
   void run (local_operation<TS, TI, TR> *op, unsigned int subject_layer, unsigned int intruder_layer, const std::vector<unsigned int> &output_layers, bool make_variants = true);

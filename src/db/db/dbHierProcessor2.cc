@@ -108,13 +108,13 @@ local_processor_cell_context<TS, TI, TR>::propagate (unsigned int output_layer, 
     return;
   }
 
-  db::Layout *subject_layout = 0;
+  db::Layout *subject_layout = nullptr;
   shape_reference_translator_with_trans<TR, db::ICplxTrans> rt (subject_layout);
 
   for (typename std::vector<local_processor_cell_drop<TS, TI, TR> >::const_iterator d = m_drops.begin (); d != m_drops.end (); ++d) {
 
-    tl_assert (d->parent_context != 0);
-    tl_assert (d->parent != 0);
+    tl_assert (d->parent_context != nullptr);
+    tl_assert (d->parent != nullptr);
 
     if (subject_layout != d->parent->layout ()) {
       subject_layout = d->parent->layout ();
@@ -141,7 +141,7 @@ local_processor_cell_context<TS, TI, TR>::propagate (unsigned int output_layer, 
 
 template <class TS, class TI, class TR>
 local_processor_cell_contexts<TS, TI, TR>::local_processor_cell_contexts ()
-  : mp_intruder_cell (0)
+  : mp_intruder_cell (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -158,7 +158,7 @@ db::local_processor_cell_context<TS, TI, TR> *
 local_processor_cell_contexts<TS, TI, TR>::find_context (const context_key_type &intruders)
 {
   typename std::unordered_map<context_key_type, db::local_processor_cell_context<TS, TI, TR> >::iterator c = m_contexts.find (intruders);
-  return c != m_contexts.end () ? &c->second : 0;
+  return c != m_contexts.end () ? &c->second : nullptr;
 }
 
 template <class TS, class TI, class TR>

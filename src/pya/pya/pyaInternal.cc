@@ -863,7 +863,7 @@ MethodTable *
 MethodTable::method_table_by_class (const gsi::ClassBase *cls_decl)
 {
   PythonClassClientData *cd = dynamic_cast<PythonClassClientData *>(cls_decl->data (gsi::ClientIndex::Python));
-  return cd ? &cd->method_table : 0;
+  return cd ? &cd->method_table : nullptr;
 }
 
 // -------------------------------------------------------------------
@@ -874,10 +874,10 @@ static std::map<PyTypeObject *, const gsi::ClassBase *> s_type2cls;
 PythonClassClientData::PythonClassClientData (const gsi::ClassBase *_cls, PyTypeObject *_py_type, PyTypeObject *_py_type_static, PythonModule *module)
   : py_type_object ((PyObject *) _py_type), py_type_object_static ((PyObject *) _py_type_static), method_table (_cls, module)
 {
-  if (_py_type != NULL) {
+  if (_py_type != nullptr) {
     s_type2cls.insert (std::make_pair (_py_type, _cls));
   }
-  if (_py_type_static != NULL) {
+  if (_py_type_static != nullptr) {
     s_type2cls.insert (std::make_pair (_py_type_static, _cls));
   }
 }
@@ -894,7 +894,7 @@ PyTypeObject *
 PythonClassClientData::py_type (const gsi::ClassBase &cls_decl, bool as_static)
 {
   PythonClassClientData *cd = dynamic_cast<PythonClassClientData *>(cls_decl.data (gsi::ClientIndex::Python));
-  return (PyTypeObject *) (cd ? (as_static ? cd->py_type_object_static.get () : cd->py_type_object.get ()) : 0);
+  return (PyTypeObject *) (cd ? (as_static ? cd->py_type_object_static.get () : cd->py_type_object.get ()) : nullptr);
 }
 
 const gsi::ClassBase *
@@ -908,7 +908,7 @@ PythonClassClientData::cls_for_type (PyTypeObject *type)
     type = type->tp_base;
   }
 
-  return 0;
+  return nullptr;
 }
 
 void
@@ -923,7 +923,7 @@ PythonClassClientData::initialize (const gsi::ClassBase &cls_decl, PyTypeObject 
       cd->py_type_object = (PyObject *) py_type;
     }
   } else {
-    cls_decl.set_data (gsi::ClientIndex::Python, new PythonClassClientData (&cls_decl, as_static ? NULL : py_type, as_static ? py_type : NULL, module));
+    cls_decl.set_data (gsi::ClientIndex::Python, new PythonClassClientData (&cls_decl, as_static ? nullptr : py_type, as_static ? py_type : nullptr, module));
   }
 }
 

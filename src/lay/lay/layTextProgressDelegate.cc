@@ -48,7 +48,7 @@ void TextProgressDelegate::show_progress_bar (bool show)
 
 bool TextProgressDelegate::progress_wants_widget () const
 {
-  return mp_mw != 0 && mp_mw->progress_wants_widget ();
+  return mp_mw != nullptr && mp_mw->progress_wants_widget ();
 }
 
 void TextProgressDelegate::progress_add_widget (QWidget *widget)
@@ -60,7 +60,7 @@ void TextProgressDelegate::progress_add_widget (QWidget *widget)
 
 QWidget *TextProgressDelegate::progress_get_widget () const
 {
-  return mp_mw ? mp_mw->progress_get_widget () : 0;
+  return mp_mw ? mp_mw->progress_get_widget () : nullptr;
 }
 
 void TextProgressDelegate::progress_remove_widget ()

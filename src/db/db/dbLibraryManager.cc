@@ -36,12 +36,12 @@
 namespace db
 {
 
-static LibraryManager *sp_instance (0);
+static LibraryManager *sp_instance (nullptr);
 
 DB_PUBLIC LibraryManager &
 LibraryManager::instance ()
 {
-  if (sp_instance == 0) {
+  if (sp_instance == nullptr) {
     sp_instance = new LibraryManager ();
     tl::StaticObjects::reg (&sp_instance);
   }
@@ -50,7 +50,7 @@ LibraryManager::instance ()
 
 bool LibraryManager::initialized () 
 {
-  return sp_instance != 0;
+  return sp_instance != nullptr;
 }
 
 LibraryManager::LibraryManager ()
@@ -70,7 +70,7 @@ LibraryManager::~LibraryManager ()
 void
 LibraryManager::rename (lib_id_type lib_id, const std::string &name)
 {
-  db::Library *lib = 0;
+  db::Library *lib = nullptr;
 
   {
     tl::MutexLocker locker (&m_lock);
@@ -145,7 +145,7 @@ LibraryManager::unregister_lib (Library *library)
     return;
   }
 
-  library->remap_to (0);
+  library->remap_to (nullptr);
 
   {
     tl::MutexLocker locker (&m_lock);
@@ -153,7 +153,7 @@ LibraryManager::unregister_lib (Library *library)
     for (lib_id_type id = 0; id < m_libs.size (); ++id) {
       if (m_libs [id] == library) {
         m_lib_by_name.erase (library->get_name ());
-        m_libs [id] = 0;
+        m_libs [id] = nullptr;
         break;
       }
     }
@@ -178,7 +178,7 @@ lib_id_type
 LibraryManager::register_lib (Library *library)
 {
   lib_id_type id = std::numeric_limits<size_t>::max ();
-  Library *old_lib = 0;
+  Library *old_lib = nullptr;
 
   {
     tl::MutexLocker locker (&m_lock);
@@ -192,7 +192,7 @@ LibraryManager::register_lib (Library *library)
     library->keep (); //  marks the library owned by the C++ side of GSI
 
     for (id = 0; id < m_libs.size (); ++id) {
-      if (m_libs [id] == 0) {
+      if (m_libs [id] == nullptr) {
         break;
       }
     }
@@ -235,12 +235,12 @@ LibraryManager::register_lib (Library *library)
     {
       //  reset the library pointer only after "remap_to" -> this function may need lib_by_id.
       tl::MutexLocker locker (&m_lock);
-      m_libs [old_lib->get_id ()] = 0;
+      m_libs [old_lib->get_id ()] = nullptr;
     }
 
     old_lib->set_id (std::numeric_limits<lib_id_type>::max ());
     delete old_lib;
-    old_lib = 0;
+    old_lib = nullptr;
 
   }
 
@@ -300,7 +300,7 @@ Library *
 LibraryManager::lib_internal (lib_id_type id) const
 {
   if (id >= m_libs.size ()) {
-    return 0;
+    return nullptr;
   } else {
     return m_libs [id];
   }
@@ -353,7 +353,7 @@ LibraryManager::clear ()
 
   for (std::vector<Library *>::iterator l = libs.begin (); l != libs.end (); ++l) {
     if (*l) {
-      (*l)->remap_to (0);
+      (*l)->remap_to (nullptr);
       (*l)->set_id (std::numeric_limits<lib_id_type>::max ());
       delete *l;
     }

@@ -55,7 +55,7 @@ public:
   virtual lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
   {
     // .. nothing yet ..
-    return 0;
+    return nullptr;
   }
 
   virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const

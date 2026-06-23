@@ -35,7 +35,7 @@ ObjectHolder::ObjectHolder (const gsi::ClassBase *cls, void *obj)
 
 ObjectHolder::~ObjectHolder ()
 {
-  reset (0, 0);
+  reset (nullptr, nullptr);
 }
 
 void ObjectHolder::reset (const gsi::ClassBase *cls, void *obj)
@@ -47,9 +47,9 @@ void ObjectHolder::reset (const gsi::ClassBase *cls, void *obj)
   if (mp_cls) {
     if (mp_obj) {
       mp_cls->destroy (mp_obj);
-      mp_obj = 0;
+      mp_obj = nullptr;
     }
-    mp_cls = 0;
+    mp_cls = nullptr;
   }
 
   if (cls) {
@@ -61,8 +61,8 @@ void ObjectHolder::reset (const gsi::ClassBase *cls, void *obj)
 void *ObjectHolder::release ()
 {
   void *obj = mp_obj;
-  mp_obj = 0;
-  mp_cls = 0;
+  mp_obj = nullptr;
+  mp_cls = nullptr;
   return obj;
 }
 

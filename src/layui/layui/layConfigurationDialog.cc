@@ -43,7 +43,7 @@ ConfigurationDialog::ConfigurationDialog (QWidget *parent, lay::Dispatcher *root
   : QDialog (parent),
     mp_root (root)
 { 
-  mp_ui = 0;
+  mp_ui = nullptr;
 
   setObjectName (QString::fromUtf8 (name));
 
@@ -72,7 +72,7 @@ ConfigurationDialog::~ConfigurationDialog ()
 {
   m_config_pages.clear ();
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -92,7 +92,7 @@ ConfigurationDialog::init (const lay::PluginDeclaration *decl)
   lay::ConfigPage *page = decl->config_page (mp_ui->centralFrame, config_title);
   if (page) {
     m_config_pages.push_back (page);
-    if (page->layout () == 0) {
+    if (page->layout () == nullptr) {
       tl::warn << "No layout in configuration page " << config_title;
     }
     layout->addWidget (page);
@@ -101,7 +101,7 @@ ConfigurationDialog::init (const lay::PluginDeclaration *decl)
   std::vector <std::pair <std::string, lay::ConfigPage *> > pages = decl->config_pages (mp_ui->centralFrame);
   for (std::vector <std::pair <std::string, lay::ConfigPage *> >::iterator p = pages.begin (); p != pages.end (); ++p) {
     m_config_pages.push_back (p->second);
-    if (p->second->layout () == 0) {
+    if (p->second->layout () == nullptr) {
       tl::warn << "No layout in configuration page " << p->first;
     }
     layout->addWidget (p->second);

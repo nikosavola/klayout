@@ -77,7 +77,7 @@ struct DeviceAbstractRef
   }
 
   DeviceAbstractRef ()
-    : device_abstract (0), trans ()
+    : device_abstract (nullptr), trans ()
   {
     //  .. nothing yet ..
   }
@@ -333,7 +333,7 @@ public:
     if (t != m_reconnected_terminals.end ()) {
       return & t->second;
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -379,7 +379,7 @@ public:
   /**
    *  @brief Generate memory statistics
    */
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const
   {
     if (! no_self) {
       stat->add (typeid (*this), (void *) this, sizeof (*this), sizeof (*this), parent, purpose, cat);

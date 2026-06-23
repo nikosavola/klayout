@@ -446,7 +446,7 @@ OASISReader::get_gdelta (int64_t grid)
 void
 OASISReader::error (const std::string &msg)
 {
-  throw OASISReaderException (msg, m_stream.pos (), m_cellname.c_str (), m_stream.source ());
+  throw OASISReaderException (msg, m_stream.pos (), m_cellname, m_stream.source ());
 }
 
 void
@@ -1414,7 +1414,7 @@ OASISReader::replace_forward_references_in_variant (tl::Variant &v)
 static void
 store_properties (db::PropertiesSet &properties, db::property_names_id_type name, const db::OASISReader::property_value_list &value)
 {
-  if (value.size () == 0) {
+  if (value.empty()) {
     properties.insert (name, tl::Variant ());
   } else if (value.size () == 1) {
     properties.insert (name, tl::Variant (value [0]));
@@ -1644,7 +1644,7 @@ OASISReader::read_pointlist (modal_variable <std::vector <db::Point> > &pointlis
   uint64_t n = 0;
   get (n);
   if (n == 0) {
-    error (tl::to_string (tr ("Invalid point list: length is zero")).c_str ());
+    error (tl::to_string (tr ("Invalid point list: length is zero")));
   }
 
   pointlist.get_non_const ().clear ();
@@ -1957,7 +1957,7 @@ OASISReader::do_read_placement (unsigned char r,
 
   db::Vector pos (mm_placement_x.get (), mm_placement_y.get ());
 
-  const std::vector<db::Vector> *points = 0;
+  const std::vector<db::Vector> *points = nullptr;
 
   if ((m & 0x8) && read_repetition ()) {
 
@@ -1983,7 +1983,7 @@ OASISReader::do_read_placement (unsigned char r,
         instances.push_back (inst);
       }
 
-    } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != 0) {
+    } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) {
 
       db::CellInstArray inst;
 
@@ -2164,7 +2164,7 @@ OASISReader::do_read_text (bool xy_absolute,
 
       db::Cell &cell = layout.cell (cell_index);
 
-      const std::vector<db::Vector> *points = 0;
+      const std::vector<db::Vector> *points = nullptr;
 
       //  If the repetition is a regular one, convert the repetition into
       //  a shape array
@@ -2183,7 +2183,7 @@ OASISReader::do_read_text (bool xy_absolute,
           cell.shapes (ll.second).insert (db::Shape::text_ptr_array_type (text_ptr, db::Disp (pos), layout.array_repository (), a, b, (uint64_t) na, (uint64_t) nb));
         }
 
-      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != 0) {
+      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) {
 
         db::TextPtr text_ptr (text, layout.shape_repository ());
 
@@ -2309,7 +2309,7 @@ OASISReader::do_read_rectangle (bool xy_absolute,
 
       db::Cell &cell = layout.cell (cell_index);
 
-      const std::vector<db::Vector> *points = 0;
+      const std::vector<db::Vector> *points = nullptr;
 
       //  If the repetition is a regular one, convert the repetition into
       //  a box array
@@ -2327,7 +2327,7 @@ OASISReader::do_read_rectangle (bool xy_absolute,
           cell.shapes (ll.second).insert (db::Shape::box_array_type (box, db::UnitTrans (), layout.array_repository (), a, b, (uint64_t) na, (uint64_t) nb));
         }
 
-      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != 0) {
+      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) {
 
         //  Create an iterated box array
         db::Shape::box_array_type::iterated_array_type array;
@@ -2443,7 +2443,7 @@ OASISReader::do_read_polygon (bool xy_absolute, db::cell_index_type cell_index, 
         db::SimplePolygon poly;
         poly.assign_hull (mm_polygon_point_list.get ().begin (), mm_polygon_point_list.get ().end (), false /*no compression*/);
 
-        const std::vector<db::Vector> *points = 0;
+        const std::vector<db::Vector> *points = nullptr;
 
         //  If the repetition is a regular one, convert the repetition into
         //  a shape array
@@ -2465,7 +2465,7 @@ OASISReader::do_read_polygon (bool xy_absolute, db::cell_index_type cell_index, 
             cell.shapes (ll.second).insert (db::array<db::SimplePolygonPtr, db::Disp> (poly_ptr, db::Disp (d + pos), layout.array_repository (), a, b, (uint64_t) na, (uint64_t) nb));
           }
 
-        } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != 0) {
+        } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) {
 
           db::Vector d (poly.box ().lower_left () - db::Point ());
           poly.move (-d);
@@ -2624,7 +2624,7 @@ OASISReader::do_read_path (bool xy_absolute, db::cell_index_type cell_index, db:
 
         db::Cell &cell = layout.cell (cell_index);
 
-        const std::vector<db::Vector> *points = 0;
+        const std::vector<db::Vector> *points = nullptr;
 
         //  If the repetition is a regular one, convert the repetition into
         //  a shape array
@@ -2646,7 +2646,7 @@ OASISReader::do_read_path (bool xy_absolute, db::cell_index_type cell_index, db:
             cell.shapes (ll.second).insert (db::array<db::PathPtr, db::Disp> (path_ptr, db::Disp (d + pos), layout.array_repository (), a, b, (uint64_t) na, (uint64_t) nb));
           }
 
-        } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != 0) {
+        } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) {
 
           db::Vector d (*path.begin () - db::Point ());
           path.move (-d);
@@ -2805,7 +2805,7 @@ OASISReader::do_read_trapezoid (unsigned char r, bool xy_absolute,db::cell_index
 
       db::Cell &cell = layout.cell (cell_index);
 
-      const std::vector<db::Vector> *points = 0;
+      const std::vector<db::Vector> *points = nullptr;
 
       //  If the repetition is a regular one, convert the repetition into
       //  a shape array
@@ -2827,7 +2827,7 @@ OASISReader::do_read_trapezoid (unsigned char r, bool xy_absolute,db::cell_index
           cell.shapes (ll.second).insert (db::array<db::SimplePolygonPtr, db::Disp> (poly_ptr, db::Disp (d + pos), layout.array_repository (), a, b, (uint64_t) na, (uint64_t) nb));
         }
 
-      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != 0) {
+      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) {
 
         db::Vector d (poly.box ().lower_left () - db::Point ());
         poly.move (-d);
@@ -3177,7 +3177,7 @@ OASISReader::do_read_ctrapezoid (bool xy_absolute,db::cell_index_type cell_index
 
       db::Cell &cell = layout.cell (cell_index);
 
-      const std::vector<db::Vector> *points = 0;
+      const std::vector<db::Vector> *points = nullptr;
 
       //  If the repetition is a regular one, convert the repetition into
       //  a shape array
@@ -3198,7 +3198,7 @@ OASISReader::do_read_ctrapezoid (bool xy_absolute,db::cell_index_type cell_index
           cell.shapes (ll.second).insert (db::array<db::SimplePolygonPtr, db::Disp> (poly_ptr, db::Disp (d + pos), layout.array_repository (), a, b, (uint64_t) na, (uint64_t) nb));
         }
 
-      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != 0) {
+      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) {
 
         db::Vector d (poly.box ().lower_left () - db::Point ());
         poly.move (-d);
@@ -3328,7 +3328,7 @@ OASISReader::do_read_circle (bool xy_absolute, db::cell_index_type cell_index, d
 
       db::Cell &cell = layout.cell (cell_index);
 
-      const std::vector<db::Vector> *points = 0;
+      const std::vector<db::Vector> *points = nullptr;
 
       //  If the repetition is a regular one, convert the repetition into
       //  a shape array
@@ -3348,7 +3348,7 @@ OASISReader::do_read_circle (bool xy_absolute, db::cell_index_type cell_index, d
           cell.shapes (ll.second).insert (db::array<db::PathPtr, db::Disp> (path_ptr, db::Disp (pos), layout.array_repository (), a, b, (uint64_t) na, (uint64_t) nb));
         }
 
-      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != 0) {
+      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) {
 
         db::PathPtr path_ptr (path, layout.shape_repository ());
 

@@ -243,7 +243,7 @@ public:
   {
     typename index_map::iterator lb = std::lower_bound (m_index_map.begin (), m_index_map.end (), i, iv_compare_f<I, T> ());
     if (lb == m_index_map.end () || i < lb->first.first) {
-      return 0;
+      return nullptr;
     } else {
       return &lb->second;
     }
@@ -264,7 +264,7 @@ public:
   {
     typename index_map::const_iterator lb = std::lower_bound (m_index_map.begin (), m_index_map.end (), i, iv_compare_f<I, T> ());
     if (lb == m_index_map.end () || i < lb->first.first) {
-      return 0;
+      return nullptr;
     } else {
       return &lb->second;
     }

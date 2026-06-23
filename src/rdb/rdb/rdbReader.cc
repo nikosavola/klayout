@@ -59,7 +59,7 @@ match_filename_to_format (const std::string &fn, const std::string &fmt)
 //  Reader implementation
 
 Reader::Reader (tl::InputStream &stream)
-  : mp_actual_reader (0)
+  : mp_actual_reader (nullptr)
 {
   for (tl::Registrar<rdb::FormatDeclaration>::iterator rdr = tl::Registrar<rdb::FormatDeclaration>::begin (); rdr != tl::Registrar<rdb::FormatDeclaration>::end () && ! mp_actual_reader; ++rdr) {
     stream.reset ();
@@ -78,7 +78,7 @@ Reader::~Reader ()
 {
   if (mp_actual_reader) {
     delete mp_actual_reader;
-    mp_actual_reader = 0;
+    mp_actual_reader = nullptr;
   }
 }
 

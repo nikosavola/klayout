@@ -115,7 +115,7 @@ public:
   InternalAngleEdgePairFilter (double amin, bool include_amin, double amax, bool include_amax, bool inverted);
 
   virtual bool selected (const db::EdgePair &edge_pair, properties_id_type) const;
-  virtual const TransformationReducer *vars () const { return 0; }
+  virtual const TransformationReducer *vars () const { return nullptr; }
   virtual bool wants_variants () const { return false; }
 
 private:

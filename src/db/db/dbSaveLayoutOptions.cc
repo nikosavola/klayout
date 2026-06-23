@@ -114,7 +114,7 @@ SaveLayoutOptions::get_options (const std::string &format) const
   if (o != m_options.end ()) {
     return o->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -125,7 +125,7 @@ SaveLayoutOptions::get_options (const std::string &format)
   if (o != m_options.end ()) {
     return o->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -140,7 +140,7 @@ SaveLayoutOptions::set_option_by_name (const std::string &method, const tl::Vari
   tl::Variant out;
   std::vector<tl::Variant> args;
   args.push_back (value);
-  eval_cls->execute (context, out, options_ref, method + "=", args, 0);
+  eval_cls->execute (context, out, options_ref, method + "=", args, nullptr);
 }
 
 tl::Variant
@@ -153,7 +153,7 @@ SaveLayoutOptions::get_option_by_name (const std::string &method)
 
   tl::Variant out;
   std::vector<tl::Variant> args;
-  eval_cls->execute (context, out, options_ref, method, args, 0);
+  eval_cls->execute (context, out, options_ref, method, args, nullptr);
 
   return out;
 }

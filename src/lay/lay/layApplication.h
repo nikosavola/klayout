@@ -335,7 +335,7 @@ public:
    *  @brief Gets the QApplication object
    *  This method will return non-null only if a GUI-enabled application is present.
    */
-  virtual QApplication *qapp_gui () { return 0; }
+  virtual QApplication *qapp_gui () { return nullptr; }
 
 protected:
   virtual void setup () = 0;
@@ -529,7 +529,7 @@ public:
    */
   virtual MainWindow *main_window () const
   {
-    return 0;
+    return nullptr;
   }
 
 protected:

@@ -31,7 +31,7 @@ namespace db
 //  DeviceAbstract class implementation
 
 DeviceAbstract::DeviceAbstract ()
-  : m_name (), mp_device_class (0), m_cell_index (std::numeric_limits<db::cell_index_type>::max ()), mp_netlist (0)
+  : m_name (), mp_device_class (nullptr), m_cell_index (std::numeric_limits<db::cell_index_type>::max ()), mp_netlist (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -42,13 +42,13 @@ DeviceAbstract::~DeviceAbstract ()
 }
 
 DeviceAbstract::DeviceAbstract (db::DeviceClass *device_class, const std::string &name)
-  : m_name (name), mp_device_class (device_class), m_cell_index (std::numeric_limits<db::cell_index_type>::max ()), mp_netlist (0)
+  : m_name (name), mp_device_class (device_class), m_cell_index (std::numeric_limits<db::cell_index_type>::max ()), mp_netlist (nullptr)
 {
   //  .. nothing yet ..
 }
 
 DeviceAbstract::DeviceAbstract (const DeviceAbstract &other)
-  : tl::Object (other), mp_device_class (0), m_cell_index (std::numeric_limits<db::cell_index_type>::max ()), mp_netlist (0)
+  : tl::Object (other), mp_device_class (nullptr), m_cell_index (std::numeric_limits<db::cell_index_type>::max ()), mp_netlist (nullptr)
 {
   operator= (other);
 }

@@ -110,7 +110,7 @@ Renderer::draw_propstring (db::properties_id_type id, const db::DPoint &pref,
 
   draw (db::DBox (tp1, tp2), ptext, m_font,
           db::HAlignLeft, db::VAlignTop, 
-          db::DFTrans (db::DFTrans::r0), 0, 0, 0, text);
+          db::DFTrans (db::DFTrans::r0), nullptr, nullptr, nullptr, text);
 }
 
 void 
@@ -126,7 +126,7 @@ Renderer::draw_description_propstring (db::properties_id_type id, const db::DPoi
 
     draw (db::DBox (tp1, tp2), description.to_string (), m_font,
             db::HAlignLeft, db::VAlignTop, 
-            db::DFTrans (db::DFTrans::r0), 0, 0, 0, text);
+            db::DFTrans (db::DFTrans::r0), nullptr, nullptr, nullptr, text);
 
   }
 }

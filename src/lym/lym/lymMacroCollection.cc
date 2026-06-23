@@ -60,7 +60,7 @@ namespace lym
 static MacroCollection ms_root;
 
 MacroCollection::MacroCollection ()
-  : mp_parent (0), m_virtual_mode (ProjectFolder), m_readonly (false)
+  : mp_parent (nullptr), m_virtual_mode (ProjectFolder), m_readonly (false)
 {
   // .. nothing yet ..
 }
@@ -231,7 +231,7 @@ Macro *MacroCollection::macro_by_name (const std::string &name, Macro::Format fo
     }
     ++i;
   }
-  return 0;
+  return nullptr;
 }
 
 const Macro *MacroCollection::macro_by_name (const std::string &name, Macro::Format format) const
@@ -243,7 +243,7 @@ const Macro *MacroCollection::macro_by_name (const std::string &name, Macro::For
     }
     ++i;
   }
-  return 0;
+  return nullptr;
 }
 
 MacroCollection *MacroCollection::folder_by_name (const std::string &name)
@@ -252,7 +252,7 @@ MacroCollection *MacroCollection::folder_by_name (const std::string &name)
   if (i != m_folders.end ()) {
     return i->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -262,7 +262,7 @@ const MacroCollection *MacroCollection::folder_by_name (const std::string &name)
   if (i != m_folders.end ()) {
     return i->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -322,7 +322,7 @@ MacroCollection::add_folder (const std::string &description, const std::string &
         if (tl::verbosity () >= 20) {
           tl::log << tl::to_string (tr ("Folder does not exist - skipping: ")) << fp;
         }
-        return 0;
+        return nullptr;
 
       } else {
 
@@ -333,7 +333,7 @@ MacroCollection::add_folder (const std::string &description, const std::string &
           if (tl::verbosity () >= 20) {
             tl::error << tl::to_string (tr ("Unable to create folder path: ")) << fp;
           }
-          return 0;
+          return nullptr;
         }
       }
 
@@ -343,13 +343,13 @@ MacroCollection::add_folder (const std::string &description, const std::string &
       if (tl::verbosity () >= 20) {
         tl::error << tl::to_string (tr ("Folder is not a directory - skipping: ")) << fp;
       }
-      return 0;
+      return nullptr;
     }
 
     for (child_iterator f = m_folders.begin (); f != m_folders.end (); ++f) {
       //  skip, if that folder is in the collection already
       if (f->second->path () == fp) {
-        return 0;
+        return nullptr;
       }
     }
 
@@ -373,7 +373,7 @@ MacroCollection::add_folder (const std::string &description, const std::string &
   mc->set_parent (this);
 
   on_changed ();
-  on_macro_changed (0);
+  on_macro_changed (nullptr);
 
   return mc;
 }
@@ -492,7 +492,7 @@ void MacroCollection::scan ()
 
       try {
 
-        MacroCollection *&mc = m_folders.insert (std::make_pair (*f, (MacroCollection *) 0)).first->second;
+        MacroCollection *&mc = m_folders.insert (std::make_pair (*f, (MacroCollection *) nullptr)).first->second;
         if (! mc) {
           mc = new MacroCollection ();
           mc->set_name (*f);
@@ -683,7 +683,7 @@ lym::MacroCollection *MacroCollection::create_folder (const char *prefix, bool m
   } while (true);
 
   if (mkdir && ! tl::mkpath (tl::combine_path (path (), name))) {
-    return 0;
+    return nullptr;
   }
 
   begin_changes ();
@@ -820,7 +820,7 @@ lym::Macro *MacroCollection::find_macro (const std::string &path)
     }
   }
 
-  return 0;
+  return nullptr;
 }
 
 MacroCollection &MacroCollection::root ()
@@ -839,7 +839,7 @@ static bool sync_macros (lym::MacroCollection *current, lym::MacroCollection *ac
   std::vector<lym::MacroCollection *> folders_to_delete;
 
   for (lym::MacroCollection::child_iterator m = current->begin_children (); m != current->end_children (); ++m) {
-    lym::MacroCollection *cm = actual ? actual->folder_by_name (m->first) : 0;
+    lym::MacroCollection *cm = actual ? actual->folder_by_name (m->first) : nullptr;
     if (! cm) {
       folders_to_delete.push_back (m->second);
     }
@@ -861,14 +861,14 @@ static bool sync_macros (lym::MacroCollection *current, lym::MacroCollection *ac
   //  delete folders which do no longer exist
   for (std::vector<lym::MacroCollection *>::iterator m = folders_to_delete.begin (); m != folders_to_delete.end (); ++m) {
     ret = true;
-    sync_macros (*m, 0, safe);
+    sync_macros (*m, nullptr, safe);
     current->erase (*m);
   }
 
   std::vector<lym::Macro *> macros_to_delete;
 
   for (lym::MacroCollection::iterator m = current->begin (); m != current->end (); ++m) {
-    lym::Macro *cm = actual ? actual->macro_by_name (m->first, m->second->format ()) : 0;
+    lym::Macro *cm = actual ? actual->macro_by_name (m->first, m->second->format ()) : nullptr;
     if (! cm) {
       macros_to_delete.push_back (m->second);
     }

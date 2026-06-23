@@ -407,7 +407,7 @@ static db::CompoundRegionOperationNode *new_check_node (db::CompoundRegionOperat
   options.negative = negative;
   options.zd_mode = zd_mode;
 
-  return new db::CompoundRegionCheckOperationNode (0, other, rel, different_polygons, d, options);
+  return new db::CompoundRegionCheckOperationNode (nullptr, other, rel, different_polygons, d, options);
 }
 
 static db::CompoundRegionOperationNode *new_width_check (db::Coord d, bool whole_edges, db::metrics_type metrics, const tl::Variant &ignore_angle, const tl::Variant &min_projection, const tl::Variant &max_projection, bool shielded, db::zero_distance_mode zd_mode, bool negative)

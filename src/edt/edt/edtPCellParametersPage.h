@@ -103,7 +103,7 @@ public:
    *  The error is indicated in the error label in the editor page.
    *  If ok is null, an exception is thrown.
    */
-  std::vector<tl::Variant> get_parameters (bool *ok = 0);
+  std::vector<tl::Variant> get_parameters (bool *ok = nullptr);
 
   /**
    *  @brief Gets the current parameters into a ParameterStates object
@@ -116,7 +116,7 @@ public:
    *  The other attributes are not changed. Parameters not present inside the
    *  ParameterStates object are created with their corresponding name.
    */
-  void get_parameters (db::ParameterStates &states, bool *ok = 0);
+  void get_parameters (db::ParameterStates &states, bool *ok = nullptr);
 
   /**
    *  @brief Gets the initial parameters

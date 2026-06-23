@@ -162,17 +162,17 @@ public:
   /**
    *  @brief Implementation of gsi::Interpreter::eval_string
    */
-  void eval_string (const char *string, const char *filename = 0, int line = 1, int context = -1);
+  void eval_string (const char *string, const char *filename = nullptr, int line = 1, int context = -1);
 
   /**
    *  @brief Implementation of gsi::Interpreter::eval_expr
    */
-  tl::Variant eval_expr (const char *string, const char *filename = 0, int line = 1, int context = -1);
+  tl::Variant eval_expr (const char *string, const char *filename = nullptr, int line = 1, int context = -1);
 
   /**
    *  @brief Implementation of gsi::Interpreter::eval_string_and_print
    */
-  void eval_string_and_print (const char *string, const char *filename = 0, int line = 1, int context = -1);
+  void eval_string_and_print (const char *string, const char *filename = nullptr, int line = 1, int context = -1);
 
   /**
    *  @brief Returns an inspector for the given context

@@ -162,7 +162,7 @@ LogFile::separator ()
 {
   m_lock.lock ();
   bool has_separator = false;
-  if (m_messages.size () > 0 && m_messages.back ().mode () == LogFileEntry::Separator) {
+  if (!m_messages.empty() && m_messages.back ().mode () == LogFileEntry::Separator) {
     has_separator = true;
   }
   m_lock.unlock ();

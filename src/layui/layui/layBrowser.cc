@@ -40,7 +40,7 @@ Browser::Browser (lay::Dispatcher *root, lay::LayoutViewBase *view, const char *
 Browser::Browser (lay::Dispatcher *root, lay::LayoutViewBase *view, const char *name, Qt::WFlags fl)
 #endif
     //  TODO: clarify whether to keep the browsers as separate (potentially hidden) windows
-  : QDialog (0 /*view*/, fl),
+  : QDialog (nullptr /*view*/, fl),
     lay::Plugin (view),
     m_active (false),
     mp_view (view),

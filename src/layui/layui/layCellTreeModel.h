@@ -87,21 +87,21 @@ public:
    *  If flags "Children" or "Parents" are given, "base" must be set to the cell of which
    *  the children or parents should be derived.
    */
-  CellTreeModel (QWidget *parent, lay::LayoutViewBase *view, int cv_index, unsigned int flags = 0, const db::Cell *base = 0, Sorting sorting = ByName);
+  CellTreeModel (QWidget *parent, lay::LayoutViewBase *view, int cv_index, unsigned int flags = 0, const db::Cell *base = nullptr, Sorting sorting = ByName);
 
   /**
    *  @brief Constructor
    *
    *  This constructor does not take a view but rather a layout. It does not display hidden status or similar.
    */
-  CellTreeModel (QWidget *parent, db::Layout *layout, unsigned int flags = 0, const db::Cell *base = 0, Sorting sorting = ByName);
+  CellTreeModel (QWidget *parent, db::Layout *layout, unsigned int flags = 0, const db::Cell *base = nullptr, Sorting sorting = ByName);
 
   /**
    *  @brief Constructor
    *
    *  This constructor does not take a view but rather a layout from a library. It does not display hidden status or similar.
    */
-  CellTreeModel (QWidget *parent, db::Library *library, unsigned int flags = 0, const db::Cell *base = 0, Sorting sorting = ByName);
+  CellTreeModel (QWidget *parent, db::Library *library, unsigned int flags = 0, const db::Cell *base = nullptr, Sorting sorting = ByName);
 
   /**
    *  @brief Dtor
@@ -122,17 +122,17 @@ public:
   /**
    *  @brief Reconfigures the model with a LayoutView
    */
-  void configure (LayoutViewBase *view, int cv_index, unsigned int flags = 0, const db::Cell *base = 0, Sorting sorting = ByName);
+  void configure (LayoutViewBase *view, int cv_index, unsigned int flags = 0, const db::Cell *base = nullptr, Sorting sorting = ByName);
 
   /**
    *  @brief Reconfigures the model with a pure Layout
    */
-  void configure (db::Layout *layout, unsigned int flags = 0, const db::Cell *base = 0, Sorting sorting = ByName);
+  void configure (db::Layout *layout, unsigned int flags = 0, const db::Cell *base = nullptr, Sorting sorting = ByName);
 
   /**
    *  @brief Reconfigures the model with a pure Layout from a library
    */
-  void configure (db::Library *library, unsigned int flags = 0, const db::Cell *base = 0, Sorting sorting = ByName);
+  void configure (db::Library *library, unsigned int flags = 0, const db::Cell *base = nullptr, Sorting sorting = ByName);
 
   /**
    *  @brief Gets the layout this model is connected to

@@ -63,7 +63,7 @@ static void configure_from_line_edit (lay::Dispatcher *dispatcher, QLineEdit *le
     Value value = Value (0);
     tl::from_string_ext (tl::to_string (le->text ()), value);
     dispatcher->config_set (cfg_name, tl::to_string (value));
-    lay::indicate_error (le, (tl::Exception *) 0);
+    lay::indicate_error (le, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     lay::indicate_error (le, &ex);
   }
@@ -95,7 +95,7 @@ EditorOptionsGeneric::EditorOptionsGeneric (lay::LayoutViewBase *view, lay::Disp
 EditorOptionsGeneric::~EditorOptionsGeneric ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 std::string
@@ -118,7 +118,7 @@ EditorOptionsGeneric::apply (lay::Dispatcher *root)
     try {
       db::DVector eg;
       egc.from_string_picky (tl::to_string (mp_ui->edit_grid_le->text ()), eg);
-      lay::indicate_error (mp_ui->edit_grid_le, (tl::Exception *) 0);
+      lay::indicate_error (mp_ui->edit_grid_le, (tl::Exception *) nullptr);
       root->config_set (cfg_edit_grid, egc.to_string (eg));
     } catch (tl::Exception &ex) {
       lay::indicate_error (mp_ui->edit_grid_le, &ex);
@@ -171,7 +171,7 @@ EditorOptionsGeneric::setup (lay::Dispatcher *root)
     mp_ui->edit_grid_le->setText (tl::to_qstring (egc.to_string (eg)));
   }
   grid_changed (mp_ui->grid_cb->currentIndex ());
-  lay::indicate_error (mp_ui->edit_grid_le, (tl::Exception *) 0);
+  lay::indicate_error (mp_ui->edit_grid_le, (tl::Exception *) nullptr);
 
   //  edit & move angle
 
@@ -205,7 +205,7 @@ EditorOptionsGeneric::setup (lay::Dispatcher *root)
   unsigned int max_shapes = 1000;
   root->config_get (cfg_edit_max_shapes_of_instances, max_shapes);
   mp_ui->max_shapes_le->setText (tl::to_qstring (tl::to_string (max_shapes)));
-  lay::indicate_error (mp_ui->max_shapes_le, (tl::Exception *) 0);
+  lay::indicate_error (mp_ui->max_shapes_le, (tl::Exception *) nullptr);
 
   bool show_shapes = true;
   root->config_get (cfg_edit_show_shapes_of_instances, show_shapes);
@@ -230,7 +230,7 @@ EditorOptionsText::EditorOptionsText (lay::LayoutViewBase *view, lay::Dispatcher
 EditorOptionsText::~EditorOptionsText ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 std::string 
@@ -310,7 +310,7 @@ EditorOptionsPath::EditorOptionsPath (lay::LayoutViewBase *view, lay::Dispatcher
 EditorOptionsPath::~EditorOptionsPath ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 std::string 
@@ -365,7 +365,7 @@ EditorOptionsPath::setup (lay::Dispatcher *root)
   double w = 0.0;
   root->config_get (cfg_edit_path_width, w);
   mp_ui->width_le->setText (tl::to_qstring (tl::to_string (w)));
-  lay::indicate_error (mp_ui->width_le, (tl::Exception *) 0);
+  lay::indicate_error (mp_ui->width_le, (tl::Exception *) nullptr);
 
   //  path type and extensions 
 
@@ -386,9 +386,9 @@ EditorOptionsPath::setup (lay::Dispatcher *root)
   root->config_get (cfg_edit_path_ext_var_begin, bgnext);
   root->config_get (cfg_edit_path_ext_var_end, endext);
   mp_ui->start_ext_le->setText (tl::to_qstring (tl::to_string (bgnext)));
-  lay::indicate_error (mp_ui->start_ext_le, (tl::Exception *) 0);
+  lay::indicate_error (mp_ui->start_ext_le, (tl::Exception *) nullptr);
   mp_ui->end_ext_le->setText (tl::to_qstring (tl::to_string (endext)));
-  lay::indicate_error (mp_ui->end_ext_le, (tl::Exception *) 0);
+  lay::indicate_error (mp_ui->end_ext_le, (tl::Exception *) nullptr);
 }
 
 // ------------------------------------------------------------------
@@ -422,7 +422,7 @@ EditorOptionsInst::EditorOptionsInst (lay::LayoutViewBase *view, lay::Dispatcher
 EditorOptionsInst::~EditorOptionsInst ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 std::string 
@@ -448,7 +448,7 @@ EditorOptionsInst::update_cell_edits ()
     mp_ui->cell_le->completer ()->deleteLater ();
   }
 
-  db::Layout *layout = 0;
+  db::Layout *layout = nullptr;
 
   //  find the layout the cell has to be looked up: that is either the layout of the current instance or
   //  the library selected
@@ -477,7 +477,7 @@ EditorOptionsInst::update_cell_edits ()
     completer->setCaseSensitivity (Qt::CaseSensitive);
     mp_ui->cell_le->setCompleter (completer);
   } else {
-    mp_ui->cell_le->setCompleter (0);
+    mp_ui->cell_le->setCompleter (nullptr);
   }
 
   std::pair<bool, db::pcell_id_type> pc = layout->pcell_by_name (tl::to_string (mp_ui->cell_le->text ()).c_str ());
@@ -485,7 +485,7 @@ EditorOptionsInst::update_cell_edits ()
 
   //  by the way, update the foreground color of the cell edit box as well (red, if not valid)
   tl::Exception ex ("No cell or PCell with this name");
-  lay::indicate_error (mp_ui->cell_le, (! pc.first && ! cc.first) ? &ex : 0);
+  lay::indicate_error (mp_ui->cell_le, (! pc.first && ! cc.first) ? &ex : nullptr);
 }
 
 void
@@ -497,8 +497,8 @@ BEGIN_PROTECTED
 
     //  find the layout the cell has to be looked up: that is either the layout of the current instance or 
     //  the library selected
-    db::Layout *layout = 0;
-    db::Library *lib = 0;
+    db::Layout *layout = nullptr;
+    db::Library *lib = nullptr;
     if (mp_ui->lib_cbx->current_library ()) {
       lib = mp_ui->lib_cbx->current_library ();
       layout = &lib->layout ();
@@ -506,7 +506,7 @@ BEGIN_PROTECTED
       layout = &view ()->cellview (m_cv_index)->layout ();
     }
 
-    bool all_cells = (mp_ui->lib_cbx->current_library () != 0 ? false : true);
+    bool all_cells = (mp_ui->lib_cbx->current_library () != nullptr ? false : true);
     lay::LibraryCellSelectionForm form (this, layout, "browse_lib_cell", all_cells);
 
     if (lib) {
@@ -640,7 +640,7 @@ EditorOptionsInst::setup (lay::Dispatcher *root)
   double angle = 0.0;
   root->config_get (cfg_edit_inst_angle, angle);
   mp_ui->angle_le->setText (tl::to_qstring (tl::to_string (angle)));
-  lay::indicate_error (mp_ui->angle_le, (tl::Exception *) 0);
+  lay::indicate_error (mp_ui->angle_le, (tl::Exception *) nullptr);
 
   bool mirror = false;
   root->config_get (cfg_edit_inst_mirror, mirror);
@@ -649,7 +649,7 @@ EditorOptionsInst::setup (lay::Dispatcher *root)
   double scale = 1.0;
   root->config_get (cfg_edit_inst_scale, scale);
   mp_ui->scale_le->setText (tl::to_qstring (tl::to_string (scale)));
-  lay::indicate_error (mp_ui->scale_le, (tl::Exception *) 0);
+  lay::indicate_error (mp_ui->scale_le, (tl::Exception *) nullptr);
 
   //  array
   bool array = false;
@@ -666,17 +666,17 @@ EditorOptionsInst::setup (lay::Dispatcher *root)
   root->config_get (cfg_edit_inst_column_y, column_y);
 
   mp_ui->rows_le->setText (tl::to_qstring (tl::to_string (rows)));
-  lay::indicate_error (mp_ui->rows_le, (tl::Exception *) 0);
+  lay::indicate_error (mp_ui->rows_le, (tl::Exception *) nullptr);
   mp_ui->row_x_le->setText (tl::to_qstring (tl::to_string (row_x)));
-  lay::indicate_error (mp_ui->row_x_le, (tl::Exception *) 0);
+  lay::indicate_error (mp_ui->row_x_le, (tl::Exception *) nullptr);
   mp_ui->row_y_le->setText (tl::to_qstring (tl::to_string (row_y)));
-  lay::indicate_error (mp_ui->row_y_le, (tl::Exception *) 0);
+  lay::indicate_error (mp_ui->row_y_le, (tl::Exception *) nullptr);
   mp_ui->columns_le->setText (tl::to_qstring (tl::to_string (columns)));
-  lay::indicate_error (mp_ui->columns_le, (tl::Exception *) 0);
+  lay::indicate_error (mp_ui->columns_le, (tl::Exception *) nullptr);
   mp_ui->column_x_le->setText (tl::to_qstring (tl::to_string (column_x)));
-  lay::indicate_error (mp_ui->column_x_le, (tl::Exception *) 0);
+  lay::indicate_error (mp_ui->column_x_le, (tl::Exception *) nullptr);
   mp_ui->column_y_le->setText (tl::to_qstring (tl::to_string (column_y)));
-  lay::indicate_error (mp_ui->column_y_le, (tl::Exception *) 0);
+  lay::indicate_error (mp_ui->column_y_le, (tl::Exception *) nullptr);
 
   //  place origin of cell flag
   bool place_origin = false;
@@ -688,7 +688,7 @@ EditorOptionsInst::setup (lay::Dispatcher *root)
 //  EditorOptionsInstPCellParam implementation
 
 EditorOptionsInstPCellParam::EditorOptionsInstPCellParam (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher)
-  : lay::EditorOptionsPageWidget (view, dispatcher), mp_pcell_parameters (0), mp_placeholder_label (0)
+  : lay::EditorOptionsPageWidget (view, dispatcher), mp_pcell_parameters (nullptr), mp_placeholder_label (nullptr)
 {
   mp_ui = new Ui::EditorOptionsInstPCellParam ();
   mp_ui->setupUi (this);
@@ -697,7 +697,7 @@ EditorOptionsInstPCellParam::EditorOptionsInstPCellParam (lay::LayoutViewBase *v
 EditorOptionsInstPCellParam::~EditorOptionsInstPCellParam ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 std::string
@@ -711,7 +711,7 @@ EditorOptionsInstPCellParam::apply (lay::Dispatcher *root)
 {
   //  pcell parameters
   std::string param;
-  db::Layout *layout = 0;
+  db::Layout *layout = nullptr;
 
   db::Library *lib = db::LibraryManager::instance ().lib_ptr_by_name (m_lib_name, view ()->active_cellview ().is_valid () ? view ()->active_cellview ()->tech_name () : std::string ());
   if (lib) {
@@ -748,7 +748,7 @@ EditorOptionsInstPCellParam::setup (lay::Dispatcher *root)
 {
   m_cv_index = view ()->active_cellview_index ();
 
-  bool needs_update = (mp_pcell_parameters == 0);
+  bool needs_update = (mp_pcell_parameters == nullptr);
 
   //  cell name
   std::string cn;
@@ -772,7 +772,7 @@ EditorOptionsInstPCellParam::setup (lay::Dispatcher *root)
   std::string param;
   root->config_get (cfg_edit_inst_pcell_parameters, param);
 
-  db::Layout *layout = 0;
+  db::Layout *layout = nullptr;
   if (lib) {
     layout = &lib->layout ();
   } else if (m_cv_index >= 0 && view ()->cellview (m_cv_index).is_valid ()) {
@@ -842,7 +842,7 @@ EditorOptionsInstPCellParam::update_pcell_parameters ()
 void
 EditorOptionsInstPCellParam::update_pcell_parameters (const std::vector <tl::Variant> &parameters)
 {
-  db::Layout *layout = 0;
+  db::Layout *layout = nullptr;
 
   //  find the layout the cell has to be looked up: that is either the layout of the current instance or
   //  the library selected
@@ -877,8 +877,8 @@ EditorOptionsInstPCellParam::update_pcell_parameters (const std::vector <tl::Var
     mp_placeholder_label->deleteLater ();
   }
 
-  mp_pcell_parameters = 0;
-  mp_placeholder_label = 0;
+  mp_pcell_parameters = nullptr;
+  mp_placeholder_label = nullptr;
 
   if (pc.first && layout->pcell_declaration (pc.second) && view ()->cellview (m_cv_index).is_valid ()) {
 

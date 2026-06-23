@@ -270,7 +270,7 @@ public:
    *  @param excludes Objects (by instance path) to exclude
    *  @param capture_all_shapes Only valid in point mode. If true, all shapes are found. Otherwise only those which are not overlapping the view port entirely.
    */
-  ShapeFinder (bool point_mode, bool top_level_sel, db::ShapeIterator::flags_type flags, const std::set<lay::ObjectInstPath> *excludes = 0, bool capture_all_shapes = false);
+  ShapeFinder (bool point_mode, bool top_level_sel, db::ShapeIterator::flags_type flags, const std::set<lay::ObjectInstPath> *excludes = nullptr, bool capture_all_shapes = false);
 
   bool find (lay::LayoutViewBase *view, const lay::LayerProperties &lprops, const db::DBox &region_mu);
   bool find (lay::LayoutViewBase *view, const db::DBox &region_mu);
@@ -365,7 +365,7 @@ public:
   typedef std::vector<lay::ObjectInstPath> founds_vector_type;
   typedef founds_vector_type::const_iterator iterator;
 
-  InstFinder (bool point_mode, bool top_level_sel, bool full_arrays, bool enclose_inst = true, const std::set<lay::ObjectInstPath> *excludes = 0, bool visible_layers = false);
+  InstFinder (bool point_mode, bool top_level_sel, bool full_arrays, bool enclose_inst = true, const std::set<lay::ObjectInstPath> *excludes = nullptr, bool visible_layers = false);
 
   bool find (LayoutViewBase *view, unsigned int cv_index, const db::DCplxTrans &trans, const db::DBox &region_mu);
   bool find (LayoutViewBase *view, const db::DBox &region_mu);

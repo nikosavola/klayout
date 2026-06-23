@@ -72,7 +72,7 @@ public:
    *  @brief Constructor
    */
   ObjectBase () 
-    : mp_status_changed_event (0)
+    : mp_status_changed_event (nullptr)
   {
   }
 
@@ -80,7 +80,7 @@ public:
    *  @brief Copy constructor
    */
   ObjectBase (const ObjectBase &)
-    : mp_status_changed_event (0)
+    : mp_status_changed_event (nullptr)
   {
   }
 
@@ -103,7 +103,7 @@ public:
     if (has_status_changed_event ()) {
       delete mp_status_changed_event;
     }
-    mp_status_changed_event = 0;
+    mp_status_changed_event = nullptr;
   }
 
   /**
@@ -151,7 +151,7 @@ public:
     if (has_status_changed_event ()) {
       status_changed_event () (ObjectRelease);
     } else {
-      mp_status_changed_event = 0;
+      mp_status_changed_event = nullptr;
     }
   }
 
@@ -164,7 +164,7 @@ public:
     if (has_status_changed_event ()) {
       return status_changed_event ().find_receiver<T> ();
     } else {
-      return 0;
+      return nullptr;
     }
   }
 

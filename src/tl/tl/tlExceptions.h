@@ -44,9 +44,9 @@ namespace tl
 void TL_PUBLIC handle_exception_silent (const tl::Exception &);
 void TL_PUBLIC handle_exception_silent (const std::exception &);
 void TL_PUBLIC handle_exception_silent ();
-void TL_PUBLIC handle_exception_ui (const tl::Exception &, QWidget *parent = 0);
-void TL_PUBLIC handle_exception_ui (const std::exception &, QWidget *parent = 0);
-void TL_PUBLIC handle_exception_ui (QWidget *parent = 0);
+void TL_PUBLIC handle_exception_ui (const tl::Exception &, QWidget *parent = nullptr);
+void TL_PUBLIC handle_exception_ui (const std::exception &, QWidget *parent = nullptr);
+void TL_PUBLIC handle_exception_ui (QWidget *parent = nullptr);
 void TL_PUBLIC handle_exception (const tl::Exception &);
 void TL_PUBLIC handle_exception (const std::exception &);
 void TL_PUBLIC handle_exception ();

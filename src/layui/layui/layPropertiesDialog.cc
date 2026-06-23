@@ -189,7 +189,7 @@ private:
 //  PropertiesDialog
 
 PropertiesDialog::PropertiesDialog (QWidget * /*parent*/, db::Manager *manager, lay::Editables *editables)
-  : QDialog (0 /*parent*/),
+  : QDialog (nullptr /*parent*/),
     mp_manager (manager),
     mp_editables (editables),
     m_index (0), m_prev_index (-1),
@@ -201,7 +201,7 @@ PropertiesDialog::PropertiesDialog (QWidget * /*parent*/, db::Manager *manager, 
 
   setObjectName (QString::fromUtf8 ("properties_dialog"));
   mp_ui->setupUi (this);
-  mp_tree_model = 0;
+  mp_tree_model = nullptr;
 
   mp_editables->enable_edits (false);
 
@@ -282,7 +282,7 @@ PropertiesDialog::PropertiesDialog (QWidget * /*parent*/, db::Manager *manager, 
 PropertiesDialog::~PropertiesDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 
   disconnect ();
 }

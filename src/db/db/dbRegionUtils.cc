@@ -157,7 +157,7 @@ RectilinearFilter::selected (const db::PolygonRef &poly, db::properties_id_type)
 const TransformationReducer *
 RectilinearFilter::vars () const
 {
-  return 0;
+  return nullptr;
 }
 
 // -------------------------------------------------------------------------------------
@@ -185,7 +185,7 @@ HoleCountFilter::selected (const db::PolygonRef &poly, properties_id_type) const
 
 const TransformationReducer *HoleCountFilter::vars () const
 {
-  return 0;
+  return nullptr;
 }
 
 // -------------------------------------------------------------------------------------
@@ -221,7 +221,7 @@ RectangleFilter::selected (const db::PolygonRef &poly, properties_id_type) const
 
 const TransformationReducer *RectangleFilter::vars () const
 {
-  return 0;
+  return nullptr;
 }
 
 // -------------------------------------------------------------------------------------

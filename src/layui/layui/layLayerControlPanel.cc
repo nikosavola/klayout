@@ -510,7 +510,7 @@ LayerControlPanel::cm_insert ()
     //  HINT: this must be the last action in this method since it will trigger the event loop which will
     //  dispatch further actions.
     if (mp_view->is_editable () && lp.layer_index () < 0 && lp.cellview_index () >= 0 && lp.source (true).special_purpose () == ParsedLayerSource::SP_None) {
-      QMessageBox::warning (0, QObject::tr ("Layer does not exist"), 
+      QMessageBox::warning (nullptr, QObject::tr ("Layer does not exist"), 
                                QObject::tr ("The layer specified does not exist. To create that layer, use 'New/Layer' from the 'Edit' menu"));
     }
 

@@ -128,7 +128,7 @@ public:
    *  @param parent The Qt parent widget
    *  @param name The layer control panel's widget name
    */
-  LayerControlPanel (LayoutViewBase *view, db::Manager *manager, QWidget *parent = 0, const char *name = "control_panel");
+  LayerControlPanel (LayoutViewBase *view, db::Manager *manager, QWidget *parent = nullptr, const char *name = "control_panel");
 
   /**
    *  @brief Destructor

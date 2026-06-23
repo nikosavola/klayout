@@ -151,7 +151,7 @@ struct test_arg_func<gsi::VectorType>
       return;
     }
 
-    tl_assert (atype.inner () != 0);
+    tl_assert (atype.inner () != nullptr);
     const ArgType &ainner = *atype.inner ();
 
     *ret = true;
@@ -174,8 +174,8 @@ struct test_arg_func<gsi::MapType>
       return;
     }
 
-    tl_assert (atype.inner () != 0);
-    tl_assert (atype.inner_k () != 0);
+    tl_assert (atype.inner () != nullptr);
+    tl_assert (atype.inner_k () != nullptr);
     const ArgType &ainner = *atype.inner ();
     const ArgType &ainner_k = *atype.inner_k ();
 
@@ -319,9 +319,9 @@ struct writer
       if (! (atype.is_ptr () || atype.is_cptr ())) {
         throw tl::Exception (tl::to_string (tr ("Arguments of reference or direct type cannot be passed nil")));
       } else if (atype.is_ptr ()) {
-        aa->write<R *> ((R *)0);
+        aa->write<R *> ((R *)nullptr);
       } else {
-        aa->write<const R *> ((const R *)0);
+        aa->write<const R *> ((const R *)nullptr);
       }
 
     } else {
@@ -369,7 +369,7 @@ struct writer<StringType>
         //  nil is treated as an empty string for references
         aa->write<void *> ((void *)new StringAdaptorImpl<std::string> (std::string ()));
       } else {
-        aa->write<void *> ((void *)0);
+        aa->write<void *> ((void *)nullptr);
       }
 
     } else {
@@ -409,10 +409,10 @@ struct writer<VectorType>
       if (! (atype.is_ptr () || atype.is_cptr ())) {
         throw tl::Exception (tl::to_string (tr ("Arguments of reference or direct type cannot be passed nil")));
       } else {
-        aa->write<void *> ((void *)0);
+        aa->write<void *> ((void *)nullptr);
       }
     } else {
-      tl_assert (atype.inner () != 0);
+      tl_assert (atype.inner () != nullptr);
       aa->write<void *> ((void *)new VariantBasedVectorAdaptor (arg, atype.inner ()));
     }
   }
@@ -430,11 +430,11 @@ struct writer<MapType>
       if (! (atype.is_ptr () || atype.is_cptr ())) {
         throw tl::Exception (tl::to_string (tr ("Arguments of reference or direct type cannot be passed nil")));
       } else {
-        aa->write<void *> ((void *)0);
+        aa->write<void *> ((void *)nullptr);
       }
     } else {
-      tl_assert (atype.inner () != 0);
-      tl_assert (atype.inner_k () != 0);
+      tl_assert (atype.inner () != nullptr);
+      tl_assert (atype.inner_k () != nullptr);
       aa->write<void *> ((void *)new VariantBasedMapAdaptor (arg, atype.inner (), atype.inner_k ()));
     }
   }
@@ -470,7 +470,7 @@ struct writer<gsi::ObjectType>
         throw tl::Exception (tl::to_string (tr ("Cannot pass nil to direct parameters")));
       }
 
-      aa->write<void *> ((void *) 0);
+      aa->write<void *> ((void *) nullptr);
 
     } else if (arg->is_list ()) {
 
@@ -478,7 +478,7 @@ struct writer<gsi::ObjectType>
       //  for now we only check whether the number of arguments is compatible with the array given.
 
       int n = int (arg->size ());
-      const gsi::MethodBase *meth = 0;
+      const gsi::MethodBase *meth = nullptr;
       for (gsi::ClassBase::method_iterator c = atype.cls ()->begin_constructors (); c != atype.cls ()->end_constructors (); ++c) {
         if ((*c)->compatible_with_num_args (n)) {
           meth = *c;
@@ -496,7 +496,7 @@ struct writer<gsi::ObjectType>
 
       push_args (arglist, *arg, meth, heap);
 
-      meth->call (0, arglist, retlist);
+      meth->call (nullptr, arglist, retlist);
 
       void *new_obj = retlist.read<void *> (*heap);
       if (new_obj && (atype.is_ptr () || atype.is_cptr () || atype.is_ref () || atype.is_cref ())) {
@@ -610,14 +610,14 @@ struct reader
       *out = rr->template read<const R &> (*heap);
     } else if (atype.is_ptr ()) {
       R *p = rr->template read<R *> (*heap);
-      if (p == 0) {
+      if (p == nullptr) {
         *out = tl::Variant ();
       } else {
         *out = *p;
       }
     } else if (atype.is_cptr ()) {
       const R *p = rr->template read<const R *> (*heap);
-      if (p == 0) {
+      if (p == nullptr) {
         *out = tl::Variant ();
       } else {
         *out = *p;
@@ -694,8 +694,8 @@ struct reader<MapType>
     if (!a) {
       *out = tl::Variant ();
     } else {
-      tl_assert (atype.inner () != 0);
-      tl_assert (atype.inner_k () != 0);
+      tl_assert (atype.inner () != nullptr);
+      tl_assert (atype.inner_k () != nullptr);
       VariantBasedMapAdaptor t (out, atype.inner (), atype.inner_k ());
       a->copy_to (&t, *heap);
     }
@@ -715,7 +715,7 @@ struct reader<VectorType>
     if (!a) {
       *out = tl::Variant ();
     } else {
-      tl_assert (atype.inner () != 0);
+      tl_assert (atype.inner () != nullptr);
       VariantBasedVectorAdaptor t (out, atype.inner ());
       a->copy_to (&t, *heap);
     }
@@ -741,9 +741,9 @@ struct reader<ObjectType>
     bool can_destroy = atype.is_ptr () || owner;
 
     const gsi::ClassBase *clsact = atype.cls ()->subclass_decl (obj);
-    tl_assert (clsact != 0);
+    tl_assert (clsact != nullptr);
 
-    if (obj == 0) {
+    if (obj == nullptr) {
 
       *out = tl::Variant ();
 
@@ -755,7 +755,7 @@ struct reader<ObjectType>
       *out = tl::Variant ();
 
       const tl::VariantUserClassBase *cls = clsact->var_cls (atype.is_cref () || atype.is_cptr ());
-      tl_assert (cls != 0);
+      tl_assert (cls != nullptr);
 
       Proxy *proxy = clsact->gsi_object (obj)->find_client<Proxy> ();
       if (proxy) {
@@ -774,7 +774,7 @@ struct reader<ObjectType>
 
     } else {
 
-      const tl::VariantUserClassBase *cls = 0;
+      const tl::VariantUserClassBase *cls = nullptr;
 
       if (clsact->adapted_type_info ()) {
         //  create an adaptor from an adapted type
@@ -788,7 +788,7 @@ struct reader<ObjectType>
         cls = clsact->var_cls (is_const);
       }
 
-      tl_assert (cls != 0);
+      tl_assert (cls != nullptr);
       *out = tl::Variant ();
 
       //  consider prefer_copy

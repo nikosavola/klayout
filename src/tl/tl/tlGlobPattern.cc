@@ -38,8 +38,8 @@ public:
   virtual GlobPatternOpBase *clone () const = 0;
   virtual bool match (const char *s, std::vector<std::string> *e) const = 0;
 
-  virtual GlobPatternOpBase *next () { return 0; }
-  virtual const GlobPatternOpBase *next () const { return 0; }
+  virtual GlobPatternOpBase *next () { return nullptr; }
+  virtual const GlobPatternOpBase *next () const { return nullptr; }
   virtual void set_next (GlobPatternOpBase * /*next*/, bool /*owned*/) { tl_assert (false); }
 
 private:
@@ -51,11 +51,11 @@ class GlobPatternOp
   : public GlobPatternOpBase
 {
 public:
-  GlobPatternOp () : m_next_owned (false), mp_next (0) { }
+  GlobPatternOp () : m_next_owned (false), mp_next (nullptr) { }
 
   virtual ~GlobPatternOp ()
   {
-    set_next (0, false);
+    set_next (nullptr, false);
   }
 
   virtual GlobPatternOp *clone () const
@@ -155,7 +155,7 @@ public:
 
   virtual bool is_const () const
   {
-    return next () == 0;
+    return next () == nullptr;
   }
 
   virtual bool match (const char *s, std::vector<std::string> *e) const
@@ -214,7 +214,7 @@ public:
 
   virtual bool is_const () const
   {
-    return next () == 0;
+    return next () == nullptr;
   }
 
   virtual bool match (const char *s, std::vector<std::string> *e) const
@@ -377,7 +377,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual GlobPatternOp *clone () const { return 0; }
+  virtual GlobPatternOp *clone () const { return nullptr; }
 
   virtual bool match (const char *s, std::vector<std::string> *e) const
   {
@@ -453,7 +453,7 @@ class GlobPatternBracket
 {
 public:
   GlobPatternBracket ()
-    : GlobPatternOp (), mp_inner (0), mp_s0 (0), m_index (0), m_cont (this)
+    : GlobPatternOp (), mp_inner (nullptr), mp_s0 (nullptr), m_index (0), m_cont (this)
   {
     //  .. nothing yet ..
   }
@@ -461,7 +461,7 @@ public:
   ~GlobPatternBracket ()
   {
     delete mp_inner;
-    mp_inner = 0;
+    mp_inner = nullptr;
   }
 
   void set_inner (GlobPatternOp *op)
@@ -490,12 +490,12 @@ public:
         m_index = e->size ();
         e->push_back (std::string ());
       } else {
-        mp_s0 = 0;
+        mp_s0 = nullptr;
       }
 
       bool res = mp_inner->match (s, e);
 
-      mp_s0 = 0;
+      mp_s0 = nullptr;
       return res;
 
     }
@@ -624,7 +624,7 @@ static
 GlobPatternOp *compile (const char *&p, bool exact, bool cs, bool hm, bool for_brace)
 {
   std::string str;
-  GlobPatternOp *op = 0, *op_head = 0;
+  GlobPatternOp *op = nullptr, *op_head = nullptr;
 
   while (*p) {
 
@@ -699,21 +699,21 @@ GlobPatternOp *compile (const char *&p, bool exact, bool cs, bool hm, bool for_b
 GlobPattern::GlobPattern ()
   : m_case_sensitive (true), m_exact (false), m_header_match (false)
 {
-  mp_op = 0;
+  mp_op = nullptr;
   m_needs_compile = true;
 }
 
 GlobPattern::GlobPattern (const std::string &p)
   : m_p (p), m_case_sensitive (true), m_exact (false), m_header_match (false)
 {
-  mp_op = 0;
+  mp_op = nullptr;
   m_needs_compile = true;
 }
 
 GlobPattern::GlobPattern (const GlobPattern &other)
   : m_case_sensitive (true), m_exact (false), m_header_match (false)
 {
-  mp_op = 0;
+  mp_op = nullptr;
   m_needs_compile = true;
 
   operator= (other);
@@ -722,7 +722,7 @@ GlobPattern::GlobPattern (const GlobPattern &other)
 GlobPattern::~GlobPattern ()
 {
   delete mp_op;
-  mp_op = 0;
+  mp_op = nullptr;
 }
 
 GlobPattern &
@@ -734,7 +734,7 @@ GlobPattern::operator= (const GlobPattern &other)
     m_exact = other.m_exact;
     m_header_match = other.m_header_match;
     m_p = other.m_p;
-    mp_op = other.mp_op ? other.mp_op->clone () : 0;
+    mp_op = other.mp_op ? other.mp_op->clone () : nullptr;
     m_needs_compile = other.m_needs_compile;
 
   }
@@ -764,7 +764,7 @@ GlobPattern::needs_compile ()
     m_needs_compile = true;
 
     delete mp_op;
-    mp_op = 0;
+    mp_op = nullptr;
 
   }
 }
@@ -840,7 +840,7 @@ bool GlobPattern::is_const () const
 
 bool GlobPattern::match (const char *s) const
 {
-  return op ()->match (s, 0);
+  return op ()->match (s, nullptr);
 }
 
 bool GlobPattern::match (const char *s, std::vector<std::string> &e) const
@@ -854,7 +854,7 @@ bool GlobPattern::match (const char *s, std::vector<std::string> &e) const
 
 bool GlobPattern::match (const std::string &s) const
 {
-  return op ()->match (s.c_str (), 0);
+  return op ()->match (s.c_str (), nullptr);
 }
 
 bool GlobPattern::match (const std::string &s, std::vector<std::string> &e) const

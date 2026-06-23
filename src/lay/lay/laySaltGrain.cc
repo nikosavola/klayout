@@ -397,7 +397,7 @@ struct ImageConverter
   }
 };
 
-static tl::XMLElementList *sp_xml_elements = 0;
+static tl::XMLElementList *sp_xml_elements = nullptr;
 
 tl::XMLElementList &
 SaltGrain::xml_elements ()

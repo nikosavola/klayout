@@ -268,7 +268,7 @@ public:
    *  @brief The default constructor
    */
   cell_list ()
-    : mp_first (0), mp_last (0)
+    : mp_first (nullptr), mp_last (nullptr)
   {
     //  .. nothing yet ..
   }
@@ -299,7 +299,7 @@ public:
   void push_back_ptr (cell_type *new_cell)
   {
     new_cell->mp_last = mp_last;
-    new_cell->mp_next = 0;
+    new_cell->mp_next = nullptr;
     if (mp_last) {
       mp_last->mp_next = new_cell;
     } else {
@@ -315,7 +315,7 @@ public:
    */
   bool empty () const
   {
-    return mp_last == 0 && mp_first == 0;
+    return mp_last == nullptr && mp_first == nullptr;
   }
   
   /**
@@ -331,7 +331,7 @@ public:
    */
   iterator end () 
   {
-    return iterator (0);
+    return iterator (nullptr);
   }
   
   /**
@@ -347,7 +347,7 @@ public:
    */
   const_iterator end () const
   {
-    return const_iterator (0);
+    return const_iterator (nullptr);
   }
 
   /**
@@ -373,8 +373,8 @@ public:
       mp_last = cell->mp_last;
     }
 
-    cell->mp_last = 0;
-    cell->mp_next = 0;
+    cell->mp_last = nullptr;
+    cell->mp_next = nullptr;
 
     return cell;
   }
@@ -497,12 +497,12 @@ public:
    *
    *  The editable mode will be taken from db::default_editable_mode.
    */
-  explicit Layout (db::Manager *manager = 0);
+  explicit Layout (db::Manager *manager = nullptr);
 
   /**
    *  @brief Standard constructor which allows one to specify editable mode
    */
-  explicit Layout (bool editable, db::Manager *manager = 0);
+  explicit Layout (bool editable, db::Manager *manager = nullptr);
 
   /**
    *  @brief The copy ctor
@@ -621,7 +621,7 @@ public:
   /**
    *  @brief Collect memory statistics
    */
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const;
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const;
 
   /**
    *  @brief Sets the properties ID
@@ -743,7 +743,7 @@ public:
    *  @param s The name of the new cell
    *  @return The index of the new cell
    */
-  cell_index_type add_cell (const char *name = 0);
+  cell_index_type add_cell (const char *name = nullptr);
 
   /**
    *  @brief Adds a cell using another cell as a template
@@ -856,7 +856,7 @@ public:
    *  @param layer_mapping The optional layer mapping object that maps the PCell layers to the layout's layers
    *  @param retain_layout Set to true for not using update() on the PCell but to retain existing layout (conservative approach)
    */
-  void get_pcell_variant_as (pcell_id_type pcell_id, const std::vector<tl::Variant> &parameters, cell_index_type cell_index, ImportLayerMapping *layer_mapping = 0, bool retain_layout = false);
+  void get_pcell_variant_as (pcell_id_type pcell_id, const std::vector<tl::Variant> &parameters, cell_index_type cell_index, ImportLayerMapping *layer_mapping = nullptr, bool retain_layout = false);
 
   /** 
    *  @brief Get the PCell variant cell of a existing cell with new parameters
@@ -1006,7 +1006,7 @@ public:
    *
    *  This method replaces the cell with the given target cell index by a library.
    */
-  void get_lib_proxy_as (Library *lib, cell_index_type cell_index, cell_index_type target_cell_index, ImportLayerMapping *layer_mapping = 0, bool retain_layout = false);
+  void get_lib_proxy_as (Library *lib, cell_index_type cell_index, cell_index_type target_cell_index, ImportLayerMapping *layer_mapping = nullptr, bool retain_layout = false);
 
   /**
    *  @brief Find an existing cold proxy for a given context
@@ -1110,14 +1110,14 @@ public:
    *  @param layer_mapping The optional layer mapping object that maps the PCell layers to the layout's layers
    *  @return true, if the proxy cell could be created
    */
-  bool recover_proxy_as (cell_index_type cell_index, std::vector <std::string>::const_iterator from, std::vector <std::string>::const_iterator to, ImportLayerMapping *layer_mapping = 0);
+  bool recover_proxy_as (cell_index_type cell_index, std::vector <std::string>::const_iterator from, std::vector <std::string>::const_iterator to, ImportLayerMapping *layer_mapping = nullptr);
 
   /**
    *  @brief Recover a proxy cell from the given binary context info object
    *
    *  See the string-based version of "recover_proxy_as" for details.
    */
-  bool recover_proxy_as (cell_index_type cell_index, const LayoutOrCellContextInfo &context_info, ImportLayerMapping *layer_mapping = 0);
+  bool recover_proxy_as (cell_index_type cell_index, const LayoutOrCellContextInfo &context_info, ImportLayerMapping *layer_mapping = nullptr);
 
   /**
    *  @brief Restores proxies as far as possible
@@ -1126,7 +1126,7 @@ public:
    *  Library updates may enabled lost connections which are help in cold proxies. This method will recover
    *  these connections.
    */
-  void restore_proxies (ImportLayerMapping *layer_mapping = 0);
+  void restore_proxies (ImportLayerMapping *layer_mapping = nullptr);
 
   /**
    *  @brief Restores proxies as far as possible, no cleanup included
@@ -1135,7 +1135,7 @@ public:
    *  Instead it returns a value of true, indicating that something got changed
    *  and a cleanup is required.
    */
-  bool restore_proxies_without_cleanup (ImportLayerMapping *layer_mapping = 0);
+  bool restore_proxies_without_cleanup (ImportLayerMapping *layer_mapping = nullptr);
 
   /**
    *  @brief Replaces the given cell index with the new cell
@@ -2276,7 +2276,7 @@ mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const 
 class DB_PUBLIC LayoutLocker
 {
 public:
-  explicit LayoutLocker (db::Layout *layout = 0, bool no_update = false)
+  explicit LayoutLocker (db::Layout *layout = nullptr, bool no_update = false)
     : mp_layout (layout), m_no_update (no_update)
   {
     if (mp_layout.get ()) {
@@ -2286,7 +2286,7 @@ public:
 
   ~LayoutLocker ()
   {
-    set (0, false);
+    set (nullptr, false);
   }
 
   LayoutLocker (const LayoutLocker &other)

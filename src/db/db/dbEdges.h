@@ -107,7 +107,7 @@ public:
    *  Creates an edge set representing the contour of the box
    */
   explicit Edges (const db::Box &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -118,7 +118,7 @@ public:
    *  Creates an edge set representing the contour of the box
    */
   explicit Edges (const db::BoxWithProperties &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -129,7 +129,7 @@ public:
    *  Creates an edge set representing the contour of the polygon
    */
   explicit Edges (const db::SimplePolygon &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -140,7 +140,7 @@ public:
    *  Creates an edge set representing the contour of the polygon
    */
   explicit Edges (const db::SimplePolygonWithProperties &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -151,7 +151,7 @@ public:
    *  Creates an edge set representing the contour of the polygon
    */
   explicit Edges (const db::Polygon &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -162,7 +162,7 @@ public:
    *  Creates an edge set representing the contour of the polygon
    */
   explicit Edges (const db::PolygonWithProperties &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -173,7 +173,7 @@ public:
    *  Creates an edge set representing the contour of the path
    */
   explicit Edges (const db::Path &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -184,7 +184,7 @@ public:
    *  Creates an edge set representing the contour of the path
    */
   explicit Edges (const db::PathWithProperties &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -195,7 +195,7 @@ public:
    *  Creates an edge set representing the single edge
    */
   explicit Edges (const db::Edge &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -206,7 +206,7 @@ public:
    *  Creates an edge set representing the single edge
    */
   explicit Edges (const db::EdgeWithProperties &s)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     insert (s);
   }
@@ -220,7 +220,7 @@ public:
    */
   template <class Iter>
   explicit Edges (const Iter &b, const Iter &e)
-    : mp_delegate (0)
+    : mp_delegate (nullptr)
   {
     reserve (e - b);
     for (Iter i = b; i != e; ++i) {
@@ -299,7 +299,7 @@ public:
   EdgesDelegate *take_delegate ()
   {
     EdgesDelegate *delegate = mp_delegate;
-    mp_delegate = 0;
+    mp_delegate = nullptr;
     return delegate;
   }
 

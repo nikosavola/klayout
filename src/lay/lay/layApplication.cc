@@ -186,7 +186,7 @@ static void ui_exception_handler_def (QWidget *parent)
 
 // --------------------------------------------------------------------------------
 
-static ApplicationBase *ms_instance = 0;
+static ApplicationBase *ms_instance = nullptr;
 
 // --------------------------------------------------------------------------------
 //  ApplicationBase implementation
@@ -210,8 +210,8 @@ ApplicationBase::ApplicationBase (bool non_ui_mode)
     m_editable (false),
     m_editable_set (false),
     m_enable_undo (true),
-    mp_ruby_interpreter (0),
-    mp_python_interpreter (0)
+    mp_ruby_interpreter (nullptr),
+    mp_python_interpreter (nullptr)
 {
   // TODO: offer a strict mode for exception handling where this takes place:
   // lay::ApplicationBase::instance ()->exit (1);
@@ -225,7 +225,7 @@ ApplicationBase::ApplicationBase (bool non_ui_mode)
   //  it will call setlocale)
   tl::initialize_codecs ();
 
-  tl_assert (ms_instance == 0);
+  tl_assert (ms_instance == nullptr);
   ms_instance = this;
 
   //  get and create the klayout appdata folder if required
@@ -602,7 +602,7 @@ ApplicationBase::init_app ()
       if (vv.size () >= 2) {
         klp_paths.push_back (tl::to_string (dir.filePath (tl::to_qstring (arch_string + "-" + vv[0] + "." + vv[1]))));
       }
-      if (vv.size () >= 1) {
+      if (!vv.empty()) {
         klp_paths.push_back (tl::to_string (dir.filePath (tl::to_qstring (arch_string + "-" + vv[0]))));
       }
       klp_paths.push_back (tl::to_string (dir.filePath (tl::to_qstring (arch_string + "-" + tl::to_string (lay::Version::version ())))));
@@ -916,10 +916,10 @@ END_PROTECTED_SILENT
 
 ApplicationBase::~ApplicationBase ()
 {
-  tl::set_ui_exception_handlers (0, 0, 0);
+  tl::set_ui_exception_handlers (nullptr, nullptr, nullptr);
 
   //  check whether shutdown was called
-  tl_assert (ms_instance == 0);
+  tl_assert (ms_instance == nullptr);
 }
 
 std::vector<std::string>
@@ -1032,15 +1032,15 @@ ApplicationBase::shutdown ()
 {
   if (mp_ruby_interpreter) {
     delete mp_ruby_interpreter;
-    mp_ruby_interpreter = 0;
+    mp_ruby_interpreter = nullptr;
   }
 
   if (mp_python_interpreter) {
     delete mp_python_interpreter;
-    mp_python_interpreter = 0;
+    mp_python_interpreter = nullptr;
   }
 
-  ms_instance = 0;
+  ms_instance = nullptr;
 }
 
 ApplicationBase *
@@ -1133,7 +1133,7 @@ int
 ApplicationBase::run ()
 {
   lay::MainWindow *mw = main_window ();
-  gtf::Player player (0);
+  gtf::Player player (nullptr);
 
   if (mw) {
 
@@ -1231,11 +1231,11 @@ ApplicationBase::run ()
 
       } else if (f->first == rdb_file) {
 
-        if (mw->current_view () == 0) {
+        if (mw->current_view () == nullptr) {
           mw->create_view ();
         }
 
-        if (mw->current_view () != 0) {
+        if (mw->current_view () != nullptr) {
           std::unique_ptr <rdb::Database> db (new rdb::Database ());
           db->load (f->second.first);
           int rdb_index = mw->current_view ()->add_rdb (db.release ());
@@ -1244,11 +1244,11 @@ ApplicationBase::run ()
 
       } else if (f->first == l2ndb_file) {
 
-        if (mw->current_view () == 0) {
+        if (mw->current_view () == nullptr) {
           mw->create_view ();
         }
 
-        if (mw->current_view () != 0) {
+        if (mw->current_view () != nullptr) {
           int l2ndb_index = mw->current_view ()->add_l2ndb (db::LayoutToNetlist::create_from_file (f->second.first));
           mw->current_view ()->open_l2ndb_browser (l2ndb_index, mw->current_view ()->active_cellview_index ());
         }
@@ -1288,7 +1288,7 @@ ApplicationBase::run ()
 
         std::string filename = f->second.first;
 
-        if (batch_mode_view.get () != 0 && ! m_same_view) {
+        if (batch_mode_view.get () != nullptr && ! m_same_view) {
           tl::warn << tl::sprintf (tl::to_string (tr ("Ignoring additional views in batch mode (file %s)")), filename);
           continue;
         }
@@ -1371,7 +1371,7 @@ ApplicationBase::run ()
 
   finish ();
 
-  batch_mode_view.reset (0);
+  batch_mode_view.reset (nullptr);
 
   return result;
 }
@@ -1448,7 +1448,7 @@ ApplicationBase::process_events_impl (QEventLoop::ProcessEventsFlags /*flags*/, 
 bool 
 ApplicationBase::write_config (const std::string &config_file, int keep_backups)
 {
-  return dispatcher () ? dispatcher ()->write_config (config_file, keep_backups) : 0;
+  return dispatcher () ? dispatcher ()->write_config (config_file, keep_backups) : false;
 }
 
 void 
@@ -1517,12 +1517,12 @@ ApplicationBase::get_config_names () const
 
 GuiApplication::GuiApplication (int &argc, char **argv)
   : QApplication (argc, argv), ApplicationBase (false),
-    mp_mw (0),
-    mp_recorder (0),
+    mp_mw (nullptr),
+    mp_recorder (nullptr),
     m_in_notify (0)
 {
   //  install a special style proxy to overcome the issue of black-on-black tree expanders
-  setStyle (new lay::BackgroundAwareTreeStyle (0));
+  setStyle (new lay::BackgroundAwareTreeStyle (nullptr));
 
   setWindowIcon (QIcon (QString::fromUtf8 (":/logo.png")));
 }
@@ -1559,7 +1559,7 @@ GuiApplication::notify (QObject *receiver, QEvent *e)
   if (wheel_event) {
     //  intercept wheel events targeting QComboBox objects to avoid
     //  changing them through wheel actions.
-    for (auto r = receiver; r != 0; r = r->parent ()) {
+    for (auto r = receiver; r != nullptr; r = r->parent ()) {
       if (dynamic_cast<QComboBox *>(r)) {
         //  stop further processing
         return true;
@@ -1719,7 +1719,7 @@ GuiApplication::shutdown ()
 
   if (mp_mw) {
     delete mp_mw;
-    mp_mw = 0;
+    mp_mw = nullptr;
   }
 
   //  detach all top level widgets from Ruby/Python - we don't want the interpreter do this
@@ -1740,7 +1740,7 @@ GuiApplication::shutdown ()
 
   if (mp_recorder) {
     delete mp_recorder;
-    mp_recorder = 0;
+    mp_recorder = nullptr;
   }
 
   ApplicationBase::shutdown ();
@@ -1761,7 +1761,7 @@ GuiApplication::finish ()
 void
 GuiApplication::prepare_recording (const std::string &gtf_record, bool gtf_save_incremental)
 {
-  tl_assert (mp_recorder == 0);
+  tl_assert (mp_recorder == nullptr);
 
   //  since the recorder tracks QAction connections etc., it must be instantiated before every other
   //  object performing a gtf::action_connect for example
@@ -1780,13 +1780,13 @@ GuiApplication::start_recording ()
 lay::Dispatcher *
 GuiApplication::dispatcher () const
 {
-  return mp_mw ? mp_mw->dispatcher () : 0;
+  return mp_mw ? mp_mw->dispatcher () : nullptr;
 }
 
 void
 GuiApplication::setup ()
 {
-  tl_assert (mp_mw == 0);
+  tl_assert (mp_mw == nullptr);
 
   mp_mw = new lay::MainWindow (this, "main_window", is_undo_enabled ());
 
@@ -1837,9 +1837,9 @@ GuiApplication::process_events_impl (QEventLoop::ProcessEventsFlags flags, bool 
 
 NonGuiApplication::NonGuiApplication (int &argc, char **argv)
   : QCoreApplication (argc, argv), ApplicationBase (true),
-    mp_pr (0),
-    mp_pb (0),
-    mp_dispatcher (0)
+    mp_pr (nullptr),
+    mp_pb (nullptr),
+    mp_dispatcher (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -1867,17 +1867,17 @@ NonGuiApplication::shutdown ()
 {
   if (mp_dispatcher) {
     delete mp_dispatcher;
-    mp_dispatcher = 0;
+    mp_dispatcher = nullptr;
   }
 
   if (mp_pr) {
     delete mp_pr;
-    mp_pr = 0;
+    mp_pr = nullptr;
   }
 
   if (mp_pb) {
     delete mp_pb;
-    mp_pb = 0;
+    mp_pb = nullptr;
   }
 
   ApplicationBase::shutdown ();

@@ -123,7 +123,7 @@ public:
    *  The graph reference is used to invalid the bbox flag of the graph
    *  whenever something changes on the shapes list.
    */
-  AnnotationShapes (db::Manager *manager = 0);
+  AnnotationShapes (db::Manager *manager = nullptr);
 
   /**
    *  @brief Dtor: clear all ..
@@ -389,7 +389,7 @@ private:
 /**
  *  @brief Collect memory usage
  */
-inline void mem_stat (db::MemStatistics *stat, db::MemStatistics::purpose_t purpose, int cat, const AnnotationShapes &x, bool no_self = false, void *parent = 0)
+inline void mem_stat (db::MemStatistics *stat, db::MemStatistics::purpose_t purpose, int cat, const AnnotationShapes &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }

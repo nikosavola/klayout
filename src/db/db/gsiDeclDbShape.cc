@@ -35,13 +35,13 @@ namespace gsi
 static db::Layout *layout_ptr (db::Shape *s)
 {
   db::Shapes *shapes = s->shapes ();
-  return shapes ? shapes->layout () : 0;
+  return shapes ? shapes->layout () : nullptr;
 }
 
 static const db::Layout *layout_ptr_const (const db::Shape *s)
 {
   const db::Shapes *shapes = s->shapes ();
-  return shapes ? shapes->layout () : 0;
+  return shapes ? shapes->layout () : nullptr;
 }
 
 static double shape_dbu (const db::Shape *s)
@@ -119,7 +119,7 @@ static void delete_shape (db::Shape *s)
 static bool shape_is_valid (const db::Shape *s)
 {
   db::Shapes *shapes = s->shapes ();
-  return shapes != 0 && shapes->is_valid (*s);
+  return shapes != nullptr && shapes->is_valid (*s);
 }
 
 static int object_type (const db::Shape *s)
@@ -900,7 +900,7 @@ static void set_shape_layer (db::Shape *s, const db::LayerProperties &lp)
 static db::Cell *cell_ptr (db::Shape *s)
 {
   db::Shapes *shapes = s->shapes ();
-  return shapes ? shapes->cell () : 0;
+  return shapes ? shapes->cell () : nullptr;
 }
 
 static void set_cell_ptr (db::Shape *s, db::Cell *new_cell)

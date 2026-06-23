@@ -154,14 +154,14 @@ class GSI_PUBLIC_TEMPLATE VariantUserClass
 public:
   VariantUserClass ()
     : VariantUserClassImpl (),
-      mp_cls (0), mp_object_cls (0), m_is_const (false)
+      mp_cls (nullptr), mp_object_cls (nullptr), m_is_const (false)
   {
     //  .. nothing yet ..
   }
 
   ~VariantUserClass ()
   {
-    mp_cls = 0;
+    mp_cls = nullptr;
     tl::VariantUserClass<T>::unregister_instance (this, m_is_const);
   }
 
@@ -190,7 +190,7 @@ public:
     if (p) {
       return p->obj ();
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -250,7 +250,7 @@ public:
 
   const char *name () const
   {
-    return mp_cls ? mp_cls->name ().c_str() : 0;
+    return mp_cls ? mp_cls->name ().c_str() : nullptr;
   }
 
   void read (void *a, tl::Extractor &ex) const
@@ -266,7 +266,7 @@ public:
 
   bool is_class () const 
   { 
-    return mp_object_cls != 0; 
+    return mp_object_cls != nullptr; 
   }
 
   bool is_const () const
@@ -334,7 +334,7 @@ class SubClassTester<X, B, true>
 public:
   virtual bool can_upcast (const void *p) const 
   {
-    return dynamic_cast<const X *>((const B *)p) != 0;
+    return dynamic_cast<const X *>((const B *)p) != nullptr;
   }
 };
 
@@ -365,13 +365,13 @@ class GSI_PUBLIC_TEMPLATE ClassExt
 {
 public:
   ClassExt (const Methods &mm, const std::string &doc = std::string ())
-    : ClassBase (doc, mm), mp_declaration (0)
+    : ClassBase (doc, mm), mp_declaration (nullptr)
   {
     //  .. nothing yet ..
   }
 
   ClassExt (const std::string &doc = std::string ())
-    : ClassBase (doc, Methods ()), mp_declaration (0)
+    : ClassBase (doc, Methods ()), mp_declaration (nullptr)
   {
     //  .. nothing yet ..
   }
@@ -482,31 +482,31 @@ struct adaptor_type_info<X, NoAdaptorTag>
 
   static const std::type_info *type_info () 
   {
-    return 0;
+    return nullptr;
   }
 
   static X *create (const NoAdaptorTag *)
   {
     tl_assert (false);
-    return 0;
+    return nullptr;
   }
 
   static X *create_consume (NoAdaptorTag *)
   {
     tl_assert (false);
-    return 0;
+    return nullptr;
   }
 
   static const NoAdaptorTag *get (const X *)
   {
     tl_assert (false);
-    return 0;
+    return nullptr;
   }
 
   static NoAdaptorTag *create_adapted (const X *)
   {
     tl_assert (false);
-    return 0;
+    return nullptr;
   }
 };
 
@@ -573,8 +573,8 @@ public:
   void initialize ()
   {
     ClassBase::initialize ();
-    m_var_cls.initialize (this, 0, false);
-    m_var_cls_c.initialize (this, 0, true);
+    m_var_cls.initialize (this, nullptr, false);
+    m_var_cls_c.initialize (this, nullptr, true);
     m_var_cls_cls.initialize (this, &m_var_cls, false);
   }
 
@@ -813,7 +813,7 @@ const ClassBase *cls_decl ()
 {
   //  TODO: needs thread safety? It's rather unlikely that two threads enter this
   //  piece of code at the same time and they interfere when storing the results.
-  static const ClassBase *cd = 0;
+  static const ClassBase *cd = nullptr;
   if (! cd) {
     cd = class_by_typeinfo_no_assert (typeid (X));
     if (!cd) {

@@ -129,7 +129,7 @@ Session::fetch (const lay::MainWindow &mw)
     }
 
     for (lay::AnnotationShapes::iterator a = view->annotation_shapes ().begin (); a != view->annotation_shapes ().end (); ++a) {
-      if (a->ptr ()->class_name () != 0) {
+      if (a->ptr ()->class_name () != nullptr) {
         view_desc.annotation_shapes.add_annotation_shape (SessionAnnotationDescriptor ());
         view_desc.annotation_shapes.back ().class_name = a->ptr ()->class_name ();
         view_desc.annotation_shapes.back ().value_string = a->ptr ()->to_string ();
@@ -264,7 +264,7 @@ Session::restore (lay::MainWindow &mw)
     lay::AnnotationShapes &as = view->annotation_shapes ();
     as.reserve (vd.annotation_shapes.annotation_shapes.size ());
     for (std::vector<SessionAnnotationDescriptor>::const_iterator ad = vd.annotation_shapes.annotation_shapes.begin (); ad != vd.annotation_shapes.annotation_shapes.end (); ++ad) {
-      db::DUserObjectBase *obj = db::DUserObjectFactory::create (ad->class_name.c_str (), ad->value_string.c_str (), ! m_base_dir.empty () ? m_base_dir.c_str () : 0);
+      db::DUserObjectBase *obj = db::DUserObjectFactory::create (ad->class_name.c_str (), ad->value_string.c_str (), ! m_base_dir.empty () ? m_base_dir.c_str () : nullptr);
       if (obj) {
         as.insert (db::DUserObject (obj));
       } else {

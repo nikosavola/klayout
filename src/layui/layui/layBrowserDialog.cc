@@ -30,7 +30,7 @@ namespace lay
 {
 
 BrowserDialog::BrowserDialog ()
-  : QDialog (0)
+  : QDialog (nullptr)
 {
   Ui::BrowserDialog::setupUi (this);
 
@@ -50,7 +50,7 @@ BrowserDialog::BrowserDialog (QWidget *parent)
 }
 
 BrowserDialog::BrowserDialog (const std::string &html)
-  : QDialog (0), m_default_source (html)
+  : QDialog (nullptr), m_default_source (html)
 {
   Ui::BrowserDialog::setupUi (this);
 
@@ -73,7 +73,7 @@ BrowserDialog::BrowserDialog (QWidget *parent, const std::string &html)
 
 BrowserDialog::~BrowserDialog ()
 {
-  set_source (0);
+  set_source (nullptr);
 }
 
 void 

@@ -718,7 +718,7 @@ public:
    *  
    *  @return The iterator delivering all these shapes
    */
-  shape_iterator begin (unsigned int layer, unsigned int flags, const shape_iterator::property_selector *prop_sel = 0, bool inv_prop_sel = false) const
+  shape_iterator begin (unsigned int layer, unsigned int flags, const shape_iterator::property_selector *prop_sel = nullptr, bool inv_prop_sel = false) const
   {
     return shapes (layer).begin (flags, prop_sel, inv_prop_sel);
   }
@@ -734,7 +734,7 @@ public:
    *  
    *  @return The iterator delivering all these shapes
    */
-  shape_iterator begin_overlapping (unsigned int layer, const box_type &box, unsigned int flags, const shape_iterator::property_selector *prop_sel = 0, bool inv_prop_sel = false) const
+  shape_iterator begin_overlapping (unsigned int layer, const box_type &box, unsigned int flags, const shape_iterator::property_selector *prop_sel = nullptr, bool inv_prop_sel = false) const
   {
     return shapes (layer).begin_overlapping (box, flags, prop_sel, inv_prop_sel);
   }
@@ -753,7 +753,7 @@ public:
    *  
    *  @return The iterator delivering all these shapes
    */
-  shape_iterator begin_touching (unsigned int layer, const box_type &box, unsigned int flags, const shape_iterator::property_selector *prop_sel = 0, bool inv_prop_sel = false) const
+  shape_iterator begin_touching (unsigned int layer, const box_type &box, unsigned int flags, const shape_iterator::property_selector *prop_sel = nullptr, bool inv_prop_sel = false) const
   {
     return shapes (layer).begin_touching (box, flags, prop_sel, inv_prop_sel);
   }
@@ -847,7 +847,7 @@ public:
    *  This method does not have any effect except for derived classes where it updates the layout
    *  with the current state, i.e. if a PCell declaration has changed.
    */
-  virtual void update (ImportLayerMapping * /*layer_mapping*/ = 0) { }
+  virtual void update (ImportLayerMapping * /*layer_mapping*/ = nullptr) { }
 
   /**
    *  @brief Checks if the cell is locked
@@ -1008,7 +1008,7 @@ public:
   /**
    *  @brief Collect memory usage statistics
    */
-  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = 0) const;
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self = false, void *parent = nullptr) const;
 
   /**
    *  @brief Sets the properties ID
@@ -1265,7 +1265,7 @@ private:
  *  @brief Collect memory statistics
  */
 inline void
-mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const db::Cell &x, bool no_self = false, void *parent = 0)
+mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const db::Cell &x, bool no_self = false, void *parent = nullptr)
 {
   x.mem_stat (stat, purpose, cat, no_self, parent);
 }

@@ -73,7 +73,7 @@ LayoutHandle::LayoutHandle (db::Layout *layout, const std::string &filename)
     std::string n;
     do {
       n = tl::sprintf ("L%d", ++nn);
-    } while (find (n) != 0);
+    } while (find (n) != nullptr);
 
     m_name = n;
     ms_dict.insert (std::make_pair (n, this));
@@ -98,7 +98,7 @@ LayoutHandle::~LayoutHandle ()
   }
 
   delete mp_layout;
-  mp_layout = 0;
+  mp_layout = nullptr;
 
   if (find (m_name) == this) {
     ms_dict.erase (m_name);
@@ -142,7 +142,7 @@ LayoutHandle::rename (const std::string &name, bool force)
 
   if (n != m_name) {
 
-    if (force || find (n) == 0) {
+    if (force || find (n) == nullptr) {
       ms_dict.erase (m_name);
       if (tl::verbosity () >= 40) {
         tl::info << "Renamed layout from " << m_name << " to " << n;
@@ -157,7 +157,7 @@ LayoutHandle::rename (const std::string &name, bool force)
     int ns = 0x40000000;
     do {
       n = name + tl::sprintf ("[%d]", nn + ns);
-      if (find (n) != 0) {
+      if (find (n) != nullptr) {
         nn += ns;
       }
       ns /= 2;
@@ -237,7 +237,7 @@ LayoutHandle::tech_name () const
 const db::Technology *
 LayoutHandle::technology () const
 {
-  return mp_layout ? mp_layout->technology () : 0;
+  return mp_layout ? mp_layout->technology () : nullptr;
 }
 
 void
@@ -261,7 +261,7 @@ LayoutHandle::find (const std::string &name)
 {
   std::map <std::string, LayoutHandle *>::const_iterator h = ms_dict.find (name);
   if (h == ms_dict.end ()) {
-    return 0;
+    return nullptr;
   } else {
     return h->second;
   }
@@ -275,7 +275,7 @@ LayoutHandle::find_layout (const db::Layout *layout)
       return h->second;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -412,7 +412,7 @@ LayoutHandle::file_watcher ()
   return *mp_file_watcher;
 }
 
-tl::FileSystemWatcher *LayoutHandle::mp_file_watcher = 0;
+tl::FileSystemWatcher *LayoutHandle::mp_file_watcher = nullptr;
 #endif
 
 std::map <std::string, LayoutHandle *> LayoutHandle::ms_dict;
@@ -421,26 +421,26 @@ std::map <std::string, LayoutHandle *> LayoutHandle::ms_dict;
 //  LayoutHandleRef implementation
 
 LayoutHandleRef::LayoutHandleRef ()
-  : mp_handle (0)
+  : mp_handle (nullptr)
 {
   // .. nothing yet ..
 }
 
 LayoutHandleRef::LayoutHandleRef (LayoutHandle *h)
-  : mp_handle (0)
+  : mp_handle (nullptr)
 {
   set (h);
 }
 
 LayoutHandleRef::LayoutHandleRef (const LayoutHandleRef &r)
-  : mp_handle (0)
+  : mp_handle (nullptr)
 {
   set (r.mp_handle);
 }
 
 LayoutHandleRef::~LayoutHandleRef ()
 {
-  set (0);
+  set (nullptr);
 }
 
 bool
@@ -467,7 +467,7 @@ LayoutHandleRef::set (LayoutHandle *h)
 
   if (mp_handle) {
     mp_handle->remove_ref ();
-    mp_handle = 0;
+    mp_handle = nullptr;
   }
   mp_handle = h;
   if (mp_handle) {

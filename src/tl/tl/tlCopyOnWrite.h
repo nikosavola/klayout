@@ -78,7 +78,7 @@ public:
   ~copy_on_write_holder ()
   {
     delete mp_x;
-    mp_x = 0;
+    mp_x = nullptr;
   }
 
   X *x ()
@@ -116,11 +116,11 @@ public:
   typedef X value_type;
 
   copy_on_write_ptr ()
-    : mp_holder (0)
+    : mp_holder (nullptr)
   { }
 
   copy_on_write_ptr (X *x)
-    : mp_holder (x ? new copy_on_write_holder<X> (x) : 0)
+    : mp_holder (x ? new copy_on_write_holder<X> (x) : nullptr)
   { }
 
   explicit copy_on_write_ptr (const copy_on_write_ptr<X, Dup> &other)
@@ -172,7 +172,7 @@ public:
       }
       return mp_holder->x ();
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -185,7 +185,7 @@ public:
     if (mp_holder) {
       return mp_holder->x ();
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -259,7 +259,7 @@ private:
       if (mp_holder->dec_ref () <= 0) {
         delete mp_holder;
       }
-      mp_holder = 0;
+      mp_holder = nullptr;
     }
   }
 

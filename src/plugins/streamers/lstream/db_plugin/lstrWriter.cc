@@ -70,7 +70,7 @@ private:
 //  LStreamWriter implementation
 
 Writer::Writer ()
-  : mp_stream (0), m_progress (tl::to_string (tr ("Writing LStream file")), 1), mp_layout (0)
+  : mp_stream (nullptr), m_progress (tl::to_string (tr ("Writing LStream file")), 1), mp_layout (nullptr)
 {
   m_progress.set_format (tl::to_string (tr ("%.0f MB")));
   m_progress.set_unit (1024 * 1024);
@@ -306,7 +306,7 @@ Writer::write_library (kj::BufferedOutputStream &os)
 
     layout_view.setResolution (integer_resolution);
 
-    make_meta_data (0, layout_view.getMetaData ());
+    make_meta_data (nullptr, layout_view.getMetaData ());
 
     //  adds a meta data view if needed
     if (needs_meta_data_view) {

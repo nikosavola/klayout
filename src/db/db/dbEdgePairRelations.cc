@@ -506,14 +506,14 @@ EdgeRelationFilter::check (const db::Edge &a, const db::Edge &b, db::EdgePair *o
   bool in1, in2;
 
   if (m_metrics == Euclidian) {
-    in2 = euclidian_near_part_of_edge (m_zero_distance_mode, m_d, an, bn, ! m_whole_edges && output ? &output->second () : 0);
-    in1 = euclidian_near_part_of_edge (m_zero_distance_mode, m_d, bn, an, ! m_whole_edges && output ? &output->first () : 0);
+    in2 = euclidian_near_part_of_edge (m_zero_distance_mode, m_d, an, bn, ! m_whole_edges && output ? &output->second () : nullptr);
+    in1 = euclidian_near_part_of_edge (m_zero_distance_mode, m_d, bn, an, ! m_whole_edges && output ? &output->first () : nullptr);
   } else if (m_metrics == Square) {
-    in2 = square_near_part_of_edge (m_zero_distance_mode, m_d, an, bn, ! m_whole_edges && output ? &output->second () : 0);
-    in1 = square_near_part_of_edge (m_zero_distance_mode, m_d, bn, an, ! m_whole_edges && output ? &output->first () : 0);
+    in2 = square_near_part_of_edge (m_zero_distance_mode, m_d, an, bn, ! m_whole_edges && output ? &output->second () : nullptr);
+    in1 = square_near_part_of_edge (m_zero_distance_mode, m_d, bn, an, ! m_whole_edges && output ? &output->first () : nullptr);
   } else {
-    in2 = projected_near_part_of_edge (m_zero_distance_mode, m_d, an, bn, ! m_whole_edges && output ? &output->second () : 0);
-    in1 = projected_near_part_of_edge (m_zero_distance_mode, m_d, bn, an, ! m_whole_edges && output ? &output->first () : 0);
+    in2 = projected_near_part_of_edge (m_zero_distance_mode, m_d, an, bn, ! m_whole_edges && output ? &output->second () : nullptr);
+    in1 = projected_near_part_of_edge (m_zero_distance_mode, m_d, bn, an, ! m_whole_edges && output ? &output->first () : nullptr);
   }
 
   if (in1 && in2) {

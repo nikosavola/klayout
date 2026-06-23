@@ -157,7 +157,7 @@ class DB_PUBLIC_TEMPLATE edge2edge_check
 {
 public:
   edge2edge_check (const EdgeRelationFilter &check, Output &output, bool different_polygons, bool requires_different_layers, bool with_shielding, bool symmetric_edges, db::properties_id_type prop_id = 0)
-    : Edge2EdgeCheckBase (check, different_polygons, requires_different_layers, with_shielding, symmetric_edges), mp_output_inter (&output), mp_output_intra (0), m_prop_id (prop_id)
+    : Edge2EdgeCheckBase (check, different_polygons, requires_different_layers, with_shielding, symmetric_edges), mp_output_inter (&output), mp_output_intra (nullptr), m_prop_id (prop_id)
   {
     //  .. nothing yet ..
   }

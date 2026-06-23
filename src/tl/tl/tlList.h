@@ -43,8 +43,8 @@ template <class C>
 class list_node
 {
 public:
-  list_node () : mp_next (0), mp_prev (0), m_owned (true) { }
-  list_node (const list_node &) : mp_next (0), mp_prev (0), m_owned (true) { }
+  list_node () : mp_next (nullptr), mp_prev (nullptr), m_owned (true) { }
+  list_node (const list_node &) : mp_next (nullptr), mp_prev (nullptr), m_owned (true) { }
   list_node &operator= (const list_node &) { return *this; }
 
   ~list_node ()
@@ -55,13 +55,13 @@ public:
   C *next ()
   {
     tl_assert (mp_next);
-    return static_cast<C *> (mp_next->mp_next == 0 ? 0 : mp_next);
+    return static_cast<C *> (mp_next->mp_next == nullptr ? nullptr : mp_next);
   }
 
   const C *next () const
   {
     tl_assert (mp_next);
-    return static_cast<const C *> (mp_next->mp_next == 0 ? 0 : mp_next);
+    return static_cast<const C *> (mp_next->mp_next == nullptr ? nullptr : mp_next);
   }
 
   C *prev ()
@@ -96,7 +96,7 @@ public:
       tl_assert (mp_next->mp_prev == this);
       mp_next->mp_prev = mp_prev;
     }
-    mp_prev = mp_next = 0;
+    mp_prev = mp_next = nullptr;
   }
 
 private:
@@ -294,12 +294,12 @@ public:
 
   C *first ()
   {
-    return ! empty () ? static_cast<C *> (m_head.mp_next) : 0;
+    return ! empty () ? static_cast<C *> (m_head.mp_next) : nullptr;
   }
 
   const C *first () const
   {
-    return ! empty () ? static_cast<C *> (m_head.mp_next) : 0;
+    return ! empty () ? static_cast<C *> (m_head.mp_next) : nullptr;
   }
 
   C *last ()
@@ -449,7 +449,7 @@ private:
 
   void push_back_impl (C *new_obj, bool owned)
   {
-    insert_before_impl (0, new_obj, owned);
+    insert_before_impl (nullptr, new_obj, owned);
   }
 
   void push_front_impl (C *new_obj, bool owned)

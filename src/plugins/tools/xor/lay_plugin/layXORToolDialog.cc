@@ -172,7 +172,7 @@ struct RegionModeConverter
 };
 
 XORToolDialog::XORToolDialog (QWidget *parent)
-  : QDialog (parent), mp_view (0)
+  : QDialog (parent), mp_view (nullptr)
 {
   mp_ui = new Ui::XORToolDialog ();
   mp_ui->setupUi (this);
@@ -188,7 +188,7 @@ XORToolDialog::XORToolDialog (QWidget *parent)
 XORToolDialog::~XORToolDialog ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 int 
@@ -284,7 +284,7 @@ XORToolDialog::exec_dialog (lay::LayoutViewBase *view)
     run_xor ();
   }
 
-  mp_view = 0;
+  mp_view = nullptr;
   return ret;
 }
 
@@ -577,7 +577,7 @@ public:
 
     } else {
 
-      db::Cell *subcell = 0;
+      db::Cell *subcell = nullptr;
       unsigned int layout_layer = 0;
 
       subcell = m_sub_cells[tol_index];
@@ -1174,7 +1174,7 @@ XORToolDialog::run_xor ()
     std::sort (tolerances.begin (), tolerances.end ());
     tolerances.erase (std::unique (tolerances.begin (), tolerances.end ()), tolerances.end ());
 
-    if (tolerances.size () == 0) {
+    if (tolerances.empty()) {
       tolerances.push_back (0);
     }
   }
@@ -1204,13 +1204,13 @@ XORToolDialog::run_xor ()
   std::string srcb = cvb->name () + ", Cell " + cvb->layout ().cell_name (cvb.cell_index ());
 
   //  Create the report database or identify the output layout
-  rdb::Database *rdb = 0;
-  rdb::Cell *rdb_cell = 0;
+  rdb::Database *rdb = nullptr;
+  rdb::Cell *rdb_cell = nullptr;
   int rdb_index = 0;
 
   int output_cv = -1;
-  db::Layout *output_layout = 0;
-  db::Cell *output_cell = 0;
+  db::Layout *output_layout = nullptr;
+  db::Cell *output_cell = nullptr;
   std::vector <unsigned int> output_layers;
 
   if (output_mode == OMMarkerDatabase) {
@@ -1280,7 +1280,7 @@ XORToolDialog::run_xor ()
   bool was_cancelled = false;
   for (int mode = 0; mode < 3 && ! was_cancelled; ++mode) {
 
-    rdb::Category *cat = 0; 
+    rdb::Category *cat = nullptr; 
     db::BooleanOp::BoolOp op;
     std::string op_name;
     std::string op_desc;
@@ -1611,7 +1611,7 @@ XORToolDialog::run_xor ()
 
     mp_view->update_content ();
 
-    if (output_mode == OMNewLayout && output_cell != 0 && output_cv >= 0) {
+    if (output_mode == OMNewLayout && output_cell != nullptr && output_cv >= 0) {
       mp_view->select_cell (output_cell->cell_index (), output_cv);
     }
   }

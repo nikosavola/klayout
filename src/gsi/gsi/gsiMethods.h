@@ -691,7 +691,7 @@ public:
 
   virtual bool is_callback () const
   {
-    return m_cb != 0;
+    return m_cb != nullptr;
   }
 
   Callback X::*callback () const

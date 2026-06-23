@@ -93,7 +93,7 @@ public:
    */
   obj_iterator image_ref () const
   {
-    tl_assert (mp_image_object == 0);
+    tl_assert (mp_image_object == nullptr);
     return m_image_ref;
   }
 
@@ -183,7 +183,7 @@ public:
 private:
   void next_valid ()
   {
-    while (m_current != m_end && dynamic_cast<const img::Object *> (m_current->ptr ()) == 0) {
+    while (m_current != m_end && dynamic_cast<const img::Object *> (m_current->ptr ()) == nullptr) {
       ++m_current;
     }
   }
@@ -564,7 +564,7 @@ private:
   /**
    *  @brief Finds an image object from the given point
    */
-  const db::DUserObject *find_image (const db::DPoint &p, const db::DBox &search_box, double l, double &dmin, const std::set<img::Service::obj_iterator> *exclude = 0);
+  const db::DUserObject *find_image (const db::DPoint &p, const db::DBox &search_box, double l, double &dmin, const std::set<img::Service::obj_iterator> *exclude = nullptr);
 
   /**
    *  @brief Update m_selected_image_views to reflect the selection

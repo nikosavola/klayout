@@ -202,10 +202,10 @@ std::vector<char> python2c_func<std::vector<char> >::operator() (PyObject *rval)
   } else
 #else
   if (PyBytes_Check (rval)) {
-    char *cp = 0;
+    char *cp = nullptr;
     Py_ssize_t sz = 0;
     PyBytes_AsStringAndSize (rval, &cp, &sz);
-    tl_assert (cp != 0);
+    tl_assert (cp != nullptr);
     return std::vector<char> (cp, cp + sz);
   } else
 #endif
@@ -214,10 +214,10 @@ std::vector<char> python2c_func<std::vector<char> >::operator() (PyObject *rval)
     if (! ba) {
       check_error ();
     }
-    char *cp = 0;
+    char *cp = nullptr;
     Py_ssize_t sz = 0;
     PyBytes_AsStringAndSize (ba.get (), &cp, &sz);
-    tl_assert (cp != 0);
+    tl_assert (cp != nullptr);
     return std::vector<char> (cp, cp + sz);
   } else if (PyByteArray_Check (rval)) {
     char *cp = PyByteArray_AsString (rval);
@@ -265,7 +265,7 @@ QString python2c_func<QString>::operator() (PyObject *rval)
 template <>
 tl::Variant python2c_func<tl::Variant>::operator() (PyObject *rval)
 {
-  if (rval == NULL || rval == Py_None) {
+  if (rval == nullptr || rval == Py_None) {
     return tl::Variant ();
   } else if (PyBool_Check (rval)) {
     return tl::Variant (python2c<bool> (rval));
@@ -342,7 +342,7 @@ tl::Variant python2c_func<tl::Variant>::operator() (PyObject *rval)
       if (cls->is_managed ()) {
 
         const tl::VariantUserClassBase *var_cls = cls->var_cls (p->const_ref ());
-        tl_assert (var_cls != 0);
+        tl_assert (var_cls != nullptr);
 
         gsi::Proxy *gsi_proxy = cls->gsi_object (obj)->find_client<gsi::Proxy> ();
         if (!gsi_proxy) {
@@ -417,7 +417,7 @@ object_to_python (void *obj, PYAObjectBase *self, const gsi::ClassBase *cls, boo
     Py_RETURN_NONE;
   }
 
-  PYAObjectBase *pya_object = 0;
+  PYAObjectBase *pya_object = nullptr;
 
   if (self && self->obj () == obj) {
 
@@ -536,10 +536,10 @@ PyObject *c2python_func<const tl::Variant &>::operator() (const tl::Variant &c)
     if (cls) {
       if (! c.user_is_ref () && cls->is_managed ()) {
         void *obj = c.user_unshare ();
-        return object_to_python (obj, 0, c.user_cls ()->gsi_cls (), true, c.user_is_const (), false, false);
+        return object_to_python (obj, nullptr, c.user_cls ()->gsi_cls (), true, c.user_is_const (), false, false);
       } else {
         void *obj = const_cast<void *> (c.to_user ());
-        return object_to_python (obj, 0, c.user_cls ()->gsi_cls (), false, false, true, false);
+        return object_to_python (obj, nullptr, c.user_cls ()->gsi_cls (), false, false, true, false);
       }
     } else {
       //  not a known type -> return nil
@@ -557,8 +557,8 @@ PyObject *c2python_func<const std::string &>::operator() (const std::string &c)
 #if PY_MAJOR_VERSION < 3
   return PyString_FromStringAndSize (c.c_str (), Py_ssize_t (c.size ()));
 #else
-  PyObject *ret = PyUnicode_DecodeUTF8 (c.c_str (), Py_ssize_t (c.size ()), NULL);
-  if (ret == NULL) {
+  PyObject *ret = PyUnicode_DecodeUTF8 (c.c_str (), Py_ssize_t (c.size ()), nullptr);
+  if (ret == nullptr) {
     check_error ();
   }
   return ret;
@@ -586,8 +586,8 @@ PyObject *c2python_func<const char *>::operator() (const char *p)
 #if PY_MAJOR_VERSION < 3
   return PyString_FromString (s);
 #else
-  PyObject *ret = PyUnicode_DecodeUTF8 (s, strlen (s), NULL);
-  if (ret == NULL) {
+  PyObject *ret = PyUnicode_DecodeUTF8 (s, strlen (s), nullptr);
+  if (ret == nullptr) {
     check_error ();
   }
   return ret;

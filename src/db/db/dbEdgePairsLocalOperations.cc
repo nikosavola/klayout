@@ -48,7 +48,7 @@ void EdgePair2EdgeInteractingLocalOperation::do_compute_local (db::Layout * /*la
 
   std::unordered_set<db::EdgePair> &result = results.front ();
 
-  std::unordered_set<db::EdgePair> *result2 = 0;
+  std::unordered_set<db::EdgePair> *result2 = nullptr;
   if (m_output_mode == Both) {
     result2 = &results[1];
   }
@@ -197,7 +197,7 @@ void edge_pair_to_polygon_interacting_local_operation<TI>::do_compute_local (db:
 
   std::unordered_set<db::EdgePair> &result = results.front ();
 
-  std::unordered_set<db::EdgePair> *result2 = 0;
+  std::unordered_set<db::EdgePair> *result2 = nullptr;
   if (m_output_mode == Both) {
     result2 = &results[1];
   }

@@ -104,7 +104,7 @@ parse_git_url (tl::Extractor &ex, std::string &url, std::string &branch, std::st
     //  SVN emulation
 
     auto parts = tl::split (subfolder, "/");
-    if (parts.size () >= 1 && parts.front () == "trunk") {
+    if (!parts.empty() && parts.front () == "trunk") {
 
       branch = "HEAD";
       parts.erase (parts.begin ());

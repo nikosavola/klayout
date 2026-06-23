@@ -49,7 +49,7 @@ Texts::Texts ()
 Texts::~Texts ()
 {
   delete mp_delegate;
-  mp_delegate = 0;
+  mp_delegate = nullptr;
 }
 
 Texts::Texts (TextsDelegate *delegate)
@@ -102,7 +102,7 @@ Texts::Texts (DeepShapeStore &dss)
 void
 Texts::convert_to_deep (const db::DeepLayer &layer)
 {
-  tl_assert (mp_delegate->deep () == 0);
+  tl_assert (mp_delegate->deep () == nullptr);
   set_delegate (copy_data_id (new db::DeepTexts (layer)));
 }
 
@@ -179,7 +179,7 @@ const db::RecursiveShapeIterator &
 Texts::iter () const
 {
   static db::RecursiveShapeIterator def_iter;
-  const db::RecursiveShapeIterator *i = mp_delegate ? mp_delegate->iter () : 0;
+  const db::RecursiveShapeIterator *i = mp_delegate ? mp_delegate->iter () : nullptr;
   return *(i ? i : &def_iter);
 }
 

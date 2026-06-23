@@ -69,7 +69,7 @@ EmptyWithinViewCache::is_empty_within_view (const db::Layout *layout, unsigned i
     for (db::Layout::layer_iterator l = layout->begin_layers (); l != layout->end_layers (); ++l) {
       if (cell.bbox ((*l).first).empty ()) {
         c.first->second.insert ((*l).first);
-      } else if (! cell.shapes ((*l).first).begin_touching (box, db::ShapeIterator::All, 0, false).at_end ()) {
+      } else if (! cell.shapes ((*l).first).begin_touching (box, db::ShapeIterator::All, nullptr, false).at_end ()) {
         ;
       } else {
         ll.push_back ((*l).first);
@@ -149,7 +149,7 @@ EmptyWithinViewCache::determine_empty_layers (const db::Layout *layout, unsigned
             //  remove all layers which became populated in that instance
             std::vector<unsigned int>::iterator llw = ll.begin ();
             for (std::vector<unsigned int>::const_iterator l = ll.begin (); l != ll.end (); ++l) {
-              if (cell.shapes (*l).begin_touching (new_box, db::ShapeIterator::All, 0, false).at_end ()) {
+              if (cell.shapes (*l).begin_touching (new_box, db::ShapeIterator::All, nullptr, false).at_end ()) {
                 *llw++ = *l;
               }
             }

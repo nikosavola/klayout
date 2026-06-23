@@ -144,7 +144,7 @@ MarkerBrowserConfigPage::MarkerBrowserConfigPage (QWidget *parent)
 MarkerBrowserConfigPage::~MarkerBrowserConfigPage ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 
@@ -207,7 +207,7 @@ MarkerBrowserConfigPage2::MarkerBrowserConfigPage2 (QWidget *parent)
 MarkerBrowserConfigPage2::~MarkerBrowserConfigPage2 ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void
@@ -328,7 +328,7 @@ public:
     if (lay::has_gui ()) {
       return new rdb::MarkerBrowserDialog (root, view);
     } else {
-      return 0;
+      return nullptr;
     }
   }
 };

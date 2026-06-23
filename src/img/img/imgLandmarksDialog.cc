@@ -110,7 +110,7 @@ private:
     int basic_width = int(0.5 + 1.0 / canvas.resolution ());
 
     //  obtain bitmap to render on
-    lay::CanvasPlane *plane_frame = 0, *plane_fill = 0;
+    lay::CanvasPlane *plane_frame = nullptr, *plane_fill = nullptr;
 
     std::vector <lay::ViewOp> vops;
     vops.reserve (2);
@@ -127,9 +127,9 @@ private:
 
     int pixel_size = 2;
     double s = vp.trans ().inverted ().ctrans (pixel_size * basic_width);
-    canvas.renderer ().draw (db::DBox (m_pos - db::DVector (s, s), m_pos + db::DVector (s, s)), vp.trans (), plane_fill, plane_frame, 0, 0);
-    canvas.renderer ().draw (db::DEdge (m_pos - db::DVector (0, s * 3.0), m_pos + db::DVector (0, s * 3.0)), vp.trans (), plane_fill, plane_frame, 0, 0);
-    canvas.renderer ().draw (db::DEdge (m_pos - db::DVector (s * 3.0, 0), m_pos + db::DVector (s * 3.0, 0)), vp.trans (), plane_fill, plane_frame, 0, 0);
+    canvas.renderer ().draw (db::DBox (m_pos - db::DVector (s, s), m_pos + db::DVector (s, s)), vp.trans (), plane_fill, plane_frame, nullptr, nullptr);
+    canvas.renderer ().draw (db::DEdge (m_pos - db::DVector (0, s * 3.0), m_pos + db::DVector (0, s * 3.0)), vp.trans (), plane_fill, plane_frame, nullptr, nullptr);
+    canvas.renderer ().draw (db::DEdge (m_pos - db::DVector (s * 3.0, 0), m_pos + db::DVector (s * 3.0, 0)), vp.trans (), plane_fill, plane_frame, nullptr, nullptr);
   }
 
   //  no copying nor default construction
@@ -428,7 +428,7 @@ LandmarksDialog::~LandmarksDialog ()
 {
   if (mp_service) {
     delete mp_service;
-    mp_service = 0;
+    mp_service = nullptr;
   }
 }
 
@@ -446,7 +446,7 @@ LandmarksDialog::update_mode ()
   }
 
   QList<QListWidgetItem *> sel = landmark_list->selectedItems ();
-  if (new_mode == Delete && sel.size () > 0) {
+  if (new_mode == Delete && !sel.empty()) {
 
     std::set <int> selected;
     for (QList<QListWidgetItem *>::const_iterator s = sel.begin (); s != sel.end (); ++s) {

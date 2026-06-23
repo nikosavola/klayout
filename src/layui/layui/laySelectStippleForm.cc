@@ -52,7 +52,7 @@ SelectStippleForm::SelectStippleForm (QWidget *parent, const lay::DitherPattern 
 SelectStippleForm::~SelectStippleForm ()
 {
   delete mp_ui;
-  mp_ui = 0;
+  mp_ui = nullptr;
 }
 
 void 

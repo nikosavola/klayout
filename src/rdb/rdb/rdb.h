@@ -408,7 +408,7 @@ public:
   tl::weak_ptr<Database> mp_database;
 
   Categories ()
-    : mp_database (0)
+    : mp_database (nullptr)
   {
     // .. nothing yet ..
   }
@@ -552,7 +552,7 @@ public:
    *  @brief Default constructor
    */
   ValueWrapper ()
-    : mp_ptr (0), m_tag_id (0)
+    : mp_ptr (nullptr), m_tag_id (0)
   {
     //  .. nothing yet ..
   }
@@ -570,7 +570,7 @@ public:
    *  @brief Copy constructor
    */
   ValueWrapper (const ValueWrapper &d)
-    : mp_ptr (d.mp_ptr ? d.mp_ptr->clone () : 0), m_tag_id (d.m_tag_id)
+    : mp_ptr (d.mp_ptr ? d.mp_ptr->clone () : nullptr), m_tag_id (d.m_tag_id)
   {
     //  .. nothing yet ..
   }
@@ -580,7 +580,7 @@ public:
    */
   ~ValueWrapper ()
   {
-    set (0);
+    set (nullptr);
   }
 
   /**
@@ -592,7 +592,7 @@ public:
       if (mp_ptr) {
         delete mp_ptr;
       }
-      mp_ptr = (d.mp_ptr ? d.mp_ptr->clone () : 0);
+      mp_ptr = (d.mp_ptr ? d.mp_ptr->clone () : nullptr);
       m_tag_id = d.m_tag_id;
     }
 
@@ -639,7 +639,7 @@ public:
   /**
    *  @brief Convert the values collection to a string 
    */
-  std::string to_string (const Database *rdb = 0) const;
+  std::string to_string (const Database *rdb = nullptr) const;
 
   /**
    *  @brief Fill the values collection from the string
@@ -1229,7 +1229,7 @@ private:
   Items &operator= (const Items &d);
 
   Items ()
-    : mp_database (0)
+    : mp_database (nullptr)
   {
     // .. nothing yet ..
   }
@@ -1254,7 +1254,7 @@ public:
    *  @brief Constructs a reference with a unit transformation and a empty parent cell id
    */
   Reference ()
-    : m_trans (), m_parent_cell_id (0), mp_database (0)
+    : m_trans (), m_parent_cell_id (0), mp_database (nullptr)
   {
     //  .. nothing yet ..
   }
@@ -1270,7 +1270,7 @@ public:
    *  @param trans The transformation which transforms anything of this cell into the parent cell.
    */
   Reference (const db::DCplxTrans &trans, id_type parent_cell_id)
-    : m_trans (trans), m_parent_cell_id (parent_cell_id), mp_database (0)
+    : m_trans (trans), m_parent_cell_id (parent_cell_id), mp_database (nullptr)
   {
     //  .. nothing yet ..
   }
@@ -1707,7 +1707,7 @@ public:
    *  This method is provided for persistency application only. It should not be used otherwise.
    */
   Cells ()
-    : mp_database (0)
+    : mp_database (nullptr)
   {
     //  .. nothing yet ..
   }

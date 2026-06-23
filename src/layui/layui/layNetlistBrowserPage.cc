@@ -81,7 +81,7 @@ trans_for (const Obj *objs, const db::Layout &ly, const db::Cell &cell, db::Cont
   const db::Circuit *circuit = deref_circuit (objs);
   while (circuit) {
     if (circuit->cell_index () == cell.cell_index ()) {
-      circuit = 0;
+      circuit = nullptr;
       break;
     } else if (circuit->begin_refs () != circuit->end_refs ()) {
       const db::SubCircuit &ref = *circuit->begin_refs ();
@@ -121,18 +121,18 @@ NetlistBrowserPage::NetlistBrowserPage (QWidget * /*parent*/)
     m_marker_dither_pattern (-1),
     m_marker_intensity (0),
     m_use_original_colors (false),
-    mp_view (0),
+    mp_view (nullptr),
     m_cv_index (0),
-    mp_plugin_root (0),
-    mp_last_db (0),
+    mp_plugin_root (nullptr),
+    mp_last_db (nullptr),
     m_history_ptr (0),
     m_signals_enabled (true),
     m_enable_updates (true),
     m_update_needed (true),
-    mp_info_dialog (0),
+    mp_info_dialog (nullptr),
     dm_update_highlights (this, &NetlistBrowserPage::update_highlights),
     dm_rerun_macro (this, &NetlistBrowserPage::rerun_macro),
-    m_cell_context_cache (0)
+    m_cell_context_cache (nullptr)
 {
   Ui::NetlistBrowserPage::setupUi (this);
 
@@ -279,7 +279,7 @@ NetlistBrowserPage::set_view (lay::LayoutViewBase *view, int cv_index)
   }
 
   if (cv_index < 0) {
-    mp_view = 0;
+    mp_view = nullptr;
     m_cv_index = 0;
   } else {
     mp_view = view;
@@ -356,7 +356,7 @@ NetlistBrowserPage::current_hierarchy_tree ()
   case 2:
     return xref_hierarchy_tree;
   default:
-    return 0;
+    return nullptr;
   }
 }
 
@@ -371,7 +371,7 @@ NetlistBrowserPage::current_directory_tree ()
   case 2:
     return xref_directory_tree;
   default:
-    return 0;
+    return nullptr;
   }
 }
 
@@ -379,7 +379,7 @@ void
 NetlistBrowserPage::anchor_clicked (const QString &a)
 {
   QTreeView *directory_tree = current_directory_tree ();
-  NetlistBrowserModel *netlist_model = 0;
+  NetlistBrowserModel *netlist_model = nullptr;
   if (directory_tree) {
     netlist_model = dynamic_cast<NetlistBrowserModel *> (directory_tree->model ());
   }
@@ -483,15 +483,15 @@ NetlistBrowserPage::select_net (const db::Net *net)
     NetlistBrowserModel *model;
 
     model = dynamic_cast<NetlistBrowserModel *> (nl_directory_tree->model ());
-    tl_assert (model != 0);
+    tl_assert (model != nullptr);
     nl_directory_tree->setCurrentIndex (model->index_from_net (net));
 
     model = dynamic_cast<NetlistBrowserModel *> (sch_directory_tree->model ());
-    tl_assert (model != 0);
+    tl_assert (model != nullptr);
     sch_directory_tree->setCurrentIndex (model->index_from_net (net));
 
     model = dynamic_cast<NetlistBrowserModel *> (xref_directory_tree->model ());
-    tl_assert (model != 0);
+    tl_assert (model != nullptr);
     xref_directory_tree->setCurrentIndex (model->index_from_net (net));
 
   }
@@ -563,7 +563,7 @@ NetlistBrowserPage::selected_nets ()
   }
 
   NetlistBrowserModel *model = dynamic_cast<NetlistBrowserModel *> (directory_tree->model ());
-  tl_assert (model != 0);
+  tl_assert (model != nullptr);
 
   QModelIndexList selection = directory_tree->selectionModel ()->selectedIndexes ();
   for (QModelIndexList::const_iterator i = selection.begin (); i != selection.end (); ++i) {
@@ -589,7 +589,7 @@ NetlistBrowserPage::selected_circuits ()
   }
 
   NetlistBrowserModel *model = dynamic_cast<NetlistBrowserModel *> (directory_tree->model ());
-  tl_assert (model != 0);
+  tl_assert (model != nullptr);
 
   QModelIndexList selection = directory_tree->selectionModel ()->selectedIndexes ();
   for (QModelIndexList::const_iterator i = selection.begin (); i != selection.end (); ++i) {
@@ -615,7 +615,7 @@ NetlistBrowserPage::selected_subcircuits ()
   }
 
   NetlistBrowserModel *model = dynamic_cast<NetlistBrowserModel *> (directory_tree->model ());
-  tl_assert (model != 0);
+  tl_assert (model != nullptr);
 
   QModelIndexList selection = directory_tree->selectionModel ()->selectedIndexes ();
   for (QModelIndexList::const_iterator i = selection.begin (); i != selection.end (); ++i) {
@@ -641,7 +641,7 @@ NetlistBrowserPage::selected_devices ()
   }
 
   NetlistBrowserModel *model = dynamic_cast<NetlistBrowserModel *> (directory_tree->model ());
-  tl_assert (model != 0);
+  tl_assert (model != nullptr);
 
   QModelIndexList selection = directory_tree->selectionModel ()->selectedIndexes ();
   for (QModelIndexList::const_iterator i = selection.begin (); i != selection.end (); ++i) {
@@ -668,7 +668,7 @@ NetlistBrowserPage::sch_selection_changed ()
   QTreeView *directory_tree = sch_directory_tree;
 
   NetlistBrowserModel *model = dynamic_cast<NetlistBrowserModel *> (directory_tree->model ());
-  tl_assert (model != 0);
+  tl_assert (model != nullptr);
 
   db::LayoutToNetlist *l2ndb = mp_database.get ();
   db::LayoutVsSchematic *lvsdb = dynamic_cast<db::LayoutVsSchematic *> (l2ndb);
@@ -706,7 +706,7 @@ void
 NetlistBrowserPage::selection_changed (QTreeView * /*hierarchy_tree*/, QTreeView *directory_tree)
 {
   NetlistBrowserModel *model = dynamic_cast<NetlistBrowserModel *> (directory_tree->model ());
-  tl_assert (model != 0);
+  tl_assert (model != nullptr);
 
   QModelIndexList selected = directory_tree->selectionModel ()->selectedIndexes ();
 
@@ -767,8 +767,8 @@ NetlistBrowserPage::navigate_to (const QModelIndex &index, bool fwd)
     return;
   }
 
-  QTreeView *directory_tree = 0;
-  QTreeView *hierarchy_tree = 0;
+  QTreeView *directory_tree = nullptr;
+  QTreeView *hierarchy_tree = nullptr;
 
   if (index.model () == nl_directory_tree->model ()) {
 
@@ -828,7 +828,7 @@ NetlistBrowserPage::log_selection_changed ()
   }
 
   NetlistLogModel *model = dynamic_cast<NetlistLogModel *> (log_view->model ());
-  tl_assert (model != 0);
+  tl_assert (model != nullptr);
 
   QModelIndexList selection = log_view->selectionModel ()->selectedIndexes ();
   for (QModelIndexList::const_iterator i = selection.begin (); i != selection.end (); ++i) {
@@ -839,7 +839,7 @@ NetlistBrowserPage::log_selection_changed ()
 
     const db::LogEntryData *le = model->log_entry (*i);
 
-    const db::Circuit *c = 0;
+    const db::Circuit *c = nullptr;
     if (le && ! le->cell_name ().empty ()) {
       c = mp_database->netlist ()->circuit_by_name (le->cell_name ());
     }
@@ -1091,7 +1091,7 @@ NetlistBrowserPage::set_db (db::LayoutToNetlist *l2ndb)
 
   if (mp_info_dialog) {
     delete mp_info_dialog;
-    mp_info_dialog = 0;
+    mp_info_dialog = nullptr;
   }
 
   db::LayoutVsSchematic *lvsdb = dynamic_cast<db::LayoutVsSchematic *> (l2ndb);
@@ -1109,7 +1109,7 @@ NetlistBrowserPage::set_db (db::LayoutToNetlist *l2ndb)
     rerun_button->setToolTip (QString ());
   }
 
-  bool is_lvsdb = (lvsdb != 0);
+  bool is_lvsdb = (lvsdb != nullptr);
   mode_tab->setTabEnabled (0, true);
   mode_tab->setTabEnabled (1, is_lvsdb);
   mode_tab->setTabEnabled (2, is_lvsdb);
@@ -1127,7 +1127,7 @@ NetlistBrowserPage::set_db (db::LayoutToNetlist *l2ndb)
 
   clear_highlights ();
 
-  m_cell_context_cache = db::ContextCache (mp_database.get () ? mp_database->internal_layout () : 0);
+  m_cell_context_cache = db::ContextCache (mp_database.get () ? mp_database->internal_layout () : nullptr);
 
   setup_trees ();
 
@@ -1181,19 +1181,19 @@ NetlistBrowserPage::setup_trees ()
   if (! mp_database.get ()) {
 
     delete nl_directory_tree->model ();
-    nl_directory_tree->setModel (0);
+    nl_directory_tree->setModel (nullptr);
     delete sch_directory_tree->model ();
-    sch_directory_tree->setModel (0);
+    sch_directory_tree->setModel (nullptr);
     delete xref_directory_tree->model ();
-    xref_directory_tree->setModel (0);
+    xref_directory_tree->setModel (nullptr);
     delete nl_hierarchy_tree->model ();
-    nl_hierarchy_tree->setModel (0);
+    nl_hierarchy_tree->setModel (nullptr);
     delete sch_hierarchy_tree->model ();
-    sch_hierarchy_tree->setModel (0);
+    sch_hierarchy_tree->setModel (nullptr);
     delete xref_hierarchy_tree->model ();
-    xref_hierarchy_tree->setModel (0);
+    xref_hierarchy_tree->setModel (nullptr);
     delete log_view->model ();
-    log_view->setModel (0);
+    log_view->setModel (nullptr);
 
     return;
 
@@ -1206,7 +1206,7 @@ NetlistBrowserPage::setup_trees ()
 
   if ((lvsdb && lvsdb->cross_ref ()) || (l2ndb && ! l2ndb->log_entries ().empty ())) {
 
-    NetlistLogModel *new_model = new NetlistLogModel (log_view, lvsdb ? lvsdb->cross_ref () : 0, l2ndb);
+    NetlistLogModel *new_model = new NetlistLogModel (log_view, lvsdb ? lvsdb->cross_ref () : nullptr, l2ndb);
     delete log_view->model ();
     log_view->setModel (new_model);
 
@@ -1217,7 +1217,7 @@ NetlistBrowserPage::setup_trees ()
   } else {
 
     delete log_view->model ();
-    log_view->setModel (0);
+    log_view->setModel (nullptr);
 
   }
 
@@ -1252,7 +1252,7 @@ NetlistBrowserPage::setup_trees ()
   } else {
 
     delete sch_directory_tree->model ();
-    sch_directory_tree->setModel (0);
+    sch_directory_tree->setModel (nullptr);
 
   }
 
@@ -1272,7 +1272,7 @@ NetlistBrowserPage::setup_trees ()
   } else {
 
     delete xref_directory_tree->model ();
-    xref_directory_tree->setModel (0);
+    xref_directory_tree->setModel (nullptr);
 
   }
 
@@ -1295,7 +1295,7 @@ NetlistBrowserPage::setup_trees ()
   } else {
 
     delete sch_hierarchy_tree->model ();
-    sch_hierarchy_tree->setModel (0);
+    sch_hierarchy_tree->setModel (nullptr);
 
   }
 
@@ -1310,7 +1310,7 @@ NetlistBrowserPage::setup_trees ()
   } else {
 
     delete xref_hierarchy_tree->model ();
-    xref_hierarchy_tree->setModel (0);
+    xref_hierarchy_tree->setModel (nullptr);
 
   }
 
@@ -1457,7 +1457,7 @@ NetlistBrowserPage::adjust_view ()
         circuit = p->first->circuit_ref ();
         trans = trans * p->first->trans ();
       } else {
-        circuit = 0;
+        circuit = nullptr;
       }
     }
 
@@ -1782,7 +1782,7 @@ NetlistBrowserPage::update_highlights ()
         circuit = p->first->circuit_ref ();
         trans = trans * p->first->trans ();
       } else {
-        circuit = 0;
+        circuit = nullptr;
       }
     }
 
@@ -1900,7 +1900,7 @@ void
 NetlistBrowserPage::export_all ()
 {
 BEGIN_PROTECTED
-  export_nets (0);
+  export_nets (nullptr);
 END_PROTECTED
 }
 
@@ -1941,12 +1941,12 @@ NetlistBrowserPage::export_nets (const std::vector<const db::Net *> *nets)
     std::map<unsigned int, unsigned int> lm = database->create_layermap (target_layout, dialog->start_layer_number ());
 
     database->build_nets (nets, cm, target_layout, lm,
-                          dialog->net_prefix ().empty () ? 0 : dialog->net_prefix ().c_str (),
+                          dialog->net_prefix ().empty () ? nullptr : dialog->net_prefix ().c_str (),
                           db::NPM_AllProperties,
                           dialog->net_propname (),
                           dialog->produce_circuit_cells () ? db::BNH_SubcircuitCells : db::BNH_Flatten,
-                          dialog->produce_circuit_cells () ? dialog->circuit_cell_prefix ().c_str () : 0,
-                          dialog->produce_device_cells () ? dialog->device_cell_prefix ().c_str () : 0);
+                          dialog->produce_circuit_cells () ? dialog->circuit_cell_prefix ().c_str () : nullptr,
+                          dialog->produce_device_cells () ? dialog->device_cell_prefix ().c_str () : nullptr);
 
     view->zoom_fit ();
     view->max_hier ();

@@ -49,27 +49,27 @@ static PyObject *BridgeError;
 static PyObject *
 bridge_a2p (PyObject * /*self*/, PyObject *args)
 {
-  PyObject *a = NULL;
+  PyObject *a = nullptr;
   if (! PyArg_ParseTuple (args, "O", &a)) {
-    return NULL;
+    return nullptr;
   }
 
   //  Iterate over the array elements
   pya::PythonRef iterator (PyObject_GetIter (a));
   if (! iterator) {
-    return NULL;
+    return nullptr;
   }
 
   //  Prepare a vector of points we can create the polygon from later
   std::vector<db::DPoint> points;
 
   PyObject *item;
-  while ((item = PyIter_Next (iterator.get ())) != NULL) {
+  while ((item = PyIter_Next (iterator.get ())) != nullptr) {
 
     //  Iterate over the x/y pair
     pya::PythonRef xy_iterator (PyObject_GetIter (item));
     if (! xy_iterator) {
-      return NULL;
+      return nullptr;
     }
 
     double c[2] = { 0.0, 0.0 };
@@ -78,7 +78,7 @@ bridge_a2p (PyObject * /*self*/, PyObject *args)
     for (int i = 0; i < 2; ++i) {
       pya::PythonRef xy_item (PyIter_Next (xy_iterator.get ()));
       if (! xy_item) {
-        return NULL;
+        return nullptr;
       }
       if (pya::test_type<double> (xy_item.get ())) {
         c[i] = pya::python2c<double> (xy_item.get ());
@@ -91,7 +91,7 @@ bridge_a2p (PyObject * /*self*/, PyObject *args)
 
   //  Handle iteration errors
   if (PyErr_Occurred()) {
-    return NULL;
+    return nullptr;
   }
 
   //  Create and return a new object of db::DSimplePolygon type
@@ -104,15 +104,15 @@ static PyObject *
 bridge_p2a (PyObject * /*self*/, PyObject *args)
 {
   //  Parse the command line arguments
-  PyObject *p = NULL;
+  PyObject *p = nullptr;
   if (! PyArg_ParseTuple (args, "O", &p)) {
-    return NULL;
+    return nullptr;
   }
 
   //  Report an error if the input isn't a db::DSimplePolygon
   if (! pya::test_type<const db::DSimplePolygon &> (p)) {
     PyErr_SetString (BridgeError, "Expected a db::DSimplePolygon type");
-    return NULL;
+    return nullptr;
   }
 
   //  Obtain the db::DSimplePolygon
@@ -143,7 +143,7 @@ static PyMethodDef BridgeMethods[] = {
     "a2p", bridge_a2p, METH_VARARGS,
     "Converts an array to a DSimplePolygon."
   },
-  { NULL, NULL, 0, NULL }  //  terminal
+  { nullptr, nullptr, 0, nullptr }  //  terminal
 };
 
 #if PY_MAJOR_VERSION < 3
@@ -170,7 +170,7 @@ struct PyModuleDef bridge_module =
 {
   PyModuleDef_HEAD_INIT,
   "bridge_mod",
-  NULL,
+  nullptr,
   -1,
   BridgeMethods
 };
@@ -181,11 +181,11 @@ PyInit_bridge_mod ()
   PyObject *m;
 
   m = PyModule_Create (&bridge_module);
-  if (m == NULL) {
-    return NULL;
+  if (m == nullptr) {
+    return nullptr;
   }
 
-  BridgeError = PyErr_NewException ((char *) "bridge_mod.error", NULL, NULL);
+  BridgeError = PyErr_NewException ((char *) "bridge_mod.error", nullptr, nullptr);
   Py_INCREF (BridgeError);
   PyModule_AddObject (m, "error", BridgeError);
 

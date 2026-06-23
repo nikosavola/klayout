@@ -371,7 +371,7 @@ struct type_traits<void>
   static bool is_cptr () { return false; }
   static bool is_ptr () { return false; }
   static BasicType code () { return T_void; }
-  static const ClassBase *cls_decl () { return 0; }
+  static const ClassBase *cls_decl () { return nullptr; }
   static bool is_iter () { return false; }
   static size_t serial_size () { return 0; }
 };
@@ -423,7 +423,7 @@ struct generic_type_traits
   static size_t serial_size () { return compute_size<V> (T ()); }
 
   static BasicType code () { return TC; }
-  static const ClassBase *cls_decl () { return 0; }
+  static const ClassBase *cls_decl () { return nullptr; }
   static bool is_iter () { return false; }
 };
 
@@ -1283,16 +1283,16 @@ public:
   typedef const T &init_type;
 
   ArgSpecImpl () 
-    : ArgSpecBase (std::string (), false), mp_init (0)
+    : ArgSpecBase (std::string (), false), mp_init (nullptr)
   { }
 
   ArgSpecImpl (const ArgSpec<void> &other)
-    : ArgSpecBase (other), mp_init (0)
+    : ArgSpecBase (other), mp_init (nullptr)
   { }
 
   template <class Q>
   ArgSpecImpl (const ArgSpec<Q> &other)
-    : ArgSpecBase (other), mp_init (0)
+    : ArgSpecBase (other), mp_init (nullptr)
   { 
     if (other.has_init ()) {
       mp_init = new T (other.init ());
@@ -1300,7 +1300,7 @@ public:
   }
 
   ArgSpecImpl (const ArgSpecImpl &other) 
-    : ArgSpecBase (other), mp_init (0)
+    : ArgSpecBase (other), mp_init (nullptr)
   {
     if (other.has_init ()) {
       mp_init = new T (other.init ());
@@ -1313,7 +1313,7 @@ public:
       ArgSpecBase::operator= (other);
       if (mp_init) {
         delete mp_init;
-        mp_init = 0;
+        mp_init = nullptr;
       }
       if (other.has_init ()) {
         mp_init = new T (other.init ());
@@ -1338,7 +1338,7 @@ public:
   {
     if (mp_init) {
       delete mp_init;
-      mp_init = 0;
+      mp_init = nullptr;
     }
   }
 
@@ -1349,12 +1349,12 @@ public:
   
   bool has_init () const
   {
-    return mp_init != 0;
+    return mp_init != nullptr;
   }
 
   const T &init () const
   {
-    tl_assert (mp_init != 0);
+    tl_assert (mp_init != nullptr);
     return *mp_init;
   }
 
@@ -1674,12 +1674,12 @@ public:
 
     if (mp_inner) {
       delete mp_inner;
-      mp_inner = 0;
+      mp_inner = nullptr;
     }
 
     if (mp_inner_k) {
       delete mp_inner_k;
-      mp_inner_k = 0;
+      mp_inner_k = nullptr;
     }
 
     if (type_traits<typename type_traits<X>::inner_type>::code () != T_void) {
@@ -1718,12 +1718,12 @@ public:
 
     if (mp_inner) {
       delete mp_inner;
-      mp_inner = 0;
+      mp_inner = nullptr;
     }
 
     if (mp_inner_k) {
       delete mp_inner_k;
-      mp_inner_k = 0;
+      mp_inner_k = nullptr;
     }
 
     if (type_traits<typename type_traits<X>::inner_type>::code () != T_void) {
@@ -2370,13 +2370,13 @@ struct do_on_type
   template <class A1, class A2, class A3>
   void operator() (gsi::BasicType type, const A1 &arg1, const A2 &arg2, const A3 &arg3)
   {
-    do_on_type_impl<F, A1, A2, A3, void, void> (type, &arg1, &arg2, &arg3, 0, 0);
+    do_on_type_impl<F, A1, A2, A3, void, void> (type, &arg1, &arg2, &arg3, nullptr, nullptr);
   }
 
   template <class A1, class A2, class A3, class A4>
   void operator() (gsi::BasicType type, const A1 &arg1, const A2 &arg2, const A3 &arg3, const A4 &arg4)
   {
-    do_on_type_impl<F, A1, A2, A3, A4, void> (type, &arg1, &arg2, &arg3, &arg4, 0);
+    do_on_type_impl<F, A1, A2, A3, A4, void> (type, &arg1, &arg2, &arg3, &arg4, nullptr);
   }
 
   template <class A1, class A2, class A3, class A4, class A5>

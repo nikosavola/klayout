@@ -90,7 +90,7 @@ SoftConnectionPinDir SoftConnectionCircuitInfo::direction_per_pin (const db::Pin
 const SoftConnectionNetGraph *SoftConnectionCircuitInfo::get_net_graph_per_pin (const db::Pin *pin) const
 {
   if (! pin) {
-    return 0;
+    return nullptr;
   }
 
   auto p = m_pin_info.find (pin->id ());
@@ -138,7 +138,7 @@ void SoftConnectionInfo::join_soft_connections (db::Netlist &netlist)
       auto cc = sc->begin_clusters ();
       if (cc != sc->end_clusters ()) {
         db::Net *net0 = c->net_by_cluster_id (cc->first);
-        tl_assert (net0 != 0);
+        tl_assert (net0 != nullptr);
         ++nnet_graphs;
         while (++cc != sc->end_clusters ()) {
           //  TODO: logging?
@@ -286,7 +286,7 @@ void SoftConnectionInfo::build_graphs_for_circuit (const db::Circuit *circuit, c
     connected.insert (c->id ());
     seen.insert (c->id ());
 
-    SoftConnectionNetGraph *sc_net_graph = 0;
+    SoftConnectionNetGraph *sc_net_graph = nullptr;
 
     while (! connected.empty ()) {
 
@@ -331,7 +331,7 @@ void SoftConnectionInfo::build_graphs_for_circuit (const db::Circuit *circuit, c
 
         //  is this net associated with a pin?
 
-        const db::Pin *pin = 0;
+        const db::Pin *pin = nullptr;
         if (net->begin_pins () != net->end_pins ()) {
           //  TODO: multiple pins per net need to be supported?
           tl_assert (net->pin_count () == 1);

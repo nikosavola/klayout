@@ -148,7 +148,7 @@ public:
 
   virtual WriterBase *create_writer () const
   {
-    return 0;
+    return nullptr;
   }
 
   virtual bool can_read () const

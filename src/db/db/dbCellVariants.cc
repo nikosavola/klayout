@@ -45,7 +45,7 @@ db::Trans OrientationReducer::reduce (const db::Trans &trans) const
 
 bool OrientationReducer::equals (const TransformationReducer *other) const
 {
-  return dynamic_cast<const OrientationReducer *> (other) != 0;
+  return dynamic_cast<const OrientationReducer *> (other) != nullptr;
 }
 
 // ------------------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ db::Trans OrthogonalTransformationReducer::reduce (const db::Trans &) const
 
 bool OrthogonalTransformationReducer::equals (const TransformationReducer *other) const
 {
-  return dynamic_cast<const OrthogonalTransformationReducer *> (other) != 0;
+  return dynamic_cast<const OrthogonalTransformationReducer *> (other) != nullptr;
 }
 
 // ------------------------------------------------------------------------------------------
@@ -87,7 +87,7 @@ db::Trans MagnificationReducer::reduce (const db::Trans &) const
 
 bool MagnificationReducer::equals (const TransformationReducer *other) const
 {
-  return dynamic_cast<const MagnificationReducer *> (other) != 0;
+  return dynamic_cast<const MagnificationReducer *> (other) != nullptr;
 }
 
 // ------------------------------------------------------------------------------------------
@@ -108,7 +108,7 @@ db::Trans XYAnisotropyAndMagnificationReducer::reduce (const db::Trans &trans) c
 
 bool XYAnisotropyAndMagnificationReducer::equals (const TransformationReducer *other) const
 {
-  return dynamic_cast<const XYAnisotropyAndMagnificationReducer *> (other) != 0;
+  return dynamic_cast<const XYAnisotropyAndMagnificationReducer *> (other) != nullptr;
 }
 
 // ------------------------------------------------------------------------------------------
@@ -127,7 +127,7 @@ db::Trans MagnificationAndOrientationReducer::reduce (const db::Trans &trans) co
 
 bool MagnificationAndOrientationReducer::equals (const TransformationReducer *other) const
 {
-  return dynamic_cast<const MagnificationAndOrientationReducer *> (other) != 0;
+  return dynamic_cast<const MagnificationAndOrientationReducer *> (other) != nullptr;
 }
 
 // ------------------------------------------------------------------------------------------
@@ -158,7 +158,7 @@ db::Trans GridReducer::reduce (const db::Trans &trans) const
 bool GridReducer::equals (const TransformationReducer *other) const
 {
   const GridReducer *red = dynamic_cast<const GridReducer *> (other);
-  return red != 0 && red->m_grid == m_grid;
+  return red != nullptr && red->m_grid == m_grid;
 }
 
 // ------------------------------------------------------------------------------------------
@@ -208,7 +208,7 @@ db::Trans ScaleAndGridReducer::reduce (const db::Trans &trans) const
 bool ScaleAndGridReducer::equals (const TransformationReducer *other) const
 {
   const ScaleAndGridReducer *red = dynamic_cast<const ScaleAndGridReducer *> (other);
-  return red != 0 && red->m_grid == m_grid && red->m_mult == m_mult;
+  return red != nullptr && red->m_grid == m_grid && red->m_mult == m_mult;
 }
 
 // ------------------------------------------------------------------------------------------
@@ -220,7 +220,7 @@ VariantsCollectorBase::VariantsCollectorBase ()
 }
 
 VariantsCollectorBase::VariantsCollectorBase (const TransformationReducer *red)
-  : mp_red (red), mp_layout (0)
+  : mp_red (red), mp_layout (nullptr)
 {
   //  .. nothing yet ..
 }
@@ -228,7 +228,7 @@ VariantsCollectorBase::VariantsCollectorBase (const TransformationReducer *red)
 void
 VariantsCollectorBase::collect (Layout *layout, db::cell_index_type initial_cell)
 {
-  tl_assert (mp_red != 0);
+  tl_assert (mp_red != nullptr);
   mp_layout = layout;
 
   m_called.clear ();
@@ -278,7 +278,7 @@ VariantsCollectorBase::collect (Layout *layout, db::cell_index_type initial_cell
 void
 VariantsCollectorBase::separate_variants (std::map<db::cell_index_type, std::map<db::ICplxTrans, db::cell_index_type> > *var_table)
 {
-  tl_assert (mp_red != 0);
+  tl_assert (mp_red != nullptr);
 
   db::LayoutLocker locker (mp_layout);
 
@@ -396,7 +396,7 @@ VariantsCollectorBase::separate_variants (std::map<db::cell_index_type, std::map
 void
 VariantsCollectorBase::commit_shapes (unsigned int layer, std::map<db::cell_index_type, std::map<db::ICplxTrans, db::Shapes> > &to_commit)
 {
-  tl_assert (mp_red != 0);
+  tl_assert (mp_red != nullptr);
 
   if (to_commit.empty ()) {
     return;
@@ -728,7 +728,7 @@ make_reducer (ReducerType type)
   case MagnificationAndOrientation:
     return new MagnificationAndOrientationReducer ();
   default:
-    return 0;
+    return nullptr;
   }
 }
 
@@ -749,7 +749,7 @@ VariantStatistics::VariantStatistics (const TransformationReducer *red)
 void
 VariantStatistics::collect (const db::Layout *layout, db::cell_index_type initial_cell)
 {
-  tl_assert (mp_red != 0);
+  tl_assert (mp_red != nullptr);
 
   //  The top cell gets a "variant" with unit transformation
   m_variants [initial_cell].insert (std::make_pair (db::ICplxTrans (), 1));

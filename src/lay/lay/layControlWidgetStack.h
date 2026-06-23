@@ -37,7 +37,7 @@ class ControlWidgetStack
   : public QFrame
 {
 public:
-  ControlWidgetStack (QWidget *parent = 0, const char *name = 0, bool size_follows_content = false);
+  ControlWidgetStack (QWidget *parent = nullptr, const char *name = nullptr, bool size_follows_content = false);
 
   void focusInEvent (QFocusEvent *);
 

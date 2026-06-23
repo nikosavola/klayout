@@ -487,7 +487,7 @@ CommonReaderBase::finish (db::Layout &layout)
     const db::LayerProperties &lp = layout.get_properties (*i);
 
     const tl::interval_map <db::ld_type, std::string> *dtmap = layer_names ().mapped (lp.layer);
-    const std::string *name = 0;
+    const std::string *name = nullptr;
     if (dtmap) {
       name = dtmap->mapped (lp.datatype);
     }
@@ -533,9 +533,9 @@ CommonReaderBase::open_dl_uncached (db::Layout &layout, const LDPair &dl)
 
     //  resolve OASIS name if possible
     const tl::interval_map <db::ld_type, std::string> *names_dmap = m_layer_names.mapped (dl.layer);
-    if (names_dmap != 0) {
+    if (names_dmap != nullptr) {
       const std::string *name = names_dmap->mapped (dl.datatype);
-      if (name != 0) {
+      if (name != nullptr) {
         lp.name = *name;
       }
     }
@@ -651,12 +651,12 @@ public:
 
   virtual ReaderBase *create_reader (tl::InputStream & /*s*/) const
   {
-    return 0;
+    return nullptr;
   }
 
   virtual WriterBase *create_writer () const
   {
-    return 0;
+    return nullptr;
   }
 
   virtual bool can_read () const

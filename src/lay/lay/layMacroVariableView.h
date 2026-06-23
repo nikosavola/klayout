@@ -56,7 +56,7 @@ public:
   /**
    *  @brief Constructor
    */
-  MacroVariableView (QWidget *parent = 0);
+  MacroVariableView (QWidget *parent = nullptr);
 
   /**
    *  @brief Attach an inspector to the view

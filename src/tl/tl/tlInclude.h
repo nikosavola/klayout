@@ -74,7 +74,7 @@ public:
    *
    *  This method will deliver the expanded text and the include expander object.
    */
-  static IncludeExpander expand (const std::string &path, std::string &expanded_text, const IncludeFileResolver *resolver = 0);
+  static IncludeExpander expand (const std::string &path, std::string &expanded_text, const IncludeFileResolver *resolver = nullptr);
 
   /**
    *  @brief Provides include expansion
@@ -82,7 +82,7 @@ public:
    *  This method will deliver the expanded text and the include expander object.
    *  This version also takes the actual text of the original file.
    */
-  static IncludeExpander expand (const std::string &path, const std::string &original_text, std::string &expanded_text, const IncludeFileResolver *resolver = 0);
+  static IncludeExpander expand (const std::string &path, const std::string &original_text, std::string &expanded_text, const IncludeFileResolver *resolver = nullptr);
 
   /**
    *  @brief Serializes the include expander information into a string

@@ -590,7 +590,7 @@ TilingProcessorWorker::do_perform (const TilingProcessorTask *tile_task)
 
     if (! mp_job->has_tiles ()) { 
 
-      make_input_var (*i, 0, eval, sf);
+      make_input_var (*i, nullptr, eval, sf);
 
     } else {
 
@@ -1001,7 +1001,7 @@ TilingProcessor::execute (const std::string &desc)
       for (std::vector<OutputSpec>::iterator o = m_outputs.begin (); o != m_outputs.end (); ++o) {
         if (o->receiver) {
           o->receiver->finish (!job.has_error ());
-          o->receiver->set_processor (0);
+          o->receiver->set_processor (nullptr);
         }
       }
 
@@ -1009,7 +1009,7 @@ TilingProcessor::execute (const std::string &desc)
       for (std::vector<OutputSpec>::iterator o = m_outputs.begin (); o != m_outputs.end (); ++o) {
         if (o->receiver) {
           o->receiver->finish (false);
-          o->receiver->set_processor (0);
+          o->receiver->set_processor (nullptr);
         }
       }
       throw;

@@ -149,21 +149,21 @@ struct cell_inst_array_defs
   static C *
   new_cell_inst_vector2 (const db::Cell *cell, const vector_type &v)
   {
-    tl_assert (cell != 0);
+    tl_assert (cell != nullptr);
     return new_cell_inst_vector (cell->cell_index (), v);
   }
 
   static C *
   new_cell_inst2 (const db::Cell *cell, const trans_type &t)
   {
-    tl_assert (cell != 0);
+    tl_assert (cell != nullptr);
     return new_cell_inst (cell->cell_index (), t);
   }
 
   static C *
   new_cell_inst_cplx2 (const db::Cell *cell, const complex_trans_type &t)
   {
-    tl_assert (cell != 0);
+    tl_assert (cell != nullptr);
     return new_cell_inst_cplx (cell->cell_index (), t);
   }
 
@@ -171,7 +171,7 @@ struct cell_inst_array_defs
   new_cell_inst_array_vector2 (const db::Cell *cell, const vector_type &v,
                                const vector_type &a, const vector_type &b, unsigned long na, unsigned long nb)
   {
-    tl_assert (cell != 0);
+    tl_assert (cell != nullptr);
     return new_cell_inst_array_vector (cell->cell_index (), v, a, b, na, nb);
   }
 
@@ -179,7 +179,7 @@ struct cell_inst_array_defs
   new_cell_inst_array2 (const db::Cell *cell, const trans_type &t,
                         const vector_type &a, const vector_type &b, unsigned long na, unsigned long nb)
   {
-    tl_assert (cell != 0);
+    tl_assert (cell != nullptr);
     return new_cell_inst_array (cell->cell_index (), t, a, b, na, nb);
   }
 
@@ -187,7 +187,7 @@ struct cell_inst_array_defs
   new_cell_inst_array_cplx2 (const db::Cell *cell, const complex_trans_type &t,
                              const vector_type &a, const vector_type &b, unsigned long na, unsigned long nb)
   {
-    tl_assert (cell != 0);
+    tl_assert (cell != nullptr);
     return new_cell_inst_array_cplx (cell->cell_index (), t, a, b, na, nb);
   }
 
@@ -205,7 +205,7 @@ struct cell_inst_array_defs
 
   static void set_cell (C *a, db::Cell *cell)
   {
-    tl_assert (cell != 0);
+    tl_assert (cell != nullptr);
     a->object ().cell_index (cell->cell_index ());
   }
 
@@ -952,12 +952,12 @@ static std::vector<db::cell_index_type> caller_cells (const db::Cell *c)
 
 static bool is_cold_proxy (const db::Cell *cell)
 {
-  return dynamic_cast<const db::ColdProxy *> (cell) != 0;
+  return dynamic_cast<const db::ColdProxy *> (cell) != nullptr;
 }
 
 static bool is_library_cell (const db::Cell *cell)
 {
-  return dynamic_cast<const db::LibraryProxy *> (cell) != 0;
+  return dynamic_cast<const db::LibraryProxy *> (cell) != nullptr;
 }
 
 static db::cell_index_type library_cell_index (const db::Cell *cell)
@@ -976,7 +976,7 @@ static db::Library *library (const db::Cell *cell)
   if (l) {
     return db::LibraryManager::instance ().lib (l->lib_id ());
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -1109,12 +1109,12 @@ static const tl::Variant &cell_meta_info_value (db::Cell *cell, const std::strin
 static MetaInfo *cell_meta_info (db::Cell *cell, const std::string &name)
 {
   if (! cell->layout ()) {
-    return 0;
+    return nullptr;
   } else if (cell->layout ()->has_meta_info (cell->cell_index (), name)) {
     const db::MetaInfo &value = cell->layout ()->meta_info (cell->cell_index (), name);
     return new MetaInfo (name, value);
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -1179,31 +1179,31 @@ static tl::Variant get_cell_properties (const db::Cell *c)
 
 static bool is_pcell_variant (const db::Cell *cell)
 {
-  tl_assert (cell->layout () != 0);
+  tl_assert (cell->layout () != nullptr);
   return cell->layout ()->is_pcell_instance (cell->cell_index ()).first;
 }
 
 static bool is_pcell_variant_of_inst (const db::Cell *cell, const db::Cell::instance_type &ref)
 { 
-  tl_assert (cell->layout () != 0);
+  tl_assert (cell->layout () != nullptr);
   return is_pcell_variant (& cell->layout ()->cell (ref.cell_index ()));
 }
 
 static db::pcell_id_type pcell_id (const db::Cell *cell)
 {
-  tl_assert (cell->layout () != 0);
+  tl_assert (cell->layout () != nullptr);
   return cell->layout ()->is_pcell_instance (cell->cell_index ()).second;
 }
 
 static db::Library *pcell_library (const db::Cell *cell)
 {
-  tl_assert (cell->layout () != 0);
+  tl_assert (cell->layout () != nullptr);
   return cell->layout ()->defining_library (cell->cell_index ()).first;
 }
 
 static const std::vector<tl::Variant> &pcell_parameters (const db::Cell *cell)
 {
-  tl_assert (cell->layout () != 0);
+  tl_assert (cell->layout () != nullptr);
   return cell->layout ()->get_pcell_parameters (cell->cell_index ());
 }
 
@@ -1225,7 +1225,7 @@ static std::map<std::string, tl::Variant> pcell_parameters_by_name (const db::Ce
   if (cp) {
     return cp->context_info ().pcell_parameters;
   } else {
-    tl_assert (cell->layout () != 0);
+    tl_assert (cell->layout () != nullptr);
     return cell->layout ()->get_named_pcell_parameters (cell->cell_index ());
   }
 }
@@ -1237,7 +1237,7 @@ static void refresh (db::Cell *cell)
 
 static const db::PCellDeclaration *pcell_declaration (const db::Cell *cell)
 { 
-  tl_assert (cell->layout () != 0);
+  tl_assert (cell->layout () != nullptr);
   std::pair<bool, db::pcell_id_type> pc = cell->layout ()->is_pcell_instance (cell->cell_index ());
   if (pc.first) {
     db::Library *lib = pcell_library (cell);
@@ -1247,7 +1247,7 @@ static const db::PCellDeclaration *pcell_declaration (const db::Cell *cell)
       return cell->layout ()->pcell_declaration (pc.second);
     }
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -1268,7 +1268,7 @@ static std::string pcell_name (const db::Cell *cell)
 
 static const db::PCellDeclaration *pcell_declaration_of_inst (const db::Cell *cell, const db::Cell::instance_type &ref)
 { 
-  tl_assert (cell->layout () != 0);
+  tl_assert (cell->layout () != nullptr);
   return pcell_declaration (& cell->layout ()->cell (ref.cell_index ()));
 }
 
@@ -1614,14 +1614,14 @@ static void
 fill_region (db::Cell *cell, const db::Region &fr, db::cell_index_type fill_cell_index, const db::Box &fc_box, const db::Point *origin,
              db::Region *remaining_parts, const db::Vector &fill_margin, db::Region *remaining_polygons, const db::Box &glue_box, const db::Region &exclude_area)
 {
-  db::fill_region (cell, fr, fill_cell_index, fc_box, origin ? *origin : db::Point (), origin == 0, remaining_parts, fill_margin, remaining_polygons, glue_box, exclude_area);
+  db::fill_region (cell, fr, fill_cell_index, fc_box, origin ? *origin : db::Point (), origin == nullptr, remaining_parts, fill_margin, remaining_polygons, glue_box, exclude_area);
 }
 
 static void
 fill_region_skew (db::Cell *cell, const db::Region &fr, db::cell_index_type fill_cell_index, const db::Box &fc_box, const db::Vector &row_step, const db::Vector &column_step, const db::Point *origin,
                   db::Region *remaining_parts, const db::Vector &fill_margin, db::Region *remaining_polygons, const db::Box &glue_box, const db::Region &exclude_area)
 {
-  db::fill_region (cell, fr, fill_cell_index, fc_box, row_step, column_step, origin ? *origin : db::Point (), origin == 0, remaining_parts, fill_margin, remaining_polygons, glue_box, exclude_area);
+  db::fill_region (cell, fr, fill_cell_index, fc_box, row_step, column_step, origin ? *origin : db::Point (), origin == nullptr, remaining_parts, fill_margin, remaining_polygons, glue_box, exclude_area);
 }
 
 static void
@@ -2313,9 +2313,9 @@ Class<db::Cell> decl_Cell ("db", "Cell",
                                                 gsi::arg ("fill_cell_index"),
                                                 gsi::arg ("fc_box"),
                                                 gsi::arg ("origin", &default_origin, "(0, 0)"),
-                                                gsi::arg ("remaining_parts", (db::Region *)0, "nil"),
+                                                gsi::arg ("remaining_parts", (db::Region *)nullptr, "nil"),
                                                 gsi::arg ("fill_margin", db::Vector ()),
-                                                gsi::arg ("remaining_polygons", (db::Region *)0, "nil"),
+                                                gsi::arg ("remaining_polygons", (db::Region *)nullptr, "nil"),
                                                 gsi::arg ("glue_box", db::Box ()),
                                                 gsi::arg ("exclude_area", db::Region (), "empty"),
     "@brief Fills the given region with cells of the given type (extended version)\n"
@@ -2391,9 +2391,9 @@ Class<db::Cell> decl_Cell ("db", "Cell",
                                                      gsi::arg ("row_step"),
                                                      gsi::arg ("column_step"),
                                                      gsi::arg ("origin", &default_origin, "(0, 0)"),
-                                                     gsi::arg ("remaining_parts", (db::Region *)0, "nil"),
+                                                     gsi::arg ("remaining_parts", (db::Region *)nullptr, "nil"),
                                                      gsi::arg ("fill_margin", db::Vector ()),
-                                                     gsi::arg ("remaining_polygons", (db::Region *)0, "nil"),
+                                                     gsi::arg ("remaining_polygons", (db::Region *)nullptr, "nil"),
                                                      gsi::arg ("glue_box", db::Box ()),
                                                      gsi::arg ("exclude_area", db::Region (), "empty"),
     "@brief Fills the given region with cells of the given type (skew step version)\n"
@@ -2423,7 +2423,7 @@ Class<db::Cell> decl_Cell ("db", "Cell",
                                                             gsi::arg ("row_step"),
                                                             gsi::arg ("column_step"),
                                                             gsi::arg ("fill_margin", db::Vector ()),
-                                                            gsi::arg ("remaining_polygons", (db::Region *)0, "nil"),
+                                                            gsi::arg ("remaining_polygons", (db::Region *)nullptr, "nil"),
                                                             gsi::arg ("glue_box", db::Box ()),
                                                             gsi::arg ("exclude_area", db::Region (), "empty"),
     "@brief Fills the given region with cells of the given type in enhanced mode with iterations\n"
@@ -3609,25 +3609,25 @@ Class<db::Cell> decl_Cell ("db", "Cell",
 static db::Cell *parent_cell_ptr (db::Instance *i)
 {
   db::Instances *instances = i->instances ();
-  return instances ? instances->cell () : 0;
+  return instances ? instances->cell () : nullptr;
 }
 
 static const db::Cell *parent_cell_ptr_const (const db::Instance *i)
 {
   const db::Instances *instances = i->instances ();
-  return instances ? instances->cell () : 0;
+  return instances ? instances->cell () : nullptr;
 }
 
 static db::Layout *layout_ptr (db::Instance *i)
 {
   db::Cell *cell = parent_cell_ptr (i);
-  return cell ? cell->layout () : 0;
+  return cell ? cell->layout () : nullptr;
 }
 
 static const db::Layout *layout_ptr_const (const db::Instance *i)
 {
   const db::Cell *cell = parent_cell_ptr_const (i);
-  return cell ? cell->layout () : 0;
+  return cell ? cell->layout () : nullptr;
 }
 
 static double inst_dbu (const db::Instance *inst)
@@ -3690,14 +3690,14 @@ static unsigned long array_nb_i (const db::Instance *inst)
 
 static void set_prop_id (db::Instance *inst, db::properties_id_type id)
 {
-  tl_assert (inst->instances () != 0);
+  tl_assert (inst->instances () != nullptr);
   check_is_editable (inst->instances ());
   *inst = inst->instances ()->replace_prop_id (*inst, id);
 }
 
 static void set_cell_inst (db::Instance *inst, const db::CellInstArray &arr)
 {
-  tl_assert (inst->instances () != 0);
+  tl_assert (inst->instances () != nullptr);
   check_is_editable (inst->instances ());
   *inst = inst->instances ()->replace (*inst, arr);
 }
@@ -3726,7 +3726,7 @@ static void set_parent_cell_ptr (db::Instance *i, db::Cell *new_parent)
   }
 
   if (new_parent != parent) {
-    tl_assert (i->instances () != 0);
+    tl_assert (i->instances () != nullptr);
     db::Instance new_i = new_parent->insert (*i);
     check_is_editable (i->instances ());
     i->instances ()->erase (*i);
@@ -3760,7 +3760,7 @@ static void set_properties (db::Instance *inst, const std::map<tl::Variant, tl::
 
 static void clear_properties (db::Instance *inst)
 {
-  tl_assert (inst->instances () != 0);
+  tl_assert (inst->instances () != nullptr);
   check_is_editable (inst->instances ());
   *inst = inst->instances ()->clear_properties (*inst);
 }
@@ -3788,7 +3788,7 @@ static bool inst_is_valid (const db::Instance *inst)
 
 static void delete_instance (db::Instance *inst)
 {
-  tl_assert (inst->instances () != 0);
+  tl_assert (inst->instances () != nullptr);
   check_is_editable (inst->instances ());
   inst->instances ()->erase (*inst);
   *inst = db::Instance ();
@@ -3797,7 +3797,7 @@ static void delete_instance (db::Instance *inst)
 static db::Cell *inst_cell (db::Instance *inst)
 {
   db::Layout *layout = layout_ptr (inst);
-  return layout ? & layout->cell (inst->cell_index ()) : 0;
+  return layout ? & layout->cell (inst->cell_index ()) : nullptr;
 }
 
 static const db::Cell *inst_cell_const (const db::Instance *inst)
@@ -3807,7 +3807,7 @@ static const db::Cell *inst_cell_const (const db::Instance *inst)
 
 static void set_inst_cell_index (db::Instance *inst, db::cell_index_type ci)
 {
-  tl_assert (inst->instances () != 0);
+  tl_assert (inst->instances () != nullptr);
   check_is_editable (inst->instances ());
   db::CellInstArray arr = inst->cell_inst ();
   arr.object ().cell_index (ci);
@@ -3825,7 +3825,7 @@ static void set_inst_cell (db::Instance *inst, const db::Cell *cell)
 
 static void set_array_a_i (db::Instance *inst, const db::CellInstArray::vector_type &a)
 {
-  tl_assert (inst->instances () != 0);
+  tl_assert (inst->instances () != nullptr);
   check_is_editable (inst->instances ());
 
   db::CellInstArray arr = inst->cell_inst ();
@@ -3840,7 +3840,7 @@ static void set_array_da_i (db::Instance *inst, const db::DVector &da)
 
 static void set_array_b_i (db::Instance *inst, const db::CellInstArray::vector_type &b)
 {
-  tl_assert (inst->instances () != 0);
+  tl_assert (inst->instances () != nullptr);
   check_is_editable (inst->instances ());
 
   db::CellInstArray arr = inst->cell_inst ();
@@ -3855,7 +3855,7 @@ static void set_array_db_i (db::Instance *inst, const db::DVector &db)
 
 static void set_array_na_i (db::Instance *inst, unsigned long na)
 {
-  tl_assert (inst->instances () != 0);
+  tl_assert (inst->instances () != nullptr);
   check_is_editable (inst->instances ());
 
   db::CellInstArray arr = inst->cell_inst ();
@@ -3865,7 +3865,7 @@ static void set_array_na_i (db::Instance *inst, unsigned long na)
 
 static void set_array_nb_i (db::Instance *inst, unsigned long nb)
 {
-  tl_assert (inst->instances () != 0);
+  tl_assert (inst->instances () != nullptr);
   check_is_editable (inst->instances ());
 
   db::CellInstArray arr = inst->cell_inst ();
@@ -3875,7 +3875,7 @@ static void set_array_nb_i (db::Instance *inst, unsigned long nb)
 
 static void explode_array (db::Instance *inst)
 {
-  tl_assert (inst->instances () != 0);
+  tl_assert (inst->instances () != nullptr);
   check_is_editable (inst->instances ());
 
   db::CellInstArray arr = inst->cell_inst ();
@@ -3904,7 +3904,7 @@ static void explode_array (db::Instance *inst)
 
 static void inst_set_cplx_trans (db::Instance *inst, const db::CellInstArray::complex_trans_type &t)
 {
-  tl_assert (inst->instances () != 0);
+  tl_assert (inst->instances () != nullptr);
   check_is_editable (inst->instances ());
 
   db::CellInstArray arr = inst->cell_inst ();
@@ -3926,7 +3926,7 @@ static void inst_set_dcplx_trans (db::Instance *inst, const db::DCplxTrans &tran
 
 static void inst_set_trans (db::Instance *inst, const db::CellInstArray::simple_trans_type &t)
 {
-  tl_assert (inst->instances () != 0);
+  tl_assert (inst->instances () != nullptr);
   check_is_editable (inst->instances ());
 
   db::CellInstArray arr = inst->cell_inst ();
@@ -3948,14 +3948,14 @@ static void inst_set_dtrans (db::Instance *inst, const db::DTrans &trans)
 
 static void inst_transform (db::Instance *inst, const db::Trans &t)
 {
-  tl_assert (inst->instances () != 0);
+  tl_assert (inst->instances () != nullptr);
   check_is_editable (inst->instances ());
   *inst = inst->instances ()->transform (*inst, t);
 }
 
 static void inst_transform_icplx (db::Instance *inst, const db::ICplxTrans &t)
 {
-  tl_assert (inst->instances () != 0);
+  tl_assert (inst->instances () != nullptr);
   check_is_editable (inst->instances ());
   *inst = inst->instances ()->transform (*inst, t);
 }
@@ -3973,14 +3973,14 @@ static void inst_dtransform (db::Instance *inst, const db::DTrans &t)
 
 static void inst_transform_into (db::Instance *inst, const db::Trans &t)
 {
-  tl_assert (inst->instances () != 0);
+  tl_assert (inst->instances () != nullptr);
   check_is_editable (inst->instances ());
   *inst = inst->instances ()->transform_into (*inst, t);
 }
 
 static void inst_transform_into_icplx (db::Instance *inst, const db::ICplxTrans &t)
 {
-  tl_assert (inst->instances () != 0);
+  tl_assert (inst->instances () != nullptr);
   check_is_editable (inst->instances ());
   *inst = inst->instances ()->transform_into (*inst, t);
 }
@@ -4056,7 +4056,7 @@ static const db::PCellDeclaration *inst_pcell_declaration (const db::Instance *i
   if (instances && instances->cell ()) {
     return pcell_declaration_of_inst (instances->cell (), *inst);
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -4073,7 +4073,7 @@ static bool inst_is_pcell (const db::Instance *inst)
 static void inst_flatten (db::Instance *inst, int levels)
 {
   db::Instances *instances = inst->instances ();
-  tl_assert (instances != 0);
+  tl_assert (instances != nullptr);
   check_is_editable (instances);
 
   db::Cell *parent = instances->cell ();
@@ -4103,7 +4103,7 @@ static void inst_flatten_all (db::Instance *inst)
 static void convert_to_static (db::Instance *inst)
 {
   db::Instances *instances = inst->instances ();
-  tl_assert (instances != 0);
+  tl_assert (instances != nullptr);
   check_is_editable (instances);
 
   db::Cell *parent = instances->cell ();

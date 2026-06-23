@@ -99,7 +99,7 @@ Salt::grain_by_name (const std::string &name)
   if (g != m_grains_by_name.end ()) {
     return g->second;
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -429,14 +429,14 @@ Salt::create_grain (const SaltGrain &templ, SaltGrain &target, double timeout, t
 
   std::string path = target.path ();
   if (! path.empty ()) {
-    coll = 0;
+    coll = nullptr;
     for (SaltGrains::collection_iterator gg = m_root.begin_collections (); gg != m_root.end_collections (); ++gg) {
       if (tl::is_parent_path (gg->path (), path)) {
         coll = gg.operator-> ();
         break;
       }
     }
-    tl_assert (coll != 0);
+    tl_assert (coll != nullptr);
   }
 
   tl::info << QObject::tr ("Installing package '%1' ..").arg (tl::to_qstring (target.name ()));

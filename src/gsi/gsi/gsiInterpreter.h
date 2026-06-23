@@ -229,7 +229,7 @@ public:
    *  "context" is the evaluation context index: -1 is the global context, 0 is the first
    *  context on the call stack, 1 the second and so on.
    */
-  virtual void eval_string (const char *string, const char *filename = 0, int line = 1, int context = -1) = 0;
+  virtual void eval_string (const char *string, const char *filename = nullptr, int line = 1, int context = -1) = 0;
 
   /**
    *  @brief Evaluates the given expression string and returns the results as a variant
@@ -242,7 +242,7 @@ public:
    *  "context" is the evaluation context index: -1 is the global context, 0 is the first
    *  context on the call stack, 1 the second and so on.
    */
-  virtual tl::Variant eval_expr (const char *string, const char *filename = 0, int line = 1, int context = -1) = 0;
+  virtual tl::Variant eval_expr (const char *string, const char *filename = nullptr, int line = 1, int context = -1) = 0;
  
   /**
    *  @brief Evaluates the given string and prints the result to stdout
@@ -253,7 +253,7 @@ public:
    *  "context" is the evaluation context index: -1 is the global context, 0 is the first
    *  context on the call stack, 1 the second and so on.
    */ 
-  virtual void eval_string_and_print (const char *string, const char *filename = 0, int line = 1, int context = -1) = 0;
+  virtual void eval_string_and_print (const char *string, const char *filename = nullptr, int line = 1, int context = -1) = 0;
 
   /**
    *  @brief Gets an inspector object for the given context

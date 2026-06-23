@@ -144,7 +144,7 @@ public:
     if (ll.first) {
       return lib (ll.second);
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -159,7 +159,7 @@ public:
     if (ll.first) {
       return lib (ll.second);
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -174,7 +174,7 @@ public:
     if (ll.first) {
       return lib (ll.second);
     } else {
-      return 0;
+      return nullptr;
     }
   }
 

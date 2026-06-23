@@ -347,9 +347,9 @@ static bool edges_are_compatible (const NetGraphNode::edge_type &e, const NetGra
     p2.clear ();
     while (t2 != tt2 && *t2 == *t20) {
       if (t2->is_for_subcircuit ()) {
-        p2.push_back ((void *) (sc_eq.other (t2->subcircuit ()) ? t2->subcircuit () : 0));
+        p2.push_back ((void *) (sc_eq.other (t2->subcircuit ()) ? t2->subcircuit () : nullptr));
       } else {
-        p2.push_back ((void *) (device_eq.other (t2->device ()) ? t2->device () : 0));
+        p2.push_back ((void *) (device_eq.other (t2->device ()) ? t2->device () : nullptr));
       }
       ++t2;
     }
@@ -402,12 +402,12 @@ NetlistCompareCore::NetlistCompareCore (NetGraph *graph, NetGraph *other_graph)
     depth_first (true),
     dont_consider_net_names (false),
     with_ambiguous (false),
-    logger (0),
+    logger (nullptr),
     with_log (true),
-    circuit_pin_mapper (0),
-    subcircuit_equivalence (0),
-    device_equivalence (0),
-    progress (0),
+    circuit_pin_mapper (nullptr),
+    subcircuit_equivalence (nullptr),
+    device_equivalence (nullptr),
+    progress (nullptr),
     mp_graph (graph),
     mp_other_graph (other_graph)
 {
@@ -562,7 +562,7 @@ static bool has_subcircuits (db::NetGraphNode::edge_iterator e, db::NetGraphNode
 size_t
 NetlistCompareCore::derive_node_identities (size_t net_index) const
 {
-  return derive_node_identities (net_index, 0, 1, (TentativeNodeMapping *) 0);
+  return derive_node_identities (net_index, 0, 1, (TentativeNodeMapping *) nullptr);
 }
 
 size_t
@@ -1034,7 +1034,7 @@ NetlistCompareCore::derive_node_identities_from_ambiguity_group (const NodeRange
       size_t ni = mp_graph->node_index_for_net (p->first->net ());
       size_t other_ni = mp_other_graph->node_index_for_net (p->second->net ());
 
-      TentativeNodeMapping::map_pair (0, mp_graph, ni, mp_other_graph, other_ni, dm, dm_other, *device_equivalence, scm, scm_other, *subcircuit_equivalence, depth);
+      TentativeNodeMapping::map_pair (nullptr, mp_graph, ni, mp_other_graph, other_ni, dm, dm_other, *device_equivalence, scm, scm_other, *subcircuit_equivalence, depth);
 
       bool ambiguous = equivalent_other_nodes.has_attribute (p->second);
 
@@ -1520,7 +1520,7 @@ NetlistCompareCore::analyze_failed_matches () const
 size_t
 NetlistCompareCore::derive_node_identities_from_node_set (std::vector<NodeEdgePair> &nodes, std::vector<NodeEdgePair> &other_nodes) const
 {
-  return derive_node_identities_from_node_set (nodes, other_nodes, 0, 1, (TentativeNodeMapping *) 0);
+  return derive_node_identities_from_node_set (nodes, other_nodes, 0, 1, (TentativeNodeMapping *) nullptr);
 }
 
 size_t

@@ -609,7 +609,7 @@ static db::Layout *layout (db::Shapes *sh)
   if (sh->cell ()) {
     return sh->cell ()->layout ();
   } else {
-    return 0;
+    return nullptr;
   }
 }
 

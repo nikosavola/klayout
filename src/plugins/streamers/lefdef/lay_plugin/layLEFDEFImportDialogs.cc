@@ -341,7 +341,7 @@ END_PROTECTED
 //  LEFDEF technology components editor
 
 LEFDEFReaderOptionsEditor::LEFDEFReaderOptionsEditor (QWidget *parent)
-  : lay::StreamReaderOptionsPage (parent), mp_tech (0)
+  : lay::StreamReaderOptionsPage (parent), mp_tech (nullptr)
 {
   setupUi (this);
 
@@ -406,7 +406,7 @@ LEFDEFReaderOptionsEditor::commit (db::FormatSpecificReaderOptions *options, con
     ex.read (v);
     ex.expect_end ();
     data->set_net_property_name (v);
-    indicate_error (net_prop_name, (tl::Exception *) 0);
+    indicate_error (net_prop_name, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     indicate_error (net_prop_name, &ex);
     has_error = true;
@@ -420,7 +420,7 @@ LEFDEFReaderOptionsEditor::commit (db::FormatSpecificReaderOptions *options, con
     ex.read (v);
     ex.expect_end ();
     data->set_inst_property_name (v);
-    indicate_error (inst_prop_name, (tl::Exception *) 0);
+    indicate_error (inst_prop_name, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     indicate_error (inst_prop_name, &ex);
     has_error = true;
@@ -434,7 +434,7 @@ LEFDEFReaderOptionsEditor::commit (db::FormatSpecificReaderOptions *options, con
     ex.read (v);
     ex.expect_end ();
     data->set_pin_property_name (v);
-    indicate_error (pin_prop_name, (tl::Exception *) 0);
+    indicate_error (pin_prop_name, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     indicate_error (pin_prop_name, &ex);
     has_error = true;
@@ -447,7 +447,7 @@ LEFDEFReaderOptionsEditor::commit (db::FormatSpecificReaderOptions *options, con
     tl::Extractor ex (s.c_str ());
     lp.read (ex);
     ex.expect_end ();
-    indicate_error (outline_layer, (tl::Exception *) 0);
+    indicate_error (outline_layer, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     indicate_error (outline_layer, &ex);
     has_error = true;
@@ -460,7 +460,7 @@ LEFDEFReaderOptionsEditor::commit (db::FormatSpecificReaderOptions *options, con
     tl::Extractor ex (s.c_str ());
     lp.read (ex);
     ex.expect_end ();
-    indicate_error (region_layer, (tl::Exception *) 0);
+    indicate_error (region_layer, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     indicate_error (region_layer, &ex);
     has_error = true;
@@ -473,7 +473,7 @@ LEFDEFReaderOptionsEditor::commit (db::FormatSpecificReaderOptions *options, con
     tl::Extractor ex (s.c_str ());
     lp.read (ex);
     ex.expect_end ();
-    indicate_error (placement_blockage_layer, (tl::Exception *) 0);
+    indicate_error (placement_blockage_layer, (tl::Exception *) nullptr);
   } catch (tl::Exception &ex) {
     indicate_error (placement_blockage_layer, &ex);
     has_error = true;

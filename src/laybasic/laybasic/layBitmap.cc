@@ -29,7 +29,7 @@
 namespace lay {
 
 Bitmap::Bitmap ()
-  : m_empty_scanline (0)
+  : m_empty_scanline (nullptr)
 {
   init (0, 0);
   m_resolution = 1.0;
@@ -37,7 +37,7 @@ Bitmap::Bitmap ()
 }
 
 Bitmap::Bitmap (unsigned int w, unsigned int h, double r, double rf)
-  : m_empty_scanline (0)
+  : m_empty_scanline (nullptr)
 {
   init (w, h);
   m_resolution = r;
@@ -45,7 +45,7 @@ Bitmap::Bitmap (unsigned int w, unsigned int h, double r, double rf)
 }
 
 Bitmap::Bitmap (const Bitmap &d)
-  : m_empty_scanline (0)
+  : m_empty_scanline (nullptr)
 {
   init (d.m_width, d.m_height);
   operator= (d);
@@ -65,15 +65,15 @@ Bitmap::operator= (const Bitmap &d)
     m_font_resolution = d.m_font_resolution;
 
     for (unsigned int i = 0; i < m_height; ++i) {
-      if (! d.m_scanlines.empty () && d.m_scanlines [i] != 0) {
+      if (! d.m_scanlines.empty () && d.m_scanlines [i] != nullptr) {
         uint32_t *sl = scanline (i);
         uint32_t *ss = d.m_scanlines [i];
         for (unsigned int b = (m_width + 31) / 32; b > 0; --b) {
           *sl++ = *ss++;
         }
-      } else if (! m_scanlines.empty () && m_scanlines [i] != 0) {
+      } else if (! m_scanlines.empty () && m_scanlines [i] != nullptr) {
         m_free.push_back (m_scanlines [i]);
-        m_scanlines [i] = 0;
+        m_scanlines [i] = nullptr;
       }
     }
     
@@ -93,11 +93,11 @@ uint32_t *
 Bitmap::scanline (unsigned int n)
 {
   if (m_scanlines.empty ()) {
-    m_scanlines.resize (m_height, 0);
+    m_scanlines.resize (m_height, nullptr);
   }
 
   uint32_t *sl = m_scanlines [n];
-  if (sl == 0) {
+  if (sl == nullptr) {
     unsigned int b = (m_width + 31) / 32;
     if (! m_free.empty ()) {
       sl = m_scanlines [n] = m_free.back ();
@@ -139,7 +139,7 @@ Bitmap::cleanup ()
 
   if (m_empty_scanline) {
     delete [] m_empty_scanline;
-    m_empty_scanline = 0;
+    m_empty_scanline = nullptr;
   }
 
   for (std::vector<uint32_t *>::iterator i = m_scanlines.begin (); i != m_scanlines.end (); ++i) {

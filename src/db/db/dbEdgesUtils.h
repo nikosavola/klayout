@@ -505,8 +505,8 @@ public:
 
   void finish1 (const db::Edge *o, size_t /*p*/)
   {
-    const OutputType *ep = 0;
-    tl::select (ep, o, (const db::Polygon *) 0);
+    const OutputType *ep = nullptr;
+    tl::select (ep, o, (const db::Polygon *) nullptr);
     if (ep) {
       finish (ep);
     }
@@ -514,8 +514,8 @@ public:
 
   void finish2 (const db::Polygon *o, size_t /*p*/)
   {
-    const OutputType *ep = 0;
-    tl::select (ep, (const db::Edge *) 0, o);
+    const OutputType *ep = nullptr;
+    tl::select (ep, (const db::Edge *) nullptr, o);
     if (ep) {
       finish (ep);
     }
@@ -523,7 +523,7 @@ public:
 
   void add (const db::Edge *e, size_t, const db::Polygon *p, size_t)
   {
-    const OutputType *ep = 0;
+    const OutputType *ep = nullptr;
     tl::select (ep, e, p);
 
     if (m_counting) {

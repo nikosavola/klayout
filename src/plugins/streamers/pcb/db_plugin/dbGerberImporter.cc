@@ -116,7 +116,7 @@ GerberFileReader::GerberFileReader (int warn_level)
     m_mx (false), m_my (false),
     m_orot (0.0), m_os (1.0), m_omx (false), m_omy (false),
     m_ep (true /*report progress*/),
-    mp_layout (0), mp_top_cell (0), mp_stream (0),
+    mp_layout (nullptr), mp_top_cell (nullptr), mp_stream (nullptr),
     m_progress (tl::to_string (tr ("Reading Gerber file")), 10000),
     m_warn_level (warn_level)
 {
@@ -129,7 +129,7 @@ GerberFileReader::accepts (tl::TextInputStream &stream)
 {
   mp_stream = &stream;
   bool result = does_accept ();
-  mp_stream = 0;
+  mp_stream = nullptr;
   return result;
 }
 
@@ -137,8 +137,8 @@ GerberMetaData
 GerberFileReader::scan (tl::TextInputStream &stream)
 {
   mp_stream = &stream;
-  mp_layout = 0;
-  mp_top_cell = 0;
+  mp_layout = nullptr;
+  mp_top_cell = nullptr;
   m_target_layers.clear ();
 
   GerberMetaData meta_data;
@@ -149,7 +149,7 @@ GerberFileReader::scan (tl::TextInputStream &stream)
     throw tl::Exception (ex.msg () + tl::to_string (tr (" in line ")) + tl::to_string (stream.line_number ()));
   }
 
-  mp_stream = 0;
+  mp_stream = nullptr;
 
   return meta_data;
 }
@@ -176,7 +176,7 @@ GerberFileReader::read (tl::TextInputStream &stream, db::Layout &layout, db::Cel
 
   flush ();
 
-  mp_stream = 0;
+  mp_stream = nullptr;
   m_target_layers.clear ();
 }
 
@@ -374,7 +374,7 @@ GerberFileReader::produce_polygon (const db::DPolygon &p, bool clear)
   }
 
   for (std::vector<db::DVector>::const_iterator d = m_displacements.begin (); d != m_displacements.end (); ++d) {
-    db::Polygon *poly = 0;
+    db::Polygon *poly = nullptr;
     if (clear) {
       m_clear_polygons.push_back (db::Polygon ());
       poly = &m_clear_polygons.back ();
@@ -1018,7 +1018,7 @@ GerberImporter::do_read (db::Layout &layout, db::cell_index_type cell_index)
       std::vector <tl::shared_ptr<db::GerberFileReader> > readers = get_readers (m_warn_level);
 
       //  determine the reader to use:
-      db::GerberFileReader *reader = 0;
+      db::GerberFileReader *reader = nullptr;
       for (std::vector <tl::shared_ptr<db::GerberFileReader> >::iterator r = readers.begin (); r != readers.end (); ++r) {
         stream.reset ();
         if ((*r)->accepts (stream)) {
@@ -1194,7 +1194,7 @@ class GerberFormatDeclaration
 
   virtual db::WriterBase *create_writer () const
   {
-    return 0;
+    return nullptr;
   }
 
   virtual bool can_read () const

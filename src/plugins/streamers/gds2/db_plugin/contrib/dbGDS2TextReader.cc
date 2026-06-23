@@ -298,7 +298,7 @@ GDS2ReaderText::path () const
 void 
 GDS2ReaderText::error (const std::string &msg)
 {
-  throw GDS2ReaderTextException (msg, int (sStream.line_number()), cellname ().c_str (), sStream.source ());
+  throw GDS2ReaderTextException (msg, int (sStream.line_number()), cellname (), sStream.source ());
 }
 
 void 
@@ -379,7 +379,7 @@ GDS2XY *
 GDS2ReaderText::get_xy_data (unsigned int &xy_length)
 {
   xy_length = (unsigned int) xyData.size ();
-  return xyData.empty () ? 0 : &xyData.front ();
+  return xyData.empty () ? nullptr : &xyData.front ();
 }
 
 void 

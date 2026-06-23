@@ -110,7 +110,7 @@ class SaltGrainNameEditDelegate
 {
 public:
   SaltGrainNameEditDelegate (QWidget *parent, Salt *salt)
-    : SaltGrainEditDelegate (parent), mp_completer (0)
+    : SaltGrainEditDelegate (parent), mp_completer (nullptr)
   {
     QStringList names;
     for (lay::Salt::flat_iterator i = salt->begin_flat (); i != salt->end_flat (); ++i) {
@@ -137,7 +137,7 @@ public:
 //  SaltGrainPropertiesDialog implementation
 
 SaltGrainPropertiesDialog::SaltGrainPropertiesDialog (QWidget *parent)
-  : QDialog (parent), mp_salt (0), m_update_enabled (true)
+  : QDialog (parent), mp_salt (nullptr), m_update_enabled (true)
 {
   Ui::SaltGrainPropertiesDialog::setupUi (this);
 
@@ -268,7 +268,7 @@ SaltGrainPropertiesDialog::dependency_changed (QTreeWidgetItem *item, int column
   m_update_enabled = false;
 
   std::string name = tl::to_string (item->data (0, Qt::UserRole).toString ().simplified ());
-  SaltGrain *g = mp_salt ? mp_salt->grain_by_name (name) : 0;
+  SaltGrain *g = mp_salt ? mp_salt->grain_by_name (name) : nullptr;
 
   if (column == 0 && mp_salt) {
 
@@ -463,7 +463,7 @@ public:
     if (n != m_name_to_grain.end ()) {
       return n->second;
     } else {
-      return 0;
+      return nullptr;
     }
   }
 
@@ -643,9 +643,9 @@ SaltGrainPropertiesDialog::exec_dialog (lay::SaltGrain *grain, lay::Salt *salt)
   }
 
   delete dependencies->itemDelegateForColumn (0);
-  dependencies->setItemDelegateForColumn (0, 0);
+  dependencies->setItemDelegateForColumn (0, nullptr);
 
-  mp_salt = 0;
+  mp_salt = nullptr;
   return res;
 }
 

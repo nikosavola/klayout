@@ -248,7 +248,7 @@ public:
   /**
    *  @brief Constructor
    */
-  edge_to_edge_set_generator (Container &edges, int tag = 0, EdgeSink *chained = 0)
+  edge_to_edge_set_generator (Container &edges, int tag = 0, EdgeSink *chained = nullptr)
     : mp_edges (&edges), m_tag (tag), mp_chained (chained)
   {
     //  .. nothing yet ..

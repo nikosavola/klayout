@@ -31,14 +31,14 @@ namespace lay
 
 tl::Mutex s_lock;
 
-BusyMode *sp_busy_mode = 0;
+BusyMode *sp_busy_mode = nullptr;
 
 // ----------------------------------------------------------------------------------------------------------
 
 BusyMode::BusyMode ()
 {
   tl::MutexLocker locker (&s_lock);
-  if (sp_busy_mode == 0) {
+  if (sp_busy_mode == nullptr) {
     sp_busy_mode = this;
   }
 }
@@ -47,7 +47,7 @@ BusyMode::~BusyMode ()
 {
   tl::MutexLocker locker (&s_lock);
   if (sp_busy_mode == this) {
-    sp_busy_mode = 0;
+    sp_busy_mode = nullptr;
   }
 }
 
@@ -73,7 +73,7 @@ BusySection::~BusySection ()
   if (sp_busy_mode == mp_busy_mode && mp_busy_mode) {
     mp_busy_mode->enter_busy_mode (m_previous_mode);
   }
-  mp_busy_mode = 0;
+  mp_busy_mode = nullptr;
 
   tl::FileSystemWatcher::global_enable (true);
 }

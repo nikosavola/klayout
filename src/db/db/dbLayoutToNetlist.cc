@@ -96,8 +96,8 @@ LayoutToNetlist::~LayoutToNetlist ()
   //  NOTE: do this in this order because of unregistration of the layers
   m_named_dls.clear ();
   m_dlrefs.clear ();
-  mp_internal_dss.reset (0);
-  mp_netlist.reset (0);
+  mp_internal_dss.reset (nullptr);
+  mp_netlist.reset (nullptr);
   m_net_clusters.clear ();
 }
 
@@ -282,7 +282,7 @@ void LayoutToNetlist::reset_extracted ()
   if (m_netlist_extracted) {
 
     m_net_clusters.clear ();
-    mp_netlist.reset (0);
+    mp_netlist.reset (nullptr);
 
     m_log_entries.clear ();
 
@@ -754,7 +754,7 @@ void LayoutToNetlist::check_must_connect_impl (const db::Circuit &c, const std::
         const db::Net *new_net = sc.net_for_pin ((*n)->begin_pins ()->pin_id ());
         new_nets.push_back (new_net);
 
-        if (new_net == 0) {
+        if (new_net == nullptr) {
           failed = true;
           std::string msg;
           if (same_names) {
@@ -784,7 +784,7 @@ void LayoutToNetlist::check_must_connect_impl (const db::Circuit &c, const std::
 
 void LayoutToNetlist::place_soft_connection_diodes ()
 {
-  db::DeviceClassDiode *soft_diode = 0;
+  db::DeviceClassDiode *soft_diode = nullptr;
 
   for (auto c = mp_netlist->begin_bottom_up (); c != mp_netlist->end_bottom_up (); ++c) {
 
@@ -997,7 +997,7 @@ db::Region *LayoutToNetlist::layer_by_name (const std::string &name)
 {
   std::map<std::string, db::DeepLayer>::const_iterator l = m_named_dls.find (name);
   if (l == m_named_dls.end ()) {
-    return 0;
+    return nullptr;
   } else {
     return new db::Region (new db::DeepRegion (l->second));
   }
@@ -1007,7 +1007,7 @@ db::Texts *LayoutToNetlist::texts_by_name (const std::string &name)
 {
   std::map<std::string, db::DeepLayer>::const_iterator l = m_named_dls.find (name);
   if (l == m_named_dls.end ()) {
-    return 0;
+    return nullptr;
   } else {
     return new db::Texts (new db::DeepTexts (l->second));
   }
@@ -1027,7 +1027,7 @@ db::Region *LayoutToNetlist::layer_by_index (unsigned int index)
 {
   auto n = m_dl_of_layer.find (index);
   if (n == m_dl_of_layer.end ()) {
-    return 0;
+    return nullptr;
   } else {
     return new db::Region (new db::DeepRegion (n->second));
   }
@@ -1037,7 +1037,7 @@ db::Texts *LayoutToNetlist::texts_by_index (unsigned int index)
 {
   auto n = m_dl_of_layer.find (index);
   if (n == m_dl_of_layer.end ()) {
-    return 0;
+    return nullptr;
   } else {
     return new db::Texts (new db::DeepTexts (n->second));
   }
@@ -1179,7 +1179,7 @@ db::CellMapping LayoutToNetlist::make_cell_mapping_into (db::Layout &layout, db:
     }
   }
 
-  return dss ().cell_mapping_to_original (m_layout_index, &layout, cell.cell_index (), &device_cells, nets ? &net_cells : 0);
+  return dss ().cell_mapping_to_original (m_layout_index, &layout, cell.cell_index (), &device_cells, nets ? &net_cells : nullptr);
 }
 
 db::CellMapping LayoutToNetlist::cell_mapping_into (db::Layout &layout, db::Cell &cell, const std::vector<const db::Net *> &nets, bool with_device_cells)
@@ -1189,7 +1189,7 @@ db::CellMapping LayoutToNetlist::cell_mapping_into (db::Layout &layout, db::Cell
 
 db::CellMapping LayoutToNetlist::cell_mapping_into (db::Layout &layout, db::Cell &cell, bool with_device_cells)
 {
-  return make_cell_mapping_into (layout, cell, 0, with_device_cells);
+  return make_cell_mapping_into (layout, cell, nullptr, with_device_cells);
 }
 
 db::CellMapping LayoutToNetlist::const_cell_mapping_into (const db::Layout &layout, const db::Cell &cell)
@@ -1427,7 +1427,7 @@ LayoutToNetlist::collect_shapes_of_pin (const local_cluster<db::NetShape> &c, co
 
   std::map<unsigned int, std::vector<const db::NetShape *> > interacting;
   int soft = 0;
-  if (c.interacts (c_other, sc_trans, m_conn, soft, 0, &interacting)) {
+  if (c.interacts (c_other, sc_trans, m_conn, soft, nullptr, &interacting)) {
 
     auto t = trans * sc_trans;
 
@@ -1495,7 +1495,7 @@ LayoutToNetlist::shapes_of_terminal (const db::NetTerminalRef &terminal, const d
 
   std::map<unsigned int, std::vector<const db::NetShape *> > interacting;
   int soft = 0;
-  if (c.interacts (c_other, d_trans, m_conn, soft, 0, &interacting)) {
+  if (c.interacts (c_other, d_trans, m_conn, soft, nullptr, &interacting)) {
 
     auto t = trans * d_trans;
 
@@ -1520,7 +1520,7 @@ void LayoutToNetlist::shapes_of_net (const db::Net &net, const db::ShapeCollecti
 void LayoutToNetlist::shapes_of_net (const db::Net &net, unsigned int lid, bool recursive, db::Shapes &to, db::properties_id_type propid, const ICplxTrans &trans) const
 {
   const db::Circuit *circuit = net.circuit ();
-  tl_assert (circuit != 0);
+  tl_assert (circuit != nullptr);
 
   std::map<unsigned int, db::Shapes *> lmap;
   lmap [lid] = &to;
@@ -1532,7 +1532,7 @@ template<class Coll>
 Coll *LayoutToNetlist::shapes_of_net_with_layer_index (const db::Net &net, unsigned int lid, bool recursive, const db::ICplxTrans &trans) const
 {
   const db::Circuit *circuit = net.circuit ();
-  tl_assert (circuit != 0);
+  tl_assert (circuit != nullptr);
 
   std::unique_ptr<Coll> res (new Coll ());
   std::map<unsigned int, Coll *> lmap;
@@ -1569,7 +1569,7 @@ LayoutToNetlist::build_all_nets (const db::CellMapping &cmap, db::Layout &target
   builder.set_cell_name_prefix (circuit_cell_name_prefix);
   builder.set_device_cell_name_prefix (device_cell_name_prefix);
 
-  builder.build_nets (0, lmap, net_prop_mode, netname_prop);
+  builder.build_nets (nullptr, lmap, net_prop_mode, netname_prop);
 }
 
 void
@@ -1638,7 +1638,7 @@ db::Net *LayoutToNetlist::probe_net (const db::Region &of_region, const db::Poin
     top_cell = &internal_layout ()->cell (initial_circuit->cell_index ());
   }
   if (! top_cell) {
-    return 0;
+    return nullptr;
   }
 
   //  Prepare a test cluster
@@ -1662,8 +1662,8 @@ db::Net *LayoutToNetlist::probe_net (const db::Region &of_region, const db::Poin
       cell_indexes.push_back (i->inst_ptr.cell_index ());
     }
 
-    db::Circuit *circuit = 0;
-    db::Net *net = 0;
+    db::Circuit *circuit = nullptr;
+    db::Net *net = nullptr;
 
     while (true) {
 
@@ -1677,7 +1677,7 @@ db::Net *LayoutToNetlist::probe_net (const db::Region &of_region, const db::Poin
 
       //  The net might have been propagated to the parent. So move there.
       if (inst_path.empty ()) {
-        return 0;
+        return nullptr;
       }
 
       db::ClusterInstance ci (cluster_id, inst_path.back ());
@@ -1689,7 +1689,7 @@ db::Net *LayoutToNetlist::probe_net (const db::Region &of_region, const db::Poin
 
       //  no parent cluster found
       if (cluster_id == 0) {
-        return 0;
+        return nullptr;
       }
 
     }
@@ -1704,18 +1704,18 @@ db::Net *LayoutToNetlist::probe_net (const db::Region &of_region, const db::Poin
 
       cell_indexes.pop_back ();
 
-      const db::Pin *pin = 0;
+      const db::Pin *pin = nullptr;
       if (net && net->pin_count () > 0) {
         pin = circuit->pin_by_id (net->begin_pins ()->pin_id ());
-        tl_assert (pin != 0);
+        tl_assert (pin != nullptr);
       }
 
       db::DCplxTrans dtrans = dbu_trans * inst_path.back ().complex_trans () * dbu_trans_inv;
 
       //  try to find a parent circuit which connects to this net
-      db::Circuit *upper_circuit = 0;
-      db::SubCircuit *subcircuit = 0;
-      db::Net *upper_net = 0;
+      db::Circuit *upper_circuit = nullptr;
+      db::SubCircuit *subcircuit = nullptr;
+      db::Net *upper_net = nullptr;
       for (db::Circuit::refs_iterator r = circuit->begin_refs (); r != circuit->end_refs () && ! upper_circuit; ++r) {
         if (r->trans ().equal (dtrans) && r->circuit () && r->circuit ()->cell_index () == cell_indexes.back ()) {
           subcircuit = r.operator-> ();
@@ -1747,7 +1747,7 @@ db::Net *LayoutToNetlist::probe_net (const db::Region &of_region, const db::Poin
     return topmost_net;
 
   } else {
-    return 0;
+    return nullptr;
   }
 }
 
@@ -2303,9 +2303,9 @@ NetBuilder::operator= (db::NetBuilder &&other)
 {
   if (this != &other) {
     mp_target = other.mp_target;
-    other.mp_target.reset (0);
+    other.mp_target.reset (nullptr);
     mp_source = other.mp_source;
-    other.mp_source.reset (0);
+    other.mp_source.reset (nullptr);
     m_cmap.swap (other.m_cmap);
     m_reuse_table.swap (other.m_reuse_table);
     std::swap (m_hier_mode, other.m_hier_mode);
@@ -2323,14 +2323,14 @@ NetBuilder::operator= (db::NetBuilder &&other)
 void
 NetBuilder::set_net_cell_name_prefix (const char *s)
 {
-  m_has_net_cell_name_prefix = (s != 0);
+  m_has_net_cell_name_prefix = (s != nullptr);
   m_net_cell_name_prefix = std::string (s ? s : "");
 }
 
 void
 NetBuilder::set_cell_name_prefix (const char *s)
 {
-  bool has_cell_name_prefix = (s != 0);
+  bool has_cell_name_prefix = (s != nullptr);
   std::string cell_name_prefix (s ? s : "");
 
   if (has_cell_name_prefix != m_has_cell_name_prefix || cell_name_prefix != m_cell_name_prefix) {
@@ -2343,7 +2343,7 @@ NetBuilder::set_cell_name_prefix (const char *s)
 void
 NetBuilder::set_device_cell_name_prefix (const char *s)
 {
-  bool has_device_cell_name_prefix = (s != 0);
+  bool has_device_cell_name_prefix = (s != nullptr);
   std::string device_cell_name_prefix (s ? s : "");
 
   if (has_device_cell_name_prefix != m_has_device_cell_name_prefix || device_cell_name_prefix != m_device_cell_name_prefix) {
@@ -2383,7 +2383,7 @@ NetBuilder::build_net (db::Cell &target_cell, const db::Net &net, const std::map
 void
 NetBuilder::build_all_nets (const std::map<unsigned int, unsigned int> &lmap, NetPropertyMode net_prop_mode, const tl::Variant &netname_prop) const
 {
-  build_nets (0, lmap, net_prop_mode, netname_prop);
+  build_nets (nullptr, lmap, net_prop_mode, netname_prop);
 }
 
 void
@@ -2460,7 +2460,7 @@ void
 NetBuilder::build_net_rec (const db::Net &net, db::Cell &target_cell, const std::map<unsigned int, unsigned int> &lmap, const std::string &add_net_cell_name_prefix, db::properties_id_type netname_propid, const db::ICplxTrans &tr) const
 {
   const db::Circuit *circuit = net.circuit ();
-  tl_assert (circuit != 0);
+  tl_assert (circuit != nullptr);
 
   build_net_rec (circuit->cell_index (), net.cluster_id (), target_cell, lmap, &net, add_net_cell_name_prefix, netname_propid, tr);
 }
@@ -2544,7 +2544,7 @@ NetBuilder::build_net_rec (db::cell_index_type ci, size_t cid, db::Cell &tc, con
         db::cell_index_type target_ci = target ().add_cell ((name_prefix + cell_name).c_str ());
         cm = m_reuse_table.insert (std::make_pair (cmap_key, std::make_pair (target_ci, true))).first;
 
-        build_net_rec (subci, subcid, target ().cell (target_ci), lmap, 0, std::string (), netname_propid, tr_mag);
+        build_net_rec (subci, subcid, target ().cell (target_ci), lmap, nullptr, std::string (), netname_propid, tr_mag);
 
       } else {
         cm = m_reuse_table.insert (std::make_pair (cmap_key, std::make_pair (std::numeric_limits<db::cell_index_type>::max (), false))).first;
@@ -2553,7 +2553,7 @@ NetBuilder::build_net_rec (db::cell_index_type ci, size_t cid, db::Cell &tc, con
     } else if (!cm->second.second && cm->second.first != std::numeric_limits<db::cell_index_type>::max ()) {
 
       //  initialize cell (after reuse of the net builder)
-      build_net_rec (subci, subcid, target ().cell (cm->second.first), lmap, 0, std::string (), netname_propid, tr_mag);
+      build_net_rec (subci, subcid, target ().cell (cm->second.first), lmap, nullptr, std::string (), netname_propid, tr_mag);
       cm->second.second = true;
 
     }

@@ -157,7 +157,7 @@ public:
    */
   virtual void transform (const db::DCplxTrans &tr)
   {
-    transform (tr, 0);
+    transform (tr, nullptr);
   }
 
   /** 
@@ -267,7 +267,7 @@ public:
    */
   lay::LayoutViewBase *view () const
   {
-    tl_assert (mp_view != 0);
+    tl_assert (mp_view != nullptr);
     return mp_view;
   }
 

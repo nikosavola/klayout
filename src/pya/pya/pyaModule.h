@@ -86,7 +86,7 @@ public:
   /**
    *  @brief Creates the classes after init has been called
    */
-  void make_classes (const char *mod_name = 0);
+  void make_classes (const char *mod_name = nullptr);
 
   /**
    *  @brief Gets the GSI class for a Python class

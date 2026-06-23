@@ -159,7 +159,7 @@ LayoutViewNotificationWidget::close_triggered ()
 //  LayoutViewWidget implementation
 
 LayoutViewWidget::LayoutViewWidget (db::Manager *mgr, bool editable, lay::Plugin *plugin_parent, QWidget *parent, unsigned int options)
-  : QFrame (parent), mp_view (0)
+  : QFrame (parent), mp_view (nullptr)
 {
   mp_layout = new QVBoxLayout (this);
   mp_layout->setContentsMargins (0, 0, 0, 0);
@@ -174,7 +174,7 @@ LayoutViewWidget::LayoutViewWidget (db::Manager *mgr, bool editable, lay::Plugin
 }
 
 LayoutViewWidget::LayoutViewWidget (lay::LayoutView *source, db::Manager *mgr, bool editable, lay::Plugin *plugin_parent, QWidget *parent, unsigned int options)
-  : QFrame (parent), mp_view (0)
+  : QFrame (parent), mp_view (nullptr)
 {
   mp_layout = new QVBoxLayout (this);
   mp_layout->setContentsMargins (0, 0, 0, 0);
@@ -191,7 +191,7 @@ LayoutViewWidget::LayoutViewWidget (lay::LayoutView *source, db::Manager *mgr, b
 LayoutViewWidget::~LayoutViewWidget ()
 {
   lay::LayoutView *view = mp_view;
-  mp_view = 0;
+  mp_view = nullptr;
   delete view;
 }
 
@@ -322,32 +322,32 @@ void LayoutViewWidget::hideEvent (QHideEvent *)
 
 QWidget *LayoutViewWidget::layer_control_frame ()
 {
-  return !mp_view ? 0 : mp_view->layer_control_frame ();
+  return !mp_view ? nullptr : mp_view->layer_control_frame ();
 }
 
 QWidget *LayoutViewWidget::layer_toolbox_frame ()
 {
-  return !mp_view ? 0 : mp_view->layer_toolbox_frame ();
+  return !mp_view ? nullptr : mp_view->layer_toolbox_frame ();
 }
 
 QWidget *LayoutViewWidget::hierarchy_control_frame ()
 {
-  return !mp_view ? 0 : mp_view->hierarchy_control_frame ();
+  return !mp_view ? nullptr : mp_view->hierarchy_control_frame ();
 }
 
 QWidget *LayoutViewWidget::libraries_frame ()
 {
-  return !mp_view ? 0 : mp_view->libraries_frame ();
+  return !mp_view ? nullptr : mp_view->libraries_frame ();
 }
 
 QWidget *LayoutViewWidget::bookmarks_frame ()
 {
-  return !mp_view ? 0 : mp_view->bookmarks_frame ();
+  return !mp_view ? nullptr : mp_view->bookmarks_frame ();
 }
 
 QWidget *LayoutViewWidget::editor_options_frame ()
 {
-  return !mp_view ? 0 : mp_view->editor_options_frame ();
+  return !mp_view ? nullptr : mp_view->editor_options_frame ();
 }
 
 // -------------------------------------------------------------
@@ -433,11 +433,11 @@ void LayoutViewSignalConnector::app_terminated ()
 
 const int timer_interval = 10;
 
-static LayoutView *ms_current = 0;
+static LayoutView *ms_current = nullptr;
 
 LayoutView::LayoutView (db::Manager *manager, bool editable, lay::Plugin *plugin_parent, unsigned int options)
   : LayoutViewBase (this, manager, editable, plugin_parent, options),
-    mp_widget (0),
+    mp_widget (nullptr),
     dm_setup_editor_option_pages (this, &LayoutView::do_setup_editor_options_pages)
 {
   //  ensures the deferred method scheduler is present
@@ -448,7 +448,7 @@ LayoutView::LayoutView (db::Manager *manager, bool editable, lay::Plugin *plugin
 
 LayoutView::LayoutView (lay::LayoutView *source, db::Manager *manager, bool editable, lay::Plugin *plugin_parent, unsigned int options)
   : LayoutViewBase (this, manager, editable, plugin_parent, options),
-    mp_widget (0),
+    mp_widget (nullptr),
     dm_setup_editor_option_pages (this, &LayoutView::do_setup_editor_options_pages)
 {
   //  ensures the deferred method scheduler is present
@@ -544,22 +544,22 @@ LayoutView::init_ui (db::Manager *mgr)
   m_always_show_ld = true;
   m_always_show_layout_index = false;
 
-  mp_connector = 0;
-  mp_timer = 0;
-  mp_left_frame = 0;
-  mp_control_panel = 0;
-  mp_hierarchy_panel = 0;
-  mp_libraries_view = 0;
-  mp_bookmarks_view = 0;
-  mp_control_frame = 0;
-  mp_toolbox = 0;
-  mp_toolbox_frame = 0;
-  mp_hierarchy_frame = 0;
-  mp_libraries_frame = 0;
-  mp_bookmarks_frame = 0;
-  mp_editor_options_frame = 0;
-  mp_min_hier_spbx = 0;
-  mp_max_hier_spbx = 0;
+  mp_connector = nullptr;
+  mp_timer = nullptr;
+  mp_left_frame = nullptr;
+  mp_control_panel = nullptr;
+  mp_hierarchy_panel = nullptr;
+  mp_libraries_view = nullptr;
+  mp_bookmarks_view = nullptr;
+  mp_control_frame = nullptr;
+  mp_toolbox = nullptr;
+  mp_toolbox_frame = nullptr;
+  mp_hierarchy_frame = nullptr;
+  mp_libraries_frame = nullptr;
+  mp_bookmarks_frame = nullptr;
+  mp_editor_options_frame = nullptr;
+  mp_min_hier_spbx = nullptr;
+  mp_max_hier_spbx = nullptr;
 
   //  NOTE: it's important to call LayoutViewBase::init from LayoutView because creating the plugins will need a
   //  fully constructed LayoutView (issue #1360)
@@ -573,7 +573,7 @@ LayoutView::init_ui (db::Manager *mgr)
 
     if ((options () & LV_NoHierarchyPanel) == 0 && (options () & LV_Naked) == 0) {
 
-      QFrame *hierarchy_frame = new QFrame (0);
+      QFrame *hierarchy_frame = new QFrame (nullptr);
       hierarchy_frame->setObjectName (QString::fromUtf8 ("left"));
       mp_hierarchy_frame = hierarchy_frame;
       QVBoxLayout *left_frame_ly = new QVBoxLayout (hierarchy_frame);
@@ -621,7 +621,7 @@ LayoutView::init_ui (db::Manager *mgr)
 
     if ((options () & LV_NoBookmarksView) == 0 && (options () & LV_Naked) == 0) {
 
-      QFrame *bookmarks_frame = new QFrame (0);
+      QFrame *bookmarks_frame = new QFrame (nullptr);
       bookmarks_frame->setObjectName (QString::fromUtf8 ("bookmarks_frame"));
       mp_bookmarks_frame = bookmarks_frame;
       QVBoxLayout *left_frame_ly = new QVBoxLayout (bookmarks_frame);
@@ -637,7 +637,7 @@ LayoutView::init_ui (db::Manager *mgr)
 
     if ((options () & LV_NoLibrariesView) == 0 && (options () & LV_Naked) == 0) {
 
-      mp_libraries_frame = new QFrame (0);
+      mp_libraries_frame = new QFrame (nullptr);
       mp_libraries_frame->setObjectName (QString::fromUtf8 ("libs_frame"));
       QVBoxLayout *left_frame_ly = new QVBoxLayout (mp_libraries_frame);
       left_frame_ly->setContentsMargins (0, 0, 0, 0);
@@ -653,7 +653,7 @@ LayoutView::init_ui (db::Manager *mgr)
 
     if ((options () & LV_NoEditorOptionsPanel) == 0 && (options () & LV_Naked) == 0) {
 
-      mp_editor_options_frame = new lay::EditorOptionsFrame (0);
+      mp_editor_options_frame = new lay::EditorOptionsFrame (nullptr);
       mp_editor_options_frame->populate (this);
 
       QObject::connect (mp_editor_options_frame, SIGNAL (destroyed ()), mp_connector, SLOT (side_panel_destroyed ()));
@@ -662,7 +662,7 @@ LayoutView::init_ui (db::Manager *mgr)
 
     if ((options () & LV_NoLayers) == 0 && (options () & LV_Naked) == 0) {
 
-      mp_control_panel = new lay::LayerControlPanel (this, manager (), 0, "lcp");
+      mp_control_panel = new lay::LayerControlPanel (this, manager (), nullptr, "lcp");
       mp_control_frame = mp_control_panel;
 
       QObject::connect (mp_control_frame, SIGNAL (destroyed ()), mp_connector, SLOT (side_panel_destroyed ()));
@@ -672,7 +672,7 @@ LayoutView::init_ui (db::Manager *mgr)
       QObject::connect (mp_control_panel, SIGNAL (current_layer_changed (const lay::LayerPropertiesConstIterator &)), mp_connector, SLOT (current_layer_changed_slot (const lay::LayerPropertiesConstIterator &)));
       QObject::connect (mp_control_panel, SIGNAL (selected_layers_changed ()), mp_connector, SLOT (selected_layers_changed_slot ()));
 
-      mp_toolbox_frame = new QFrame (0);
+      mp_toolbox_frame = new QFrame (nullptr);
       mp_toolbox_frame->setObjectName (QString::fromUtf8 ("lt_frame"));
       QVBoxLayout *lt_frame_ly = new QVBoxLayout (mp_toolbox_frame);
       lt_frame_ly->setContentsMargins (0, 0, 0, 0);
@@ -715,7 +715,7 @@ void LayoutView::close ()
   close_event.clear ();
 
   if (ms_current == this) {
-    ms_current = 0;
+    ms_current = nullptr;
   }
 
   if (mp_properties_dialog) {
@@ -729,37 +729,37 @@ void LayoutView::close ()
   if (mp_control_frame) {
     delete mp_control_frame;
   }
-  mp_control_panel = 0;
-  mp_control_frame = 0;
+  mp_control_panel = nullptr;
+  mp_control_frame = nullptr;
 
   if (mp_toolbox_frame) {
     delete mp_toolbox_frame;
   }
-  mp_toolbox = 0;
-  mp_toolbox_frame = 0;
+  mp_toolbox = nullptr;
+  mp_toolbox_frame = nullptr;
 
   if (mp_hierarchy_frame) {
     delete mp_hierarchy_frame;
   }
-  mp_hierarchy_frame = 0;
-  mp_hierarchy_panel = 0;
+  mp_hierarchy_frame = nullptr;
+  mp_hierarchy_panel = nullptr;
 
   if (mp_libraries_frame) {
     delete mp_libraries_frame;
   }
-  mp_libraries_frame = 0;
-  mp_libraries_view = 0;
+  mp_libraries_frame = nullptr;
+  mp_libraries_view = nullptr;
 
   if (mp_editor_options_frame) {
     delete mp_editor_options_frame;
   }
-  mp_editor_options_frame = 0;
+  mp_editor_options_frame = nullptr;
 
   if (mp_bookmarks_frame) {
     delete mp_bookmarks_frame;
   }
-  mp_bookmarks_frame = 0;
-  mp_bookmarks_view = 0;
+  mp_bookmarks_frame = nullptr;
+  mp_bookmarks_view = nullptr;
 }
 
 void
@@ -769,7 +769,7 @@ LayoutView::finish ()
     set_menu_parent_widget (mp_widget);
     init_menu ();
     if (mp_widget) {
-      menu ()->build (0, 0);
+      menu ()->build (nullptr, nullptr);
     }
   }
 }
@@ -815,7 +815,7 @@ LayoutView::do_change_active_cellview ()
 lay::EditorOptionsPageCollection *LayoutView::editor_options_pages ()
 {
   if (! mp_editor_options_frame) {
-    return 0;
+    return nullptr;
   } else {
     return mp_editor_options_frame->pages_widget ();
   }
@@ -838,22 +838,22 @@ void LayoutView::do_setup_editor_options_pages ()
 void LayoutView::side_panel_destroyed (QObject *sender)
 {
   if (sender == mp_control_frame) {
-    mp_control_frame = 0;
-    mp_control_panel = 0;
+    mp_control_frame = nullptr;
+    mp_control_panel = nullptr;
   } else if (sender == mp_hierarchy_frame) {
-    mp_hierarchy_frame = 0;
-    mp_hierarchy_panel = 0;
+    mp_hierarchy_frame = nullptr;
+    mp_hierarchy_panel = nullptr;
   } else if (sender == mp_libraries_frame) {
-    mp_libraries_frame = 0;
-    mp_libraries_view = 0;
+    mp_libraries_frame = nullptr;
+    mp_libraries_view = nullptr;
   } else if (sender == mp_editor_options_frame) {
-    mp_editor_options_frame = 0;
+    mp_editor_options_frame = nullptr;
   } else if (sender == mp_bookmarks_frame) {
-    mp_bookmarks_frame = 0;
-    mp_bookmarks_view = 0;
+    mp_bookmarks_frame = nullptr;
+    mp_bookmarks_view = nullptr;
   } else if (sender == mp_toolbox_frame) {
-    mp_toolbox_frame = 0;
-    mp_toolbox = 0;
+    mp_toolbox_frame = nullptr;
+    mp_toolbox = nullptr;
   }
 }
 

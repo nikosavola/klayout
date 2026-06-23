@@ -292,14 +292,14 @@ TextGenerator::generator_by_name (const std::string &name)
       return f.operator-> ();
     }
   }
-  return 0;
+  return nullptr;
 }
 
 const TextGenerator *
 TextGenerator::default_generator ()
 {
   const std::vector<TextGenerator> &fonts = generators ();
-  return fonts.empty () ? 0 : &fonts [0];
+  return fonts.empty () ? nullptr : &fonts [0];
 }
 
 

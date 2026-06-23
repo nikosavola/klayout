@@ -117,28 +117,28 @@ static IteratorIterator each (db::RecursiveShapeIterator *r)
 static db::DCplxTrans si_dtrans (const db::RecursiveShapeIterator *r)
 {
   const db::Layout *ly = r->layout ();
-  tl_assert (ly != 0);
+  tl_assert (ly != nullptr);
   return db::CplxTrans (ly->dbu ()) * r->trans () * db::VCplxTrans (1.0 / ly->dbu ());
 }
 
 static db::DCplxTrans si_global_dtrans (const db::RecursiveShapeIterator *r)
 {
   const db::Layout *ly = r->layout ();
-  tl_assert (ly != 0);
+  tl_assert (ly != nullptr);
   return db::CplxTrans (ly->dbu ()) * r->global_trans () * db::VCplxTrans (1.0 / ly->dbu ());
 }
 
 static db::DCplxTrans si_always_apply_dtrans (const db::RecursiveShapeIterator *r)
 {
   const db::Layout *ly = r->layout ();
-  tl_assert (ly != 0);
+  tl_assert (ly != nullptr);
   return db::CplxTrans (ly->dbu ()) * r->always_apply () * db::VCplxTrans (1.0 / ly->dbu ());
 }
 
 static void si_set_global_dtrans (db::RecursiveShapeIterator *r, const db::DCplxTrans &gt)
 {
   const db::Layout *ly = r->layout ();
-  tl_assert (ly != 0);
+  tl_assert (ly != nullptr);
   r->set_global_trans (db::VCplxTrans (1.0 / ly->dbu ()) * gt * db::CplxTrans (ly->dbu ()));
 }
 

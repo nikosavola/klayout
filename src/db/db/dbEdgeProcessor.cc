@@ -1031,11 +1031,11 @@ EdgeProcessor::~EdgeProcessor ()
 {
   if (mp_work_edges) {
     delete mp_work_edges;
-    mp_work_edges = 0;
+    mp_work_edges = nullptr;
   }
   if (mp_cpvector) {
     delete mp_cpvector;
-    mp_cpvector = 0;
+    mp_cpvector = nullptr;
   }
 }
 
@@ -2324,7 +2324,7 @@ EdgeProcessor::redo_or_process (const std::vector<std::pair<db::EdgeSink *, db::
 
       WorkEdge &ew = (*mp_work_edges) [n];
 
-      CutPoints *cut_points = ew.data ? & ((*mp_cpvector) [ew.data - 1]) : 0;
+      CutPoints *cut_points = ew.data ? & ((*mp_cpvector) [ew.data - 1]) : nullptr;
       ew.data = 0;
 
       if (ew.dy () == 0 && ! selects_edges) {

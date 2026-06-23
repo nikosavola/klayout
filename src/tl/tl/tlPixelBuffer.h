@@ -88,7 +88,7 @@ public:
    *  "stride" specifies the stride (distance between two rows of data).
    *  The size of the data block needs to be stride*h elements or w*h if stride is not given.
    */
-  PixelBuffer (unsigned int w, unsigned int h, const tl::color_t *data = 0, unsigned int stride = 0);
+  PixelBuffer (unsigned int w, unsigned int h, const tl::color_t *data = nullptr, unsigned int stride = 0);
 
   /**
    *  @brief Default constructor
@@ -304,7 +304,7 @@ private:
   {
   public:
     ImageData ()
-      : mp_data (0), m_length (0)
+      : mp_data (nullptr), m_length (0)
     {
       //  .. nothing yet ..
     }
@@ -325,7 +325,7 @@ private:
     ~ImageData ()
     {
       delete[] mp_data;
-      mp_data = 0;
+      mp_data = nullptr;
     }
 
     size_t length () const { return m_length; }
@@ -372,7 +372,7 @@ public:
    *  "stride" specifies the stride (distance in bytes between two rows of data).
    *  The size of the data block needs to be stride*h elements or bytes(w)*h if stride is not given.
    */
-  BitmapBuffer (unsigned int w, unsigned int h, const uint8_t *data = 0, unsigned int stride = 0);
+  BitmapBuffer (unsigned int w, unsigned int h, const uint8_t *data = nullptr, unsigned int stride = 0);
 
   /**
    *  @brief Default constructor
@@ -533,7 +533,7 @@ private:
   {
   public:
     MonoImageData ()
-      : mp_data (0), m_length (0)
+      : mp_data (nullptr), m_length (0)
     {
       //  .. nothing yet ..
     }
@@ -554,7 +554,7 @@ private:
     ~MonoImageData ()
     {
       delete[] mp_data;
-      mp_data = 0;
+      mp_data = nullptr;
     }
 
     size_t length () const { return m_length; }

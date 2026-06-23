@@ -30,3 +30,59 @@ environment-pass = ["HOST_CCACHE_DIR"]
 [tool.cibuildwheel.macos]
 # Repair macOS wheels (include libpng with the wheel, for example)
 repair-wheel-command = "delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v --ignore-missing-dependencies {wheel}"
+
+# -------------------------------------------------------------------------
+# Python tooling
+#
+# ruff is the linter + formatter; pyrefly is the type checker (informational).
+# The minimum supported Python is 3.10 (see the cibuildwheel `skip` above,
+# which drops cp36-cp39).
+#
+# NOTE: the tree is not auto-formatted to these rules yet. The config is
+# deliberately tolerant (E501 line-length relaxed, intentional re-export
+# patterns ignored) so it can be adopted without a flag-day. Tighten it once a
+# dedicated `ruff format` / `ruff check --fix` commit has landed.
+# -------------------------------------------------------------------------
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+extend-exclude = [
+  "venv",
+  "testdata",
+  "build-release",
+  "bin-release",
+  "*.pyi",          # generated stubs (scripts/stubgen.py)
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+ignore = [
+  "E501",   # line-too-long: many long lines in build scripts; relax for now
+]
+
+[tool.ruff.lint.per-file-ignores]
+# The shipped `klayout` package __init__ modules deliberately re-export symbols
+# from the compiled C-extension modules (pya/*core) via star imports.
+"src/pymod/distutils_src/**/__init__.py" = ["F401", "F403", "F405", "E402"]
+# Editor/macro templates are snippets, not standalone modules.
+"src/lay/lay/**/*.py" = ["F821", "F401"]
+
+[tool.ruff.format]
+quote-style = "double"
+docstring-code-format = true
+
+# -------------------------------------------------------------------------
+# pyrefly type checker — run as an informational (non-blocking) CI check.
+# The shipped package is thin Python over the compiled `pya`/`*core` extension
+# modules, so the typed/untyped boundary produces unavoidable noise. Treat
+# findings as advisory until stubs (*.pyi) cover the C-extension surface.
+# -------------------------------------------------------------------------
+[tool.pyrefly]
+project-includes = ["src/pymod/distutils_src/klayout"]
+project-excludes = [
+  "**/*.pyi",
+  "venv",
+  "testdata",
+  "build-release",
+  "bin-release",
+]

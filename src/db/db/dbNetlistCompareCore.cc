@@ -1,4 +1,18 @@
 
+//  NOTE: <execution> must be included before any Qt header, otherwise TBB's
+//  emit() method collides with Qt's "emit" keyword macro.
+#if __cplusplus >= 201703L
+  #if __has_include(<execution>)
+    #include <execution>
+  #endif
+#endif
+
+#if defined(__cpp_lib_execution)
+#define PARALLEL_EXEC_POLICY std::execution::par,
+#else
+#define PARALLEL_EXEC_POLICY
+#endif
+
 /*
 
   KLayout Layout Viewer
@@ -34,13 +48,6 @@
 #include "tlInternational.h"
 
 #include <algorithm>
-
-#if defined(__cpp_lib_execution)
-#include <execution>
-#define PARALLEL_EXEC_POLICY std::execution::par,
-#else
-#define PARALLEL_EXEC_POLICY
-#endif
 
 namespace db
 {

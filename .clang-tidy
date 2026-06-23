@@ -26,7 +26,15 @@ Checks: >
 # Treat nothing as an error yet (informational rollout).
 WarningsAsErrors: ''
 
-# Only diagnose project headers, not system or third-party ones.
-HeaderFilterRegex: '^src/(?!gsiqt/).*'
+# Only diagnose project headers, not system or third-party ones. clang-tidy
+# matches these against the path as the compiler sees it (absolute, or relative
+# like ../../../src/...), so anchor on the "/src/" segment rather than "^src/".
+#
+# NOTE: clang-tidy uses LLVM's regex engine, which has no lookahead support, so
+# exclusions go in ExcludeHeaderFilterRegex (clang-tidy >= 19) rather than a
+# "(?!...)" in HeaderFilterRegex. We exclude the generated Qt bindings (gsiqt)
+# and the vendored Cap'n Proto tree under the lstream streamer.
+HeaderFilterRegex: '(/|^)src/'
+ExcludeHeaderFilterRegex: '(/|^)src/(gsiqt/|plugins/streamers/lstream/(runtime|db_plugin/capnp)/)'
 
 FormatStyle: file

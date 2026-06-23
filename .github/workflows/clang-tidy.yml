@@ -71,7 +71,8 @@ jobs:
           # Directory holding compile_commands.json (repository root).
           database: "."
           files-changed-only: true
-          ignore: ".github|testdata|src/gsiqt"
+          # Skip generated Qt bindings (gsiqt) and the vendored Cap'n Proto tree.
+          ignore: ".github|testdata|src/gsiqt|src/plugins/streamers/lstream/runtime|src/plugins/streamers/lstream/db_plugin/capnp"
           step-summary: true
 
       - name: Fail on clang-tidy findings

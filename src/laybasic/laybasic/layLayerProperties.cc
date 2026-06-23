@@ -490,7 +490,7 @@ LayerProperties::display_string (const lay::LayoutViewBase *view, bool real, boo
 
     if (! m_name.empty ()) {
 
-      if (m_name.find ("$") == std::string::npos) {
+      if (m_name.find ('$') == std::string::npos) {
         ret = m_name;
       } else {
 

@@ -54,7 +54,7 @@ XMLWriter::start_element (const std::string &name)
   if (m_open) {
     m_os << ">";
   } 
-  m_os << std::endl;
+  m_os << '\n';
 
   write_indent();
   m_os << "<" << name.c_str();
@@ -91,10 +91,10 @@ XMLWriter::end_element (const std::string &name)
   --m_indent;
 
   if (m_open) {
-    m_os << "/>" << std::endl;
+    m_os << "/>" << '\n';
   } else {
     if (m_has_children) {
-      m_os << std::endl;
+      m_os << '\n';
       write_indent ();
     } 
     m_os << "</" << name.c_str() << ">";
@@ -107,7 +107,7 @@ XMLWriter::end_element (const std::string &name)
 void 
 XMLWriter::end_document ()
 {
-  m_os << std::endl;
+  m_os << '\n';
 }
 
 void 

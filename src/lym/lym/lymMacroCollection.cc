@@ -556,7 +556,7 @@ MacroCollection::create_entry (const std::string &path)
 
     }
 
-    if (new_macro.get ()) {
+    if (new_macro) {
       m_macros.insert (std::make_pair (n, new_macro.release ()));
     }
 

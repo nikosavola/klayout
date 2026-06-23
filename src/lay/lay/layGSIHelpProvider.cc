@@ -392,7 +392,7 @@ replace_references (const std::string &t, const gsi::ClassBase *cls_base)
 
   size_t q = 0;
   size_t p;
-  while ((p = t.find ("\\", q)) != std::string::npos) {
+  while ((p = t.find ('\\', q)) != std::string::npos) {
 
     r += std::string (t, q, p - q);
 
@@ -577,16 +577,16 @@ GSIHelpProvider::produce_class_index (lay::HelpSource *src, const char *module_n
   bool skip_qt_classes = src->get_option ("skip-qt-classes").to_bool ();
   std::ostringstream os;
 
-  os << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << std::endl
-     << "<!DOCTYPE language SYSTEM \"klayout_doc.dtd\">" << std::endl
-     << std::endl;
+  os << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << '\n'
+     << "<!DOCTYPE language SYSTEM \"klayout_doc.dtd\">" << '\n'
+     << '\n';
 
   os << "<doc>";
   if (!module_name) {
-    os << "<title>" << tl::to_string (QObject::tr ("Class Index")) << "</title>" << std::endl;
+    os << "<title>" << tl::to_string (QObject::tr ("Class Index")) << "</title>" << '\n';
   } else {
-    os << "<title>" << tl::to_string (QObject::tr ("Class Index for Module ")) << escape_xml (module_name) << "</title>" << std::endl;
-    os << "<keyword name=\"" << escape_xml (module_name) << "\"/>" << std::endl;
+    os << "<title>" << tl::to_string (QObject::tr ("Class Index for Module ")) << escape_xml (module_name) << "</title>" << '\n';
+    os << "<keyword name=\"" << escape_xml (module_name) << "\"/>" << '\n';
   }
 
   typedef std::vector <std::pair <std::string, std::pair<std::string, std::string> > > class_index_t;
@@ -607,10 +607,10 @@ GSIHelpProvider::produce_class_index (lay::HelpSource *src, const char *module_n
   if (! module_name) {
 
     for (class_index_t::const_iterator i = class_names.begin (); i != class_names.end (); ++i) {
-      os << "<topic-ref href=\"" << escape_xml (class_doc_url (i->first)) << "\"/>" << std::endl;
+      os << "<topic-ref href=\"" << escape_xml (class_doc_url (i->first)) << "\"/>" << '\n';
     }
     for (class_index_t::const_iterator i = qt_class_names.begin (); i != qt_class_names.end (); ++i) {
-      os << "<topic-ref href=\"" << escape_xml (class_doc_url (i->first)) << "\"/>" << std::endl;
+      os << "<topic-ref href=\"" << escape_xml (class_doc_url (i->first)) << "\"/>" << '\n';
     }
 
     std::set<std::string> mod_names;
@@ -625,10 +625,10 @@ GSIHelpProvider::produce_class_index (lay::HelpSource *src, const char *module_n
     }
 
     for (std::set<std::string>::const_iterator m = mod_names.begin (); m != mod_names.end (); ++m) {
-      os << "<topic-ref href=\"" << escape_xml (module_doc_url (*m)) << "\"/>" << std::endl;
+      os << "<topic-ref href=\"" << escape_xml (module_doc_url (*m)) << "\"/>" << '\n';
     }
     for (std::set<std::string>::const_iterator m = qt_mod_names.begin (); m != qt_mod_names.end (); ++m) {
-      os << "<topic-ref href=\"" << escape_xml (module_doc_url (*m)) << "\"/>" << std::endl;
+      os << "<topic-ref href=\"" << escape_xml (module_doc_url (*m)) << "\"/>" << '\n';
     }
 
     os << "<p>" << tl::to_string (QObject::tr ("Per-Module documentation:")) << "</p>";
@@ -645,25 +645,25 @@ GSIHelpProvider::produce_class_index (lay::HelpSource *src, const char *module_n
   }
 
   if (! qt_class_names.empty ()) {
-    os << "<p>" << tl::to_string (QObject::tr ("Find Qt class documentation")) << " <a href=\"#qtclasses\">" << tl::to_string (QObject::tr ("here")) << "</a></p>" << std::endl;
+    os << "<p>" << tl::to_string (QObject::tr ("Find Qt class documentation")) << " <a href=\"#qtclasses\">" << tl::to_string (QObject::tr ("here")) << "</a></p>" << '\n';
   }
 
   if (! class_names.empty ()) {
     
     std::sort (class_names.begin (), class_names.end ());
 
-    os << "<h2>KLayout classes</h2>" << std::endl;
-    os << "<table>" << std::endl;
+    os << "<h2>KLayout classes</h2>" << '\n';
+    os << "<table>" << '\n';
     int n = 0;
     for (class_index_t::const_iterator cc = class_names.begin (); cc != class_names.end (); ++cc, ++n) {
-      os << "<tr class=\"row" << (n % 2)  << "\">" << std::endl;
+      os << "<tr class=\"row" << (n % 2)  << "\">" << '\n';
       os << "<td><a href=\"" << escape_xml (class_doc_url (cc->first)) << "\">" << escape_xml (cc->first) << "</a></td>";
       if (! module_name) {
         os << "<td><a href=\"" << module_doc_url (cc->second.first) << "\">" << escape_xml (cc->second.first) << "</a></td>";
       }
-      os << "<td>" << escape_xml (cc->second.second) << "</td></tr>" << std::endl;
+      os << "<td>" << escape_xml (cc->second.second) << "</td></tr>" << '\n';
     }
-    os << "</table>" << std::endl;
+    os << "</table>" << '\n';
 
   }
 
@@ -671,22 +671,22 @@ GSIHelpProvider::produce_class_index (lay::HelpSource *src, const char *module_n
     
     std::sort (qt_class_names.begin (), qt_class_names.end ());
 
-    os << "<a name=\"qtclasses\"/><h2>Qt classes</h2>" << std::endl;
-    os << "<table>" << std::endl;
+    os << "<a name=\"qtclasses\"/><h2>Qt classes</h2>" << '\n';
+    os << "<table>" << '\n';
     int n = 0;
     for (class_index_t::const_iterator cc = qt_class_names.begin (); cc != qt_class_names.end (); ++cc, ++n) {
-      os << "<tr class=\"row" << (n % 2)  << "\">" << std::endl;
+      os << "<tr class=\"row" << (n % 2)  << "\">" << '\n';
       os << "<td><a href=\"" << escape_xml (class_doc_url (cc->first)) << "\">" << escape_xml (cc->first) << "</a></td>";
       if (! module_name) {
         os << "<td><a href=\"" << module_doc_url (cc->second.first) << "\">" << escape_xml (cc->second.first) << "</a></td>";
       }
-      os << "<td>" << escape_xml (cc->second.second) << "</td></tr>" << std::endl;
+      os << "<td>" << escape_xml (cc->second.second) << "</td></tr>" << '\n';
     }
-    os << "</table>" << std::endl;
+    os << "</table>" << '\n';
 
   }
 
-  os << "</doc>" << std::endl;
+  os << "</doc>" << '\n';
 
   return os.str ();
 
@@ -989,26 +989,26 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
 
   DocumentationParser &class_doc = cls_documentation (cls_obj);
 
-  os << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << std::endl
-     << "<!DOCTYPE language SYSTEM \"klayout_doc.dtd\">" << std::endl
-     << std::endl;
+  os << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << '\n'
+     << "<!DOCTYPE language SYSTEM \"klayout_doc.dtd\">" << '\n'
+     << '\n';
 
   os << "<doc><title>" << tl::to_string (QObject::tr ("API reference - Class")) << " " << escape_xml (cls);
   if (class_doc.hidden) {
     os << " " << tl::to_string (QObject::tr ("[internal]"));
   }
-  os << "</title>" << std::endl;
-  os << "<property name=\"module\" value=\"" << escape_xml (cls_obj->module ()) << "\"/>" << std::endl;
+  os << "</title>" << '\n';
+  os << "<property name=\"module\" value=\"" << escape_xml (cls_obj->module ()) << "\"/>" << '\n';
 
-  os << "<keyword name=\"" << escape_xml (cls) << "\"/>" << std::endl;
+  os << "<keyword name=\"" << escape_xml (cls) << "\"/>" << '\n';
 
   os << "<p>"
      << "<link href=\"/about/rba_notation.xml\"/>"
-     << "</p>" << std::endl;
+     << "</p>" << '\n';
 
   os << "<p><b>" << tl::to_string (QObject::tr ("Module")) << "</b>: <a href=\"" << escape_xml (module_doc_url (cls_obj->module ())) << "\">" << escape_xml (cls_obj->module ()) << "</a></p>";
 
-  os << "<p><b>" << tl::to_string (QObject::tr ("Description")) << "</b>: " << escape_xml (class_doc.brief_doc) << "</p>" << std::endl;
+  os << "<p><b>" << tl::to_string (QObject::tr ("Description")) << "</b>: " << escape_xml (class_doc.brief_doc) << "</p>" << '\n';
 
   const gsi::ClassBase *act_cls_obj = real_class (cls_obj);
 
@@ -1047,7 +1047,7 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
 
     }
 
-    os << "</p>" << std::endl;
+    os << "</p>" << '\n';
 
   }
 
@@ -1055,7 +1055,7 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
     os << "<p>" << tl::to_string (QObject::tr ("This class is equivalent to the class "));
     std::string n = make_qualified_name (tl_alias);
     os << "<a href=\"" << escape_xml (class_doc_url (n)) << "\">" << escape_xml (n) << "</a>";
-    os << "</p>" << std::endl;
+    os << "</p>" << '\n';
   }
 
   //  Produce child classes
@@ -1089,7 +1089,7 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
   }
 
   if (any) {
-    os << "</p>" << std::endl;
+    os << "</p>" << '\n';
   }
 
   //  Produce subclasses (parent classes)
@@ -1119,12 +1119,12 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
   }
 
   if (any) {
-    os << "</p>" << std::endl;
+    os << "</p>" << '\n';
   }
 
   //  Inserts an index
 
-  os << "<h2-index/>" << std::endl;
+  os << "<h2-index/>" << '\n';
 
   //  Produce class doc body
 
@@ -1139,10 +1139,10 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
                            "Instead, use the subclasses listed above. "
                            "Also see there for more documentation and actual incarnations of this class."
                         ))
-       << "</p>" << std::endl;
+       << "</p>" << '\n';
   }
 
-  os << replace_references (class_doc.doc_html (), cls_obj) << std::endl;
+  os << replace_references (class_doc.doc_html (), cls_obj) << '\n';
 
   //  collect the methods of the class and their hidden base classes
   //  (in the reverse order so that derived classes override their super classes methods)
@@ -1176,7 +1176,7 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
   }
 
   if (mm.empty ()) {
-    os << "</doc>" << std::endl;
+    os << "</doc>" << '\n';
     return os.str ();
   }
 
@@ -1194,26 +1194,26 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
     if (i->second.first->is_static () && syn.name == "new" && ! syn.deprecated && ! i->second.first->is_protected ()) {
 
       if (! any) {
-        os << "<h2>" << tl::to_string (QObject::tr ("Public constructors")) << "</h2>" << std::endl;
-        os << "<table>" << std::endl;
+        os << "<h2>" << tl::to_string (QObject::tr ("Public constructors")) << "</h2>" << '\n';
+        os << "<table>" << '\n';
         any = true;
       }
 
       DocumentationParser method_doc (i->second.first);
-      os << "<tr class=\"row" << (row % 2)  << "\">" << std::endl;
+      os << "<tr class=\"row" << (row % 2)  << "\">" << '\n';
       ++row;
       os << "<td>" << method_return (i->second.first, method_doc) << "</td>";
       os << "<td><b><a href=\"#method" << n << "\">" << escape_xml (i->first) << "</a></b></td>";
       os << "<td>" << method_arguments (i->second.first, cls_obj, method_doc) << "</td>";
       os << "<td>" << replace_references (escape_xml (method_doc.brief_doc), cls_obj) << "</td>";
-      os << "</tr>" << std::endl;
+      os << "</tr>" << '\n';
 
     }
 
   }
 
   if (any) {
-    os << "</table>" << std::endl;
+    os << "</table>" << '\n';
   }
 
   n = 0;
@@ -1227,13 +1227,13 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
     if (! i->second.first->is_static () && ! syn.deprecated && ! i->second.first->is_protected ()) {
 
       if (! any) {
-        os << "<h2>" << tl::to_string (QObject::tr ("Public methods")) << "</h2>" << std::endl;
-        os << "<table>" << std::endl;
+        os << "<h2>" << tl::to_string (QObject::tr ("Public methods")) << "</h2>" << '\n';
+        os << "<table>" << '\n';
         any = true;
       }
 
       DocumentationParser method_doc (i->second.first);
-      os << "<tr class=\"row" << (row % 2)  << "\">" << std::endl;
+      os << "<tr class=\"row" << (row % 2)  << "\">" << '\n';
       ++row;
       std::string attr = method_attributes (i->second.first, method_doc, true /*without static*/);
       if (! attr.empty ()) {
@@ -1245,14 +1245,14 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
       os << "<td><b><a href=\"#method" << n << "\">" << escape_xml (i->first) << "</a></b></td>";
       os << "<td>" << method_arguments (i->second.first, cls_obj, method_doc) << "</td>";
       os << "<td>" << replace_references (escape_xml (method_doc.brief_doc), cls_obj) << "</td>";
-      os << "</tr>" << std::endl;
+      os << "</tr>" << '\n';
 
     }
 
   }
 
   if (any) {
-    os << "</table>" << std::endl;
+    os << "</table>" << '\n';
   }
 
   //  Produce static methods brief descriptions
@@ -1270,12 +1270,12 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
 
       if (! any) {
         any = true;
-        os << "<h2>" << tl::to_string (QObject::tr ("Public static methods and constants")) << "</h2>" << std::endl;
-        os << "<table>" << std::endl;
+        os << "<h2>" << tl::to_string (QObject::tr ("Public static methods and constants")) << "</h2>" << '\n';
+        os << "<table>" << '\n';
       }
 
       DocumentationParser method_doc (i->second.first);
-      os << "<tr class=\"row" << (row % 2)  << "\">" << std::endl;
+      os << "<tr class=\"row" << (row % 2)  << "\">" << '\n';
       ++row;
       std::string attr = method_attributes (i->second.first, method_doc, true /*without static*/);
       if (! attr.empty ()) {
@@ -1287,14 +1287,14 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
       os << "<td><b><a href=\"#method" << n << "\">" << escape_xml (i->first) << "</a></b></td>";
       os << "<td>" << method_arguments (i->second.first, cls_obj, method_doc) << "</td>";
       os << "<td>" << replace_references (escape_xml (method_doc.brief_doc), cls_obj) << "</td>";
-      os << "</tr>" << std::endl;
+      os << "</tr>" << '\n';
 
     }
 
   }
 
   if (any) {
-    os << "</table>" << std::endl;
+    os << "</table>" << '\n';
   }
 
   //  Produce protected methods brief descriptions
@@ -1312,12 +1312,12 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
 
       if (! any) {
         any = true;
-        os << "<h2>" << tl::to_string (QObject::tr ("Protected methods (static, non-static and constructors)")) << "</h2>" << std::endl;
-        os << "<table>" << std::endl;
+        os << "<h2>" << tl::to_string (QObject::tr ("Protected methods (static, non-static and constructors)")) << "</h2>" << '\n';
+        os << "<table>" << '\n';
       }
 
       DocumentationParser method_doc (i->second.first);
-      os << "<tr class=\"row" << (row % 2)  << "\">" << std::endl;
+      os << "<tr class=\"row" << (row % 2)  << "\">" << '\n';
       ++row;
       std::string attr = method_attributes (i->second.first, method_doc);
       if (! attr.empty ()) {
@@ -1331,14 +1331,14 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
       os << "<td>";
       os << "<td>" << replace_references (escape_xml (method_doc.brief_doc), cls_obj) << "</td>";
       os << "</td>";
-      os << "</tr>" << std::endl;
+      os << "</tr>" << '\n';
 
     }
 
   }
 
   if (any) {
-    os << "</table>" << std::endl;
+    os << "</table>" << '\n';
   }
 
   //  Produce deprecated methods brief descriptions
@@ -1361,12 +1361,12 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
 
       if (! any) {
         any = true;
-        os << "<h2>" << tl::to_string (QObject::tr ("Deprecated methods (protected, public, static, non-static and constructors)")) << "</h2>" << std::endl;
-        os << "<table>" << std::endl;
+        os << "<h2>" << tl::to_string (QObject::tr ("Deprecated methods (protected, public, static, non-static and constructors)")) << "</h2>" << '\n';
+        os << "<table>" << '\n';
       }
 
       DocumentationParser method_doc (i->second.first);
-      os << "<tr class=\"row" << (row % 2)  << "\">" << std::endl;
+      os << "<tr class=\"row" << (row % 2)  << "\">" << '\n';
       ++row;
       std::string attr = method_attributes (i->second.first, method_doc, false, false);
       if (! attr.empty ()) {
@@ -1384,21 +1384,21 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
         os << tl::to_string (QObject::tr ("Use of this method is deprecated"));
       }
       os << "</td>";
-      os << "</tr>" << std::endl;
+      os << "</tr>" << '\n';
 
     }
 
   }
 
   if (any) {
-    os << "</table>" << std::endl;
+    os << "</table>" << '\n';
   }
 
   //  Produce method details
 
   n = 0;
 
-  os << "<a name=\"detailed\"/><h2>" << tl::to_string (QObject::tr ("Detailed description")) << "</h2>" << std::endl;
+  os << "<a name=\"detailed\"/><h2>" << tl::to_string (QObject::tr ("Detailed description")) << "</h2>" << '\n';
 
   std::string prev_title;
 
@@ -1431,7 +1431,7 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
         os << "<td>";
         sigindex = -1;
       }
-      os << "<h3>" << escape_xml (i->first) << "</h3>" << std::endl;
+      os << "<h3>" << escape_xml (i->first) << "</h3>" << '\n';
       prev_title = i->first;
       os << "</td>";
     }
@@ -1439,7 +1439,7 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
 
     os << "<a name=\"method" << n << "\"/>"
        << "<a name=\"m_" << escape_xml (i->first) << "\"/>"
-       << "<keyword title=\"" << tl::to_string (QObject::tr ("API reference - Class")) << " " << escape_xml (cls) << ", " << tl::to_string (QObject::tr ("Method")) << " " << escape_xml (i->first) <<  "\" name=\"" << escape_xml (cls) << "#" << escape_xml (i->first) << "\"/>" << std::endl;
+       << "<keyword title=\"" << tl::to_string (QObject::tr ("API reference - Class")) << " " << escape_xml (cls) << ", " << tl::to_string (QObject::tr ("Method")) << " " << escape_xml (i->first) <<  "\" name=\"" << escape_xml (cls) << "#" << escape_xml (i->first) << "\"/>" << '\n';
 
     os << "<p><b>";
     if (sigindex >= 0) {
@@ -1452,19 +1452,19 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
       os << "<i>[" << escape_xml (attr) << "] </i>";
     }
     os << method_return (i->second.first, method_doc, true) << " <b> " << escape_xml (i->first) << " </b> " << method_arguments (i->second.first, cls_obj, method_doc, true, " ");
-    os << "</p>" << std::endl;
+    os << "</p>" << '\n';
 
-    os << "<p><b>" << tl::to_string (QObject::tr ("Description")) << "</b>: " << replace_references (escape_xml (method_doc.brief_doc), cls_obj) << "</p>" << std::endl;
+    os << "<p><b>" << tl::to_string (QObject::tr ("Description")) << "</b>: " << replace_references (escape_xml (method_doc.brief_doc), cls_obj) << "</p>" << '\n';
 
     if (! method_doc.params.empty () || ! method_doc.ret_val.empty ()) {
-      os << "<table class=\"layout-table\">" << std::endl;
+      os << "<table class=\"layout-table\">" << '\n';
       for (std::vector<std::pair <std::string, std::string> >::const_iterator p = method_doc.params.begin (); p != method_doc.params.end (); ++p) {
-        os << "<tr><td><b>" << escape_xml (p->first) << "</b>:</td><td>" << replace_references (escape_xml (p->second), cls_obj) << "</td></tr>" << std::endl;
+        os << "<tr><td><b>" << escape_xml (p->first) << "</b>:</td><td>" << replace_references (escape_xml (p->second), cls_obj) << "</td></tr>" << '\n';
       }
       if (! method_doc.ret_val.empty ()) {
-        os << "<tr><td><b>" << tl::to_string (QObject::tr ("Returns")) << "</b>:</td><td>" << replace_references (escape_xml (method_doc.ret_val), cls_obj) << "</td></tr>" << std::endl;
+        os << "<tr><td><b>" << tl::to_string (QObject::tr ("Returns")) << "</b>:</td><td>" << replace_references (escape_xml (method_doc.ret_val), cls_obj) << "</td></tr>" << '\n';
       }
-      os << "</table>" << std::endl;
+      os << "</table>" << '\n';
     }
 
     if (syn.deprecated) {
@@ -1475,22 +1475,22 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
       }
 
       if (nd_syn != i->second.first->end_synonyms ()) {
-        os << "<p>" << tl::to_string (QObject::tr ("Use of this method is deprecated. Use")) << " " << full_name (*nd_syn) << " " << tl::to_string (QObject::tr ("instead")) << "</p>" << std::endl;
+        os << "<p>" << tl::to_string (QObject::tr ("Use of this method is deprecated. Use")) << " " << full_name (*nd_syn) << " " << tl::to_string (QObject::tr ("instead")) << "</p>" << '\n';
       } else {
-        os << "<p>" << tl::to_string (QObject::tr ("Use of this method is deprecated")) << "</p>" << std::endl;
+        os << "<p>" << tl::to_string (QObject::tr ("Use of this method is deprecated")) << "</p>" << '\n';
       }
 
     }
 
     std::string dh = method_doc.doc;
     if (! tl::Extractor (dh.c_str ()).at_end ()) {
-      os << "<p>" << replace_references (method_doc.doc_html (), cls_obj) << "</p>" << std::endl;
+      os << "<p>" << replace_references (method_doc.doc_html (), cls_obj) << "</p>" << '\n';
     }
 
     if (! pydoc.empty ()) {
       os << "<p><b>";
       os << tl::to_string (QObject::tr ("Python specific notes: "));
-      os << "</b><br/>" << tl::replaced (escape_xml (pydoc), "\n\n", "<br/>") << "</p>" << std::endl;
+      os << "</b><br/>" << tl::replaced (escape_xml (pydoc), "\n\n", "<br/>") << "</p>" << '\n';
     }
 
     os << "</td></tr>";
@@ -1499,7 +1499,7 @@ GSIHelpProvider::produce_class_doc (const std::string &cls) const
 
   os << "</table>";
 
-  os << "</doc>" << std::endl;
+  os << "</doc>" << '\n';
   return os.str ();
 
 }

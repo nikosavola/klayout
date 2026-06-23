@@ -131,7 +131,7 @@ MacroInterpreter::execute_macro (const lym::Macro *macro)
     if (cls.current_name () == macro->dsl_interpreter ()) {
 
       std::unique_ptr<tl::Executable> eo (cls->executable (macro));
-      if (eo.get ()) {
+      if (eo) {
         eo->do_execute ();
       }
 

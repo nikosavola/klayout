@@ -103,7 +103,7 @@ LayoutToNetlist::~LayoutToNetlist ()
 
 void LayoutToNetlist::keep_dss ()
 {
-  if (mp_dss.get () && ! mp_internal_dss.get ()) {
+  if (mp_dss.get () && ! mp_internal_dss) {
     mp_dss->keep ();
     mp_internal_dss.reset (mp_dss.get ());
   }
@@ -257,7 +257,7 @@ size_t LayoutToNetlist::link_net_to_parent_circuit (const Net *subcircuit_net, C
 
 void LayoutToNetlist::ensure_netlist ()
 {
-  if (! mp_netlist.get ()) {
+  if (! mp_netlist) {
     mp_netlist.reset (new db::Netlist (this));
   }
 }
@@ -887,7 +887,7 @@ void LayoutToNetlist::mem_stat (MemStatistics *stat, MemStatistics::purpose_t pu
   db::mem_stat (stat, purpose, cat, m_joined_nets_per_cell, true, (void *) this);
 
   m_net_clusters.mem_stat (stat, MemStatistics::LayoutToNetlist, cat, true, (void *) this);
-  if (mp_netlist.get ()) {
+  if (mp_netlist) {
     db::mem_stat (stat, MemStatistics::Netlist, cat, *mp_netlist, false, (void *) this);
   }
 }

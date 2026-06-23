@@ -201,7 +201,7 @@ SaltController::install_packages (const std::vector<std::string> &packages, bool
     if (br != std::string::npos) {
       n = std::string (*p, 0, br);
       v = std::string (*p, br + 1);
-      size_t brr = v.find (")");
+      size_t brr = v.find (')');
       if (brr != std::string::npos) {
         v = std::string (v, 0, brr);
       }

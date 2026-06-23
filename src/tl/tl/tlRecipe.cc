@@ -149,7 +149,7 @@ tl::Variant Recipe::make (const std::string &generator, const std::map<std::stri
   }
 
   std::unique_ptr<Executable> eo (recipe_obj->executable (params));
-  if (! eo.get ()) {
+  if (! eo) {
     return tl::Variant ();
   }
 

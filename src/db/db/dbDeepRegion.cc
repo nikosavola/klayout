@@ -1758,7 +1758,7 @@ DeepRegion::edges (const EdgeFilterBase *filter, const PolygonToEdgeProcessorBas
     for (db::Layout::iterator c = layout.begin (); c != layout.end (); ++c) {
 
       db::ICplxTrans tr;
-      if (vars.get ()) {
+      if (vars) {
         tr = vars->single_variant_transformation (c->cell_index ());
       }
 
@@ -1901,7 +1901,7 @@ DeepRegion::apply_filter (const PolygonFilterBase &filter, bool with_true, bool 
 
     const db::Shapes &s = c->shapes (polygons.layer ());
 
-    if (vars.get ()) {
+    if (vars) {
 
       const std::set<db::ICplxTrans> &vv = vars->variants (c->cell_index ());
       for (auto v = vv.begin (); v != vv.end (); ++v) {
@@ -1974,10 +1974,10 @@ DeepRegion::apply_filter (const PolygonFilterBase &filter, bool with_true, bool 
   }
 
   if (! filter.requires_raw_input ()) {
-    if (res_true.get ()) {
+    if (res_true) {
       res_true->set_is_merged (true);
     }
-    if (res_false.get ()) {
+    if (res_false) {
       res_false->set_is_merged (true);
     }
   }
@@ -2265,7 +2265,7 @@ DeepRegion::sized_inside (const Region &inside, bool outside, coord_type dx, coo
     proc.set_description (proc.description (&op) + tl::sprintf (tl::to_string (tr (" (steps %d..%d)")), steps_from + 1, steps_from + steps_chunk + 1));
     steps_from += steps_chunk;
 
-    proc.run (&op, prev.get () ? prev->deep_layer ().layer () : polygons.layer (), inside_polygons.layer (), res->deep_layer ().layer ());
+    proc.run (&op, prev ? prev->deep_layer ().layer () : polygons.layer (), inside_polygons.layer (), res->deep_layer ().layer ());
 
     //  NOTE: in the last step we apply a polygon breaker in addition to "merge" so the
     //  result is granular for better deep mode performance

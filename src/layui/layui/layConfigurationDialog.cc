@@ -117,7 +117,7 @@ ConfigurationDialog::init (const lay::PluginDeclaration *decl)
     (*p)->setup (mp_root);
   }
 
-  config_title = std::string (config_title, 0, config_title.find ("|"));
+  config_title = std::string (config_title, 0, config_title.find ('|'));
   setWindowTitle (tl::to_qstring (tl::to_string (QObject::tr ("Configuration")) + " - " + config_title));
 }
 

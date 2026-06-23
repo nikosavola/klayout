@@ -584,36 +584,36 @@ StatisticsSource::per_layer_stat_page (const tl::URI &uri) const
     std::sort (layers.begin (), layers.end (), CompareNameLD (layout));
   }
 
-  os << "<html>" << std::endl
-     <<   "<body>" << std::endl
-     <<     "<h2>" << tl::to_string (QObject::tr ("Detailed Layer Statistics for '")) << m_h->name () << "'</h2>" << std::endl
+  os << "<html>" << '\n'
+     <<   "<body>" << '\n'
+     <<     "<h2>" << tl::to_string (QObject::tr ("Detailed Layer Statistics for '")) << m_h->name () << "'</h2>" << '\n'
 
-     <<     "<p>" << std::endl
-     <<     "<table cellspacing=\"5\" cellpadding=\"5\">" << std::endl
+     <<     "<p>" << '\n'
+     <<     "<table cellspacing=\"5\" cellpadding=\"5\">" << '\n'
 
-     <<       "<tr>" << std::endl
-     <<         "<th bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("Layer")) << "</th>" << std::endl
-     <<         "<th bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("All")) << "</th>" << std::endl
-     <<         "<th colspan=\"3\" bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("Boxes")) << "</th>" << std::endl
-     <<         "<th colspan=\"3\" bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("Polygons")) << "</th>" << std::endl
-     <<         "<th colspan=\"3\" bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("Paths")) << "</th>" << std::endl
-     <<         "<th colspan=\"3\" bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("Texts")) << "</th>" << std::endl
-     <<         "<th bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("Edges")) << "</th>" << std::endl
-     <<         "<th bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("Edge Pairs")) << "</th>" << std::endl
-     <<         "<th bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("User objects")) << "</th>" << std::endl
-     <<       "</tr>" << std::endl
+     <<       "<tr>" << '\n'
+     <<         "<th bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("Layer")) << "</th>" << '\n'
+     <<         "<th bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("All")) << "</th>" << '\n'
+     <<         "<th colspan=\"3\" bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("Boxes")) << "</th>" << '\n'
+     <<         "<th colspan=\"3\" bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("Polygons")) << "</th>" << '\n'
+     <<         "<th colspan=\"3\" bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("Paths")) << "</th>" << '\n'
+     <<         "<th colspan=\"3\" bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("Texts")) << "</th>" << '\n'
+     <<         "<th bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("Edges")) << "</th>" << '\n'
+     <<         "<th bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("Edge Pairs")) << "</th>" << '\n'
+     <<         "<th bgcolor=\"#f0f0f0\">" << tl::to_string (QObject::tr ("User objects")) << "</th>" << '\n'
+     <<       "</tr>" << '\n'
 
-     <<       "<tr>" << std::endl
-     <<         "<th></th>" << std::endl
-     <<         "<th>" << tl::to_string (QObject::tr ("(total)")) << "</th>" << std::endl
-     <<         "<th>" << tl::to_string (QObject::tr ("(total)")) << "</th><th>" << tl::to_string (QObject::tr ("(single)")) << "</th><th>" << tl::to_string (QObject::tr ("(arrays)")) << "</th>" << std::endl
-     <<         "<th>" << tl::to_string (QObject::tr ("(total)")) << "</th><th>" << tl::to_string (QObject::tr ("(single)")) << "</th><th>" << tl::to_string (QObject::tr ("(arrays)")) << "</th>" << std::endl
-     <<         "<th>" << tl::to_string (QObject::tr ("(total)")) << "</th><th>" << tl::to_string (QObject::tr ("(single)")) << "</th><th>" << tl::to_string (QObject::tr ("(arrays)")) << "</th>" << std::endl
-     <<         "<th>" << tl::to_string (QObject::tr ("(total)")) << "</th><th>" << tl::to_string (QObject::tr ("(single)")) << "</th><th>" << tl::to_string (QObject::tr ("(arrays)")) << "</th>" << std::endl
-     <<         "<th>" << tl::to_string (QObject::tr ("(total)")) << "</th>" << std::endl
-     <<         "<th>" << tl::to_string (QObject::tr ("(total)")) << "</th>" << std::endl
-     <<         "<th>" << tl::to_string (QObject::tr ("(total)")) << "</th>" << std::endl
-     <<       "</tr>" << std::endl
+     <<       "<tr>" << '\n'
+     <<         "<th></th>" << '\n'
+     <<         "<th>" << tl::to_string (QObject::tr ("(total)")) << "</th>" << '\n'
+     <<         "<th>" << tl::to_string (QObject::tr ("(total)")) << "</th><th>" << tl::to_string (QObject::tr ("(single)")) << "</th><th>" << tl::to_string (QObject::tr ("(arrays)")) << "</th>" << '\n'
+     <<         "<th>" << tl::to_string (QObject::tr ("(total)")) << "</th><th>" << tl::to_string (QObject::tr ("(single)")) << "</th><th>" << tl::to_string (QObject::tr ("(arrays)")) << "</th>" << '\n'
+     <<         "<th>" << tl::to_string (QObject::tr ("(total)")) << "</th><th>" << tl::to_string (QObject::tr ("(single)")) << "</th><th>" << tl::to_string (QObject::tr ("(arrays)")) << "</th>" << '\n'
+     <<         "<th>" << tl::to_string (QObject::tr ("(total)")) << "</th><th>" << tl::to_string (QObject::tr ("(single)")) << "</th><th>" << tl::to_string (QObject::tr ("(arrays)")) << "</th>" << '\n'
+     <<         "<th>" << tl::to_string (QObject::tr ("(total)")) << "</th>" << '\n'
+     <<         "<th>" << tl::to_string (QObject::tr ("(total)")) << "</th>" << '\n'
+     <<         "<th>" << tl::to_string (QObject::tr ("(total)")) << "</th>" << '\n'
+     <<       "</tr>" << '\n'
     ;
 
   db::CellCounter cc (&layout);
@@ -637,40 +637,40 @@ StatisticsSource::per_layer_stat_page (const tl::URI &uri) const
 
     }
 
-    os <<       "<tr>" << std::endl
-       <<         "<td>" << tl::escaped_to_html (layout.get_properties (*l).to_string (), true) << "</td>" << std::endl
-       <<         "<td>" << st_hier.all_total () << "<br></br>" << st_flat.all_total () << "</td>" << std::endl
+    os <<       "<tr>" << '\n'
+       <<         "<td>" << tl::escaped_to_html (layout.get_properties (*l).to_string (), true) << "</td>" << '\n'
+       <<         "<td>" << st_hier.all_total () << "<br></br>" << st_flat.all_total () << "</td>" << '\n'
        // Boxes (total, single, array)
-       <<         "<td>" << st_hier.box_total () << "<br></br>" << st_flat.box_total () << "</td>" << std::endl
-       <<         "<td>" << st_hier.box_single () << "<br></br>" << st_flat.box_single () << "</td>" << std::endl
-       <<         "<td>" << st_hier.box_array () << "<br></br>" << st_flat.box_array () << "</td>" << std::endl
+       <<         "<td>" << st_hier.box_total () << "<br></br>" << st_flat.box_total () << "</td>" << '\n'
+       <<         "<td>" << st_hier.box_single () << "<br></br>" << st_flat.box_single () << "</td>" << '\n'
+       <<         "<td>" << st_hier.box_array () << "<br></br>" << st_flat.box_array () << "</td>" << '\n'
        // Polygons (total, single, array)
-       <<         "<td>" << st_hier.polygon_total () << "<br></br>" << st_flat.polygon_total () << "</td>" << std::endl
-       <<         "<td>" << st_hier.polygon_single () << "<br></br>" << st_flat.polygon_single () << "</td>" << std::endl
-       <<         "<td>" << st_hier.polygon_array () << "<br></br>" << st_flat.polygon_array () << "</td>" << std::endl
+       <<         "<td>" << st_hier.polygon_total () << "<br></br>" << st_flat.polygon_total () << "</td>" << '\n'
+       <<         "<td>" << st_hier.polygon_single () << "<br></br>" << st_flat.polygon_single () << "</td>" << '\n'
+       <<         "<td>" << st_hier.polygon_array () << "<br></br>" << st_flat.polygon_array () << "</td>" << '\n'
        // Paths (total, single, array)
-       <<         "<td>" << st_hier.path_total () << "<br></br>" << st_flat.path_total () << "</td>" << std::endl
-       <<         "<td>" << st_hier.path_single () << "<br></br>" << st_flat.path_single () << "</td>" << std::endl
-       <<         "<td>" << st_hier.path_array () << "<br></br>" << st_flat.path_array () << "</td>" << std::endl
+       <<         "<td>" << st_hier.path_total () << "<br></br>" << st_flat.path_total () << "</td>" << '\n'
+       <<         "<td>" << st_hier.path_single () << "<br></br>" << st_flat.path_single () << "</td>" << '\n'
+       <<         "<td>" << st_hier.path_array () << "<br></br>" << st_flat.path_array () << "</td>" << '\n'
        // Texts (total, single, array)
-       <<         "<td>" << st_hier.text_total () << "<br></br>" << st_flat.text_total () << "</td>" << std::endl
-       <<         "<td>" << st_hier.text_single () << "<br></br>" << st_flat.text_single () << "</td>" << std::endl
-       <<         "<td>" << st_hier.text_array () << "<br></br>" << st_flat.text_array () << "</td>" << std::endl
+       <<         "<td>" << st_hier.text_total () << "<br></br>" << st_flat.text_total () << "</td>" << '\n'
+       <<         "<td>" << st_hier.text_single () << "<br></br>" << st_flat.text_single () << "</td>" << '\n'
+       <<         "<td>" << st_hier.text_array () << "<br></br>" << st_flat.text_array () << "</td>" << '\n'
        // Edges (total)
-       <<         "<td>" << st_hier.edge_total () << "<br></br>" << st_flat.edge_total () << "</td>" << std::endl
+       <<         "<td>" << st_hier.edge_total () << "<br></br>" << st_flat.edge_total () << "</td>" << '\n'
        // EdgePairs (total)
-       <<         "<td>" << st_hier.edge_pair_total () << "<br></br>" << st_flat.edge_pair_total () << "</td>" << std::endl
+       <<         "<td>" << st_hier.edge_pair_total () << "<br></br>" << st_flat.edge_pair_total () << "</td>" << '\n'
        // User objects (total)
-       <<         "<td>" << st_hier.user_total () << "<br></br>" << st_flat.user_total () << "</td>" << std::endl
+       <<         "<td>" << st_hier.user_total () << "<br></br>" << st_flat.user_total () << "</td>" << '\n'
        // ...
-       <<         "<td>" << tl::to_string (QObject::tr ("(hier)")) << "<br></br>" << tl::to_string (QObject::tr ("(flat)")) << "</td>" << std::endl
-       <<       "</tr>" << std::endl
+       <<         "<td>" << tl::to_string (QObject::tr ("(hier)")) << "<br></br>" << tl::to_string (QObject::tr ("(flat)")) << "</td>" << '\n'
+       <<       "</tr>" << '\n'
       ;
 
   }
 
-  os <<     "</table>" << std::endl
-     <<     "</p>" << std::endl
+  os <<     "</table>" << '\n'
+     <<     "</p>" << '\n'
      <<     tl::to_string (QObject::tr ("<h4>Note</h4>"
                                         "<p>"
                                         "\"(hier)\" is the object count where each cell counts once. "
@@ -681,7 +681,7 @@ StatisticsSource::per_layer_stat_page (const tl::URI &uri) const
                                         "\"(arrays)\" is the number of shape arrays where each array counts as one, but contributes many individual shapes to \"(total)\"."
                                         "</p>"
                                        ))
-     <<   "</body>" << std::endl
+     <<   "</body>" << '\n'
      << "</html>";
 
   return os.str ();
@@ -712,46 +712,46 @@ StatisticsSource::index_page (const tl::URI & /*uri*/) const
 
   db::CellCounter cc (&layout);
 
-  os << "<html>" << std::endl
-     <<   "<body>" << std::endl
-     <<     "<h2>" << tl::to_string (QObject::tr ("Common Statistics For '")) << tl::escaped_to_html (m_h->name (), true) << "'</h2>" << std::endl
-     <<     "<p>" << std::endl
-     <<     "<table>" << std::endl
+  os << "<html>" << '\n'
+     <<   "<body>" << '\n'
+     <<     "<h2>" << tl::to_string (QObject::tr ("Common Statistics For '")) << tl::escaped_to_html (m_h->name (), true) << "'</h2>" << '\n'
+     <<     "<p>" << '\n'
+     <<     "<table>" << '\n'
      <<       "<tr>"
      <<         "<td>" << tl::to_string (QObject::tr ("Path")) << ":&nbsp;</td><td>" << tl::escaped_to_html (m_h->filename (), true) << "</td>"
-     <<       "</tr>" << std::endl;
+     <<       "</tr>" << '\n';
   if (! m_h->save_options ().format ().empty ()) {
     os <<       "<tr>"
        <<         "<td>" << tl::to_string (QObject::tr ("Format")) << ":&nbsp;</td><td>" << tl::escaped_to_html (m_h->save_options ().format (), true) << "</td>"
-       <<       "</tr>" << std::endl;
+       <<       "</tr>" << '\n';
   }
   os <<       "<tr>"
      <<         "<td>" << tl::to_string (QObject::tr ("Technology")) << ":&nbsp;</td><td>" << tl::escaped_to_html (m_h->technology ()->description (), true) << tl::escaped_to_html (format_tech_name (m_h->tech_name ()), true) << "</td>"
-     <<       "</tr>" << std::endl
+     <<       "</tr>" << '\n'
      <<       "<tr>"
      <<         "<td>" << tl::to_string (QObject::tr ("Database unit")) << ":&nbsp;</td><td>" << tl::sprintf ("%.12g ", layout.dbu ()) << tl::to_string (QObject::tr ("micron")) << "</td>"
-     <<       "</tr>" << std::endl
+     <<       "</tr>" << '\n'
      <<       "<tr>"
      <<         "<td>" << tl::to_string (QObject::tr ("Number of cells")) << ":&nbsp;</td><td>" << num_cells << "</td>"
-     <<       "</tr>" << std::endl
+     <<       "</tr>" << '\n'
      <<       "<tr>"
      <<         "<td>" << tl::to_string (QObject::tr ("Number of layers")) << ":&nbsp;</td><td>" << num_layers << "</td>"
-     <<       "</tr>" << std::endl;
+     <<       "</tr>" << '\n';
   for (db::Layout::meta_info_iterator meta = layout.begin_meta (); meta != layout.end_meta (); ++meta) {
     std::string d = meta->second.description;
     if (!d.empty ()) {
       d = layout.meta_info_name (meta->first);
     }
-    os <<     "<tr><td>" << tl::escaped_to_html (d, true) << "</td><td>" << tl::escaped_to_html (meta->second.value.to_string (), true) << "</td></tr>" << std::endl;
+    os <<     "<tr><td>" << tl::escaped_to_html (d, true) << "</td><td>" << tl::escaped_to_html (meta->second.value.to_string (), true) << "</td></tr>" << '\n';
   }
-  os <<     "</table>" << std::endl
-     <<     "<h2>" << tl::to_string (QObject::tr ("Top Cells")) << "</h2>" << std::endl
-     <<     "<table>" << std::endl;
+  os <<     "</table>" << '\n'
+     <<     "<h2>" << tl::to_string (QObject::tr ("Top Cells")) << "</h2>" << '\n'
+     <<     "<table>" << '\n';
   for (db::Layout::top_down_const_iterator tc = layout.begin_top_down (); tc != layout.end_top_cells (); ++tc) {
-    os <<     "<tr><td>" << tl::escaped_to_html (layout.cell_name (*tc), true) << "</td></tr>" << std::endl;
+    os <<     "<tr><td>" << tl::escaped_to_html (layout.cell_name (*tc), true) << "</td></tr>" << '\n';
   }
-  os <<     "</table>" << std::endl;
-  os <<     "</p>" << std::endl;
+  os <<     "</table>" << '\n';
+  os <<     "</p>" << '\n';
 
   std::vector <unsigned int> layers_with_oasis_names;
 
@@ -772,10 +772,10 @@ StatisticsSource::index_page (const tl::URI & /*uri*/) const
 
   if (! layers_sorted_by_ld.empty ()) {
 
-    os <<     "<h2>" << tl::to_string (QObject::tr ("Layers (sorted by layer and datatype)")) << "</h2>" << std::endl
-       <<     "<p><a href=\"" << tl::escaped_to_html (tl::to_string (s_per_layer_stat_path_ld), true) << "\">Detailed layer statistics</a></p>" << std::endl
-       <<     "<p>" << std::endl
-       <<     "<table>" << std::endl
+    os <<     "<h2>" << tl::to_string (QObject::tr ("Layers (sorted by layer and datatype)")) << "</h2>" << '\n'
+       <<     "<p><a href=\"" << tl::escaped_to_html (tl::to_string (s_per_layer_stat_path_ld), true) << "\">Detailed layer statistics</a></p>" << '\n'
+       <<     "<p>" << '\n'
+       <<     "<table>" << '\n'
        <<     "<tr><td><b>" << tl::to_string (QObject::tr ("Layer/Datatype")) << "</b>&nbsp;&nbsp;</td>";
     if (! layers_with_oasis_names.empty ()) {
       os << "<td><b>" << tl::to_string (QObject::tr ("Layer name")) << "</b></td>";
@@ -784,7 +784,7 @@ StatisticsSource::index_page (const tl::URI & /*uri*/) const
       os << "<td><b>" << tl::to_string (QObject::tr ("Shape count (hier)")) << "</b></td>";
       os << "<td><b>" << tl::to_string (QObject::tr ("Shape count (flat)")) << "</b></td>";
     }
-    os << "</tr>" << std::endl;
+    os << "</tr>" << '\n';
 
     tl::RelativeProgress progress (tl::to_string (QObject::tr ("Collecting statistics")), layers_sorted_by_ld.size () * layout.cells (), 100000);
     for (std::vector <unsigned int>::const_iterator i = layers_sorted_by_ld.begin (); i != layers_sorted_by_ld.end (); ++i) {
@@ -821,22 +821,22 @@ StatisticsSource::index_page (const tl::URI & /*uri*/) const
         os <<   "<td>" << st_hier.all_total () << "</td>";
         os <<   "<td>" << st_flat.all_total () << "</td>";
       }
-      os << "</tr>" << std::endl;
+      os << "</tr>" << '\n';
 
     }
 
-    os <<     "</table>" << std::endl;
-    os <<     "</p>" << std::endl;
+    os <<     "</table>" << '\n';
+    os <<     "</p>" << '\n';
 
   }
 
   if (! layers_with_oasis_names.empty ()) {
 
-    os <<     "<h2>" << tl::to_string (QObject::tr ("Layers (sorted by layer names)")) << "</h2>" << std::endl
-       <<     "<p><a href=\"" << tl::escaped_to_html (tl::to_string (s_per_layer_stat_path_name), true) << "\">Detailed layer statistics</a></p>" << std::endl
-       <<     "<p>" << std::endl
-       <<     "<table>" << std::endl
-       <<     "<tr><td><b>" << tl::to_string (QObject::tr ("Layer name")) << "</b>&nbsp;&nbsp;</td><td><b>" << tl::to_string (QObject::tr ("Layer/Datatype")) << "</b></td></tr>" << std::endl;
+    os <<     "<h2>" << tl::to_string (QObject::tr ("Layers (sorted by layer names)")) << "</h2>" << '\n'
+       <<     "<p><a href=\"" << tl::escaped_to_html (tl::to_string (s_per_layer_stat_path_name), true) << "\">Detailed layer statistics</a></p>" << '\n'
+       <<     "<p>" << '\n'
+       <<     "<table>" << '\n'
+       <<     "<tr><td><b>" << tl::to_string (QObject::tr ("Layer name")) << "</b>&nbsp;&nbsp;</td><td><b>" << tl::to_string (QObject::tr ("Layer/Datatype")) << "</b></td></tr>" << '\n';
 
     for (std::vector <unsigned int>::const_iterator i = layers_with_oasis_names.begin (); i != layers_with_oasis_names.end (); ++i) {
       if (layout.is_valid_layer (*i)) {
@@ -845,18 +845,18 @@ StatisticsSource::index_page (const tl::URI & /*uri*/) const
           os << "<tr>"
              <<   "<td>" << tl::escaped_to_html (lp.name, true) << "</td>"
              <<   "<td>" << tl::sprintf ("%d/%d", lp.layer, lp.datatype) << "</td>"
-             << "</tr>" << std::endl;
+             << "</tr>" << '\n';
         }
       }
     }
 
-    os <<     "</table>" << std::endl;
-    os <<     "</p>" << std::endl;
+    os <<     "</table>" << '\n';
+    os <<     "</p>" << '\n';
 
   }
 
-  os <<   "</body>" << std::endl
-     << "</html>" << std::endl;
+  os <<   "</body>" << '\n'
+     << "</html>" << '\n';
      ;
 
   return os.str ();

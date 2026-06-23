@@ -72,7 +72,7 @@ static std::unique_ptr<db::Technologies> sp_technologies;
 db::Technologies *
 Technologies::instance ()
 {
-  if (! sp_technologies.get ()) {
+  if (! sp_technologies) {
     sp_technologies.reset (new db::Technologies ());
   }
   return sp_technologies.get ();

@@ -79,7 +79,7 @@ GDS2WriterText::write_int (int32_t l)
     }
     else
     {
-      ssFormattingStream<<l<<std::endl;
+      ssFormattingStream<<l<<'\n';
       bIsXCoordinate = true;
     }
   }
@@ -134,7 +134,7 @@ GDS2WriterText::write_record (int16_t i)
   {
     if(siCurrentRecord != sXY)
     {
-      ssFormattingStream<<std::endl;
+      ssFormattingStream<<'\n';
     }
   }
   
@@ -147,7 +147,7 @@ GDS2WriterText::write_record (int16_t i)
     case sTEXT:
     case sBOUNDARY:
    {
-      ssFormattingStream<<std::endl;
+      ssFormattingStream<<'\n';
     }break; 
     default:
    {

@@ -295,7 +295,7 @@ ShapePropertiesPage::do_apply (bool current_only, bool relative, bool commit)
     }
   }
 
-  if (! applicator.get ()) {
+  if (! applicator) {
     return;
   }
 

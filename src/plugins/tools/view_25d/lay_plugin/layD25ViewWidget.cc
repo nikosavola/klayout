@@ -422,7 +422,7 @@ D25ViewWidget::mouseReleaseEvent (QMouseEvent * /*event*/)
 void
 D25ViewWidget::mouseMoveEvent (QMouseEvent *event)
 {
-  if (mp_mode.get ()) {
+  if (mp_mode) {
     mp_mode->mouse_move (event);
   }
 }

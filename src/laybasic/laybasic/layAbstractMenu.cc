@@ -1306,7 +1306,7 @@ AbstractMenu::build (QMenuBar *mbar, QToolBar *tbar)
 
       if (c->has_submenu ()) {
 
-        if (c->name ().find ("@") == 0) {
+        if (c->name ().find ('@') == 0) {
 
           //  done later.
 
@@ -1427,7 +1427,7 @@ AbstractMenu::build (QMenuBar *mbar, QToolBar *tbar)
 
         //  nothing: let build_detached build the menu
 
-      } else if (c->name ().find ("@") == 0) {
+      } else if (c->name ().find ('@') == 0) {
 
         if (c->menu () == 0) {
           QMenu *menu = new QMenu (tl::to_qstring (c->action ()->get_title ()), mp_dispatcher->menu_parent_widget ());

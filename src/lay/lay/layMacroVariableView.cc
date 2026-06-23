@@ -155,7 +155,7 @@ MacroVariableView::MacroVariableView (QWidget *parent)
 void MacroVariableView::set_inspector (gsi::Inspector *inspector)
 {
   if (inspector != mp_inspector.get ()) {
-    bool fresh = (! inspector || ! mp_inspector.get () || ! mp_inspector->equiv (inspector));
+    bool fresh = (! inspector || ! mp_inspector || ! mp_inspector->equiv (inspector));
     if (fresh) {
       clear ();
     }
@@ -187,7 +187,7 @@ void MacroVariableView::set_show_all (bool show_all)
 {
   if (m_show_all != show_all) {
     m_show_all = show_all;
-    if (mp_inspector.get ()) {
+    if (mp_inspector) {
       sync (true);
     }
   }

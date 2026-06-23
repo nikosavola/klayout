@@ -76,7 +76,7 @@ SaltGrainDetailsTextWidget::loadResource (int type, const QUrl &url)
 
     int icon_dim = 64;
 
-    if (!mp_grain.get () || mp_grain->icon ().isNull ()) {
+    if (!mp_grain || mp_grain->icon ().isNull ()) {
 
       return QImage (":/salt_icon.png");
 

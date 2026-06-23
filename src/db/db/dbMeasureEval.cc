@@ -452,7 +452,8 @@ public:
     }
 
     //  default for "layers" is 'all'
-    for (unsigned int i = 0; i < (unsigned int) mp_eval->layer_indexes ().size (); ++i) {
+    layers.reserve((unsigned int) mp_eval->layer_indexes ().size ());
+for (unsigned int i = 0; i < (unsigned int) mp_eval->layer_indexes ().size (); ++i) {
       layers.push_back (i);
     }
 
@@ -705,7 +706,7 @@ MeasureNetEval::net_func () const
   }
 
   //  build a lookup table of nets vs. cell_index+cluster_id
-  if (! m_nets_per_cell_and_cluster_id.get ()) {
+  if (! m_nets_per_cell_and_cluster_id) {
     m_nets_per_cell_and_cluster_id.reset (new std::map<std::pair<db::cell_index_type, size_t>, const db::Net *> ());
     for (auto c = nl->begin_circuits (); c != nl->end_circuits (); ++c) {
       auto ci = c->cell_index ();

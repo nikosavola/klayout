@@ -848,7 +848,7 @@ InstPropertiesPage::do_apply (bool current_only, bool relative)
     }
   }
 
-  if (! applicator.get ()) {
+  if (! applicator) {
     return;
   }
 

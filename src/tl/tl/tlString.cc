@@ -21,6 +21,7 @@
 */
 
 
+#include <cmath>
 #include <cstdlib>
 #include <cstdio>
 #include <cmath>
@@ -449,7 +450,7 @@ to_string (float d, int prec)
   }
 
   //  For small values less than 1e-(prec) simply return "0" to avoid ugly values like "1.2321716e-14".
-  if (fabs (d) < pow (10.0, -prec)) {
+  if (std::fabs (d) < pow (10.0, -prec)) {
     return "0";
   }
 

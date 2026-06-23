@@ -287,14 +287,14 @@ public:
 
   ~ProtectedShapes ()
   {
-    if (mp_tmp_shapes.get ()) {
-      mp_target->insert (*mp_tmp_shapes.get ());
+    if (mp_tmp_shapes) {
+      mp_target->insert (*mp_tmp_shapes);
     }
   }
 
   db::Shapes *operator-> () const
   {
-    if (mp_tmp_shapes.get ()) {
+    if (mp_tmp_shapes) {
       return mp_tmp_shapes.get ();
     } else {
       return mp_target;

@@ -321,7 +321,7 @@ MAGWriter::write_label (const std::string &layer, const db::Text &text, const db
   db::Vector v = scaled (text.trans ().disp ());
 
   std::string s = text.string ();
-  if (s.find ("\n") != std::string::npos) {
+  if (s.find ('\n') != std::string::npos) {
     s = tl::replaced (s, "\n", "\\n");
   }
 

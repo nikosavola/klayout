@@ -351,8 +351,8 @@ void TestBase::test_is_long_runner ()
 
 void TestBase::write_detailed_diff (std::ostream &os, const std::string &subject, const std::string &ref)
 {
-  os << replicate (" ", tl::indent ()) << "Actual value is:    " << tl::to_string (subject) << std::endl
-     << replicate (" ", tl::indent ()) << "Reference value is: " << tl::to_string (ref) << std::endl
+  os << replicate (" ", tl::indent ()) << "Actual value is:    " << tl::to_string (subject) << '\n'
+     << replicate (" ", tl::indent ()) << "Reference value is: " << tl::to_string (ref) << '\n'
   ;
 }
 

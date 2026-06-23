@@ -59,8 +59,8 @@ RecursiveShapeIterator &RecursiveShapeIterator::operator= (const RecursiveShapeI
     mp_shapes = d.mp_shapes;
 
     m_region = d.m_region;
-    if (d.mp_complex_region.get () != 0) {
-      mp_complex_region.reset (new region_type (*d.mp_complex_region.get ()));
+    if (d.mp_complex_region != 0) {
+      mp_complex_region.reset (new region_type (*d.mp_complex_region));
     } else {
       mp_complex_region.reset (0);
     }
@@ -362,7 +362,7 @@ RecursiveShapeIterator::always_apply () const
 void
 RecursiveShapeIterator::set_region (const box_type &region)
 {
-  if (m_region != region || mp_complex_region.get () != 0) {
+  if (m_region != region || mp_complex_region != 0) {
     init_region (region);
     reset ();
   }
@@ -380,7 +380,7 @@ RecursiveShapeIterator::confine_region (const box_type &region)
 {
   if (m_region.empty ()) {
     //  no more confinement
-  } else if (mp_complex_region.get ()) {
+  } else if (mp_complex_region) {
     init_region (*mp_complex_region & region_type (region));
   } else {
     init_region (m_region & region);
@@ -393,7 +393,7 @@ RecursiveShapeIterator::confine_region (const region_type &region)
 {
   if (m_region.empty ()) {
     //  no more confinement
-  } else if (mp_complex_region.get ()) {
+  } else if (mp_complex_region) {
     init_region (*mp_complex_region & region);
   } else {
     init_region (region & region_type (m_region));
@@ -476,7 +476,7 @@ RecursiveShapeIterator::validate (RecursiveShapeReceiver *receiver) const
   m_skip_shapes_member_stack.push_back (false);
 
   m_local_complex_region_stack.clear ();
-  if (mp_complex_region.get ()) {
+  if (mp_complex_region) {
 
     //  prepare a local complex region
     m_local_complex_region_stack.push_back (box_tree_type ());

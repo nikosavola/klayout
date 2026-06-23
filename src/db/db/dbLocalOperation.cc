@@ -64,7 +64,7 @@ void local_operation<TS, TI, TR>::compute_local (db::Layout *layout, db::Cell *s
 
       do_compute_local (layout, subject_cell, single_interactions, results, proc);
 
-      if (progress.get ()) {
+      if (progress) {
         ++*progress;
       }
 

@@ -56,7 +56,7 @@ static std::string variant_list_to_string (const tl::Variant &value)
   }
 
   for (auto i = value.begin (); i != value.end (); ++i) {
-    if (! i->is_a_string () || std::string (i->to_string ()).find (",") != std::string::npos) {
+    if (! i->is_a_string () || std::string (i->to_string ()).find (',') != std::string::npos) {
       return value.to_parsable_string ();
     }
   }
@@ -449,7 +449,7 @@ PCellParametersPage::setup (lay::LayoutViewBase *view, int cv_index, const db::P
     }
 
     std::string gt, description;
-    size_t tab = p->get_description ().find ("\t");
+    size_t tab = p->get_description ().find ('\t');
     if (tab != std::string::npos) {
       gt = std::string (p->get_description (), 0, tab);
       description = std::string (p->get_description (), tab + 1, std::string::npos);

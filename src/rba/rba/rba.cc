@@ -1426,7 +1426,7 @@ method_adaptor (int mid, int argc, VALUE *argv, VALUE self, bool ctor)
         ret = Qnil;
 
         std::unique_ptr<gsi::IterAdaptorAbstractBase> iter ((gsi::IterAdaptorAbstractBase *) retlist.read<void *> (heap));
-        if (iter.get ()) {
+        if (iter) {
 
           gsi::SerialArgs rr (iter->serial_size ());
           while (! iter->at_end ()) {

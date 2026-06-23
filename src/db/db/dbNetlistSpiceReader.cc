@@ -1116,7 +1116,7 @@ SpiceNetlistBuilder::build_circuit (const SpiceCachedCircuit *cc, const paramete
 db::Net *
 SpiceNetlistBuilder::make_net (const std::string &name)
 {
-  if (! mp_nets_by_name.get ()) {
+  if (! mp_nets_by_name) {
     mp_nets_by_name.reset (new std::map<std::string, db::Net *> ());
   }
 

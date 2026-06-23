@@ -676,7 +676,7 @@ struct reader<gsi::StringType>
   void operator() (gsi::SerialArgs *rr, VALUE *ret, Proxy * /*self*/, const gsi::ArgType &, tl::Heap *heap)
   {
     std::unique_ptr<gsi::StringAdaptor> a ((gsi::StringAdaptor *) rr->read<void *>(*heap));
-    if (!a.get ()) {
+    if (!a) {
       *ret = Qnil;
     } else {
       *ret = rb_utf8_str_new (a->c_str (), long (a->size ()));
@@ -693,7 +693,7 @@ struct reader<gsi::ByteArrayType>
   void operator() (gsi::SerialArgs *rr, VALUE *ret, Proxy * /*self*/, const gsi::ArgType &, tl::Heap *heap)
   {
     std::unique_ptr<gsi::ByteArrayAdaptor> a ((gsi::ByteArrayAdaptor *) rr->read<void *>(*heap));
-    if (!a.get ()) {
+    if (!a) {
       *ret = Qnil;
     } else {
       *ret = rb_str_new (a->c_str (), long (a->size ()));
@@ -772,7 +772,7 @@ struct reader<gsi::VariantType>
   void operator() (gsi::SerialArgs *rr, VALUE *ret, Proxy *self, const gsi::ArgType &atype, tl::Heap *heap)
   {
     std::unique_ptr<gsi::VariantAdaptor> a ((gsi::VariantAdaptor *) rr->read<void *>(*heap));
-    if (!a.get ()) {
+    if (!a) {
       *ret = Qnil;
     } else {
       gsi::VariantAdaptorImpl<tl::Variant> *aa = dynamic_cast<gsi::VariantAdaptorImpl<tl::Variant> *> (a.get ());
@@ -801,7 +801,7 @@ struct reader<gsi::VectorType>
   void operator() (gsi::SerialArgs *rr, VALUE *ret, Proxy * /*self*/, const gsi::ArgType &atype, tl::Heap *heap)
   {
     std::unique_ptr<gsi::VectorAdaptor> a ((gsi::VectorAdaptor *) rr->read<void *>(*heap));
-    if (!a.get ()) {
+    if (!a) {
       *ret = Qnil;
     } else {
       *ret = rb_ary_new ();
@@ -821,7 +821,7 @@ struct reader<gsi::MapType>
   void operator() (gsi::SerialArgs *rr, VALUE *ret, Proxy * /*self*/, const gsi::ArgType &atype, tl::Heap *heap)
   {
     std::unique_ptr<gsi::MapAdaptor> a ((gsi::MapAdaptor *) rr->read<void *>(*heap));
-    if (!a.get ()) {
+    if (!a) {
       *ret = Qnil;
     } else {
       *ret = rb_hash_new ();

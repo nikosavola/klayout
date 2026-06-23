@@ -448,7 +448,7 @@ public:
 
   tl::Variant eval ()
   {
-    if (mp_expr.get ()) {
+    if (mp_expr) {
       return mp_expr->execute ();
     } else {
       return tl::Variant ();

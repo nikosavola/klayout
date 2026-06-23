@@ -132,7 +132,7 @@ PropertiesSet::PropertiesSet (const PropertiesSet &other)
 }
 
 PropertiesSet::PropertiesSet (const PropertiesSet &&other)
-  : m_map (std::move (other.m_map)), m_hash (other.m_hash)
+  : m_map (other.m_map), m_hash (other.m_hash)
 {
   //  .. nothing yet ..
 }
@@ -148,7 +148,7 @@ PropertiesSet::operator= (const PropertiesSet &other)
 PropertiesSet &
 PropertiesSet::operator= (const PropertiesSet &&other)
 {
-  m_map = std::move (other.m_map);
+  m_map = other.m_map;
   m_hash = other.m_hash;
   return *this;
 }

@@ -2875,7 +2875,8 @@ LayoutViewBase::save_layer_props (const std::string &fn)
 
     //  multiple tabs are written in the multi-tab format
     std::vector<lay::LayerPropertiesList> props;
-    for (unsigned int i = 0; i < layer_lists (); ++i) {
+    props.reserve(layer_lists ());
+for (unsigned int i = 0; i < layer_lists (); ++i) {
       props.push_back (get_properties (i));
     }
 

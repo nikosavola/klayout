@@ -441,7 +441,7 @@ DeepTexts::apply_filter (const TextFilterBase &filter, bool with_true, bool with
 
     const db::Shapes &s = c->shapes (texts.layer ());
 
-    if (vars.get ()) {
+    if (vars) {
 
       const std::set<db::ICplxTrans> &vv = vars->variants (c->cell_index ());
       for (auto v = vv.begin (); v != vv.end (); ++v) {

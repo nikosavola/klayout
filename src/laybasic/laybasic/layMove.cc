@@ -450,7 +450,7 @@ void
 MoveService::cancel_transaction ()
 { 
   if (m_dragging) {
-    if (mp_transaction.get ()) {
+    if (mp_transaction) {
       mp_transaction->cancel ();
     }
     mp_transaction.reset (0);

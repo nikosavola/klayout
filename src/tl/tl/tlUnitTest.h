@@ -375,7 +375,7 @@ public:
   void detailed_diff (const std::string &file, int line, const std::string &msg, const X &subject, const Y &ref)
   {
     std::ostringstream sstr;
-    sstr << msg << std::endl;
+    sstr << msg << '\n';
     write_detailed_diff (sstr, tl::to_string (subject), tl::to_string (ref));
     raise (file, line, sstr.str ());
   }

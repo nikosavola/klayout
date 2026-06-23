@@ -620,7 +620,8 @@ db::DPolygon
 Polygon::polygon () const
 {
   std::vector<db::DPoint> pts;
-  for (int i = 0; i < int (size ()); ++i) {
+  pts.reserve(int (size ()));
+for (int i = 0; i < int (size ()); ++i) {
     pts.push_back (*vertex (i));
   }
 

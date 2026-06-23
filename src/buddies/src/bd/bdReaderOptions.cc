@@ -824,8 +824,8 @@ GenericReaderOptions::configure (db::LoadLayoutOptions &load_options)
 
 static std::string::size_type find_file_sep (const std::string &s, std::string::size_type from)
 {
-  std::string::size_type p1 = s.find ("+", from);
-  std::string::size_type p2 = s.find (",", from);
+  std::string::size_type p1 = s.find ('+', from);
+  std::string::size_type p2 = s.find (',', from);
 
   if (p1 == std::string::npos) {
     return p2;

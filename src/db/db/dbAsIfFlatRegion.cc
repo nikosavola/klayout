@@ -1528,7 +1528,7 @@ AsIfFlatRegion::sized_inside (const Region &inside, bool outside, coord_type dx,
     db::FlatRegion *res_flat = dynamic_cast<db::FlatRegion *> (res.get ());
     tl_assert (res_flat != 0);
     results.push_back (&res_flat->raw_polygons ());
-    proc.run_flat (prev.get () ? prev->begin () : polygons, others, std::vector<bool> (), &op, results);
+    proc.run_flat (prev ? prev->begin () : polygons, others, std::vector<bool> (), &op, results);
 
     //  NOTE: in the last step we apply a polygon breaker in addition to "merge" so the
     //  result is granular for better deep mode performance

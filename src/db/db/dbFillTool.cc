@@ -414,7 +414,7 @@ fill_polygon_impl (db::Cell *cell, const db::Polygon &fp0, db::cell_index_type f
 
     //  not need to do anything
 
-  } else if (exclude_rasterized.get ()) {
+  } else if (exclude_rasterized) {
 
     tl_assert (remaining_parts == 0);
     GenericRasterizer am (filled_poly, rasterized_area, row_step, column_step, origin, fc_bbox.p2 () - fc_bbox.p1 ());

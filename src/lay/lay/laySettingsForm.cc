@@ -123,7 +123,7 @@ SettingsForm::SettingsForm (QWidget *parent, lay::Dispatcher *dispatcher, const 
         //  add the entry in the items tree
         while (! config_title.empty ()) {
 
-          size_t sep = config_title.find ("|");
+          size_t sep = config_title.find ('|');
           std::string subtitle;
           if (sep != std::string::npos) {
             subtitle = std::string (config_title, 0, sep);

@@ -1057,7 +1057,7 @@ DEFImporter::read_vias (db::Layout &layout, db::Cell & /*design*/, double scale)
 
       if (test ("VIARULE")) {
 
-        if (! rule_based_vg.get ()) {
+        if (! rule_based_vg) {
           rule_based_vg.reset (new RuleBasedViaGenerator ());
         }
 
@@ -1065,7 +1065,7 @@ DEFImporter::read_vias (db::Layout &layout, db::Cell & /*design*/, double scale)
 
       } else if (test ("CUTSIZE")) {
 
-        if (! rule_based_vg.get ()) {
+        if (! rule_based_vg) {
           rule_based_vg.reset (new RuleBasedViaGenerator ());
         }
 
@@ -1073,7 +1073,7 @@ DEFImporter::read_vias (db::Layout &layout, db::Cell & /*design*/, double scale)
 
       } else if (test ("CUTSPACING")) {
 
-        if (! rule_based_vg.get ()) {
+        if (! rule_based_vg) {
           rule_based_vg.reset (new RuleBasedViaGenerator ());
         }
 
@@ -1081,7 +1081,7 @@ DEFImporter::read_vias (db::Layout &layout, db::Cell & /*design*/, double scale)
 
       } else if (test ("ORIGIN")) {
 
-        if (! rule_based_vg.get ()) {
+        if (! rule_based_vg) {
           rule_based_vg.reset (new RuleBasedViaGenerator ());
         }
 
@@ -1089,7 +1089,7 @@ DEFImporter::read_vias (db::Layout &layout, db::Cell & /*design*/, double scale)
 
       } else if (test ("ENCLOSURE")) {
 
-        if (! rule_based_vg.get ()) {
+        if (! rule_based_vg) {
           rule_based_vg.reset (new RuleBasedViaGenerator ());
         }
 
@@ -1098,7 +1098,7 @@ DEFImporter::read_vias (db::Layout &layout, db::Cell & /*design*/, double scale)
 
       } else if (test ("OFFSET")) {
 
-        if (! rule_based_vg.get ()) {
+        if (! rule_based_vg) {
           rule_based_vg.reset (new RuleBasedViaGenerator ());
         }
 
@@ -1107,7 +1107,7 @@ DEFImporter::read_vias (db::Layout &layout, db::Cell & /*design*/, double scale)
 
       } else if (test ("ROWCOL")) {
 
-        if (! rule_based_vg.get ()) {
+        if (! rule_based_vg) {
           rule_based_vg.reset (new RuleBasedViaGenerator ());
         }
 
@@ -1121,7 +1121,7 @@ DEFImporter::read_vias (db::Layout &layout, db::Cell & /*design*/, double scale)
 
       } else if (test ("PATTERN")) {
 
-        if (! rule_based_vg.get ()) {
+        if (! rule_based_vg) {
           rule_based_vg.reset (new RuleBasedViaGenerator ());
         }
 
@@ -1129,7 +1129,7 @@ DEFImporter::read_vias (db::Layout &layout, db::Cell & /*design*/, double scale)
 
       } else if (test ("LAYERS")) {
 
-        if (! rule_based_vg.get ()) {
+        if (! rule_based_vg) {
           rule_based_vg.reset (new RuleBasedViaGenerator ());
         }
 
@@ -1146,7 +1146,7 @@ DEFImporter::read_vias (db::Layout &layout, db::Cell & /*design*/, double scale)
 
       } else if ((is_polygon = test ("POLYGON")) || test ("RECT")) {
 
-        if (! geo_based_vg.get ()) {
+        if (! geo_based_vg) {
           geo_based_vg.reset (new GeometryBasedLayoutGenerator ());
         }
 
@@ -1216,10 +1216,10 @@ DEFImporter::read_vias (db::Layout &layout, db::Cell & /*design*/, double scale)
 
     if (rule_based_vg.get () && geo_based_vg.get ()) {
       error (tl::to_string (tr ("A via can only be defined through a VIARULE or geometry, not both ways")));
-    } else if (rule_based_vg.get ()) {
+    } else if (rule_based_vg) {
       rule_based_vg->def_local = true;
       reader_state ()->register_via_cell (n, std::string (), rule_based_vg.release ());
-    } else if (geo_based_vg.get ()) {
+    } else if (geo_based_vg) {
       geo_based_vg->def_local = true;
       reader_state ()->register_via_cell (n, std::string (), geo_based_vg.release ());
     } else {

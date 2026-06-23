@@ -459,7 +459,7 @@ SearchReplaceResults::rowCount (const QModelIndex &parent) const
 static std::string 
 escape_csv (const std::string &s)
 {
-  if (s.find (",") != std::string::npos) {
+  if (s.find (',') != std::string::npos) {
     std::string r = "\"";
     for (const char *c = s.c_str (); *c; ++c) {
       if (*c == '\"') {

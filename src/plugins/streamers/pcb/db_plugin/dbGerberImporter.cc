@@ -851,21 +851,21 @@ GerberImporter::do_load_project (tl::TextInputStream &stream)
 void 
 GerberImporter::save_project (std::ostream &stream)
 {
-  stream << "# Gerber PCB import project" << std::endl;
-  stream << "# Created by KLayout" << std::endl;
-  stream << "dir=" << tl::to_quoted_string (m_dir) << std::endl;
-  stream << "cell=" << tl::to_quoted_string (m_cell_name) << std::endl;
-  stream << "dbu=" << tl::to_string (m_dbu) << std::endl;
-  stream << "circle-points=" << tl::to_string (m_circle_points) << std::endl;
-  stream << "transformation=" << tl::to_quoted_string (m_global_trans.to_string ()) << std::endl;
+  stream << "# Gerber PCB import project" << '\n';
+  stream << "# Created by KLayout" << '\n';
+  stream << "dir=" << tl::to_quoted_string (m_dir) << '\n';
+  stream << "cell=" << tl::to_quoted_string (m_cell_name) << '\n';
+  stream << "dbu=" << tl::to_string (m_dbu) << '\n';
+  stream << "circle-points=" << tl::to_string (m_circle_points) << '\n';
+  stream << "transformation=" << tl::to_quoted_string (m_global_trans.to_string ()) << '\n';
   for (std::vector <std::pair<db::DPoint, db::DPoint> >::const_iterator r = m_reference_points.begin (); r != m_reference_points.end (); ++r) {
-    stream << "ref-point=(" << tl::to_string (r->first.x ()) << "," << tl::to_string (r->first.y ()) << "),(" << tl::to_string (r->second.x ()) << "," << tl::to_string (r->second.y ()) << ")" << std::endl;
+    stream << "ref-point=(" << tl::to_string (r->first.x ()) << "," << tl::to_string (r->first.y ()) << "),(" << tl::to_string (r->second.x ()) << "," << tl::to_string (r->second.y ()) << ")" << '\n';
   }
-  stream << "merge=" << (m_merge ? 1 : 0) << std::endl;
-  stream << "invert-negative-layers=" << (m_invert_negative_layers ? 1 : 0) << std::endl;
-  stream << "border=" << tl::to_string (m_border) << std::endl;
+  stream << "merge=" << (m_merge ? 1 : 0) << '\n';
+  stream << "invert-negative-layers=" << (m_invert_negative_layers ? 1 : 0) << '\n';
+  stream << "border=" << tl::to_string (m_border) << '\n';
   if (! m_layer_styles.empty ()) {
-    stream << "layer-styles=" << tl::to_quoted_string (m_layer_styles) << std::endl;
+    stream << "layer-styles=" << tl::to_quoted_string (m_layer_styles) << '\n';
   }
 
   for (std::vector<db::GerberFile>::iterator file = m_files.begin (); file != m_files.end (); ++file) {
@@ -885,7 +885,7 @@ GerberImporter::save_project (std::ostream &stream)
       stream << " merge=" << tl::to_string (file->merge_mode ());
     }
 
-    stream << std::endl;
+    stream << '\n';
 
   }
 }

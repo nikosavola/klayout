@@ -209,7 +209,7 @@ public:
    */
   bool has_complex_region () const
   {
-    return mp_complex_region.get () != 0;
+    return mp_complex_region != 0;
   }
 
   /**

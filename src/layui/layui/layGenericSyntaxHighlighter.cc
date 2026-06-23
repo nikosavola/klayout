@@ -141,9 +141,9 @@ bool GenericSyntaxHighlighterRuleStringList::match (const QString &input, unsign
 void GenericSyntaxHighlighterRuleStringList::dump () const
 {
   if (! m_s.empty ()) {
-    std::cout << "    rule(string list) '" << tl::to_string (*m_s.begin ()) << " ...'" << std::endl;
+    std::cout << "    rule(string list) '" << tl::to_string (*m_s.begin ()) << " ...'" << '\n';
   } else {
-    std::cout << "    rule(string list) ''" << std::endl;
+    std::cout << "    rule(string list) ''" << '\n';
   }
 }
 
@@ -194,7 +194,7 @@ public:
 
   virtual void dump () const
   {
-    std::cout << "    rule(string) '" << tl::to_string (m_s) << "' dynamic=" << m_dynamic << ", insensitive=" << m_insensitive << std::endl;
+    std::cout << "    rule(string) '" << tl::to_string (m_s) << "' dynamic=" << m_dynamic << ", insensitive=" << m_insensitive << '\n';
   }
 
 private:
@@ -263,7 +263,7 @@ public:
 
   virtual void dump () const
   {
-    std::cout << "    rule(range) '" << tl::to_string (m_s1) << "'..'" << tl::to_string (m_s2) << "' dynamic=" << m_dynamic << std::endl;
+    std::cout << "    rule(range) '" << tl::to_string (m_s1) << "'..'" << tl::to_string (m_s2) << "' dynamic=" << m_dynamic << '\n';
   }
 
 private:
@@ -306,7 +306,7 @@ public:
 
   virtual void dump () const
   {
-    std::cout << "    rule(int)" << std::endl;
+    std::cout << "    rule(int)" << '\n';
   }
 };
 
@@ -368,7 +368,7 @@ public:
 
   virtual void dump () const
   {
-    std::cout << "    rule(float)" << std::endl;
+    std::cout << "    rule(float)" << '\n';
   }
 };
 
@@ -403,7 +403,7 @@ public:
 
   virtual void dump () const
   {
-    std::cout << "    rule(identifier)" << std::endl;
+    std::cout << "    rule(identifier)" << '\n';
   }
 };
 
@@ -431,7 +431,7 @@ public:
 
   virtual void dump () const
   {
-    std::cout << "    rule(line continue)" << std::endl;
+    std::cout << "    rule(line continue)" << '\n';
   }
 };
 
@@ -469,7 +469,7 @@ public:
 
   virtual void dump () const
   {
-    std::cout << "    rule(spaces)" << std::endl;
+    std::cout << "    rule(spaces)" << '\n';
   }
 };
 
@@ -503,7 +503,7 @@ public:
 
   virtual void dump () const
   {
-    std::cout << "    rule(any char) '" << tl::to_string (m_s) << std::endl;
+    std::cout << "    rule(any char) '" << tl::to_string (m_s) << '\n';
   }
 
 private:
@@ -617,7 +617,7 @@ public:
 
   virtual void dump () const
   {
-    std::cout << "    rule(regexp) '" << tl::to_string (m_re.pattern ()) << "' dynamic=" << m_dynamic << std::endl;
+    std::cout << "    rule(regexp) '" << tl::to_string (m_re.pattern ()) << "' dynamic=" << m_dynamic << '\n';
   }
 
 private:
@@ -731,14 +731,14 @@ GenericSyntaxHighlighterRule::match (const QString &input, unsigned int generati
 void 
 GenericSyntaxHighlighterRule::dump () const
 {
-  std::cout << "    [attribute=" << m_attribute_id << ", context_id=" << m_target_context_id << ", column=" << m_column << ", first-non-space=" << m_first_non_space << ", lookahead=" << m_lookahead << "]" << std::endl;
+  std::cout << "    [attribute=" << m_attribute_id << ", context_id=" << m_target_context_id << ", column=" << m_column << ", first-non-space=" << m_first_non_space << ", lookahead=" << m_lookahead << "]" << '\n';
   mp_rule->dump ();
   if (! m_child_rules.empty ()) {
-    std::cout << "    <-- begin children -->" << std::endl;
+    std::cout << "    <-- begin children -->" << '\n';
     for (std::list<GenericSyntaxHighlighterRule>::const_iterator r = m_child_rules.begin (); r != m_child_rules.end (); ++r) {
       r->dump ();
     }
-    std::cout << "    <-- end children -->" << std::endl;
+    std::cout << "    <-- end children -->" << '\n';
   }
 }
 
@@ -825,7 +825,7 @@ GenericSyntaxHighlighterContext::include (const GenericSyntaxHighlighterContext 
 void 
 GenericSyntaxHighlighterContext::dump () const
 {
-  std::cout << "  [context id=" << m_id << ", fallthrough=" << m_fallthrough_context << ", linebegin=" << m_linebegin_context << ", lineend=" << m_lineend_context << ", attribute=" << m_attribute_id << "]" << std::endl;
+  std::cout << "  [context id=" << m_id << ", fallthrough=" << m_fallthrough_context << ", linebegin=" << m_linebegin_context << ", lineend=" << m_lineend_context << ", attribute=" << m_attribute_id << "]" << '\n';
   for (std::list<GenericSyntaxHighlighterRule>::const_iterator r = m_rules.begin (); r != m_rules.end (); ++r) {
     std::cout << "  ";
     r->dump ();
@@ -895,9 +895,9 @@ GenericSyntaxHighlighterContexts::context (int id) const
 void 
 GenericSyntaxHighlighterContexts::dump () const
 {
-    std::cout << "[contexts]" << std::endl;
+    std::cout << "[contexts]" << '\n';
   for (std::map<QString, GenericSyntaxHighlighterContext>::const_iterator c = m_contexts_by_name.begin (); c != m_contexts_by_name.end (); ++c) {
-    std::cout << tl::to_string (c->first) << ":" << std::endl;
+    std::cout << tl::to_string (c->first) << ":" << '\n';
     c->second.dump ();
   }
 }

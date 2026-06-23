@@ -300,7 +300,7 @@ InputHttpStreamPrivateData::timeout () const
 void
 InputHttpStreamPrivateData::close ()
 {
-  if (mp_active_reply.get ()) {
+  if (mp_active_reply) {
     QNetworkReply *reply = mp_active_reply.release ();
     reply->abort ();
     reply->deleteLater ();

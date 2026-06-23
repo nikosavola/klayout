@@ -3136,7 +3136,7 @@ Expression::operator= (const Expression &d)
     mp_eval = d.mp_eval;
     m_local_text = d.m_local_text;
     mp_text = d.mp_text;
-    if (d.m_root.get ()) {
+    if (d.m_root) {
       m_root.reset (d.m_root->clone (this));
     } else {
       m_root.reset (0);
@@ -3156,7 +3156,7 @@ Expression::execute () const
 void
 Expression::execute (EvalTarget &v) const
 {
-  if (m_root.get ()) {
+  if (m_root) {
     m_root->execute (v);
   } 
 }
@@ -3259,7 +3259,7 @@ Eval::eval_top (ExpressionParserContext &ex, std::unique_ptr<ExpressionNode> &n)
         eval_assign (ex, nn);
       }
 
-      if (! n.get ()) {
+      if (! n) {
         n.reset (nn.release ());
       } else if (dynamic_cast <SequenceExpressionNode *> (n.get ())) {
         n->add_child (nn.release ());

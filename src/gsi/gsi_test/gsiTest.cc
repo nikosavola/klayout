@@ -48,7 +48,7 @@ static int a_count = 0;
 
 void A::br () 
 {
-  std::cout << "YOUR CHANCE TO SET A BREAKPOINT HERE" << std::endl;
+  std::cout << "YOUR CHANCE TO SET A BREAKPOINT HERE" << '\n';
 }
 
 A::A () {
@@ -134,7 +134,8 @@ A::qba_cref_to_ia (const QByteArray &ba)
   const char *cp = ba.constData ();
   size_t n = ba.size ();
   std::vector<int> ia;
-  for (size_t i = 0; i < n; ++i) {
+  ia.reserve(n);
+for (size_t i = 0; i < n; ++i) {
     ia.push_back (int (*cp++));
   }
   return ia;
@@ -207,7 +208,8 @@ A::qs_cref_to_ia (const QString &qs)
   const QChar *cp = qs.constData ();
   size_t n = qs.size ();
   std::vector<int> ia;
-  for (size_t i = 0; i < n; ++i) {
+  ia.reserve(n);
+for (size_t i = 0; i < n; ++i) {
     ia.push_back ((*cp++).unicode ());
   }
   return ia;
@@ -242,7 +244,8 @@ A::ql1s_cref_to_ia (const QLatin1String &ql1s)
   std::vector<int> ia;
   const char *cp = ql1s.data ();
   size_t n = ql1s.size ();
-  for (size_t i = 0; i < n; ++i) {
+  ia.reserve(n);
+for (size_t i = 0; i < n; ++i) {
     ia.push_back ((unsigned char) *cp++);
   }
   return ia;
@@ -589,25 +592,25 @@ int E::inst_count()
 const E &E::icref() 
 { 
   //  late initialisation is required because otherwise no binding happens
-  if (! e_inst.get ()) { 
+  if (! e_inst) { 
     e_inst.reset (new E ()); 
   } 
-  return *e_inst.get (); 
+  return *e_inst; 
 }
 
 E &E::incref() 
 { 
   //  late initialisation is required because otherwise no binding happens
-  if (! e_inst.get ()) { 
+  if (! e_inst) { 
     e_inst.reset (new E ()); 
   }
-  return *e_inst.get (); 
+  return *e_inst; 
 }
 
 const E *E::ic() 
 { 
   //  late initialisation is required because otherwise no binding happens
-  if (! e_inst.get ()) { 
+  if (! e_inst) { 
     e_inst.reset (new E ()); 
   } 
   return e_inst.get (); 
@@ -616,7 +619,7 @@ const E *E::ic()
 E *E::inc() 
 { 
   //  late initialisation is required because otherwise no binding happens
-  if (! e_inst.get ()) { 
+  if (! e_inst) { 
     e_inst.reset (new E ()); 
   }
   return e_inst.get (); 
@@ -636,25 +639,25 @@ std::unique_ptr<F> F::f_inst;
 const F &F::icref() 
 { 
   //  late initialisation is required because otherwise no binding happens
-  if (! f_inst.get ()) { 
+  if (! f_inst) { 
     f_inst.reset (new F ()); 
   } 
-  return *f_inst.get (); 
+  return *f_inst; 
 }
 
 F &F::incref() 
 { 
   //  late initialisation is required because otherwise no binding happens
-  if (! f_inst.get ()) { 
+  if (! f_inst) { 
     f_inst.reset (new F ()); 
   }
-  return *f_inst.get (); 
+  return *f_inst; 
 }
 
 const F *F::ic() 
 { 
   //  late initialisation is required because otherwise no binding happens
-  if (! f_inst.get ()) { 
+  if (! f_inst) { 
     f_inst.reset (new F ()); 
   } 
   return f_inst.get (); 
@@ -663,7 +666,7 @@ const F *F::ic()
 F *F::inc() 
 { 
   //  late initialisation is required because otherwise no binding happens
-  if (! f_inst.get ()) { 
+  if (! f_inst) { 
     f_inst.reset (new F ()); 
   }
   return f_inst.get (); 

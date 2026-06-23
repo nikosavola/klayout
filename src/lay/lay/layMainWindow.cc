@@ -1560,7 +1560,7 @@ MainWindow::cm_print ()
   //  TODO: move to lay::LayoutView
 
   //  Late-initialize the printer to save time on startup
-  if (! mp_printer.get ()) {
+  if (! mp_printer) {
     mp_printer.reset (new QPrinter ());
   }
 

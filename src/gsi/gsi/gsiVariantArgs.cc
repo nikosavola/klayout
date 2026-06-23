@@ -655,7 +655,7 @@ struct reader<gsi::StringType>
   operator() (tl::Variant *out, gsi::SerialArgs *rr, const gsi::ArgType &, tl::Heap *heap)
   {
     std::unique_ptr<StringAdaptor> a ((StringAdaptor *) rr->read<void *>(*heap));
-    if (!a.get ()) {
+    if (!a) {
       *out = tl::Variant ();
     } else {
       *out = tl::Variant (std::string (a->c_str (), a->size ()));
@@ -673,7 +673,7 @@ struct reader<gsi::VariantType>
   operator() (tl::Variant *out, gsi::SerialArgs *rr, const gsi::ArgType &, tl::Heap *heap)
   {
     std::unique_ptr<VariantAdaptor> a ((VariantAdaptor *) rr->read<void *>(*heap));
-    if (!a.get ()) {
+    if (!a) {
       *out = tl::Variant ();
     } else {
       *out = a->var ();
@@ -691,7 +691,7 @@ struct reader<MapType>
   operator() (tl::Variant *out, gsi::SerialArgs *rr, const gsi::ArgType &atype, tl::Heap *heap)
   {
     std::unique_ptr<MapAdaptor> a ((MapAdaptor *) rr->read<void *>(*heap));
-    if (!a.get ()) {
+    if (!a) {
       *out = tl::Variant ();
     } else {
       tl_assert (atype.inner () != 0);
@@ -712,7 +712,7 @@ struct reader<VectorType>
   operator() (tl::Variant *out, gsi::SerialArgs *rr, const gsi::ArgType &atype, tl::Heap *heap)
   {
     std::unique_ptr<VectorAdaptor> a ((VectorAdaptor *) rr->read<void *>(*heap));
-    if (!a.get ()) {
+    if (!a) {
       *out = tl::Variant ();
     } else {
       tl_assert (atype.inner () != 0);

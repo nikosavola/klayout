@@ -636,23 +636,23 @@ HelpSource::produce_main_index ()
 {
   std::ostringstream os;
 
-  os << "<doc><title>" << tl::to_string (QObject::tr ("Main Index")) << "</title>" << std::endl;
+  os << "<doc><title>" << tl::to_string (QObject::tr ("Main Index")) << "</title>" << '\n';
 
-  os << "<p>" << tl::to_string (QObject::tr ("Welcome to KLayout's documentation")) << "</p>" << std::endl;
+  os << "<p>" << tl::to_string (QObject::tr ("Welcome to KLayout's documentation")) << "</p>" << '\n';
   os << "<p>" << tl::to_string (QObject::tr (
     "The documentation is organized in chapters.\n"
     "For a brief introduction read the User Manual. 'Various Topics' is a collection of brief articles about specific topics.\n"
     "For Ruby programming see the 'Programming Ruby Scripts' chapter and for a complete Ruby class reference see the 'Class Index'.\n"
   ));
-  os << "</p>" << std::endl;
+  os << "</p>" << '\n';
 
-  os << "<topics>" << std::endl;
+  os << "<topics>" << '\n';
   for (tl::Registrar<lay::HelpProvider>::iterator cls = tl::Registrar<lay::HelpProvider>::begin (); cls != tl::Registrar<lay::HelpProvider>::end (); ++cls) {
-    os << "<topic href=\"" << cls->index (this) << "\"/>" << std::endl;
+    os << "<topic href=\"" << cls->index (this) << "\"/>" << '\n';
   }
-  os << "</topics>" << std::endl;
+  os << "</topics>" << '\n';
 
-  os << "</doc>" << std::endl;
+  os << "</doc>" << '\n';
 
   std::string text = os.str ();
 
@@ -671,9 +671,9 @@ HelpSource::produce_search (const std::string &string)
 {
   std::ostringstream os;
 
-  os << "<doc><title>" << tl::to_string (QObject::tr ("Search results for")) << " \"" << escape_xml (string) << "\"</title>" << std::endl;
+  os << "<doc><title>" << tl::to_string (QObject::tr ("Search results for")) << " \"" << escape_xml (string) << "\"</title>" << '\n';
 
-  os << "<h2>" << tl::to_string (QObject::tr ("Search results for")) << " \"" << escape_xml (string) << "\"</h2><p/>" << std::endl;
+  os << "<h2>" << tl::to_string (QObject::tr ("Search results for")) << " \"" << escape_xml (string) << "\"</h2><p/>" << '\n';
 
   std::vector <int> exact_hit_indices;
 
@@ -688,12 +688,12 @@ HelpSource::produce_search (const std::string &string)
   if (! exact_hit_indices.empty ()) {
 
     if (exact_hit_indices.size () > 1) {
-      os << "<p>" << exact_hit_indices.size () << " " << tl::to_string (QObject::tr ("exact hits found")) << "</p>" << std::endl;
+      os << "<p>" << exact_hit_indices.size () << " " << tl::to_string (QObject::tr ("exact hits found")) << "</p>" << '\n';
     } else {
-      os << "<p>" << tl::to_string (QObject::tr ("One exact hit found")) << "</p>" << std::endl;
+      os << "<p>" << tl::to_string (QObject::tr ("One exact hit found")) << "</p>" << '\n';
     }
 
-    os << "<table>" << std::endl;
+    os << "<table>" << '\n';
 
     std::sort (exact_hit_indices.begin (), exact_hit_indices.end (), StringLengthSorter (m_index));
 
@@ -705,18 +705,18 @@ HelpSource::produce_search (const std::string &string)
       const IndexEntry &ie = m_index[*i];
       size_t f = ie.normalized_key.find (string);
 
-      os << "<tr>" << std::endl;
-      os << "<td>" << escape_xml (std::string (ie.key, 0, f)) << "<b>" << escape_xml (std::string (ie.key, f, string.size ())) << "</b>" << escape_xml (std::string (ie.key, f + string.size ())) << "</td>" << std::endl;
-      os << "<td><a href=\"" << ie.path << "\"><nobr>" << escape_xml (ie.title) << "</nobr></a></td>" << std::endl;
-      os << "</tr>" << std::endl;
+      os << "<tr>" << '\n';
+      os << "<td>" << escape_xml (std::string (ie.key, 0, f)) << "<b>" << escape_xml (std::string (ie.key, f, string.size ())) << "</b>" << escape_xml (std::string (ie.key, f + string.size ())) << "</td>" << '\n';
+      os << "<td><a href=\"" << ie.path << "\"><nobr>" << escape_xml (ie.title) << "</nobr></a></td>" << '\n';
+      os << "</tr>" << '\n';
 
     }
 
     if (int (exact_hit_indices.size ()) >= max_n) {
-      os << "<tr><td>...</td></tr>" << std::endl;
+      os << "<tr><td>...</td></tr>" << '\n';
     }
 
-    os << "</table>" << std::endl;
+    os << "</table>" << '\n';
 
   } else {
 
@@ -743,24 +743,24 @@ HelpSource::produce_search (const std::string &string)
 
       if (f == std::string::npos) {
         if (n == 0) {
-          os << "<table>" << std::endl;
+          os << "<table>" << '\n';
         }
-        os << "<tr>" << std::endl;
-        os << "<td>" << escape_xml (ie.key) << "</td>" << std::endl;
-        os << "<td><a href=\"" << ie.path << "\"><nobr>" << escape_xml (ie.title) << "</nobr></a></td>" << std::endl;
-        os << "</tr>" << std::endl;
+        os << "<tr>" << '\n';
+        os << "<td>" << escape_xml (ie.key) << "</td>" << '\n';
+        os << "<td><a href=\"" << ie.path << "\"><nobr>" << escape_xml (ie.title) << "</nobr></a></td>" << '\n';
+        os << "</tr>" << '\n';
         ++n;
       }
 
     }
 
     if (n > 0) {
-      os << "</table>" << std::endl;
+      os << "</table>" << '\n';
     }
 
   }
 
-  os << "</doc>" << std::endl;
+  os << "</doc>" << '\n';
 
   std::string text = os.str ();
 
@@ -907,7 +907,7 @@ HelpSource::process (const QDomElement &element, const std::string &path, QXmlSt
 
     std::string path_wo_anchor = path;
     std::string::size_type n;
-    if ((n = path.rfind ("#")) != std::string::npos) {
+    if ((n = path.rfind ('#')) != std::string::npos) {
       path_wo_anchor = std::string (path, 0, n);
     }
 

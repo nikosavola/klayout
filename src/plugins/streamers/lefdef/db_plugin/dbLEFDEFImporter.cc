@@ -966,7 +966,7 @@ LEFDEFReaderOptions::set_lef_context_enabled (bool f)
 db::LEFDEFReaderState *
 LEFDEFReaderOptions::reader_state (db::Layout &layout, const std::string &base_path, const db::LoadLayoutOptions &options) const
 {
-  if (m_lef_context_enabled && ! mp_reader_state.get ()) {
+  if (m_lef_context_enabled && ! mp_reader_state) {
     mp_reader_state.reset (new db::LEFDEFReaderState (this));
     mp_reader_state->init (layout, base_path, options);
   }
@@ -1068,7 +1068,7 @@ LEFDEFReaderState::warn (const std::string &msg, int warn_level)
 void
 LEFDEFReaderState::ensure_lef_importer (int warn_level)
 {
-  if (! mp_lef_importer.get ()) {
+  if (! mp_lef_importer) {
     mp_lef_importer.reset (new db::LEFImporter (warn_level));
   }
 }

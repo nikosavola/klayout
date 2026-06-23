@@ -273,7 +273,7 @@ LineStyleInfo::scaled (unsigned int n) const
 
   tl::MutexLocker locker (& s_mutex);
 
-  if (! m_scaled_pattern.get ()) {
+  if (! m_scaled_pattern) {
     m_scaled_pattern.reset (new std::map<unsigned int, LineStyleInfo> ());
   }
 

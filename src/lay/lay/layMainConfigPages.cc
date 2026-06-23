@@ -468,8 +468,8 @@ CustomizeMenuConfigPage::apply (const std::vector<std::pair<std::string, std::st
 
       std::string tl_menu;
       std::string rem_path = path;
-      if (path.find ("@") == 0) {
-        size_t n = path.find (".");
+      if (path.find ('@') == 0) {
+        size_t n = path.find ('.');
         if (n != std::string::npos) {
           tl_menu = std::string (path, 1, n - 1);
           rem_path = std::string (path, n + 1);

@@ -450,7 +450,7 @@ public:
     for (unsigned int i = 0; i < l; ++i) {
       std::cout << "  ";
     }
-    std::cout << "ShapeFilter (" << m_layers.to_string () << ", " << (int)m_flags << ") :" << std::endl;
+    std::cout << "ShapeFilter (" << m_layers.to_string () << ", " << (int)m_flags << ") :" << '\n';
     FilterBracket::dump (l + 1);
   }
 
@@ -1384,7 +1384,7 @@ public:
     for (unsigned int i = 0; i < l; ++i) {
       std::cout << "  ";
     }
-    std::cout << "ChildCellFilter (" << m_pattern.pattern () << ", " << (int)m_instance_mode << ") :" << std::endl;
+    std::cout << "ChildCellFilter (" << m_pattern.pattern () << ", " << (int)m_instance_mode << ") :" << '\n';
     FilterBracket::dump (l + 1);
   }
 
@@ -1596,7 +1596,7 @@ public:
 
     } else if (id == m_pids.instances) {
 
-      if (! m_cell_counter.get ()) {
+      if (! m_cell_counter) {
         if (mp_parent) {
           m_cell_counter.reset (new db::CellCounter (layout (), mp_parent->cell_index ()));
         } else {
@@ -1670,7 +1670,7 @@ public:
     for (unsigned int i = 0; i < l; ++i) {
       std::cout << "  ";
     }
-    std::cout << "CellFilter (" << m_pattern.pattern () << ") :" << std::endl;
+    std::cout << "CellFilter (" << m_pattern.pattern () << ") :" << '\n';
     FilterBracket::dump (l + 1);
   }
 
@@ -1819,9 +1819,9 @@ public:
       std::cout << "  ";
     }
     if (m_transparent) {
-      std::cout << "TransparentDeleteFilter ()" << std::endl;
+      std::cout << "TransparentDeleteFilter ()" << '\n';
     } else {
-      std::cout << "DeleteFilter ()" << std::endl;
+      std::cout << "DeleteFilter ()" << '\n';
     }
     FilterBracket::dump (l + 1);
   }
@@ -1922,9 +1922,9 @@ public:
       std::cout << "  ";
     }
     if (m_transparent) {
-      std::cout << "TransparentWithDoFilter (" << m_do_expression << ")" << std::endl;
+      std::cout << "TransparentWithDoFilter (" << m_do_expression << ")" << '\n';
     } else {
-      std::cout << "WithDoFilter (" << m_do_expression << ")" << std::endl;
+      std::cout << "WithDoFilter (" << m_do_expression << ")" << '\n';
     }
     FilterBracket::dump (l + 1);
   }
@@ -2164,7 +2164,7 @@ public:
     if (! m_sort_expression.empty ()) {
       std::cout << " sorted by " << m_sort_expression << " unique=" << m_unique;
     }
-    std::cout << ")" << std::endl;
+    std::cout << ")" << '\n';
     FilterBracket::dump (l + 1);
   }
 
@@ -2240,7 +2240,7 @@ public:
     for (unsigned int i = 0; i < l; ++i) {
       std::cout << "  ";
     }
-    std::cout << "ConditionalFilter (" << m_expr << ") :" << std::endl;
+    std::cout << "ConditionalFilter (" << m_expr << ") :" << '\n';
     FilterBracket::dump (l + 1);
   }
 
@@ -2409,7 +2409,7 @@ LayoutQueryIterator::dump () const
 {
   const_cast<LayoutQueryIterator *> (this)->ensure_initialized ();
   mp_root_state->dump ();
-  std::cout << std::endl;
+  std::cout << '\n';
 }
 
 void 
@@ -2961,7 +2961,7 @@ FilterBase::dump (unsigned int l) const
   for (unsigned int i = 0; i < l; ++i) {
     std::cout << "  ";
   }
-  std::cout << "FilterBase" << std::endl;
+  std::cout << "FilterBase" << '\n';
 }
 
 // --------------------------------------------------------------------------------
@@ -3183,7 +3183,7 @@ FilterBracket::dump (unsigned int l) const
     for (unsigned int i = 0; i < l; ++i) {
       std::cout << "  ";
     }
-    std::cout << "FilterBracket (" << m_loopmin << ".." << m_loopmax << ") {" << std::endl;
+    std::cout << "FilterBracket (" << m_loopmin << ".." << m_loopmax << ") {" << '\n';
 
     std::deque<const FilterBase *> todo;
     std::vector<const FilterBase *> filters;
@@ -3214,27 +3214,27 @@ FilterBracket::dump (unsigned int l) const
       for (unsigned int i = 0; i < l + 1; ++i) {
         std::cout << "  ";
       }
-      std::cout << "[" << ids [*f] << "]" << std::endl;
+      std::cout << "[" << ids [*f] << "]" << '\n';
       (*f)->dump (l + 1);
       for (std::vector<FilterBase *>::const_iterator c = (*f)->followers ().begin (); c != (*f)->followers ().end (); ++c) {
         for (unsigned int i = 0; i < l + 1; ++i) {
           std::cout << "  ";
         }
-        std::cout << "-> [" << ids [*c] << "]" << std::endl;
+        std::cout << "-> [" << ids [*c] << "]" << '\n';
       }
     }
 
     for (unsigned int i = 0; i < l; ++i) {
       std::cout << "  ";
     }
-    std::cout << "}" << std::endl;
+    std::cout << "}" << '\n';
 
   } else {
 
     for (unsigned int i = 0; i < l; ++i) {
       std::cout << "  ";
     }
-    std::cout << "FilterBracket (" << m_loopmin << ".." << m_loopmax << ")" << std::endl;
+    std::cout << "FilterBracket (" << m_loopmin << ".." << m_loopmax << ")" << '\n';
 
   }
 }

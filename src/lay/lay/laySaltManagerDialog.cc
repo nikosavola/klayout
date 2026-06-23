@@ -880,7 +880,7 @@ void
 SaltManagerDialog::salt_mine_download_finished ()
 {
   QApplication::restoreOverrideCursor ();
-  if (m_salt_mine_reader.get ()) {
+  if (m_salt_mine_reader) {
     //  NOTE: don't delete the reader in the slot it triggered
     m_salt_mine_reader->close ();
   }
@@ -893,7 +893,7 @@ BEGIN_PROTECTED
 
   try {
 
-    if (m_salt_mine_reader.get ()) {
+    if (m_salt_mine_reader) {
 
       lay::Salt new_mine;
       new_mine.load (m_salt_mine_url, *m_salt_mine_reader);
@@ -1222,7 +1222,7 @@ SaltManagerDialog::get_remote_grain_info (lay::SaltGrain *g, SaltGrainDetailsTex
 
   m_downloaded_grain.reset (0);
 
-  if (m_downloaded_grain_reader.get ()) {
+  if (m_downloaded_grain_reader) {
     m_downloaded_grain_reader->close ();
   }
   m_downloaded_grain_reader.reset (0);
@@ -1301,13 +1301,13 @@ SaltManagerDialog::get_remote_grain_info (lay::SaltGrain *g, SaltGrainDetailsTex
 void
 SaltManagerDialog::data_ready ()
 {
-  if (! m_salt_mine_grain.get () || ! m_downloaded_grain.get () || ! mp_downloaded_target) {
+  if (! m_salt_mine_grain || ! m_downloaded_grain || ! mp_downloaded_target) {
     return;
   }
 
   //  Load the grain file (save URL as it is overwritten by the grain.xml content)
   std::string url = m_downloaded_grain->url ();
-  if (m_downloaded_grain_reader.get ()) {
+  if (m_downloaded_grain_reader) {
     m_downloaded_grain->load (*m_downloaded_grain_reader);
     m_downloaded_grain->set_url (url);
   }
@@ -1329,7 +1329,7 @@ SaltManagerDialog::data_ready ()
     mp_downloaded_target->set_grain (m_downloaded_grain.get ());
 
     m_downloaded_grain.reset (0);
-    if (m_downloaded_grain_reader.get ()) {
+    if (m_downloaded_grain_reader) {
       //  NOTE: don't delete the reader in the slot it triggered
       m_downloaded_grain_reader->close ();
     }
@@ -1355,12 +1355,12 @@ SaltManagerDialog::show_error (tl::Exception &ex)
       "</body>"
     "</html>"
   )
-  .arg (tl::to_qstring (m_downloaded_grain.get () ? m_downloaded_grain->url () : ""))
+  .arg (tl::to_qstring (m_downloaded_grain ? m_downloaded_grain->url () : ""))
   .arg (tl::to_qstring (tl::escaped_to_html (ex.msg ())));
   mp_downloaded_target->setHtml (html);
 
   m_downloaded_grain.reset (0);
-  if (m_downloaded_grain_reader.get ()) {
+  if (m_downloaded_grain_reader) {
     //  NOTE: don't delete the reader in the slot it triggered
     m_downloaded_grain_reader->close();
   }

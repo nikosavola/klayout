@@ -306,7 +306,7 @@ void add_properties_to_item (rdb::Item *item, db::properties_id_type prop_id)
 void create_item_from_shape (rdb::Database *db, rdb::id_type cell_id, rdb::id_type cat_id, const db::CplxTrans &trans, const db::Shape &shape, bool with_properties)
 {
   std::unique_ptr<rdb::ValueBase> value (rdb::ValueBase::create_from_shape (shape, trans));
-  if (! value.get ()) {
+  if (! value) {
     return;
   }
 

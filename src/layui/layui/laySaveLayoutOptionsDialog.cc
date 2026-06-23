@@ -427,7 +427,7 @@ SaveLayoutAsOptionsDialog::ok_button_pressed ()
       if (page->second == fmt_name) {
         if (page->first) {
           std::unique_ptr<db::FormatSpecificWriterOptions> options (decl->create_specific_options ());
-          if (options.get ()) {
+          if (options) {
             page->first->commit (options.get (), mp_tech, tl::OutputStream::output_mode_from_filename (m_filename, index_to_om (mp_ui->compression->currentIndex ())) != tl::OutputStream::OM_Plain);
           }
         }
@@ -566,7 +566,7 @@ SaveLayoutAsOptionsDialog::get_options (lay::LayoutViewBase *view, unsigned int 
           std::unique_ptr<db::FormatSpecificWriterOptions> specific_options;
           specific_options.reset (decl->create_specific_options ());
 
-          if (specific_options.get ()) {
+          if (specific_options) {
             if (page->first) {
               page->first->commit (specific_options.get (), mp_tech, tl::OutputStream::output_mode_from_filename (m_filename, index_to_om (mp_ui->compression->currentIndex ())) != tl::OutputStream::OM_Plain);
             }

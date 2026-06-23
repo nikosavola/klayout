@@ -586,7 +586,7 @@ BD_PUBLIC int strmxor (int argc, char *argv[])
 
   //  Writes the output layout
 
-  if (output_layout.get ()) {
+  if (output_layout) {
 
     db::SaveLayoutOptions save_options;
     std::string of = save_options.set_format_from_filename (output).second;

@@ -539,7 +539,7 @@ MacroEditorDialog::MacroEditorDialog (lay::Dispatcher *pr, lym::MacroCollection 
 
       if (ll [0] == '[') {
 
-        size_t closing = ll.find ("]");
+        size_t closing = ll.find (']');
         if (closing != std::string::npos) {
           category = tl::trim (std::string (ll, 1, closing - 1));
         }
@@ -551,7 +551,7 @@ MacroEditorDialog::MacroEditorDialog (lay::Dispatcher *pr, lym::MacroCollection 
       } else {
 
         std::string description;
-        size_t colon = ll.find (":");
+        size_t colon = ll.find (':');
         if (colon != std::string::npos) {
           description = tl::trim (std::string (ll, colon + 1));
           ll = tl::trim (std::string (ll, 0, colon));
@@ -1357,7 +1357,7 @@ MacroEditorDialog::update_inspected ()
   } else {
 
     std::unique_ptr<gsi::Inspector> ci (mp_current_interpreter->inspector (m_eval_context));
-    variableListFrame->setVisible (ci.get () != 0);
+    variableListFrame->setVisible (ci != 0);
     variableList->set_inspector (ci.release ());
 
     update_watches ();

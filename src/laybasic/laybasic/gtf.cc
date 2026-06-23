@@ -436,7 +436,7 @@ write_data (const tl::Variant &data, std::ostream &os, unsigned int level)
     for (unsigned int i = 0; i < level; ++i) {
       os << "  ";
     }
-    os << "<block>" << std::endl;
+    os << "<block>" << '\n';
 
     for (tl::Variant::const_iterator b = data.begin (); b != data.end (); ++b) {
       write_data (*b, os, level + 1);
@@ -445,7 +445,7 @@ write_data (const tl::Variant &data, std::ostream &os, unsigned int level)
     for (unsigned int i = 0; i < level; ++i) {
       os << "  ";
     }
-    os << "</block>" << std::endl;
+    os << "</block>" << '\n';
 
   } else {
 
@@ -454,9 +454,9 @@ write_data (const tl::Variant &data, std::ostream &os, unsigned int level)
     }
 
     if (data.is_long ()) {
-      os << "<int>" << data.to_long () << "</int>" << std::endl;
+      os << "<int>" << data.to_long () << "</int>" << '\n';
     } else if (data.is_a_string ()) {
-      os << "<string>" << escape_string (data.to_string ()) << "</string>" << std::endl;
+      os << "<string>" << escape_string (data.to_string ()) << "</string>" << '\n';
     } else if (data.is_user<QImage> ()) {
 
       QImage img (data.to_user<QImage> ());
@@ -464,7 +464,7 @@ write_data (const tl::Variant &data, std::ostream &os, unsigned int level)
       QBuffer buffer (&ba);
       buffer.open (QIODevice::WriteOnly);
       img.save (&buffer, "PNG");
-      os << "<img>" << ba.toBase64 ().constData () << "</img>" << std::endl;
+      os << "<img>" << ba.toBase64 ().constData () << "</img>" << '\n';
 
     } 
   }
@@ -482,7 +482,7 @@ LogEventBase::write (std::ostream &os, bool with_endl) const
   }
 
   if (! data ().is_nil () && ! (data ().is_list () && data ().get_list ().empty ())) {
-    os << ">" << std::endl;
+    os << ">" << '\n';
     if (data ().is_list ()) {
       for (tl::Variant::const_iterator b = data ().begin (); b != data ().end (); ++b) {
         write_data (*b, os, 2);
@@ -496,7 +496,7 @@ LogEventBase::write (std::ostream &os, bool with_endl) const
   }
 
   if (with_endl) {
-    os << std::endl;
+    os << '\n';
   }
 
 }
@@ -1064,11 +1064,11 @@ EventList::save (const std::string &filename)
     os = &std::cout;
   }
 
-  *os << "<testcase>" << std::endl;
+  *os << "<testcase>" << '\n';
   for (const_iterator e = m_events.begin (); e != m_events.end (); ++e) {
     (*e)->write (*os);
   }
-  *os << "</testcase>" << std::endl;
+  *os << "</testcase>" << '\n';
   if (os != &std::cout) {
     delete os;
   }

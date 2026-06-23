@@ -848,7 +848,7 @@ DeepEdges::apply_filter (const EdgeFilterBase &filter, bool with_true, bool with
 
     const db::Shapes &s = c->shapes (edges.layer ());
 
-    if (vars.get ()) {
+    if (vars) {
 
       const std::set<db::ICplxTrans> &vv = vars->variants (c->cell_index ());
       for (auto v = vv.begin (); v != vv.end (); ++v) {
@@ -917,10 +917,10 @@ DeepEdges::apply_filter (const EdgeFilterBase &filter, bool with_true, bool with
   }
 
   if (! filter.requires_raw_input ()) {
-    if (res_true.get ()) {
+    if (res_true) {
       res_true->set_is_merged (true);
     }
-    if (res_false.get ()) {
+    if (res_false) {
       res_false->set_is_merged (true);
     }
   }

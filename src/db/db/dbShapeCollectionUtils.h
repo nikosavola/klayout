@@ -241,7 +241,7 @@ shape_collection_processed_impl (const db::DeepLayer &input, const shape_collect
 
     const db::Shapes &s = c->shapes (input.layer ());
 
-    if (vars.get ()) {
+    if (vars) {
 
       const std::set<db::ICplxTrans> &vv = vars->variants (c->cell_index ());
       for (auto v = vv.begin (); v != vv.end (); ++v) {

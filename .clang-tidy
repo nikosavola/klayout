@@ -1,0 +1,32 @@
+# clang-tidy configuration for KLayout.
+#
+# clang-tidy needs a compilation database (compile_commands.json). KLayout uses
+# qmake, which does not emit one, so generate it with Bear first:
+#
+#   ./build.sh -dry-run            # or a normal build
+#   bear -- make -C build-release  # wraps make to capture compile commands
+#   run-clang-tidy -p build-release src/db/db/dbPolygon.cc
+#
+# Start narrow: run on the files you change, not the whole tree. The check set
+# below favours correctness/bugprone findings and disables the noisiest
+# stylistic and modernize checks so signal stays high. Expand over time.
+Checks: >
+  -*,
+  bugprone-*,
+  performance-*,
+  readability-misleading-indentation,
+  readability-redundant-control-flow,
+  readability-redundant-smartptr-get,
+  misc-redundant-expression,
+  misc-unused-using-decls,
+  -bugprone-easily-swappable-parameters,
+  -bugprone-narrowing-conversions,
+  -performance-no-int-to-ptr
+
+# Treat nothing as an error yet (informational rollout).
+WarningsAsErrors: ''
+
+# Only diagnose project headers, not system or third-party ones.
+HeaderFilterRegex: '^src/(?!gsiqt/).*'
+
+FormatStyle: file

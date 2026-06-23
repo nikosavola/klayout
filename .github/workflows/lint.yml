@@ -1,0 +1,154 @@
+---
+name: Lint and Format
+
+# Incremental-adoption strategy: the existing tree is not auto-formatted yet,
+# so checks are scoped to the lines/files changed in a pull request. New and
+# modified code is held to the configured style; untouched legacy code is not.
+# C++ formatting is checked per changed *line* (git clang-format), so editing a
+# legacy file does not force reformatting the whole file.
+#
+# "Required" jobs gate the PR. "Advisory" jobs run for visibility but do not
+# fail the build (continue-on-error) until the corresponding repo-wide cleanup
+# has landed.
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+# Pinned tool versions — keep in sync with .pre-commit-config.yaml and the
+# versions developers run locally so results do not drift.
+env:
+  RUFF_VERSION: "0.15.18"
+  CLANG_FORMAT_PACKAGE: "clang-format~=19.1"
+
+concurrency:
+  group: lint-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ----------------------------- required ------------------------------------
+  clang-format:
+    name: C++ format (changed lines)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install clang-format
+        run: pip install "${CLANG_FORMAT_PACKAGE}"
+      - name: Determine base ref
+        id: base
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "sha=${{ github.event.pull_request.base.sha }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "sha=${{ github.event.before }}" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Check changed C++ lines
+        run: |
+          base="${{ steps.base.outputs.sha }}"
+          echo "Comparing against $base"
+          patch=$(git diff -U0 --no-color "$base"...HEAD -- \
+            '*.cc' '*.cpp' '*.cxx' '*.h' '*.hh' '*.hpp' \
+            ':(exclude)testdata/**' ':(exclude)src/gsiqt/**' \
+            | clang-format-diff -p1 -style=file || true)
+          if [ -n "$patch" ]; then
+            echo "::error::clang-format would change the following added/modified lines."
+            echo "Run 'git clang-format' before committing."
+            echo "$patch"
+            exit 1
+          fi
+          echo "No C++ formatting issues in changed lines."
+
+  ruff-lint:
+    name: Python lint (ruff, changed files)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install ruff
+        run: pip install "ruff==${RUFF_VERSION}"
+      - name: Determine base ref
+        id: base
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "sha=${{ github.event.pull_request.base.sha }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "sha=${{ github.event.before }}" >> "$GITHUB_OUTPUT"
+          fi
+      - name: ruff check (changed files)
+        run: |
+          base="${{ steps.base.outputs.sha }}"
+          mapfile -t files < <(git diff --name-only --diff-filter=ACMR "$base"...HEAD -- '*.py')
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No changed Python files."; exit 0
+          fi
+          printf '%s\n' "${files[@]}"
+          ruff check --output-format=github "${files[@]}"
+
+  # ----------------------------- advisory ------------------------------------
+  ruff-format:
+    name: Python format (advisory)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install ruff
+        run: pip install "ruff==${RUFF_VERSION}"
+      - run: ruff format --check --diff .
+
+  cppcheck:
+    name: cppcheck (advisory)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install cppcheck
+        run: sudo apt-get update && sudo apt-get install -y cppcheck
+      - name: Run cppcheck
+        run: |
+          cppcheck --enable=warning,performance,portability \
+            --inline-suppr --std=c++17 --quiet \
+            --suppress=missingIncludeSystem \
+            -i testdata -i src/gsiqt \
+            --error-exitcode=1 \
+            src/
+
+  pyrefly:
+    name: Python types (pyrefly, advisory)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install pyrefly
+      - run: pyrefly check
+
+  rubocop:
+    name: Ruby lint (rubocop, advisory)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+      - run: gem install rubocop
+      - run: rubocop --parallel

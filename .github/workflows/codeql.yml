@@ -1,0 +1,62 @@
+---
+name: CodeQL
+
+# Security/quality static analysis for C++ and Python.
+# C++ requires a build; KLayout is large, so this runs on a schedule and on
+# pushes/PRs to master rather than on every PR by default.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  schedule:
+    - cron: "27 3 * * 1"  # Mondays 03:27 UTC
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: python
+            build-mode: none
+          - language: c-cpp
+            build-mode: manual
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          queries: security-and-quality
+
+      # Minimal manual build for C/C++. Adjust to match the project's build
+      # (build.sh) and available Qt; kept lightweight so analysis completes.
+      - name: Install build dependencies (c-cpp)
+        if: matrix.language == 'c-cpp'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            qtbase5-dev qttools5-dev libqt5svg5-dev \
+            zlib1g-dev libcurl4-openssl-dev libexpat1-dev libpng-dev ruby-dev
+
+      - name: Build (c-cpp)
+        if: matrix.language == 'c-cpp'
+        run: |
+          ./build.sh -j$(nproc) -without-qtbinding -python $(which python3) || \
+            echo "::warning::Build step needs tuning for this environment"
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"

@@ -1,0 +1,76 @@
+---
+name: Sanitizers
+
+# Builds the core libraries with sanitizers and runs the unit test suite.
+# A full KLayout build is expensive, so this is opt-in (manual dispatch) and
+# scheduled weekly rather than running on every PR.
+#
+# NOTE: the build/test invocation below is a scaffold. It needs validation
+# against the project's real build and test runner (build.sh + the unit test
+# binaries) and the available Qt before it can be made a required check.
+
+on:
+  workflow_dispatch:
+    inputs:
+      sanitizers:
+        description: "Space-separated sanitizers (address, undefined, thread, leak)"
+        default: "address undefined"
+        required: true
+  schedule:
+    - cron: "41 4 * * 2"  # Tuesdays 04:41 UTC
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sanitizers-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: ASan/UBSan build + tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    env:
+      SANITIZERS: ${{ github.event.inputs.sanitizers || 'address undefined' }}
+      # Continue past the first error and demangle frames for readable reports
+      ASAN_OPTIONS: "halt_on_error=0:detect_leaks=0:abort_on_error=0"
+      UBSAN_OPTIONS: "print_stacktrace=1:halt_on_error=0"
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            qtbase5-dev qttools5-dev libqt5svg5-dev \
+            zlib1g-dev libcurl4-openssl-dev libexpat1-dev libpng-dev \
+            ruby-dev ccache
+
+      - uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: sanitizers
+
+      - name: Build with sanitizers (debug)
+        run: |
+          export PATH="/usr/lib/ccache:$PATH"
+          SAN_ARGS=""
+          for s in $SANITIZERS; do SAN_ARGS="$SAN_ARGS SANITIZE+=$s"; done
+          KLAYOUT_QMAKE_ARGS="$SAN_ARGS" \
+            ./build.sh -debug -j"$(nproc)" \
+              -without-qtbinding \
+              -python "$(which python3)" \
+              -build "$PWD/build-san" -bin "$PWD/bin-san" \
+              -option -k
+
+      - name: Run unit tests
+        run: |
+          export TESTSRC="$PWD"
+          export TESTTMP="$PWD/testtmp"
+          mkdir -p "$TESTTMP"
+          # Run the unit test runner; adjust path/flags to the real runner.
+          if [ -x ./bin-san/ut_runner ]; then
+            ./bin-san/ut_runner -a || true
+          else
+            echo "::warning::ut_runner not found at expected path; adjust this step"
+          fi

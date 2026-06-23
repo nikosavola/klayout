@@ -10,6 +10,17 @@
 # Start narrow: run on the files you change, not the whole tree. The check set
 # below favours correctness/bugprone findings and disables the noisiest
 # stylistic and modernize checks so signal stays high. Expand over time.
+#
+# Backlog (enabled via bugprone-*/performance-* but not yet cleaned tree-wide;
+# they fire only on files you touch, matching the incremental rollout):
+#   - bugprone-empty-catch, bugprone-branch-clone: usually intentional;
+#     review case by case rather than mass-rewriting.
+#   - bugprone-integer-division, bugprone-incorrect-roundings,
+#     bugprone-suspicious-semicolon: possible real bugs, need manual review.
+#   - performance-noexcept-move-constructor/-swap and the modernize insertion
+#     checks (use-override, use-equals-default): clang-tidy --fix stacks
+#     duplicate edits on templated headers (one per instantiation), so apply
+#     these by hand, not with run-clang-tidy -fix.
 Checks: >
   -*,
   bugprone-*,

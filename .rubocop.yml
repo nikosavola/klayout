@@ -1,0 +1,50 @@
+# RuboCop configuration for KLayout.
+#
+# The Ruby in this repo is mostly DRC/LVS macros, build helpers and test
+# scripts rather than a conventional Ruby application. This config therefore
+# starts deliberately lax: it enables the layout/lint cops that catch real
+# mistakes and disables the opinionated style/metrics cops that would flag the
+# established macro style en masse. Tighten over time.
+
+AllCops:
+  TargetRubyVersion: 2.7
+  NewCops: disable
+  SuggestExtensions: false
+  Exclude:
+    - 'testdata/**/*'
+    - 'venv/**/*'
+    - 'build-release/**/*'
+    - 'bin-release/**/*'
+
+# --- Style: relax conventions that do not match the existing macro code ---
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/StringLiterals:
+  Enabled: false
+Style/NumericLiterals:
+  Enabled: false
+Style/GuardClause:
+  Enabled: false
+Style/IfUnlessModifier:
+  Enabled: false
+Style/RedundantSelf:
+  Enabled: false
+
+# --- Metrics: do not gate on size/complexity for now ---
+Metrics:
+  Enabled: false
+
+# --- Layout: keep the cheap, unambiguous whitespace cops on ---
+Layout/LineLength:
+  Max: 200
+Layout/TrailingWhitespace:
+  Exclude:
+    - 'testdata/**/*'
+
+# --- Lint: keep correctness cops on; relax a couple of noisy ones ---
+Lint/AssignmentInCondition:
+  Enabled: false
+Lint/SuppressedException:
+  Enabled: false

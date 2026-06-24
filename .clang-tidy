@@ -46,7 +46,9 @@ Checks: >
 #     "_ARGSPEC*" helper macros in gsiMethods.h). These are not defects, and
 #     renaming the convention tree-wide is out of scope.
 
-# Treat nothing as an error yet (informational rollout).
+# Leave clang-tidy's own severity at "warning"; the CI workflow decides
+# pass/fail from the number of findings (cpp-linter's clang-tidy-checks-failed),
+# so the gate still fails on any diagnostic without flipping these to errors.
 WarningsAsErrors: ''
 
 # Only diagnose project headers, not system or third-party ones. clang-tidy

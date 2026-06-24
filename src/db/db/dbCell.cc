@@ -99,7 +99,7 @@ Cell::Cell (cell_index_type ci, db::Layout &l)
   m_bbox_with_empty = box_type (box_type::point_type (), box_type::point_type ());
 }
 
-Cell::Cell (const Cell &d)
+Cell::Cell (const Cell &d) // NOLINT(bugprone-copy-constructor-init)
   : db::Object (d), 
     gsi::ObjectBase (),
     mp_layout (d.mp_layout), m_instances (this), m_prop_id (d.m_prop_id), m_hier_levels (d.m_hier_levels),
@@ -138,7 +138,7 @@ Cell::operator= (const Cell &d)
   return *this;
 }
 
-Cell::~Cell ()
+Cell::~Cell () // NOLINT(bugprone-exception-escape)
 {
   m_locked = false;
   clear_shapes ();
@@ -479,7 +479,7 @@ Cell::move (unsigned int src, unsigned int dest, unsigned int types)
 }
 
 void
-Cell::swap (unsigned int i1, unsigned int i2)
+Cell::swap (unsigned int i1, unsigned int i2) // NOLINT(bugprone-exception-escape)
 {
   check_locked ();
 

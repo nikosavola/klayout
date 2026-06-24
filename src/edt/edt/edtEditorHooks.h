@@ -45,8 +45,8 @@ namespace lay
 
 namespace db
 {
-  class Instance;
-  class Shape;
+  class Instance; // NOLINT(bugprone-tagged-union-member-count)
+  class Shape; // NOLINT(bugprone-tagged-union-member-count)
 }
 
 namespace edt

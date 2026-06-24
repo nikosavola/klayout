@@ -328,7 +328,7 @@ inline double cost_of (double d)
 {
   int exp = 0;
   frexp (d, &exp);
-  return double ((exp + 7) / 8);
+  return double ((exp + 7) / 8); // NOLINT(bugprone-integer-division)
 }
 
 
@@ -681,7 +681,7 @@ OASISWriter::OASISWriter ()
 }
 
 // 1M CBLOCK buffer size
-const size_t cblock_buffer_size = 1024 * 1024;
+const size_t cblock_buffer_size = 1024 * 1024; // NOLINT(bugprone-implicit-widening-of-multiplication-result)
 
 void 
 OASISWriter::write_record_id (char b)

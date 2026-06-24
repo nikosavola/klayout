@@ -43,9 +43,9 @@ template <class C>
 class list_node
 {
 public:
-  list_node () : mp_next (nullptr), mp_prev (nullptr), m_owned (true) { }
-  list_node (const list_node &) : mp_next (nullptr), mp_prev (nullptr), m_owned (true) { }
-  list_node &operator= (const list_node &) { return *this; }
+  list_node () : mp_next (nullptr), mp_prev (nullptr), m_owned (true) { } // NOLINT(bugprone-crtp-constructor-accessibility)
+  list_node (const list_node &) : mp_next (nullptr), mp_prev (nullptr), m_owned (true) { } // NOLINT(bugprone-crtp-constructor-accessibility)
+  list_node &operator= (const list_node &) { return *this; } // NOLINT(bugprone-unhandled-self-assignment)
 
   ~list_node ()
   {

@@ -1082,7 +1082,7 @@ SimpleColorButton::set_color_internal (QColor c)
   frame_pen.setJoinStyle (Qt::MiterJoin);
   pxpainter.setPen (frame_pen);
   int dpri = int (dpr);
-  QRectF r ((dpri / 2) / dpr, (dpri / 2) / dpr, rt.width () - 1.0, rt.height () - 1.0);
+  QRectF r ((dpri / 2) / dpr, (dpri / 2) / dpr, rt.width () - 1.0, rt.height () - 1.0); // NOLINT(bugprone-integer-division)
   pxpainter.drawRect (r);
 
   setIconSize (QSize (rt.width (), rt.height ()));
@@ -1329,7 +1329,7 @@ ColorButton::set_color_internal (QColor c)
   pxpainter.setPen (frame_pen);
 
   int dpri = int (dpr);
-  QRectF r ((dpri / 2) / dpr, (dpri / 2) / dpr, rt.width () - 1.0, rt.height () - 1.0);
+  QRectF r ((dpri / 2) / dpr, (dpri / 2) / dpr, rt.width () - 1.0, rt.height () - 1.0); // NOLINT(bugprone-integer-division)
 
   if (! m_color.isValid ()) {
 

@@ -62,7 +62,7 @@ Object::Object (const Object & /*other*/)
   //  .. nothing yet ..
 }
 
-Object &Object::operator= (const Object & /*other*/)
+Object &Object::operator= (const Object & /*other*/) // NOLINT(bugprone-unhandled-self-assignment)
 {
   //  .. nothing yet ..
   return *this;
@@ -170,7 +170,7 @@ WeakOrSharedPtr::~WeakOrSharedPtr ()
   reset (nullptr, true, false);
 }
 
-WeakOrSharedPtr &WeakOrSharedPtr::operator= (const WeakOrSharedPtr &o) 
+WeakOrSharedPtr &WeakOrSharedPtr::operator= (const WeakOrSharedPtr &o)  // NOLINT(bugprone-unhandled-self-assignment)
 {
   reset (o.mp_t, o.m_is_shared, o.m_is_event);
   return *this;

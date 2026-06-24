@@ -45,8 +45,8 @@ namespace lay {
 namespace edt {
 
 class Service;
-class EditorOptionsPages;
-class EditorOptionsPage;
+class EditorOptionsPages; // NOLINT(bugprone-forward-declaration-namespace)
+class EditorOptionsPage; // NOLINT(bugprone-forward-declaration-namespace)
 class RoundCornerOptionsDialog;
 class AreaAndPerimeterDialog;
 class MakeCellOptionsDialog;

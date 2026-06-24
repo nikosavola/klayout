@@ -232,7 +232,7 @@ struct get_boxed_value_func
 
       R *v = new R (python2c<R> (arg));
       heap->push (v);
-      *ret = v;
+      *ret = v; // NOLINT(bugprone-multi-level-implicit-pointer-conversion)
 
     } else {
 

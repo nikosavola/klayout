@@ -59,7 +59,7 @@ void
 RubberBox::render (const Viewport &vp, ViewObjectCanvas &canvas)
 { 
   lay::Renderer &r = canvas.renderer ();
-  int lw = int (0.5 + 1.0 / r.resolution ());
+  int lw = int (0.5 + 1.0 / r.resolution ()); // NOLINT(bugprone-incorrect-roundings)
   lay::CanvasPlane *plane = canvas.plane (lay::ViewOp (m_color, lay::ViewOp::Copy, 0, m_stipple, 0, lay::ViewOp::Rect, lw));
   if (plane) {
     r.draw (vp.trans () * db::DBox (m_p1, m_p2), nullptr, plane, nullptr, nullptr);

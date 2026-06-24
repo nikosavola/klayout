@@ -2215,7 +2215,7 @@ EdgeProcessor::redo_or_process (const std::vector<std::pair<db::EdgeSink *, db::
       progress.reset (new tl::AbsoluteProgress (m_progress_desc, 1000));
     }
     progress->set_format (tl::to_string (tr ("%.0f%%")));
-    progress->set_unit (todo_max / 100);
+    progress->set_unit (todo_max / 100); // NOLINT(bugprone-integer-division)
   }
 
   size_t todo_next = 0;

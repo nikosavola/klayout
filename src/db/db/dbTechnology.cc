@@ -40,7 +40,7 @@ Technologies::Technologies ()
   m_in_update = false;
 }
 
-Technologies::Technologies (const Technologies &other)
+Technologies::Technologies (const Technologies &other) // NOLINT(bugprone-copy-constructor-init)
   : tl::Object ()
 {
   m_changed = false;
@@ -280,7 +280,7 @@ Technology::~Technology ()
   m_components.clear ();
 }
 
-Technology::Technology (const Technology &d)
+Technology::Technology (const Technology &d) // NOLINT(bugprone-copy-constructor-init)
   : tl::Object (),
     m_name (d.m_name), m_description (d.m_description), m_group (d.m_group), m_grain_name (d.m_grain_name), m_dbu (d.m_dbu),
     m_default_grids (d.m_default_grids),

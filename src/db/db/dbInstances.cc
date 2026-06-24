@@ -597,9 +597,9 @@ instance_iterator<Traits>::update_ref ()
   }
 }
 
-template class instance_iterator<NormalInstanceIteratorTraits>;
-template class instance_iterator<TouchingInstanceIteratorTraits>;
-template class instance_iterator<OverlappingInstanceIteratorTraits>;
+template class instance_iterator<NormalInstanceIteratorTraits>; // NOLINT(bugprone-tagged-union-member-count)
+template class instance_iterator<TouchingInstanceIteratorTraits>; // NOLINT(bugprone-tagged-union-member-count)
+template class instance_iterator<OverlappingInstanceIteratorTraits>; // NOLINT(bugprone-tagged-union-member-count)
 
 // -------------------------------------------------------------------------------------
 //  NormalInstanceIteratorTraits implementation

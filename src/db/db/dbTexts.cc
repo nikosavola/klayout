@@ -58,7 +58,7 @@ Texts::Texts (TextsDelegate *delegate)
   //  .. nothing yet ..
 }
 
-Texts::Texts (const Texts &other)
+Texts::Texts (const Texts &other) // NOLINT(bugprone-copy-constructor-init)
   : db::ShapeCollection (), mp_delegate (other.mp_delegate->clone ())
 {
   //  .. nothing yet ..

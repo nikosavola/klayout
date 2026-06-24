@@ -241,7 +241,7 @@ ChannelProxy::~ChannelProxy ()
 }
 
 ChannelProxy &
-ChannelProxy::operator= (const ChannelProxy &d)
+ChannelProxy::operator= (const ChannelProxy &d) // NOLINT(bugprone-unhandled-self-assignment)
 {
   if (mp_channel != d.mp_channel) {
     mp_channel = d.mp_channel;

@@ -884,7 +884,7 @@ DEFImporter::read_nets (db::Layout &layout, db::Cell &design, double scale, bool
           warn (tl::to_string (tr ("Nested subnets")));
         }
 
-        net = stored_netname + "/" + subnetname;
+        net = stored_netname + "/" + subnetname; // NOLINT(performance-inefficient-string-concatenation)
 
         if (produce_net_props ()) {
           db::PropertiesSet props;

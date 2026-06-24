@@ -605,7 +605,7 @@ LEFDEFReaderOptions::LEFDEFReaderOptions ()
   //  .. nothing yet ..
 }
 
-LEFDEFReaderOptions::LEFDEFReaderOptions (const LEFDEFReaderOptions &d)
+LEFDEFReaderOptions::LEFDEFReaderOptions (const LEFDEFReaderOptions &d) // NOLINT(bugprone-copy-constructor-init)
   : db::FormatSpecificReaderOptions (),
     m_lef_context_enabled (false)
 {
@@ -1396,7 +1396,7 @@ LEFDEFReaderState::read_single_map_file (const std::string &path, std::map<std::
 
         }
 
-        std::string final_name = w1 + "." + purpose_str;
+        std::string final_name = w1 + "." + purpose_str; // NOLINT(performance-inefficient-string-concatenation)
 
         for (std::set<LayerDetailsKey>::const_iterator p = translated_purposes.begin (); p != translated_purposes.end (); ++p) {
           for (std::vector<int>::const_iterator l = layers.begin (); l != layers.end (); ++l) {

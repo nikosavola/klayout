@@ -439,7 +439,7 @@ public:
   /**
    *  @brief Assignment operator
    */
-  modal_variable &operator= (const modal_variable<T> &d)
+  modal_variable &operator= (const modal_variable<T> &d) // NOLINT(bugprone-unhandled-self-assignment)
   {
     m_t = d.m_t;
     m_initialized = d.m_initialized;

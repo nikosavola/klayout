@@ -792,7 +792,7 @@ std::string Netlist::to_string () const
         }
         ps += p->name () + "=" + tl::sprintf ("%.12g", d->parameter_value (p->id ()));
       }
-      res += std::string ("  device ") + tl::to_word_or_quoted_string (d->device_class ()->name ()) + " " + device2string (*d) + " (" + ts + ") (" + ps + ");\n";
+      res += std::string ("  device ") + tl::to_word_or_quoted_string (d->device_class ()->name ()) + " " + device2string (*d) + " (" + ts + ") (" + ps + ");\n"; // NOLINT(performance-inefficient-string-concatenation)
     }
 
     for (db::Circuit::const_subcircuit_iterator sc = c->begin_subcircuits (); sc != c->end_subcircuits (); ++sc) {

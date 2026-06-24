@@ -29,17 +29,17 @@ namespace tl
   {
     if (__a < __b) {
       if (__b < __c)
-        return __b;
+        return __b; // NOLINT(bugprone-return-const-ref-from-parameter)
       else if (__a < __c)
-        return __c;
+        return __c; // NOLINT(bugprone-return-const-ref-from-parameter)
       else
-        return __a;
+        return __a; // NOLINT(bugprone-return-const-ref-from-parameter)
     } else if (__a < __c) {
-      return __a;
+      return __a; // NOLINT(bugprone-return-const-ref-from-parameter)
     } else if (__b < __c) {
-      return __c;
+      return __c; // NOLINT(bugprone-return-const-ref-from-parameter)
     } else {
-      return __b;
+      return __b; // NOLINT(bugprone-return-const-ref-from-parameter)
     }
   }
 
@@ -49,17 +49,17 @@ namespace tl
   {
     if (__comp(__a, __b)) {
       if (__comp(__b, __c))
-        return __b;
+        return __b; // NOLINT(bugprone-return-const-ref-from-parameter)
       else if (__comp(__a, __c))
-        return __c;
+        return __c; // NOLINT(bugprone-return-const-ref-from-parameter)
       else
-        return __a;
+        return __a; // NOLINT(bugprone-return-const-ref-from-parameter)
     } else if (__comp(__a, __c)) {
-      return __a;
+      return __a; // NOLINT(bugprone-return-const-ref-from-parameter)
     } else if (__comp(__b, __c)) {
-      return __c;
+      return __c; // NOLINT(bugprone-return-const-ref-from-parameter)
     } else {
-      return __b;
+      return __b; // NOLINT(bugprone-return-const-ref-from-parameter)
     }
   }
 

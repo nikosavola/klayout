@@ -79,7 +79,7 @@ SearchReplaceConfigPage::SearchReplaceConfigPage (QWidget *parent)
 void 
 SearchReplaceConfigPage::setup (lay::Dispatcher *root)
 {
-  std::string value;
+  std::string value; // NOLINT(bugprone-unused-local-non-trivial-variable)
 
   //  window mode
   SearchReplaceDialog::window_type wmode = SearchReplaceDialog::FitMarker;

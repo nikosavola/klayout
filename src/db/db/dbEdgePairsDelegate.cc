@@ -34,7 +34,7 @@ EdgePairsDelegate::EdgePairsDelegate ()
   m_report_progress = false;
 }
 
-EdgePairsDelegate::EdgePairsDelegate (const EdgePairsDelegate &other)
+EdgePairsDelegate::EdgePairsDelegate (const EdgePairsDelegate &other) // NOLINT(bugprone-copy-constructor-init)
   : ShapeCollectionDelegateBase ()
 {
   operator= (other);

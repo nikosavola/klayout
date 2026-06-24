@@ -183,7 +183,7 @@ LineStyleInfo::get_bitmap (int w, int h, int fw) const
   unsigned int stride = (width + 7) / 8;
 
   unsigned char *data = new unsigned char[stride * height];
-  memset (data, 0x00, size_t (stride * height));
+  memset (data, 0x00, size_t (stride * height)); // NOLINT(bugprone-misplaced-widening-cast)
 
   unsigned int hv = height - 2 * frame_width;
 
@@ -419,7 +419,7 @@ LineStyles::LineStyles () :
   }
 }
 
-LineStyles::LineStyles (const LineStyles &p) :
+LineStyles::LineStyles (const LineStyles &p) : // NOLINT(bugprone-copy-constructor-init)
   db::Object (nullptr)
 {
   m_styles = p.m_styles;

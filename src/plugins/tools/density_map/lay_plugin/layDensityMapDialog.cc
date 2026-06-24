@@ -245,7 +245,7 @@ BEGIN_PROTECTED
   make_density_map ();
 
   //  close this dialog
-  QDialog::accept ();
+  QDialog::accept (); // NOLINT(bugprone-parent-virtual-call)
 
 END_PROTECTED
 }
@@ -759,9 +759,9 @@ DensityMapDialog::average_window (img::Object &img_object, const std::string bou
       //  top and bottom row count half in case of even nw
       double f = weights [dy + wh];
 
-      std::vector<double>::iterator d = vavg_data.begin () + y * nx;
+      std::vector<double>::iterator d = vavg_data.begin () + y * nx; // NOLINT(bugprone-implicit-widening-of-multiplication-result)
       if (periodic || (y + dy >= 0 && y + dy < ny)) {
-        const float *s = img_object.float_data () + safe_mod (y + dy, ny) * nx;
+        const float *s = img_object.float_data () + safe_mod (y + dy, ny) * nx; // NOLINT(bugprone-implicit-widening-of-multiplication-result)
         for (int ix = 0; ix < nx; ++ix) {
           *d++ += f * *s++;
         }

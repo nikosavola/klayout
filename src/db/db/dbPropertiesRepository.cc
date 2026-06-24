@@ -132,7 +132,7 @@ PropertiesSet::PropertiesSet (const PropertiesSet &other)
 }
 
 PropertiesSet::PropertiesSet (const PropertiesSet &&other)
-  : m_map (other.m_map), m_hash (other.m_hash)
+  : m_map (other.m_map), m_hash (other.m_hash) // NOLINT(performance-move-constructor-init)
 {
   //  .. nothing yet ..
 }

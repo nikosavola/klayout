@@ -595,7 +595,7 @@ draw_ruler_segment (const ant::Object &ruler, size_t index, const db::DCplxTrans
   
   bool xy_swapped = ((trans.rot () % 2) != 0);
   double lu = p1.double_distance (p2);
-  int min_tick_spc = int (0.5 + 20 / renderer.resolution ());  //  min tick spacing in canvas units
+  int min_tick_spc = int (0.5 + 20 / renderer.resolution ());  //  min tick spacing in canvas units // NOLINT(bugprone-incorrect-roundings)
   double mu = double (min_tick_spc) / trans.ctrans (1.0);
 
   if (ruler.outline () == Object::OL_diag) {
@@ -647,7 +647,7 @@ draw_ruler_box (const ant::Object &ruler, const db::DCplxTrans &trans, bool sel,
   db::DPoint q2 = v.second;
 
   double lu = p1.double_distance (p2);
-  int min_tick_spc = int (0.5 + 20 / renderer.resolution ());  //  min tick spacing in canvas units
+  int min_tick_spc = int (0.5 + 20 / renderer.resolution ());  //  min tick spacing in canvas units // NOLINT(bugprone-incorrect-roundings)
   double mu = double (min_tick_spc) / trans.ctrans (1.0);
 
   bool r = (q2.x () > q1.x ()) ^ (q2.y () < q1.y ());
@@ -1015,7 +1015,7 @@ View::render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
     return;
   }
 
-  int basic_width = int(0.5 + 1.0 / canvas.resolution ());
+  int basic_width = int(0.5 + 1.0 / canvas.resolution ()); // NOLINT(bugprone-incorrect-roundings)
 
   tl::Color c (mp_rulers->color ());
   if (! c.is_valid ()) {
@@ -1205,7 +1205,7 @@ Service::annotations_changed ()
 std::vector <lay::ViewOp>
 Service::get_view_ops (lay::RedrawThreadCanvas &canvas, tl::Color background, tl::Color foreground, tl::Color /*active*/) const
 {
-  int basic_width = int(0.5 + 1.0 / canvas.resolution ());
+  int basic_width = int(0.5 + 1.0 / canvas.resolution ()); // NOLINT(bugprone-incorrect-roundings)
 
   //  the changing of the view ops is done here since it may depend on the 
   //  background color which might be changed by another configure call later.
@@ -3027,7 +3027,7 @@ Service::menu_activated (const std::string &symbol)
       manager ()->commit ();
     }
   } else {
-    lay::Plugin::menu_activated (symbol);
+    lay::Plugin::menu_activated (symbol); // NOLINT(bugprone-parent-virtual-call)
   }
 }
 

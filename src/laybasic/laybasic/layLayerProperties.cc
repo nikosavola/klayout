@@ -63,12 +63,12 @@ LayerProperties::brighter (tl::color_t in, int x)
   static double f = log (2.0) / 128.0;
 
   if (x < 0) {
-    x = int (256.0 * exp (f * x) + 0.5);
+    x = int (256.0 * exp (f * x) + 0.5); // NOLINT(bugprone-incorrect-roundings)
     r = (x * r) / 256;
     g = (x * g) / 256;
     b = (x * b) / 256;
   } else {
-    x = int (256.0 * exp (f * -x) + 0.5);
+    x = int (256.0 * exp (f * -x) + 0.5); // NOLINT(bugprone-incorrect-roundings)
     r = 255 - (x * (255 - r)) / 256;
     g = 255 - (x * (255 - g)) / 256;
     b = 255 - (x * (255 - b)) / 256;
@@ -674,7 +674,7 @@ LayerPropertiesNode::LayerPropertiesNode (const LayerProperties &d)
   m_id = ++s_unique_id;
 }
 
-LayerPropertiesNode::LayerPropertiesNode (const LayerPropertiesNode &d)
+LayerPropertiesNode::LayerPropertiesNode (const LayerPropertiesNode &d) // NOLINT(bugprone-copy-constructor-init)
   : LayerProperties (d), tl::Object (),
     m_list_index (0),
     m_expanded (d.m_expanded),
@@ -967,7 +967,7 @@ LayerPropertiesConstIterator::LayerPropertiesConstIterator (const LayerPropertie
   //  .. nothing yet ..
 }
 
-LayerPropertiesConstIterator::LayerPropertiesConstIterator (const LayerPropertiesConstIterator &d)
+LayerPropertiesConstIterator::LayerPropertiesConstIterator (const LayerPropertiesConstIterator &d) // NOLINT(bugprone-copy-constructor-init)
   : tl::Object (), m_uint (d.m_uint), m_list (d.m_list), mp_obj (d.mp_obj)
 {
   //  .. nothing yet ..
@@ -1235,7 +1235,7 @@ LayerPropertiesList::~LayerPropertiesList ()
   //  .. nothing yet ..  
 }
 
-LayerPropertiesList::LayerPropertiesList (const LayerPropertiesList &d)
+LayerPropertiesList::LayerPropertiesList (const LayerPropertiesList &d) // NOLINT(bugprone-copy-constructor-init)
   : tl::Object (), m_list_index (0)
 {
   operator= (d);

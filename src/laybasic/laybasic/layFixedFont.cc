@@ -59,7 +59,7 @@ const FixedFont &
 FixedFont::get_font (double resolution)
 {
   int fs = ms_default_font_size;
-  int od = std::max (1, std::min (ff_resolutions, int (1.0 / resolution + 0.5))) - 1;
+  int od = std::max (1, std::min (ff_resolutions, int (1.0 / resolution + 0.5))) - 1; // NOLINT(bugprone-incorrect-roundings)
   return fonts [od * ff_sizes + fs];
 }
 

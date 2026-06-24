@@ -1730,8 +1730,8 @@ LayoutViewBase::icon_for_layer (const LayerPropertiesConstIterator &iter, unsign
   double dpr_drawing = canvas () ? 1.0 / canvas ()->resolution () : 1.0;
   unsigned int oversampling = canvas () ? canvas ()->oversampling () : 1;
 
-  h = std::max ((unsigned int) 16, h) * oversampling * dpr + 0.5;
-  w = std::max ((unsigned int) 16, w) * oversampling * dpr + 0.5;
+  h = std::max ((unsigned int) 16, h) * oversampling * dpr + 0.5; // NOLINT(bugprone-incorrect-roundings)
+  w = std::max ((unsigned int) 16, w) * oversampling * dpr + 0.5; // NOLINT(bugprone-incorrect-roundings)
 
   tl::color_t def_color   = 0x808080;
   tl::color_t fill_color  = iter->has_fill_color (true)  ? iter->eff_fill_color (true)  : def_color;
@@ -1788,7 +1788,7 @@ LayoutViewBase::icon_for_layer (const LayerPropertiesConstIterator &iter, unsign
     //  default line width is 0 for parents and 1 for leafs
     lw = iter->has_children () ? 0 : 1;
   }
-  lw = lw * dpr_drawing + 0.5;
+  lw = lw * dpr_drawing + 0.5; // NOLINT(bugprone-incorrect-roundings)
 
   int p0 = lw / 2;
   p0 = std::max (0, std::min (int (w / 4 - 1), p0));
@@ -1876,7 +1876,7 @@ LayoutViewBase::icon_for_layer (const LayerPropertiesConstIterator &iter, unsign
   //  create text
   single_bitmap_to_image (lay::ViewOp (frame_color, mode, 0, 0, 0), text, &image, dither_pattern (), line_styles (), dpr_drawing, w, h);
   //  create vertex
-  single_bitmap_to_image (lay::ViewOp (frame_color, mode, 0, 0, 0, lay::ViewOp::Cross, iter->marked (true) ? int (9 * dpr_drawing + 0.5) : 0), vertex, &image, dither_pattern (), line_styles (), dpr_drawing, w, h);
+  single_bitmap_to_image (lay::ViewOp (frame_color, mode, 0, 0, 0, lay::ViewOp::Cross, iter->marked (true) ? int (9 * dpr_drawing + 0.5) : 0), vertex, &image, dither_pattern (), line_styles (), dpr_drawing, w, h); // NOLINT(bugprone-incorrect-roundings)
 
   if (oversampling > 1) {
     tl::PixelBuffer subsampled (image.width () / oversampling, image.height () / oversampling);

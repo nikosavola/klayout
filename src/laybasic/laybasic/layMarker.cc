@@ -306,7 +306,7 @@ void
 MarkerBase::get_bitmaps (const Viewport & /*vp*/, ViewObjectCanvas &canvas, lay::CanvasPlane *&fill, lay::CanvasPlane *&contour, lay::CanvasPlane *&vertex, lay::CanvasPlane *&text)
 {
   double resolution = canvas.resolution ();
-  int basic_width = int(0.5 + 1.0 / resolution);
+  int basic_width = int(0.5 + 1.0 / resolution); // NOLINT(bugprone-incorrect-roundings)
 
   //  obtain bitmaps
   tl::Color color = m_color;

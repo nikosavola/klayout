@@ -65,7 +65,7 @@ template <class ConstIter, class NonConstIter>
 void to_non_const_box_tree_iter (const ConstIter &ci, NonConstIter &nci, unstable_layer_tag)
 {
   //  HACK: this assumes non-const and const iterators have the same memory layout ...
-  nci = *reinterpret_cast<NonConstIter *> ((void *) &ci);
+  nci = *reinterpret_cast<NonConstIter *> ((void *) &ci); // NOLINT(bugprone-casting-through-void)
 }
 
 

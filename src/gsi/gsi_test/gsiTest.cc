@@ -111,7 +111,7 @@ A::~A ()
 {
   //  This allows destruction from outside the auto_ptr
   if (a_inst.get () == this) {
-    a_inst.release ();
+    a_inst.release (); // NOLINT(bugprone-unused-return-value)
   }
   --a_count;
 }
@@ -528,7 +528,7 @@ static const A *b10ep_ext (const B *b)
 { 
   //  The way this code is written there are no assertions from MSVC's
   //  iterator debug mode:
-  return b10bp_ext (b) + (b->b10e () - b->b10b ());
+  return b10bp_ext (b) + (b->b10e () - b->b10b ()); // NOLINT(bugprone-pointer-arithmetic-on-polymorphic-object)
 }
 
 // ----------------------------------------------------------------
@@ -551,7 +551,7 @@ std::vector<int>::const_iterator C::s1b ()
 
 void C::s2 (double x) 
 { 
-  for (int i = 0; i < int (x + 0.5); ++i) {
+  for (int i = 0; i < int (x + 0.5); ++i) { // NOLINT(bugprone-incorrect-roundings)
     m_v.push_back (i);
   }
 }
@@ -696,7 +696,7 @@ X::X (const char *x)
   ++s_xinst;
 }
 
-X::X (const X &x)
+X::X (const X &x) // NOLINT(bugprone-copy-constructor-init)
   : gsi::ObjectBase ()
 {
   *this = x;

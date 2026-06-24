@@ -1138,7 +1138,7 @@ public:
   }
 
   CopyDetector pass_cd_direct (const CopyDetector &cd) { return cd; }
-  const CopyDetector &pass_cd_cref (const CopyDetector &cd) { return cd; }
+  const CopyDetector &pass_cd_cref (const CopyDetector &cd) { return cd; } // NOLINT(bugprone-return-const-ref-from-parameter)
   const CopyDetector *pass_cd_cptr (const CopyDetector &cd) { return &cd; }
   CopyDetector *pass_cd_ptr (const CopyDetector &cd) { return const_cast<CopyDetector *> (&cd); }
   CopyDetector &pass_cd_ref (const CopyDetector &cd) { return const_cast<CopyDetector &> (cd); }

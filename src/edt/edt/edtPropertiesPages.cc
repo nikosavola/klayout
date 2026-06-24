@@ -1439,7 +1439,7 @@ EditablePathPropertiesPage::create_applicator (db::Shapes & /*shapes*/, const db
   }
 
   db::Coord se = 0, ee = 0;
-  switch (type_cb->currentIndex ()) {
+  switch (type_cb->currentIndex ()) { // NOLINT(bugprone-switch-missing-default-case)
   case 0: // flush
     break;
   case 1: // square

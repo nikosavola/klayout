@@ -313,8 +313,8 @@ namespace tl
   template <class I, class F, class R>
   size_t hfunc (const db::complex_trans<I, F, R> &t, size_t h)
   {
-    h = hfunc (int64_t (0.5 + t.angle () / db::epsilon), h);
-    h = hfunc (int64_t (0.5 + t.mag () / db::epsilon), h);
+    h = hfunc (int64_t (0.5 + t.angle () / db::epsilon), h); // NOLINT(bugprone-incorrect-roundings)
+    h = hfunc (int64_t (0.5 + t.mag () / db::epsilon), h); // NOLINT(bugprone-incorrect-roundings)
     h = hfunc (int (t.is_mirror ()), h);
     h = hfunc (t.disp (), h);
     return h;

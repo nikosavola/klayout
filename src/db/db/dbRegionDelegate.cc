@@ -38,7 +38,7 @@ RegionDelegate::RegionDelegate ()
   m_merge_min_coherence = false;
 }
 
-RegionDelegate::RegionDelegate (const RegionDelegate &other)
+RegionDelegate::RegionDelegate (const RegionDelegate &other) // NOLINT(bugprone-copy-constructor-init)
   : ShapeCollectionDelegateBase ()
 {
   operator= (other);

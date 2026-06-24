@@ -147,7 +147,7 @@ std::string to_string (const std::wstring &ws)
 
   for (std::wstring::const_iterator c = ws.begin (); c != ws.end (); ++c) {
 
-    uint32_t c32 = *c;
+    uint32_t c32 = *c; // NOLINT(bugprone-signed-char-misuse)
     if (sizeof (wchar_t) == 2 && c32 >= 0xd800 && c + 1 < ws.end ()) {
       ++c;
       c32 = (c32 & 0x3ff) << 10;

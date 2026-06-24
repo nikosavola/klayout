@@ -67,7 +67,7 @@ BasicStrokedPolygon::parameters_from_shape (const db::Layout &layout, const db::
     nm.insert (std::make_pair (p_shape, tl::Variant (db::CplxTrans (layout.dbu ()) * poly)));
   }
   //  use 1/10 of the minimum bbox dimension as a rough initialisation of the width
-  nm.insert (std::make_pair (p_width, tl::Variant (layout.dbu () * (std::min (poly.box ().width (), poly.box ().height ()) / 10))));
+  nm.insert (std::make_pair (p_width, tl::Variant (layout.dbu () * (std::min (poly.box ().width (), poly.box ().height ()) / 10)))); // NOLINT(bugprone-integer-division)
   nm.insert (std::make_pair (p_radius, tl::Variant (0.0)));
   return map_parameters (nm);
 }

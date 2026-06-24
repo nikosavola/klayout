@@ -66,7 +66,7 @@ Vertex::Vertex (Graph *graph, db::DCoord x, db::DCoord y)
   //  .. nothing yet ..
 }
 
-Vertex::Vertex (const Vertex &v)
+Vertex::Vertex (const Vertex &v) // NOLINT(bugprone-copy-constructor-init)
   : DPoint (), mp_graph (v.mp_graph), mp_ids (nullptr)
 {
   operator= (v);

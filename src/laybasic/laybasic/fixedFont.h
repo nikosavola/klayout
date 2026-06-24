@@ -130747,42 +130747,42 @@ uint32_t ff36_data [] = {
 };
 
 static FixedFont fonts[] = {
-  FixedFont (ff1_height, ff1_line_height, ff1_width, ff1_first_char, sizeof (ff1_data) / sizeof (uint32_t) / (ff1_height * ff1_stride), ff1_data, ff1_stride),
-  FixedFont (ff2_height, ff2_line_height, ff2_width, ff2_first_char, sizeof (ff2_data) / sizeof (uint32_t) / (ff2_height * ff2_stride), ff2_data, ff2_stride),
-  FixedFont (ff3_height, ff3_line_height, ff3_width, ff3_first_char, sizeof (ff3_data) / sizeof (uint32_t) / (ff3_height * ff3_stride), ff3_data, ff3_stride),
-  FixedFont (ff4_height, ff4_line_height, ff4_width, ff4_first_char, sizeof (ff4_data) / sizeof (uint32_t) / (ff4_height * ff4_stride), ff4_data, ff4_stride),
-  FixedFont (ff5_height, ff5_line_height, ff5_width, ff5_first_char, sizeof (ff5_data) / sizeof (uint32_t) / (ff5_height * ff5_stride), ff5_data, ff5_stride),
-  FixedFont (ff6_height, ff6_line_height, ff6_width, ff6_first_char, sizeof (ff6_data) / sizeof (uint32_t) / (ff6_height * ff6_stride), ff6_data, ff6_stride),
-  FixedFont (ff7_height, ff7_line_height, ff7_width, ff7_first_char, sizeof (ff7_data) / sizeof (uint32_t) / (ff7_height * ff7_stride), ff7_data, ff7_stride),
-  FixedFont (ff8_height, ff8_line_height, ff8_width, ff8_first_char, sizeof (ff8_data) / sizeof (uint32_t) / (ff8_height * ff8_stride), ff8_data, ff8_stride),
-  FixedFont (ff9_height, ff9_line_height, ff9_width, ff9_first_char, sizeof (ff9_data) / sizeof (uint32_t) / (ff9_height * ff9_stride), ff9_data, ff9_stride),
-  FixedFont (ff10_height, ff10_line_height, ff10_width, ff10_first_char, sizeof (ff10_data) / sizeof (uint32_t) / (ff10_height * ff10_stride), ff10_data, ff10_stride),
-  FixedFont (ff11_height, ff11_line_height, ff11_width, ff11_first_char, sizeof (ff11_data) / sizeof (uint32_t) / (ff11_height * ff11_stride), ff11_data, ff11_stride),
-  FixedFont (ff12_height, ff12_line_height, ff12_width, ff12_first_char, sizeof (ff12_data) / sizeof (uint32_t) / (ff12_height * ff12_stride), ff12_data, ff12_stride),
-  FixedFont (ff13_height, ff13_line_height, ff13_width, ff13_first_char, sizeof (ff13_data) / sizeof (uint32_t) / (ff13_height * ff13_stride), ff13_data, ff13_stride),
-  FixedFont (ff14_height, ff14_line_height, ff14_width, ff14_first_char, sizeof (ff14_data) / sizeof (uint32_t) / (ff14_height * ff14_stride), ff14_data, ff14_stride),
-  FixedFont (ff15_height, ff15_line_height, ff15_width, ff15_first_char, sizeof (ff15_data) / sizeof (uint32_t) / (ff15_height * ff15_stride), ff15_data, ff15_stride),
-  FixedFont (ff16_height, ff16_line_height, ff16_width, ff16_first_char, sizeof (ff16_data) / sizeof (uint32_t) / (ff16_height * ff16_stride), ff16_data, ff16_stride),
-  FixedFont (ff17_height, ff17_line_height, ff17_width, ff17_first_char, sizeof (ff17_data) / sizeof (uint32_t) / (ff17_height * ff17_stride), ff17_data, ff17_stride),
-  FixedFont (ff18_height, ff18_line_height, ff18_width, ff18_first_char, sizeof (ff18_data) / sizeof (uint32_t) / (ff18_height * ff18_stride), ff18_data, ff18_stride),
-  FixedFont (ff19_height, ff19_line_height, ff19_width, ff19_first_char, sizeof (ff19_data) / sizeof (uint32_t) / (ff19_height * ff19_stride), ff19_data, ff19_stride),
-  FixedFont (ff20_height, ff20_line_height, ff20_width, ff20_first_char, sizeof (ff20_data) / sizeof (uint32_t) / (ff20_height * ff20_stride), ff20_data, ff20_stride),
-  FixedFont (ff21_height, ff21_line_height, ff21_width, ff21_first_char, sizeof (ff21_data) / sizeof (uint32_t) / (ff21_height * ff21_stride), ff21_data, ff21_stride),
-  FixedFont (ff22_height, ff22_line_height, ff22_width, ff22_first_char, sizeof (ff22_data) / sizeof (uint32_t) / (ff22_height * ff22_stride), ff22_data, ff22_stride),
-  FixedFont (ff23_height, ff23_line_height, ff23_width, ff23_first_char, sizeof (ff23_data) / sizeof (uint32_t) / (ff23_height * ff23_stride), ff23_data, ff23_stride),
-  FixedFont (ff24_height, ff24_line_height, ff24_width, ff24_first_char, sizeof (ff24_data) / sizeof (uint32_t) / (ff24_height * ff24_stride), ff24_data, ff24_stride),
-  FixedFont (ff25_height, ff25_line_height, ff25_width, ff25_first_char, sizeof (ff25_data) / sizeof (uint32_t) / (ff25_height * ff25_stride), ff25_data, ff25_stride),
-  FixedFont (ff26_height, ff26_line_height, ff26_width, ff26_first_char, sizeof (ff26_data) / sizeof (uint32_t) / (ff26_height * ff26_stride), ff26_data, ff26_stride),
-  FixedFont (ff27_height, ff27_line_height, ff27_width, ff27_first_char, sizeof (ff27_data) / sizeof (uint32_t) / (ff27_height * ff27_stride), ff27_data, ff27_stride),
-  FixedFont (ff28_height, ff28_line_height, ff28_width, ff28_first_char, sizeof (ff28_data) / sizeof (uint32_t) / (ff28_height * ff28_stride), ff28_data, ff28_stride),
-  FixedFont (ff29_height, ff29_line_height, ff29_width, ff29_first_char, sizeof (ff29_data) / sizeof (uint32_t) / (ff29_height * ff29_stride), ff29_data, ff29_stride),
-  FixedFont (ff30_height, ff30_line_height, ff30_width, ff30_first_char, sizeof (ff30_data) / sizeof (uint32_t) / (ff30_height * ff30_stride), ff30_data, ff30_stride),
-  FixedFont (ff31_height, ff31_line_height, ff31_width, ff31_first_char, sizeof (ff31_data) / sizeof (uint32_t) / (ff31_height * ff31_stride), ff31_data, ff31_stride),
-  FixedFont (ff32_height, ff32_line_height, ff32_width, ff32_first_char, sizeof (ff32_data) / sizeof (uint32_t) / (ff32_height * ff32_stride), ff32_data, ff32_stride),
-  FixedFont (ff33_height, ff33_line_height, ff33_width, ff33_first_char, sizeof (ff33_data) / sizeof (uint32_t) / (ff33_height * ff33_stride), ff33_data, ff33_stride),
-  FixedFont (ff34_height, ff34_line_height, ff34_width, ff34_first_char, sizeof (ff34_data) / sizeof (uint32_t) / (ff34_height * ff34_stride), ff34_data, ff34_stride),
-  FixedFont (ff35_height, ff35_line_height, ff35_width, ff35_first_char, sizeof (ff35_data) / sizeof (uint32_t) / (ff35_height * ff35_stride), ff35_data, ff35_stride),
-  FixedFont (ff36_height, ff36_line_height, ff36_width, ff36_first_char, sizeof (ff36_data) / sizeof (uint32_t) / (ff36_height * ff36_stride), ff36_data, ff36_stride),
+  FixedFont (ff1_height, ff1_line_height, ff1_width, ff1_first_char, sizeof (ff1_data) / sizeof (uint32_t) / (ff1_height * ff1_stride), ff1_data, ff1_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff2_height, ff2_line_height, ff2_width, ff2_first_char, sizeof (ff2_data) / sizeof (uint32_t) / (ff2_height * ff2_stride), ff2_data, ff2_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff3_height, ff3_line_height, ff3_width, ff3_first_char, sizeof (ff3_data) / sizeof (uint32_t) / (ff3_height * ff3_stride), ff3_data, ff3_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff4_height, ff4_line_height, ff4_width, ff4_first_char, sizeof (ff4_data) / sizeof (uint32_t) / (ff4_height * ff4_stride), ff4_data, ff4_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff5_height, ff5_line_height, ff5_width, ff5_first_char, sizeof (ff5_data) / sizeof (uint32_t) / (ff5_height * ff5_stride), ff5_data, ff5_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff6_height, ff6_line_height, ff6_width, ff6_first_char, sizeof (ff6_data) / sizeof (uint32_t) / (ff6_height * ff6_stride), ff6_data, ff6_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff7_height, ff7_line_height, ff7_width, ff7_first_char, sizeof (ff7_data) / sizeof (uint32_t) / (ff7_height * ff7_stride), ff7_data, ff7_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff8_height, ff8_line_height, ff8_width, ff8_first_char, sizeof (ff8_data) / sizeof (uint32_t) / (ff8_height * ff8_stride), ff8_data, ff8_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff9_height, ff9_line_height, ff9_width, ff9_first_char, sizeof (ff9_data) / sizeof (uint32_t) / (ff9_height * ff9_stride), ff9_data, ff9_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff10_height, ff10_line_height, ff10_width, ff10_first_char, sizeof (ff10_data) / sizeof (uint32_t) / (ff10_height * ff10_stride), ff10_data, ff10_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff11_height, ff11_line_height, ff11_width, ff11_first_char, sizeof (ff11_data) / sizeof (uint32_t) / (ff11_height * ff11_stride), ff11_data, ff11_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff12_height, ff12_line_height, ff12_width, ff12_first_char, sizeof (ff12_data) / sizeof (uint32_t) / (ff12_height * ff12_stride), ff12_data, ff12_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff13_height, ff13_line_height, ff13_width, ff13_first_char, sizeof (ff13_data) / sizeof (uint32_t) / (ff13_height * ff13_stride), ff13_data, ff13_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff14_height, ff14_line_height, ff14_width, ff14_first_char, sizeof (ff14_data) / sizeof (uint32_t) / (ff14_height * ff14_stride), ff14_data, ff14_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff15_height, ff15_line_height, ff15_width, ff15_first_char, sizeof (ff15_data) / sizeof (uint32_t) / (ff15_height * ff15_stride), ff15_data, ff15_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff16_height, ff16_line_height, ff16_width, ff16_first_char, sizeof (ff16_data) / sizeof (uint32_t) / (ff16_height * ff16_stride), ff16_data, ff16_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff17_height, ff17_line_height, ff17_width, ff17_first_char, sizeof (ff17_data) / sizeof (uint32_t) / (ff17_height * ff17_stride), ff17_data, ff17_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff18_height, ff18_line_height, ff18_width, ff18_first_char, sizeof (ff18_data) / sizeof (uint32_t) / (ff18_height * ff18_stride), ff18_data, ff18_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff19_height, ff19_line_height, ff19_width, ff19_first_char, sizeof (ff19_data) / sizeof (uint32_t) / (ff19_height * ff19_stride), ff19_data, ff19_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff20_height, ff20_line_height, ff20_width, ff20_first_char, sizeof (ff20_data) / sizeof (uint32_t) / (ff20_height * ff20_stride), ff20_data, ff20_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff21_height, ff21_line_height, ff21_width, ff21_first_char, sizeof (ff21_data) / sizeof (uint32_t) / (ff21_height * ff21_stride), ff21_data, ff21_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff22_height, ff22_line_height, ff22_width, ff22_first_char, sizeof (ff22_data) / sizeof (uint32_t) / (ff22_height * ff22_stride), ff22_data, ff22_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff23_height, ff23_line_height, ff23_width, ff23_first_char, sizeof (ff23_data) / sizeof (uint32_t) / (ff23_height * ff23_stride), ff23_data, ff23_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff24_height, ff24_line_height, ff24_width, ff24_first_char, sizeof (ff24_data) / sizeof (uint32_t) / (ff24_height * ff24_stride), ff24_data, ff24_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff25_height, ff25_line_height, ff25_width, ff25_first_char, sizeof (ff25_data) / sizeof (uint32_t) / (ff25_height * ff25_stride), ff25_data, ff25_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff26_height, ff26_line_height, ff26_width, ff26_first_char, sizeof (ff26_data) / sizeof (uint32_t) / (ff26_height * ff26_stride), ff26_data, ff26_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff27_height, ff27_line_height, ff27_width, ff27_first_char, sizeof (ff27_data) / sizeof (uint32_t) / (ff27_height * ff27_stride), ff27_data, ff27_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff28_height, ff28_line_height, ff28_width, ff28_first_char, sizeof (ff28_data) / sizeof (uint32_t) / (ff28_height * ff28_stride), ff28_data, ff28_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff29_height, ff29_line_height, ff29_width, ff29_first_char, sizeof (ff29_data) / sizeof (uint32_t) / (ff29_height * ff29_stride), ff29_data, ff29_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff30_height, ff30_line_height, ff30_width, ff30_first_char, sizeof (ff30_data) / sizeof (uint32_t) / (ff30_height * ff30_stride), ff30_data, ff30_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff31_height, ff31_line_height, ff31_width, ff31_first_char, sizeof (ff31_data) / sizeof (uint32_t) / (ff31_height * ff31_stride), ff31_data, ff31_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff32_height, ff32_line_height, ff32_width, ff32_first_char, sizeof (ff32_data) / sizeof (uint32_t) / (ff32_height * ff32_stride), ff32_data, ff32_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff33_height, ff33_line_height, ff33_width, ff33_first_char, sizeof (ff33_data) / sizeof (uint32_t) / (ff33_height * ff33_stride), ff33_data, ff33_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff34_height, ff34_line_height, ff34_width, ff34_first_char, sizeof (ff34_data) / sizeof (uint32_t) / (ff34_height * ff34_stride), ff34_data, ff34_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff35_height, ff35_line_height, ff35_width, ff35_first_char, sizeof (ff35_data) / sizeof (uint32_t) / (ff35_height * ff35_stride), ff35_data, ff35_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  FixedFont (ff36_height, ff36_line_height, ff36_width, ff36_first_char, sizeof (ff36_data) / sizeof (uint32_t) / (ff36_height * ff36_stride), ff36_data, ff36_stride), // NOLINT(bugprone-implicit-widening-of-multiplication-result)
 };
 
 } // namespace lay

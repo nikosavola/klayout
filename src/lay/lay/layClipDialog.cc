@@ -215,7 +215,7 @@ BEGIN_PROTECTED
   }
 
   //  close this dialog
-  QDialog::accept ();
+  QDialog::accept (); // NOLINT(bugprone-parent-virtual-call)
 
 END_PROTECTED
 }

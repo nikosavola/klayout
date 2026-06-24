@@ -1600,10 +1600,10 @@ MainWindow::cm_print ()
       page_rect.setBottom (page_rect.bottom () - b);
 
       QRectF text_rect = page_rect;
-      text_rect.setLeft (text_rect.left () + hh / 2);
-      text_rect.setRight (text_rect.right () - hh / 2);
-      text_rect.setBottom (text_rect.bottom () - hh / 2);
-      text_rect.setTop (text_rect.top () + hh / 2);
+      text_rect.setLeft (text_rect.left () + hh / 2); // NOLINT(bugprone-integer-division)
+      text_rect.setRight (text_rect.right () - hh / 2); // NOLINT(bugprone-integer-division)
+      text_rect.setBottom (text_rect.bottom () - hh / 2); // NOLINT(bugprone-integer-division)
+      text_rect.setTop (text_rect.top () + hh / 2); // NOLINT(bugprone-integer-division)
 
       QImage img = current_view ()->get_image_with_options (page_rect.width (),
                                                             page_rect.height () - 4 * hh,

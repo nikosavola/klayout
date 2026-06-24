@@ -87,7 +87,7 @@ public:
   /**
    *  @brief Assignment
    */
-  ObjectBase &operator= (const ObjectBase &)
+  ObjectBase &operator= (const ObjectBase &) // NOLINT(bugprone-unhandled-self-assignment)
   {
     return *this;
   }

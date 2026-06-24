@@ -293,7 +293,7 @@ bool MacroTreeModel::dropMimeData (const QMimeData *data, Qt::DropAction /*actio
 
     if (is_valid_pointer ((void *) p)) {
 
-      QObject *from_object = (QObject *) (void *) p;
+      QObject *from_object = (QObject *) (void *) p; // NOLINT(bugprone-casting-through-void)
       lym::Macro *from_macro = dynamic_cast <lym::Macro *> (from_object);
       lym::MacroCollection *from_mc = dynamic_cast <lym::MacroCollection *> (from_object);
 

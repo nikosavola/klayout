@@ -2683,7 +2683,7 @@ NetlistBrowserModel::build_url (const QModelIndex &index, const std::string &tit
     if (pstr.empty ()) {
       pstr = tl::to_string (i.row ());
     } else {
-      pstr = tl::to_string (i.row ()) + "," + pstr;
+      pstr = tl::to_string (i.row ()) + "," + pstr; // NOLINT(performance-inefficient-string-concatenation)
     }
     i = parent (i);
   }

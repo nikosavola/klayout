@@ -1154,7 +1154,7 @@ RS274XReader::read_sr_parameter (const std::string &block)
     dy *= unit ();
 
     std::vector <db::DVector> steps;
-    steps.reserve (nx * ny);
+    steps.reserve (nx * ny); // NOLINT(bugprone-implicit-widening-of-multiplication-result)
     for (int i = 0; i < nx; ++i) {
       for (int j = 0; j < ny; ++j) {
         steps.push_back (db::DVector (i * dx, j * dy));

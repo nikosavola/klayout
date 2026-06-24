@@ -225,7 +225,7 @@ struct get_boxed_value_func
 
       R *v = new R (ruby2c<R> (arg));
       heap->push (v);
-      *value = v;
+      *value = v; // NOLINT(bugprone-multi-level-implicit-pointer-conversion)
 
     } else {
 

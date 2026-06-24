@@ -223,7 +223,7 @@ public:
   /**
    *  @brief Assignment operator
    */
-  user_object<C> &operator= (const user_object<C> &d)
+  user_object<C> &operator= (const user_object<C> &d) // NOLINT(bugprone-unhandled-self-assignment)
   {
     if (d.mp_obj) {
       set_ptr (d.mp_obj->clone ());

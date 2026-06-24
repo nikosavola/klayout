@@ -1214,7 +1214,7 @@ ApplicationBase::run ()
 
       if (f->first == layout_file || f->first == layout_file_with_tech) {
 
-        std::string filename = f->second.first;
+        std::string filename = f->second.first; // NOLINT(bugprone-unused-local-non-trivial-variable)
 
         if (f->first != layout_file_with_tech) {
           mw->add_mru (f->second.first);

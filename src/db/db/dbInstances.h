@@ -104,7 +104,7 @@ struct instances_editable_traits<InstancesNonEditableTag>
  *  reference points to a certain instance and provides an abstract interface.
  */
 
-class DB_PUBLIC Instance
+class DB_PUBLIC Instance // NOLINT(bugprone-tagged-union-member-count)
 {
 public:
   typedef db::Layout layout_type;
@@ -521,7 +521,7 @@ private:
 //  NOTE: we do explicit instantiation, so the exposure is declared
 //  as DB_PUBLIC - as if it wasn't a template
 template <class IterTraits>
-class DB_PUBLIC instance_iterator
+class DB_PUBLIC instance_iterator // NOLINT(bugprone-tagged-union-member-count)
 {
 public:
   typedef db::Layout layout_type;
@@ -1802,7 +1802,7 @@ private:
   friend struct NormalInstanceIteratorTraits;
   friend struct TouchingInstanceIteratorTraits;
   friend struct OverlappingInstanceIteratorTraits;
-  template <class Traits> friend class instance_iterator;
+  template <class Traits> friend class instance_iterator; // NOLINT(bugprone-tagged-union-member-count)
   template <class Inst, class ET> friend class InstOp;
 
   union {

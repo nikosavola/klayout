@@ -36,7 +36,7 @@ EdgesDelegate::EdgesDelegate ()
   m_strict_handling = false;
 }
 
-EdgesDelegate::EdgesDelegate (const EdgesDelegate &other)
+EdgesDelegate::EdgesDelegate (const EdgesDelegate &other) // NOLINT(bugprone-copy-constructor-init)
   : ShapeCollectionDelegateBase ()
 {
   operator= (other);

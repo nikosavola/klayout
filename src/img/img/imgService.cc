@@ -112,7 +112,7 @@ draw_scanline (unsigned int level, const img::Object &image_object, tl::PixelBuf
   db::DPoint qm = p1 + (p2 - p1) * 0.5;
   double xm = t.trans (qm).x ();
 
-  if (level < 7 && xstop > xstart + 1 && fabs (xm - (xstart + xstop) / 2) > 1.0 && xm > xstart + 1 && xm < xstop - 1) {
+  if (level < 7 && xstop > xstart + 1 && fabs (xm - (xstart + xstop) / 2) > 1.0 && xm > xstart + 1 && xm < xstop - 1) { // NOLINT(bugprone-integer-division)
 
     draw_scanline (level + 1, image_object, pxbuffer, y, t, it, q1, qm);
     draw_scanline (level + 1, image_object, pxbuffer, y, t, it, qm, q2);
@@ -303,10 +303,10 @@ View::render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
     std::vector <db::Polygon> frame_p;
 
     db::DBox b = image_box_poly.box ();
-    if (b.left () < std::numeric_limits<db::Coord>::min () / 2 ||
-        b.right () > std::numeric_limits<db::Coord>::max () / 2 ||
-        b.bottom () < std::numeric_limits<db::Coord>::min () / 2 ||
-        b.top () > std::numeric_limits<db::Coord>::max () / 2) {
+    if (b.left () < std::numeric_limits<db::Coord>::min () / 2 || // NOLINT(bugprone-integer-division)
+        b.right () > std::numeric_limits<db::Coord>::max () / 2 || // NOLINT(bugprone-integer-division)
+        b.bottom () < std::numeric_limits<db::Coord>::min () / 2 || // NOLINT(bugprone-integer-division)
+        b.top () > std::numeric_limits<db::Coord>::max () / 2) { // NOLINT(bugprone-integer-division)
       return;
     }
 

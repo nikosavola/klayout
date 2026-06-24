@@ -497,7 +497,7 @@ Layout::Layout (bool editable, db::Manager *manager)
   // .. nothing yet ..
 }
 
-Layout::Layout (const db::Layout &layout)
+Layout::Layout (const db::Layout &layout) // NOLINT(bugprone-copy-constructor-init)
   : db::Object (layout),
     db::LayoutStateModel (),
     gsi::ObjectBase (),
@@ -1485,7 +1485,7 @@ Layout::add_cell (const char *name)
 cell_index_type
 Layout::add_anonymous_cell ()
 {
-  std::string b;
+  std::string b; // NOLINT(bugprone-unused-local-non-trivial-variable)
 
   //  create a new cell
   cell_index_type new_index = allocate_new_cell ();
@@ -2572,7 +2572,7 @@ static const std::vector<tl::Variant> &gauge_parameters (const std::vector<tl::V
     return buffer;
 
   } else {
-    return p;
+    return p; // NOLINT(bugprone-return-const-ref-from-parameter)
   }
 }
 

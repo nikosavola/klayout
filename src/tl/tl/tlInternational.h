@@ -80,7 +80,7 @@ TL_PUBLIC std::string to_string (const QString &s);
  */
 inline const std::string &to_string (const std::string &s)
 {
-  return s;
+  return s; // NOLINT(bugprone-return-const-ref-from-parameter)
 }
 
 #ifndef _WIN32

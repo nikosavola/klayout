@@ -92,7 +92,7 @@ bool ControlWidgetStack::event(QEvent *e)
   if (e->type () == QEvent::LayoutRequest) {
     update_geometry ();
   }
-  return QWidget::event (e);
+  return QWidget::event (e); // NOLINT(bugprone-parent-virtual-call)
 }
 
 QSize ControlWidgetStack::sizeHint() const

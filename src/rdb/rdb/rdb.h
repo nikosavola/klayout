@@ -50,7 +50,7 @@ namespace tl
 
 namespace db
 {
-  class Shape;
+  class Shape; // NOLINT(bugprone-tagged-union-member-count)
   class Layout;
 }
 

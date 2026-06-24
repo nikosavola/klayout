@@ -887,7 +887,7 @@ BrowseShapesForm::fill_cell_instances (const db::ICplxTrans &t, const db::Layout
 
       std::string new_path;
       if (! path.empty ()) {
-        new_path = layout.cell_name (p->parent_cell_index ()) + aref + "/" + path;
+        new_path = layout.cell_name (p->parent_cell_index ()) + aref + "/" + path; // NOLINT(performance-inefficient-string-concatenation)
       } else {
         new_path = layout.cell_name (p->parent_cell_index ()) + aref;
       }

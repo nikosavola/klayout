@@ -220,7 +220,7 @@ struct var2c<tl::Variant>
 {
   static const tl::Variant &get (const tl::Variant &rval)
   {
-    return rval;
+    return rval; // NOLINT(bugprone-return-const-ref-from-parameter)
   }
 };
 
@@ -333,7 +333,7 @@ struct writer
         R *v = new R (var2c<R>::get (*arg));
         heap->push (v);
 
-        aa->write<void *> (v);
+        aa->write<void *> (v); // NOLINT(bugprone-multi-level-implicit-pointer-conversion)
 
       } else if (atype.is_cref ()) {
         //  Note: POD's are written as copies for const refs, so we can pass a temporary here:

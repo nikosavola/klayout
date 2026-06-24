@@ -62,7 +62,7 @@ EdgePairs::EdgePairs (EdgePairsDelegate *delegate)
   //  .. nothing yet ..
 }
 
-EdgePairs::EdgePairs (const EdgePairs &other)
+EdgePairs::EdgePairs (const EdgePairs &other) // NOLINT(bugprone-copy-constructor-init)
   : db::ShapeCollection (), mp_delegate (other.mp_delegate->clone ())
 {
   //  .. nothing yet ..

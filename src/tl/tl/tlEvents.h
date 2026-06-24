@@ -147,7 +147,7 @@ typedef event<> Event;
 #define _TMPLARGLISTP A1, void, void, void, void
 #define _CALLARGS     a1
 #define _CALLARGLIST  A1 a1
-#define _CALLARGPTRS  (void *)&a1
+#define _CALLARGPTRS  (void *)&a1 // NOLINT(bugprone-macro-parentheses)
 
 #include "tlEventsVar.h"
 

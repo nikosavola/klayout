@@ -1288,15 +1288,15 @@ XORToolDialog::run_xor ()
     if (mode == 0 && axorb) {
       op = db::BooleanOp::Xor;
       op_name = "XOR";
-      op_desc = "XOR between '" + srca + "' (Layout A) and '" + srcb + "' (Layout B)";
+      op_desc = "XOR between '" + srca + "' (Layout A) and '" + srcb + "' (Layout B)"; // NOLINT(performance-inefficient-string-concatenation)
     } else if (mode == 1 && anotb) {
       op = db::BooleanOp::ANotB;
       op_name = "ANOTB";
-      op_desc = "Geometry in '" + srca + "' (Layout A) but not in '" + srcb + "' (Layout B)";
+      op_desc = "Geometry in '" + srca + "' (Layout A) but not in '" + srcb + "' (Layout B)"; // NOLINT(performance-inefficient-string-concatenation)
     } else if (mode == 2 && bnota) {
       op = db::BooleanOp::BNotA;
       op_name = "BNOTA";
-      op_desc = "Geometry in '" + srca + "' (Layout B) but not in '" + srcb + "' (Layout A)";
+      op_desc = "Geometry in '" + srca + "' (Layout B) but not in '" + srcb + "' (Layout A)"; // NOLINT(performance-inefficient-string-concatenation)
     } else {
       continue;
     }

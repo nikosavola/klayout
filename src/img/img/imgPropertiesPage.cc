@@ -500,14 +500,14 @@ PropertiesPage::update ()
   m_no_signals = true;
 
   if (mp_direct_image->data_mapping ().gamma < 1.0) {
-    gamma_slider->setValue (50 - int (0.5 + (1.0 / mp_direct_image->data_mapping ().gamma - 1.0) / (1.0 / min_gamma - 1.0) * 50.0));
+    gamma_slider->setValue (50 - int (0.5 + (1.0 / mp_direct_image->data_mapping ().gamma - 1.0) / (1.0 / min_gamma - 1.0) * 50.0)); // NOLINT(bugprone-incorrect-roundings)
   } else {
-    gamma_slider->setValue (50 + int (0.5 + (mp_direct_image->data_mapping ().gamma - 1.0) / (max_gamma - 1.0) * 50.0));
+    gamma_slider->setValue (50 + int (0.5 + (mp_direct_image->data_mapping ().gamma - 1.0) / (max_gamma - 1.0) * 50.0)); // NOLINT(bugprone-incorrect-roundings)
   }
 
-  r_slider->setValue (int (0.5 + mp_direct_image->data_mapping ().red_gain * 50.0));
-  g_slider->setValue (int (0.5 + mp_direct_image->data_mapping ().green_gain * 50.0));
-  b_slider->setValue (int (0.5 + mp_direct_image->data_mapping ().blue_gain * 50.0));
+  r_slider->setValue (int (0.5 + mp_direct_image->data_mapping ().red_gain * 50.0)); // NOLINT(bugprone-incorrect-roundings)
+  g_slider->setValue (int (0.5 + mp_direct_image->data_mapping ().green_gain * 50.0)); // NOLINT(bugprone-incorrect-roundings)
+  b_slider->setValue (int (0.5 + mp_direct_image->data_mapping ().blue_gain * 50.0)); // NOLINT(bugprone-incorrect-roundings)
 
   m_no_signals = false;
 
@@ -642,9 +642,9 @@ PropertiesPage::gamma_spinbox_changed (double value)
   m_no_signals = true;
 
   if (value < 1.0) {
-    gamma_slider->setValue (50 - int (0.5 + (1.0 / value - 1.0) / (1.0 / min_gamma - 1.0) * 50.0));
+    gamma_slider->setValue (50 - int (0.5 + (1.0 / value - 1.0) / (1.0 / min_gamma - 1.0) * 50.0)); // NOLINT(bugprone-incorrect-roundings)
   } else {
-    gamma_slider->setValue (50 + int (0.5 + (value - 1.0) / (max_gamma - 1.0) * 50.0));
+    gamma_slider->setValue (50 + int (0.5 + (value - 1.0) / (max_gamma - 1.0) * 50.0)); // NOLINT(bugprone-incorrect-roundings)
   }
 
   emit edited ();
@@ -700,7 +700,7 @@ PropertiesPage::red_spinbox_changed (double value)
 
   m_no_signals = true;
 
-  r_slider->setValue (int (0.5 + value * 50.0));
+  r_slider->setValue (int (0.5 + value * 50.0)); // NOLINT(bugprone-incorrect-roundings)
   emit edited ();
 
   m_no_signals = false;
@@ -732,7 +732,7 @@ PropertiesPage::green_spinbox_changed (double value)
 
   m_no_signals = true;
 
-  g_slider->setValue (int (0.5 + value * 50.0));
+  g_slider->setValue (int (0.5 + value * 50.0)); // NOLINT(bugprone-incorrect-roundings)
   emit edited ();
 
   m_no_signals = false;
@@ -764,7 +764,7 @@ PropertiesPage::blue_spinbox_changed (double value)
 
   m_no_signals = true;
 
-  b_slider->setValue (int (0.5 + value * 50.0));
+  b_slider->setValue (int (0.5 + value * 50.0)); // NOLINT(bugprone-incorrect-roundings)
   emit edited ();
 
   m_no_signals = false;  

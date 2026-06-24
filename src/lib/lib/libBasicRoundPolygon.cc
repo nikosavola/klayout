@@ -62,7 +62,7 @@ BasicRoundPolygon::parameters_from_shape (const db::Layout &layout, const db::Sh
   nm.insert (std::make_pair (p_layer, tl::Variant (layout.get_properties (layer))));
   nm.insert (std::make_pair (p_polygon, tl::Variant (db::CplxTrans (layout.dbu ()) * poly)));
   //  use 1/10 of the minimum bbox dimension as a rough initialisation of the radius
-  nm.insert (std::make_pair (p_radius, tl::Variant (layout.dbu () * (std::min (poly.box ().width (), poly.box ().height ()) / 10))));
+  nm.insert (std::make_pair (p_radius, tl::Variant (layout.dbu () * (std::min (poly.box ().width (), poly.box ().height ()) / 10)))); // NOLINT(bugprone-integer-division)
   return map_parameters (nm);
 }
 

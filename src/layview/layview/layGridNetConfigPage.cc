@@ -57,7 +57,7 @@ GridNetConfigPage::~GridNetConfigPage ()
 void
 GridNetConfigPage::setup (lay::Dispatcher *root)
 {
-  std::string value;
+  std::string value; // NOLINT(bugprone-unused-local-non-trivial-variable)
 
   //  Grid visibility
   bool visible = false;

@@ -119,7 +119,7 @@ ClassBase::qname () const
   const gsi::ClassBase *p = this;
   while (p->parent ()) {
     p = p->parent ();
-    qn = p->name () + "::" + qn;
+    qn = p->name () + "::" + qn; // NOLINT(performance-inefficient-string-concatenation)
   }
   return qn;
 }

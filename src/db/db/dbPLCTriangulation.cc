@@ -310,7 +310,7 @@ Triangulation::find_closest_edge (const db::DPoint &p, Vertex *vstart, bool insi
       vstart = mp_graph->polygons ().begin ()->vertex (0);
       double dmin = vstart->distance (p);
 
-      while (ls * ls < m) {
+      while (ls * ls < m) { // NOLINT(bugprone-implicit-widening-of-multiplication-result)
         m /= 2;
         for (size_t i = m / 2; i < n; i += m) {
           ++ls;

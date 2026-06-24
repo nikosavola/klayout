@@ -83,7 +83,7 @@ private:
       valid = true;
       cache_ptr = &c->second;
     } else {
-      cache_ptr = &caches [node];
+      cache_ptr = &caches [node]; // NOLINT(bugprone-pointer-arithmetic-on-polymorphic-object)
     }
   }
 
@@ -484,7 +484,7 @@ protected:
   const shape_interactions<TS, TI> &interactions_for_child (const shape_interactions<TS, TI> &interactions, unsigned int child_index, shape_interactions<TS, TI> &child_interactions) const
   {
     if (! needs_reduce_interactions (child_index)) {
-      return interactions;
+      return interactions; // NOLINT(bugprone-return-const-ref-from-parameter)
     }
 
     for (typename shape_interactions<TS, TI>::iterator i = interactions.begin (); i != interactions.end (); ++i) {

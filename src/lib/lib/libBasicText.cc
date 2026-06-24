@@ -127,7 +127,7 @@ BasicText::coerce_parameters (const db::Layout &layout, db::pcell_parameters_typ
     return;
   }
 
-  std::string t = parameters [p_text].to_string ();
+  std::string t = parameters [p_text].to_string (); // NOLINT(bugprone-unused-local-non-trivial-variable)
 
   int f = get_font_index (parameters);
   const db::TextGenerator &font = db::TextGenerator::generators ()[f];

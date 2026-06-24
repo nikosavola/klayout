@@ -77,7 +77,7 @@ template <class Value>
 const Value &per_mask_value (const std::map<unsigned int, Value> &map, const Value &def, unsigned int mask)
 {
   typename std::map<unsigned int, Value>::const_iterator i = map.find (mask);
-  return i == map.end () ? def : i->second;
+  return i == map.end () ? def : i->second; // NOLINT(bugprone-return-const-ref-from-parameter)
 }
 
 inline bool per_mask_value_is_null (int dt) { return dt < 0; }

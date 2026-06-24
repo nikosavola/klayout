@@ -514,7 +514,7 @@ PCellParametersPage::setup (lay::LayoutViewBase *view, int cv_index, const db::P
         leader = tl::sprintf ("[%s] ", p->get_name ());
       }
 
-      QLabel *l = new QLabel (tl::to_qstring (leader + description + range), inner_frame);
+      QLabel *l = new QLabel (tl::to_qstring (leader + description + range), inner_frame); // NOLINT(performance-inefficient-string-concatenation)
       inner_grid->addWidget (l, row, 1);
       m_all_widgets.back ().push_back (l);
 

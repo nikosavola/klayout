@@ -57,7 +57,7 @@ class Shapes;
  *  copy semantics but can be copied by bytewise copy simply.
  */
 template <class C>
-class generic_polygon_edge_iterator
+class generic_polygon_edge_iterator // NOLINT(bugprone-tagged-union-member-count)
 {
 public:
   typedef C coord_type;
@@ -337,7 +337,7 @@ private:
  *  copy semantics but can be copied by bytewise copy simply.
  */
 template <class C>
-class generic_point_iterator
+class generic_point_iterator // NOLINT(bugprone-tagged-union-member-count)
 {
 public:
   typedef C coord_type;
@@ -594,7 +594,7 @@ private:
  *  the shape proxy will also point to a modified or invalid shape.
  *  The proxy can be "null" which means a invalid reference.
  */ 
-class DB_PUBLIC Shape
+class DB_PUBLIC Shape // NOLINT(bugprone-tagged-union-member-count)
 {
 public:
   typedef db::Coord coord_type;

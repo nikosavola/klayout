@@ -41,8 +41,8 @@
 
 namespace img {
 
-class LayoutView;
-class LayoutCanvas;
+class LayoutView; // NOLINT(bugprone-forward-declaration-namespace)
+class LayoutCanvas; // NOLINT(bugprone-forward-declaration-namespace)
 class Service;
 
 // -------------------------------------------------------------

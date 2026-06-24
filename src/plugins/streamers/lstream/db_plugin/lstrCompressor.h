@@ -84,7 +84,7 @@ inline double cost_of (double d)
 {
   int exp = 0;
   frexp (d, &exp);
-  return double ((exp + 7) / 8);
+  return double ((exp + 7) / 8); // NOLINT(bugprone-integer-division)
 }
 
 /**

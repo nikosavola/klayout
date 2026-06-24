@@ -83,7 +83,7 @@ AnnotationShapes::AnnotationShapes (db::Manager *manager)
   // .. nothing yet ..
 }
 
-AnnotationShapes::AnnotationShapes (const AnnotationShapes &d)
+AnnotationShapes::AnnotationShapes (const AnnotationShapes &d) // NOLINT(bugprone-copy-constructor-init)
   : db::LayoutStateModel (true /*busy*/), db::Object (d)
 {
   operator= (d);

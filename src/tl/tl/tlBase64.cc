@@ -41,7 +41,7 @@ public:
     }
     for (unsigned int i = 0; i < 64; ++i) {
       m_bin2char[i] = charset[i];
-      m_char2bin[(unsigned int) charset[i]] = i;
+      m_char2bin[(unsigned int) charset[i]] = i; // NOLINT(bugprone-signed-char-misuse)
     }
   }
 

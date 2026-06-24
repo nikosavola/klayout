@@ -469,7 +469,7 @@ Bitmap::render_fill (std::vector<lay::RenderEdge> &edges)
     int c = 0;
     bool x1set = false;
     double x1 = 0;
-    unsigned int yint = (unsigned int) (y + 0.5);
+    unsigned int yint = (unsigned int) (y + 0.5); // NOLINT(bugprone-incorrect-roundings)
 
     for (e = done; e != todo; ++e) {
       if (! e->is_horizontal ()) {
@@ -539,7 +539,7 @@ Bitmap::render_fill_ortho (std::vector<lay::RenderEdge> &edges)
     int c = 0;
     bool x1set = false;
     double x1 = 0;
-    unsigned int yint = (unsigned int) (y + 0.5);
+    unsigned int yint = (unsigned int) (y + 0.5); // NOLINT(bugprone-incorrect-roundings)
 
     for (e = done; e != todo; ++e) {
       if (! e->is_horizontal ()) {
@@ -817,7 +817,7 @@ Bitmap::render_text (const lay::RenderText &text)
       y += double (ff.line_height () * (lines - 1) + ff.height ());
     } else if (text.valign == db::VAlignCenter) {
       y = text.b.center ().y ();
-      y += double ((ff.line_height () * (lines - 1) + ff.height ()) / 2);
+      y += double ((ff.line_height () * (lines - 1) + ff.height ()) / 2); // NOLINT(bugprone-integer-division)
     } else {
       y = text.b.top ();
     }
@@ -840,7 +840,7 @@ Bitmap::render_text (const lay::RenderText &text)
         xx -= double (ff.width () * length);
       } else if (text.halign == db::HAlignCenter) {
         xx = text.b.center ().x ();
-        xx -= double (ff.width () * length / 2);
+        xx -= double (ff.width () * length / 2); // NOLINT(bugprone-integer-division)
       } else {
         xx = text.b.left ();
       }
@@ -857,7 +857,7 @@ Bitmap::render_text (const lay::RenderText &text)
           }
 
           if (xx > -100.0 && xx < double (width ())) {
-            fill_pattern (int (y + 0.5), int (floor (xx)), ff.data () + (c - ff.first_char ()) * ff.height () * ff.stride (), ff.stride (), ff.height ());
+            fill_pattern (int (y + 0.5), int (floor (xx)), ff.data () + (c - ff.first_char ()) * ff.height () * ff.stride (), ff.stride (), ff.height ()); // NOLINT(bugprone-implicit-widening-of-multiplication-result,bugprone-incorrect-roundings)
           }
 
           xx += double (ff.width ());

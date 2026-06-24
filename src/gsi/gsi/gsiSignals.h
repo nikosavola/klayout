@@ -292,7 +292,7 @@ protected:
    */
   virtual int qt_metacall (QMetaObject::Call c, int id, void **a)
   {
-    id = QObject::qt_metacall (c, id, a);
+    id = QObject::qt_metacall (c, id, a); // NOLINT(bugprone-parent-virtual-call)
     if (id < 0) {
       return id;
     }

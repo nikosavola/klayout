@@ -105,10 +105,10 @@ skip_quad (const db::Box &qb, const lay::Bitmap *vertex_bitmap, const db::CplxTr
     return true;
   }
 
-  int ixmin = (unsigned int)(qb_trans.left () + 0.5);
-  int ixmax = (unsigned int)(qb_trans.right () + 0.5);
-  int iymin = (unsigned int)(qb_trans.bottom () + 0.5);
-  int iymax = (unsigned int)(qb_trans.top () + 0.5);
+  int ixmin = (unsigned int)(qb_trans.left () + 0.5); // NOLINT(bugprone-incorrect-roundings)
+  int ixmax = (unsigned int)(qb_trans.right () + 0.5); // NOLINT(bugprone-incorrect-roundings)
+  int iymin = (unsigned int)(qb_trans.bottom () + 0.5); // NOLINT(bugprone-incorrect-roundings)
+  int iymax = (unsigned int)(qb_trans.top () + 0.5); // NOLINT(bugprone-incorrect-roundings)
   if (! has_zero_bit (vertex_bitmap, ixmin, iymin, ixmax, iymax)) {
     return true; // skip
   } else {

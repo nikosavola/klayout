@@ -77,8 +77,8 @@ public:
   {
     m_start_displacement = widget->displacement ();
 
-    double px = (pos.x () - widget->width () / 2) * 2.0 / widget->width ();
-    double py = -(pos.y () - widget->height () / 2) * 2.0 / widget->height ();
+    double px = (pos.x () - widget->width () / 2) * 2.0 / widget->width (); // NOLINT(bugprone-integer-division)
+    double py = -(pos.y () - widget->height () / 2) * 2.0 / widget->height (); // NOLINT(bugprone-integer-division)
 
     //  compute vector of line of sight
     std::pair<QVector3D, QVector3D> ray = camera_normal (view ()->cam_perspective () * view ()->cam_trans (), px, py);
@@ -177,7 +177,7 @@ public:
     //  simple change of azimuth only - with center in the middle
 
     QPoint m = event->pos () - m_start_pos;
-    QVector3D p (m_start_pos.x () - view ()->width () / 2, -m_start_pos.y () + view ()->height () / 2, 0);
+    QVector3D p (m_start_pos.x () - view ()->width () / 2, -m_start_pos.y () + view ()->height () / 2, 0); // NOLINT(bugprone-integer-division)
     QVector3D d (m.x (), -m.y (), 0);
 
     double cp = QVector3D::crossProduct (p, p + d).z () / p.length () / (p + d).length ();
@@ -256,8 +256,8 @@ D25ViewWidget::wheelEvent (QWheelEvent *event)
   double px = (event->position ().x () - width () / 2) * 2.0 / width ();
   double py = -(event->position ().y () - height () / 2) * 2.0 / height ();
 #else
-  double px = (event->pos ().x () - width () / 2) * 2.0 / width ();
-  double py = -(event->pos ().y () - height () / 2) * 2.0 / height ();
+  double px = (event->pos ().x () - width () / 2) * 2.0 / width (); // NOLINT(bugprone-integer-division)
+  double py = -(event->pos ().y () - height () / 2) * 2.0 / height (); // NOLINT(bugprone-integer-division)
 #endif
 
   if (top_view ()) {
@@ -1203,7 +1203,7 @@ D25ViewWidget::paintGL ()
   positions = m_gridplane_program->attributeLocation ("posAttr");
 
   //  a vertex buffer for the decoration
-  lay::mem_chunks<float, 1024 * 18> vertexes;
+  lay::mem_chunks<float, 1024 * 18> vertexes; // NOLINT(bugprone-implicit-widening-of-multiplication-result)
 
   m_gridplane_program->bind ();
 
@@ -1333,7 +1333,7 @@ D25ViewWidget::paintGL ()
     int cube_margin = 40;
 
     QMatrix4x4 into_top_right_corner;
-    into_top_right_corner.translate (1.0 - 2.0 / width () * (cube_margin + cube_size / 2), 1.0 - 2.0 / height () * (cube_margin + cube_size / 2));
+    into_top_right_corner.translate (1.0 - 2.0 / width () * (cube_margin + cube_size / 2), 1.0 - 2.0 / height () * (cube_margin + cube_size / 2)); // NOLINT(bugprone-integer-division)
     // into_top_right_corner.translate (0.5, 0.5, 0.0);
     into_top_right_corner.scale (2.0 * cube_size / double (height ()), 2.0 * cube_size / double (height ()), 1.0);
 

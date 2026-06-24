@@ -132,7 +132,7 @@ public:
 
   const shape_type &operator() (const shape_type &s) const
   {
-    return s;
+    return s; // NOLINT(bugprone-return-const-ref-from-parameter)
   }
 
   template <class Trans>

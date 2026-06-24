@@ -3558,14 +3558,14 @@ MacroEditorDialog::do_update_ui_to_run_mode ()
 
     if (m_in_breakpoint && mp_current_interpreter) {
 
-      base_color = QColor (base_color.red (), int (0.5 + base_color.green () * alpha), int (0.5 + base_color.blue () * alpha));
-      alt_base_color = QColor (alt_base_color.red (), int (0.5 + alt_base_color.green () * alpha), int (0.5 + alt_base_color.blue () * alpha));
+      base_color = QColor (base_color.red (), int (0.5 + base_color.green () * alpha), int (0.5 + base_color.blue () * alpha)); // NOLINT(bugprone-incorrect-roundings)
+      alt_base_color = QColor (alt_base_color.red (), int (0.5 + alt_base_color.green () * alpha), int (0.5 + alt_base_color.blue () * alpha)); // NOLINT(bugprone-incorrect-roundings)
       runtimeFrame->show ();
 
     } else {
 
-      base_color = QColor (int (0.5 + base_color.red () * alpha), base_color.green (), int (0.5 + base_color.blue () * alpha));
-      alt_base_color = QColor (int (0.5 + alt_base_color.red () * alpha), alt_base_color.green (), int (0.5 + alt_base_color.blue () * alpha));
+      base_color = QColor (int (0.5 + base_color.red () * alpha), base_color.green (), int (0.5 + base_color.blue () * alpha)); // NOLINT(bugprone-incorrect-roundings)
+      alt_base_color = QColor (int (0.5 + alt_base_color.red () * alpha), alt_base_color.green (), int (0.5 + alt_base_color.blue () * alpha)); // NOLINT(bugprone-incorrect-roundings)
       runtimeFrame->hide ();
 
     }

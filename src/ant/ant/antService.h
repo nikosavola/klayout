@@ -46,8 +46,8 @@
 
 namespace ant {
 
-class LayoutViewBase;
-class LayoutCanvas;
+class LayoutViewBase; // NOLINT(bugprone-forward-declaration-namespace)
+class LayoutCanvas; // NOLINT(bugprone-forward-declaration-namespace)
 class Service;
 
 // -------------------------------------------------------------

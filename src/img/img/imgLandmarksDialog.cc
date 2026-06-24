@@ -107,7 +107,7 @@ private:
       return;
     }
 
-    int basic_width = int(0.5 + 1.0 / canvas.resolution ());
+    int basic_width = int(0.5 + 1.0 / canvas.resolution ()); // NOLINT(bugprone-incorrect-roundings)
 
     //  obtain bitmap to render on
     lay::CanvasPlane *plane_frame = nullptr, *plane_fill = nullptr;

@@ -616,7 +616,7 @@ GDS2ReaderBase::read_boundary (db::Layout &layout, db::Cell &cell, bool from_box
       if (xy_length > 2000) {
 
         m_all_points.clear ();
-        m_all_points.reserve (xy_length * 2); // allocate some (hopefully enough) elements
+        m_all_points.reserve (xy_length * 2); // allocate some (hopefully enough) elements // NOLINT(bugprone-implicit-widening-of-multiplication-result)
 
         while (true) {
 
@@ -759,7 +759,7 @@ GDS2ReaderBase::read_path (db::Layout &layout, db::Cell &cell)
     if (xy_length > 2000) {
 
       m_all_points.clear ();
-      m_all_points.reserve (xy_length * 2); // allocate some (hopefully enough) elements
+      m_all_points.reserve (xy_length * 2); // allocate some (hopefully enough) elements // NOLINT(bugprone-implicit-widening-of-multiplication-result)
 
       while (true) {
 

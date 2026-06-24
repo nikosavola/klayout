@@ -142,8 +142,8 @@ Timer::start ()
   times (&clks);
   const double clk2msec = 1000.0 / sysconf (_SC_CLK_TCK);
 
-  m_user_ms += (timer_t) ((clks.tms_utime + clks.tms_cutime) * clk2msec + 0.5);
-  m_sys_ms += (timer_t) ((clks.tms_stime + clks.tms_cstime) * clk2msec + 0.5);
+  m_user_ms += (timer_t) ((clks.tms_utime + clks.tms_cutime) * clk2msec + 0.5); // NOLINT(bugprone-incorrect-roundings)
+  m_sys_ms += (timer_t) ((clks.tms_stime + clks.tms_cstime) * clk2msec + 0.5); // NOLINT(bugprone-incorrect-roundings)
 #endif
 
   m_wall_ns += ns_time ();

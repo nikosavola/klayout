@@ -585,7 +585,7 @@ DitherPatternInfo::get_bitmap (int width, int height, int frame_width) const
   unsigned int stride = (width + 7) / 8;
 
   unsigned char *data = new unsigned char[stride * height];
-  memset (data, 0x00, size_t (stride * height));
+  memset (data, 0x00, size_t (stride * height)); // NOLINT(bugprone-misplaced-widening-cast)
 
   for (unsigned int i = 0; i < (unsigned int) height; ++i) {
     uint32_t w = 0xffffffff;
@@ -774,7 +774,7 @@ DitherPatternInfo::scale_pattern (unsigned int n)
   }
 
   std::vector<uint64_t> new_pattern;
-  new_pattern.resize (n * m_height, (uint64_t) 0);
+  new_pattern.resize (n * m_height, (uint64_t) 0); // NOLINT(bugprone-implicit-widening-of-multiplication-result)
 
   for (unsigned int r = 0; r < m_height; ++r) {
 
@@ -995,7 +995,7 @@ DitherPattern::~DitherPattern ()
   //  .. nothing yet ..
 }
 
-DitherPattern::DitherPattern (const DitherPattern &p) :
+DitherPattern::DitherPattern (const DitherPattern &p) : // NOLINT(bugprone-copy-constructor-init)
     db::Object (nullptr)
 {
   m_pattern = p.m_pattern;

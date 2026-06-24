@@ -764,7 +764,7 @@ public:
    *  @brief Move constructor
    */
   box_tree (box_tree &&b)
-    : m_objects (b.m_objects), m_elements (b.m_elements), mp_root (b.mp_root)
+    : m_objects (b.m_objects), m_elements (b.m_elements), mp_root (b.mp_root) // NOLINT(performance-move-constructor-init)
   {
     b.mp_root = nullptr;
   }
@@ -772,7 +772,7 @@ public:
   /**
    *  @brief Assignment 
    */
-  box_tree &operator= (const box_tree &b)
+  box_tree &operator= (const box_tree &b) // NOLINT(bugprone-unhandled-self-assignment)
   {
     clear ();
     m_objects = b.m_objects;
@@ -1760,7 +1760,7 @@ public:
    *  @brief Move constructor
    */
   unstable_box_tree (unstable_box_tree &&b)
-    : m_objects (b.m_objects), mp_root (b.mp_root)
+    : m_objects (b.m_objects), mp_root (b.mp_root) // NOLINT(performance-move-constructor-init)
   {
     b.mp_root = nullptr;
   }
@@ -1768,7 +1768,7 @@ public:
   /**
    *  @brief Assignment 
    */
-  unstable_box_tree &operator= (const unstable_box_tree &b)
+  unstable_box_tree &operator= (const unstable_box_tree &b) // NOLINT(bugprone-unhandled-self-assignment)
   {
     clear ();
     m_objects = b.m_objects;

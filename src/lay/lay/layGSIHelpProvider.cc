@@ -309,7 +309,7 @@ static std::string make_qualified_name (const gsi::ClassBase *cls)
     if (qname.empty ()) {
       qname = n;
     } else {
-      qname = n + "::" + qname;
+      qname = n + "::" + qname; // NOLINT(performance-inefficient-string-concatenation)
     }
 
     p = p->parent ();

@@ -545,13 +545,13 @@ D25View::update_visibility ()
 void 
 D25View::accept ()
 {
-  QDialog::accept ();
+  QDialog::accept (); // NOLINT(bugprone-parent-virtual-call)
 }
 
 void
 D25View::reject ()
 {
-  QDialog::reject ();
+  QDialog::reject (); // NOLINT(bugprone-parent-virtual-call)
 }
 
 }

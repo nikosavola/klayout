@@ -781,7 +781,7 @@ DXFReader::ncircle_for_radius (double rad) const
   //  num of points = 1 / delta
   double delta = acos (1.0 - accu / rad) / M_PI;
 
-  return int (0.5 + std::max (4.0, 1.0 / std::max (1.0 / double (std::max (4, m_circle_points)), delta)));
+  return int (0.5 + std::max (4.0, 1.0 / std::max (1.0 / double (std::max (4, m_circle_points)), delta))); // NOLINT(bugprone-incorrect-roundings)
 }
 
 void 
@@ -2425,7 +2425,7 @@ DXFReader::read_entities (db::Layout &layout, db::Cell &cell, const db::DVector 
           ez = read_double ();
         } else if (g >= 10 && g <= 13) {
 
-          while (p.size () < size_t (g - 10 + 1)) {
+          while (p.size () < size_t (g - 10 + 1)) { // NOLINT(bugprone-misplaced-widening-cast)
             p.push_back (db::DPoint ());
           }
 
@@ -2433,7 +2433,7 @@ DXFReader::read_entities (db::Layout &layout, db::Cell &cell, const db::DVector 
 
         } else if (g >= 20 && g <= 23) {
 
-          while (p.size () < size_t (g - 20 + 1)) {
+          while (p.size () < size_t (g - 20 + 1)) { // NOLINT(bugprone-misplaced-widening-cast)
             p.push_back (db::DPoint ());
           }
 
@@ -2717,7 +2717,7 @@ DXFReader::read_entities (db::Layout &layout, db::Cell &cell, const db::DVector 
       double sx = 1.0, sy = 1.0;
       int nx = 1, ny = 1;
       double dx = 0.0, dy = 0.0;
-      std::string s;
+      std::string s; // NOLINT(bugprone-unused-local-non-trivial-variable)
       std::string cellname, layer (zero_layer_name);
       double a = 0.0;
       double ex = 0.0, ey = 0.0, ez = 1.0;

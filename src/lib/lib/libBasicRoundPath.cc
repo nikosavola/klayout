@@ -59,7 +59,7 @@ BasicRoundPath::parameters_from_shape (const db::Layout &layout, const db::Shape
   nm.insert (std::make_pair (p_layer, tl::Variant (layout.get_properties (layer))));
   nm.insert (std::make_pair (p_path, tl::Variant (db::CplxTrans (layout.dbu ()) * path)));
   //  use 1/10 of the minimum bbox dimension as a rough initialisation of the radius
-  nm.insert (std::make_pair (p_radius, tl::Variant (layout.dbu () * (std::min (path.box ().width (), path.box ().height ()) / 10))));
+  nm.insert (std::make_pair (p_radius, tl::Variant (layout.dbu () * (std::min (path.box ().width (), path.box ().height ()) / 10)))); // NOLINT(bugprone-integer-division)
   return map_parameters (nm);
 }
 

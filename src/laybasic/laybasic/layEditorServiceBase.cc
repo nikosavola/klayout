@@ -102,7 +102,7 @@ protected:
     int dither_pattern = 0; // solid
     int cross_dither_pattern = 6;  // dotted
 
-    int lw = int (0.5 + 1.0 / canvas.resolution ());
+    int lw = int (0.5 + 1.0 / canvas.resolution ()); // NOLINT(bugprone-incorrect-roundings)
 
     std::vector <lay::ViewOp> ops;
     ops.resize (1);
@@ -154,7 +154,7 @@ protected:
     int dashed_style = 2;
     int solid_style = 0;
 
-    int lw = int (0.5 + 1.0 / canvas.resolution ());
+    int lw = int (0.5 + 1.0 / canvas.resolution ()); // NOLINT(bugprone-incorrect-roundings)
 
     std::vector <lay::ViewOp> ops;
     ops.resize (1);

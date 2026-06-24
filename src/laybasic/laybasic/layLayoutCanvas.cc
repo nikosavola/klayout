@@ -818,7 +818,7 @@ LayoutCanvas::image_with_options (unsigned int width, unsigned int height, int l
     font_resolution = resolution;
   }
   if (linewidth <= 0) {
-    linewidth = 1.0 / resolution + 0.5;
+    linewidth = 1.0 / resolution + 0.5; // NOLINT(bugprone-incorrect-roundings)
   }
   if (! background.is_valid ()) {
     background = background_color ();

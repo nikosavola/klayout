@@ -754,7 +754,7 @@ RS274XMacroAperture::do_produce_flash_internal ()
         ex.expect (",");
         read_exposure (ex, clear, clear_set);
         ex.expect (",");
-        int n = int (read_expr (ex) + 0.5);
+        int n = int (read_expr (ex) + 0.5); // NOLINT(bugprone-incorrect-roundings)
         if (n < 1) {
           throw tl::Exception (tl::to_string (tr ("Invalid point count in outline element in aperture macro")));
         }
@@ -831,7 +831,7 @@ RS274XMacroAperture::do_produce_flash_internal ()
         ex.expect (",");
         read_exposure (ex, clear, clear_set);
         ex.expect (",");
-        int n = int (read_expr (ex) + 0.5);
+        int n = int (read_expr (ex) + 0.5); // NOLINT(bugprone-incorrect-roundings)
         if (n < 3) {
           throw tl::Exception (tl::to_string (tr ("Invalid point count in polygon element in aperture macro")));
         }
@@ -867,7 +867,7 @@ RS274XMacroAperture::do_produce_flash_internal ()
         ex.expect (",");
         double g = read_expr (ex, true);
         ex.expect (",");
-        int n = int (read_expr (ex) + 0.5);
+        int n = int (read_expr (ex) + 0.5); // NOLINT(bugprone-incorrect-roundings)
         ex.expect (",");
         double ct = read_expr (ex, true);
         ex.expect (",");

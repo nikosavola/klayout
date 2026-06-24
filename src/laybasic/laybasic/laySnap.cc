@@ -125,7 +125,7 @@ int draw_round (double x)
   } else if (x > 10000.0) {
     return 10000;
   } else {
-    return x > 0 ? int (x + 0.5) : int (x - 0.5);
+    return x > 0 ? int (x + 0.5) : int (x - 0.5); // NOLINT(bugprone-incorrect-roundings)
   }
 }
 

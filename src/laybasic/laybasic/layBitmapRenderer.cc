@@ -218,8 +218,8 @@ BitmapRenderer::render_vertices (lay::CanvasPlane &plane, int mode)
     if (m_xmin > -0.5 && m_ymin > -0.5 && 
         m_xmin < double (bitmap->width ()) - 0.5 &&
         m_ymin < double (bitmap->height ()) - 0.5) {
-      unsigned int yint = (unsigned int) (m_ymin + 0.5);
-      unsigned int xint = (unsigned int) (m_xmin + 0.5);
+      unsigned int yint = (unsigned int) (m_ymin + 0.5); // NOLINT(bugprone-incorrect-roundings)
+      unsigned int xint = (unsigned int) (m_xmin + 0.5); // NOLINT(bugprone-incorrect-roundings)
       bitmap->fill (yint, xint, xint + 1);
     }
     return;

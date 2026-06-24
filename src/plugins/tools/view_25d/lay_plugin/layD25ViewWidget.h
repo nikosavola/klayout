@@ -82,8 +82,8 @@ class D25ViewWidget
 Q_OBJECT 
 
 public:
-  typedef lay::mem_chunks<GLfloat, 1024 * 18> triangle_chunks_type;
-  typedef lay::mem_chunks<GLfloat, 1024 * 6> line_chunks_type;
+  typedef lay::mem_chunks<GLfloat, 1024 * 18> triangle_chunks_type; // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+  typedef lay::mem_chunks<GLfloat, 1024 * 6> line_chunks_type; // NOLINT(bugprone-implicit-widening-of-multiplication-result)
 
   struct LayerInfo
   {

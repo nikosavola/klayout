@@ -773,7 +773,7 @@ SpiceCircuitDict::read_options (tl::Extractor &ex)
     n = tl::to_lower_case (n);
 
     double v = 0.0;
-    std::string w;
+    std::string w; // NOLINT(bugprone-unused-local-non-trivial-variable)
     if (ex.test ("=")) {
       if (ex.try_read (v)) {
         //  take value

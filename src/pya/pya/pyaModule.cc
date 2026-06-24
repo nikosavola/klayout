@@ -496,10 +496,10 @@ public:
 
           disambiguated_names.push_back (name);
           if (mt->is_static (mid)) {
-            name = "_class_" + name;
+            name = "_class_" + name; // NOLINT(performance-inefficient-string-concatenation)
             mp_module->add_python_doc (*cls, mt, int (mid), tl::sprintf (tl::to_string (tr ("This class method is available as '%s' in Python")), name));
           } else {
-            name = "_inst_" + name;
+            name = "_inst_" + name; // NOLINT(performance-inefficient-string-concatenation)
             mp_module->add_python_doc (*cls, mt, int (mid), tl::sprintf (tl::to_string (tr ("This instance method is available as '%s' in Python")), name));
           }
 

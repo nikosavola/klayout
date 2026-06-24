@@ -310,7 +310,7 @@ private:
     std::vector<size_t> local_polygon_port_ids;
 
     for (auto i = port_ids.begin (); i != port_ids.end (); ++i) {
-      switch (type_from_id (*i)) {
+      switch (type_from_id (*i)) { // NOLINT(bugprone-switch-missing-default-case)
       case 0:  //  vertex port
         local_vertex_port_ids.push_back (*i);
         local_vertex_ports.push_back ((*mp_vertex_ports) [index_from_id (*i)]);

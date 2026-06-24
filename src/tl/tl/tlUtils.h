@@ -135,7 +135,7 @@ public:
 
   const Value &operator() (const Value &v) const 
   {
-    return v;
+    return v; // NOLINT(bugprone-return-const-ref-from-parameter)
   }
 };
 

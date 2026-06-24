@@ -136,7 +136,7 @@ TextInfo::bbox (const db::DText &text, const db::DCplxTrans &vp_trans) const
         xl -= double (ff.width () * length);
       } else if (halign == db::HAlignCenter) {
         xl = b.center ().x ();
-        xl -= double (ff.width () * length / 2);
+        xl -= double (ff.width () * length / 2); // NOLINT(bugprone-integer-division)
       } else {
         xl = b.left ();
       }

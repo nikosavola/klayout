@@ -767,7 +767,7 @@ public:
       ++mp_finish;
     }
 
-    new (mp_start + n) value_type (item);
+    new (mp_start + n) value_type (item); // NOLINT(bugprone-multi-level-implicit-pointer-conversion)
 
     return iterator (this, n);
   }
@@ -997,7 +997,7 @@ private:
       size_type l = last ();
       for (size_type i = first (); i < l; ++i) {
         if (is_used (i)) {
-          new (new_start + i) value_type (item (i));
+          new (new_start + i) value_type (item (i)); // NOLINT(bugprone-multi-level-implicit-pointer-conversion)
           item (i).~value_type ();
         }
       }

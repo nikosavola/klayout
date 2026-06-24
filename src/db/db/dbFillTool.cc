@@ -190,8 +190,8 @@ private:
 
       for (unsigned int ir = 0; ir < (unsigned int) std::abs (rows_per_columns); ++ir) {
 
-        db::Vector dr = m_row_step * long ((rows_per_columns > 0 ? -int (ir + 1) : ir) + m_row_steps);
-        db::Vector dc = m_column_step * long ((columns_per_rows > 0 ? -int (ic + 1) : ic) + m_column_steps);
+        db::Vector dr = m_row_step * long ((rows_per_columns > 0 ? -int (ir + 1) : ir) + m_row_steps); // NOLINT(bugprone-misplaced-widening-cast)
+        db::Vector dc = m_column_step * long ((columns_per_rows > 0 ? -int (ic + 1) : ic) + m_column_steps); // NOLINT(bugprone-misplaced-widening-cast)
 
         am.reinitialize (db::Point (ra_left, ra_bottom) + dr + dc, db::Vector (ddx, ddy), m_dim, nx, ny);
 

@@ -444,7 +444,7 @@ struct box_convert <db::box <C>, AllowEmpty >
 
   const box_type &operator() (const box_type &b) const
   {
-    return b;
+    return b; // NOLINT(bugprone-return-const-ref-from-parameter)
   }
 };
 

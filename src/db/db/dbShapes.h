@@ -44,7 +44,7 @@ class Cell;
 template <class Sh, class StableTag> class layer_op;
 template <class Obj, class Trans> struct array;
 template <class Shape> class object_with_properties;
-template <class Coord> class generic_polygon_edge_iterator;
+template <class Coord> class generic_polygon_edge_iterator; // NOLINT(bugprone-tagged-union-member-count)
 template <class Coord> class generic_repository;
 typedef generic_repository<db::Coord> GenericRepository;
 class ArrayRepository;
@@ -582,7 +582,7 @@ public:
   /**
    *  @brief Dtor: clear all ..
    */
-  ~Shapes () 
+  ~Shapes ()  // NOLINT(bugprone-exception-escape)
   {
     clear ();
     mp_cell = nullptr;

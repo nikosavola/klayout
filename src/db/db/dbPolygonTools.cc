@@ -599,7 +599,7 @@ namespace
     bbox += line.bbox ();
 
     //  guess DBU
-    double dbu = std::max (1e-10, std::max (bbox.width (), bbox.height ()) / (std::numeric_limits<db::Coord>::max () / 2));
+    double dbu = std::max (1e-10, std::max (bbox.width (), bbox.height ()) / (std::numeric_limits<db::Coord>::max () / 2)); // NOLINT(bugprone-integer-division)
     dbu = pow (10.0, ceil (log10 (dbu)));
 
     db::CplxTrans tr (dbu);

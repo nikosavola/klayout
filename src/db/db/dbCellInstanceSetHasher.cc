@@ -53,7 +53,7 @@ CellInstanceSetHasher::MatrixHash::MatrixHash (const db::CellInstArray &array)
     //  compute the sum of all individual matrices
     *this *= double (na * nb);
 
-    db::DVector dab = db::DVector (a) * double ((nb * (na - 1) * na) / 2) + db::DVector (b) * double ((na * (nb - 1) * nb) / 2);
+    db::DVector dab = db::DVector (a) * double ((nb * (na - 1) * na) / 2) + db::DVector (b) * double ((na * (nb - 1) * nb) / 2); // NOLINT(bugprone-integer-division)
     m() [0][2] += dab.x ();
     m() [1][2] += dab.y ();
 
@@ -79,7 +79,7 @@ CellInstanceSetHasher::MatrixHash::MatrixHash (const db::CellInstArray &array)
 
 static inline size_t d2h (double d)
 {
-  return d < 0 ? size_t (d - 0.5) : size_t (d + 0.5);
+  return d < 0 ? size_t (d - 0.5) : size_t (d + 0.5); // NOLINT(bugprone-incorrect-roundings)
 }
 
 size_t

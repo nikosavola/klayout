@@ -1346,7 +1346,7 @@ BEGIN_PROTECTED
     rows.insert (s->row ());
   }
 
-  std::unique_ptr <lay::LayoutHandle> handle (new lay::LayoutHandle (new db::Layout (mp_view->manager ()), std::string ()));
+  std::unique_ptr <lay::LayoutHandle> handle (new lay::LayoutHandle (new db::Layout (mp_view->manager ()), std::string ())); // NOLINT(bugprone-multiple-new-in-one-expression)
   handle->rename ("query_results");
   m_model.export_layout (handle->layout (), &rows);
   mp_view->add_layout (handle.release (), true);
@@ -1382,7 +1382,7 @@ BEGIN_PROTECTED
   query_to_model (model, lq, iq, std::numeric_limits<size_t>::max (), true);
   model.end_changes ();
 
-  std::unique_ptr <lay::LayoutHandle> handle (new lay::LayoutHandle (new db::Layout (mp_view->manager ()), std::string ()));
+  std::unique_ptr <lay::LayoutHandle> handle (new lay::LayoutHandle (new db::Layout (mp_view->manager ()), std::string ())); // NOLINT(bugprone-multiple-new-in-one-expression)
   handle->rename ("query_results");
   model.export_layout (handle->layout ());
   mp_view->add_layout (handle.release (), true);

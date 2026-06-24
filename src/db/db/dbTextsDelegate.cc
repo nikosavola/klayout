@@ -33,7 +33,7 @@ TextsDelegate::TextsDelegate ()
   m_report_progress = false;
 }
 
-TextsDelegate::TextsDelegate (const TextsDelegate &other)
+TextsDelegate::TextsDelegate (const TextsDelegate &other) // NOLINT(bugprone-copy-constructor-init)
   : db::ShapeCollectionDelegateBase ()
 {
   operator= (other);

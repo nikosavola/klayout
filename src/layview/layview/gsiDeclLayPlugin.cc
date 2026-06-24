@@ -520,7 +520,7 @@ PluginImpl::mouse_release_event (const db::DPoint &p, unsigned int buttons, bool
   if (f_mouse_release_event.can_issue ()) {
     return f_mouse_release_event.issue (&PluginImpl::mouse_release_event_noref, p, buttons, prio);
   } else {
-    return lay::ViewService::mouse_release_event (p, buttons, prio);
+    return lay::ViewService::mouse_release_event (p, buttons, prio); // NOLINT(bugprone-parent-virtual-call)
   }
 }
 
@@ -537,7 +537,7 @@ PluginImpl::wheel_event (int delta, bool horizontal, const db::DPoint &p, unsign
   if (f_wheel_event.can_issue ()) {
     return f_wheel_event.issue (&PluginImpl::wheel_event_noref, delta, horizontal, p, buttons, prio);
   } else {
-    return lay::ViewService::wheel_event (delta, horizontal, p, buttons, prio);
+    return lay::ViewService::wheel_event (delta, horizontal, p, buttons, prio); // NOLINT(bugprone-parent-virtual-call)
   }
 }
 

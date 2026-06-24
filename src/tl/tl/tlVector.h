@@ -63,7 +63,7 @@ public:
   /**
    *  @brief Move constructor
    */
-  explicit vector (const tl::vector<T> &&d) : base (d) { }
+  explicit vector (const tl::vector<T> &&d) : base (d) { } // NOLINT(performance-move-constructor-init)
 
   /**
    *  @brief Assignment

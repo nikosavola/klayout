@@ -1093,7 +1093,7 @@ private:
 // ----------------------------------------------------------------------------------
 //  MarkerBrowserListViewModel definition and implementation
 
-static const rdb::Item &access (const rdb::Item &item) { return item; }
+static const rdb::Item &access (const rdb::Item &item) { return item; } // NOLINT(bugprone-return-const-ref-from-parameter)
 static const rdb::Item &access (const rdb::ItemRef &ref) { return *ref; }
 
 template <class Iter>

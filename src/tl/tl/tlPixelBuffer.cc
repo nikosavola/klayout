@@ -120,7 +120,7 @@ PixelBuffer::PixelBuffer (unsigned int w, unsigned int h, tl::color_t *data)
   m_width = w;
   m_height = h;
   m_transparent = false;
-  m_data.reset (new ImageData (data, w * h));
+  m_data.reset (new ImageData (data, w * h)); // NOLINT(bugprone-implicit-widening-of-multiplication-result)
 }
 
 PixelBuffer::PixelBuffer (unsigned int w, unsigned int h, const tl::color_t *data, unsigned int stride)
@@ -147,7 +147,7 @@ PixelBuffer::PixelBuffer (unsigned int w, unsigned int h, const tl::color_t *dat
     }
   }
 
-  m_data.reset (new ImageData (new_data, w * h));
+  m_data.reset (new ImageData (new_data, w * h)); // NOLINT(bugprone-implicit-widening-of-multiplication-result)
 }
 
 PixelBuffer::PixelBuffer ()
@@ -258,14 +258,14 @@ tl::color_t *
 PixelBuffer::scan_line (unsigned int n)
 {
   tl_assert (n < m_height);
-  return m_data->data () + n * m_width;
+  return m_data->data () + n * m_width; // NOLINT(bugprone-implicit-widening-of-multiplication-result)
 }
 
 const tl::color_t *
 PixelBuffer::scan_line (unsigned int n) const
 {
   tl_assert (n < m_height);
-  return m_data->data () + n * m_width;
+  return m_data->data () + n * m_width; // NOLINT(bugprone-implicit-widening-of-multiplication-result)
 }
 
 tl::color_t *
@@ -392,14 +392,14 @@ PixelBuffer::subsample (tl::PixelBuffer &dest, unsigned int os, double g)
   //  forward transformation table
   unsigned short lut1[256];
   for (unsigned int i = 0; i < 256; ++i) {
-    double f = (65536 / (os * os)) - 1;
+    double f = (65536 / (os * os)) - 1; // NOLINT(bugprone-integer-division)
     lut1[i] = (unsigned short)std::min (f, std::max (0.0, floor (0.5 + pow (i / 255.0, g) * f)));
   }
 
   //  backward transformation table
   unsigned char lut2[65536];
   for (unsigned int i = 0; i < 65536; ++i) {
-    double f = os * os * ((65536 / (os * os)) - 1);
+    double f = os * os * ((65536 / (os * os)) - 1); // NOLINT(bugprone-integer-division)
     lut2[i] = (unsigned char)std::min (255.0, std::max (0.0, floor (0.5 + pow (i / f, 1.0 / g) * 255.0)));
   }
 
@@ -408,14 +408,14 @@ PixelBuffer::subsample (tl::PixelBuffer &dest, unsigned int os, double g)
   //  forward transformation table
   unsigned short luta1[256];
   for (unsigned int i = 0; i < 256; ++i) {
-    double f = (65536 / (os * os)) - 1;
+    double f = (65536 / (os * os)) - 1; // NOLINT(bugprone-integer-division)
     luta1[i] = (unsigned short)std::min (f, std::max (0.0, floor (0.5 + (i / 255.0) * f)));
   }
 
   //  backward transformation table
   unsigned char luta2[65536];
   for (unsigned int i = 0; i < 65536; ++i) {
-    double f = os * os * ((65536 / (os * os)) - 1);
+    double f = os * os * ((65536 / (os * os)) - 1); // NOLINT(bugprone-integer-division)
     luta2[i] = (unsigned char)std::min (255.0, std::max (0.0, floor (0.5 + (i / f) * 255.0)));
   }
 
@@ -679,7 +679,7 @@ BitmapBuffer::BitmapBuffer (unsigned int w, unsigned int h, uint8_t *data)
   m_width = w;
   m_height = h;
   m_stride = stride_from_width (w);
-  m_data.reset (new MonoImageData (data, m_stride * h));
+  m_data.reset (new MonoImageData (data, m_stride * h)); // NOLINT(bugprone-implicit-widening-of-multiplication-result)
 }
 
 BitmapBuffer::BitmapBuffer (unsigned int w, unsigned int h, const uint8_t *data, unsigned int stride)
@@ -702,7 +702,7 @@ BitmapBuffer::BitmapBuffer (unsigned int w, unsigned int h, const uint8_t *data,
     }
   }
 
-  m_data.reset (new MonoImageData (new_data, m_stride * h));
+  m_data.reset (new MonoImageData (new_data, m_stride * h)); // NOLINT(bugprone-implicit-widening-of-multiplication-result)
 }
 
 BitmapBuffer::BitmapBuffer ()
@@ -807,14 +807,14 @@ uint8_t *
 BitmapBuffer::scan_line (unsigned int n)
 {
   tl_assert (n < m_height);
-  return m_data->data () + n * m_stride;
+  return m_data->data () + n * m_stride; // NOLINT(bugprone-implicit-widening-of-multiplication-result)
 }
 
 const uint8_t *
 BitmapBuffer::scan_line (unsigned int n) const
 {
   tl_assert (n < m_height);
-  return m_data->data () + n * m_stride;
+  return m_data->data () + n * m_stride; // NOLINT(bugprone-implicit-widening-of-multiplication-result)
 }
 
 uint8_t *

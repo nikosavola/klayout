@@ -50,7 +50,7 @@ Edges::Edges (EdgesDelegate *delegate)
   //  .. nothing yet ..
 }
 
-Edges::Edges (const Edges &other)
+Edges::Edges (const Edges &other) // NOLINT(bugprone-copy-constructor-init)
   : db::ShapeCollection (), mp_delegate (other.mp_delegate->clone ())
 {
   //  .. nothing yet ..

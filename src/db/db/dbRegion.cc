@@ -57,7 +57,7 @@ Region::Region (RegionDelegate *delegate)
   //  .. nothing yet ..
 }
 
-Region::Region (const Region &other)
+Region::Region (const Region &other) // NOLINT(bugprone-copy-constructor-init)
   : db::ShapeCollection (), mp_delegate (other.mp_delegate->clone ())
 {
   //  .. nothing yet ..

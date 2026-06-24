@@ -39,7 +39,7 @@ Library::Library ()
   m_layout.set_library (this);
 }
 
-Library::Library (const Library &d)
+Library::Library (const Library &d) // NOLINT(bugprone-copy-constructor-init)
   : gsi::ObjectBase (), tl::Object (),
     m_name (d.m_name), m_description (d.m_description),
     m_id (std::numeric_limits<lib_id_type>::max ()), m_layout (d.m_layout),

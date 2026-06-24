@@ -91,7 +91,7 @@ public:
    *  chain - higher positions come later.
    *  The name is an arbitrary string that is used for debugging purposes only.
    */
-  RegisteredClass (X *inst, int position = 0, const char *name = "", bool owned = true) 
+  RegisteredClass (X *inst, int position = 0, const char *name = "", bool owned = true)  // NOLINT(bugprone-crtp-constructor-accessibility)
     : m_owned (owned)
   { 
     Registrar<X> *instance = Registrar<X>::get_instance ();

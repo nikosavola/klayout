@@ -179,7 +179,7 @@ class edge_pair_to_edge_interaction_filter
   : public db::box_scanner_receiver2<db::EdgePair, size_t, db::Edge, size_t>
 {
 public:
-  edge_pair_to_edge_interaction_filter (OutputContainer *output, size_t min_count, size_t max_count)
+  edge_pair_to_edge_interaction_filter (OutputContainer *output, size_t min_count, size_t max_count) // NOLINT(cppcoreguidelines-pro-type-member-init)
     : mp_output (output), m_min_count (min_count), m_max_count (max_count)
   {
     m_counting = !(min_count == 1 && max_count == std::numeric_limits<size_t>::max ());

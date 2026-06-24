@@ -2263,7 +2263,7 @@ Service::mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio)
 
   lay::PointSnapToObjectResult snap_details;
   if (m_drawing) {
-    lay::angle_constraint_type ac;
+    lay::angle_constraint_type ac; // NOLINT(cppcoreguidelines-init-variables)
     if (snap_square) {
       ac = lay::AC_DiagonalOnly;
     } else if (is_box_style) {

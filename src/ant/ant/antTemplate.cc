@@ -169,7 +169,7 @@ Template::from_string (const std::string &s)
         } else if (key == "mode") {
 
           ant::RulerModeConverter mc;
-          ant::Template::ruler_mode_type mode;
+          ant::Template::ruler_mode_type mode; // NOLINT(cppcoreguidelines-init-variables)
           mc.from_string (s, mode);
           r.back ().set_mode (mode);
 
@@ -196,63 +196,63 @@ Template::from_string (const std::string &s)
         } else if (key == "position") {
 
           ant::PositionConverter pc;
-          ant::Object::position_type pos;
+          ant::Object::position_type pos; // NOLINT(cppcoreguidelines-init-variables)
           pc.from_string (s, pos);
           r.back ().set_main_position (pos);
 
         } else if (key == "xalign") {
 
           ant::AlignmentConverter ac;
-          ant::Object::alignment_type a;
+          ant::Object::alignment_type a; // NOLINT(cppcoreguidelines-init-variables)
           ac.from_string (s, a);
           r.back ().set_main_xalign (a);
 
         } else if (key == "yalign") {
 
           ant::AlignmentConverter ac;
-          ant::Object::alignment_type a;
+          ant::Object::alignment_type a; // NOLINT(cppcoreguidelines-init-variables)
           ac.from_string (s, a);
           r.back ().set_main_yalign (a);
 
         } else if (key == "xlabel_xalign") {
 
           ant::AlignmentConverter ac;
-          ant::Object::alignment_type a;
+          ant::Object::alignment_type a; // NOLINT(cppcoreguidelines-init-variables)
           ac.from_string (s, a);
           r.back ().set_xlabel_xalign (a);
 
         } else if (key == "xlabel_yalign") {
 
           ant::AlignmentConverter ac;
-          ant::Object::alignment_type a;
+          ant::Object::alignment_type a; // NOLINT(cppcoreguidelines-init-variables)
           ac.from_string (s, a);
           r.back ().set_xlabel_yalign (a);
 
         } else if (key == "ylabel_xalign") {
 
           ant::AlignmentConverter ac;
-          ant::Object::alignment_type a;
+          ant::Object::alignment_type a; // NOLINT(cppcoreguidelines-init-variables)
           ac.from_string (s, a);
           r.back ().set_ylabel_xalign (a);
 
         } else if (key == "ylabel_yalign") {
 
           ant::AlignmentConverter ac;
-          ant::Object::alignment_type a;
+          ant::Object::alignment_type a; // NOLINT(cppcoreguidelines-init-variables)
           ac.from_string (s, a);
           r.back ().set_ylabel_yalign (a);
 
         } else if (key == "style") {
 
           ant::StyleConverter sc;
-          ant::Object::style_type st;
+          ant::Object::style_type st; // NOLINT(cppcoreguidelines-init-variables)
           sc.from_string (s, st);
           r.back ().style (st);
 
         } else if (key == "outline") {
 
           ant::OutlineConverter oc;
-          ant::Object::outline_type ot;
+          ant::Object::outline_type ot; // NOLINT(cppcoreguidelines-init-variables)
           oc.from_string (s, ot);
           r.back ().outline (ot);
 
@@ -265,7 +265,7 @@ Template::from_string (const std::string &s)
         } else if (key == "angle_constraint") {
 
           lay::ACConverter sc;
-          lay::angle_constraint_type sm;
+          lay::angle_constraint_type sm; // NOLINT(cppcoreguidelines-init-variables)
           sc.from_string (s, sm);
           r.back ().angle_constraint (sm);
 

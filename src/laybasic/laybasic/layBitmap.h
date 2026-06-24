@@ -118,7 +118,7 @@ private:
 /**
  *  @brief A rendered text object
  */
-struct RenderText
+struct RenderText // NOLINT(cppcoreguidelines-pro-type-member-init)
 {
   db::DBox b;
   std::string text;

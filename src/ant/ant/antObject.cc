@@ -671,7 +671,7 @@ Object::from_string (const char *s, const char * /*base_dir*/)
       std::string s;
       ex.read_word (s);
       ant::PositionConverter pc;
-      ant::Object::position_type pos;
+      ant::Object::position_type pos; // NOLINT(cppcoreguidelines-init-variables)
       pc.from_string (s, pos);
       set_main_position (pos);
       ex.test (",");
@@ -681,7 +681,7 @@ Object::from_string (const char *s, const char * /*base_dir*/)
       std::string s;
       ex.read_word (s);
       ant::AlignmentConverter ac;
-      ant::Object::alignment_type a;
+      ant::Object::alignment_type a; // NOLINT(cppcoreguidelines-init-variables)
       ac.from_string (s, a);
       set_main_xalign (a);
       ex.test (",");
@@ -691,7 +691,7 @@ Object::from_string (const char *s, const char * /*base_dir*/)
       std::string s;
       ex.read_word (s);
       ant::AlignmentConverter ac;
-      ant::Object::alignment_type a;
+      ant::Object::alignment_type a; // NOLINT(cppcoreguidelines-init-variables)
       ac.from_string (s, a);
       set_main_yalign (a);
       ex.test (",");
@@ -701,7 +701,7 @@ Object::from_string (const char *s, const char * /*base_dir*/)
       std::string s;
       ex.read_word (s);
       ant::AlignmentConverter ac;
-      ant::Object::alignment_type a;
+      ant::Object::alignment_type a; // NOLINT(cppcoreguidelines-init-variables)
       ac.from_string (s, a);
       set_xlabel_xalign (a);
       ex.test (",");
@@ -711,7 +711,7 @@ Object::from_string (const char *s, const char * /*base_dir*/)
       std::string s;
       ex.read_word (s);
       ant::AlignmentConverter ac;
-      ant::Object::alignment_type a;
+      ant::Object::alignment_type a; // NOLINT(cppcoreguidelines-init-variables)
       ac.from_string (s, a);
       set_xlabel_yalign (a);
       ex.test (",");
@@ -721,7 +721,7 @@ Object::from_string (const char *s, const char * /*base_dir*/)
       std::string s;
       ex.read_word (s);
       ant::AlignmentConverter ac;
-      ant::Object::alignment_type a;
+      ant::Object::alignment_type a; // NOLINT(cppcoreguidelines-init-variables)
       ac.from_string (s, a);
       set_ylabel_xalign (a);
       ex.test (",");
@@ -731,7 +731,7 @@ Object::from_string (const char *s, const char * /*base_dir*/)
       std::string s;
       ex.read_word (s);
       ant::AlignmentConverter ac;
-      ant::Object::alignment_type a;
+      ant::Object::alignment_type a; // NOLINT(cppcoreguidelines-init-variables)
       ac.from_string (s, a);
       set_ylabel_yalign (a);
       ex.test (",");
@@ -741,7 +741,7 @@ Object::from_string (const char *s, const char * /*base_dir*/)
       std::string s;
       ex.read_word (s);
       ant::StyleConverter sc;
-      ant::Object::style_type st;
+      ant::Object::style_type st; // NOLINT(cppcoreguidelines-init-variables)
       sc.from_string (s, st);
       style (st);
 
@@ -750,7 +750,7 @@ Object::from_string (const char *s, const char * /*base_dir*/)
       std::string s;
       ex.read_word (s);
       ant::OutlineConverter oc;
-      ant::Object::outline_type ot;
+      ant::Object::outline_type ot; // NOLINT(cppcoreguidelines-init-variables)
       oc.from_string (s, ot);
       outline (ot);
 
@@ -765,7 +765,7 @@ Object::from_string (const char *s, const char * /*base_dir*/)
       std::string s;
       ex.read_word (s);
       lay::ACConverter sc;
-      lay::angle_constraint_type sm;
+      lay::angle_constraint_type sm; // NOLINT(cppcoreguidelines-init-variables)
       sc.from_string (s, sm);
       angle_constraint (sm);
 

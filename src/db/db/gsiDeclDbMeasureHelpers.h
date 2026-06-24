@@ -213,7 +213,7 @@ public:
   }
 
   //  only needed for PolygonFilterBase
-  virtual bool selected (const db::PolygonRef &shape, db::properties_id_type prop_id) const
+  virtual bool selected (const db::PolygonRef &shape, db::properties_id_type prop_id) const // NOLINT(modernize-use-override)
   {
     try {
 

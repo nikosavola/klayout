@@ -177,19 +177,19 @@ GridNet::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_grid_style0) {
 
-    lay::GridNet::GridStyle style;
+    lay::GridNet::GridStyle style; // NOLINT(cppcoreguidelines-init-variables)
     GridNetStyleConverter ().from_string (value, style);
     need_update = test_and_set (m_style0, style);
 
   } else if (name == cfg_grid_style1) {
 
-    lay::GridNet::GridStyle style;
+    lay::GridNet::GridStyle style; // NOLINT(cppcoreguidelines-init-variables)
     GridNetStyleConverter ().from_string (value, style);
     need_update = test_and_set (m_style1, style);
 
   } else if (name == cfg_grid_style2) {
 
-    lay::GridNet::GridStyle style;
+    lay::GridNet::GridStyle style; // NOLINT(cppcoreguidelines-init-variables)
     GridNetStyleConverter ().from_string (value, style);
     need_update = test_and_set (m_style2, style);
 

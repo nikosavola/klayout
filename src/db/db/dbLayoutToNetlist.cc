@@ -2268,12 +2268,12 @@ NetBuilder::NetBuilder (db::Layout *target, const db::LayoutToNetlist *source)
   //  .. nothing yet ..
 }
 
-NetBuilder::NetBuilder (const db::NetBuilder &other)
+NetBuilder::NetBuilder (const db::NetBuilder &other) // NOLINT(cppcoreguidelines-pro-type-member-init)
 {
   operator=(other);
 }
 
-NetBuilder::NetBuilder (db::NetBuilder &&other)
+NetBuilder::NetBuilder (db::NetBuilder &&other) // NOLINT(cppcoreguidelines-pro-type-member-init)
 {
   operator=(other);
 }

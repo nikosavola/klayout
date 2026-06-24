@@ -142,7 +142,7 @@ public:
 
       try {
 
-        db::BooleanOp::BoolOp op_mode;
+        db::BooleanOp::BoolOp op_mode; // NOLINT(cppcoreguidelines-init-variables)
         switch (m_boolean_mode) {
         default: 
           op_mode = db::BooleanOp::Or; 

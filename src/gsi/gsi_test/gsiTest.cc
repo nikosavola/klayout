@@ -79,7 +79,7 @@ A::A (int n1, int n2, double n3) {
   f = false;
 }
 
-A::A (const A &a)
+A::A (const A &a) // NOLINT(cppcoreguidelines-pro-type-member-init)
   : gsi::ObjectBase (a)
 {
   ++a_count;

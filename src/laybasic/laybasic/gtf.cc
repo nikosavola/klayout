@@ -1793,7 +1793,7 @@ GtfXmlHandler::startElement (const QString & /*namespaceURI*/, const QString &lo
     int button = atts.value (QString::fromUtf8 ("button")).toInt (nullptr, 16);
     int modifiers = atts.value (QString::fromUtf8 ("modifiers")).toInt (nullptr, 16);
 
-    QEvent::Type type;
+    QEvent::Type type; // NOLINT(cppcoreguidelines-init-variables)
     if (localName == QString::fromUtf8 ("mouse_button_release")) {
       type = QEvent::MouseButtonRelease;
     } else if (localName == QString::fromUtf8 ("mouse_button_press")) {
@@ -1823,7 +1823,7 @@ GtfXmlHandler::startElement (const QString & /*namespaceURI*/, const QString &lo
     QString text = text_char;
     int modifiers = atts.value (QString::fromUtf8 ("modifiers")).toInt (nullptr, 16);
 
-    QEvent::Type type;
+    QEvent::Type type; // NOLINT(cppcoreguidelines-init-variables)
     if (localName == QString::fromUtf8 ("key_press")) {
       type = QEvent::KeyPress;
     } else {

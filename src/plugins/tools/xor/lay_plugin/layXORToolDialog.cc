@@ -1282,7 +1282,7 @@ XORToolDialog::run_xor ()
   for (int mode = 0; mode < 3 && ! was_cancelled; ++mode) {
 
     rdb::Category *cat = nullptr; 
-    db::BooleanOp::BoolOp op;
+    db::BooleanOp::BoolOp op; // NOLINT(cppcoreguidelines-init-variables)
     std::string op_name;
     std::string op_desc;
 

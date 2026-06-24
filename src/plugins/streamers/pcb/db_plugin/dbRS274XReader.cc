@@ -30,7 +30,7 @@ namespace db
 // ---------------------------------------------------------------------------------
 //  RS274XReader implementation
 
-RS274XReader::RS274XReader (int warn_level)
+RS274XReader::RS274XReader (int warn_level) // NOLINT(cppcoreguidelines-pro-type-member-init)
   : GerberFileReader (warn_level)
 {
   init ();

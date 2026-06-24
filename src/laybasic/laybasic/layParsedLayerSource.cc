@@ -1421,7 +1421,7 @@ ParsedLayerSource::parse_from_string (const char *cp)
 
       } else {
 
-        HierarchyLevelSelection::level_mode_type m;
+        HierarchyLevelSelection::level_mode_type m; // NOLINT(cppcoreguidelines-init-variables)
 
         int f = 0;
         m = HierarchyLevelSelection::absolute;

@@ -436,7 +436,7 @@ public:
 #if QT_VERSION >= 0x60000
   enterEvent (QEnterEvent * /*event*/)
 #else
-  enterEvent (QEvent * /*event*/)
+  enterEvent (QEvent * /*event*/) // NOLINT(modernize-use-override)
 #endif override
   {
     BEGIN_PROTECTED

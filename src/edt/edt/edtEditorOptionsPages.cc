@@ -176,7 +176,7 @@ EditorOptionsGeneric::setup (lay::Dispatcher *root)
   //  edit & move angle
 
   lay::ACConverter acc;
-  lay::angle_constraint_type ac;
+  lay::angle_constraint_type ac; // NOLINT(cppcoreguidelines-init-variables)
 
   ac = lay::AC_Any;
   root->config_get (cfg_edit_move_angle_mode, ac, acc);

@@ -92,7 +92,7 @@ void
 RulerOptionsPage::setup (lay::Dispatcher *root)
 {
   lay::ACConverter acc;
-  lay::angle_constraint_type ac;
+  lay::angle_constraint_type ac; // NOLINT(cppcoreguidelines-init-variables)
 
   ac = lay::AC_Any;
   root->config_get (cfg_ruler_snap_mode, ac, acc);

@@ -74,9 +74,9 @@ public:
   }
 
 #if _COUNT != 0
-  void call (void *cls, SerialArgs &args, SerialArgs &) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &) const  // NOLINT(modernize-use-override)
 #else
-  void call (void *cls, SerialArgs &, SerialArgs &) const 
+  void call (void *cls, SerialArgs &, SerialArgs &) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -117,9 +117,9 @@ public:
   }
 
 #if _COUNT != 0
-  void call (void *cls, SerialArgs &args, SerialArgs &) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &) const  // NOLINT(modernize-use-override)
 #else
-  void call (void *cls, SerialArgs &, SerialArgs &) const 
+  void call (void *cls, SerialArgs &, SerialArgs &) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -160,9 +160,9 @@ public:
   }
 
 #if _COUNT != 0
-  void call (void *cls, SerialArgs &args, SerialArgs &) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &) const  // NOLINT(modernize-use-override)
 #else
-  void call (void *cls, SerialArgs &, SerialArgs &) const 
+  void call (void *cls, SerialArgs &, SerialArgs &) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -205,9 +205,9 @@ public:
   }
 
 #if _COUNT != 0
-  void call (void *, SerialArgs &args, SerialArgs &) const 
+  void call (void *, SerialArgs &args, SerialArgs &) const  // NOLINT(modernize-use-override)
 #else
-  void call (void *, SerialArgs &, SerialArgs &) const 
+  void call (void *, SerialArgs &, SerialArgs &) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -249,9 +249,9 @@ public:
   }
 
 #if _COUNT != 0
-  void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #else
-  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -293,9 +293,9 @@ public:
   }
 
 #if _COUNT != 0
-  void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #else
-  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -337,9 +337,9 @@ public:
   }
 
 #if _COUNT != 0
-  void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #else
-  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -381,9 +381,9 @@ public:
   }
 
 #if _COUNT != 0
-  void call (void *, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *, SerialArgs &args, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #else
-  void call (void *, SerialArgs &, SerialArgs &ret) const 
+  void call (void *, SerialArgs &, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -433,7 +433,7 @@ public:
 #if _COUNT != 0
   virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -580,7 +580,7 @@ public:
 #if _COUNT != 0
   virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -678,7 +678,7 @@ public:
 #if _COUNT != 0
   virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -725,9 +725,9 @@ public:
   }
 
 #if _COUNT != 0
-  void call (void * /*cls*/, SerialArgs &args, SerialArgs &ret) const
+  void call (void * /*cls*/, SerialArgs &args, SerialArgs &ret) const // NOLINT(modernize-use-override)
 #else
-  void call (void * /*cls*/, SerialArgs &, SerialArgs &ret) const
+  void call (void * /*cls*/, SerialArgs &, SerialArgs &ret) const // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -774,9 +774,9 @@ public:
   }
 
 #if _COUNT != 0
-  void call (void * /*cls*/, SerialArgs &args, SerialArgs &ret) const
+  void call (void * /*cls*/, SerialArgs &args, SerialArgs &ret) const // NOLINT(modernize-use-override)
 #else
-  void call (void * /*cls*/, SerialArgs &, SerialArgs &ret) const
+  void call (void * /*cls*/, SerialArgs &, SerialArgs &ret) const // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -826,7 +826,7 @@ public:
 #if _COUNT != 0
   virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -872,9 +872,9 @@ public:
   }
 
 #if _COUNT != 0
-  void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #else
-  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -920,9 +920,9 @@ public:
   }
 
 #if _COUNT != 0
-  void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #else
-  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -970,9 +970,9 @@ public:
   }
 
 #if _COUNT != 0
-  void call (void *, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *, SerialArgs &args, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #else
-  void call (void *, SerialArgs &, SerialArgs &ret) const 
+  void call (void *, SerialArgs &, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -1022,7 +1022,7 @@ public:
 #if _COUNT != 0
   virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -1067,9 +1067,9 @@ public:
   }
 
 #if _COUNT != 0
-  void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #else
-  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -1114,9 +1114,9 @@ public:
   }
 
 #if _COUNT != 0
-  void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #else
-  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const  // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();
@@ -1161,9 +1161,9 @@ public:
   }
 
 #if _COUNT != 0
-  void call (void * /*cls*/, SerialArgs &args, SerialArgs &ret) const
+  void call (void * /*cls*/, SerialArgs &args, SerialArgs &ret) const // NOLINT(modernize-use-override)
 #else
-  void call (void * /*cls*/, SerialArgs &, SerialArgs &ret) const
+  void call (void * /*cls*/, SerialArgs &, SerialArgs &ret) const // NOLINT(modernize-use-override)
 #endif override
   {
     this->mark_called ();

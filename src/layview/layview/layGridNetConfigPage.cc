@@ -81,7 +81,7 @@ GridNetConfigPage::setup (lay::Dispatcher *root)
   root->config_get (cfg_grid_ruler_color, color, ColorConverter ());
   mp_grid_ruler_color_cbtn->set_color (color);
 
-  lay::GridNet::GridStyle style;
+  lay::GridNet::GridStyle style; // NOLINT(cppcoreguidelines-init-variables)
 
   style = lay::GridNet::Invisible;
   root->config_get (cfg_grid_style0, style, GridNetStyleConverter ());

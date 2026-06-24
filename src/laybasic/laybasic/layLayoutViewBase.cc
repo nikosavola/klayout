@@ -241,7 +241,7 @@ struct OpDeleteLayerProps
 
 const double animation_interval = 0.5;
 
-LayoutViewBase::LayoutViewBase (db::Manager *manager, bool editable, lay::Plugin *plugin_parent, unsigned int options)
+LayoutViewBase::LayoutViewBase (db::Manager *manager, bool editable, lay::Plugin *plugin_parent, unsigned int options) // NOLINT(cppcoreguidelines-pro-type-member-init)
   : lay::Dispatcher (plugin_parent, false /*not standalone*/),
     mp_ui (nullptr),
     dm_redraw (this, &LayoutViewBase::redraw),
@@ -256,7 +256,7 @@ LayoutViewBase::LayoutViewBase (db::Manager *manager, bool editable, lay::Plugin
   init (manager);
 }
 
-LayoutViewBase::LayoutViewBase (lay::LayoutView *ui, db::Manager *manager, bool editable, lay::Plugin *plugin_parent, unsigned int options)
+LayoutViewBase::LayoutViewBase (lay::LayoutView *ui, db::Manager *manager, bool editable, lay::Plugin *plugin_parent, unsigned int options) // NOLINT(cppcoreguidelines-pro-type-member-init)
   : lay::Dispatcher (plugin_parent, false /*not standalone*/),
     mp_ui (ui),
     dm_redraw (this, &LayoutViewBase::redraw),

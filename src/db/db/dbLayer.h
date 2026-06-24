@@ -102,7 +102,7 @@ struct layer
   /**
    *  @brief The copy constructor
    */
-  layer (const layer &d)
+  layer (const layer &d) // NOLINT(cppcoreguidelines-pro-type-member-init)
   {
     operator= (d);
   }
@@ -110,7 +110,7 @@ struct layer
   /**
    *  @brief The move constructor
    */
-  layer (const layer &&d)
+  layer (const layer &&d) // NOLINT(cppcoreguidelines-pro-type-member-init)
   {
     operator= (d);
   }

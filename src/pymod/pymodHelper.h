@@ -89,6 +89,7 @@ module_init (const char *pymod_name, const char *mod_name, const char *mod_descr
 
 #else
 
+// NOLINTBEGIN(bugprone-macro-parentheses): names are pasted with ##, cannot be parenthesised
 #define DEFINE_PYMOD(__name__, __name_str__, __description__) \
   extern "C" \
   DEF_INSIDE_PUBLIC \
@@ -104,6 +105,7 @@ module_init (const char *pymod_name, const char *mod_name, const char *mod_descr
   { \
     return __init__ (STRINGIFY(__name__), __name_str__, __description__); \
   } \
+// NOLINTEND(bugprone-macro-parentheses)
 
 #endif
 

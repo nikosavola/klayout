@@ -734,7 +734,7 @@ bool run_tiled_xor (const XORData &xor_data)
         proc.input (in_b, si);
       }
 
-      std::string expr = "var x=" + in_a + "^" + in_b + "; ";
+      std::string expr = "var x=" + in_a + "^" + in_b + "; "; // NOLINT(performance-inefficient-string-concatenation)
 
       int tol_index = 0;
       for (std::vector<double>::const_iterator t = xor_data.tolerances.begin (); t != xor_data.tolerances.end (); ++t) {

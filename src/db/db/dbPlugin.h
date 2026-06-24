@@ -59,6 +59,7 @@ typedef void (*dbp_init_func_t) (const char **version, const char **description)
 
 # endif
 
+// NOLINTBEGIN(bugprone-macro-parentheses): desc is always a single identifier
 #define DECLARE_DB_PLUGIN(desc) \
   extern "C" { \
     DBP_PUBLIC void dbp_init (const char **version, const char **description) { \
@@ -66,5 +67,6 @@ typedef void (*dbp_init_func_t) (const char **version, const char **description)
       *description = desc.description; \
     } \
   }
+// NOLINTEND(bugprone-macro-parentheses)
 
 #endif

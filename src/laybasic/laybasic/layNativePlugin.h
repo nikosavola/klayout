@@ -63,6 +63,7 @@ typedef void (*klp_init_func_t) (void (**autorun) (), void (**autorun_early) (),
 
 # endif
 
+// NOLINTBEGIN(bugprone-macro-parentheses): desc is always a single identifier
 #define DECLARE_NATIVE_PLUGIN(desc) \
   extern "C" { \
     KLP_PUBLIC void klp_init (void (**autorun) (), void (**autorun_early) (), const char **version, const char **description) { \
@@ -72,6 +73,7 @@ typedef void (*klp_init_func_t) (void (**autorun) (), void (**autorun_early) (),
       *description = desc.description; \
     } \
   }
+// NOLINTEND(bugprone-macro-parentheses)
 
 /**
  *  @brief Some (opaque) types for representing some gsi classes in the native API

@@ -51,7 +51,7 @@ public:
   DEFImporter (int warn_level);
 
 protected:
-  void do_read (db::Layout &layout);
+  void do_read (db::Layout &layout) override;
 
 private:
   std::map<std::string, std::map<std::string, db::Coord> > m_nondefault_widths;

@@ -423,12 +423,12 @@ public:
     }
   }
 
-  int columnCount (const QModelIndex & /*parent*/) const
+  int columnCount (const QModelIndex & /*parent*/) const override
   {
     return 2;
   }
 
-  QVariant headerData (int section, Qt::Orientation /*orientation*/, int role) const
+  QVariant headerData (int section, Qt::Orientation /*orientation*/, int role) const override
   {
     if (role == Qt::DisplayRole) {
       if (section == 0) {
@@ -520,7 +520,7 @@ public:
     }
   }
 
-  QVariant data (const QModelIndex &index, int role) const
+  QVariant data (const QModelIndex &index, int role) const override
   {
     if (!mp_database || !index.isValid ()) {
       return QVariant ();
@@ -630,7 +630,7 @@ public:
     return QVariant ();
   }
 
-  bool hasChildren (const QModelIndex &parent) const
+  bool hasChildren (const QModelIndex &parent) const override
   {
     return rowCount (parent) != 0;
   }
@@ -640,7 +640,7 @@ public:
     emit dataChanged (index (0, 0, QModelIndex ()), index (rowCount (QModelIndex ()) - 1, columnCount (QModelIndex ()) - 1, QModelIndex ()));
   }
 
-  QModelIndex index (int row, int column, const QModelIndex &parent) const
+  QModelIndex index (int row, int column, const QModelIndex &parent) const override
   {
     if (! mp_database) {
 
@@ -663,7 +663,7 @@ public:
     }
   }
 
-  QModelIndex parent (const QModelIndex &index) const
+  QModelIndex parent (const QModelIndex &index) const override
   {
     MarkerBrowserTreeViewModelCacheEntry *node = (MarkerBrowserTreeViewModelCacheEntry *) index.internalPointer ();
     if (node && node->parent () && node->parent () != &m_cache) {
@@ -673,7 +673,7 @@ public:
     }
   }
 
-  int rowCount (const QModelIndex &index) const
+  int rowCount (const QModelIndex &index) const override
   {
     if (! mp_database) {
       return 0;
@@ -1400,12 +1400,12 @@ public:
     emit dataChanged (index (0, 0, QModelIndex ()), index (rowCount (QModelIndex ()) - 1, columnCount (QModelIndex ()) - 1, QModelIndex ()));
   }
 
-  int columnCount (const QModelIndex & /*parent*/) const
+  int columnCount (const QModelIndex & /*parent*/) const override
   {
     return 4 + int (m_user_tags.size ());
   }
 
-  QVariant headerData (int section, Qt::Orientation /*orientation*/, int role) const
+  QVariant headerData (int section, Qt::Orientation /*orientation*/, int role) const override
   {
     if (role == Qt::DisplayRole) {
       if (section == 0) {
@@ -1424,7 +1424,7 @@ public:
     return QVariant ();
   }
 
-  QVariant data (const QModelIndex &index, int role) const
+  QVariant data (const QModelIndex &index, int role) const override
   {
     if (!mp_database || !index.isValid ()) {
       return QVariant ();
@@ -1565,12 +1565,12 @@ public:
     return QVariant ();
   }
 
-  bool hasChildren (const QModelIndex &parent) const
+  bool hasChildren (const QModelIndex &parent) const override
   {
     return rowCount (parent) != 0;
   }
 
-  QModelIndex index (int row, int column, const QModelIndex &parent) const
+  QModelIndex index (int row, int column, const QModelIndex &parent) const override
   {
     if (mp_database && ! parent.isValid () && row >= 0 && row < int (m_item_list.size ())) {
       return createIndex (row, column);
@@ -1579,12 +1579,12 @@ public:
     }
   }
 
-  QModelIndex parent (const QModelIndex & /*index*/) const
+  QModelIndex parent (const QModelIndex & /*index*/) const override
   {
     return QModelIndex ();
   }
 
-  int rowCount (const QModelIndex &index) const
+  int rowCount (const QModelIndex &index) const override
   {
     if (mp_database && ! index.isValid ()) {
       return int (m_item_list.size ());

@@ -57,18 +57,18 @@ public:
     rb_gc_register_address (&m_array);
   }
 
-  ~RBAArrayInspector ()
+  ~RBAArrayInspector () override
   {
     rb_gc_unregister_address (&m_array);
     m_array = Qnil;
   }
 
-  std::string description () const
+  std::string description () const override
   {
     return std::string ("...");
   }
 
-  bool has_keys () const
+  bool has_keys () const override
   {
     return false;
   }
@@ -78,37 +78,37 @@ public:
     return rb_ary_entry (m_array, long (index));
   }
 
-  virtual std::string type (size_t index) const
+  std::string type (size_t index) const override
   {
     return ruby2c<std::string> (rba_safe_obj_as_string (rb_class_of (rb_value (index))));
   }
 
-  virtual Visibility visibility (size_t /*index*/) const
+  Visibility visibility (size_t /*index*/) const override
   {
     return gsi::Inspector::Always;
   }
 
-  virtual tl::Variant value (size_t index) const
+  tl::Variant value (size_t index) const override
   {
     return ruby2c<tl::Variant> (rb_value (index));
   }
 
-  virtual size_t count () const
+  size_t count () const override
   {
     return TYPE (m_array) == T_ARRAY ? RARRAY_LEN (m_array) : 0;
   }
 
-  virtual bool has_children (size_t index) const
+  bool has_children (size_t index) const override
   {
     return has_inspector (rb_value (index));
   }
 
-  virtual gsi::Inspector *child_inspector (size_t index) const
+  gsi::Inspector *child_inspector (size_t index) const override
   {
     return create_inspector_for_object (rb_value (index));
   }
 
-  virtual bool equiv (const gsi::Inspector *other) const
+  bool equiv (const gsi::Inspector *other) const override
   {
     const RBAArrayInspector *o = dynamic_cast<const RBAArrayInspector *> (other);
     return o && o->m_array == m_array;
@@ -137,7 +137,7 @@ public:
     rb_hash_foreach (m_hash, (int (*)(...)) &push_key_to_ary_i, m_keys);
   }
 
-  ~RBAHashInspector ()
+  ~RBAHashInspector () override
   {
     rb_gc_unregister_address (&m_hash);
     rb_gc_unregister_address (&m_keys);
@@ -145,7 +145,7 @@ public:
     m_keys = Qnil;
   }
 
-  std::string description () const
+  std::string description () const override
   {
     return std::string ("...");
   }
@@ -160,42 +160,42 @@ public:
     return rb_hash_fetch (m_hash, rb_key (index));
   }
 
-  virtual tl::Variant keyv (size_t index) const
+  tl::Variant keyv (size_t index) const override
   {
     return ruby2c<tl::Variant> (rb_key (index));
   }
 
-  virtual std::string type (size_t index) const
+  std::string type (size_t index) const override
   {
     return ruby2c<std::string> (rba_safe_obj_as_string (rb_class_of (rb_value (index))));
   }
 
-  virtual Visibility visibility (size_t /*index*/) const
+  Visibility visibility (size_t /*index*/) const override
   {
     return gsi::Inspector::Always;
   }
 
-  virtual tl::Variant value (size_t index) const
+  tl::Variant value (size_t index) const override
   {
     return ruby2c<tl::Variant> (rb_value (index));
   }
 
-  virtual size_t count () const
+  size_t count () const override
   {
     return RARRAY_LEN (m_keys);
   }
 
-  virtual bool has_children (size_t index) const
+  bool has_children (size_t index) const override
   {
     return has_inspector (rb_value (index));
   }
 
-  virtual gsi::Inspector *child_inspector (size_t index) const
+  gsi::Inspector *child_inspector (size_t index) const override
   {
     return create_inspector_for_object (rb_value (index));
   }
 
-  virtual bool equiv (const gsi::Inspector *other) const
+  bool equiv (const gsi::Inspector *other) const override
   {
     const RBAHashInspector *o = dynamic_cast<const RBAHashInspector *> (other);
     return o && o->m_hash == m_hash;
@@ -218,7 +218,7 @@ public:
     rb_gc_register_address (&m_members);
   }
 
-  ~RBAObjectInspector ()
+  ~RBAObjectInspector () override
   {
     rb_gc_unregister_address (&m_obj);
     m_obj = Qnil;
@@ -226,7 +226,7 @@ public:
     m_members = Qnil;
   }
 
-  std::string description () const
+  std::string description () const override
   {
     return ruby2c<std::string> (rba_safe_inspect (m_obj));
   }
@@ -256,42 +256,42 @@ public:
     }
   }
 
-  virtual std::string key (size_t index) const
+  std::string key (size_t index) const override
   {
     return ruby2c<std::string> (rba_safe_obj_as_string (rb_key (index)));
   }
 
-  virtual std::string type (size_t index) const
+  std::string type (size_t index) const override
   {
     return ruby2c<std::string> (rba_safe_obj_as_string (rb_class_of (rb_value (index))));
   }
 
-  virtual Visibility visibility (size_t /*index*/) const
+  Visibility visibility (size_t /*index*/) const override
   {
     return gsi::Inspector::Always;
   }
 
-  virtual tl::Variant value (size_t index) const
+  tl::Variant value (size_t index) const override
   {
     return ruby2c<tl::Variant> (rb_value (index));
   }
 
-  virtual size_t count () const
+  size_t count () const override
   {
     return 1 + RARRAY_LEN (m_members);
   }
 
-  virtual bool has_children (size_t index) const
+  bool has_children (size_t index) const override
   {
     return has_inspector (rb_value (index));
   }
 
-  virtual gsi::Inspector *child_inspector (size_t index) const
+  gsi::Inspector *child_inspector (size_t index) const override
   {
     return create_inspector_for_object (rb_value (index));
   }
 
-  virtual bool equiv (const gsi::Inspector *other) const
+  bool equiv (const gsi::Inspector *other) const override
   {
     const RBAObjectInspector *o = dynamic_cast<const RBAObjectInspector *> (other);
     return o && o->m_obj == m_obj;
@@ -347,7 +347,7 @@ public:
     }
   }
 
-  ~RBADataInspector ()
+  ~RBADataInspector () override
   {
     rb_gc_unregister_address (&m_obj);
     m_obj = Qnil;
@@ -355,12 +355,12 @@ public:
     m_members = Qnil;
   }
 
-  std::string description () const
+  std::string description () const override
   {
     return ruby2c<std::string> (rba_safe_inspect (m_obj));
   }
 
-  virtual std::string key (size_t index) const
+  std::string key (size_t index) const override
   {
     if (index == 0) {
       return rba_class_name (m_obj);
@@ -425,37 +425,37 @@ public:
     return Qnil;
   }
 
-  virtual std::string type (size_t index) const
+  std::string type (size_t index) const override
   {
     return ruby2c<std::string> (rba_safe_obj_as_string (rb_class_of (rb_value (index))));
   }
 
-  virtual Visibility visibility (size_t /*index*/) const
+  Visibility visibility (size_t /*index*/) const override
   {
     return gsi::Inspector::Always;
   }
 
-  virtual tl::Variant value (size_t index) const
+  tl::Variant value (size_t index) const override
   {
     return ruby2c<tl::Variant> (rb_value (index));
   }
 
-  virtual size_t count () const
+  size_t count () const override
   {
     return 1 + RARRAY_LEN (m_members) + m_getters.size ();
   }
 
-  virtual bool has_children (size_t index) const
+  bool has_children (size_t index) const override
   {
     return has_inspector (rb_value (index));
   }
 
-  virtual gsi::Inspector *child_inspector (size_t index) const
+  gsi::Inspector *child_inspector (size_t index) const override
   {
     return create_inspector_for_object (rb_value (index));
   }
 
-  virtual bool equiv (const gsi::Inspector *other) const
+  bool equiv (const gsi::Inspector *other) const override
   {
     const RBADataInspector *o = dynamic_cast<const RBADataInspector *> (other);
     return o && o->m_obj == m_obj;
@@ -480,7 +480,7 @@ public:
     rb_gc_register_address (&m_members);
   }
 
-  ~RBAClassInspector ()
+  ~RBAClassInspector () override
   {
     rb_gc_unregister_address (&m_class);
     m_class = Qnil;
@@ -488,7 +488,7 @@ public:
     m_members = Qnil;
   }
 
-  std::string description () const
+  std::string description () const override
   {
     return ruby2c<std::string> (rba_safe_obj_as_string (m_class));
   }
@@ -508,42 +508,42 @@ public:
     }
   }
 
-  virtual std::string key (size_t index) const
+  std::string key (size_t index) const override
   {
     return ruby2c<std::string> (rba_safe_obj_as_string (rb_key (index)));
   }
 
-  virtual std::string type (size_t index) const
+  std::string type (size_t index) const override
   {
     return ruby2c<std::string> (rba_safe_obj_as_string (rb_class_of (rb_value (index))));
   }
 
-  virtual Visibility visibility (size_t /*index*/) const
+  Visibility visibility (size_t /*index*/) const override
   {
     return gsi::Inspector::Always;
   }
 
-  virtual tl::Variant value (size_t index) const
+  tl::Variant value (size_t index) const override
   {
     return ruby2c<tl::Variant> (rb_value (index));
   }
 
-  virtual size_t count () const
+  size_t count () const override
   {
     return RARRAY_LEN (m_members);
   }
 
-  virtual bool has_children (size_t index) const
+  bool has_children (size_t index) const override
   {
     return has_inspector (rb_value (index));
   }
 
-  virtual gsi::Inspector *child_inspector (size_t index) const
+  gsi::Inspector *child_inspector (size_t index) const override
   {
     return create_inspector_for_object (rb_value (index));
   }
 
-  virtual bool equiv (const gsi::Inspector *other) const
+  bool equiv (const gsi::Inspector *other) const override
   {
     const RBAClassInspector *o = dynamic_cast<const RBAClassInspector *> (other);
     return o && o->m_class == m_class;
@@ -564,18 +564,18 @@ public:
     rb_gc_register_address (&m_local_variables);
   }
 
-  ~RBABindingInspector ()
+  ~RBABindingInspector () override
   {
     rb_gc_unregister_address (&m_local_variables);
     m_local_variables = Qnil;
   }
 
-  std::string description () const
+  std::string description () const override
   {
     return std::string ();
   }
 
-  virtual std::string key (size_t index) const
+  std::string key (size_t index) const override
   {
     return ruby2c<std::string> (rba_safe_obj_as_string (rb_ary_entry (m_local_variables, long (index))));
   }
@@ -585,37 +585,37 @@ public:
     return rba_eval_string_in_context (key (index).c_str (), nullptr, 0, m_context);
   }
 
-  virtual std::string type (size_t index) const
+  std::string type (size_t index) const override
   {
     return ruby2c<std::string> (rba_safe_obj_as_string (rb_class_of (rb_value (index))));
   }
 
-  virtual Visibility visibility (size_t /*index*/) const
+  Visibility visibility (size_t /*index*/) const override
   {
     return gsi::Inspector::Always;
   }
 
-  virtual tl::Variant value (size_t index) const
+  tl::Variant value (size_t index) const override
   {
     return ruby2c<tl::Variant> (rb_value (index));
   }
 
-  virtual size_t count () const
+  size_t count () const override
   {
     return TYPE (m_local_variables) == T_ARRAY ? RARRAY_LEN (m_local_variables) : 0;
   }
 
-  virtual bool has_children (size_t index) const
+  bool has_children (size_t index) const override
   {
     return has_inspector (rb_value (index));
   }
 
-  virtual gsi::Inspector *child_inspector (size_t index) const
+  gsi::Inspector *child_inspector (size_t index) const override
   {
     return create_inspector_for_object (rb_value (index));
   }
 
-  virtual bool equiv (const gsi::Inspector *other) const
+  bool equiv (const gsi::Inspector *other) const override
   {
     const RBABindingInspector *o = dynamic_cast<const RBABindingInspector *> (other);
     return o && o->m_context == m_context;

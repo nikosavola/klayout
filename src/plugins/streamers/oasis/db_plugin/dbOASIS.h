@@ -290,15 +290,15 @@ class RegularRepetition
 public:
   RegularRepetition (const db::Vector &a, const db::Vector &b, size_t n, size_t m);
 
-  virtual RepetitionBase *clone () const;
-  virtual RepetitionIteratorBase *begin () const;
-  virtual unsigned int type () const;
-  virtual bool equals (const RepetitionBase *b) const;
-  virtual bool less (const RepetitionBase *b) const;
-  virtual bool is_regular (db::Vector &a, db::Vector &b, size_t &n, size_t &m) const;
-  virtual const std::vector<db::Vector> *is_iterated () const;
-  virtual unsigned int type () { return 1; }
-  virtual size_t size () const { return m_n * m_m; }
+  RepetitionBase *clone () const override;
+  RepetitionIteratorBase *begin () const override;
+  unsigned int type () const override;
+  bool equals (const RepetitionBase *b) const override;
+  bool less (const RepetitionBase *b) const override;
+  bool is_regular (db::Vector &a, db::Vector &b, size_t &n, size_t &m) const override;
+  const std::vector<db::Vector> *is_iterated () const override;
+  unsigned int type () override { return 1; }
+  size_t size () const override { return m_n * m_m; }
 
 private:
   friend class RegularRepetitionIterator;
@@ -313,12 +313,12 @@ class RegularRepetitionIterator
 public:
   RegularRepetitionIterator (const RegularRepetition *rep, size_t i, size_t j);
 
-  virtual RepetitionIteratorBase *clone () const;
-  virtual void inc ();
-  virtual db::Vector get () const;
-  virtual unsigned int type () const;
-  virtual bool equals (const RepetitionIteratorBase *) const;
-  virtual bool at_end () const;
+  RepetitionIteratorBase *clone () const override;
+  void inc () override;
+  db::Vector get () const override;
+  unsigned int type () const override;
+  bool equals (const RepetitionIteratorBase *) const override;
+  bool at_end () const override;
 
 private:
   const RegularRepetition *mp_rep;
@@ -333,15 +333,15 @@ class IrregularRepetition
 public:
   IrregularRepetition ();
 
-  virtual RepetitionBase *clone () const;
-  virtual RepetitionIteratorBase *begin () const;
-  virtual unsigned int type () const;
-  virtual bool equals (const RepetitionBase *b) const;
-  virtual bool less (const RepetitionBase *b) const;
-  virtual bool is_regular (db::Vector &a, db::Vector &b, size_t &n, size_t &m) const;
-  virtual const std::vector<db::Vector> *is_iterated () const;
-  virtual unsigned int type () { return 2; }
-  virtual size_t size () const { return m_points.size () + 1; }
+  RepetitionBase *clone () const override;
+  RepetitionIteratorBase *begin () const override;
+  unsigned int type () const override;
+  bool equals (const RepetitionBase *b) const override;
+  bool less (const RepetitionBase *b) const override;
+  bool is_regular (db::Vector &a, db::Vector &b, size_t &n, size_t &m) const override;
+  const std::vector<db::Vector> *is_iterated () const override;
+  unsigned int type () override { return 2; }
+  size_t size () const override { return m_points.size () + 1; }
 
   void reserve (size_t n) 
   {
@@ -370,12 +370,12 @@ class IrregularRepetitionIterator
 public:
   IrregularRepetitionIterator (const IrregularRepetition *rep, size_t i);
 
-  virtual RepetitionIteratorBase *clone () const;
-  virtual void inc ();
-  virtual db::Vector get () const;
-  virtual unsigned int type () const;
-  virtual bool equals (const RepetitionIteratorBase *) const;
-  virtual bool at_end () const;
+  RepetitionIteratorBase *clone () const override;
+  void inc () override;
+  db::Vector get () const override;
+  unsigned int type () const override;
+  bool equals (const RepetitionIteratorBase *) const override;
+  bool at_end () const override;
 
 private:
   const IrregularRepetition *mp_rep;

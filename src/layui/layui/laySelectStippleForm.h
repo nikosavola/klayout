@@ -47,7 +47,7 @@ class SelectStippleForm
 public:
   SelectStippleForm (QWidget *parent, const lay::DitherPattern &pattern, bool include_nil = false);
 
-  ~SelectStippleForm ();
+  ~SelectStippleForm () override;
 
   int selected () const
   {

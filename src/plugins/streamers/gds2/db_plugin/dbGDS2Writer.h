@@ -49,47 +49,47 @@ protected:
   /**
    *  @brief Write a byte
    */
-  void write_byte (unsigned char b);
+  void write_byte (unsigned char b) override;
 
   /**
    *  @brief Write a record length short
    */
-  virtual void write_record_size (int16_t i);
+  void write_record_size (int16_t i) override;
 
   /**
    *  @brief Write a record type short
    */
-  virtual void write_record (int16_t i);
+  void write_record (int16_t i) override;
 
   /**
    *  @brief Write a short
    */
-  void write_short (int16_t i);
+  void write_short (int16_t i) override;
 
   /**
    *  @brief Write a long
    */
-  void write_int (int32_t l);
+  void write_int (int32_t l) override;
 
   /**
    *  @brief Write a double
    */
-  void write_double (double d);
+  void write_double (double d) override;
 
   /**
    *  @brief Write the time
    */
-  void write_time (const short *t);
+  void write_time (const short *t) override;
 
   /**
    *  @brief Write a string
    */
-  void write_string (const char *t);
+  void write_string (const char *t) override;
 
   /**
    *  @brief Write a string
    */
-  void write_string (const std::string &t);
+  void write_string (const std::string &t) override;
 
   /**
    *  @brief Write a string plus record
@@ -99,7 +99,7 @@ protected:
   /**
    *  @brief Set the stream to write the data to
    */
-  void set_stream (tl::OutputStream &stream)
+  void set_stream (tl::OutputStream &stream) override
   {
     mp_stream = &stream;
   }
@@ -107,7 +107,7 @@ protected:
   /**
    *  @brief Establish a checkpoint for progress reporting
    */
-  void progress_checkpoint ();
+  void progress_checkpoint () override;
 
 private:
   tl::OutputStream *mp_stream;

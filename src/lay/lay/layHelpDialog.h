@@ -52,12 +52,12 @@ Q_OBJECT
 
 public:
   HelpDialog (QWidget *parent, bool modal = false);
-  ~HelpDialog ();
+  ~HelpDialog () override;
 
   void search (const std::string &topic);
   void load (const std::string &url);
-  void showEvent (QShowEvent *);
-  void hideEvent (QHideEvent *);
+  void showEvent (QShowEvent *) override;
+  void hideEvent (QHideEvent *) override;
 
 protected slots:
   void title_changed (const QString &t);

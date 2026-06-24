@@ -606,7 +606,7 @@ public:
     }
   }
 
-  virtual tl::Worker *create_worker ();
+  tl::Worker *create_worker () override;
 
 private:
   output_mode_t m_output_mode;
@@ -717,7 +717,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void perform_task (tl::Task *task) 
+  void perform_task (tl::Task *task) override 
   {
     XORTask *xor_task = dynamic_cast <XORTask *> (task);
     if (xor_task) {

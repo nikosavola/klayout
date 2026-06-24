@@ -244,7 +244,7 @@ struct BoxTreePusher
     //  .. nothing yet ..
   }
 
-  void put (const db::SimplePolygon &sp)
+  void put (const db::SimplePolygon &sp) override
   {
     mp_bt->insert (sp.box ());
   }

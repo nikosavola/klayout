@@ -44,7 +44,7 @@ class LAYUI_PUBLIC BackgroundAwareTreeStyle
 {
 public:
   BackgroundAwareTreeStyle (QStyle *org_style);
-  void drawPrimitive (PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w) const;
+  void drawPrimitive (PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w) const override;
 };
 
 } // namespace lay

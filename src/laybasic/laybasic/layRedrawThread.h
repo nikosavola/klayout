@@ -53,7 +53,7 @@ class RedrawThread
 {
 public:
   RedrawThread (lay::RedrawThreadCanvas *canvas, lay::LayoutViewBase *view);
-  virtual ~RedrawThread ();
+  ~RedrawThread () override;
 
   void commit (const std::vector <lay::RedrawLayerInfo> &layers, const lay::Viewport &vp, double resolution, double font_resolution);
   void start (int workers, const std::vector <lay::RedrawLayerInfo> &layers, const lay::Viewport &vp, double resolution, double font_resolution, bool force_redraw);
@@ -81,10 +81,10 @@ public:
   void task_finished (int id);
 
 protected:
-  tl::Worker *create_worker ();
-  void setup_worker (tl::Worker *worker);
-  void finished ();
-  void stopped ();
+  tl::Worker *create_worker () override;
+  void setup_worker (tl::Worker *worker) override;
+  void finished () override;
+  void stopped () override;
 
 private:
   void start ();

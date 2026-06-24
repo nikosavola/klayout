@@ -42,11 +42,11 @@ class MouseTracker
 public: 
   MouseTracker (lay::LayoutViewBase *view);
 
-  virtual bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  bool leave_event (bool prio);
-  bool configure (const std::string &name, const std::string &value);
+  bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  bool leave_event (bool prio) override;
+  bool configure (const std::string &name, const std::string &value) override;
 
-  lay::ViewService *view_service_interface ()
+  lay::ViewService *view_service_interface () override
   {
     return this;
   }

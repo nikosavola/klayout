@@ -63,7 +63,7 @@ public:
   LayoutVsSchematicStandardWriter (tl::OutputStream &stream, bool short_version);
 
 protected:
-  void do_write_lvs (const db::LayoutVsSchematic *lvs);
+  void do_write_lvs (const db::LayoutVsSchematic *lvs) override;
 
 private:
   tl::OutputStream *mp_stream;

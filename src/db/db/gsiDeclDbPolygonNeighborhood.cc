@@ -44,7 +44,7 @@ public:
     //  just for signature
   }
 
-  void neighbors (const db::Layout *layout, const db::Cell *cell, const db::PolygonWithProperties &polygon, const db::PolygonNeighborhoodVisitor::neighbors_type &neighbors)
+  void neighbors (const db::Layout *layout, const db::Cell *cell, const db::PolygonWithProperties &polygon, const db::PolygonNeighborhoodVisitor::neighbors_type &neighbors) override
   {
     if (f_neighbors.can_issue ()) {
 

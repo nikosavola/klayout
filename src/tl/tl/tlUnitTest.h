@@ -245,7 +245,7 @@ class TL_PUBLIC CaptureChannel : public tl::Channel
 {
 public:
   CaptureChannel ();
-  ~CaptureChannel ();
+  ~CaptureChannel () override;
 
   std::string captured_text () const
   {
@@ -258,11 +258,11 @@ public:
   }
 
 protected:
-  virtual void puts (const char *s);
-  virtual void endl ();
-  virtual void end ();
-  virtual void begin ();
-  virtual void yield () { }
+  void puts (const char *s) override;
+  void endl () override;
+  void end () override;
+  void begin () override;
+  void yield () override { }
 
 private:
   std::ostringstream m_text;

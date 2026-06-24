@@ -51,7 +51,7 @@ public:
     return false;
   }
 
-  virtual bool selected (const db::Text &text, db::properties_id_type prop_id) const
+  bool selected (const db::Text &text, db::properties_id_type prop_id) const override
   {
     if (f_selected.can_issue ()) {
       return f_selected.issue<TextFilterImpl, bool, const db::TextWithProperties &> (&TextFilterImpl::issue_selected, db::TextWithProperties (text, prop_id));

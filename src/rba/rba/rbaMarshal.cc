@@ -52,22 +52,22 @@ public:
     gc_lock_object (m_string);
   }
 
-  ~RubyBasedStringAdaptor ()
+  ~RubyBasedStringAdaptor () override
   {
     gc_unlock_object (m_string);
   }
 
-  virtual const char *c_str () const
+  const char *c_str () const override
   {
     return RSTRING_PTR (m_string);
   }
 
-  virtual size_t size () const
+  size_t size () const override
   {
     return RSTRING_LEN (m_string);
   }
 
-  virtual void set (const char * /*c_str*/, size_t /*s*/, tl::Heap & /*heap*/)
+  void set (const char * /*c_str*/, size_t /*s*/, tl::Heap & /*heap*/) override
   {
     //  TODO: is there a setter for a string?
     //  -> so far, string OUT parameters are not supported
@@ -90,22 +90,22 @@ public:
     gc_lock_object (m_bytes);
   }
 
-  ~RubyBasedByteArrayAdaptor ()
+  ~RubyBasedByteArrayAdaptor () override
   {
     gc_unlock_object (m_bytes);
   }
 
-  virtual const char *c_str () const
+  const char *c_str () const override
   {
     return RSTRING_PTR (m_bytes);
   }
 
-  virtual size_t size () const
+  size_t size () const override
   {
     return RSTRING_LEN (m_bytes);
   }
 
-  virtual void set (const char * /*c_str*/, size_t /*s*/, tl::Heap & /*heap*/)
+  void set (const char * /*c_str*/, size_t /*s*/, tl::Heap & /*heap*/) override
   {
     //  TODO: is there a setter for a string?
     //  -> so far, byte array OUT parameters are not supported
@@ -123,10 +123,10 @@ class RubyBasedVariantAdaptor
 {
 public:
   RubyBasedVariantAdaptor (VALUE var);
-  ~RubyBasedVariantAdaptor ();
+  ~RubyBasedVariantAdaptor () override;
 
-  virtual tl::Variant var () const;
-  virtual void set (const tl::Variant &v, tl::Heap &heap);
+  tl::Variant var () const override;
+  void set (const tl::Variant &v, tl::Heap &heap) override;
   VALUE value () const { return m_var; }
 
 private:
@@ -142,9 +142,9 @@ class RubyBasedVectorAdaptorIterator
 public:
   RubyBasedVectorAdaptorIterator (VALUE array, const gsi::ArgType *ainner);
 
-  virtual void get (gsi::SerialArgs &w, tl::Heap &heap) const;
-  virtual bool at_end () const;
-  virtual void inc ();
+  void get (gsi::SerialArgs &w, tl::Heap &heap) const override;
+  bool at_end () const override;
+  void inc () override;
 
 private:
   VALUE m_array;
@@ -160,13 +160,13 @@ class RubyBasedVectorAdaptor
 {
 public:
   RubyBasedVectorAdaptor (VALUE array, const gsi::ArgType *ainner);
-  ~RubyBasedVectorAdaptor ();
+  ~RubyBasedVectorAdaptor () override;
 
-  virtual gsi::VectorAdaptorIterator *create_iterator () const;
-  virtual void push (gsi::SerialArgs &r, tl::Heap &heap);
-  virtual void clear ();
-  virtual size_t size () const;
-  virtual size_t serial_size () const;
+  gsi::VectorAdaptorIterator *create_iterator () const override;
+  void push (gsi::SerialArgs &r, tl::Heap &heap) override;
+  void clear () override;
+  size_t size () const override;
+  size_t serial_size () const override;
 
 private:
   const gsi::ArgType *mp_ainner;
@@ -182,9 +182,9 @@ class RubyBasedMapAdaptorIterator
 public:
   RubyBasedMapAdaptorIterator (VALUE hash, const gsi::ArgType *ainner, const gsi::ArgType *ainner_k);
 
-  virtual void get (gsi::SerialArgs &w, tl::Heap &heap) const;
-  virtual bool at_end () const;
-  virtual void inc ();
+  void get (gsi::SerialArgs &w, tl::Heap &heap) const override;
+  bool at_end () const override;
+  void inc () override;
 
 private:
   std::vector<std::pair<VALUE, VALUE> > m_kv;
@@ -200,13 +200,13 @@ class RubyBasedMapAdaptor
 {
 public:
   RubyBasedMapAdaptor (VALUE hash, const gsi::ArgType *ainner, const gsi::ArgType *ainner_k);
-  ~RubyBasedMapAdaptor ();
+  ~RubyBasedMapAdaptor () override;
 
-  virtual gsi::MapAdaptorIterator *create_iterator () const;
-  virtual void insert (gsi::SerialArgs &r, tl::Heap &heap);
-  virtual void clear ();
-  virtual size_t size () const;
-  virtual size_t serial_size () const;
+  gsi::MapAdaptorIterator *create_iterator () const override;
+  void insert (gsi::SerialArgs &r, tl::Heap &heap) override;
+  void clear () override;
+  size_t size () const override;
+  size_t serial_size () const override;
 
 private:
   const gsi::ArgType *mp_ainner, *mp_ainner_k;

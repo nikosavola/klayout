@@ -165,8 +165,8 @@ public:
    *  @param vertices The bitmap to which to render the vertices. Can be 0 for not drawing this.
    *  @param texts Currenty not used. Used for drawing properties if drawing of these is required.
    */
-  virtual void draw (const db::Shape &shape, const db::CplxTrans &trans,
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::Shape &shape, const db::CplxTrans &trans,
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /**
    *  @brief Render a polygon into a set of bitmaps
@@ -178,20 +178,20 @@ public:
    *  @param vertices The bitmap to which to render the vertices. Can be 0 for not drawing this.
    *  @param texts Currenty not used. No texts to draw.
    */
-  virtual void draw (const db::Polygon &poly, const db::CplxTrans &trans,
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::Polygon &poly, const db::CplxTrans &trans,
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /** 
    *  @brief Same for double coordinates
    */
-  virtual void draw (const db::DPolygon &poly,
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::DPolygon &poly,
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /** 
    *  @brief Same for double coordinates and transformation
    */
-  virtual void draw (const db::DPolygon &poly, const db::DCplxTrans &trans,
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::DPolygon &poly, const db::DCplxTrans &trans,
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /**
    *  @brief Render a box into a set of bitmaps
@@ -203,26 +203,26 @@ public:
    *  @param vertices The bitmap to which to render the vertices. Can be 0 for not drawing this.
    *  @param texts Currenty not used. No texts to draw.
    */
-  virtual void draw (const db::Box &box, const db::CplxTrans &trans,
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::Box &box, const db::CplxTrans &trans,
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /** 
    *  @brief Same for short representation
    */
-  virtual void draw (const db::ShortBox &box, const db::CplxTrans &trans,
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::ShortBox &box, const db::CplxTrans &trans,
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /** 
    *  @brief Same for double coordinates
    */
-  virtual void draw (const db::DBox &box, 
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::DBox &box, 
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /** 
    *  @brief Same for double coordinates and transformation
    */
-  virtual void draw (const db::DBox &box, const db::DCplxTrans &trans,
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::DBox &box, const db::DCplxTrans &trans,
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /**
    *  @brief Render a path into a set of bitmaps
@@ -234,20 +234,20 @@ public:
    *  @param vertices The bitmap to which to render the vertices. Can be 0 for not drawing this.
    *  @param texts Currenty not used. No texts to draw.
    */
-  virtual void draw (const db::Path &path, const db::CplxTrans &trans,
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::Path &path, const db::CplxTrans &trans,
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /** 
    *  @brief Same for double coordinates
    */
-  virtual void draw (const db::DPath &path,
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::DPath &path,
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /** 
    *  @brief Same for double coordinates and transformation
    */
-  virtual void draw (const db::DPath &path, const db::DCplxTrans &trans,
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::DPath &path, const db::DCplxTrans &trans,
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /**
    *  @brief Render a text into a set of bitmaps
@@ -259,20 +259,20 @@ public:
    *  @param vertices The bitmap to which to render the vertices. Can be 0 for not drawing this.
    *  @param texts The bitmap to which to render the text.
    */
-  virtual void draw (const db::Text &text, const db::CplxTrans &trans,
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::Text &text, const db::CplxTrans &trans,
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /** 
    *  @brief Same for double coordinates
    */
-  virtual void draw (const db::DText &text, 
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::DText &text, 
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /** 
    *  @brief Same for double coordinates and transformation
    */
-  virtual void draw (const db::DText &text, const db::DCplxTrans &trans,
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::DText &text, const db::DCplxTrans &trans,
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /**
    *  @brief Draw a formatted text
@@ -288,8 +288,8 @@ public:
    *  @param vertices The bitmap to which to render the vertices. Can be 0 for not drawing this.
    *  @param texts The bitmap to which to render the text.
    */
-  virtual void draw (const db::DBox &box, const std::string &text, db::Font font, db::HAlign halign, db::VAlign valign, db::DFTrans trans,
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::DBox &box, const std::string &text, db::Font font, db::HAlign halign, db::VAlign valign, db::DFTrans trans,
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /**
    *  @brief Render a edge into a set of bitmaps
@@ -301,20 +301,20 @@ public:
    *  @param vertices The bitmap to which to render the vertices. Can be 0 for not drawing this.
    *  @param texts Currenty not used. No texts to draw.
    */
-  virtual void draw (const db::Edge &edge, const db::CplxTrans &trans,
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::Edge &edge, const db::CplxTrans &trans,
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /** 
    *  @brief Same for double coordinates 
    */
-  virtual void draw (const db::DEdge &edge, 
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::DEdge &edge, 
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
   /** 
    *  @brief Same for double coordinates and transformation
    */
-  virtual void draw (const db::DEdge &edge, const db::DCplxTrans &trans,
-                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts);
+  void draw (const db::DEdge &edge, const db::DCplxTrans &trans,
+                     lay::CanvasPlane *fill, lay::CanvasPlane *frame, lay::CanvasPlane *vertices, lay::CanvasPlane *texts) override;
 
 private:
   std::vector<lay::RenderEdge> m_edges;

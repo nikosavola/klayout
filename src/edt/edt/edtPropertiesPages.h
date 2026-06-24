@@ -49,25 +49,25 @@ Q_OBJECT
 
 public:
   ShapePropertiesPage (const std::string &description, edt::Service *service, db::Manager *manager, QWidget *parent);
-  ~ShapePropertiesPage ();
+  ~ShapePropertiesPage () override;
 
-  virtual size_t count () const;
-  virtual void select_entries (const std::vector<size_t> &entries);
-  virtual std::string description (size_t entry) const;
-  virtual std::string description () const;
-  virtual void confine_selection (const std::vector<size_t> &remaining_entries);
-  virtual QIcon icon (size_t entry, int w, int h) const;
-  virtual QIcon icon (int w, int h) const { return lay::PropertiesPage::icon (w, h); }
-  virtual void leave ();
+  size_t count () const override;
+  void select_entries (const std::vector<size_t> &entries) override;
+  std::string description (size_t entry) const override;
+  std::string description () const override;
+  void confine_selection (const std::vector<size_t> &remaining_entries) override;
+  QIcon icon (size_t entry, int w, int h) const override;
+  QIcon icon (int w, int h) const override { return lay::PropertiesPage::icon (w, h); }
+  void leave () override;
 
 protected:
-  virtual bool readonly ();
+  bool readonly () override;
 
 private:
-  virtual void update ();
-  virtual void apply (bool commit);
-  virtual void apply_to_all (bool relative, bool commit);
-  virtual bool can_apply_to_all () const;
+  void update () override;
+  void apply (bool commit) override;
+  void apply_to_all (bool relative, bool commit) override;
+  bool can_apply_to_all () const override;
   void do_apply (bool current_only, bool relative, bool commit);
   void recompute_selection_ptrs (const std::vector<lay::ObjectInstPath> &new_sel);
   void apply_change (const ChangeApplicator *applicator, unsigned int cv_index, bool current_only, bool relative, bool commit);
@@ -112,16 +112,16 @@ Q_OBJECT
 public:
   PolygonPropertiesPage (edt::Service *service, db::Manager *manager, QWidget *parent);
 
-  virtual std::string description (size_t entry) const;
-  virtual std::string description () const { return ShapePropertiesPage::description (); }
-  virtual void do_update (const db::Shape &shape, double dbu);
-  virtual ChangeApplicator *create_applicator (db::Shapes &shapes, const db::Shape &shape, double dbu);
+  std::string description (size_t entry) const override;
+  std::string description () const override { return ShapePropertiesPage::description (); }
+  void do_update (const db::Shape &shape, double dbu) override;
+  ChangeApplicator *create_applicator (db::Shapes &shapes, const db::Shape &shape, double dbu) override;
 
 protected:
-  virtual QCheckBox *dbu_checkbox () const { return dbu_cb; }
-  virtual QCheckBox *abs_checkbox () const { return abs_cb; }
-  virtual lay::LayerSelectionComboBox *layer_selector () const { return layer_cbx; }
-  virtual QLabel *cell_label () const { return cell_lbl; }
+  QCheckBox *dbu_checkbox () const override { return dbu_cb; }
+  QCheckBox *abs_checkbox () const override { return abs_cb; }
+  lay::LayerSelectionComboBox *layer_selector () const override { return layer_cbx; }
+  QLabel *cell_label () const override { return cell_lbl; }
 
 public slots:
   void text_changed ();
@@ -139,19 +139,19 @@ Q_OBJECT
 public:
   BoxPropertiesPage (edt::Service *service, db::Manager *manager, QWidget *parent);
 
-  virtual std::string description (size_t entry) const;
-  virtual std::string description () const { return ShapePropertiesPage::description (); }
-  virtual void do_update (const db::Shape &shape, double dbu);
-  virtual ChangeApplicator *create_applicator (db::Shapes &shapes, const db::Shape &shape, double dbu);
+  std::string description (size_t entry) const override;
+  std::string description () const override { return ShapePropertiesPage::description (); }
+  void do_update (const db::Shape &shape, double dbu) override;
+  ChangeApplicator *create_applicator (db::Shapes &shapes, const db::Shape &shape, double dbu) override;
 
 public slots:
   void changed ();
 
 protected:
-  virtual QCheckBox *dbu_checkbox () const { return dbu_cb; }
-  virtual QCheckBox *abs_checkbox () const { return abs_cb; }
-  virtual lay::LayerSelectionComboBox *layer_selector () const { return layer_cbx; }
-  virtual QLabel *cell_label () const { return cell_lbl; }
+  QCheckBox *dbu_checkbox () const override { return dbu_cb; }
+  QCheckBox *abs_checkbox () const override { return abs_cb; }
+  lay::LayerSelectionComboBox *layer_selector () const override { return layer_cbx; }
+  QLabel *cell_label () const override { return cell_lbl; }
 
 private:
   bool m_recursion_sentinel;
@@ -172,19 +172,19 @@ Q_OBJECT
 public:
   PointPropertiesPage (edt::Service *service, db::Manager *manager, QWidget *parent);
 
-  virtual std::string description (size_t entry) const;
-  virtual std::string description () const { return ShapePropertiesPage::description (); }
-  virtual void do_update (const db::Shape &shape, double dbu);
-  virtual ChangeApplicator *create_applicator (db::Shapes &shapes, const db::Shape &shape, double dbu);
+  std::string description (size_t entry) const override;
+  std::string description () const override { return ShapePropertiesPage::description (); }
+  void do_update (const db::Shape &shape, double dbu) override;
+  ChangeApplicator *create_applicator (db::Shapes &shapes, const db::Shape &shape, double dbu) override;
 
 public slots:
   void changed ();
 
 protected:
-  virtual QCheckBox *dbu_checkbox () const { return dbu_cb; }
-  virtual QCheckBox *abs_checkbox () const { return abs_cb; }
-  virtual lay::LayerSelectionComboBox *layer_selector () const { return layer_cbx; }
-  virtual QLabel *cell_label () const { return cell_lbl; }
+  QCheckBox *dbu_checkbox () const override { return dbu_cb; }
+  QCheckBox *abs_checkbox () const override { return abs_cb; }
+  lay::LayerSelectionComboBox *layer_selector () const override { return layer_cbx; }
+  QLabel *cell_label () const override { return cell_lbl; }
 
 private:
   double m_dbu;
@@ -202,16 +202,16 @@ Q_OBJECT
 public:
   TextPropertiesPage (edt::Service *service, db::Manager *manager, QWidget *parent);
 
-  virtual std::string description (size_t entry) const;
-  virtual std::string description () const { return ShapePropertiesPage::description (); }
-  virtual void do_update (const db::Shape &shape, double dbu);
-  virtual ChangeApplicator *create_applicator (db::Shapes &shapes, const db::Shape &shape, double dbu);
+  std::string description (size_t entry) const override;
+  std::string description () const override { return ShapePropertiesPage::description (); }
+  void do_update (const db::Shape &shape, double dbu) override;
+  ChangeApplicator *create_applicator (db::Shapes &shapes, const db::Shape &shape, double dbu) override;
 
 protected:
-  virtual QCheckBox *dbu_checkbox () const { return dbu_cb; }
-  virtual QCheckBox *abs_checkbox () const { return abs_cb; }
-  virtual lay::LayerSelectionComboBox *layer_selector () const { return layer_cbx; }
-  virtual QLabel *cell_label () const { return cell_lbl; }
+  QCheckBox *dbu_checkbox () const override { return dbu_cb; }
+  QCheckBox *abs_checkbox () const override { return abs_cb; }
+  lay::LayerSelectionComboBox *layer_selector () const override { return layer_cbx; }
+  QLabel *cell_label () const override { return cell_lbl; }
 };
 
 class PathPropertiesPage
@@ -223,16 +223,16 @@ Q_OBJECT
 public:
   PathPropertiesPage (edt::Service *service, db::Manager *manager, QWidget *parent);
 
-  virtual std::string description (size_t entry) const;
-  virtual std::string description () const { return ShapePropertiesPage::description (); }
-  virtual void do_update (const db::Shape &shape, double dbu);
-  virtual ChangeApplicator *create_applicator (db::Shapes &shapes, const db::Shape &shape, double dbu);
+  std::string description (size_t entry) const override;
+  std::string description () const override { return ShapePropertiesPage::description (); }
+  void do_update (const db::Shape &shape, double dbu) override;
+  ChangeApplicator *create_applicator (db::Shapes &shapes, const db::Shape &shape, double dbu) override;
 
 protected:
-  virtual QCheckBox *dbu_checkbox () const { return dbu_cb; }
-  virtual QCheckBox *abs_checkbox () const { return abs_cb; }
-  virtual lay::LayerSelectionComboBox *layer_selector () const { return layer_cbx; }
-  virtual QLabel *cell_label () const { return cell_lbl; }
+  QCheckBox *dbu_checkbox () const override { return dbu_cb; }
+  QCheckBox *abs_checkbox () const override { return abs_cb; }
+  lay::LayerSelectionComboBox *layer_selector () const override { return layer_cbx; }
+  QLabel *cell_label () const override { return cell_lbl; }
 
 private:
   bool m_in_text_changed;
@@ -247,16 +247,16 @@ Q_OBJECT
 public:
   EditablePathPropertiesPage (edt::Service *service, db::Manager *manager, QWidget *parent);
 
-  virtual std::string description (size_t entry) const;
-  virtual std::string description () const { return ShapePropertiesPage::description (); }
-  virtual void do_update (const db::Shape &shape, double dbu);
-  virtual ChangeApplicator *create_applicator (db::Shapes &shapes, const db::Shape &shape, double dbu);
+  std::string description (size_t entry) const override;
+  std::string description () const override { return ShapePropertiesPage::description (); }
+  void do_update (const db::Shape &shape, double dbu) override;
+  ChangeApplicator *create_applicator (db::Shapes &shapes, const db::Shape &shape, double dbu) override;
 
 protected:
-  virtual QCheckBox *dbu_checkbox () const { return dbu_cb; }
-  virtual QCheckBox *abs_checkbox () const { return abs_cb; }
-  virtual lay::LayerSelectionComboBox *layer_selector () const { return layer_cbx; }
-  virtual QLabel *cell_label () const { return cell_lbl; }
+  QCheckBox *dbu_checkbox () const override { return dbu_cb; }
+  QCheckBox *abs_checkbox () const override { return abs_cb; }
+  lay::LayerSelectionComboBox *layer_selector () const override { return layer_cbx; }
+  QLabel *cell_label () const override { return cell_lbl; }
 
 public slots:
   void type_selected (int); 

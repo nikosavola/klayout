@@ -46,32 +46,32 @@ public:
   /**
    *  @brief The destructor
    */
-  ~MoveTrackerService ();
+  ~MoveTrackerService () override;
 
   /**
    *  @brief Begin a "move" operation
    */
-  virtual bool begin_move (lay::Editable::MoveMode mode, const db::DPoint &p, lay::angle_constraint_type ac);
+  bool begin_move (lay::Editable::MoveMode mode, const db::DPoint &p, lay::angle_constraint_type ac) override;
 
   /**
    *  @brief Continue a "move" operation
    */
-  virtual void move (const db::DPoint &p, lay::angle_constraint_type ac);
+  void move (const db::DPoint &p, lay::angle_constraint_type ac) override;
 
   /**
    *  @brief Transform during a move operation
    */
-  virtual void move_transform (const db::DPoint &p, db::DFTrans tr, lay::angle_constraint_type ac);
+  void move_transform (const db::DPoint &p, db::DFTrans tr, lay::angle_constraint_type ac) override;
 
   /**
    *  @brief Terminate a "move" operation
    */
-  virtual void end_move (const db::DPoint &p, lay::angle_constraint_type ac);
+  void end_move (const db::DPoint &p, lay::angle_constraint_type ac) override;
 
   /**
    *  @brief Terminate a "move" operation with compulsory move vector
    */
-  virtual void end_move (const db::DVector &v);
+  void end_move (const db::DVector &v) override;
 
   /**
    *  @brief Access to the view object
@@ -85,7 +85,7 @@ public:
   /**
    *  @brief Cancel any edit operations (such as move)
    */
-  virtual void edit_cancel ();
+  void edit_cancel () override;
 
 private:
   lay::LayoutViewBase *mp_view;

@@ -114,8 +114,8 @@ public:
   LEFDEFReaderOptions (const LEFDEFReaderOptions &d);
   LEFDEFReaderOptions &operator= (const LEFDEFReaderOptions &d);
 
-  db::FormatSpecificReaderOptions *clone () const;
-  virtual const std::string &format_name () const;
+  db::FormatSpecificReaderOptions *clone () const override;
+  const std::string &format_name () const override;
 
   bool paths_relative_to_cwd () const
   {
@@ -1173,9 +1173,9 @@ class DB_PLUGIN_PUBLIC RuleBasedViaGenerator
 public:
   RuleBasedViaGenerator ();
 
-  virtual void create_cell (LEFDEFReaderState &reader, Layout &layout, db::Cell &cell, const std::vector<std::string> *maskshift_layers, const std::vector<unsigned int> &masks, const LEFDEFNumberOfMasks *nm);
+  void create_cell (LEFDEFReaderState &reader, Layout &layout, db::Cell &cell, const std::vector<std::string> *maskshift_layers, const std::vector<unsigned int> &masks, const LEFDEFNumberOfMasks *nm) override;
 
-  virtual std::vector<std::string> maskshift_layers () const
+  std::vector<std::string> maskshift_layers () const override
   {
     std::vector<std::string> msl;
     msl.push_back (m_bottom_layer);
@@ -1184,7 +1184,7 @@ public:
     return msl;
   }
 
-  virtual bool is_fixedmask () const
+  bool is_fixedmask () const override
   {
     return false;
   }
@@ -1226,9 +1226,9 @@ class DB_PLUGIN_PUBLIC GeometryBasedLayoutGenerator
 public:
   GeometryBasedLayoutGenerator ();
 
-  virtual void create_cell (LEFDEFReaderState &reader, Layout &layout, db::Cell &cell, const std::vector<std::string> *maskshift_layers, const std::vector<unsigned int> &masks, const LEFDEFNumberOfMasks *num_cut_masks);
-  virtual std::vector<std::string> maskshift_layers () const { return m_maskshift_layers; }
-  virtual bool is_fixedmask () const { return m_fixedmask; }
+  void create_cell (LEFDEFReaderState &reader, Layout &layout, db::Cell &cell, const std::vector<std::string> *maskshift_layers, const std::vector<unsigned int> &masks, const LEFDEFNumberOfMasks *num_cut_masks) override;
+  std::vector<std::string> maskshift_layers () const override { return m_maskshift_layers; }
+  bool is_fixedmask () const override { return m_fixedmask; }
 
   void add_polygon (const std::string &ln, LayerPurpose purpose, const db::Polygon &poly, unsigned int mask, properties_id_type prop_id, const DVector &via_size = db::DVector ());
   void add_box (const std::string &ln, LayerPurpose purpose, const db::Box &box, unsigned int mask, properties_id_type prop_id, const DVector &via_size = db::DVector ());
@@ -1450,8 +1450,8 @@ public:
   }
 
 protected:
-  virtual void common_reader_error (const std::string &msg) { error (msg); }
-  virtual void common_reader_warn (const std::string &msg, int warn_level) { warn (msg, warn_level); }
+  void common_reader_error (const std::string &msg) override { error (msg); }
+  void common_reader_warn (const std::string &msg, int warn_level) override { warn (msg, warn_level); }
 
 private:
   /**
@@ -1853,10 +1853,10 @@ class DB_PLUGIN_PUBLIC LEFDEFReader
 public:
   LEFDEFReader (tl::InputStream &s);
 
-  virtual const db::LayerMap &read (db::Layout &layout, const db::LoadLayoutOptions &options);
-  virtual const db::LayerMap &read (db::Layout &layout);
+  const db::LayerMap &read (db::Layout &layout, const db::LoadLayoutOptions &options) override;
+  const db::LayerMap &read (db::Layout &layout) override;
 
-  virtual const char *format () const;
+  const char *format () const override;
 
   const db::LayerMap &read_lefdef (db::Layout &layout, const db::LoadLayoutOptions &options, bool import_lef);
 

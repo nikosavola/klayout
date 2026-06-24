@@ -140,7 +140,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~Dispatcher ();
+  ~Dispatcher () override;
 
   /**
    *  @brief Write configuration to a file
@@ -208,7 +208,7 @@ public:
   /**
    *  @brief Called, when a menu item is selected
    */
-  virtual void menu_activated (const std::string &symbol)
+  void menu_activated (const std::string &symbol) override
   {
     if (mp_delegate) {
       mp_delegate->menu_activated (symbol);
@@ -260,9 +260,9 @@ public:
 
 protected:
   //  capture the configuration events so we can change the value of the configuration actions
-  virtual bool configure (const std::string &name, const std::string &value);
-  virtual void config_finalize ();
-  virtual void function (const std::string &symbol, const std::string &args);
+  bool configure (const std::string &name, const std::string &value) override;
+  void config_finalize () override;
+  void function (const std::string &symbol, const std::string &args) override;
 
 private:
   Dispatcher (const Dispatcher &);

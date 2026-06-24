@@ -67,17 +67,17 @@ public:
     }
   }
 
-  virtual const char *c_str () const
+  const char *c_str () const override
   {
     return m_stdstr.c_str ();
   }
 
-  virtual size_t size () const
+  size_t size () const override
   {
     return m_stdstr.size ();
   }
 
-  virtual void set (const char * /*c_str*/, size_t /*s*/, tl::Heap & /*heap*/)
+  void set (const char * /*c_str*/, size_t /*s*/, tl::Heap & /*heap*/) override
   {
     //  TODO: is there a setter for a string?
     //  So far it's not possible to have string OUT parameter
@@ -101,17 +101,17 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual const char *c_str () const
+  const char *c_str () const override
   {
     return &m_bytearray.front ();
   }
 
-  virtual size_t size () const
+  size_t size () const override
   {
     return m_bytearray.size ();
   }
 
-  virtual void set (const char * /*c_str*/, size_t /*s*/, tl::Heap & /*heap*/)
+  void set (const char * /*c_str*/, size_t /*s*/, tl::Heap & /*heap*/) override
   {
     //  TODO: is there a setter for a byte array?
     //  So far it's not possible to have bytes OUT parameter
@@ -131,8 +131,8 @@ class PythonBasedVariantAdaptor
 public:
   PythonBasedVariantAdaptor (const PythonPtr &var);
 
-  virtual tl::Variant var () const;
-  virtual void set (const tl::Variant &v, tl::Heap & /*heap*/);
+  tl::Variant var () const override;
+  void set (const tl::Variant &v, tl::Heap & /*heap*/) override;
   const PythonPtr &ptr () const { return m_var; }
 
 private:
@@ -148,9 +148,9 @@ class PythonBasedVectorAdaptorIterator
 public:
   PythonBasedVectorAdaptorIterator (const PythonPtr &array, size_t len, const gsi::ArgType *ainner);
 
-  virtual void get (gsi::SerialArgs &w, tl::Heap &heap) const;
-  virtual bool at_end () const;
-  virtual void inc ();
+  void get (gsi::SerialArgs &w, tl::Heap &heap) const override;
+  bool at_end () const override;
+  void inc () override;
 
 private:
   PythonPtr m_array;
@@ -167,11 +167,11 @@ class PythonBasedVectorAdaptor
 public:
   PythonBasedVectorAdaptor (const PythonPtr &array, const gsi::ArgType *ainner);
 
-  virtual gsi::VectorAdaptorIterator *create_iterator () const;
-  virtual void push (gsi::SerialArgs &r, tl::Heap &heap);
-  virtual void clear ();
-  virtual size_t size () const;
-  virtual size_t serial_size () const;
+  gsi::VectorAdaptorIterator *create_iterator () const override;
+  void push (gsi::SerialArgs &r, tl::Heap &heap) override;
+  void clear () override;
+  size_t size () const override;
+  size_t serial_size () const override;
 
 private:
   const gsi::ArgType *mp_ainner;
@@ -187,9 +187,9 @@ class PythonBasedMapAdaptorIterator
 public:
   PythonBasedMapAdaptorIterator (const PythonPtr &hash, const gsi::ArgType *ainner, const gsi::ArgType *ainner_k);
 
-  virtual void get (gsi::SerialArgs &w, tl::Heap &heap) const;
-  virtual bool at_end () const;
-  virtual void inc ();
+  void get (gsi::SerialArgs &w, tl::Heap &heap) const override;
+  bool at_end () const override;
+  void inc () override;
 
 private:
   const gsi::ArgType *mp_ainner, *mp_ainner_k;
@@ -208,11 +208,11 @@ class PythonBasedMapAdaptor
 public:
   PythonBasedMapAdaptor (const PythonPtr &hash, const gsi::ArgType *ainner, const gsi::ArgType *ainner_k);
 
-  virtual gsi::MapAdaptorIterator *create_iterator () const;
-  virtual void insert (gsi::SerialArgs &r, tl::Heap &heap);
-  virtual void clear ();
-  virtual size_t size () const;
-  virtual size_t serial_size () const;
+  gsi::MapAdaptorIterator *create_iterator () const override;
+  void insert (gsi::SerialArgs &r, tl::Heap &heap) override;
+  void clear () override;
+  size_t size () const override;
+  size_t serial_size () const override;
 
 private:
   const gsi::ArgType *mp_ainner, *mp_ainner_k;

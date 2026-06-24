@@ -152,7 +152,7 @@ public:
   }
 
 protected:
-  void property_changed ()
+  void property_changed () override
   {
     if (mp_view && id () >= 0) {
       replace_annotation_base (mp_view.get (), id (), *this);

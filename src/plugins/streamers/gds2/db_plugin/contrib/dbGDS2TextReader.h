@@ -62,15 +62,15 @@ public:
   /**
    *  @brief Destructor
    */
-  ~GDS2ReaderText();
+  ~GDS2ReaderText() override;
 
   /**
    *  @brief Format
    */
-  const char *format () const { return "GDS2Text"; }
+  const char *format () const override { return "GDS2Text"; }
 
 protected:
-  virtual void init (const LoadLayoutOptions &options);
+  void init (const LoadLayoutOptions &options) override;
 
 private:
   tl::TextInputStream sStream;
@@ -81,18 +81,18 @@ private:
   tl::Extractor reader;
   std::vector<GDS2XY> xyData;
 
-  virtual std::string path () const;
-  const char *get_string ();
-  void get_string (std::string &s) const;
-  int get_int ();
-  short get_short ();
-  unsigned short get_ushort ();
-  double get_double();
-  short get_record();
-  void unget_record (short rec_id);
-  void get_time (unsigned int *mod_time, unsigned int *access_time);
-  GDS2XY *get_xy_data (unsigned int &xy_length);
-  void progress_checkpoint ();
+  std::string path () const override;
+  const char *get_string () override;
+  void get_string (std::string &s) const override;
+  int get_int () override;
+  short get_short () override;
+  unsigned short get_ushort () override;
+  double get_double() override;
+  short get_record() override;
+  void unget_record (short rec_id) override;
+  void get_time (unsigned int *mod_time, unsigned int *access_time) override;
+  GDS2XY *get_xy_data (unsigned int &xy_length) override;
+  void progress_checkpoint () override;
   short siExtractData(std::string &sInput, std::string &sToken, std::string &sArguments);
 
   /**
@@ -100,8 +100,8 @@ private:
    */
   void vConvertToXY(const std::string &_sArg);
 
-  void error (const std::string &txt);
-  void warn (const std::string &txt, int warn_level = 1);
+  void error (const std::string &txt) override;
+  void warn (const std::string &txt, int warn_level = 1) override;
 };
 
 }

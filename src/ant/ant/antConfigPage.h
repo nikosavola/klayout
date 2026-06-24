@@ -49,10 +49,10 @@ class ConfigPage
 
 public:
   ConfigPage (QWidget *parent);
-  ~ConfigPage ();
+  ~ConfigPage () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::RulerConfigPage *mp_ui;
@@ -68,10 +68,10 @@ class ConfigPage2
 
 public:
   ConfigPage2 (QWidget *parent);
-  ~ConfigPage2 ();
+  ~ConfigPage2 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::RulerConfigPage2 *mp_ui;
@@ -87,10 +87,10 @@ class ConfigPage3
 
 public:
   ConfigPage3 (QWidget *parent);
-  ~ConfigPage3 ();
+  ~ConfigPage3 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::RulerConfigPage3 *mp_ui;
@@ -106,10 +106,10 @@ class ConfigPage4
 
 public:
   ConfigPage4 (QWidget *parent);
-  ~ConfigPage4 ();
+  ~ConfigPage4 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 public slots:
   void add_clicked ();

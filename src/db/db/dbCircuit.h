@@ -131,7 +131,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~Circuit ();
+  ~Circuit () override;
 
   /**
    *  @brief Assignment

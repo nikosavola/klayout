@@ -113,7 +113,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~MainWindow ();
+  ~MainWindow () override;
 
   /**
    *  @brief Gets the dispatcher interface
@@ -370,12 +370,12 @@ public:
   /**
    *  @brief Implementation of the Plugin interface
    */
-  bool configure (const std::string &name, const std::string &value);
+  bool configure (const std::string &name, const std::string &value) override;
 
   /**
    *  @brief Implementation of the Plugin interface
    */
-  void config_finalize ();
+  void config_finalize () override;
 
   /**
    *  @brief Tell, if exit was called
@@ -527,7 +527,7 @@ public:
   /**
    *  @brief Handles a generic menu request
    */
-  void menu_activated (const std::string &symbol);
+  void menu_activated (const std::string &symbol) override;
 
   /**
    *  @brief Gets the available menu symbols
@@ -592,12 +592,12 @@ public:
   /**
    *  @brief Reimplementation of the dragEnterEvent event handler
    */
-  void dragEnterEvent(QDragEnterEvent *event);
+  void dragEnterEvent(QDragEnterEvent *event) override;
 
   /**
    *  @brief Reimplementation of the dropEvent event handler
    */
-  void dropEvent(QDropEvent *event);
+  void dropEvent(QDropEvent *event) override;
 
   /**
    *  @brief An event indicating that the current view has changed
@@ -660,7 +660,7 @@ public slots:
    *
    *  @param The index of the mode to select
    */
-  void select_mode (int m);
+  void select_mode (int m) override;
 
   void update_action_states ();
   void cancel ();
@@ -718,7 +718,7 @@ protected:
   void do_update_menu ();
   void do_update_grids ();
   void do_update_mru_menus ();
-  bool eventFilter (QObject *watched, QEvent *event);
+  bool eventFilter (QObject *watched, QEvent *event) override;
 
 private:
   lay::Dispatcher m_dispatcher;
@@ -801,8 +801,8 @@ private:
 
   void init_menu ();
 
-  void closeEvent (QCloseEvent *event);
-  void resizeEvent (QResizeEvent *event);
+  void closeEvent (QCloseEvent *event) override;
+  void resizeEvent (QResizeEvent *event) override;
 
   void cm_navigator_freeze ();
   void cm_navigator_close ();
@@ -873,8 +873,8 @@ private:
   void update_dock_widget_state ();
   void read_dock_widget_state ();
 
-  void plugin_registered (lay::PluginDeclaration *cls);
-  void plugin_removed (lay::PluginDeclaration *cls);
+  void plugin_registered (lay::PluginDeclaration *cls) override;
+  void plugin_removed (lay::PluginDeclaration *cls) override;
 
   void libraries_changed ();
 };

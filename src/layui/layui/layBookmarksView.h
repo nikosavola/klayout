@@ -51,7 +51,7 @@ Q_OBJECT
 
 public:
   BookmarksView (lay::LayoutViewBase *view, QWidget *parent, const char *name);
-  ~BookmarksView ();
+  ~BookmarksView () override;
 
   void set_background_color (tl::Color c);
   void set_text_color (tl::Color c);

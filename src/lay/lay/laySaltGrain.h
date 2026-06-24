@@ -78,7 +78,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~SaltGrain () { }
+  ~SaltGrain () override { }
 
   /**
    *  @brief Equality

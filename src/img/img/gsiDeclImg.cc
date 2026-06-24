@@ -392,7 +392,7 @@ public:
   }
 
 protected:
-  void property_changed ()
+  void property_changed () override
   {
     //  NOTE: property changes are not reflected immediately since they may be
     //  inefficient. Hence we delay their execution.
@@ -1383,7 +1383,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void begin (size_t nx, size_t ny, const db::DPoint &p0, double dx, double dy, const db::DBox & /*frame*/)
+  void begin (size_t nx, size_t ny, const db::DPoint &p0, double dx, double dy, const db::DBox & /*frame*/) override
   {
     if (mp_image) {
       db::Matrix3d m = db::Matrix3d::disp ((p0 - db::DPoint ()) + db::DVector (nx * dx * 0.5, ny * dy * 0.5)) * db::Matrix3d::mag (dx, dy);
@@ -1391,7 +1391,7 @@ public:
     }
   }
 
-  virtual void put (size_t ix, size_t iy, const db::Box & /*tile*/, size_t  /*id*/, const tl::Variant &obj, double /*dbu*/, const db::ICplxTrans & /*trans*/, bool /*clip*/) 
+  void put (size_t ix, size_t iy, const db::Box & /*tile*/, size_t  /*id*/, const tl::Variant &obj, double /*dbu*/, const db::ICplxTrans & /*trans*/, bool /*clip*/) override 
   {
     if (mp_image) {
       mp_image->set_pixel (ix, iy, obj.to_double ());

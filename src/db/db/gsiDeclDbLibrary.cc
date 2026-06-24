@@ -122,7 +122,7 @@ public:
     : gsi::Class<Base> (base, module, name, methods, description)
   { }
 
-  virtual void destroy (void *p) const
+  void destroy (void *p) const override
   {
     Base *lib = reinterpret_cast<Base *> (p);
     destroy_lib (lib);
@@ -138,7 +138,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual std::string reload ()
+  std::string reload () override
   {
     if (cb_reload.can_issue ()) {
       return cb_reload.issue<db::Library, std::string> (&db::Library::reload);
@@ -590,7 +590,7 @@ public:
     return std::vector<db::LayerProperties> ();
   }
 
-  virtual std::vector<db::PCellLayerDeclaration> get_layer_declarations (const db::pcell_parameters_type &parameters) const
+  std::vector<db::PCellLayerDeclaration> get_layer_declarations (const db::pcell_parameters_type &parameters) const override
   {
     std::vector<db::LayerProperties> lp;
     if (cb_get_layer_declarations.can_issue ()) {
@@ -612,7 +612,7 @@ public:
     return db::PCellDeclaration::get_parameter_declarations ();
   }
 
-  virtual std::vector<db::PCellParameterDeclaration> get_parameter_declarations () const
+  std::vector<db::PCellParameterDeclaration> get_parameter_declarations () const override
   {
     if (cb_get_parameter_declarations.can_issue ()) {
       return cb_get_parameter_declarations.issue<db::PCellDeclaration, std::vector<db::PCellParameterDeclaration> > (&db::PCellDeclaration::get_parameter_declarations);
@@ -627,7 +627,7 @@ public:
     return input;
   }
 
-  virtual void coerce_parameters (const db::Layout &layout, db::pcell_parameters_type &parameters) const
+  void coerce_parameters (const db::Layout &layout, db::pcell_parameters_type &parameters) const override
   {
     db::pcell_parameters_type output;
     if (cb_coerce_parameters.can_issue ()) {
@@ -645,7 +645,7 @@ public:
     db::PCellDeclaration::callback (layout, name, states);
   }
 
-  virtual void callback (const db::Layout &layout, const std::string &name, db::ParameterStates &states) const
+  void callback (const db::Layout &layout, const std::string &name, db::ParameterStates &states) const override
   {
     if (cb_callback.can_issue ()) {
       cb_callback.issue<db::PCellDeclaration, const db::Layout &, const std::string &, db::ParameterStates &> (&db::PCellDeclaration::callback, layout, name, states);
@@ -659,7 +659,7 @@ public:
     return db::PCellDeclaration::produce (layout, layer_ids, parameters, cell);
   }
 
-  virtual void produce (const db::Layout &layout, const std::vector<unsigned int> &layer_ids, const db::pcell_parameters_type &parameters, db::Cell &cell) const
+  void produce (const db::Layout &layout, const std::vector<unsigned int> &layer_ids, const db::pcell_parameters_type &parameters, db::Cell &cell) const override
   {
     if (cb_produce.can_issue ()) {
       cb_produce.issue<db::PCellDeclaration, const db::Layout &, const std::vector<unsigned int> &, const db::pcell_parameters_type &, db::Cell &> (&db::PCellDeclaration::produce, layout, layer_ids, parameters, cell);
@@ -673,7 +673,7 @@ public:
     return db::PCellDeclaration::can_create_from_shape (layout, shape, layer);
   }
 
-  virtual bool can_create_from_shape (const db::Layout &layout, const db::Shape &shape, unsigned int layer) const
+  bool can_create_from_shape (const db::Layout &layout, const db::Shape &shape, unsigned int layer) const override
   {
     if (cb_can_create_from_shape.can_issue ()) {
       return cb_can_create_from_shape.issue<db::PCellDeclaration, bool, const db::Layout &, const db::Shape &, unsigned int> (&db::PCellDeclaration::can_create_from_shape, layout, shape, layer);
@@ -687,7 +687,7 @@ public:
     return db::PCellDeclaration::parameters_from_shape (layout, shape, layer);
   }
 
-  virtual db::pcell_parameters_type parameters_from_shape (const db::Layout &layout, const db::Shape &shape, unsigned int layer) const
+  db::pcell_parameters_type parameters_from_shape (const db::Layout &layout, const db::Shape &shape, unsigned int layer) const override
   {
     if (cb_parameters_from_shape.can_issue ()) {
       return cb_parameters_from_shape.issue<db::PCellDeclaration, db::pcell_parameters_type, const db::Layout &, const db::Shape &, unsigned int> (&db::PCellDeclaration::parameters_from_shape, layout, shape, layer);
@@ -701,7 +701,7 @@ public:
     return db::PCellDeclaration::transformation_from_shape (layout, shape, layer);
   }
 
-  virtual db::Trans transformation_from_shape (const db::Layout &layout, const db::Shape &shape, unsigned int layer) const
+  db::Trans transformation_from_shape (const db::Layout &layout, const db::Shape &shape, unsigned int layer) const override
   {
     if (cb_transformation_from_shape.can_issue ()) {
       return cb_transformation_from_shape.issue<db::PCellDeclaration, db::Trans, const db::Layout &, const db::Shape &, unsigned int> (&db::PCellDeclaration::transformation_from_shape, layout, shape, layer);
@@ -715,7 +715,7 @@ public:
     return db::PCellDeclaration::wants_lazy_evaluation ();
   }
 
-  virtual bool wants_lazy_evaluation () const
+  bool wants_lazy_evaluation () const override
   {
     if (cb_wants_lazy_evaluation.can_issue ()) {
       return cb_wants_lazy_evaluation.issue<db::PCellDeclaration, bool> (&db::PCellDeclaration::wants_lazy_evaluation);
@@ -729,7 +729,7 @@ public:
     return db::PCellDeclaration::get_description ();
   }
 
-  virtual std::string get_description () const
+  std::string get_description () const override
   {
     if (cb_get_description.can_issue ()) {
       return cb_get_description.issue<db::PCellDeclaration, std::string> (&db::PCellDeclaration::get_description);
@@ -743,7 +743,7 @@ public:
     return db::PCellDeclaration::via_types ();
   }
 
-  virtual std::vector<db::ViaType> via_types () const
+  std::vector<db::ViaType> via_types () const override
   {
     if (cb_via_types.can_issue ()) {
       return cb_via_types.issue<db::PCellDeclaration, std::vector<db::ViaType>> (&db::PCellDeclaration::via_types);
@@ -757,7 +757,7 @@ public:
     return db::PCellDeclaration::get_display_name (parameters);
   }
 
-  virtual std::string get_display_name (const db::pcell_parameters_type &parameters) const
+  std::string get_display_name (const db::pcell_parameters_type &parameters) const override
   {
     if (cb_get_display_name.can_issue ()) {
       return cb_get_display_name.issue<db::PCellDeclaration, std::string, const db::pcell_parameters_type &> (&db::PCellDeclaration::get_display_name, parameters);
@@ -771,7 +771,7 @@ public:
     return db::PCellDeclaration::get_cell_name (parameters);
   }
 
-  virtual std::string get_cell_name (const db::pcell_parameters_type &parameters) const
+  std::string get_cell_name (const db::pcell_parameters_type &parameters) const override
   {
     if (cb_get_cell_name.can_issue ()) {
       return cb_get_cell_name.issue<db::PCellDeclaration, std::string, const db::pcell_parameters_type &> (&db::PCellDeclaration::get_cell_name, parameters);

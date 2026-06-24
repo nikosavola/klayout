@@ -55,7 +55,7 @@ public:
     return false;
   }
 
-  virtual bool selected (const db::EdgePair &edge_pair, db::properties_id_type prop_id) const
+  bool selected (const db::EdgePair &edge_pair, db::properties_id_type prop_id) const override
   {
     if (f_selected.can_issue ()) {
       return f_selected.issue<EdgePairFilterImpl, bool, const db::EdgePairWithProperties &> (&EdgePairFilterImpl::issue_selected, db::EdgePairWithProperties (edge_pair, prop_id));
@@ -548,12 +548,12 @@ public:
   }
 
   //  not needed, but mutes
-  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const
+  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const override
   {
     db::RelativeExtents::process (poly, result);
   }
 
-  void process (const db::EdgePairWithProperties &ep, std::vector<db::PolygonWithProperties> &result) const
+  void process (const db::EdgePairWithProperties &ep, std::vector<db::PolygonWithProperties> &result) const override
   {
     db::RelativeExtents::process (db::Polygon (ep.bbox ()), result);
   }
@@ -570,12 +570,12 @@ public:
     //  .. nothing yet ..
   }
 
-  void process (const db::PolygonWithProperties &poly, std::vector<db::EdgeWithProperties> &result) const
+  void process (const db::PolygonWithProperties &poly, std::vector<db::EdgeWithProperties> &result) const override
   {
     db::RelativeExtentsAsEdges::process (poly, result);
   }
 
-  void process (const db::EdgePairWithProperties &ep, std::vector<db::EdgeWithProperties> &result) const
+  void process (const db::EdgePairWithProperties &ep, std::vector<db::EdgeWithProperties> &result) const override
   {
     db::RelativeExtentsAsEdges::process (db::Polygon (ep.bbox ()), result);
   }

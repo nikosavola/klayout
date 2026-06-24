@@ -89,8 +89,8 @@ Q_OBJECT
 public:
   LEFDEFReaderOptionsEditor (QWidget *parent);
 
-  void commit (db::FormatSpecificReaderOptions *options, const db::Technology *tech);
-  void setup (const db::FormatSpecificReaderOptions *options, const db::Technology *tech);
+  void commit (db::FormatSpecificReaderOptions *options, const db::Technology *tech) override;
+  void setup (const db::FormatSpecificReaderOptions *options, const db::Technology *tech) override;
 
 private slots:
   void checkbox_changed ();

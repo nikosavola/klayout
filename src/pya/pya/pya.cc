@@ -133,12 +133,12 @@ public:
     }
   }
 
-  virtual std::vector<tl::BacktraceElement> stack_trace () const
+  std::vector<tl::BacktraceElement> stack_trace () const override
   {
     return m_stack_trace;
   }
 
-  virtual size_t scope_index () const
+  size_t scope_index () const override
   {
     static int consider_scope = -1;
 
@@ -160,7 +160,7 @@ public:
     return 0;
   }
 
-  virtual int stack_depth () const
+  int stack_depth () const override
   {
     return int (m_stack_trace.size ());
   }

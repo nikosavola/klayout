@@ -46,71 +46,71 @@ public:
   DeepEdgePairs (const DeepEdgePairs &other);
   DeepEdgePairs (const DeepLayer &dl);
 
-  virtual ~DeepEdgePairs ();
+  ~DeepEdgePairs () override;
 
-  EdgePairsDelegate *clone () const;
+  EdgePairsDelegate *clone () const override;
 
-  virtual void do_insert (const db::EdgePair &edge_pair, db::properties_id_type prop_id);
+  void do_insert (const db::EdgePair &edge_pair, db::properties_id_type prop_id) override;
 
-  virtual void do_transform (const db::Trans &t);
-  virtual void do_transform (const db::ICplxTrans &t);
-  virtual void do_transform (const db::IMatrix2d &t);
-  virtual void do_transform (const db::IMatrix3d &t);
+  void do_transform (const db::Trans &t) override;
+  void do_transform (const db::ICplxTrans &t) override;
+  void do_transform (const db::IMatrix2d &t) override;
+  void do_transform (const db::IMatrix3d &t) override;
 
-  virtual void flatten ();
+  void flatten () override;
 
-  virtual void reserve (size_t n);
+  void reserve (size_t n) override;
 
-  virtual EdgePairsIteratorDelegate *begin () const;
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const;
+  EdgePairsIteratorDelegate *begin () const override;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const override;
 
-  virtual size_t count () const;
-  virtual size_t hier_count () const;
-  virtual std::string to_string (size_t) const;
-  virtual Box bbox () const;
-  virtual bool empty () const;
-  virtual const db::EdgePair *nth (size_t n) const;
-  virtual db::properties_id_type nth_prop_id (size_t n) const;
-  virtual bool has_valid_edge_pairs () const;
-  virtual const db::RecursiveShapeIterator *iter () const;
-  virtual void apply_property_translator (const db::PropertiesTranslator &pt);
+  size_t count () const override;
+  size_t hier_count () const override;
+  std::string to_string (size_t) const override;
+  Box bbox () const override;
+  bool empty () const override;
+  const db::EdgePair *nth (size_t n) const override;
+  db::properties_id_type nth_prop_id (size_t n) const override;
+  bool has_valid_edge_pairs () const override;
+  const db::RecursiveShapeIterator *iter () const override;
+  void apply_property_translator (const db::PropertiesTranslator &pt) override;
 
-  virtual EdgePairsDelegate *filter_in_place (const EdgePairFilterBase &filter);
-  virtual EdgePairsDelegate *filtered (const EdgePairFilterBase &) const;
-  virtual std::pair<EdgePairsDelegate *, EdgePairsDelegate *> filtered_pair (const EdgePairFilterBase &filter) const;
-  virtual EdgePairsDelegate *process_in_place (const EdgePairProcessorBase &);
-  virtual EdgePairsDelegate *processed (const EdgePairProcessorBase &) const;
-  virtual RegionDelegate *processed_to_polygons (const EdgePairToPolygonProcessorBase &filter) const;
-  virtual EdgesDelegate *processed_to_edges (const EdgePairToEdgeProcessorBase &filter) const;
+  EdgePairsDelegate *filter_in_place (const EdgePairFilterBase &filter) override;
+  EdgePairsDelegate *filtered (const EdgePairFilterBase &) const override;
+  std::pair<EdgePairsDelegate *, EdgePairsDelegate *> filtered_pair (const EdgePairFilterBase &filter) const override;
+  EdgePairsDelegate *process_in_place (const EdgePairProcessorBase &) override;
+  EdgePairsDelegate *processed (const EdgePairProcessorBase &) const override;
+  RegionDelegate *processed_to_polygons (const EdgePairToPolygonProcessorBase &filter) const override;
+  EdgesDelegate *processed_to_edges (const EdgePairToEdgeProcessorBase &filter) const override;
 
-  virtual EdgePairsDelegate *add_in_place (const EdgePairs &other);
-  virtual EdgePairsDelegate *add (const EdgePairs &other) const;
+  EdgePairsDelegate *add_in_place (const EdgePairs &other) override;
+  EdgePairsDelegate *add (const EdgePairs &other) const override;
 
-  virtual RegionDelegate *polygons (db::Coord e) const;
-  virtual EdgesDelegate *edges () const;
-  virtual EdgesDelegate *first_edges () const;
-  virtual EdgesDelegate *second_edges () const;
+  RegionDelegate *polygons (db::Coord e) const override;
+  EdgesDelegate *edges () const override;
+  EdgesDelegate *first_edges () const override;
+  EdgesDelegate *second_edges () const override;
 
-  virtual EdgePairsDelegate *in (const EdgePairs &, bool) const;
+  EdgePairsDelegate *in (const EdgePairs &, bool) const override;
 
-  virtual bool equals (const EdgePairs &other) const;
-  virtual bool less (const EdgePairs &other) const;
+  bool equals (const EdgePairs &other) const override;
+  bool less (const EdgePairs &other) const override;
 
-  virtual void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const;
-  virtual void insert_into_as_polygons (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer, db::Coord enl) const;
+  void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const override;
+  void insert_into_as_polygons (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer, db::Coord enl) const override;
 
-  virtual DeepShapeCollectionDelegateBase *deep ()
+  DeepShapeCollectionDelegateBase *deep () override
   {
     return this;
   }
 
 protected:
-  virtual EdgesDelegate *pull_generic (const Edges &other) const;
-  virtual RegionDelegate *pull_generic (const Region &other) const;
-  virtual EdgePairsDelegate *selected_interacting_generic (const Edges &other, bool inverse, size_t min_count, size_t max_count) const;
-  virtual std::pair<EdgePairsDelegate *, EdgePairsDelegate *> selected_interacting_pair_generic (const Edges &other, size_t min_count, size_t max_count) const;
-  virtual EdgePairsDelegate *selected_interacting_generic (const Region &other, EdgePairInteractionMode mode, bool inverse, size_t min_count, size_t max_count) const;
-  virtual std::pair<EdgePairsDelegate *, EdgePairsDelegate *> selected_interacting_pair_generic (const Region &other, EdgePairInteractionMode mode, size_t min_count, size_t max_count) const;
+  EdgesDelegate *pull_generic (const Edges &other) const override;
+  RegionDelegate *pull_generic (const Region &other) const override;
+  EdgePairsDelegate *selected_interacting_generic (const Edges &other, bool inverse, size_t min_count, size_t max_count) const override;
+  std::pair<EdgePairsDelegate *, EdgePairsDelegate *> selected_interacting_pair_generic (const Edges &other, size_t min_count, size_t max_count) const override;
+  EdgePairsDelegate *selected_interacting_generic (const Region &other, EdgePairInteractionMode mode, bool inverse, size_t min_count, size_t max_count) const override;
+  std::pair<EdgePairsDelegate *, EdgePairsDelegate *> selected_interacting_pair_generic (const Region &other, EdgePairInteractionMode mode, size_t min_count, size_t max_count) const override;
 
 private:
   DeepEdgePairs &operator= (const DeepEdgePairs &other);

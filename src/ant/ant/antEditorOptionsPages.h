@@ -47,14 +47,14 @@ Q_OBJECT
 
 public:
   ToolkitWidget (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher);
-  ~ToolkitWidget ();
+  ~ToolkitWidget () override;
 
-  virtual std::string title () const;
-  virtual const char *name () const;
-  virtual int order () const { return 0; }
-  virtual void configure (const std::string &name, const std::string &value);
-  virtual void commit (lay::Dispatcher *root);
-  virtual void deactivated ();
+  std::string title () const override;
+  const char *name () const override;
+  int order () const override { return 0; }
+  void configure (const std::string &name, const std::string &value) override;
+  void commit (lay::Dispatcher *root) override;
+  void deactivated () override;
 
 private:
   QHBoxLayout *mp_layout;

@@ -886,7 +886,7 @@ public:
     : mp_target (target), mp_id (id)
   { }
 
-  virtual void put (const db::Polygon &poly)
+  void put (const db::Polygon &poly) override
   {
     mp_target->insert (poly, (*mp_id)++);
   }

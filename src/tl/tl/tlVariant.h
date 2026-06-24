@@ -127,7 +127,7 @@ public:
     return VariantUserClassBase::instance (typeid (T), is_const);
   }
 
-  const tl::VariantUserClassBase *change_constness (bool constness) const
+  const tl::VariantUserClassBase *change_constness (bool constness) const override
   {
     return instance (constness);
   }

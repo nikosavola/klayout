@@ -250,7 +250,7 @@ namespace {
       : mp_os (&os)
     { }
 
-    virtual void put (const db::SimplePolygon &polygon)
+    void put (const db::SimplePolygon &polygon) override
     {
       db::Box b = polygon.box (); // NOLINT(performance-unnecessary-copy-initialization)
       if (b.empty () || b.height () == 0 || b.width () == 0) {

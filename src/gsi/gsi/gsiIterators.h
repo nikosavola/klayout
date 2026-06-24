@@ -121,22 +121,22 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void get (SerialArgs &w) const
+  void get (SerialArgs &w) const override
   {
     w.write<V &> (*m_b);
   }
   
-  virtual size_t serial_size () const 
+  size_t serial_size () const override 
   {
     return gsi::type_traits<V &>::serial_size ();
   }
 
-  virtual bool at_end () const 
+  bool at_end () const override 
   {
     return m_b == m_e;
   }
 
-  virtual void inc () 
+  void inc () override 
   {
     ++m_b;
   }
@@ -159,22 +159,22 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void get (SerialArgs &w) const
+  void get (SerialArgs &w) const override
   {
     w.write<const V &> (*m_b);
   }
 
-  virtual size_t serial_size () const 
+  size_t serial_size () const override 
   {
     return gsi::type_traits<const V &>::serial_size ();
   }
 
-  virtual bool at_end () const 
+  bool at_end () const override 
   {
     return m_b == m_e;
   }
 
-  virtual void inc () 
+  void inc () override 
   {
     ++m_b;
   }
@@ -200,22 +200,22 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void get (SerialArgs &w) const
+  void get (SerialArgs &w) const override
   {
     w.write<reference> (*m_b);
   }
 
-  virtual size_t serial_size () const 
+  size_t serial_size () const override 
   {
     return gsi::type_traits<reference>::serial_size ();
   }
 
-  virtual bool at_end () const 
+  bool at_end () const override 
   {
     return m_b == m_e;
   }
 
-  virtual void inc () 
+  void inc () override 
   {
     ++m_b;
   }
@@ -241,22 +241,22 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void get (SerialArgs &w) const
+  void get (SerialArgs &w) const override
   {
     w.write<reference> (*m_i);
   }
 
-  virtual size_t serial_size () const 
+  size_t serial_size () const override 
   {
     return gsi::type_traits<reference>::serial_size ();
   }
 
-  virtual bool at_end () const 
+  bool at_end () const override 
   {
     return m_i.at_end ();
   }
 
-  virtual void inc () 
+  void inc () override 
   {
     ++m_i;
   }

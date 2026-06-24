@@ -43,10 +43,10 @@ Q_OBJECT
 
 public:
   CIFReaderOptionPage (QWidget *parent);
-  ~CIFReaderOptionPage ();
+  ~CIFReaderOptionPage () override;
 
-  void setup (const db::FormatSpecificReaderOptions *options, const db::Technology *tech);
-  void commit (db::FormatSpecificReaderOptions *options, const db::Technology *tech);
+  void setup (const db::FormatSpecificReaderOptions *options, const db::Technology *tech) override;
+  void commit (db::FormatSpecificReaderOptions *options, const db::Technology *tech) override;
 
 private:
   Ui::CIFReaderOptionPage *mp_ui;

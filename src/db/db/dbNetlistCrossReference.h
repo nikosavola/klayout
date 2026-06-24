@@ -46,7 +46,7 @@ class DB_PUBLIC NetlistCrossReference
 {
 public:
   NetlistCrossReference ();
-  ~NetlistCrossReference ();
+  ~NetlistCrossReference () override;
 
   enum Status {
     None = 0,
@@ -155,96 +155,96 @@ public:
   void gen_subcircuits (const db::SubCircuit *a, const db::SubCircuit *b, Status status, const std::string &msg);
 
   //  db::NetlistCompareLogger interface
-  virtual void begin_netlist (const db::Netlist *a, const db::Netlist *b)
+  void begin_netlist (const db::Netlist *a, const db::Netlist *b) override
   {
     gen_begin_netlist (a, b);
   }
 
-  virtual void end_netlist (const db::Netlist *a, const db::Netlist *b)
+  void end_netlist (const db::Netlist *a, const db::Netlist *b) override
   {
     sort_netlist ();
     gen_end_netlist (a, b);
   }
 
-  virtual void begin_circuit (const db::Circuit *a, const db::Circuit *b)
+  void begin_circuit (const db::Circuit *a, const db::Circuit *b) override
   {
     gen_begin_circuit (a, b);
   }
 
-  virtual void end_circuit (const db::Circuit *a, const db::Circuit *b, bool matching, const std::string &msg)
+  void end_circuit (const db::Circuit *a, const db::Circuit *b, bool matching, const std::string &msg) override
   {
     sort_circuit ();
     gen_end_circuit (a, b, matching ? Match : NoMatch, msg);
   }
 
-  virtual void circuit_skipped (const db::Circuit *a, const db::Circuit *b, const std::string &msg)
+  void circuit_skipped (const db::Circuit *a, const db::Circuit *b, const std::string &msg) override
   {
     gen_begin_circuit (a, b);
     gen_end_circuit (a, b, Skipped, msg);
   }
 
-  virtual void circuit_mismatch (const db::Circuit *a, const db::Circuit *b, const std::string &msg)
+  void circuit_mismatch (const db::Circuit *a, const db::Circuit *b, const std::string &msg) override
   {
     gen_begin_circuit (a, b);
     gen_end_circuit (a, b, Mismatch, msg);
   }
 
-  virtual void log_entry (Severity severity, const std::string &msg)
+  void log_entry (Severity severity, const std::string &msg) override
   {
     gen_log_entry (severity, msg);
   }
 
-  virtual void match_nets (const db::Net *a, const db::Net *b)
+  void match_nets (const db::Net *a, const db::Net *b) override
   {
     gen_nets (a, b, Match, std::string ());
   }
 
-  virtual void match_ambiguous_nets (const db::Net *a, const db::Net *b, const std::string &msg)
+  void match_ambiguous_nets (const db::Net *a, const db::Net *b, const std::string &msg) override
   {
     gen_nets (a, b, MatchWithWarning, msg);
   }
 
-  virtual void net_mismatch (const db::Net *a, const db::Net *b, const std::string &msg)
+  void net_mismatch (const db::Net *a, const db::Net *b, const std::string &msg) override
   {
     gen_nets (a, b, Mismatch, msg);
   }
 
-  virtual void match_devices (const db::Device *a, const db::Device *b)
+  void match_devices (const db::Device *a, const db::Device *b) override
   {
     gen_devices (a, b, Match, std::string ());
   }
 
-  virtual void match_devices_with_different_parameters (const db::Device *a, const db::Device *b)
+  void match_devices_with_different_parameters (const db::Device *a, const db::Device *b) override
   {
     gen_devices (a, b, MatchWithWarning, std::string ());
   }
 
-  virtual void match_devices_with_different_device_classes (const db::Device *a, const db::Device *b)
+  void match_devices_with_different_device_classes (const db::Device *a, const db::Device *b) override
   {
     gen_devices (a, b, MatchWithWarning, std::string ());
   }
 
-  virtual void device_mismatch (const db::Device *a, const db::Device *b, const std::string &msg)
+  void device_mismatch (const db::Device *a, const db::Device *b, const std::string &msg) override
   {
     gen_devices (a, b, Mismatch, msg);
   }
 
-  virtual void match_pins (const db::Pin *a, const db::Pin *b)
+  void match_pins (const db::Pin *a, const db::Pin *b) override
   {
     gen_pins (a, b, Match, std::string ());
   }
 
-  virtual void pin_mismatch (const db::Pin *a, const db::Pin *b, const std::string &msg)
+  void pin_mismatch (const db::Pin *a, const db::Pin *b, const std::string &msg) override
   {
     gen_pins (a, b, Mismatch, msg);
   }
 
-  virtual void match_subcircuits (const db::SubCircuit *a, const db::SubCircuit *b)
+  void match_subcircuits (const db::SubCircuit *a, const db::SubCircuit *b) override
   {
     gen_subcircuits (a, b, Match, std::string ());
   }
 
-  virtual void subcircuit_mismatch (const db::SubCircuit *a, const db::SubCircuit *b, const std::string &msg)
+  void subcircuit_mismatch (const db::SubCircuit *a, const db::SubCircuit *b, const std::string &msg) override
   {
     gen_subcircuits (a, b, Mismatch, msg);
   }

@@ -74,13 +74,13 @@ Q_OBJECT
 
 public:
   LCPTreeWidget (QWidget *parent, lay::LayerTreeModel *model, const char *name);
-  ~LCPTreeWidget ();
+  ~LCPTreeWidget () override;
 
-  virtual QSize sizeHint () const;
+  QSize sizeHint () const override;
 
   //  overload the double click event, because the default behaviour is
   //  expanding/collapsing the items
-  virtual void mouseDoubleClickEvent (QMouseEvent *event);
+  void mouseDoubleClickEvent (QMouseEvent *event) override;
 
   void set_selection (const std::vector<lay::LayerPropertiesConstIterator> &sel);
   void set_current (const lay::LayerPropertiesConstIterator &sel);
@@ -92,9 +92,9 @@ signals:
   void search_triggered (const QString &t);
 
 protected:
-  virtual void keyPressEvent (QKeyEvent *event);
-  virtual bool event (QEvent *event);
-  virtual bool focusNextPrevChild (bool next);
+  void keyPressEvent (QKeyEvent *event) override;
+  bool event (QEvent *event) override;
+  bool focusNextPrevChild (bool next) override;
 
 private:
   lay::LayerTreeModel *mp_model;
@@ -133,7 +133,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~LayerControlPanel ();
+  ~LayerControlPanel () override;
 
   /** 
    *  @brief Return true, if the tree view has the focus
@@ -328,12 +328,12 @@ public:
   /**
    *  @brief Implementation of the undo operations
    */
-  virtual void undo (db::Op *op);
+  void undo (db::Op *op) override;
 
   /**
    *  @brief Implementation of the redo operations
    */
-  virtual void redo (db::Op *op);
+  void redo (db::Op *op) override;
 
   using QFrame::setGeometry;
 

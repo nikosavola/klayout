@@ -90,7 +90,7 @@ class DensityMapDialogPluginDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override
   {
     options.push_back (std::make_pair (cfg_density_map_layer_mode, layer_mode_specific));
     options.push_back (std::make_pair (cfg_density_map_region_mode, region_mode_global_bbox));
@@ -101,18 +101,18 @@ public:
     options.push_back (std::make_pair (cfg_density_map_threads, "1"));
   }
 
-  virtual lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
+  lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const override
   {
     return nullptr; //  .. no config page yet ..
   }
 
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     lay::PluginDeclaration::get_menu_entries (menu_entries);
     menu_entries.push_back (lay::menu_item ("density_map::show", "density_map_tool:edit", "tools_menu.post_verification_group", tl::to_string (QObject::tr ("Density Map"))));
   }
  
-  virtual lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *root, lay::LayoutViewBase *view) const
+  lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *root, lay::LayoutViewBase *view) const override
   {
     if (lay::has_gui ()) {
       return new DensityMapDialog (root, view);
@@ -212,7 +212,7 @@ namespace
       //  .. nothing yet ..
     }
 
-    virtual void put (size_t ix, size_t iy, const db::Box &tile, size_t /*id*/, const tl::Variant &obj, double /*dbu*/, const db::ICplxTrans & /*trans*/, bool /*clip*/)
+    void put (size_t ix, size_t iy, const db::Box &tile, size_t /*id*/, const tl::Variant &obj, double /*dbu*/, const db::ICplxTrans & /*trans*/, bool /*clip*/) override
     {
       if (tl::verbosity () >= 30) {
         tl::info << "Density map value: " << ix << "," << iy << " " << tile.to_string () << " -> " << obj.to_string ();

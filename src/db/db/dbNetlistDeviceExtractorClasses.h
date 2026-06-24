@@ -37,7 +37,7 @@ class DB_PUBLIC DeviceClassFactory
 {
 public:
   DeviceClassFactory () { }
-  ~DeviceClassFactory () { }
+  ~DeviceClassFactory () override { }
   virtual db::DeviceClass *create_class () const = 0;
 };
 
@@ -49,7 +49,7 @@ class DB_PUBLIC_TEMPLATE device_class_factory
   : public DeviceClassFactory
 {
 public:
-  virtual db::DeviceClass *create_class () const { return new C (); }
+  db::DeviceClass *create_class () const override { return new C (); }
 };
 
 /**
@@ -104,9 +104,9 @@ class DB_PUBLIC NetlistDeviceExtractorMOS3Transistor
 public:
   NetlistDeviceExtractorMOS3Transistor (const std::string &name, bool strict = false, DeviceClassFactory *factory = nullptr);
 
-  virtual void setup ();
-  virtual db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const;
-  virtual void extract_devices (const std::vector<db::Region> &layer_geometry);
+  void setup () override;
+  db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const override;
+  void extract_devices (const std::vector<db::Region> &layer_geometry) override;
 
   bool is_strict () const
   {
@@ -150,10 +150,10 @@ class DB_PUBLIC NetlistDeviceExtractorMOS4Transistor
 public:
   NetlistDeviceExtractorMOS4Transistor (const std::string &name, bool strict = false, DeviceClassFactory *factory = nullptr);
 
-  virtual void setup ();
+  void setup () override;
 
 private:
-  virtual void modify_device (const db::Polygon &rgate, const std::vector<db::Region> &layer_geometry, db::Device *device);
+  void modify_device (const db::Polygon &rgate, const std::vector<db::Region> &layer_geometry, db::Device *device) override;
 };
 
 /**
@@ -180,9 +180,9 @@ class DB_PUBLIC NetlistDeviceExtractorResistor
 public:
   NetlistDeviceExtractorResistor (const std::string &name, double sheet_rho, DeviceClassFactory *factory = nullptr);
 
-  virtual void setup ();
-  virtual db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const;
-  virtual void extract_devices (const std::vector<db::Region> &layer_geometry);
+  void setup () override;
+  db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const override;
+  void extract_devices (const std::vector<db::Region> &layer_geometry) override;
 
 protected:
   /**
@@ -218,8 +218,8 @@ class DB_PUBLIC NetlistDeviceExtractorResistorWithBulk
 public:
   NetlistDeviceExtractorResistorWithBulk (const std::string &name, double sheet_rho, DeviceClassFactory *factory = nullptr);
 
-  virtual void setup ();
-  virtual void modify_device (const db::Polygon &res, const std::vector<db::Region> & /*layer_geometry*/, db::Device *device);
+  void setup () override;
+  void modify_device (const db::Polygon &res, const std::vector<db::Region> & /*layer_geometry*/, db::Device *device) override;
 };
 
 /**
@@ -245,9 +245,9 @@ class DB_PUBLIC NetlistDeviceExtractorCapacitor
 public:
   NetlistDeviceExtractorCapacitor (const std::string &name, double area_cap, DeviceClassFactory *factory = nullptr);
 
-  virtual void setup ();
-  virtual db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const;
-  virtual void extract_devices (const std::vector<db::Region> &layer_geometry);
+  void setup () override;
+  db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const override;
+  void extract_devices (const std::vector<db::Region> &layer_geometry) override;
 
 protected:
   /**
@@ -283,8 +283,8 @@ class DB_PUBLIC NetlistDeviceExtractorCapacitorWithBulk
 public:
   NetlistDeviceExtractorCapacitorWithBulk (const std::string &name, double cap_area, DeviceClassFactory *factory = nullptr);
 
-  virtual void setup ();
-  virtual void modify_device (const db::Polygon &cap, const std::vector<db::Region> & /*layer_geometry*/, db::Device *device);
+  void setup () override;
+  void modify_device (const db::Polygon &cap, const std::vector<db::Region> & /*layer_geometry*/, db::Device *device) override;
 };
 
 /**
@@ -315,9 +315,9 @@ class DB_PUBLIC NetlistDeviceExtractorBJT3Transistor
 public:
   NetlistDeviceExtractorBJT3Transistor (const std::string &name, DeviceClassFactory *factory = nullptr);
 
-  virtual void setup ();
-  virtual db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const;
-  virtual void extract_devices (const std::vector<db::Region> &layer_geometry);
+  void setup () override;
+  db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const override;
+  void extract_devices (const std::vector<db::Region> &layer_geometry) override;
 
 protected:
   /**
@@ -352,10 +352,10 @@ class DB_PUBLIC NetlistDeviceExtractorBJT4Transistor
 public:
   NetlistDeviceExtractorBJT4Transistor (const std::string &name, DeviceClassFactory *factory = nullptr);
 
-  virtual void setup ();
+  void setup () override;
 
 private:
-  virtual void modify_device (const db::Polygon &emitter, const std::vector<db::Region> &layer_geometry, db::Device *device);
+  void modify_device (const db::Polygon &emitter, const std::vector<db::Region> &layer_geometry, db::Device *device) override;
 };
 
 /**
@@ -380,9 +380,9 @@ class DB_PUBLIC NetlistDeviceExtractorDiode
 public:
   NetlistDeviceExtractorDiode (const std::string &name, DeviceClassFactory *factory = nullptr);
 
-  virtual void setup ();
-  virtual db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const;
-  virtual void extract_devices (const std::vector<db::Region> &layer_geometry);
+  void setup () override;
+  db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const override;
+  void extract_devices (const std::vector<db::Region> &layer_geometry) override;
 
 protected:
   /**

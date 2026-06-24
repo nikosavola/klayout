@@ -93,7 +93,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~EditorOptionsPage ();
+  ~EditorOptionsPage () override;
 
   /**
    *  @brief The title of the page
@@ -391,9 +391,9 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual ~EditorOptionsPageFactory () { }
+  ~EditorOptionsPageFactory () override { }
 
-  virtual lay::EditorOptionsPage *create_page (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher)
+  lay::EditorOptionsPage *create_page (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher) override
   {
     return new T (view, dispatcher);
   }

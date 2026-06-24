@@ -236,9 +236,9 @@ class VariantBasedVectorAdaptorIterator
 public:
   VariantBasedVectorAdaptorIterator (tl::Variant::iterator b, tl::Variant::iterator e, const gsi::ArgType *ainner);
 
-  virtual void get (SerialArgs &w, tl::Heap &heap) const;
-  virtual bool at_end () const;
-  virtual void inc ();
+  void get (SerialArgs &w, tl::Heap &heap) const override;
+  bool at_end () const override;
+  void inc () override;
 
 private:
   tl::Variant::iterator m_b, m_e;
@@ -254,11 +254,11 @@ class VariantBasedVectorAdaptor
 public:
   VariantBasedVectorAdaptor (tl::Variant *var, const gsi::ArgType *ainner);
 
-  virtual VectorAdaptorIterator *create_iterator () const;
-  virtual void push (SerialArgs &r, tl::Heap &heap);
-  virtual void clear ();
-  virtual size_t size () const;
-  virtual size_t serial_size () const;
+  VectorAdaptorIterator *create_iterator () const override;
+  void push (SerialArgs &r, tl::Heap &heap) override;
+  void clear () override;
+  size_t size () const override;
+  size_t serial_size () const override;
 
 private:
   const gsi::ArgType *mp_ainner;
@@ -274,9 +274,9 @@ class VariantBasedMapAdaptorIterator
 public:
   VariantBasedMapAdaptorIterator (tl::Variant::array_iterator b, tl::Variant::array_iterator e, const gsi::ArgType *ainner, const gsi::ArgType *ainner_k);
 
-  virtual void get (SerialArgs &w, tl::Heap &heap) const;
-  virtual bool at_end () const;
-  virtual void inc ();
+  void get (SerialArgs &w, tl::Heap &heap) const override;
+  bool at_end () const override;
+  void inc () override;
 
 private:
   tl::Variant::array_iterator m_b, m_e;
@@ -292,11 +292,11 @@ class VariantBasedMapAdaptor
 public:
   VariantBasedMapAdaptor (tl::Variant *var, const gsi::ArgType *ainner, const gsi::ArgType *ainner_k);
 
-  virtual MapAdaptorIterator *create_iterator () const;
-  virtual void insert (SerialArgs &r, tl::Heap &heap);
-  virtual void clear ();
-  virtual size_t size () const;
-  virtual size_t serial_size () const;
+  MapAdaptorIterator *create_iterator () const override;
+  void insert (SerialArgs &r, tl::Heap &heap) override;
+  void clear () override;
+  size_t size () const override;
+  size_t serial_size () const override;
 
 private:
   const gsi::ArgType *mp_ainner, *mp_ainner_k;

@@ -50,12 +50,12 @@ public:
     // .. nothing yet ..
   }
 
-  lay::StreamReaderOptionsPage *format_specific_options_page (QWidget *parent) const
+  lay::StreamReaderOptionsPage *format_specific_options_page (QWidget *parent) const override
   {
     return new lay::LEFDEFReaderOptionsEditor (parent);
   }
 
-  db::FormatSpecificReaderOptions *create_specific_options () const
+  db::FormatSpecificReaderOptions *create_specific_options () const override
   {
     return new LEFDEFReaderOptions ();
   }

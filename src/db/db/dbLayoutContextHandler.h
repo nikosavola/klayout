@@ -56,17 +56,17 @@ public:
   /**
    *  @brief Provide <..> bindings.
    */
-  virtual tl::Variant eval_bracket (const std::string &content) const;
+  tl::Variant eval_bracket (const std::string &content) const override;
 
   /**
    *  @brief Provide <<..>> bindings.
    */
-  virtual tl::Variant eval_double_bracket (const std::string &content) const;
+  tl::Variant eval_double_bracket (const std::string &content) const override;
 
   /**
    *  @brief Provide a database unit value
    */
-  virtual double dbu () const
+  double dbu () const override
   {
     return mp_layout->dbu ();
   }

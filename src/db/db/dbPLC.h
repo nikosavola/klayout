@@ -561,7 +561,7 @@ public:
    *
    *  It is legal to delete a polygon object to remove it.
    */
-  ~Polygon ();
+  ~Polygon () override;
 
   /**
    *  @brief Detaches a polygon object from the edges
@@ -823,7 +823,7 @@ public:
   typedef polygons_type::const_iterator polygon_iterator;
 
   Graph ();
-  ~Graph ();
+  ~Graph () override;
 
   /**
    *  @brief Returns a string representation of the polygon graph.

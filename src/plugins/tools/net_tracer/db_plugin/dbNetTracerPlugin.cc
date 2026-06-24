@@ -179,12 +179,12 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual db::TechnologyComponent *create_component () const
+  db::TechnologyComponent *create_component () const override
   {
     return new NetTracerTechnologyComponent ();
   }
 
-  virtual tl::XMLElementBase *xml_element () const
+  tl::XMLElementBase *xml_element () const override
   {
     return new db::TechnologyComponentXMLElement<NetTracerTechnologyComponent> (net_tracer_component_name (),
       //  0.28 definitions

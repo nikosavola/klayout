@@ -119,7 +119,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~LayoutToNetlist ();
+  ~LayoutToNetlist () override;
 
   /**
    *  @brief Makes the extractor take over ownership over the DSS when it was created with an external DSS
@@ -1269,8 +1269,8 @@ private:
   void place_soft_connection_diodes ();
 
   //  implementation of NetlistManipulationCallbacks
-  virtual size_t link_net_to_parent_circuit (const Net *subcircuit_net, Circuit *parent_circuit, const DCplxTrans &trans);
-  virtual void link_nets (const db::Net *net, const db::Net *with);
+  size_t link_net_to_parent_circuit (const Net *subcircuit_net, Circuit *parent_circuit, const DCplxTrans &trans) override;
+  void link_nets (const db::Net *net, const db::Net *with) override;
 };
 
 /**

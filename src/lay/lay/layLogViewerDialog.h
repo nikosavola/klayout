@@ -86,11 +86,11 @@ public:
   LogReceiver (LogFile *file, int verbosity, void (LogFile::*method)(const std::string &, bool));
 
 protected:
-  virtual void puts (const char *s);
-  virtual void endl ();
-  virtual void end ();
-  virtual void begin ();
-  virtual void yield ();
+  void puts (const char *s) override;
+  void endl () override;
+  void end () override;
+  void begin () override;
+  void yield () override;
 
 private:
   LogFile *mp_file;
@@ -128,12 +128,12 @@ public:
   /**
    *  @brief Implementation of the QAbstractItemModel interface
    */
-  int rowCount(const QModelIndex &parent) const;
+  int rowCount(const QModelIndex &parent) const override;
 
   /**
    *  @brief Implementation of the QAbstractItemModel interface
    */
-  QVariant data(const QModelIndex &index, int role) const;
+  QVariant data(const QModelIndex &index, int role) const override;
 
   /**
    *  @brief Gets a value indicating whether errors are present

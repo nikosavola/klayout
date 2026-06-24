@@ -63,7 +63,7 @@ public:
   BrowserDialog_Stub (const std::string &html) : lay::BrowserDialog (html) { }
   BrowserDialog_Stub (QWidget *parent, const std::string &html) : lay::BrowserDialog (parent, html) { }
 
-  virtual void closed ()
+  void closed () override
   {
     if (closed_cb.can_issue ()) {
       closed_cb.issue<lay::BrowserDialog> (&lay::BrowserDialog::closed);
@@ -83,7 +83,7 @@ public:
   BrowserSource_Stub () : lay::BrowserSource () { }
   BrowserSource_Stub (const std::string &html) : lay::BrowserSource (html) { }
 
-  virtual std::string get (const std::string &url)
+  std::string get (const std::string &url) override
   {
     if (get_cb.can_issue ()) {
       return get_cb.issue<lay::BrowserSource, std::string, const std::string &> (&lay::BrowserSource::get, url);

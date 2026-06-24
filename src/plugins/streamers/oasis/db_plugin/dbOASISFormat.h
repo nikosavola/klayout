@@ -73,7 +73,7 @@ public:
   /**
    *  @brief Implementation of FormatSpecificReaderOptions
    */
-  virtual FormatSpecificReaderOptions *clone () const
+  FormatSpecificReaderOptions *clone () const override
   {
     return new OASISReaderOptions (*this);
   }
@@ -81,7 +81,7 @@ public:
   /**
    *  @brief Implementation of FormatSpecificReaderOptions
    */
-  virtual const std::string &format_name () const
+  const std::string &format_name () const override
   {
     static const std::string n ("OASIS");
     return n;
@@ -175,7 +175,7 @@ public:
   /** 
    *  @brief Implementation of FormatSpecificWriterOptions
    */
-  virtual FormatSpecificWriterOptions *clone () const
+  FormatSpecificWriterOptions *clone () const override
   {
     return new OASISWriterOptions (*this);
   }
@@ -183,7 +183,7 @@ public:
   /**
    *  @brief Implementation of FormatSpecificWriterOptions
    */
-  virtual const std::string &format_name () const
+  const std::string &format_name () const override
   {
     static std::string n ("OASIS");
     return n;

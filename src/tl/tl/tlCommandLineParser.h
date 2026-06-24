@@ -307,27 +307,27 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void take_value (tl::Extractor &ex)
+  void take_value (tl::Extractor &ex) override
   {
     extract (ex, *mp_value, option ().repeated);
   }
 
-  virtual void mark_present ()
+  void mark_present () override
   {
     mark_presence (*mp_value);
   }
 
-  virtual void invert_present ()
+  void invert_present () override
   {
     invert_presence (*mp_value);
   }
 
-  virtual ArgBase *clone () const
+  ArgBase *clone () const override
   {
     return new arg_direct_setter<T> (*this);
   }
 
-  virtual bool wants_value () const
+  bool wants_value () const override
   {
     return wants_value_traits<T> () ();
   }
@@ -352,30 +352,30 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void take_value (tl::Extractor &ex)
+  void take_value (tl::Extractor &ex) override
   {
     extract (ex, m_value, option ().repeated);
     (mp_object->*mp_setter) (m_value);
   }
 
-  virtual void mark_present ()
+  void mark_present () override
   {
     mark_presence (m_value);
     (mp_object->*mp_setter) (m_value);
   }
 
-  virtual void invert_present ()
+  void invert_present () override
   {
     invert_presence (m_value);
     (mp_object->*mp_setter) (m_value);
   }
 
-  virtual ArgBase *clone () const
+  ArgBase *clone () const override
   {
     return new arg_method_setter<C, T> (*this);
   }
 
-  virtual bool wants_value () const
+  bool wants_value () const override
   {
     return wants_value_traits<T> () ();
   }

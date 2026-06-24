@@ -59,7 +59,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~shape_collection_processor () { }
+  ~shape_collection_processor () override { }
 
   /**
    *  @brief Performs the actual processing with properties
@@ -324,7 +324,7 @@ public:
     : m_dx (dx), m_dy (dy)
   { }
 
-  virtual void process (const db::object_with_properties<Shape> &s, std::vector<db::PolygonWithProperties> &res) const
+  void process (const db::object_with_properties<Shape> &s, std::vector<db::PolygonWithProperties> &res) const override
   {
     db::box_convert<db::object_with_properties<Shape> > bc;
     db::Box box = bc (s).enlarged (db::Vector (m_dx, m_dy));
@@ -333,7 +333,7 @@ public:
     }
   }
 
-  virtual const db::TransformationReducer *vars () const
+  const db::TransformationReducer *vars () const override
   {
     if (m_dx == 0 && m_dy == 0) {
       return nullptr;
@@ -344,10 +344,10 @@ public:
     }
   }
 
-  virtual bool result_is_merged () const { return false; }
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool result_must_not_be_merged () const { return false; }
-  virtual bool wants_variants () const { return true; }
+  bool result_is_merged () const override { return false; }
+  bool requires_raw_input () const override { return false; }
+  bool result_must_not_be_merged () const override { return false; }
+  bool wants_variants () const override { return true; }
 
 private:
   db::XYAnisotropyAndMagnificationReducer m_anisotropic_reducer;

@@ -58,18 +58,18 @@ class GerberDrillFileReader
 {
 public:
   GerberDrillFileReader (int warn_level);
-  ~GerberDrillFileReader ();
+  ~GerberDrillFileReader () override;
 
   double um (double u)
   {
     return u * unit ();
   }
 
-  virtual bool does_accept ();
+  bool does_accept () override;
 
 protected:
-  virtual void do_read ();
-  GerberMetaData do_scan ();
+  void do_read () override;
+  GerberMetaData do_scan () override;
 
 private:
   std::string m_buffer;

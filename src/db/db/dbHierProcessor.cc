@@ -373,7 +373,7 @@ public:
     //  nothing yet ..
   }
 
-  void add (const T *ref1, unsigned int id1, const T *ref2, unsigned int id2)
+  void add (const T *ref1, unsigned int id1, const T *ref2, unsigned int id2) override
   {
     if (!mp_result->has_subject_shape_id (id1)) {
       mp_result->add_subject_shape (id1, *ref1);

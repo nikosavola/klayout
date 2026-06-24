@@ -878,13 +878,13 @@ class RootItemData
 public:
   RootItemData ();
 
-  virtual void do_ensure_children (NetlistBrowserModel *model);
-  virtual QIcon icon (NetlistBrowserModel *model);
-  virtual QString text (int column, NetlistBrowserModel *model);
-  virtual QString search_text ();
-  virtual std::string tooltip (NetlistBrowserModel *model);
-  virtual db::NetlistCrossReference::Status status (NetlistBrowserModel *model);
-  virtual bool has_children (NetlistBrowserModel *) { return true; }
+  void do_ensure_children (NetlistBrowserModel *model) override;
+  QIcon icon (NetlistBrowserModel *model) override;
+  QString text (int column, NetlistBrowserModel *model) override;
+  QString search_text () override;
+  std::string tooltip (NetlistBrowserModel *model) override;
+  db::NetlistCrossReference::Status status (NetlistBrowserModel *model) override;
+  bool has_children (NetlistBrowserModel *) override { return true; }
 
   CircuitItemData *circuit_item (NetlistBrowserModel *model, const IndexedNetlistModel::circuit_pair &cp);
 };
@@ -897,15 +897,15 @@ class CircuitItemData
 public:
   CircuitItemData (NetlistModelItemData *parent, const IndexedNetlistModel::circuit_pair &cp);
 
-  virtual void do_ensure_children (NetlistBrowserModel *model);
-  virtual QIcon icon (NetlistBrowserModel *model);
-  virtual QString text (int column, NetlistBrowserModel *model);
-  virtual QString search_text ();
-  virtual std::string tooltip (NetlistBrowserModel *model);
-  virtual db::NetlistCrossReference::Status status (NetlistBrowserModel *model);
-  virtual bool has_children (NetlistBrowserModel *model);
+  void do_ensure_children (NetlistBrowserModel *model) override;
+  QIcon icon (NetlistBrowserModel *model) override;
+  QString text (int column, NetlistBrowserModel *model) override;
+  QString search_text () override;
+  std::string tooltip (NetlistBrowserModel *model) override;
+  db::NetlistCrossReference::Status status (NetlistBrowserModel *model) override;
+  bool has_children (NetlistBrowserModel *model) override;
 
-  virtual std::pair<const db::Circuit *, const db::Circuit *> circuits_of_this ()
+  std::pair<const db::Circuit *, const db::Circuit *> circuits_of_this () override
   {
     return m_cp;
   }
@@ -926,12 +926,12 @@ class CircuitItemForSubCircuitData
 public:
   CircuitItemForSubCircuitData (NetlistModelItemData *parent, const IndexedNetlistModel::subcircuit_pair &sp);
 
-  virtual QString text (int column, NetlistBrowserModel *model);
-  virtual QString search_text ();
-  virtual std::string tooltip (NetlistBrowserModel *model);
-  virtual db::NetlistCrossReference::Status status (NetlistBrowserModel *model);
+  QString text (int column, NetlistBrowserModel *model) override;
+  QString search_text () override;
+  std::string tooltip (NetlistBrowserModel *model) override;
+  db::NetlistCrossReference::Status status (NetlistBrowserModel *model) override;
 
-  virtual std::pair<const db::SubCircuit *, const db::SubCircuit *> subcircuits_of_this ()
+  std::pair<const db::SubCircuit *, const db::SubCircuit *> subcircuits_of_this () override
   {
     return m_sp;
   }
@@ -950,13 +950,13 @@ public:
 
   CircuitItemNodeData (NetlistModelItemData *parent, type t);
 
-  virtual void do_ensure_children (NetlistBrowserModel *model);
-  virtual QIcon icon (NetlistBrowserModel *model);
-  virtual QString text (int column, NetlistBrowserModel *model);
-  virtual QString search_text ();
-  virtual std::string tooltip (NetlistBrowserModel *model);
-  virtual db::NetlistCrossReference::Status status (NetlistBrowserModel *model);
-  virtual bool has_children (NetlistBrowserModel *model);
+  void do_ensure_children (NetlistBrowserModel *model) override;
+  QIcon icon (NetlistBrowserModel *model) override;
+  QString text (int column, NetlistBrowserModel *model) override;
+  QString search_text () override;
+  std::string tooltip (NetlistBrowserModel *model) override;
+  db::NetlistCrossReference::Status status (NetlistBrowserModel *model) override;
+  bool has_children (NetlistBrowserModel *model) override;
 
   CircuitNetItemData *circuit_net_item (NetlistBrowserModel *model, const IndexedNetlistModel::net_pair &np);
   CircuitDeviceItemData *circuit_device_item (NetlistBrowserModel *model, const IndexedNetlistModel::device_pair &dp);
@@ -974,20 +974,20 @@ class CircuitNetItemData
 public:
   CircuitNetItemData (NetlistModelItemData *parent, const IndexedNetlistModel::net_pair &np);
 
-  virtual void do_ensure_children (NetlistBrowserModel *model);
-  virtual QIcon icon (NetlistBrowserModel *model);
-  virtual QString text (int column, NetlistBrowserModel *model);
-  virtual QString search_text ();
-  virtual std::string tooltip (NetlistBrowserModel *model);
-  virtual db::NetlistCrossReference::Status status (NetlistBrowserModel *model);
-  virtual bool has_children (NetlistBrowserModel *) { return true; }
+  void do_ensure_children (NetlistBrowserModel *model) override;
+  QIcon icon (NetlistBrowserModel *model) override;
+  QString text (int column, NetlistBrowserModel *model) override;
+  QString search_text () override;
+  std::string tooltip (NetlistBrowserModel *model) override;
+  db::NetlistCrossReference::Status status (NetlistBrowserModel *model) override;
+  bool has_children (NetlistBrowserModel *) override { return true; }
 
   const IndexedNetlistModel::net_pair &np ()
   {
     return m_np;
   }
 
-  virtual std::pair<const db::Net *, const db::Net *> nets_of_this ()
+  std::pair<const db::Net *, const db::Net *> nets_of_this () override
   {
     return m_np;
   }
@@ -1010,13 +1010,13 @@ class CircuitNetDeviceTerminalItemData
 public:
   CircuitNetDeviceTerminalItemData (NetlistModelItemData *parent, const IndexedNetlistModel::net_terminal_pair &tp);
 
-  virtual void do_ensure_children (NetlistBrowserModel * /*model*/);
-  virtual QIcon icon (NetlistBrowserModel *model);
-  virtual QString text (int column, NetlistBrowserModel *model);
-  virtual QString search_text ();
-  virtual std::string tooltip (NetlistBrowserModel *model);
-  virtual db::NetlistCrossReference::Status status (NetlistBrowserModel *model);
-  virtual bool has_children (NetlistBrowserModel *) { return true; }
+  void do_ensure_children (NetlistBrowserModel * /*model*/) override;
+  QIcon icon (NetlistBrowserModel *model) override;
+  QString text (int column, NetlistBrowserModel *model) override;
+  QString search_text () override;
+  std::string tooltip (NetlistBrowserModel *model) override;
+  db::NetlistCrossReference::Status status (NetlistBrowserModel *model) override;
+  bool has_children (NetlistBrowserModel *) override { return true; }
 
   const IndexedNetlistModel::net_pair &np ()
   {
@@ -1034,7 +1034,7 @@ public:
     return m_tp;
   }
 
-  virtual std::pair<const db::Device *, const db::Device *> devices_of_this ()
+  std::pair<const db::Device *, const db::Device *> devices_of_this () override
   {
     return dp ();
   }
@@ -1052,9 +1052,9 @@ class CircuitNetDeviceTerminalOthersItemData
 public:
   CircuitNetDeviceTerminalOthersItemData (NetlistModelItemData *parent, const IndexedNetlistModel::net_pair &np, const std::pair<const db::DeviceTerminalDefinition *, const db::DeviceTerminalDefinition *> &tp);
 
-  virtual QIcon icon (NetlistBrowserModel *model);
-  virtual QString text (int column, NetlistBrowserModel *model);
-  virtual QString search_text ();
+  QIcon icon (NetlistBrowserModel *model) override;
+  QString text (int column, NetlistBrowserModel *model) override;
+  QString search_text () override;
 
 private:
   std::pair<const db::DeviceTerminalDefinition *, const db::DeviceTerminalDefinition *> m_tp;
@@ -1069,13 +1069,13 @@ class CircuitNetSubCircuitPinItemData
 public:
   CircuitNetSubCircuitPinItemData (NetlistModelItemData *parent, const IndexedNetlistModel::net_subcircuit_pin_pair &pp);
 
-  virtual void do_ensure_children (NetlistBrowserModel *model);
-  virtual QIcon icon (NetlistBrowserModel *model);
-  virtual QString text (int column, NetlistBrowserModel *model);
-  virtual QString search_text ();
-  virtual std::string tooltip (NetlistBrowserModel *model);
-  virtual db::NetlistCrossReference::Status status (NetlistBrowserModel *model);
-  virtual bool has_children (NetlistBrowserModel *) { return true; }
+  void do_ensure_children (NetlistBrowserModel *model) override;
+  QIcon icon (NetlistBrowserModel *model) override;
+  QString text (int column, NetlistBrowserModel *model) override;
+  QString search_text () override;
+  std::string tooltip (NetlistBrowserModel *model) override;
+  db::NetlistCrossReference::Status status (NetlistBrowserModel *model) override;
+  bool has_children (NetlistBrowserModel *) override { return true; }
 
   const IndexedNetlistModel::net_pair &np ()
   {
@@ -1093,18 +1093,18 @@ public:
     return pins_from_pinrefs (m_sp);
   }
 
-  virtual std::pair<const db::SubCircuit *, const db::SubCircuit *> subcircuits_of_this ()
+  std::pair<const db::SubCircuit *, const db::SubCircuit *> subcircuits_of_this () override
   {
     return subcircuits_from_pinrefs (m_sp);
   }
 
   //  NOTE: this is important as this node acts as parent for nets inside this circuit
-  virtual std::pair<const db::Circuit *, const db::Circuit *> circuits_of_this ()
+  std::pair<const db::Circuit *, const db::Circuit *> circuits_of_this () override
   {
     return circuit_refs_from_subcircuits (subcircuits_of_this ());
   }
 
-  virtual std::pair<const db::Pin *, const db::Pin *> pins_of_this ()
+  std::pair<const db::Pin *, const db::Pin *> pins_of_this () override
   {
     return m_pp;
   }
@@ -1123,15 +1123,15 @@ class CircuitNetPinItemData
 public:
   CircuitNetPinItemData (NetlistModelItemData *parent, const IndexedNetlistModel::net_pin_pair &pp);
 
-  virtual void do_ensure_children (NetlistBrowserModel *);
-  virtual QIcon icon (NetlistBrowserModel *model);
-  virtual QString text (int column, NetlistBrowserModel *model);
-  virtual QString search_text ();
-  virtual std::string tooltip (NetlistBrowserModel *model);
-  virtual db::NetlistCrossReference::Status status (NetlistBrowserModel *model);
-  virtual bool has_children (NetlistBrowserModel *) { return false; }
+  void do_ensure_children (NetlistBrowserModel *) override;
+  QIcon icon (NetlistBrowserModel *model) override;
+  QString text (int column, NetlistBrowserModel *model) override;
+  QString search_text () override;
+  std::string tooltip (NetlistBrowserModel *model) override;
+  db::NetlistCrossReference::Status status (NetlistBrowserModel *model) override;
+  bool has_children (NetlistBrowserModel *) override { return false; }
 
-  virtual std::pair<const db::Pin *, const db::Pin *> pins_of_this ()
+  std::pair<const db::Pin *, const db::Pin *> pins_of_this () override
   {
     return pins_from_pinrefs (m_pp);
   }
@@ -1148,13 +1148,13 @@ class CircuitSubCircuitItemData
 public:
   CircuitSubCircuitItemData (NetlistModelItemData *parent, const IndexedNetlistModel::subcircuit_pair &sp);
 
-  virtual void do_ensure_children (NetlistBrowserModel *model);
-  virtual QIcon icon (NetlistBrowserModel *model);
-  virtual QString text (int column, NetlistBrowserModel *model);
-  virtual QString search_text ();
-  virtual std::string tooltip (NetlistBrowserModel *model);
-  virtual db::NetlistCrossReference::Status status (NetlistBrowserModel *model);
-  virtual bool has_children (NetlistBrowserModel *) { return true; }
+  void do_ensure_children (NetlistBrowserModel *model) override;
+  QIcon icon (NetlistBrowserModel *model) override;
+  QString text (int column, NetlistBrowserModel *model) override;
+  QString search_text () override;
+  std::string tooltip (NetlistBrowserModel *model) override;
+  db::NetlistCrossReference::Status status (NetlistBrowserModel *model) override;
+  bool has_children (NetlistBrowserModel *) override { return true; }
 
   const IndexedNetlistModel::subcircuit_pair &sp ()
   {
@@ -1179,11 +1179,11 @@ class CircuitPinItemData
 public:
   CircuitPinItemData (NetlistModelItemData *parent, const IndexedNetlistModel::pin_pair &pp);
 
-  virtual QIcon icon (NetlistBrowserModel *model);
-  virtual QString text (int column, NetlistBrowserModel *model);
-  virtual QString search_text ();
+  QIcon icon (NetlistBrowserModel *model) override;
+  QString text (int column, NetlistBrowserModel *model) override;
+  QString search_text () override;
 
-  virtual std::pair<const db::Pin *, const db::Pin *> pins_of_this ()
+  std::pair<const db::Pin *, const db::Pin *> pins_of_this () override
   {
     return m_pp;
   }
@@ -1200,13 +1200,13 @@ class CircuitSubCircuitPinsItemData
 public:
   CircuitSubCircuitPinsItemData (NetlistModelItemData *parent, const IndexedNetlistModel::subcircuit_pair &sp);
 
-  virtual void do_ensure_children (NetlistBrowserModel *model);
-  virtual QIcon icon (NetlistBrowserModel *model);
-  virtual QString text (int column, NetlistBrowserModel *model);
-  virtual QString search_text ();
-  virtual std::string tooltip (NetlistBrowserModel *model);
-  virtual db::NetlistCrossReference::Status status (NetlistBrowserModel *model);
-  virtual bool has_children (NetlistBrowserModel *model);
+  void do_ensure_children (NetlistBrowserModel *model) override;
+  QIcon icon (NetlistBrowserModel *model) override;
+  QString text (int column, NetlistBrowserModel *model) override;
+  QString search_text () override;
+  std::string tooltip (NetlistBrowserModel *model) override;
+  db::NetlistCrossReference::Status status (NetlistBrowserModel *model) override;
+  bool has_children (NetlistBrowserModel *model) override;
 
   const IndexedNetlistModel::subcircuit_pair &sp ()
   {
@@ -1225,16 +1225,16 @@ class CircuitSubCircuitPinItemData
 public:
   CircuitSubCircuitPinItemData (NetlistModelItemData *parent, const IndexedNetlistModel::net_subcircuit_pin_pair &pp);
 
-  virtual QIcon icon (NetlistBrowserModel *model);
-  virtual QString text (int column, NetlistBrowserModel *model);
-  virtual QString search_text ();
+  QIcon icon (NetlistBrowserModel *model) override;
+  QString text (int column, NetlistBrowserModel *model) override;
+  QString search_text () override;
 
   IndexedNetlistModel::subcircuit_pair sp ()
   {
     return subcircuits_from_pinrefs (m_pp);
   }
 
-  virtual std::pair<const db::Pin *, const db::Pin *> pins_of_this ()
+  std::pair<const db::Pin *, const db::Pin *> pins_of_this () override
   {
     return pins_from_netrefs (m_pp);
   }
@@ -1251,20 +1251,20 @@ class CircuitDeviceItemData
 public:
   CircuitDeviceItemData (NetlistModelItemData *parent, const IndexedNetlistModel::device_pair &dp);
 
-  virtual void do_ensure_children (NetlistBrowserModel * /*model*/);
-  virtual QIcon icon (NetlistBrowserModel *model);
-  virtual QString text (int column, NetlistBrowserModel *model);
-  virtual QString search_text ();
-  virtual std::string tooltip (NetlistBrowserModel *model);
-  virtual db::NetlistCrossReference::Status status (NetlistBrowserModel *model);
-  virtual bool has_children (NetlistBrowserModel *) { return true; }
+  void do_ensure_children (NetlistBrowserModel * /*model*/) override;
+  QIcon icon (NetlistBrowserModel *model) override;
+  QString text (int column, NetlistBrowserModel *model) override;
+  QString search_text () override;
+  std::string tooltip (NetlistBrowserModel *model) override;
+  db::NetlistCrossReference::Status status (NetlistBrowserModel *model) override;
+  bool has_children (NetlistBrowserModel *) override { return true; }
 
   const IndexedNetlistModel::device_pair &dp ()
   {
     return m_dp;
   }
 
-  virtual std::pair<const db::Device *, const db::Device *> devices_of_this ()
+  std::pair<const db::Device *, const db::Device *> devices_of_this () override
   {
     return m_dp;
   }
@@ -1281,9 +1281,9 @@ class CircuitDeviceTerminalItemData
 public:
   CircuitDeviceTerminalItemData (NetlistModelItemData *parent, const std::pair<const db::DeviceTerminalDefinition *, const db::DeviceTerminalDefinition *> &tp);
 
-  virtual QIcon icon (NetlistBrowserModel *model);
-  virtual QString text (int column, NetlistBrowserModel *model);
-  virtual QString search_text ();
+  QIcon icon (NetlistBrowserModel *model) override;
+  QString text (int column, NetlistBrowserModel *model) override;
+  QString search_text () override;
 
 private:
   std::pair<const db::DeviceTerminalDefinition *, const db::DeviceTerminalDefinition *> m_tp;

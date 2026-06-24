@@ -39,7 +39,7 @@ struct CellOp
   : public db::Op
 {
   CellOp () { }
-  virtual ~CellOp () { }
+  ~CellOp () override { }
 
   virtual void redo (db::Cell *) const = 0;
   virtual void undo (db::Cell *) const = 0;
@@ -53,12 +53,12 @@ public:
     : m_a (a), m_b (b)
   { }
 
-  virtual void redo (db::Cell *cell) const
+  void redo (db::Cell *cell) const override
   {
     cell->swap (m_a, m_b);
   }
 
-  virtual void undo (db::Cell *cell) const
+  void undo (db::Cell *cell) const override
   {
     cell->swap (m_a, m_b);
   }
@@ -74,12 +74,12 @@ struct SetCellPropId
     : m_from (f), m_to (t)
   { }
 
-  virtual void redo (db::Cell *cell) const
+  void redo (db::Cell *cell) const override
   {
     cell->prop_id (m_to);
   }
 
-  virtual void undo (db::Cell *cell) const
+  void undo (db::Cell *cell) const override
   {
     cell->prop_id (m_from);
   }

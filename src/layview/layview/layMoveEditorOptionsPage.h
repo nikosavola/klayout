@@ -41,12 +41,12 @@ class MoveEditorOptionsPage
 public:
   MoveEditorOptionsPage (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher);
 
-  virtual std::string title () const;
-  virtual const char *name () const;
-  virtual int order () const;
-  virtual void deactivated ();
-  virtual void commit (lay::Dispatcher *dispatcher);
-  virtual void configure (const std::string &name, const std::string &value);
+  std::string title () const override;
+  const char *name () const override;
+  int order () const override;
+  void deactivated () override;
+  void commit (lay::Dispatcher *dispatcher) override;
+  void configure (const std::string &name, const std::string &value) override;
 
 private:
   QHBoxLayout *mp_layout;

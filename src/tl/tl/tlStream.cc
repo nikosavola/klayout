@@ -279,17 +279,17 @@ public:
     : m_source (source)
   { }
 
-  virtual size_t read (char *, size_t)
+  size_t read (char *, size_t) override
   {
     return 0;
   }
 
-  virtual void reset () { }
-  virtual void close () { }
+  void reset () override { }
+  void close () override { }
 
-  virtual std::string source () const { return m_source; }
-  virtual std::string absolute_path () const { return m_source; }
-  virtual std::string filename () const { return m_source; }
+  std::string source () const override { return m_source; }
+  std::string absolute_path () const override { return m_source; }
+  std::string filename () const override { return m_source; }
 
 public:
   std::string m_source;

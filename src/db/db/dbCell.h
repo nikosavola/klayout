@@ -106,7 +106,7 @@ public:
   /**
    *  @brief The destructor
    */
-  virtual ~Cell ();
+  ~Cell () override;
 
   /**
    *  @brief The assignment operator 
@@ -998,12 +998,12 @@ public:
   /** 
    *  @brief Implementation of the redo method
    */
-  void redo (db::Op *op);
+  void redo (db::Op *op) override;
 
   /** 
    *  @brief Implementation of the undo method
    */
-  void undo (db::Op *op);
+  void undo (db::Op *op) override;
 
   /**
    *  @brief Collect memory usage statistics

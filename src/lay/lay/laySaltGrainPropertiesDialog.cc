@@ -65,7 +65,7 @@ public:
     //  .. nothing yet ..
   }
 
-  QWidget *createEditor (QWidget *parent, const QStyleOptionViewItem & /*option*/, const QModelIndex & /*index*/) const
+  QWidget *createEditor (QWidget *parent, const QStyleOptionViewItem & /*option*/, const QModelIndex & /*index*/) const override
   {
     QLineEdit *editor = new QLineEdit (parent);
     editor->setFrame (false);
@@ -73,12 +73,12 @@ public:
     return editor;
   }
 
-  void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex & /*index*/) const
+  void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex & /*index*/) const override
   {
     editor->setGeometry(option.rect);
   }
 
-  void setEditorData (QWidget *widget, const QModelIndex &index) const
+  void setEditorData (QWidget *widget, const QModelIndex &index) const override
   {
     QLineEdit *editor = dynamic_cast<QLineEdit *> (widget);
     if (editor) {
@@ -86,7 +86,7 @@ public:
     }
   }
 
-  void setModelData (QWidget *widget, QAbstractItemModel *model, const QModelIndex &index) const
+  void setModelData (QWidget *widget, QAbstractItemModel *model, const QModelIndex &index) const override
   {
     QLineEdit *editor = dynamic_cast<QLineEdit *> (widget);
     if (editor) {
@@ -94,7 +94,7 @@ public:
     }
   }
 
-  QSize sizeHint (const QStyleOptionViewItem &option, const QModelIndex & /*index*/) const
+  QSize sizeHint (const QStyleOptionViewItem &option, const QModelIndex & /*index*/) const override
   {
     QSize sz = option.fontMetrics.size (Qt::TextSingleLine, QString::fromUtf8 ("M"));
     sz += QSize (0, 8);
@@ -119,7 +119,7 @@ public:
     mp_completer = new QCompleter (names, this);
   }
 
-  QWidget *createEditor (QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+  QWidget *createEditor (QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override
   {
     QWidget *editor = SaltGrainEditDelegate::createEditor (parent, option, index);
     QLineEdit *line_edit = dynamic_cast<QLineEdit *> (editor);

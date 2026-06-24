@@ -42,10 +42,10 @@ Q_OBJECT
 
 public:
   GDS2WriterOptionPage (QWidget *parent);
-  ~GDS2WriterOptionPage ();
+  ~GDS2WriterOptionPage () override;
 
-  void setup (const db::FormatSpecificWriterOptions *options, const db::Technology *tech);
-  void commit (db::FormatSpecificWriterOptions *options, const db::Technology *tech, bool gzip);
+  void setup (const db::FormatSpecificWriterOptions *options, const db::Technology *tech) override;
+  void commit (db::FormatSpecificWriterOptions *options, const db::Technology *tech, bool gzip) override;
 
 public slots:
   void multi_xy_clicked ();

@@ -88,14 +88,14 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual ~RecentConfigurationPage ();
+  ~RecentConfigurationPage () override;
 
-  virtual std::string title () const;
-  virtual int order () const;
-  virtual void apply (lay::Dispatcher * /*root*/) { }
-  virtual void setup (lay::Dispatcher * /*root*/) { }
-  virtual void commit_recent (lay::Dispatcher *root);
-  virtual void config_recent_for_layer (lay::Dispatcher *root, const db::LayerProperties &lp, int cv_index);
+  std::string title () const override;
+  int order () const override;
+  void apply (lay::Dispatcher * /*root*/) override { }
+  void setup (lay::Dispatcher * /*root*/) override { }
+  void commit_recent (lay::Dispatcher *root) override;
+  void config_recent_for_layer (lay::Dispatcher *root, const db::LayerProperties &lp, int cv_index) override;
 
 protected:
   /**
@@ -127,7 +127,7 @@ private:
   void set_stored_values (const std::list<std::vector<std::string> > &values) const;
   void render_to (QTreeWidgetItem *item, int column, const std::vector<std::string> &values, RecentConfigurationPage::ConfigurationRendering rendering);
   void layers_changed (int);
-  virtual void technology_changed (const std::string &);
+  void technology_changed (const std::string &) override;
 };
 
 }

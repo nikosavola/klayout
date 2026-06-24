@@ -1398,7 +1398,7 @@ namespace
       }
     }
 
-    void insert_transformed (Shapes &into, const Shapes &from, const ICplxTrans &trans) const
+    void insert_transformed (Shapes &into, const Shapes &from, const ICplxTrans &trans) const override
     {
       if (! m_text_annot_name_id.first) {
 

@@ -1115,17 +1115,17 @@ public:
     //  .. nothing yet ..
   }
 
-  ~GerberReader ()
+  ~GerberReader () override
   {
     //  .. nothing yet ..
   }
 
-  virtual const db::LayerMap &read (db::Layout &layout)
+  const db::LayerMap &read (db::Layout &layout) override
   {
     return read (layout, db::LoadLayoutOptions ());
   }
 
-  virtual const db::LayerMap &read (db::Layout &layout, const db::LoadLayoutOptions &options)
+  const db::LayerMap &read (db::Layout &layout, const db::LoadLayoutOptions &options) override
   {
     init (options);
 
@@ -1154,7 +1154,7 @@ public:
     return m_layers;
   }
 
-  virtual const char *format () const
+  const char *format () const override
   {
     return "GerberPCB";
   }
@@ -1167,12 +1167,12 @@ private:
 class GerberFormatDeclaration
   : public db::StreamFormatDeclaration
 {
-  virtual std::string format_name () const { return "GerberPCB"; }
-  virtual std::string format_desc () const { return "Gerber PCB"; }
-  virtual std::string format_title () const { return "Gerber PCB (project files)"; }
-  virtual std::string file_format () const { return "Gerber PCB project files (*.pcb *.PCB)"; }
+  std::string format_name () const override { return "GerberPCB"; }
+  std::string format_desc () const override { return "Gerber PCB"; }
+  std::string format_title () const override { return "Gerber PCB (project files)"; }
+  std::string file_format () const override { return "Gerber PCB project files (*.pcb *.PCB)"; }
 
-  virtual bool detect (tl::InputStream &stream) const
+  bool detect (tl::InputStream &stream) const override
   {
     //  The test is that somewhere within the first 1000 bytes, a <pcb-project> XML tag appears.
     //  1000 bytes are within the initial block that the stream reader reads and hence
@@ -1187,27 +1187,27 @@ class GerberFormatDeclaration
     }
   }
 
-  virtual db::ReaderBase *create_reader (tl::InputStream &s) const
+  db::ReaderBase *create_reader (tl::InputStream &s) const override
   {
     return new GerberReader (s);
   }
 
-  virtual db::WriterBase *create_writer () const
+  db::WriterBase *create_writer () const override
   {
     return nullptr;
   }
 
-  virtual bool can_read () const
+  bool can_read () const override
   {
     return true;
   }
 
-  virtual bool can_write () const
+  bool can_write () const override
   {
     return false;
   }
 
-  virtual bool supports_context () const
+  bool supports_context () const override
   {
     return false;
   }

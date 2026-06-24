@@ -53,19 +53,19 @@ class LAYUI_PUBLIC MarkerBrowserDialog
 
 public:
   MarkerBrowserDialog (lay::Dispatcher *root, lay::LayoutViewBase *view);
-  ~MarkerBrowserDialog ();
+  ~MarkerBrowserDialog () override;
 
   void load (int rdb_index, int cv_index);
 
 private:
   //  implementation of the lay::Browser interface
-  virtual void activated ();
-  virtual void deactivated ();
+  void activated () override;
+  void deactivated () override;
 
-  bool configure (const std::string &name, const std::string &value);
+  bool configure (const std::string &name, const std::string &value) override;
 
   //  implementation of the lay::Plugin interface
-  virtual void menu_activated (const std::string &symbol);
+  void menu_activated (const std::string &symbol) override;
 
   void cellviews_changed ();
   void cellview_changed (int index);

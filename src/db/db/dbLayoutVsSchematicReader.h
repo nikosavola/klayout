@@ -73,7 +73,7 @@ public:
     do_read_lvs (lvs);
   }
 
-  virtual void do_read_lvs (db::LayoutVsSchematic *lvs);
+  void do_read_lvs (db::LayoutVsSchematic *lvs) override;
 
 private:
   void read_netlist (db::LayoutVsSchematic *lvs);

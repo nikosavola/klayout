@@ -43,7 +43,7 @@ class LayoutStatisticsForm
 
 public:
   LayoutStatisticsForm (QWidget *parent, lay::LayoutViewBase *view, const char *name);
-  ~LayoutStatisticsForm ();
+  ~LayoutStatisticsForm () override;
 
 public slots:
   void layout_selected (int);

@@ -43,7 +43,7 @@ class DB_PUBLIC MutableEdges
 public:
   MutableEdges ();
   MutableEdges (const MutableEdges &other);
-  virtual ~MutableEdges ();
+  ~MutableEdges () override;
 
   virtual void do_transform (const db::Trans &t) = 0;
   virtual void do_transform (const db::ICplxTrans &t) = 0;

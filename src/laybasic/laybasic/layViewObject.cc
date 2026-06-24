@@ -239,17 +239,17 @@ public:
     //  .. nothing yet ..
   }
 
-  void resizeEvent (QResizeEvent *)
+  void resizeEvent (QResizeEvent *) override
   {
     mp_view->resize_event (width (), height ());
   }
 
-  bool focusNextPrevChild (bool /*next*/)
+  bool focusNextPrevChild (bool /*next*/) override
   {
     return false;
   }
 
-  void keyPressEvent (QKeyEvent *e)
+  void keyPressEvent (QKeyEvent *e) override
   {
   BEGIN_PROTECTED
     unsigned int buttons = qt_to_buttons (Qt::MouseButtons (), e->modifiers ());
@@ -257,7 +257,7 @@ public:
   END_PROTECTED
   }
 
-  bool event (QEvent *e)
+  bool event (QEvent *e) override
   {
     if (e->type () == QEvent::MaxUser) {
 
@@ -307,7 +307,7 @@ public:
     return nullptr;
   }
 
-  void dragEnterEvent (QDragEnterEvent *event)
+  void dragEnterEvent (QDragEnterEvent *event) override
   {
   BEGIN_PROTECTED
 
@@ -335,7 +335,7 @@ public:
   END_PROTECTED_SILENT
   }
 
-  void dragLeaveEvent (QDragLeaveEvent * /*event*/)
+  void dragLeaveEvent (QDragLeaveEvent * /*event*/) override
   {
   BEGIN_PROTECTED
 
@@ -352,7 +352,7 @@ public:
   END_PROTECTED_SILENT
   }
 
-  void dragMoveEvent (QDragMoveEvent *event)
+  void dragMoveEvent (QDragMoveEvent *event) override
   {
   BEGIN_PROTECTED
 
@@ -376,7 +376,7 @@ public:
   END_PROTECTED_SILENT
   }
 
-  void dropEvent (QDropEvent *event)
+  void dropEvent (QDropEvent *event) override
   {
   BEGIN_PROTECTED
 
@@ -400,7 +400,7 @@ public:
   END_PROTECTED_SILENT
   }
 
-  void mouseMoveEvent (QMouseEvent *e)
+  void mouseMoveEvent (QMouseEvent *e) override
   {
   BEGIN_PROTECTED
 
@@ -416,7 +416,7 @@ public:
   END_PROTECTED
   }
 
-  void mouseDoubleClickEvent (QMouseEvent *e)
+  void mouseDoubleClickEvent (QMouseEvent *e) override
   {
     BEGIN_PROTECTED
 
@@ -437,21 +437,21 @@ public:
   enterEvent (QEnterEvent * /*event*/)
 #else
   enterEvent (QEvent * /*event*/)
-#endif
+#endif override
   {
     BEGIN_PROTECTED
     mp_view->send_enter_event ();
     END_PROTECTED
   }
 
-  void leaveEvent (QEvent * /*event*/)
+  void leaveEvent (QEvent * /*event*/) override
   {
     BEGIN_PROTECTED
     mp_view->send_leave_event ();
     END_PROTECTED
   }
 
-  void wheelEvent (QWheelEvent *e)
+  void wheelEvent (QWheelEvent *e) override
   {
     BEGIN_PROTECTED
 
@@ -473,7 +473,7 @@ public:
     END_PROTECTED
   }
 
-  void mousePressEvent (QMouseEvent *e)
+  void mousePressEvent (QMouseEvent *e) override
   {
     BEGIN_PROTECTED
 
@@ -489,7 +489,7 @@ public:
     END_PROTECTED
   }
 
-  void mouseReleaseEvent (QMouseEvent *e)
+  void mouseReleaseEvent (QMouseEvent *e) override
   {
     BEGIN_PROTECTED
 
@@ -505,7 +505,7 @@ public:
     END_PROTECTED
   }
 
-  void paintEvent (QPaintEvent *)
+  void paintEvent (QPaintEvent *) override
   {
     BEGIN_PROTECTED
     mp_view->paint_event ();

@@ -44,13 +44,13 @@ class LAYUI_PUBLIC NetlistLogModel
 public:
   NetlistLogModel (QWidget *parent, const db::NetlistCrossReference *cross_ref, const db::LayoutToNetlist *l2n);
 
-  virtual bool hasChildren (const QModelIndex &parent) const;
-  virtual QModelIndex index (int row, int column, const QModelIndex &parent) const;
-  virtual QModelIndex parent (const QModelIndex &child) const;
-  virtual int rowCount (const QModelIndex &parent) const;
-  virtual int columnCount (const QModelIndex &parent) const;
-  virtual QVariant data (const QModelIndex &index, int role) const;
-  virtual QVariant headerData (int section, Qt::Orientation orientation, int role) const;
+  bool hasChildren (const QModelIndex &parent) const override;
+  QModelIndex index (int row, int column, const QModelIndex &parent) const override;
+  QModelIndex parent (const QModelIndex &child) const override;
+  int rowCount (const QModelIndex &parent) const override;
+  int columnCount (const QModelIndex &parent) const override;
+  QVariant data (const QModelIndex &index, int role) const override;
+  QVariant headerData (int section, Qt::Orientation orientation, int role) const override;
 
   const db::LogEntryData *log_entry (const QModelIndex &index) const;
 

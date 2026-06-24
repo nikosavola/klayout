@@ -64,7 +64,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~View ();
+  ~View () override;
 
   /**
    *  @brief Set a transformation
@@ -93,7 +93,7 @@ private:
   const ant::Object *mp_ruler;
   db::DCplxTrans m_trans;
 
-  virtual void render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas);
+  void render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas) override;
 
   //  no copying nor default construction
   View (const View &d);
@@ -221,7 +221,7 @@ public:
 
   Service (db::Manager *manager, lay::LayoutViewBase *view);
 
-  ~Service ();
+  ~Service () override;
 
   /** 
    *  @brief Clear all highlights (for current object highlighting)
@@ -241,12 +241,12 @@ public:
   /**
    *  @brief Cancel dragging the ruler. The ruler is erased.
    */
-  void drag_cancel ();
+  void drag_cancel () override;
 
   /**
    *  @brief Cancel any edit operations (such as move)
    */
-  void edit_cancel ();
+  void edit_cancel () override;
 
   /** 
    *  @brief Clear all rulers
@@ -256,77 +256,77 @@ public:
   /** 
    *  @brief "delete" operation
    */
-  virtual void del ();
+  void del () override;
 
   /** 
    *  @brief "cut" operation
    */
-  virtual void cut ();
+  void cut () override;
 
   /** 
    *  @brief "copy" operation
    */
-  virtual void copy ();
+  void copy () override;
 
   /** 
    *  @brief "paste" operation
    */
-  virtual void paste ();
+  void paste () override;
 
   /**
    *  @brief Indicates whether there are selection objects
    */
-  virtual bool has_selection ();
+  bool has_selection () override;
 
   /**
    *  @brief Indicates how many objects are selected
    */
-  virtual size_t selection_size ();
+  size_t selection_size () override;
 
   /**
    *  @brief Indicates whether there are selection objects in transient mode
    */
-  virtual bool has_transient_selection ();
+  bool has_transient_selection () override;
 
   /**
    *  @brief point selection proximity predicate
    */
-  virtual double click_proximity (const db::DPoint &pos, lay::Editable::SelectionMode mode);
+  double click_proximity (const db::DPoint &pos, lay::Editable::SelectionMode mode) override;
 
   /**
    *  @brief Gets the catch distance (for single click)
    */
-  virtual double catch_distance ();
+  double catch_distance () override;
 
   /**
    *  @brief Gets the catch distance (for box)
    */
-  virtual double catch_distance_box ();
+  double catch_distance_box () override;
 
   /**
    *  @brief "select" operation
    */
-  virtual bool select (const db::DBox &box, lay::Editable::SelectionMode mode);
+  bool select (const db::DBox &box, lay::Editable::SelectionMode mode) override;
 
   /**
    *  @brief Clears the previous selection
    */
-  virtual void clear_previous_selection ();
+  void clear_previous_selection () override;
 
   /**
    *  @brief Turns the transient selection to the selection
    */
-  virtual void transient_to_selection ();
+  void transient_to_selection () override;
 
   /**
    *  @brief Establish a transient selection
    */
-  virtual bool transient_select (const db::DPoint &pos);
+  bool transient_select (const db::DPoint &pos) override;
 
   /**
    *  @brief Clear the transient selection
    */
-  virtual void clear_transient_selection ();
+  void clear_transient_selection () override;
 
   /**
    *  @brief Inserts a ruler
@@ -337,58 +337,58 @@ public:
   /**
    *  @brief Begin a "move" operation
    */
-  virtual bool begin_move (lay::Editable::MoveMode mode, const db::DPoint &p, lay::angle_constraint_type ac);
+  bool begin_move (lay::Editable::MoveMode mode, const db::DPoint &p, lay::angle_constraint_type ac) override;
 
   /**
    *  @brief Continue a "move" operation
    */
-  virtual void move (const db::DPoint &p, lay::angle_constraint_type ac);
+  void move (const db::DPoint &p, lay::angle_constraint_type ac) override;
 
   /**
    *  @brief Transform during a move operation
    */
-  virtual void move_transform (const db::DPoint &p, db::DFTrans tr, lay::angle_constraint_type ac);
+  void move_transform (const db::DPoint &p, db::DFTrans tr, lay::angle_constraint_type ac) override;
 
   /**
    *  @brief Terminate a "move" operation
    */
-  virtual void end_move (const db::DPoint &p, lay::angle_constraint_type ac);
+  void end_move (const db::DPoint &p, lay::angle_constraint_type ac) override;
 
   /**
    *  @brief Terminate a "move" operation with compulsory move vector
    */
-  virtual void end_move (const db::DVector &v);
+  void end_move (const db::DVector &v) override;
 
   /**
    *  @brief Return the bbox of the selection (reimplementation of lay::Editable interface)
    */
-  virtual db::DBox selection_bbox ();
+  db::DBox selection_bbox () override;
 
   /**
    *  @brief Implementation of the editables API
    */
-  virtual bool enter_event (bool);
+  bool enter_event (bool) override;
 
   /**
    *  @brief Implementation of the editables API
    */
-  virtual bool leave_event (bool);
+  bool leave_event (bool) override;
 
   /**
    *  @brief Implementation of the editables API
    */
-  virtual void hover_reset ();
+  void hover_reset () override;
 
   /**
    *  @brief Transform the selection (reimplementation of lay::Editable interface)
    */
-  virtual void transform (const db::DCplxTrans &trans);
+  void transform (const db::DCplxTrans &trans) override;
 
 #if defined(HAVE_QT)
   /**
    *  @brief Create the properties page
    */
-  virtual std::vector<lay::PropertiesPage *> properties_pages (db::Manager *manager, QWidget *parent);
+  std::vector<lay::PropertiesPage *> properties_pages (db::Manager *manager, QWidget *parent) override;
 #endif
 
   /**
@@ -422,12 +422,12 @@ public:
   /**
    *  @brief Implementation of "Plugin" interface: configuration setup
    */
-  bool configure (const std::string &name, const std::string &value);
+  bool configure (const std::string &name, const std::string &value) override;
 
   /**
    *  @brief Implementation of "Plugin" interface: configuration finalization
    */
-  void config_finalize ();
+  void config_finalize () override;
 
   /**
    *  @brief Color accessor
@@ -448,7 +448,7 @@ public:
   /**
    *  @brief Obtain the lay::ViewService interface
    */
-  lay::ViewService *view_service_interface ()
+  lay::ViewService *view_service_interface () override
   {
     return this;
   }
@@ -456,7 +456,7 @@ public:
   /**
    *  @brief Obtain the lay::Drawing interface
    */
-  lay::Drawing *drawing_interface ()
+  lay::Drawing *drawing_interface () override
   {
     return this;
   }
@@ -464,7 +464,7 @@ public:
   /**
    *  @brief Obtain the lay::Editable interface
    */
-  lay::Editable *editable_interface ()
+  lay::Editable *editable_interface () override
   {
     return this;
   }
@@ -512,12 +512,12 @@ public:
   /**
    *  @brief Implements the menu response function
    */
-  void menu_activated (const  std::string &symbol);
+  void menu_activated (const  std::string &symbol) override;
 
   /**
    *  @brief Implements the toolbox widget response function
    */
-  void function (const std::string &name, const std::string &value);
+  void function (const std::string &name, const std::string &value) override;
 
   /**
    *  @brief Return the annotation iterator that delivers the annotations (and only these)
@@ -640,12 +640,12 @@ private:
    */
   void annotations_changed ();
 
-  virtual bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual bool mouse_press_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual bool mouse_double_click_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual bool key_event (unsigned int key, unsigned int buttons);
-  virtual void deactivated ();
+  bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  bool mouse_press_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  bool mouse_double_click_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  bool key_event (unsigned int key, unsigned int buttons) override;
+  void deactivated () override;
 
   void snap_rulers (lay::angle_constraint_type ac);
 
@@ -690,12 +690,12 @@ private:
    */
   void paint_on_planes (const db::DCplxTrans &trans,
                         const std::vector <lay::CanvasPlane *> &planes,
-                        lay::Renderer &renderer);
+                        lay::Renderer &renderer) override;
 
   /**
    *  @brief implementation of the "Drawing" interface: configuration
    */
-  std::vector <lay::ViewOp> get_view_ops (lay::RedrawThreadCanvas &canvas, tl::Color background, tl::Color foreground, tl::Color active) const;
+  std::vector <lay::ViewOp> get_view_ops (lay::RedrawThreadCanvas &canvas, tl::Color background, tl::Color foreground, tl::Color active) const override;
 
   /**
    *  @brief Update m_rulers to reflect the selection

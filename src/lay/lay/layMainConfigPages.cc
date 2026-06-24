@@ -52,7 +52,7 @@ class MainPluginDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override
   {
     options.push_back (std::pair<std::string, std::string> (cfg_grid, "0.001"));
     options.push_back (std::pair<std::string, std::string> (cfg_circle_points, "32"));
@@ -89,7 +89,7 @@ public:
     options.push_back (std::pair<std::string, std::string> (cfg_properties_dialog_relative_mode, "true"));
   }
 
-  virtual std::vector<std::pair <std::string, ConfigPage *> > config_pages (QWidget *parent) const 
+  std::vector<std::pair <std::string, ConfigPage *> > config_pages (QWidget *parent) const override 
   {
     std::vector<std::pair <std::string, ConfigPage *> > pages;
     pages.push_back (std::make_pair (tl::to_string (QObject::tr ("Application|General")), new MainConfigPage7 (parent)));

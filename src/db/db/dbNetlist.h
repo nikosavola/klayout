@@ -44,7 +44,7 @@ class DB_PUBLIC NetlistManipulationCallbacks
 {
 public:
   NetlistManipulationCallbacks () { }
-  virtual ~NetlistManipulationCallbacks () { }
+  ~NetlistManipulationCallbacks () override { }
 
   virtual size_t link_net_to_parent_circuit (const db::Net *subcircuit_net, db::Circuit *parent_circuit, const db::DCplxTrans &trans) = 0;
   virtual void link_nets (const db::Net *net, const db::Net *with) = 0;
@@ -90,7 +90,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~Netlist ();
+  ~Netlist () override;
 
   /**
    *  @brief Assignment

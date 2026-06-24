@@ -627,7 +627,7 @@ public:
     keep ();
   }
 
-  virtual tl::Variant execute ()
+  tl::Variant execute () override
   {
     if (execute_cb.can_issue ()) {
       return execute_cb.issue<tl::Executable, tl::Variant> (&tl::Executable::execute);
@@ -636,7 +636,7 @@ public:
     }
   }
 
-  virtual void cleanup ()
+  void cleanup () override
   {
     if (cleanup_cb.can_issue ()) {
       cleanup_cb.issue<tl::Executable> (&tl::Executable::cleanup);
@@ -683,7 +683,7 @@ public:
     keep ();
   }
 
-  virtual tl::Executable *executable (const std::map<std::string, tl::Variant> &params) const
+  tl::Executable *executable (const std::map<std::string, tl::Variant> &params) const override
   {
     if (executable_cb.can_issue ()) {
       return executable_cb.issue<tl::Recipe, tl::Executable *, const std::map<std::string, tl::Variant> &> (&tl::Recipe::executable, params);

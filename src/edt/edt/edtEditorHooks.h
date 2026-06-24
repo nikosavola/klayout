@@ -88,7 +88,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~EditorHooks ();
+  ~EditorHooks () override;
 
   //  shape creation protocol
   virtual void begin_create_shapes (lay::CellViewRef & /*cv*/, const lay::LayerProperties & /*layer*/) { }

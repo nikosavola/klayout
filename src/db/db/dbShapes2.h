@@ -111,67 +111,67 @@ public:
     return m_layer;
   }
 
-  virtual box_type bbox () const 
+  box_type bbox () const override 
   {
     return m_layer.bbox ();
   }
 
-  virtual void update_bbox () 
+  void update_bbox () override 
   {
     m_layer.update_bbox ();
   }
 
-  virtual bool is_bbox_dirty () const
+  bool is_bbox_dirty () const override
   {
     return m_layer.is_bbox_dirty ();
   }
 
-  virtual bool is_tree_dirty () const
+  bool is_tree_dirty () const override
   {
     return m_layer.is_tree_dirty ();
   }
 
-  size_t size () const
+  size_t size () const override
   {
     return m_layer.size ();
   }
 
-  bool empty () const
+  bool empty () const override
   {
     return m_layer.empty ();
   }
 
-  virtual void sort () 
+  void sort () override 
   {
     m_layer.sort ();
   }
 
-  virtual bool is_same_type (const LayerBase *other) const
+  bool is_same_type (const LayerBase *other) const override
   {
     return dynamic_cast<const layer_class<Sh, StableTag> *> (other);
   }
 
-  virtual LayerBase *clone () const;
-  virtual void translate_into (Shapes *target, GenericRepository &rep, ArrayRepository &array_rep) const;
-  virtual void translate_into (Shapes *target, GenericRepository &rep, ArrayRepository &array_rep, pm_delegate_type &pm) const;
-  virtual void transform_into (Shapes *target, const Trans &trans, GenericRepository &rep, ArrayRepository &array_rep) const;
-  virtual void transform_into (Shapes *target, const Trans &trans, GenericRepository &rep, ArrayRepository &array_rep, pm_delegate_type &pm) const;
-  virtual void transform_into (Shapes *target, const ICplxTrans &trans, GenericRepository &rep, ArrayRepository &array_rep) const;
-  virtual void transform_into (Shapes *target, const ICplxTrans &trans, GenericRepository &rep, ArrayRepository &array_rep, pm_delegate_type &pm) const;
-  virtual void insert_into (Shapes *target);
-  virtual void deref_into (Shapes *target);
-  virtual void deref_into (Shapes *target, pm_delegate_type &pm);
-  virtual void deref_and_transform_into (Shapes *target, const Trans &trans);
-  virtual void deref_and_transform_into (Shapes *target, const Trans &trans, pm_delegate_type &pm);
-  virtual void deref_and_transform_into (Shapes *target, const ICplxTrans &trans);
-  virtual void deref_and_transform_into (Shapes *target, const ICplxTrans &trans, pm_delegate_type &pm);
+  LayerBase *clone () const override;
+  void translate_into (Shapes *target, GenericRepository &rep, ArrayRepository &array_rep) const override;
+  void translate_into (Shapes *target, GenericRepository &rep, ArrayRepository &array_rep, pm_delegate_type &pm) const override;
+  void transform_into (Shapes *target, const Trans &trans, GenericRepository &rep, ArrayRepository &array_rep) const override;
+  void transform_into (Shapes *target, const Trans &trans, GenericRepository &rep, ArrayRepository &array_rep, pm_delegate_type &pm) const override;
+  void transform_into (Shapes *target, const ICplxTrans &trans, GenericRepository &rep, ArrayRepository &array_rep) const override;
+  void transform_into (Shapes *target, const ICplxTrans &trans, GenericRepository &rep, ArrayRepository &array_rep, pm_delegate_type &pm) const override;
+  void insert_into (Shapes *target) override;
+  void deref_into (Shapes *target) override;
+  void deref_into (Shapes *target, pm_delegate_type &pm) override;
+  void deref_and_transform_into (Shapes *target, const Trans &trans) override;
+  void deref_and_transform_into (Shapes *target, const Trans &trans, pm_delegate_type &pm) override;
+  void deref_and_transform_into (Shapes *target, const ICplxTrans &trans) override;
+  void deref_and_transform_into (Shapes *target, const ICplxTrans &trans, pm_delegate_type &pm) override;
 
-  virtual void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self, void *parent) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self, void *parent) const override
   {
     db::mem_stat (stat, purpose, cat, m_layer, no_self, parent);
   }
 
-  unsigned int type_mask () const;
+  unsigned int type_mask () const override;
 
 private:
   layer_type m_layer;

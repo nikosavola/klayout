@@ -120,7 +120,7 @@ public:
     set_result_type (db::CompoundRegionCheckOperationNode::Region);
   }
 
-  virtual void neighbors (const db::Layout * /*layout*/, const db::Cell * /*cell*/, const db::PolygonWithProperties &polygon, const neighbors_type &neighbors)
+  void neighbors (const db::Layout * /*layout*/, const db::Cell * /*cell*/, const db::PolygonWithProperties &polygon, const neighbors_type &neighbors) override
   {
     auto i = neighbors.find ((unsigned int) 1);
     if (i == neighbors.end ()) {

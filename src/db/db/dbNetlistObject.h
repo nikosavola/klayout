@@ -56,7 +56,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~NetlistObject ();
+  ~NetlistObject () override;
 
   /**
    *  @brief Assignment

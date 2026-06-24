@@ -58,7 +58,7 @@ struct DB_PUBLIC TextStringFilter
   /**
    *  @brief Returns true if the text matches the criterion
    */
-  virtual bool selected (const db::Text &text, db::properties_id_type) const
+  bool selected (const db::Text &text, db::properties_id_type) const override
   {
     return (text.string () == m_text) != m_inverse;
   }
@@ -66,7 +66,7 @@ struct DB_PUBLIC TextStringFilter
   /**
    *  @brief This filter is not sensitive to hierarchy
    */
-  virtual const TransformationReducer *vars () const
+  const TransformationReducer *vars () const override
   {
     return nullptr;
   }
@@ -82,7 +82,7 @@ struct DB_PUBLIC TextStringFilter
   /**
    *  @brief Wants to build variants
    */
-  virtual bool wants_variants () const
+  bool wants_variants () const override
   {
     return false;
   }
@@ -118,7 +118,7 @@ struct DB_PUBLIC TextPatternFilter
   /**
    *  @brief Returns true if the text matches the criterion
    */
-  virtual bool selected (const db::Text &text, db::properties_id_type) const
+  bool selected (const db::Text &text, db::properties_id_type) const override
   {
     return m_pattern.match (text.string ()) != m_inverse;
   }
@@ -126,7 +126,7 @@ struct DB_PUBLIC TextPatternFilter
   /**
    *  @brief This filter is not sensitive to hierarchy
    */
-  virtual const TransformationReducer *vars () const
+  const TransformationReducer *vars () const override
   {
     return nullptr;
   }
@@ -142,7 +142,7 @@ struct DB_PUBLIC TextPatternFilter
   /**
    *  @brief Wants to build variants
    */
-  virtual bool wants_variants () const
+  bool wants_variants () const override
   {
     return false;
   }

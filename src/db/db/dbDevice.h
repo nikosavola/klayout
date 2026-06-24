@@ -130,7 +130,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~Device ();
+  ~Device () override;
 
   /**
    *  @brief Gets the device class

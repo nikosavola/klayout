@@ -100,7 +100,7 @@ public:
 
   LayoutToNetlistStandardReader (tl::InputStream &stream);
 
-  void do_read (db::LayoutToNetlist *l2n);
+  void do_read (db::LayoutToNetlist *l2n) override;
 
 protected:
   friend class l2n_std_reader::Brace;

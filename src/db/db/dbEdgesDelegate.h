@@ -171,7 +171,7 @@ public:
   typedef coord_traits::distance_type length_type;
 
   EdgesDelegate ();
-  virtual ~EdgesDelegate ();
+  ~EdgesDelegate () override;
 
   EdgesDelegate (const EdgesDelegate &other);
   EdgesDelegate &operator= (const EdgesDelegate &other);
@@ -287,7 +287,7 @@ public:
   virtual bool has_valid_merged_edges () const = 0;
 
   virtual const db::RecursiveShapeIterator *iter () const = 0;
-  virtual void apply_property_translator (const db::PropertiesTranslator &pt) = 0;
+  void apply_property_translator (const db::PropertiesTranslator &pt) override = 0;
 
   virtual bool equals (const Edges &other) const = 0;
   virtual bool less (const Edges &other) const = 0;

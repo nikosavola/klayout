@@ -194,7 +194,7 @@ public:
     weak_or_shared_collection<T, Shared> *collection;
 
   protected:
-    virtual void reset_object ()
+    void reset_object () override
     {
       weak_or_shared_ptr<T, Shared>::reset_object ();
       if (collection) {

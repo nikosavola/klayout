@@ -42,10 +42,10 @@ Q_OBJECT
 
 public:
   CIFWriterOptionPage (QWidget *parent);
-  ~CIFWriterOptionPage ();
+  ~CIFWriterOptionPage () override;
 
-  void setup (const db::FormatSpecificWriterOptions *options, const db::Technology *tech);
-  void commit (db::FormatSpecificWriterOptions *options, const db::Technology *tech, bool gzip);
+  void setup (const db::FormatSpecificWriterOptions *options, const db::Technology *tech) override;
+  void commit (db::FormatSpecificWriterOptions *options, const db::Technology *tech, bool gzip) override;
 
 private:
   Ui::CIFWriterOptionPage *mp_ui;

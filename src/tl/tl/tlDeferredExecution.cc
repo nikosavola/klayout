@@ -44,7 +44,7 @@ class DefaultDeferredMethodScheduler
 {
 public:
   DefaultDeferredMethodScheduler () : DeferredMethodScheduler () { }
-  void queue_event() {}
+  void queue_event() override {}
 };
 
 // -----------------------------------------------------------------------------------

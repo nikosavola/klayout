@@ -52,10 +52,10 @@ public:
   /** 
    *  @brief Destructor
    */
-  ~LayoutViewFunctions ();
+  ~LayoutViewFunctions () override;
 
   //  Plugin interface implementation
-  void menu_activated (const std::string &symbol);
+  void menu_activated (const std::string &symbol) override;
 
   //  menu callbacks
   void cm_new_layer ();

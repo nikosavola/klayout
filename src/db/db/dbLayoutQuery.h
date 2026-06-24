@@ -196,7 +196,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~FilterBracket ();
+  ~FilterBracket () override;
 
   /**
    *  @brief Set the min multiplicity explicitly
@@ -237,17 +237,17 @@ public:
   /**
    *  @brief Implementation of create_state
    */
-  virtual FilterStateBase *create_state (const std::vector<FilterStateBase *> &followers, db::Layout *layout, tl::Eval &eval, bool single) const;
+  FilterStateBase *create_state (const std::vector<FilterStateBase *> &followers, db::Layout *layout, tl::Eval &eval, bool single) const override;
 
   /**
    *  @brief Implementation of clone
    */
-  virtual FilterBase *clone (LayoutQuery *q) const;
+  FilterBase *clone (LayoutQuery *q) const override;
 
   /**
    *  @brief Implementation of dump
    */
-  virtual void dump (unsigned int l) const;
+  void dump (unsigned int l) const override;
 
   /**
    *  @brief Optimize the bracket - reduce the complexity where possible
@@ -475,7 +475,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~LayoutQuery ();
+  ~LayoutQuery () override;
 
   /**
    *  @brief Gets the root bracket of the query
@@ -591,7 +591,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~LayoutQueryIterator ();
+  ~LayoutQueryIterator () override;
 
   /**
    *  @brief Reset the iterator to the initial state 

@@ -39,14 +39,14 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void begin (size_t /*nx*/, size_t /*ny*/, const db::DPoint & /*p0*/, double /*dx*/, double /*dy*/, const db::DBox & /*frame*/)
+  void begin (size_t /*nx*/, size_t /*ny*/, const db::DPoint & /*p0*/, double /*dx*/, double /*dy*/, const db::DBox & /*frame*/) override
   {
     if (mp_value) {
       *mp_value = 0.0;
     }
   }
 
-  virtual void put (size_t /*ix*/, size_t /*iy*/, const db::Box & /*tile*/, size_t /*id*/, const tl::Variant &obj, double /*dbu*/, const db::ICplxTrans & /*trans*/, bool /*clip*/) 
+  void put (size_t /*ix*/, size_t /*iy*/, const db::Box & /*tile*/, size_t /*id*/, const tl::Variant &obj, double /*dbu*/, const db::ICplxTrans & /*trans*/, bool /*clip*/) override 
   {
     if (mp_value) {
       *mp_value += obj.to_double ();
@@ -89,7 +89,7 @@ public:
     m_mt_mode = false;
   }
 
-  virtual void begin (size_t nx, size_t ny, const db::DPoint &p0, double dx, double dy, const db::DBox &frame)
+  void begin (size_t nx, size_t ny, const db::DPoint &p0, double dx, double dy, const db::DBox &frame) override
   { 
     m_mt_mode = (processor () && processor ()->threads () >= 1);
     m_events.clear ();
@@ -105,7 +105,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void put (size_t ix, size_t iy, const db::Box &tile, size_t id, const tl::Variant &obj, double dbu, const db::ICplxTrans &trans, bool clip) 
+  void put (size_t ix, size_t iy, const db::Box &tile, size_t id, const tl::Variant &obj, double dbu, const db::ICplxTrans &trans, bool clip) override 
   { 
     if (m_mt_mode) {
       //  store the events so we can later flush them at once in the main thread
@@ -130,7 +130,7 @@ public:
     }
   }
 
-  virtual void finish (bool success)
+  void finish (bool success) override
   { 
     //  flush stored events now.
     for (std::vector<TPEvent>::const_iterator e = m_events.begin (); e != m_events.end (); ++e) {

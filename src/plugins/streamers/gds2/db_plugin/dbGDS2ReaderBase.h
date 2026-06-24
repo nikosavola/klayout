@@ -61,7 +61,7 @@ public:
   /**  
    *  @brief Destructor
    */
-  ~GDS2ReaderBase ();
+  ~GDS2ReaderBase () override;
 
   /**
    *  @brief Accessor method to the library name
@@ -74,8 +74,8 @@ protected:
    */
   const std::string &cellname () const { return m_cellname; }
 
-  virtual void do_read (db::Layout &layout);
-  virtual void init (const LoadLayoutOptions &options);
+  void do_read (db::Layout &layout) override;
+  void init (const LoadLayoutOptions &options) override;
 
 private:
   friend class GDS2ReaderLayerMapping;
@@ -100,8 +100,8 @@ private:
   std::pair <bool, db::properties_id_type> finish_element_with_props ();
   void finish_element ();
 
-  virtual void common_reader_error (const std::string &msg) { error (msg); }
-  virtual void common_reader_warn (const std::string &msg, int warn_level = 1) { warn (msg, warn_level); }
+  void common_reader_error (const std::string &msg) override { error (msg); }
+  void common_reader_warn (const std::string &msg, int warn_level = 1) override { warn (msg, warn_level); }
 
   virtual void error (const std::string &txt) = 0;
   virtual void warn (const std::string &txt, int warn_level = 1) = 0;

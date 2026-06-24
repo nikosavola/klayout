@@ -125,7 +125,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~Service ();
+  ~Service () override;
 
   /** 
    *  @brief Clear all highlights (for current object highlighting)
@@ -145,17 +145,17 @@ public:
   /** 
    *  @brief "delete" operation
    */
-  virtual void del ();
+  void del () override;
 
   /**
    *  @brief Deliver the selection's bbox (reimplementation of lay::Editable interface)
    */
-  virtual db::DBox selection_bbox ();
+  db::DBox selection_bbox () override;
  
   /** 
    *  @brief "transform" operation
    */
-  virtual void transform (const db::DCplxTrans &tr)
+  void transform (const db::DCplxTrans &tr) override
   {
     transform (tr, nullptr);
   }
@@ -163,72 +163,72 @@ public:
   /** 
    *  @brief "cut" operation
    */
-  virtual void cut ();
+  void cut () override;
 
   /** 
    *  @brief "copy" operation
    */
-  virtual void copy ();
+  void copy () override;
 
   /**
    *  @brief Begin a "move" operation
    */
-  virtual bool begin_move (lay::Editable::MoveMode mode, const db::DPoint &p, lay::angle_constraint_type ac);
+  bool begin_move (lay::Editable::MoveMode mode, const db::DPoint &p, lay::angle_constraint_type ac) override;
 
   /**
    *  @brief Continue a "move" operation
    */
-  virtual void move (const db::DPoint &p, lay::angle_constraint_type ac);
+  void move (const db::DPoint &p, lay::angle_constraint_type ac) override;
 
   /**
    *  @brief Transform during a move operation
    */
-  virtual void move_transform (const db::DPoint &p, db::DFTrans tr, lay::angle_constraint_type ac);
+  void move_transform (const db::DPoint &p, db::DFTrans tr, lay::angle_constraint_type ac) override;
 
   /**
    *  @brief Terminate a "move" operation
    */
-  virtual void end_move (const db::DPoint &p, lay::angle_constraint_type ac);
+  void end_move (const db::DPoint &p, lay::angle_constraint_type ac) override;
 
   /**
    *  @brief Terminate a "move" operation with compulsory move vector
    */
-  virtual void end_move (const db::DVector &v);
+  void end_move (const db::DVector &v) override;
 
   /**
    *  @brief Indicates whether objects are selected
    */
-  virtual bool has_selection ();
+  bool has_selection () override;
 
   /**
    *  @brief Indicates how many objects are selected
    */
-  virtual size_t selection_size ();
+  size_t selection_size () override;
 
   /**
    *  @brief Indicates whether objects are selected in transient mode
    */
-  virtual bool has_transient_selection ();
+  bool has_transient_selection () override;
 
   /** 
    *  @brief "select" operation
    */
-  virtual double click_proximity (const db::DPoint &pos, lay::Editable::SelectionMode mode);
+  double click_proximity (const db::DPoint &pos, lay::Editable::SelectionMode mode) override;
 
   /**
    *  @brief Gets the catch distance (for single click)
    */
-  virtual double catch_distance ();
+  double catch_distance () override;
 
   /**
    *  @brief Gets the catch distance (for box)
    */
-  virtual double catch_distance_box ();
+  double catch_distance_box () override;
 
   /**
    *  @brief "select" operation
    */
-  virtual bool select (const db::DBox &box, lay::Editable::SelectionMode mode);
+  bool select (const db::DBox &box, lay::Editable::SelectionMode mode) override;
 
   /** 
    *  @brief Returns true, if the given selected object is handled by this service
@@ -281,7 +281,7 @@ public:
   /**
    *  @brief Clears the previous selection
    */
-  void clear_previous_selection ();
+  void clear_previous_selection () override;
 
   /**
    *  @brief Gets the selection iterator
@@ -291,7 +291,7 @@ public:
   /**
    *  @brief Establish a transient selection
    */
-  bool transient_select (const db::DPoint &pos);
+  bool transient_select (const db::DPoint &pos) override;
 
   /**
    *  @brief Gets the transient selection iterator
@@ -301,12 +301,12 @@ public:
   /**
    *  @brief Turns the transient selection to the selection
    */
-  virtual void transient_to_selection ();
+  void transient_to_selection () override;
 
   /**
    *  @brief Clear the transient selection
    */
-  void clear_transient_selection ();
+  void clear_transient_selection () override;
 
   /**
    *  @brief Clear the selection
@@ -336,52 +336,52 @@ public:
   /**
    *  @brief Implement the mouse mode: move event
    */
-  virtual bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio);
+  bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
 
   /**
    *  @brief Implement the mouse mode: button press event
    */
-  virtual bool mouse_press_event (const db::DPoint &p, unsigned int buttons, bool prio);
+  bool mouse_press_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
 
   /**
    *  @brief Implement the mouse mode: button clicked (pressed and released)
    */
-  virtual bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio);
+  bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
 
   /**
    *  @brief Implement the mouse mode: button double clicked 
    */
-  virtual bool mouse_double_click_event (const db::DPoint &p, unsigned int buttons, bool prio);
+  bool mouse_double_click_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
 
   /**
    *  @brief Mouse leave event handler
    */
-  virtual bool leave_event (bool prio);
+  bool leave_event (bool prio) override;
 
   /**
    *  @brief Mouse enter event handler
    */
-  virtual bool enter_event (bool prio);
+  bool enter_event (bool prio) override;
 
   /**
    *  @brief Implements the key handler
    */
-  virtual bool key_event (unsigned int /*key*/, unsigned int /*buttons*/);
+  bool key_event (unsigned int /*key*/, unsigned int /*buttons*/) override;
 
   /**
    *  @brief Implement the mouse mode: deactivate mouse mode
    */
-  virtual void deactivated ();
+  void deactivated () override;
 
   /**
    *  @brief Implement the mouse mode: mode activated
    */
-  virtual void activated ();
+  void activated () override;
 
   /**
    *  @brief Cancel any edit operations (such as move)
    */
-  virtual void edit_cancel ();
+  void edit_cancel () override;
 
   /**
    *  @brief Triggered by tap - gives the new layer and if required the initial point
@@ -560,7 +560,7 @@ protected:
   /**
    *  @brief Receive configuration parameters
    */
-  bool configure (const std::string &name, const std::string &value);
+  bool configure (const std::string &name, const std::string &value) override;
 
   /**
    *  @brief Snap a point to the edit grid

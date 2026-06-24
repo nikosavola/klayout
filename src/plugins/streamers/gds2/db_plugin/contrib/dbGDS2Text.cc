@@ -41,12 +41,12 @@ namespace db
 class GDS2TextFormatDeclaration
   : public db::StreamFormatDeclaration
 {
-  virtual std::string format_name () const { return "GDS2Text"; }
-  virtual std::string format_desc () const { return "GDS2 Text"; }
-  virtual std::string format_title () const { return "GDS2 (ASCII text representation)"; }
-  virtual std::string file_format () const { return "GDS2 Text files (*.txt *.TXT )"; }
+  std::string format_name () const override { return "GDS2Text"; }
+  std::string format_desc () const override { return "GDS2 Text"; }
+  std::string format_title () const override { return "GDS2 (ASCII text representation)"; }
+  std::string file_format () const override { return "GDS2 Text files (*.txt *.TXT )"; }
 
-  virtual bool detect (tl::InputStream &s) const 
+  bool detect (tl::InputStream &s) const override 
   {
     try {
 
@@ -70,27 +70,27 @@ class GDS2TextFormatDeclaration
     return false;
   }
 
-  virtual ReaderBase *create_reader (tl::InputStream &s) const 
+  ReaderBase *create_reader (tl::InputStream &s) const override 
   {
     return new db::GDS2ReaderText(s);
   }
 
-  virtual WriterBase *create_writer () const 
+  WriterBase *create_writer () const override 
   {
     return new db::GDS2WriterText();
   }
 
-  virtual bool can_read () const
+  bool can_read () const override
   {
     return true;
   }
 
-  virtual bool can_write () const
+  bool can_write () const override
   {
     return true;
   }
 
-  virtual bool supports_context () const
+  bool supports_context () const override
   {
     return true;
   }

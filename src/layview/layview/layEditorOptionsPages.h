@@ -59,18 +59,18 @@ Q_OBJECT
 
 public:
   EditorOptionsPages (QWidget *parent, lay::LayoutViewBase *view, const std::vector<lay::EditorOptionsPage *> &pages);
-  ~EditorOptionsPages ();
+  ~EditorOptionsPages () override;
 
-  virtual void unregister_page (lay::EditorOptionsPage *page);
-  virtual bool has_content () const;
-  virtual bool has_modal_content () const;
-  virtual void activate_page (lay::EditorOptionsPage *page);
-  virtual void make_page_current (lay::EditorOptionsPage *page);
-  virtual bool exec_modal (lay::EditorOptionsPage *page);
-  virtual std::vector<lay::EditorOptionsPage *> editor_options_pages (const lay::PluginDeclaration *plugin_declaration);
-  virtual std::vector<lay::EditorOptionsPage *> editor_options_pages ();
-  virtual void activate (const lay::Plugin *plugin);
-  virtual lay::EditorOptionsPage *page_with_name (const std::string &name);
+  void unregister_page (lay::EditorOptionsPage *page) override;
+  bool has_content () const override;
+  bool has_modal_content () const override;
+  void activate_page (lay::EditorOptionsPage *page) override;
+  void make_page_current (lay::EditorOptionsPage *page) override;
+  bool exec_modal (lay::EditorOptionsPage *page) override;
+  std::vector<lay::EditorOptionsPage *> editor_options_pages (const lay::PluginDeclaration *plugin_declaration) override;
+  std::vector<lay::EditorOptionsPage *> editor_options_pages () override;
+  void activate (const lay::Plugin *plugin) override;
+  lay::EditorOptionsPage *page_with_name (const std::string &name) override;
 
   void do_apply (bool modal);
 
@@ -86,7 +86,7 @@ private:
   bool m_update_enabled;
 
   void update (lay::EditorOptionsPage *page);
-  void focusInEvent (QFocusEvent *event);
+  void focusInEvent (QFocusEvent *event) override;
 };
 
 /**
@@ -99,7 +99,7 @@ Q_OBJECT
 
 public:
   EditorOptionsModalPages (EditorOptionsPages *parent);
-  ~EditorOptionsModalPages ();
+  ~EditorOptionsModalPages () override;
 
   int count ();
   int current_index ();
@@ -109,8 +109,8 @@ public:
   EditorOptionsPage *widget (int index);
 
 private slots:
-  void accept ();
-  void reject ();
+  void accept () override;
+  void reject () override;
   void clicked (QAbstractButton *button);
 
 private:

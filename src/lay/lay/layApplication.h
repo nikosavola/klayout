@@ -91,7 +91,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~ApplicationBase ();
+  ~ApplicationBase () override;
 
   /**
    *  @brief The singleton instance
@@ -405,9 +405,9 @@ class LAY_PUBLIC GuiApplication
 {
 public:
   GuiApplication (int &argc, char **argv);
-  ~GuiApplication ();
+  ~GuiApplication () override;
 
-  QApplication *qapp_gui () { return this; }
+  QApplication *qapp_gui () override { return this; }
 
   /**
    *  @brief Does some pre-initialization
@@ -419,7 +419,7 @@ public:
   /**
    *  @brief Reimplementation of notify from QApplication
    */
-  bool notify (QObject *receiver, QEvent *e);
+  bool notify (QObject *receiver, QEvent *e) override;
 
   /**
    *  @brief Gets the application instance, cast to this class
@@ -432,7 +432,7 @@ public:
   /**
    *  @brief Specialization of exec
    */
-  int exec ();
+  int exec () override;
 
   /**
    *  @brief Hides QCoreApplication::exit
@@ -445,7 +445,7 @@ public:
   /**
    *  @brief Returns the main window's reference
    */
-  virtual MainWindow *main_window () const
+  MainWindow *main_window () const override
   {
     return mp_mw;
   }
@@ -456,12 +456,12 @@ public:
    *  Use lay::BusySection to declare a section in "busy" mode. In busy mode, some features are disabled to
    *  prevent recursion in processing of events.
    */
-  virtual void enter_busy_mode (bool bm);
+  void enter_busy_mode (bool bm) override;
 
   /**
    *  @brief Gets a value indicating whether busy mode is enabled
    */
-  virtual bool is_busy () const;
+  bool is_busy () const override;
 
   /**
    *  @brief Forces update of the application menu
@@ -472,17 +472,17 @@ public:
   /**
    *  @brief Handles events
    */
-  bool event (QEvent *event);
+  bool event (QEvent *event) override;
 
 protected:
-  virtual void setup ();
-  virtual void shutdown ();
-  virtual void finish ();
-  virtual void prepare_recording (const std::string &gtf_record, bool gtf_save_incremental);
-  virtual void start_recording ();
-  virtual void process_events_impl (QEventLoop::ProcessEventsFlags flags, bool silent);
+  void setup () override;
+  void shutdown () override;
+  void finish () override;
+  void prepare_recording (const std::string &gtf_record, bool gtf_save_incremental) override;
+  void start_recording () override;
+  void process_events_impl (QEventLoop::ProcessEventsFlags flags, bool silent) override;
 
-  virtual lay::Dispatcher *dispatcher () const;
+  lay::Dispatcher *dispatcher () const override;
 
 private:
   MainWindow *mp_mw;
@@ -500,7 +500,7 @@ class LAY_PUBLIC NonGuiApplication
 {
 public:
   NonGuiApplication (int &argc, char **argv);
-  ~NonGuiApplication ();
+  ~NonGuiApplication () override;
 
   /**
    *  @brief Gets the application instance, cast to this class
@@ -513,7 +513,7 @@ public:
   /**
    *  @brief Specialization of exec
    */
-  int exec ();
+  int exec () override;
 
   /**
    *  @brief Hides QCoreApplication::exit
@@ -527,16 +527,16 @@ public:
    *  @brief Returns the main window's reference
    *  This incarnation returns 0 since no GUI is supported.
    */
-  virtual MainWindow *main_window () const
+  MainWindow *main_window () const override
   {
     return nullptr;
   }
 
 protected:
-  virtual void setup ();
-  virtual void shutdown ();
+  void setup () override;
+  void shutdown () override;
 
-  virtual lay::Dispatcher *dispatcher () const
+  lay::Dispatcher *dispatcher () const override
   {
     return mp_dispatcher;
   }

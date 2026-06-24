@@ -60,7 +60,7 @@ class MacroIncludeFileResolver
 public:
   MacroIncludeFileResolver () { }
 
-  std::string get_text (const std::string &path) const
+  std::string get_text (const std::string &path) const override
   {
     //  Use lym::Macro to resolve texts - this strips the XML envelope.
     //  Intentionally not compatibility check is made to allow using any

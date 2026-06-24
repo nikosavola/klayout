@@ -51,9 +51,9 @@ public:
   typedef std::map<std::string, tl::Variant> parameters_type;
 
   NetlistSpiceReader (NetlistSpiceReaderDelegate *delegate = nullptr);
-  virtual ~NetlistSpiceReader ();
+  ~NetlistSpiceReader () override;
 
-  virtual void read (tl::InputStream &stream, db::Netlist &netlist);
+  void read (tl::InputStream &stream, db::Netlist &netlist) override;
 
   /**
    *  @brief Sets or resets strict mode

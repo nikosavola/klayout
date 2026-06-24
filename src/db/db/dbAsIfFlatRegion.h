@@ -44,251 +44,251 @@ class DB_PUBLIC AsIfFlatRegion
 {
 public:
   AsIfFlatRegion ();
-  virtual ~AsIfFlatRegion ();
+  ~AsIfFlatRegion () override;
 
-  virtual bool is_box () const;
+  bool is_box () const override;
 
-  virtual area_type area (const db::Box &box) const;
-  virtual perimeter_type perimeter (const db::Box &box) const;
-  virtual Box bbox () const;
+  area_type area (const db::Box &box) const override;
+  perimeter_type perimeter (const db::Box &box) const override;
+  Box bbox () const override;
 
-  virtual std::string to_string (size_t nmax) const;
+  std::string to_string (size_t nmax) const override;
 
-  virtual EdgePairsDelegate *cop_to_edge_pairs (db::CompoundRegionOperationNode &node, PropertyConstraint prop_constraint);
-  virtual RegionDelegate *cop_to_region (db::CompoundRegionOperationNode &node, db::PropertyConstraint prop_constraint);
-  virtual EdgesDelegate *cop_to_edges (db::CompoundRegionOperationNode &node, db::PropertyConstraint prop_constraint);
+  EdgePairsDelegate *cop_to_edge_pairs (db::CompoundRegionOperationNode &node, PropertyConstraint prop_constraint) override;
+  RegionDelegate *cop_to_region (db::CompoundRegionOperationNode &node, db::PropertyConstraint prop_constraint) override;
+  EdgesDelegate *cop_to_edges (db::CompoundRegionOperationNode &node, db::PropertyConstraint prop_constraint) override;
 
-  EdgePairsDelegate *width_check (db::Coord d, const RegionCheckOptions &options) const;
-  EdgePairsDelegate *space_check (db::Coord d, const RegionCheckOptions &options) const;
-  EdgePairsDelegate *isolated_check (db::Coord d, const RegionCheckOptions &options) const;
-  EdgePairsDelegate *notch_check (db::Coord d, const RegionCheckOptions &options) const;
-  EdgePairsDelegate *enclosing_check (const Region &other, db::Coord d, const RegionCheckOptions &options) const;
-  EdgePairsDelegate *overlap_check (const Region &other, db::Coord d, const RegionCheckOptions &options) const;
-  EdgePairsDelegate *separation_check (const Region &other, db::Coord d, const RegionCheckOptions &options) const;
-  EdgePairsDelegate *inside_check (const Region &other, db::Coord d, const RegionCheckOptions &options) const;
+  EdgePairsDelegate *width_check (db::Coord d, const RegionCheckOptions &options) const override;
+  EdgePairsDelegate *space_check (db::Coord d, const RegionCheckOptions &options) const override;
+  EdgePairsDelegate *isolated_check (db::Coord d, const RegionCheckOptions &options) const override;
+  EdgePairsDelegate *notch_check (db::Coord d, const RegionCheckOptions &options) const override;
+  EdgePairsDelegate *enclosing_check (const Region &other, db::Coord d, const RegionCheckOptions &options) const override;
+  EdgePairsDelegate *overlap_check (const Region &other, db::Coord d, const RegionCheckOptions &options) const override;
+  EdgePairsDelegate *separation_check (const Region &other, db::Coord d, const RegionCheckOptions &options) const override;
+  EdgePairsDelegate *inside_check (const Region &other, db::Coord d, const RegionCheckOptions &options) const override;
 
-  virtual EdgePairsDelegate *grid_check (db::Coord gx, db::Coord gy) const;
-  virtual EdgePairsDelegate *angle_check (double min, double max, bool inverse) const;
+  EdgePairsDelegate *grid_check (db::Coord gx, db::Coord gy) const override;
+  EdgePairsDelegate *angle_check (double min, double max, bool inverse) const override;
 
-  virtual RegionDelegate *snapped_in_place (db::Coord gx, db::Coord gy)
+  RegionDelegate *snapped_in_place (db::Coord gx, db::Coord gy) override
   {
     return snapped (gx, gy);
   }
 
-  virtual RegionDelegate *snapped (db::Coord gx, db::Coord gy);
+  RegionDelegate *snapped (db::Coord gx, db::Coord gy) override;
 
-  virtual RegionDelegate *scaled_and_snapped_in_place (db::Coord gx, db::Coord mx, db::Coord dx, db::Coord gy, db::Coord my, db::Coord dy)
+  RegionDelegate *scaled_and_snapped_in_place (db::Coord gx, db::Coord mx, db::Coord dx, db::Coord gy, db::Coord my, db::Coord dy) override
   {
     return scaled_and_snapped (gx, mx, dx, gy, my, dy);
   }
 
-  virtual RegionDelegate *scaled_and_snapped (db::Coord gx, db::Coord mx, db::Coord dx, db::Coord gy, db::Coord my, db::Coord dy);
+  RegionDelegate *scaled_and_snapped (db::Coord gx, db::Coord mx, db::Coord dx, db::Coord gy, db::Coord my, db::Coord dy) override;
 
-  virtual EdgesDelegate *edges (const EdgeFilterBase *filter, const db::PolygonToEdgeProcessorBase *proc) const;
+  EdgesDelegate *edges (const EdgeFilterBase *filter, const db::PolygonToEdgeProcessorBase *proc) const override;
 
-  virtual RegionDelegate *process_in_place (const PolygonProcessorBase &filter)
+  RegionDelegate *process_in_place (const PolygonProcessorBase &filter) override
   {
     return processed (filter);
   }
 
-  virtual RegionDelegate *processed (const PolygonProcessorBase &filter) const;
-  virtual EdgesDelegate *processed_to_edges (const PolygonToEdgeProcessorBase &filter) const;
-  virtual EdgePairsDelegate *processed_to_edge_pairs (const PolygonToEdgePairProcessorBase &filter) const;
+  RegionDelegate *processed (const PolygonProcessorBase &filter) const override;
+  EdgesDelegate *processed_to_edges (const PolygonToEdgeProcessorBase &filter) const override;
+  EdgePairsDelegate *processed_to_edge_pairs (const PolygonToEdgePairProcessorBase &filter) const override;
 
-  virtual RegionDelegate *filter_in_place (const PolygonFilterBase &filter)
+  RegionDelegate *filter_in_place (const PolygonFilterBase &filter) override
   {
     return filtered (filter);
   }
 
-  virtual RegionDelegate *filtered (const PolygonFilterBase &filter) const;
-  virtual std::pair<RegionDelegate *, RegionDelegate *> filtered_pair (const PolygonFilterBase &filter) const;
+  RegionDelegate *filtered (const PolygonFilterBase &filter) const override;
+  std::pair<RegionDelegate *, RegionDelegate *> filtered_pair (const PolygonFilterBase &filter) const override;
 
-  virtual RegionDelegate *merged_in_place ()
+  RegionDelegate *merged_in_place () override
   {
     return merged ();
   }
 
-  virtual RegionDelegate *merged_in_place (bool min_coherence, unsigned int min_wc, bool join_properties_on_merge)
+  RegionDelegate *merged_in_place (bool min_coherence, unsigned int min_wc, bool join_properties_on_merge) override
   {
     return merged (min_coherence, min_wc, join_properties_on_merge);
   }
 
-  virtual RegionDelegate *merged () const
+  RegionDelegate *merged () const override
   {
     return merged (min_coherence (), 0, join_properties_on_merge ());
   }
 
-  virtual RegionDelegate *merged (bool min_coherence, unsigned int min_wc, bool join_properties_on_merge) const;
+  RegionDelegate *merged (bool min_coherence, unsigned int min_wc, bool join_properties_on_merge) const override;
 
-  virtual RegionDelegate *sized (coord_type d, unsigned int mode) const;
-  virtual RegionDelegate *sized (coord_type dx, coord_type dy, unsigned int mode) const;
-  virtual RegionDelegate *sized_inside (const Region &inside, bool outside, coord_type d, int steps, unsigned int mode) const;
-  virtual RegionDelegate *sized_inside (const Region &inside, bool outside, coord_type dx, coord_type dy, int steps, unsigned int mode) const;
+  RegionDelegate *sized (coord_type d, unsigned int mode) const override;
+  RegionDelegate *sized (coord_type dx, coord_type dy, unsigned int mode) const override;
+  RegionDelegate *sized_inside (const Region &inside, bool outside, coord_type d, int steps, unsigned int mode) const override;
+  RegionDelegate *sized_inside (const Region &inside, bool outside, coord_type dx, coord_type dy, int steps, unsigned int mode) const override;
 
-  virtual RegionDelegate *and_with (const Region &other, PropertyConstraint property_constraint) const;
-  virtual RegionDelegate *not_with (const Region &other, PropertyConstraint property_constraint) const;
-  virtual RegionDelegate *xor_with (const Region &other, PropertyConstraint prop_constraint) const;
-  virtual RegionDelegate *or_with (const Region &other, PropertyConstraint prop_constraint) const;
-  virtual std::pair<RegionDelegate *, RegionDelegate *> andnot_with (const Region &other, PropertyConstraint property_constraint) const;
+  RegionDelegate *and_with (const Region &other, PropertyConstraint property_constraint) const override;
+  RegionDelegate *not_with (const Region &other, PropertyConstraint property_constraint) const override;
+  RegionDelegate *xor_with (const Region &other, PropertyConstraint prop_constraint) const override;
+  RegionDelegate *or_with (const Region &other, PropertyConstraint prop_constraint) const override;
+  std::pair<RegionDelegate *, RegionDelegate *> andnot_with (const Region &other, PropertyConstraint property_constraint) const override;
 
-  virtual RegionDelegate *add_in_place (const Region &other)
+  RegionDelegate *add_in_place (const Region &other) override
   {
     return add (other);
   }
 
-  virtual RegionDelegate *add (const Region &other) const;
+  RegionDelegate *add (const Region &other) const override;
 
-  virtual RegionDelegate *peel (double /*complexity_factor*/) const
+  RegionDelegate *peel (double /*complexity_factor*/) const override
   {
     return const_cast<AsIfFlatRegion *> (this);
   }
 
-  virtual RegionDelegate *selected_outside (const Region &other) const
+  RegionDelegate *selected_outside (const Region &other) const override
   {
     return selected_interacting_generic (other, 1, false, Positive, size_t (1), std::numeric_limits<size_t>::max ()).first;
   }
 
-  virtual RegionDelegate *selected_not_outside (const Region &other) const
+  RegionDelegate *selected_not_outside (const Region &other) const override
   {
     return selected_interacting_generic (other, 1, false, Negative, size_t (1), std::numeric_limits<size_t>::max ()).first;
   }
 
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_outside_pair (const Region &other) const
+  std::pair<RegionDelegate *, RegionDelegate *> selected_outside_pair (const Region &other) const override
   {
     return selected_interacting_generic (other, 1, false, PositiveAndNegative, size_t (1), std::numeric_limits<size_t>::max ());
   }
 
-  virtual RegionDelegate *selected_inside (const Region &other) const
+  RegionDelegate *selected_inside (const Region &other) const override
   {
     return selected_interacting_generic (other, -1, true, Positive, size_t (1), std::numeric_limits<size_t>::max ()).first;
   }
 
-  virtual RegionDelegate *selected_not_inside (const Region &other) const
+  RegionDelegate *selected_not_inside (const Region &other) const override
   {
     return selected_interacting_generic (other, -1, true, Negative, size_t (1), std::numeric_limits<size_t>::max ()).first;
   }
 
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_inside_pair (const Region &other) const
+  std::pair<RegionDelegate *, RegionDelegate *> selected_inside_pair (const Region &other) const override
   {
     return selected_interacting_generic (other, -1, true, PositiveAndNegative, size_t (1), std::numeric_limits<size_t>::max ());
   }
 
-  virtual RegionDelegate *selected_enclosing (const Region &other, size_t min_count, size_t max_count) const
+  RegionDelegate *selected_enclosing (const Region &other, size_t min_count, size_t max_count) const override
   {
     return selected_interacting_generic (other, -2, false, Positive, min_count, max_count).first;
   }
 
-  virtual RegionDelegate *selected_not_enclosing (const Region &other, size_t min_count, size_t max_count) const
+  RegionDelegate *selected_not_enclosing (const Region &other, size_t min_count, size_t max_count) const override
   {
     return selected_interacting_generic (other, -2, false, Negative, min_count, max_count).first;
   }
 
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_enclosing_pair (const Region &other, size_t min_count, size_t max_count) const
+  std::pair<RegionDelegate *, RegionDelegate *> selected_enclosing_pair (const Region &other, size_t min_count, size_t max_count) const override
   {
     return selected_interacting_generic (other, -2, false, PositiveAndNegative, min_count, max_count);
   }
 
-  virtual RegionDelegate *selected_interacting (const Region &other, size_t min_count, size_t max_count) const
+  RegionDelegate *selected_interacting (const Region &other, size_t min_count, size_t max_count) const override
   {
     return selected_interacting_generic (other, 0, true, Positive, min_count, max_count).first;
   }
 
-  virtual RegionDelegate *selected_not_interacting (const Region &other, size_t min_count, size_t max_count) const
+  RegionDelegate *selected_not_interacting (const Region &other, size_t min_count, size_t max_count) const override
   {
     return selected_interacting_generic (other, 0, true, Negative, min_count, max_count).first;
   }
 
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_pair (const Region &other, size_t min_count, size_t max_count) const
+  std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_pair (const Region &other, size_t min_count, size_t max_count) const override
   {
     return selected_interacting_generic (other, 0, true, PositiveAndNegative, min_count, max_count);
   }
 
-  virtual RegionDelegate *selected_interacting (const Edges &other, size_t min_count, size_t max_count) const
+  RegionDelegate *selected_interacting (const Edges &other, size_t min_count, size_t max_count) const override
   {
     return selected_interacting_generic (other, Positive, min_count, max_count).first;
   }
 
-  virtual RegionDelegate *selected_not_interacting (const Edges &other, size_t min_count, size_t max_count) const
+  RegionDelegate *selected_not_interacting (const Edges &other, size_t min_count, size_t max_count) const override
   {
     return selected_interacting_generic (other, Negative, min_count, max_count).first;
   }
 
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_pair (const Edges &other, size_t min_count, size_t max_count) const
+  std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_pair (const Edges &other, size_t min_count, size_t max_count) const override
   {
     return selected_interacting_generic (other, PositiveAndNegative, min_count, max_count);
   }
 
-  virtual RegionDelegate *selected_interacting (const Texts &other, size_t min_count, size_t max_count) const
+  RegionDelegate *selected_interacting (const Texts &other, size_t min_count, size_t max_count) const override
   {
     return selected_interacting_generic (other, Positive, min_count, max_count).first;
   }
 
-  virtual RegionDelegate *selected_not_interacting (const Texts &other, size_t min_count, size_t max_count) const
+  RegionDelegate *selected_not_interacting (const Texts &other, size_t min_count, size_t max_count) const override
   {
     return selected_interacting_generic (other, Negative, min_count, max_count).first;
   }
 
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_pair (const Texts &other, size_t min_count, size_t max_count) const
+  std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_pair (const Texts &other, size_t min_count, size_t max_count) const override
   {
     return selected_interacting_generic (other, PositiveAndNegative, min_count, max_count);
   }
 
-  virtual RegionDelegate *selected_overlapping (const Region &other, size_t min_count, size_t max_count) const
+  RegionDelegate *selected_overlapping (const Region &other, size_t min_count, size_t max_count) const override
   {
     return selected_interacting_generic (other, 0, false, Positive, min_count, max_count).first;
   }
 
-  virtual RegionDelegate *selected_not_overlapping (const Region &other, size_t min_count, size_t max_count) const
+  RegionDelegate *selected_not_overlapping (const Region &other, size_t min_count, size_t max_count) const override
   {
     return selected_interacting_generic (other, 0, false, Negative, min_count, max_count).first;
   }
 
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_overlapping_pair (const Region &other, size_t min_count, size_t max_count) const
+  std::pair<RegionDelegate *, RegionDelegate *> selected_overlapping_pair (const Region &other, size_t min_count, size_t max_count) const override
   {
     return selected_interacting_generic (other, 0, false, PositiveAndNegative, min_count, max_count);
   }
 
-  virtual RegionDelegate *pull_inside (const Region &other) const
+  RegionDelegate *pull_inside (const Region &other) const override
   {
     return pull_generic (other, -1, true);
   }
 
-  virtual RegionDelegate *pull_interacting (const Region &other) const
+  RegionDelegate *pull_interacting (const Region &other) const override
   {
     return pull_generic (other, 0, true);
   }
 
-  virtual EdgesDelegate *pull_interacting (const Edges &other) const
+  EdgesDelegate *pull_interacting (const Edges &other) const override
   {
     return pull_generic (other);
   }
 
-  virtual TextsDelegate *pull_interacting (const Texts &other) const
+  TextsDelegate *pull_interacting (const Texts &other) const override
   {
     return pull_generic (other);
   }
 
-  virtual RegionDelegate *pull_overlapping (const Region &other) const
+  RegionDelegate *pull_overlapping (const Region &other) const override
   {
     return pull_generic (other, 0, false);
   }
 
-  virtual RegionDelegate *in (const Region &other, bool invert) const
+  RegionDelegate *in (const Region &other, bool invert) const override
   {
     return in_and_out_generic (other, invert ? Negative : Positive).first;
   }
 
-  virtual std::pair<RegionDelegate *, RegionDelegate *> in_and_out (const Region &other) const
+  std::pair<RegionDelegate *, RegionDelegate *> in_and_out (const Region &other) const override
   {
     return in_and_out_generic (other, PositiveAndNegative);
   }
 
-  virtual bool equals (const Region &other) const;
-  virtual bool less (const Region &other) const;
+  bool equals (const Region &other) const override;
+  bool less (const Region &other) const override;
 
-  virtual RegionDelegate *nets (LayoutToNetlist *l2n, NetPropertyMode prop_mode, const tl::Variant &net_prop_name, const std::vector<const db::Net *> *net_filter) const;
+  RegionDelegate *nets (LayoutToNetlist *l2n, NetPropertyMode prop_mode, const tl::Variant &net_prop_name, const std::vector<const db::Net *> *net_filter) const override;
 
-  virtual void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const;
+  void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const override;
 
 protected:
   void update_bbox (const db::Box &box);

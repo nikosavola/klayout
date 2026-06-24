@@ -43,10 +43,10 @@ Q_OBJECT
 
 public:
   MAGReaderOptionPage (QWidget *parent);
-  ~MAGReaderOptionPage ();
+  ~MAGReaderOptionPage () override;
 
-  void setup (const db::FormatSpecificReaderOptions *options, const db::Technology *tech);
-  void commit (db::FormatSpecificReaderOptions *options, const db::Technology *tech);
+  void setup (const db::FormatSpecificReaderOptions *options, const db::Technology *tech) override;
+  void commit (db::FormatSpecificReaderOptions *options, const db::Technology *tech) override;
 
 private slots:
   void add_lib_path_clicked ();

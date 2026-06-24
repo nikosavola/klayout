@@ -57,8 +57,8 @@ Q_OBJECT
 public:
   NetTracerTechComponentEditor (QWidget *parent);
 
-  void commit ();
-  void setup ();
+  void commit () override;
+  void setup () override;
 
 public slots:
   void add_clicked ();

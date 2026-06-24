@@ -100,11 +100,11 @@ Q_OBJECT
 
 public:
   GerberImportDialog (QWidget *parent, db::GerberImportData *data);
-  ~GerberImportDialog ();
+  ~GerberImportDialog () override;
 
-  int exec ();
-  void accept ();
-  void reject ();
+  int exec () override;
+  void accept () override;
+  void reject () override;
 
 public slots:
   void next_page ();

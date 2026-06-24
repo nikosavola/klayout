@@ -139,7 +139,7 @@ public:
     //  .. nothing yet ..
   }
 
-  QWidget *createEditor (QWidget * /*parent*/, const QStyleOptionViewItem & /*option*/, const QModelIndex & /*index*/) const 
+  QWidget *createEditor (QWidget * /*parent*/, const QStyleOptionViewItem & /*option*/, const QModelIndex & /*index*/) const override 
   {
     return nullptr;
   }
@@ -158,17 +158,17 @@ public:
     //  .. nothing yet ..
   }
 
-  QWidget *createEditor (QWidget *parent, const QStyleOptionViewItem & /*option*/, const QModelIndex & /*index*/) const 
+  QWidget *createEditor (QWidget *parent, const QStyleOptionViewItem & /*option*/, const QModelIndex & /*index*/) const override 
   {
     return new GerberImportDialogMetalLayerColumnEditorWidget (parent, mp_data);
   }
 
-  void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex & /*index*/) const
+  void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex & /*index*/) const override
   {
     editor->setGeometry(option.rect);
   }
 
-  void setEditorData (QWidget *widget, const QModelIndex &index) const
+  void setEditorData (QWidget *widget, const QModelIndex &index) const override
   {
     GerberImportDialogMetalLayerColumnEditorWidget *editor = dynamic_cast<GerberImportDialogMetalLayerColumnEditorWidget *> (widget);
     if (editor) {
@@ -176,7 +176,7 @@ public:
     }
   }
 
-  void setModelData (QWidget *widget, QAbstractItemModel *model, const QModelIndex &index) const
+  void setModelData (QWidget *widget, QAbstractItemModel *model, const QModelIndex &index) const override
   {
     GerberImportDialogMetalLayerColumnEditorWidget *editor = dynamic_cast<GerberImportDialogMetalLayerColumnEditorWidget *> (widget);
     if (editor) {
@@ -192,7 +192,7 @@ public:
     }
   }
 
-  QSize sizeHint (const QStyleOptionViewItem &option, const QModelIndex &index) const 
+  QSize sizeHint (const QStyleOptionViewItem &option, const QModelIndex &index) const override 
   {
     QWidget *editor = createEditor (nullptr, option, index);
     QSize size = editor->sizeHint ();
@@ -217,17 +217,17 @@ public:
     //  .. nothing yet ..
   }
 
-  QWidget *createEditor (QWidget *parent, const QStyleOptionViewItem & /*option*/, const QModelIndex & /*index*/) const 
+  QWidget *createEditor (QWidget *parent, const QStyleOptionViewItem & /*option*/, const QModelIndex & /*index*/) const override 
   {
     return new GerberImportDialogFileColumnEditorWidget (parent, mp_data);
   }
 
-  void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex & /*index*/) const
+  void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex & /*index*/) const override
   {
     editor->setGeometry(option.rect);
   }
 
-  void setEditorData (QWidget *widget, const QModelIndex &index) const
+  void setEditorData (QWidget *widget, const QModelIndex &index) const override
   {
     GerberImportDialogFileColumnEditorWidget *editor = dynamic_cast<GerberImportDialogFileColumnEditorWidget *> (widget);
     if (editor) {
@@ -236,7 +236,7 @@ public:
     }
   }
 
-  void setModelData (QWidget *widget, QAbstractItemModel *model, const QModelIndex &index) const
+  void setModelData (QWidget *widget, QAbstractItemModel *model, const QModelIndex &index) const override
   {
     GerberImportDialogFileColumnEditorWidget *editor = dynamic_cast<GerberImportDialogFileColumnEditorWidget *> (widget);
     if (editor) {
@@ -270,7 +270,7 @@ public:
     }
   }
 
-  QSize sizeHint (const QStyleOptionViewItem &option, const QModelIndex &index) const 
+  QSize sizeHint (const QStyleOptionViewItem &option, const QModelIndex &index) const override 
   {
     QWidget *editor = createEditor (nullptr, option, index);
     QSize size = editor->sizeHint ();

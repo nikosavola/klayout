@@ -62,12 +62,12 @@ public:
     m_boolean_size_mode = 2;
   }
 
-  ~BooleanOperationsPlugin ()
+  ~BooleanOperationsPlugin () override
   {
     // ...
   }
 
-  void menu_activated (const std::string &symbol) 
+  void menu_activated (const std::string &symbol) override 
   {
     if (symbol == "lay::boolean") {
       boolean ();
@@ -470,18 +470,18 @@ public:
     //  .. nothing yet ..
   }
   
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > & /*options*/) const
+  void get_options (std::vector < std::pair<std::string, std::string> > & /*options*/) const override
   {
     //  .. nothing yet ..
   }
 
-  virtual lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
+  lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const override
   {
     // .. nothing yet ..
     return nullptr;
   }
 
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     lay::PluginDeclaration::get_menu_entries (menu_entries);
     menu_entries.push_back (lay::separator ("ops_group", "edit_menu.layer_menu.end"));
@@ -490,17 +490,17 @@ public:
     menu_entries.push_back (lay::menu_item ("lay::size", "size:edit:edit_mode", "edit_menu.layer_menu.end", tl::to_string (QObject::tr ("Size"))));
   }
 
-  virtual bool configure (const std::string & /*name*/, const std::string & /*value*/)
+  bool configure (const std::string & /*name*/, const std::string & /*value*/) override
   {
     return false;
   }
 
-  virtual void config_finalize ()
+  void config_finalize () override
   {
     // .. nothing yet ..
   }
 
-  lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *, lay::LayoutViewBase *view) const
+  lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *, lay::LayoutViewBase *view) const override
   {
     return new BooleanOperationsPlugin (view);
   }

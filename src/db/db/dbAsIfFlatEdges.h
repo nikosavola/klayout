@@ -48,139 +48,139 @@ class DB_PUBLIC AsIfFlatEdges
 {
 public:
   AsIfFlatEdges ();
-  virtual ~AsIfFlatEdges ();
+  ~AsIfFlatEdges () override;
 
-  virtual size_t count () const;
-  virtual size_t hier_count () const;
-  virtual std::string to_string (size_t) const;
-  virtual distance_type length (const db::Box &) const;
-  virtual Box bbox () const;
+  size_t count () const override;
+  size_t hier_count () const override;
+  std::string to_string (size_t) const override;
+  distance_type length (const db::Box &) const override;
+  Box bbox () const override;
 
-  virtual EdgePairsDelegate *width_check (db::Coord d, const db::EdgesCheckOptions &options) const
+  EdgePairsDelegate *width_check (db::Coord d, const db::EdgesCheckOptions &options) const override
   {
     return run_check (db::WidthRelation, nullptr, d, options);
   }
     
-  virtual EdgePairsDelegate *space_check (db::Coord d, const db::EdgesCheckOptions &options) const
+  EdgePairsDelegate *space_check (db::Coord d, const db::EdgesCheckOptions &options) const override
   {
     return run_check (db::SpaceRelation, nullptr, d, options);
   }
 
-  virtual EdgePairsDelegate *enclosing_check (const Edges &other, db::Coord d, const db::EdgesCheckOptions &options) const
+  EdgePairsDelegate *enclosing_check (const Edges &other, db::Coord d, const db::EdgesCheckOptions &options) const override
   {
     return run_check (db::OverlapRelation, &other, d, options);
   }
 
-  virtual EdgePairsDelegate *overlap_check (const Edges &other, db::Coord d, const db::EdgesCheckOptions &options) const
+  EdgePairsDelegate *overlap_check (const Edges &other, db::Coord d, const db::EdgesCheckOptions &options) const override
   {
     return run_check (db::WidthRelation, &other, d, options);
   }
 
-  virtual EdgePairsDelegate *separation_check (const Edges &other, db::Coord d, const db::EdgesCheckOptions &options) const
+  EdgePairsDelegate *separation_check (const Edges &other, db::Coord d, const db::EdgesCheckOptions &options) const override
   {
     return run_check (db::SpaceRelation, &other, d, options);
   }
 
-  virtual EdgePairsDelegate *inside_check (const Edges &other, db::Coord d, const db::EdgesCheckOptions &options) const
+  EdgePairsDelegate *inside_check (const Edges &other, db::Coord d, const db::EdgesCheckOptions &options) const override
   {
     return run_check (db::InsideRelation, &other, d, options);
   }
 
-  virtual EdgesDelegate *process_in_place (const EdgeProcessorBase &filter)
+  EdgesDelegate *process_in_place (const EdgeProcessorBase &filter) override
   {
     return processed (filter);
   }
 
-  virtual EdgesDelegate *processed (const EdgeProcessorBase &filter) const;
-  virtual EdgePairsDelegate *processed_to_edge_pairs (const EdgeToEdgePairProcessorBase &) const;
-  virtual RegionDelegate *processed_to_polygons (const EdgeToPolygonProcessorBase &) const;
+  EdgesDelegate *processed (const EdgeProcessorBase &filter) const override;
+  EdgePairsDelegate *processed_to_edge_pairs (const EdgeToEdgePairProcessorBase &) const override;
+  RegionDelegate *processed_to_polygons (const EdgeToPolygonProcessorBase &) const override;
 
-  virtual EdgesDelegate *filter_in_place (const EdgeFilterBase &filter)
+  EdgesDelegate *filter_in_place (const EdgeFilterBase &filter) override
   {
     return filtered (filter);
   }
 
-  virtual EdgesDelegate *filtered (const EdgeFilterBase &) const;
-  virtual std::pair<EdgesDelegate *, EdgesDelegate *> filtered_pair (const EdgeFilterBase &filter) const;
+  EdgesDelegate *filtered (const EdgeFilterBase &) const override;
+  std::pair<EdgesDelegate *, EdgesDelegate *> filtered_pair (const EdgeFilterBase &filter) const override;
 
-  virtual EdgesDelegate *merged_in_place ()
+  EdgesDelegate *merged_in_place () override
   {
     return merged ();
   }
 
-  virtual EdgesDelegate *merged () const;
+  EdgesDelegate *merged () const override;
 
-  virtual EdgesDelegate *and_with (const Edges &other) const;
+  EdgesDelegate *and_with (const Edges &other) const override;
 
-  virtual EdgesDelegate *not_with (const Edges &other) const;
+  EdgesDelegate *not_with (const Edges &other) const override;
 
-  virtual std::pair<EdgesDelegate *, EdgesDelegate *> andnot_with (const Edges &other) const;
+  std::pair<EdgesDelegate *, EdgesDelegate *> andnot_with (const Edges &other) const override;
 
-  virtual EdgesDelegate *and_with (const Region &other) const;
+  EdgesDelegate *and_with (const Region &other) const override;
 
-  virtual EdgesDelegate *not_with (const Region &other) const;
+  EdgesDelegate *not_with (const Region &other) const override;
 
-  virtual std::pair<EdgesDelegate *, EdgesDelegate *> andnot_with (const Region &other) const;
+  std::pair<EdgesDelegate *, EdgesDelegate *> andnot_with (const Region &other) const override;
 
-  virtual EdgesDelegate *xor_with (const Edges &other) const;
+  EdgesDelegate *xor_with (const Edges &other) const override;
 
-  virtual EdgesDelegate *or_with (const Edges &other) const;
+  EdgesDelegate *or_with (const Edges &other) const override;
 
-  virtual EdgesDelegate *intersections (const Edges &other) const;
+  EdgesDelegate *intersections (const Edges &other) const override;
 
-  virtual EdgesDelegate *add_in_place (const Edges &other)
+  EdgesDelegate *add_in_place (const Edges &other) override
   {
     return add (other);
   }
 
-  virtual EdgesDelegate *add (const Edges &other) const;
+  EdgesDelegate *add (const Edges &other) const override;
 
-  virtual EdgesDelegate *inside_part (const Region &other) const
+  EdgesDelegate *inside_part (const Region &other) const override
   {
     return edge_region_op (other, db::EdgePolygonOp::Inside, false /*don't include borders*/).first;
   }
 
-  virtual EdgesDelegate *outside_part (const Region &other) const
+  EdgesDelegate *outside_part (const Region &other) const override
   {
     return edge_region_op (other, db::EdgePolygonOp::Outside, false /*don't include borders*/).first;
   }
 
-  virtual std::pair<EdgesDelegate *, EdgesDelegate *> inside_outside_part_pair (const Region &other) const
+  std::pair<EdgesDelegate *, EdgesDelegate *> inside_outside_part_pair (const Region &other) const override
   {
     return edge_region_op (other, db::EdgePolygonOp::Both, false /*don't include borders*/);
   }
 
-  virtual RegionDelegate *extended (coord_type ext_b, coord_type ext_e, coord_type ext_o, coord_type ext_i, bool join) const;
+  RegionDelegate *extended (coord_type ext_b, coord_type ext_e, coord_type ext_o, coord_type ext_i, bool join) const override;
 
-  virtual EdgesDelegate *pull_interacting (const Edges &) const;
-  virtual RegionDelegate *pull_interacting (const Region &) const;
-  virtual EdgesDelegate *selected_interacting (const Edges &, size_t min_count, size_t max_count) const;
-  virtual EdgesDelegate *selected_not_interacting (const Edges &, size_t min_count, size_t max_count) const;
-  virtual EdgesDelegate *selected_interacting (const Region &, size_t min_count, size_t max_count) const;
-  virtual EdgesDelegate *selected_not_interacting (const Region &, size_t min_count, size_t max_count) const;
-  virtual std::pair<EdgesDelegate *, EdgesDelegate *> selected_interacting_pair (const Region &other, size_t min_count, size_t max_count) const;
-  virtual std::pair<EdgesDelegate *, EdgesDelegate *> selected_interacting_pair (const Edges &other, size_t min_count, size_t max_count) const;
+  EdgesDelegate *pull_interacting (const Edges &) const override;
+  RegionDelegate *pull_interacting (const Region &) const override;
+  EdgesDelegate *selected_interacting (const Edges &, size_t min_count, size_t max_count) const override;
+  EdgesDelegate *selected_not_interacting (const Edges &, size_t min_count, size_t max_count) const override;
+  EdgesDelegate *selected_interacting (const Region &, size_t min_count, size_t max_count) const override;
+  EdgesDelegate *selected_not_interacting (const Region &, size_t min_count, size_t max_count) const override;
+  std::pair<EdgesDelegate *, EdgesDelegate *> selected_interacting_pair (const Region &other, size_t min_count, size_t max_count) const override;
+  std::pair<EdgesDelegate *, EdgesDelegate *> selected_interacting_pair (const Edges &other, size_t min_count, size_t max_count) const override;
 
-  virtual EdgesDelegate *selected_outside (const Edges &other) const;
-  virtual EdgesDelegate *selected_not_outside (const Edges &other) const;
-  virtual std::pair<EdgesDelegate *, EdgesDelegate *> selected_outside_pair (const Edges &other) const;
-  virtual EdgesDelegate *selected_inside (const Edges &other) const;
-  virtual EdgesDelegate *selected_not_inside (const Edges &other) const;
-  virtual std::pair<EdgesDelegate *, EdgesDelegate *> selected_inside_pair (const Edges &other) const;
-  virtual EdgesDelegate *selected_outside (const Region &other) const;
-  virtual EdgesDelegate *selected_not_outside (const Region &other) const;
-  virtual std::pair<EdgesDelegate *, EdgesDelegate *> selected_outside_pair (const Region &other) const;
-  virtual EdgesDelegate *selected_inside (const Region &other) const;
-  virtual EdgesDelegate *selected_not_inside (const Region &other) const;
-  virtual std::pair<EdgesDelegate *, EdgesDelegate *> selected_inside_pair (const Region &other) const;
+  EdgesDelegate *selected_outside (const Edges &other) const override;
+  EdgesDelegate *selected_not_outside (const Edges &other) const override;
+  std::pair<EdgesDelegate *, EdgesDelegate *> selected_outside_pair (const Edges &other) const override;
+  EdgesDelegate *selected_inside (const Edges &other) const override;
+  EdgesDelegate *selected_not_inside (const Edges &other) const override;
+  std::pair<EdgesDelegate *, EdgesDelegate *> selected_inside_pair (const Edges &other) const override;
+  EdgesDelegate *selected_outside (const Region &other) const override;
+  EdgesDelegate *selected_not_outside (const Region &other) const override;
+  std::pair<EdgesDelegate *, EdgesDelegate *> selected_outside_pair (const Region &other) const override;
+  EdgesDelegate *selected_inside (const Region &other) const override;
+  EdgesDelegate *selected_not_inside (const Region &other) const override;
+  std::pair<EdgesDelegate *, EdgesDelegate *> selected_inside_pair (const Region &other) const override;
 
-  virtual EdgesDelegate *in (const Edges &, bool) const;
-  virtual std::pair<EdgesDelegate *, EdgesDelegate *> in_and_out (const Edges &) const;
+  EdgesDelegate *in (const Edges &, bool) const override;
+  std::pair<EdgesDelegate *, EdgesDelegate *> in_and_out (const Edges &) const override;
 
-  virtual bool equals (const Edges &other) const;
-  virtual bool less (const Edges &other) const;
+  bool equals (const Edges &other) const override;
+  bool less (const Edges &other) const override;
 
-  virtual void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const;
+  void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const override;
 
 protected:
   void update_bbox (const db::Box &box);

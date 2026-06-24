@@ -136,7 +136,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~SignalHandler () { }
+  ~SignalHandler () override { }
 
   /**
    *  @brief Provides the implementation for the call of the signal
@@ -184,7 +184,7 @@ public:
   /**
    *  @brief Returns a value indicating whether this method is a signal
    */
-  bool is_signal () const
+  bool is_signal () const override
   {
     return true;
   }
@@ -199,7 +199,7 @@ public:
    *  for a return value.
    *  The signal will *not* take ownership over the handler object.
    */
-  virtual void add_handler (void *obj, SignalHandler *handler) const = 0;
+  void add_handler (void *obj, SignalHandler *handler) const override = 0;
 };
 
 /**
@@ -222,7 +222,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~SignalAdaptor ()
+  ~SignalAdaptor () override
   {
     //  .. nothing yet ..
   }
@@ -279,7 +279,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual ~QtSignalAdaptor ()
+  ~QtSignalAdaptor () override
   {
     //  .. nothing yet ..
   }
@@ -290,7 +290,7 @@ protected:
    *  This implementation basically hijacks the slot of QtSignalAdaptorBase. It won't call
    *  the real base class but QObject and handle every method not handled by QObject.
    */
-  virtual int qt_metacall (QMetaObject::Call c, int id, void **a)
+  int qt_metacall (QMetaObject::Call c, int id, void **a) override
   {
     id = QObject::qt_metacall (c, id, a); // NOLINT(bugprone-parent-virtual-call)
     if (id < 0) {
@@ -389,7 +389,7 @@ protected:
    *  Takes one argument from the stack of arguments and writes it to the argument buffer.
    *  Then dispatches to the base class for the next arguments
    */
-  virtual void write_args (SerialArgs &args, void **a)
+  void write_args (SerialArgs &args, void **a) override
   {
     write_args_non_virtual (args, a);
   }
@@ -419,17 +419,17 @@ public:
   {
   }
 
-  virtual MethodBase *clone () const
+  MethodBase *clone () const override
   {
     return new QtSignalImpl<empty_list_t> (*this);
   }
 
-  void add_handler (void *obj, SignalHandler *handler) const
+  void add_handler (void *obj, SignalHandler *handler) const override
   {
     _add_handler<QtSignalAdaptor<empty_list_t> > (obj, handler);
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _initialize ();
@@ -500,18 +500,18 @@ public:
     return this;
   }
 
-  virtual MethodBase *clone () const
+  MethodBase *clone () const override
   {
     return new QtSignalImpl<type_pair_t<H, T> > (*this);
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _initialize ();
   }
 
-  void add_handler (void *obj, SignalHandler *handler) const
+  void add_handler (void *obj, SignalHandler *handler) const override
   {
     QtSignalImpl<empty_list_t>::template _add_handler<QtSignalAdaptor<type_pair_t<H, T> > > (obj, handler);
   }
@@ -849,17 +849,17 @@ public:
   {
   }
 
-  virtual MethodBase *clone () const
+  MethodBase *clone () const override
   {
     return new EventSignalImpl<X, E, empty_list_t> (*this);
   }
 
-  void add_handler (void *obj, SignalHandler *handler) const
+  void add_handler (void *obj, SignalHandler *handler) const override
   {
     _add_handler<EventSignalAdaptor<empty_list_t> > (obj, handler);
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _initialize ();
@@ -898,12 +898,12 @@ public:
   {
   }
 
-  virtual MethodBase *clone () const
+  MethodBase *clone () const override
   {
     return new EventSignalImpl<X, E, type_pair_t<H, T> > (*this);
   }
 
-  void add_handler (void *obj, SignalHandler *handler) const
+  void add_handler (void *obj, SignalHandler *handler) const override
   {
     EventSignalImpl<X, E, empty_list_t>::template _add_handler<EventSignalAdaptor<type_pair_t<H, T> > > (obj, handler);
   }
@@ -915,7 +915,7 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _initialize ();
@@ -947,17 +947,17 @@ public:
   {
   }
 
-  virtual MethodBase *clone () const
+  MethodBase *clone () const override
   {
     return new EventSignalFuncImpl<X, E, empty_list_t> (*this);
   }
 
-  void add_handler (void *obj, SignalHandler *handler) const
+  void add_handler (void *obj, SignalHandler *handler) const override
   {
     _add_handler<EventSignalAdaptor<empty_list_t> > (obj, handler);
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _initialize ();
@@ -996,12 +996,12 @@ public:
   {
   }
 
-  virtual MethodBase *clone () const
+  MethodBase *clone () const override
   {
     return new EventSignalFuncImpl<X, E, type_pair_t<H, T> > (*this);
   }
 
-  void add_handler (void *obj, SignalHandler *handler) const
+  void add_handler (void *obj, SignalHandler *handler) const override
   {
     EventSignalFuncImpl<X, E, empty_list_t>::template _add_handler<EventSignalAdaptor<type_pair_t<H, T> > > (obj, handler);
   }
@@ -1013,7 +1013,7 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _initialize ();

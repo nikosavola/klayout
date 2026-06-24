@@ -433,43 +433,43 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual std::string format_name () const { return "OASIS"; }
-  virtual std::string format_desc () const { return "OASIS"; }
-  virtual std::string format_title () const { return "OASIS"; }
-  virtual std::string file_format () const { return "OASIS files (*.oas *.OAS *.oas.gz *.OAS.gz)"; }
+  std::string format_name () const override { return "OASIS"; }
+  std::string format_desc () const override { return "OASIS"; }
+  std::string format_title () const override { return "OASIS"; }
+  std::string file_format () const override { return "OASIS files (*.oas *.OAS *.oas.gz *.OAS.gz)"; }
 
-  virtual bool detect (tl::InputStream &stream) const 
+  bool detect (tl::InputStream &stream) const override 
   {
     const char *hdr = stream.get (4);
     return (hdr && hdr[0] == 0x25 && hdr[1] == 0x53 && hdr[2] == 0x45 && hdr[3] == 0x4d);
   }
 
-  virtual ReaderBase *create_reader (tl::InputStream &s) const 
+  ReaderBase *create_reader (tl::InputStream &s) const override 
   {
     return new db::OASISReader (s);
   }
 
-  virtual WriterBase *create_writer () const
+  WriterBase *create_writer () const override
   {
     return new db::OASISWriter ();
   }
 
-  virtual bool can_read () const
+  bool can_read () const override
   {
     return true;
   }
 
-  virtual bool can_write () const
+  bool can_write () const override
   {
     return true;
   }
 
-  virtual bool supports_context () const
+  bool supports_context () const override
   {
     return true;
   }
 
-  virtual tl::XMLElementBase *xml_writer_options_element () const
+  tl::XMLElementBase *xml_writer_options_element () const override
   {
     return new db::WriterOptionsXMLElement<db::OASISWriterOptions> ("oasis",
       tl::make_member (&db::OASISWriterOptions::compression_level, "compression-level") +

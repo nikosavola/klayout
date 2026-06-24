@@ -260,7 +260,7 @@ public:
   /** 
    *  @brief Destructor
    */
-  ~LayoutViewBase ();
+  ~LayoutViewBase () override;
 
   /**
    *  @brief Copies settings from the source view
@@ -906,12 +906,12 @@ public:
   /**
    *  @brief Implementation of the undo operations
    */
-  virtual void undo (db::Op *op);
+  void undo (db::Op *op) override;
 
   /**
    *  @brief Implementation of the redo operations
    */
-  virtual void redo (db::Op *op);
+  void redo (db::Op *op) override;
 
   /** 
    *  @brief Set the cellview at the given index
@@ -2162,12 +2162,12 @@ public:
   /**
    *  @brief Gets a value indicating whether the view will accept a dropped file with the given URL or path
    */
-  virtual bool accepts_drop (const std::string &path_or_url) const;
+  bool accepts_drop (const std::string &path_or_url) const override;
 
   /**
    *  @brief Gets called when a file or URL is dropped on the view
    */
-  virtual void drop_url (const std::string &path_or_url);
+  void drop_url (const std::string &path_or_url) override;
 
   /**
    *  @brief Returns true if the layer control panels model got updated
@@ -2267,7 +2267,7 @@ public:
    *  This method can be called multiple times and will count the enable/disable
    *  transitions. Each disable will cancel on enable call.
    */
-  void enable_edits (bool enable);
+  void enable_edits (bool enable) override;
 
   /**
    *  @brief Gets a value indicating whether edits are enabled or not
@@ -2883,7 +2883,7 @@ public:
   /**
    *  @brief Gets called when a menu item is activated
    */
-  void menu_activated (const std::string &symbol);
+  void menu_activated (const std::string &symbol) override;
 
   /**
    *  @brief Gets all available menu symbols
@@ -2908,14 +2908,14 @@ public:
   /**
    *  @brief Cancels all edit operations but maintains selection
    */
-  void cancel_edits ();
+  void cancel_edits () override;
 
   /**
    *  @brief Finishes all edit operations and maintains selection
    *
    *  In contrast to "cancel_edits" there is no rollback of operations applied already.
    */
-  void finish_edits ();
+  void finish_edits () override;
 
   /**
    *  @brief Select all levels of hierarchy available
@@ -2952,7 +2952,7 @@ public:
    *
    *  The transformation is given in micron units.
    */
-  virtual void transform (const db::DCplxTrans &tr);
+  void transform (const db::DCplxTrans &tr) override;
 
   /**
    *  @brief Select a cell by index for a certain cell view
@@ -3015,7 +3015,7 @@ public:
   /**
    *  @brief Unregisters the given plugin
    */
-  void unregister_plugin (lay::Plugin *pi);
+  void unregister_plugin (lay::Plugin *pi) override;
 
   /**
    *  @brief Gets the options the view was created with
@@ -3224,8 +3224,8 @@ protected:
 
   virtual LayoutView *get_ui ();
 
-  bool configure (const std::string &name, const std::string &value);
-  void config_finalize ();
+  bool configure (const std::string &name, const std::string &value) override;
+  void config_finalize () override;
 
   std::list<lay::CellView>::iterator cellview_iter (int cv_index);
   std::list<lay::CellView>::const_iterator cellview_iter (int cv_index) const;

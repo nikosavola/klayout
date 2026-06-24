@@ -77,7 +77,7 @@ public:
   /**
    *  @brief The destructor
    */
-  virtual ~PropertiesPage ();
+  ~PropertiesPage () override;
 
   /**
    *  @brief Gets the number of entries represented by this page

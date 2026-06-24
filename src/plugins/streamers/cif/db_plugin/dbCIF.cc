@@ -51,10 +51,10 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual std::string format_name () const { return "CIF"; }
-  virtual std::string format_desc () const { return "CIF"; }
-  virtual std::string format_title () const { return "CIF (Caltech interchange format)"; }
-  virtual std::string file_format () const { return "CIF files (*.cif *.CIF *.cif.gz *.CIF.gz)"; }
+  std::string format_name () const override { return "CIF"; }
+  std::string format_desc () const override { return "CIF"; }
+  std::string format_title () const override { return "CIF (Caltech interchange format)"; }
+  std::string file_format () const override { return "CIF files (*.cif *.CIF *.cif.gz *.CIF.gz)"; }
 
   static tl::Extractor &skip_blanks (tl::Extractor &ex)
   {
@@ -64,7 +64,7 @@ public:
     return ex;
   }
 
-  virtual bool detect (tl::InputStream &s) const 
+  bool detect (tl::InputStream &s) const override 
   {
     try {
 
@@ -153,32 +153,32 @@ public:
     return false;
   }
 
-  virtual ReaderBase *create_reader (tl::InputStream &s) const 
+  ReaderBase *create_reader (tl::InputStream &s) const override 
   {
     return new db::CIFReader (s);
   }
 
-  virtual WriterBase *create_writer () const
+  WriterBase *create_writer () const override
   {
     return new db::CIFWriter ();
   }
 
-  virtual bool can_read () const
+  bool can_read () const override
   {
     return true;
   }
 
-  virtual bool can_write () const
+  bool can_write () const override
   {
     return true;
   }
 
-  virtual bool supports_context () const
+  bool supports_context () const override
   {
     return false;
   }
 
-  virtual tl::XMLElementBase *xml_reader_options_element () const
+  tl::XMLElementBase *xml_reader_options_element () const override
   {
     return new db::ReaderOptionsXMLElement<db::CIFReaderOptions> ("cif",
       tl::make_member (&db::CIFReaderOptions::wire_mode, "wire-mode") +
@@ -189,7 +189,7 @@ public:
     );
   }
 
-  virtual tl::XMLElementBase *xml_writer_options_element () const
+  tl::XMLElementBase *xml_writer_options_element () const override
   {
     return new db::WriterOptionsXMLElement<db::CIFWriterOptions> ("cif",
       tl::make_member (&db::CIFWriterOptions::dummy_calls, "dummy-calls") +

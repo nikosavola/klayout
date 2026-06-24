@@ -71,7 +71,7 @@ public:
    *  The destructor will delete the layout object that
    *  was associated with this handle.
    */
-  ~LayoutHandle ();
+  ~LayoutHandle () override;
 
   /**
    *  @brief Renames the layout object

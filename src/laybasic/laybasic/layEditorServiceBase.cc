@@ -74,7 +74,7 @@ public:
     return color.rgb ();
   }
 
-  virtual void render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
+  void render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas) override
   {
     if (mp_service && mp_service->tracking_cursor_enabled ()) {
       do_render (vp, canvas);
@@ -97,7 +97,7 @@ public:
   { }
 
 protected:
-  virtual void do_render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
+  void do_render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas) override
   {
     int dither_pattern = 0; // solid
     int cross_dither_pattern = 6;  // dotted
@@ -145,7 +145,7 @@ public:
   { }
 
 protected:
-  virtual void do_render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
+  void do_render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas) override
   {
     if (m_edge.is_degenerate ()) {
       return;

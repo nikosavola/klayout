@@ -98,7 +98,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~Category ();
+  ~Category () override;
 
   /**
    *  @brief The Id of the category (getter)
@@ -502,20 +502,20 @@ public:
     return m_value;
   }
 
-  int type_index () const 
+  int type_index () const override 
   { 
     return type_index_of<C> (); 
   }
 
-  bool compare (const ValueBase *other) const;
+  bool compare (const ValueBase *other) const override;
 
-  bool is_shape () const;
+  bool is_shape () const override;
 
-  std::string to_string () const;
+  std::string to_string () const override;
 
-  std::string to_display_string () const;
+  std::string to_display_string () const override;
 
-  ValueBase *clone () const
+  ValueBase *clone () const override
   {
     return new Value<C> (m_value);
   }
@@ -811,7 +811,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~Item ();
+  ~Item () override;
 
   /**
    *  @brief Get the cell that this item is located inside (by id)
@@ -1495,7 +1495,7 @@ public:
   /**
    *  @brief Cell destructor
    */
-  ~Cell ();
+  ~Cell () override;
 
   /**
    *  @brief Get the cell id
@@ -2027,7 +2027,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~Database ();
+  ~Database () override;
 
   /**
    *  @brief Get the database description

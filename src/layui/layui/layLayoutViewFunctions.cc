@@ -2143,7 +2143,7 @@ class LayoutViewPluginDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     std::string at;
 
@@ -2304,7 +2304,7 @@ public:
 
   }
 
-  bool menu_activated (const std::string &symbol) const
+  bool menu_activated (const std::string &symbol) const override
   {
     if (symbol == "lv:enable_all") {
 
@@ -2325,7 +2325,7 @@ public:
     }
   }
 
-  void implements_primary_mouse_modes (std::vector<std::pair<std::string, std::pair<std::string, int> > > &modes)
+  void implements_primary_mouse_modes (std::vector<std::pair<std::string, std::pair<std::string, int> > > &modes) override
   {
     std::vector <std::string> mode_titles;
     lay::LayoutViewBase::intrinsic_mouse_modes (&mode_titles);
@@ -2337,7 +2337,7 @@ public:
     }
   }
 
-  lay::Plugin *create_plugin (db::Manager *manager, Dispatcher *, LayoutViewBase *view) const
+  lay::Plugin *create_plugin (db::Manager *manager, Dispatcher *, LayoutViewBase *view) const override
   {
     return new LayoutViewFunctions (manager, view);
   }

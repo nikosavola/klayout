@@ -43,24 +43,24 @@ public:
   OriginalLayerTexts (const OriginalLayerTexts &other);
   OriginalLayerTexts (const RecursiveShapeIterator &si);
   OriginalLayerTexts (const RecursiveShapeIterator &si, const db::ICplxTrans &trans);
-  virtual ~OriginalLayerTexts ();
+  ~OriginalLayerTexts () override;
 
-  TextsDelegate *clone () const;
+  TextsDelegate *clone () const override;
 
-  virtual TextsIteratorDelegate *begin () const;
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const;
+  TextsIteratorDelegate *begin () const override;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const override;
 
-  virtual bool empty () const;
+  bool empty () const override;
 
-  virtual const db::Text *nth (size_t n) const;
-  virtual db::properties_id_type nth_prop_id (size_t n) const;
-  virtual bool has_valid_texts () const;
+  const db::Text *nth (size_t n) const override;
+  db::properties_id_type nth_prop_id (size_t n) const override;
+  bool has_valid_texts () const override;
 
-  virtual const db::RecursiveShapeIterator *iter () const;
-  virtual void apply_property_translator (const db::PropertiesTranslator &pt);
+  const db::RecursiveShapeIterator *iter () const override;
+  void apply_property_translator (const db::PropertiesTranslator &pt) override;
 
-  virtual bool equals (const Texts &other) const;
-  virtual bool less (const Texts &other) const;
+  bool equals (const Texts &other) const override;
+  bool less (const Texts &other) const override;
 
 private:
   OriginalLayerTexts &operator= (const OriginalLayerTexts &other);

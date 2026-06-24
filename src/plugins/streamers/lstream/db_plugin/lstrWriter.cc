@@ -57,7 +57,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void write (const void* buffer, size_t size)
+  void write (const void* buffer, size_t size) override
   {
     mp_os->put ((const char *) buffer, size);
   }

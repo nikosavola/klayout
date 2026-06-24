@@ -154,9 +154,9 @@ public:
     : mp_obj (obj), m_owns_obj (owns_obj) 
   { }
 
-  virtual ~XMLReaderProxy () { }
+  ~XMLReaderProxy () override { }
 
-  virtual void release () 
+  void release () override 
   {
     if (m_owns_obj && mp_obj) {
       delete mp_obj;
@@ -164,7 +164,7 @@ public:
     mp_obj = nullptr;
   }
 
-  virtual void detach ()
+  void detach () override
   {
     m_owns_obj = false;
   }
@@ -718,23 +718,23 @@ public:
     // .. nothing yet ..
   }
 
-  virtual XMLElementBase *clone () const
+  XMLElementBase *clone () const override
   {
     return new XMLElement<Obj, Parent, Read, Write> (*this);
   }
 
-  virtual void create (const XMLElementBase *, XMLReaderState &objs, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const
+  void create (const XMLElementBase *, XMLReaderState &objs, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const override
   {
     XMLObjTag<Obj> tag;
     objs.push (tag);
   }
 
-  virtual void cdata (const std::string & /*cdata*/, XMLReaderState & /*objs*/) const
+  void cdata (const std::string & /*cdata*/, XMLReaderState & /*objs*/) const override
   {
     // .. nothing yet ..
   }
 
-  virtual void finish (const XMLElementBase * /*parent*/, XMLReaderState &objs, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const
+  void finish (const XMLElementBase * /*parent*/, XMLReaderState &objs, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const override
   {
     XMLObjTag<Obj> tag;
     XMLObjTag<Parent> parent_tag;
@@ -742,7 +742,7 @@ public:
     objs.pop (tag);
   }
 
-  virtual void write (const XMLElementBase * /*parent*/, tl::OutputStream &os, int indent, XMLWriterState &objs) const
+  void write (const XMLElementBase * /*parent*/, tl::OutputStream &os, int indent, XMLWriterState &objs) const override
   {
     XMLObjTag<Parent> parent_tag;
     Read r (m_r);
@@ -759,7 +759,7 @@ public:
     }
   }
 
-  virtual bool has_any (XMLWriterState &objs) const 
+  bool has_any (XMLWriterState &objs) const override 
   {
     XMLObjTag<Parent> parent_tag;
     Read r (m_r);
@@ -823,24 +823,24 @@ public:
     // .. nothing yet ..
   }
 
-  virtual XMLElementBase *clone () const
+  XMLElementBase *clone () const override
   {
     return new XMLElementWithParentRef<Obj, Parent, Read, Write> (*this);
   }
 
-  virtual void create (const XMLElementBase *, XMLReaderState &objs, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const
+  void create (const XMLElementBase *, XMLReaderState &objs, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const override
   {
     XMLObjTag<Obj> tag;
     XMLObjTag<Parent> parent_tag;
     objs.push (new Obj (objs.back (parent_tag)), true);
   }
 
-  virtual void cdata (const std::string & /*cdata*/, XMLReaderState & /*objs*/) const
+  void cdata (const std::string & /*cdata*/, XMLReaderState & /*objs*/) const override
   {
     // .. nothing yet ..
   }
 
-  virtual void finish (const XMLElementBase * /*parent*/, XMLReaderState &objs, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const
+  void finish (const XMLElementBase * /*parent*/, XMLReaderState &objs, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const override
   {
     XMLObjTag<Obj> tag;
     XMLObjTag<Parent> parent_tag;
@@ -848,7 +848,7 @@ public:
     objs.pop (tag);
   }
 
-  virtual void write (const XMLElementBase * /*parent*/, tl::OutputStream &os, int indent, XMLWriterState &objs) const
+  void write (const XMLElementBase * /*parent*/, tl::OutputStream &os, int indent, XMLWriterState &objs) const override
   {
     XMLObjTag<Parent> parent_tag;
     Read r (m_r);
@@ -865,7 +865,7 @@ public:
     }
   }
 
-  virtual bool has_any (XMLWriterState &objs) const 
+  bool has_any (XMLWriterState &objs) const override 
   {
     XMLObjTag<Parent> parent_tag;
     Read r (m_r);
@@ -931,22 +931,22 @@ public:
     // .. nothing yet ..
   }
 
-  virtual XMLElementBase *clone () const
+  XMLElementBase *clone () const override
   {
     return new XMLMember<Value, Parent, Read, Write, Converter> (*this);
   }
 
-  virtual void create (const XMLElementBase *, XMLReaderState &objs, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const
+  void create (const XMLElementBase *, XMLReaderState &objs, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const override
   {
     objs.cdata = "";
   }
 
-  virtual void cdata (const std::string &cd, XMLReaderState &objs) const
+  void cdata (const std::string &cd, XMLReaderState &objs) const override
   {
     objs.cdata += cd;
   }
 
-  virtual void finish (const XMLElementBase * /*parent*/, XMLReaderState &objs, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const
+  void finish (const XMLElementBase * /*parent*/, XMLReaderState &objs, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const override
   {
     XMLObjTag<Value> tag;
     XMLObjTag<Parent> parent_tag;
@@ -960,7 +960,7 @@ public:
     value_obj.pop (tag);
   }
 
-  virtual void write (const XMLElementBase * /*parent*/, tl::OutputStream &os, int indent, XMLWriterState &objs) const
+  void write (const XMLElementBase * /*parent*/, tl::OutputStream &os, int indent, XMLWriterState &objs) const override
   {
     XMLObjTag<Parent> parent_tag;
     Read r (m_r);
@@ -984,7 +984,7 @@ public:
     }
   }
 
-  virtual bool has_any (XMLWriterState &objs) const 
+  bool has_any (XMLWriterState &objs) const override 
   {
     XMLObjTag<Parent> parent_tag;
     Read r (m_r);
@@ -1022,22 +1022,22 @@ public:
     // .. nothing yet ..
   }
 
-  virtual XMLElementBase *clone () const
+  XMLElementBase *clone () const override
   {
     return new XMLWildcardMember<Value, Parent, Write, Converter> (*this);
   }
 
-  virtual void create (const XMLElementBase *, XMLReaderState &objs, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const
+  void create (const XMLElementBase *, XMLReaderState &objs, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const override
   {
     objs.cdata = "";
   }
 
-  virtual void cdata (const std::string &cd, XMLReaderState &objs) const
+  void cdata (const std::string &cd, XMLReaderState &objs) const override
   {
     objs.cdata += cd;
   }
 
-  virtual void finish (const XMLElementBase * /*parent*/, XMLReaderState &objs, const std::string & /*uri*/, const std::string &lname, const std::string & /*qname*/) const
+  void finish (const XMLElementBase * /*parent*/, XMLReaderState &objs, const std::string & /*uri*/, const std::string &lname, const std::string & /*qname*/) const override
   {
     XMLObjTag<Value> tag;
     XMLObjTag<Parent> parent_tag;
@@ -1051,11 +1051,11 @@ public:
     value_obj.pop (tag);
   }
 
-  virtual void write (const XMLElementBase * /*parent*/, tl::OutputStream & /*os*/, int  /*indent*/, XMLWriterState & /*objs*/) const
+  void write (const XMLElementBase * /*parent*/, tl::OutputStream & /*os*/, int  /*indent*/, XMLWriterState & /*objs*/) const override
   {
   }
 
-  virtual bool has_any (XMLWriterState & /*objs*/) const 
+  bool has_any (XMLWriterState & /*objs*/) const override 
   {
     return false;
   }
@@ -1096,22 +1096,22 @@ public:
     // .. nothing yet ..
   }
 
-  virtual XMLElementBase *clone () const
+  XMLElementBase *clone () const override
   {
     return new XMLStruct<Obj> (*this);
   }
 
-  virtual void create (const XMLElementBase *, XMLReaderState &, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const
+  void create (const XMLElementBase *, XMLReaderState &, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const override
   {
     // .. nothing yet ..
   }
 
-  virtual void cdata (const std::string &, XMLReaderState &) const
+  void cdata (const std::string &, XMLReaderState &) const override
   {
     // .. nothing yet ..
   }
 
-  virtual void finish (const XMLElementBase *, XMLReaderState &, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const
+  void finish (const XMLElementBase *, XMLReaderState &, const std::string & /*uri*/, const std::string & /*lname*/, const std::string & /*qname*/) const override
   {
     // .. nothing yet ..
   }
@@ -1144,7 +1144,7 @@ public:
   }
 
 private:
-  virtual void write (const XMLElementBase*, tl::OutputStream &, int, XMLWriterState &) const
+  void write (const XMLElementBase*, tl::OutputStream &, int, XMLWriterState &) const override
   {
     // .. see write (os)
   }

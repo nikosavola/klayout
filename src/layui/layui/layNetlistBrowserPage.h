@@ -68,7 +68,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~NetlistBrowserPage ();
+  ~NetlistBrowserPage () override;
 
   /**
    *  @brief Returns true if netlist mode is selected
@@ -222,7 +222,7 @@ private slots:
   void mode_tab_changed (int);
 
 protected:
-  bool eventFilter (QObject *watched, QEvent *event);
+  bool eventFilter (QObject *watched, QEvent *event) override;
 
 private:
   bool m_show_all;

@@ -58,17 +58,17 @@ Q_OBJECT
 
 public:
   NetTracerDialog (lay::Dispatcher *root, lay::LayoutViewBase *view);
-  virtual ~NetTracerDialog ();
+  ~NetTracerDialog () override;
 
-  virtual void drag_cancel ();
-  virtual bool claims_message_bar () const;
-  virtual bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual void menu_activated (const std::string &symbol);
-  virtual lay::ViewService *view_service_interface ();
-  virtual void deactivated ();
-  virtual void activated ();
-  virtual bool configure (const std::string &name, const std::string &value);
+  void drag_cancel () override;
+  bool claims_message_bar () const override;
+  bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  void menu_activated (const std::string &symbol) override;
+  lay::ViewService *view_service_interface () override;
+  void deactivated () override;
+  void activated () override;
+  bool configure (const std::string &name, const std::string &value) override;
 
 protected slots:
   void net_color_changed (QColor);

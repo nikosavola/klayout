@@ -61,7 +61,7 @@ class DB_PUBLIC NetlistSpiceReaderDelegate
 {
 public:
   NetlistSpiceReaderDelegate ();
-  virtual ~NetlistSpiceReaderDelegate ();
+  ~NetlistSpiceReaderDelegate () override;
 
   /**
    *  @brief Gets the reader options

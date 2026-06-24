@@ -45,11 +45,11 @@ class DB_PUBLIC EdgeFilterBasedEdgePairFilter
 {
 public:
   EdgeFilterBasedEdgePairFilter (EdgeFilterBase *edge_filter, bool one_must_match);
-  virtual ~EdgeFilterBasedEdgePairFilter ();
+  ~EdgeFilterBasedEdgePairFilter () override;
 
-  virtual bool selected (const db::EdgePair &edge_pair, properties_id_type prop_id) const;
-  virtual const TransformationReducer *vars () const;
-  virtual bool wants_variants () const;
+  bool selected (const db::EdgePair &edge_pair, properties_id_type prop_id) const override;
+  const TransformationReducer *vars () const override;
+  bool wants_variants () const override;
 
 private:
   EdgeFilterBase *mp_edge_filter;
@@ -69,9 +69,9 @@ public:
 
   EdgePairFilterByDistance (distance_type min_distance, distance_type max_distance, bool inverted);
 
-  virtual bool selected (const db::EdgePair &edge_pair, properties_id_type) const;
-  virtual const TransformationReducer *vars () const { return &m_vars; }
-  virtual bool wants_variants () const { return true; }
+  bool selected (const db::EdgePair &edge_pair, properties_id_type) const override;
+  const TransformationReducer *vars () const override { return &m_vars; }
+  bool wants_variants () const override { return true; }
 
 private:
   distance_type m_min_distance, m_max_distance;
@@ -92,9 +92,9 @@ public:
 
   EdgePairFilterByArea (area_type min_area, area_type max_area, bool inverted);
 
-  virtual bool selected (const db::EdgePair &edge_pair, properties_id_type) const;
-  virtual const TransformationReducer *vars () const { return &m_vars; }
-  virtual bool wants_variants () const { return true; }
+  bool selected (const db::EdgePair &edge_pair, properties_id_type) const override;
+  const TransformationReducer *vars () const override { return &m_vars; }
+  bool wants_variants () const override { return true; }
 
 private:
   area_type m_min_area, m_max_area;
@@ -114,9 +114,9 @@ public:
   InternalAngleEdgePairFilter (double a, bool inverted);
   InternalAngleEdgePairFilter (double amin, bool include_amin, double amax, bool include_amax, bool inverted);
 
-  virtual bool selected (const db::EdgePair &edge_pair, properties_id_type) const;
-  virtual const TransformationReducer *vars () const { return nullptr; }
-  virtual bool wants_variants () const { return false; }
+  bool selected (const db::EdgePair &edge_pair, properties_id_type) const override;
+  const TransformationReducer *vars () const override { return nullptr; }
+  bool wants_variants () const override { return false; }
 
 private:
   db::EdgeAngleChecker m_checker;

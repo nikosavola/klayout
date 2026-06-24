@@ -174,7 +174,7 @@ Q_OBJECT
 public:
   MacroEditorTextWidget (QWidget *parent);
 
-  void paintEvent (QPaintEvent *event);
+  void paintEvent (QPaintEvent *event) override;
 
 signals:
   void contentsChanged ();
@@ -194,9 +194,9 @@ Q_OBJECT
 public:
   MacroEditorSidePanel (QWidget *parent, MacroEditorTextWidget *text, MacroEditorExecutionModel *exec_model);
   
-  QSize sizeHint () const;
-  void paintEvent (QPaintEvent *event);
-  void mousePressEvent (QMouseEvent *event);
+  QSize sizeHint () const override;
+  void paintEvent (QPaintEvent *event) override;
+  void mousePressEvent (QMouseEvent *event) override;
 
   void set_watermark (const QString &wm);
   void set_debugging_on (bool debugging_on);
@@ -433,7 +433,7 @@ private:
   void replace_in_selection (const QString &replace, bool first);
   void notification_action (const MacroEditorNotification &notification, const std::string &action);
 
-  bool eventFilter (QObject *watched, QEvent *event);
+  bool eventFilter (QObject *watched, QEvent *event) override;
 };
 
 }

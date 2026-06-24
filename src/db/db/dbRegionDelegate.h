@@ -135,7 +135,7 @@ public:
   typedef coord_traits::area_type area_type;
 
   RegionDelegate ();
-  virtual ~RegionDelegate ();
+  ~RegionDelegate () override;
 
   RegionDelegate (const RegionDelegate &other);
   RegionDelegate &operator= (const RegionDelegate &other);
@@ -286,7 +286,7 @@ public:
 
   virtual const db::RecursiveShapeIterator *iter () const = 0;
 
-  virtual void apply_property_translator (const db::PropertiesTranslator &pt) = 0;
+  void apply_property_translator (const db::PropertiesTranslator &pt) override = 0;
 
   virtual bool equals (const Region &other) const = 0;
   virtual bool less (const Region &other) const = 0;

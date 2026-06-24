@@ -69,10 +69,10 @@ Q_OBJECT
 
 public:
   TechBaseEditorPage (QWidget *parent);
-  ~TechBaseEditorPage ();
+  ~TechBaseEditorPage () override;
 
-  virtual void setup ();
-  virtual void commit ();
+  void setup () override;
+  void commit () override;
 
 private slots:
   void browse_clicked ();
@@ -89,10 +89,10 @@ Q_OBJECT
 
 public:
   TechMacrosPage (QWidget *parent, const std::string &cat, const std::string &cat_desc);
-  ~TechMacrosPage ();
+  ~TechMacrosPage () override;
 
-  virtual void setup ();
-  virtual void commit ();
+  void setup () override;
+  void commit () override;
 
 private:
   Ui::TechMacrosPage *mp_ui;
@@ -113,10 +113,10 @@ Q_OBJECT
 
 public:
   TechLoadOptionsEditorPage (QWidget *parent);
-  ~TechLoadOptionsEditorPage ();
+  ~TechLoadOptionsEditorPage () override;
 
-  virtual void setup ();
-  virtual void commit ();
+  void setup () override;
+  void commit () override;
 
 private:
   Ui::TechLoadOptionsEditorPage *mp_ui;
@@ -130,10 +130,10 @@ Q_OBJECT
 
 public:
   TechSaveOptionsEditorPage (QWidget *parent);
-  ~TechSaveOptionsEditorPage ();
+  ~TechSaveOptionsEditorPage () override;
 
-  virtual void setup ();
-  virtual void commit ();
+  void setup () override;
+  void commit () override;
 
 private:
   Ui::TechSaveOptionsEditorPage *mp_ui;
@@ -147,7 +147,7 @@ Q_OBJECT
 
 public:
   TechSetupDialog (QWidget *parent);
-  ~TechSetupDialog ();
+  ~TechSetupDialog () override;
 
   int exec_dialog (db::Technologies &technologies);
 
@@ -164,7 +164,7 @@ private:
   void update_tech_tree ();
   void update_tech (db::Technology *tech);
   void update_tech_component ();
-  void accept ();
+  void accept () override;
   db::Technology *selected_tech ();
   void select_tech (const db::Technology &tech);
   std::string selected_tech_component_name ();
@@ -187,10 +187,10 @@ class LAY_PUBLIC TechComponentSetupDialog
 {
 public:
   TechComponentSetupDialog (QWidget *parent, db::Technology *tech, const std::string &component_name);
-  ~TechComponentSetupDialog ();
+  ~TechComponentSetupDialog () override;
 
 protected:
-  void accept ();
+  void accept () override;
 
 private:
   Ui::TechComponentSetupDialog *mp_ui;

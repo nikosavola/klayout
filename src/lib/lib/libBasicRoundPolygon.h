@@ -46,32 +46,32 @@ public:
   /**
    *  @brief This PCell can be created from a shape
    */
-  virtual bool can_create_from_shape (const db::Layout &layout, const db::Shape &shape, unsigned int layer) const;
+  bool can_create_from_shape (const db::Layout &layout, const db::Shape &shape, unsigned int layer) const override;
 
   /**
    *  @brief Get the parameters from a shape
    */
-  virtual db::pcell_parameters_type parameters_from_shape (const db::Layout &layout, const db::Shape &shape, unsigned int layer) const;
+  db::pcell_parameters_type parameters_from_shape (const db::Layout &layout, const db::Shape &shape, unsigned int layer) const override;
 
   /**
    *  @brief Get the layer declarations
    */
-  virtual std::vector<db::PCellLayerDeclaration> get_layer_declarations (const db::pcell_parameters_type &parameters) const;
+  std::vector<db::PCellLayerDeclaration> get_layer_declarations (const db::pcell_parameters_type &parameters) const override;
 
   /**
    *  @brief Produces the layout
    */
-  virtual void produce (const db::Layout &layout, const std::vector<unsigned int> &layer_ids, const db::pcell_parameters_type &parameters, db::Cell &cell) const;
+  void produce (const db::Layout &layout, const std::vector<unsigned int> &layer_ids, const db::pcell_parameters_type &parameters, db::Cell &cell) const override;
 
   /**
    *  @brief Get the display name for a PCell with the given parameters
    */
-  virtual std::string get_display_name (const db::pcell_parameters_type &) const;
+  std::string get_display_name (const db::pcell_parameters_type &) const override;
 
   /**
    *  @brief Get the parameter declarations
    */
-  virtual std::vector<db::PCellParameterDeclaration> get_parameter_declarations () const;
+  std::vector<db::PCellParameterDeclaration> get_parameter_declarations () const override;
 };
 
 }

@@ -57,7 +57,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~LayerMappingWidget ();
+  ~LayerMappingWidget () override;
 
   /**
    *  @brief Set the layer mapping

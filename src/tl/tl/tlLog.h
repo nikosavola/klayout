@@ -101,7 +101,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~Channel ();
+  ~Channel () override;
 
   /**
    *  @brief Output "something"
@@ -263,11 +263,11 @@ public:
   void clear ();
 
 protected:
-  virtual void puts (const char *s);
-  virtual void endl ();
-  virtual void end ();
-  virtual void begin ();
-  virtual void yield ();
+  void puts (const char *s) override;
+  void endl () override;
+  void end () override;
+  void begin () override;
+  void yield () override;
 
 private:
   tl::weak_collection<tl::Channel> m_channels;

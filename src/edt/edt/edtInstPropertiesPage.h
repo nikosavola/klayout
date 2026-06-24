@@ -45,17 +45,17 @@ Q_OBJECT
 
 public:
   InstPropertiesPage (edt::Service *service, db::Manager *manager, QWidget *parent);
-  ~InstPropertiesPage ();
+  ~InstPropertiesPage () override;
 
-  virtual size_t count () const;
-  virtual void select_entries (const std::vector<size_t> &entries);
-  virtual std::string description (size_t entry) const;
-  virtual std::string description () const;
-  virtual void confine_selection (const std::vector<size_t> &remaining_entries);
-  virtual void leave ();
+  size_t count () const override;
+  void select_entries (const std::vector<size_t> &entries) override;
+  std::string description (size_t entry) const override;
+  std::string description () const override;
+  void confine_selection (const std::vector<size_t> &remaining_entries) override;
+  void leave () override;
 
 private:
-  virtual void update ();
+  void update () override;
   void recompute_selection_ptrs (const std::vector<lay::ObjectInstPath> &new_sel);
 
 protected:
@@ -66,10 +66,10 @@ protected:
   db::properties_id_type m_prop_id;
   edt::PCellParametersPage *mp_pcell_parameters;
 
-  virtual bool readonly ();
-  virtual void apply (bool commit);
-  virtual void apply_to_all (bool relative, bool commit);
-  virtual bool can_apply_to_all () const;
+  bool readonly () override;
+  void apply (bool commit) override;
+  void apply_to_all (bool relative, bool commit) override;
+  bool can_apply_to_all () const override;
   void do_apply (bool current_only, bool relative);
   virtual ChangeApplicator *create_applicator (db::Cell &cell, const db::Instance &inst, double dbu);
 

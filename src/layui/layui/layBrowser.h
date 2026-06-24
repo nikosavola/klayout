@@ -56,7 +56,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~Browser ();
+  ~Browser () override;
 
   /**
    *  @brief Activation event
@@ -126,7 +126,7 @@ public:
   /**
    *  @brief implementation of the lay::Plugin interface: obtain a pointer to the lay::Browser interface
    */
-  lay::Browser *browser_interface ()
+  lay::Browser *browser_interface () override
   {
     return this;
   }
@@ -136,9 +136,9 @@ private:
   lay::LayoutViewBase *mp_view;
   lay::Dispatcher *mp_root;
 
-  void closeEvent (QCloseEvent *);
-  void accept ();
-  void reject ();
+  void closeEvent (QCloseEvent *) override;
+  void accept () override;
+  void reject () override;
 };
 
 }

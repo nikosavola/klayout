@@ -91,7 +91,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~ClassBase ();
+  ~ClassBase () override;
 
   /**
    *  @brief Gets the pointer to the base class declaration object (can be 0)

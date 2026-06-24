@@ -451,7 +451,7 @@ struct JoinEdgesClusterCollector
     //  .. nothing yet ..
   }
 
-  void add (const db::Edge *o1, size_t p1, const db::Edge *o2, size_t p2)
+  void add (const db::Edge *o1, size_t p1, const db::Edge *o2, size_t p2) override
   {
     if (o1->p2 () == o2->p1 () || o1->p1 () == o2->p2 ()) {
       db::cluster_collector<db::Edge, size_t, JoinEdgesCluster>::add (o1, p1, o2, p2);

@@ -69,7 +69,7 @@ Q_OBJECT
 
 public:
   CopyModeDialog (QWidget *parent);
-  virtual ~CopyModeDialog ();
+  ~CopyModeDialog () override;
 
   bool exec_dialog (unsigned int &mode, bool &dont_ask);
 };
@@ -85,7 +85,7 @@ Q_OBJECT
 
 public:
   InstantiationForm (QWidget *parent);
-  virtual ~InstantiationForm ();
+  ~InstantiationForm () override;
 
   void show (lay::LayoutViewBase *view, const lay::ObjectInstPath &path);
 
@@ -113,7 +113,7 @@ Q_OBJECT
 
 public:
   ChangeLayerOptionsDialog (QWidget *parent);
-  virtual ~ChangeLayerOptionsDialog ();
+  ~ChangeLayerOptionsDialog () override;
 
   bool exec_dialog (lay::LayoutViewBase *view, int cv_index, unsigned int &new_layer);
 };
@@ -129,7 +129,7 @@ Q_OBJECT
 
 public:
   AlignOptionsDialog (QWidget *parent);
-  virtual ~AlignOptionsDialog ();
+  ~AlignOptionsDialog () override;
 
   bool exec_dialog (int &hmode, int &vmode, bool &visible_layers);
 };
@@ -145,7 +145,7 @@ Q_OBJECT
 
 public:
   DistributeOptionsDialog (QWidget *parent);
-  virtual ~DistributeOptionsDialog ();
+  ~DistributeOptionsDialog () override;
 
   bool exec_dialog (bool &hdistribute, int &hmode, double &hpitch, double &hspace, bool &vdistribute, int &vmode, double &vpitch, double &vspace, bool &visible_layers);
 };
@@ -180,7 +180,7 @@ public:
   MakeArrayOptionsDialog (QWidget *parent);
   bool exec_dialog (ArrayOptions &options);
 
-  virtual void accept ();
+  void accept () override;
 };
 
 /**
@@ -194,11 +194,11 @@ Q_OBJECT
 
 public:
   RoundCornerOptionsDialog (QWidget *parent);
-  ~RoundCornerOptionsDialog ();
+  ~RoundCornerOptionsDialog () override;
 
   bool exec_dialog (const db::Layout &layout, double &router, double &rinner, unsigned int &npoints, bool &undo_before_apply, double router_extracted, double rinner_extracted, unsigned int npoints_extracted, bool has_extracted);
 
-  virtual void accept ();
+  void accept () override;
 
 private slots:
   void amend_changed ();
@@ -221,7 +221,7 @@ Q_OBJECT
 
 public:
   AreaAndPerimeterDialog (QWidget *parent);
-  ~AreaAndPerimeterDialog ();
+  ~AreaAndPerimeterDialog () override;
 
   bool exec_dialog (double area, double perimeter);
 };

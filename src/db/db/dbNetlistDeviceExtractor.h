@@ -104,7 +104,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~NetlistDeviceExtractor ();
+  ~NetlistDeviceExtractor () override;
 
   /**
    *  @brief Gets the property name for the device terminal annotation

@@ -64,7 +64,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~TipDialog ();
+  ~TipDialog () override;
 
   /**
    *  @brief Returns true, if the tip dialog will be shown
@@ -103,7 +103,7 @@ private:
   button_type *mp_res;
 
   bool do_exec_dialog (button_type *button);
-  void accept (); 
+  void accept () override; 
   void init (const std::string &text, buttons_type buttons);
 };
 

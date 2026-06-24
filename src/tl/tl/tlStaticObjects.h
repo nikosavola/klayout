@@ -55,12 +55,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ~StaticObjectReference ()
+  ~StaticObjectReference () override
   {
     clear ();
   }
 
-  void clear()
+  void clear() override
   {
     if (mp_x) {
       delete *mp_x;

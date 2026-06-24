@@ -47,58 +47,58 @@ public:
   DeepTexts (const DeepTexts &other);
   DeepTexts (const DeepLayer &dl);
 
-  virtual ~DeepTexts ();
+  ~DeepTexts () override;
 
-  TextsDelegate *clone () const;
+  TextsDelegate *clone () const override;
 
-  virtual void do_insert (const db::Text &text, properties_id_type prop_id);
+  void do_insert (const db::Text &text, properties_id_type prop_id) override;
 
-  virtual void do_transform (const db::Trans &t);
-  virtual void do_transform (const db::ICplxTrans &t);
-  virtual void do_transform (const db::IMatrix2d &t);
-  virtual void do_transform (const db::IMatrix3d &t);
+  void do_transform (const db::Trans &t) override;
+  void do_transform (const db::ICplxTrans &t) override;
+  void do_transform (const db::IMatrix2d &t) override;
+  void do_transform (const db::IMatrix3d &t) override;
 
-  virtual void flatten ();
+  void flatten () override;
 
-  virtual void reserve (size_t n);
+  void reserve (size_t n) override;
 
-  virtual TextsIteratorDelegate *begin () const;
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const;
+  TextsIteratorDelegate *begin () const override;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const override;
 
-  virtual size_t count () const;
-  virtual size_t hier_count () const;
-  virtual std::string to_string (size_t) const;
-  virtual Box bbox () const;
-  virtual bool empty () const;
-  virtual const db::Text *nth (size_t n) const;
-  virtual db::properties_id_type nth_prop_id (size_t n) const;
-  virtual bool has_valid_texts () const;
-  virtual const db::RecursiveShapeIterator *iter () const;
-  virtual void apply_property_translator (const db::PropertiesTranslator &pt);
+  size_t count () const override;
+  size_t hier_count () const override;
+  std::string to_string (size_t) const override;
+  Box bbox () const override;
+  bool empty () const override;
+  const db::Text *nth (size_t n) const override;
+  db::properties_id_type nth_prop_id (size_t n) const override;
+  bool has_valid_texts () const override;
+  const db::RecursiveShapeIterator *iter () const override;
+  void apply_property_translator (const db::PropertiesTranslator &pt) override;
 
-  virtual TextsDelegate *filter_in_place (const TextFilterBase &filter);
-  virtual TextsDelegate *filtered (const TextFilterBase &) const;
-  virtual std::pair<TextsDelegate *, TextsDelegate *> filtered_pair (const TextFilterBase &filter) const;
+  TextsDelegate *filter_in_place (const TextFilterBase &filter) override;
+  TextsDelegate *filtered (const TextFilterBase &) const override;
+  std::pair<TextsDelegate *, TextsDelegate *> filtered_pair (const TextFilterBase &filter) const override;
 
-  virtual TextsDelegate *process_in_place (const TextProcessorBase &);
-  virtual TextsDelegate *processed (const TextProcessorBase &) const;
-  virtual RegionDelegate *processed_to_polygons (const TextToPolygonProcessorBase &filter) const;
+  TextsDelegate *process_in_place (const TextProcessorBase &) override;
+  TextsDelegate *processed (const TextProcessorBase &) const override;
+  RegionDelegate *processed_to_polygons (const TextToPolygonProcessorBase &filter) const override;
 
-  virtual TextsDelegate *add_in_place (const Texts &other);
-  virtual TextsDelegate *add (const Texts &other) const;
+  TextsDelegate *add_in_place (const Texts &other) override;
+  TextsDelegate *add (const Texts &other) const override;
 
-  virtual RegionDelegate *polygons (db::Coord e, const tl::Variant &text_prop) const;
-  virtual EdgesDelegate *edges () const;
+  RegionDelegate *polygons (db::Coord e, const tl::Variant &text_prop) const override;
+  EdgesDelegate *edges () const override;
 
-  virtual TextsDelegate *in (const Texts &, bool) const;
+  TextsDelegate *in (const Texts &, bool) const override;
 
-  virtual bool equals (const Texts &other) const;
-  virtual bool less (const Texts &other) const;
+  bool equals (const Texts &other) const override;
+  bool less (const Texts &other) const override;
 
-  virtual void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const;
-  virtual void insert_into_as_polygons (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer, db::Coord enl) const;
+  void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const override;
+  void insert_into_as_polygons (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer, db::Coord enl) const override;
 
-  virtual DeepShapeCollectionDelegateBase *deep ()
+  DeepShapeCollectionDelegateBase *deep () override
   {
     return this;
   }
@@ -109,8 +109,8 @@ private:
   void init ();
   std::pair<DeepTexts *, DeepTexts *> apply_filter (const TextFilterBase &filter, bool with_true, bool with_false) const;
 
-  virtual TextsDelegate *selected_interacting_generic (const Region &other, bool inverse) const;
-  virtual RegionDelegate *pull_generic (const Region &other) const;
+  TextsDelegate *selected_interacting_generic (const Region &other, bool inverse) const override;
+  RegionDelegate *pull_generic (const Region &other) const override;
 };
 
 }

@@ -54,12 +54,12 @@ public:
   /**
    *  @brief Reimplementation of the box_scanner_receiver interface
    */
-  void add (const db::Edge *o1, size_t p1, const db::Edge *o2, size_t p2);
+  void add (const db::Edge *o1, size_t p1, const db::Edge *o2, size_t p2) override;
 
   /**
    *  @brief Reimplementation of the box_scanner_receiver interface
    */
-  void finish (const Edge *o, size_t);
+  void finish (const Edge *o, size_t) override;
 
   /**
    *  @brief Gets a value indicating whether the check requires different layers
@@ -169,7 +169,7 @@ public:
   }
 
 protected:
-  void put (const db::EdgePair &edge, bool inter_polygon) const
+  void put (const db::EdgePair &edge, bool inter_polygon) const override
   {
     if (! inter_polygon || ! mp_output_intra) {
       if (m_prop_id != 0) {
@@ -255,7 +255,7 @@ public:
   }
 
 protected:
-  void put_negative (const db::Edge &edge, int layer) const
+  void put_negative (const db::Edge &edge, int layer) const override
   {
     if (layer == 0) {
       mp_l1_negative_output->insert (edge);
@@ -296,7 +296,7 @@ public:
   }
 
 protected:
-  void put_negative (const db::Edge &edge, int layer) const
+  void put_negative (const db::Edge &edge, int layer) const override
   {
     if (layer == 0) {
       edge2edge_check<Output>::put (db::EdgePair (edge, edge.swapped_points ()), false);
@@ -378,7 +378,7 @@ public:
   }
 
 protected:
-  virtual void put (const OutputType &res) const
+  void put (const OutputType &res) const override
   {
     mp_output->insert (res);
   }
@@ -424,7 +424,7 @@ public:
   }
 
 protected:
-  virtual void put (const OutputType &poly) const
+  void put (const OutputType &poly) const override
   {
     mp_output->insert (poly);
   }

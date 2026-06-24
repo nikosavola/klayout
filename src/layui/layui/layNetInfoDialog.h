@@ -50,7 +50,7 @@ class NetInfoDialog
 
 public:
   NetInfoDialog (QWidget *parent);
-  ~NetInfoDialog ();
+  ~NetInfoDialog () override;
 
   void set_nets (const db::LayoutToNetlist *l2ndb, const std::vector<const db::Net *> &nets);
 
@@ -58,7 +58,7 @@ private slots:
   void detailed_checkbox_clicked ();
 
 protected:
-  void showEvent (QShowEvent *);
+  void showEvent (QShowEvent *) override;
 
 private:
   tl::weak_ptr<db::LayoutToNetlist> mp_l2ndb;

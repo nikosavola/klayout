@@ -44,12 +44,12 @@ Q_OBJECT
 public:
   EditorOptionsPageWidget (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher);
   EditorOptionsPageWidget ();
-  virtual ~EditorOptionsPageWidget ();
+  ~EditorOptionsPageWidget () override;
 
-  virtual void set_focus ();
-  virtual bool is_visible () const;
-  virtual void set_visible (bool visible);
-  virtual EditorOptionsPageWidget *widget () { return this; }
+  void set_focus () override;
+  bool is_visible () const override;
+  void set_visible (bool visible) override;
+  EditorOptionsPageWidget *widget () override { return this; }
 
   void set_transparent (bool f);
   bool is_transparent () const { return m_is_transparent; }
@@ -58,10 +58,10 @@ protected slots:
   void edited ();
 
 protected:
-  virtual bool focusNextPrevChild (bool next);
-  virtual void keyPressEvent (QKeyEvent *event);
-  virtual void resizeEvent (QResizeEvent *e);
-  virtual bool event (QEvent *event);
+  bool focusNextPrevChild (bool next) override;
+  void keyPressEvent (QKeyEvent *event) override;
+  void resizeEvent (QResizeEvent *e) override;
+  bool event (QEvent *event) override;
 
   bool m_is_transparent;
 };

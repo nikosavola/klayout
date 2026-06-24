@@ -67,7 +67,7 @@ public:
     properties_frame->update ();
   }
 
-  virtual void accept ()
+  void accept () override
   {
     BEGIN_PROTECTED 
 

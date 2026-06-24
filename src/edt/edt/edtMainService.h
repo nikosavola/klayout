@@ -85,7 +85,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~MainService ();
+  ~MainService () override;
 
   /**
    *  @brief Access to the view object
@@ -98,7 +98,7 @@ public:
   /** 
    *  @brief Implementation of the menu functions
    */
-  virtual void menu_activated (const std::string &symbol);
+  void menu_activated (const std::string &symbol) override;
 
   /**
    *  @brief Descend to selection 
@@ -238,7 +238,7 @@ public:
   /**
    *  @brief "paste" operation
    */
-  virtual void paste ();
+  void paste () override;
 
 private:
   //  The layout view that this service is attached to

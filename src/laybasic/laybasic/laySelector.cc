@@ -328,12 +328,12 @@ public:
     // .. nothing yet ..
   }
 
-  virtual lay::Plugin *create_plugin (db::Manager * /*manager*/, lay::Dispatcher * /*dispatcher*/, lay::LayoutViewBase *view) const
+  lay::Plugin *create_plugin (db::Manager * /*manager*/, lay::Dispatcher * /*dispatcher*/, lay::LayoutViewBase *view) const override
   {
     return new SelectionService (view);
   }
 
-  virtual std::vector<std::string> additional_editor_options_pages (lay::LayoutViewBase *view) const
+  std::vector<std::string> additional_editor_options_pages (lay::LayoutViewBase *view) const override
   {
     std::vector<std::string> names;
     if (view->is_editable ()) {

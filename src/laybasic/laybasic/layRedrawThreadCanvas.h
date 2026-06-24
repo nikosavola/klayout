@@ -269,12 +269,12 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~BitmapRedrawThreadCanvas ();
+  ~BitmapRedrawThreadCanvas () override;
 
   /**
    *  @brief Returns true, if shifting is supported
    */
-  virtual bool shift_supported () const;
+  bool shift_supported () const override;
   
   /**
    *  @brief Prepare the given number of planes
@@ -282,7 +282,7 @@ public:
    *  This method is called from RedrawThread::start (), not from the
    *  redraw thread.
    */
-  virtual void prepare (unsigned int nlayers, unsigned int width, unsigned int height, double resolution, double font_resolution, const db::Vector *shift_vector, const std::vector<int> *planes, const lay::Drawings *drawings);
+  void prepare (unsigned int nlayers, unsigned int width, unsigned int height, double resolution, double font_resolution, const db::Vector *shift_vector, const std::vector<int> *planes, const lay::Drawings *drawings) override;
   
   /**
    *  @brief Test a plane with the given index for emptiness
@@ -295,34 +295,34 @@ public:
    *  This method is called from the redraw thread to transfer data for a certain plane.
    *  The planes have been reserved before with prepare ().
    */
-  virtual void set_plane (unsigned int n, const lay::CanvasPlane *plane);
+  void set_plane (unsigned int n, const lay::CanvasPlane *plane) override;
 
   /**
    *  @brief Set a plane for the drawing number d and index n within the drawing.
    *
    *  This method is called from the redraw thread.
    */
-  virtual void set_drawing_plane (unsigned int d, unsigned int n, const lay::CanvasPlane *plane);
+  void set_drawing_plane (unsigned int d, unsigned int n, const lay::CanvasPlane *plane) override;
   
   /** 
    *  @brief Create a new, unassociated drawing plane
    */
-  virtual lay::CanvasPlane *create_drawing_plane ();
+  lay::CanvasPlane *create_drawing_plane () override;
 
   /** 
    *  @brief Initialize a drawing plane for drawing on plane number n
    */
-  virtual void initialize_plane (lay::CanvasPlane *plane, unsigned int n);
+  void initialize_plane (lay::CanvasPlane *plane, unsigned int n) override;
 
   /** 
    *  @brief Initialize a drawing plane for drawing on drawing d and plane number n
    */
-  virtual void initialize_plane (lay::CanvasPlane *plane, unsigned int d, unsigned int n);
+  void initialize_plane (lay::CanvasPlane *plane, unsigned int d, unsigned int n) override;
 
   /**
    *  @brief Provide the renderer
    */
-  virtual lay::Renderer *create_renderer () 
+  lay::Renderer *create_renderer () override 
   { 
     return new lay::BitmapRenderer (m_width, m_height, resolution (), font_resolution ());
   }

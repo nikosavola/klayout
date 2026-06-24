@@ -59,61 +59,61 @@ public:
 
   FlatEdges (const FlatEdges &other);
 
-  virtual ~FlatEdges ();
+  ~FlatEdges () override;
 
-  EdgesDelegate *clone () const
+  EdgesDelegate *clone () const override
   {
     return new FlatEdges (*this);
   }
 
-  void reserve (size_t);
-  void flatten () { }
+  void reserve (size_t) override;
+  void flatten () override { }
 
-  virtual EdgesIteratorDelegate *begin () const;
-  virtual EdgesIteratorDelegate *begin_merged () const;
+  EdgesIteratorDelegate *begin () const override;
+  EdgesIteratorDelegate *begin_merged () const override;
 
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const;
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_merged_iter () const;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const override;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_merged_iter () const override;
 
-  virtual bool empty () const;
-  virtual size_t count () const;
-  virtual size_t hier_count () const;
-  virtual bool is_merged () const;
+  bool empty () const override;
+  size_t count () const override;
+  size_t hier_count () const override;
+  bool is_merged () const override;
 
-  virtual void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const;
+  void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const override;
 
   virtual EdgesDelegate *processed_in_place (const EdgeProcessorBase &filter);
-  virtual EdgesDelegate *filter_in_place (const EdgeFilterBase &filter);
+  EdgesDelegate *filter_in_place (const EdgeFilterBase &filter) override;
 
-  virtual EdgesDelegate *add_in_place (const Edges &other);
-  virtual EdgesDelegate *add (const Edges &other) const;
+  EdgesDelegate *add_in_place (const Edges &other) override;
+  EdgesDelegate *add (const Edges &other) const override;
 
-  virtual const db::Edge *nth (size_t n) const;
-  virtual db::properties_id_type nth_prop_id (size_t n) const;
-  virtual bool has_valid_edges () const;
-  virtual bool has_valid_merged_edges () const;
+  const db::Edge *nth (size_t n) const override;
+  db::properties_id_type nth_prop_id (size_t n) const override;
+  bool has_valid_edges () const override;
+  bool has_valid_merged_edges () const override;
 
-  virtual const db::RecursiveShapeIterator *iter () const;
-  virtual void apply_property_translator (const db::PropertiesTranslator &pt);
+  const db::RecursiveShapeIterator *iter () const override;
+  void apply_property_translator (const db::PropertiesTranslator &pt) override;
 
-  void do_insert (const db::Edge &edge, properties_id_type prop_id);
+  void do_insert (const db::Edge &edge, properties_id_type prop_id) override;
 
-  void do_transform (const db::Trans &t)
+  void do_transform (const db::Trans &t) override
   {
     transform_generic (t);
   }
 
-  void do_transform (const db::ICplxTrans &t)
+  void do_transform (const db::ICplxTrans &t) override
   {
     transform_generic (t);
   }
 
-  void do_transform (const db::IMatrix2d &t)
+  void do_transform (const db::IMatrix2d &t) override
   {
     transform_generic (t);
   }
 
-  void do_transform (const db::IMatrix3d &t)
+  void do_transform (const db::IMatrix3d &t) override
   {
     transform_generic (t);
   }
@@ -122,8 +122,8 @@ public:
   const db::Shapes &raw_edges () const { return *mp_edges; }
 
 protected:
-  virtual void merged_semantics_changed ();
-  virtual Box compute_bbox () const;
+  void merged_semantics_changed () override;
+  Box compute_bbox () const override;
   void invalidate_cache ();
   void set_is_merged (bool m);
 

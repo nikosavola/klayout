@@ -39,58 +39,58 @@ class DB_PLUGIN_PUBLIC GDS2WriterText
 
 public:
   GDS2WriterText();
-  ~GDS2WriterText();
+  ~GDS2WriterText() override;
 
 protected:
   /**
    *  @brief Write a byte
    */
-  virtual void write_byte (unsigned char b);
+  void write_byte (unsigned char b) override;
 
   /**
    *  @brief Write a short
    */
-  virtual void write_short (int16_t i);
+  void write_short (int16_t i) override;
 
   /**
    *  @brief Write a long
    */
-  virtual void write_int (int32_t l);
+  void write_int (int32_t l) override;
 
   /**
    *  @brief Write a double
    */
-  virtual void write_double (double d);
+  void write_double (double d) override;
 
   /**
    *  @brief Write the time
    */
-  virtual void write_time (const short *t);
+  void write_time (const short *t) override;
 
   /**
    *  @brief Write a string
    */
-  virtual void write_string (const char *t);
+  void write_string (const char *t) override;
 
   /**
    *  @brief Write a string
    */
-  virtual void write_string (const std::string &t);
+  void write_string (const std::string &t) override;
 
   /**
    *  @brief Write the size of the record
    */
-  virtual void write_record_size (int16_t i);
+  void write_record_size (int16_t i) override;
 
   /**
    *  @brief Write a record identifier
    */
-  virtual void write_record (int16_t i);
+  void write_record (int16_t i) override;
 
   /**
    *  @brief Set the stream to write the data to
    */
-  void set_stream (tl::OutputStream &stream)
+  void set_stream (tl::OutputStream &stream) override
   {
     pStream = &stream;
   }
@@ -98,7 +98,7 @@ protected:
   /**
    *  @brief Establish a checkpoint for progress reporting
    */
-  void progress_checkpoint ();
+  void progress_checkpoint () override;
 
 private:
   tl::OutputStream *pStream;

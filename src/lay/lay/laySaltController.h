@@ -70,52 +70,52 @@ public:
   /**
    *  @brief Reimplementation of the PluginDeclaration interface
    */
-  virtual void initialize (lay::Dispatcher *root);
+  void initialize (lay::Dispatcher *root) override;
 
   /**
    *  @brief Reimplementation of the PluginDeclaration interface
    */
-  virtual void initialized (lay::Dispatcher *root);
+  void initialized (lay::Dispatcher *root) override;
 
   /**
    *  @brief Reimplementation of the PluginDeclaration interface
    */
-  virtual void uninitialize (lay::Dispatcher *root);
+  void uninitialize (lay::Dispatcher *root) override;
 
   /**
    *  @brief Reimplementation of the PluginDeclaration interface
    */
-  void get_options (std::vector < std::pair<std::string, std::string> > &options) const;
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override;
 
   /**
    *  @brief Reimplementation of the PluginDeclaration interface
    */
-  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const;
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override;
 
   /**
    *  @brief Reimplementation of the PluginDeclaration interface
    */
-  bool configure (const std::string &key, const std::string &value);
+  bool configure (const std::string &key, const std::string &value) override;
 
   /**
    *  @brief Reimplementation of the PluginDeclaration interface
    */
-  void config_finalize();
+  void config_finalize() override;
 
   /**
    *  @brief Reimplementation of the PluginDeclaration interface
    */
-  bool can_exit (lay::Dispatcher *root) const;
+  bool can_exit (lay::Dispatcher *root) const override;
 
   /**
    *  @brief Reimplementation of the PluginDeclaration interface
    */
-  bool accepts_drop (const std::string &path_or_url) const;
+  bool accepts_drop (const std::string &path_or_url) const override;
 
   /**
    *  @brief Reimplementation of the PluginDeclaration interface
    */
-  void drop_url (const std::string &path_or_url);
+  void drop_url (const std::string &path_or_url) override;
 
   /**
    *  @brief Shows the package editor

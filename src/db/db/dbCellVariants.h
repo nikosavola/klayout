@@ -66,9 +66,9 @@ public:
 struct DB_PUBLIC OrientationReducer
   : public TransformationReducer
 {
-  db::ICplxTrans reduce (const db::ICplxTrans &trans) const;
-  db::Trans reduce (const db::Trans &trans) const;
-  virtual bool equals (const TransformationReducer *other) const;
+  db::ICplxTrans reduce (const db::ICplxTrans &trans) const override;
+  db::Trans reduce (const db::Trans &trans) const override;
+  bool equals (const TransformationReducer *other) const override;
 };
 
 /**
@@ -77,9 +77,9 @@ struct DB_PUBLIC OrientationReducer
 struct DB_PUBLIC OrthogonalTransformationReducer
   : public TransformationReducer
 {
-  db::ICplxTrans reduce (const db::ICplxTrans &trans) const;
-  db::Trans reduce (const db::Trans &trans) const;
-  virtual bool equals (const TransformationReducer *other) const;
+  db::ICplxTrans reduce (const db::ICplxTrans &trans) const override;
+  db::Trans reduce (const db::Trans &trans) const override;
+  bool equals (const TransformationReducer *other) const override;
 };
 
 /**
@@ -90,9 +90,9 @@ struct DB_PUBLIC OrthogonalTransformationReducer
 struct DB_PUBLIC MagnificationReducer
   : public TransformationReducer
 {
-  db::ICplxTrans reduce (const db::ICplxTrans &trans) const;
-  db::Trans reduce (const db::Trans &) const;
-  virtual bool equals (const TransformationReducer *other) const;
+  db::ICplxTrans reduce (const db::ICplxTrans &trans) const override;
+  db::Trans reduce (const db::Trans &) const override;
+  bool equals (const TransformationReducer *other) const override;
 };
 
 /**
@@ -103,9 +103,9 @@ struct DB_PUBLIC MagnificationReducer
 struct DB_PUBLIC XYAnisotropyAndMagnificationReducer
   : public TransformationReducer
 {
-  db::ICplxTrans reduce (const db::ICplxTrans &trans) const;
-  db::Trans reduce (const db::Trans &trans) const;
-  virtual bool equals (const TransformationReducer *other) const;
+  db::ICplxTrans reduce (const db::ICplxTrans &trans) const override;
+  db::Trans reduce (const db::Trans &trans) const override;
+  bool equals (const TransformationReducer *other) const override;
 };
 
 /**
@@ -116,9 +116,9 @@ struct DB_PUBLIC XYAnisotropyAndMagnificationReducer
 struct DB_PUBLIC MagnificationAndOrientationReducer
   : public TransformationReducer
 {
-  db::ICplxTrans reduce (const db::ICplxTrans &trans) const;
-  db::Trans reduce (const db::Trans &trans) const;
-  virtual bool equals (const TransformationReducer *other) const;
+  db::ICplxTrans reduce (const db::ICplxTrans &trans) const override;
+  db::Trans reduce (const db::Trans &trans) const override;
+  bool equals (const TransformationReducer *other) const override;
 };
 
 /**
@@ -131,11 +131,11 @@ struct DB_PUBLIC GridReducer
 {
   GridReducer (db::Coord grid);
 
-  db::ICplxTrans reduce (const db::ICplxTrans &trans) const;
-  db::Trans reduce (const db::Trans &trans) const;
-  virtual bool equals (const TransformationReducer *other) const;
+  db::ICplxTrans reduce (const db::ICplxTrans &trans) const override;
+  db::Trans reduce (const db::Trans &trans) const override;
+  bool equals (const TransformationReducer *other) const override;
 
-  bool is_translation_invariant () const { return false; }
+  bool is_translation_invariant () const override { return false; }
 
 private:
   db::Coord m_grid;
@@ -153,13 +153,13 @@ struct DB_PUBLIC ScaleAndGridReducer
 {
   ScaleAndGridReducer (db::Coord grid, db::Coord mult, db::Coord div);
 
-  virtual db::ICplxTrans reduce_trans (const db::ICplxTrans &trans) const;
-  virtual db::Trans reduce_trans (const db::Trans &trans) const;
-  virtual db::ICplxTrans reduce (const db::ICplxTrans &trans) const;
-  virtual db::Trans reduce (const db::Trans &trans) const;
-  virtual bool equals (const TransformationReducer *other) const;
+  db::ICplxTrans reduce_trans (const db::ICplxTrans &trans) const override;
+  db::Trans reduce_trans (const db::Trans &trans) const override;
+  db::ICplxTrans reduce (const db::ICplxTrans &trans) const override;
+  db::Trans reduce (const db::Trans &trans) const override;
+  bool equals (const TransformationReducer *other) const override;
 
-  bool is_translation_invariant () const { return false; }
+  bool is_translation_invariant () const override { return false; }
 
 private:
   int64_t m_mult;

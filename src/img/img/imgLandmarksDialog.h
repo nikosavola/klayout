@@ -48,13 +48,13 @@ Q_OBJECT
 
 public:
   LandmarksDialog (QWidget *parent, img::Object &img);
-  ~LandmarksDialog ();
+  ~LandmarksDialog () override;
 
   enum mode_t { Move, Add, Delete, None } m_mode;
 
 private slots:
   void update_mode ();
-  void accept ();
+  void accept () override;
 
 private:
   LandmarkEditorService *mp_service;

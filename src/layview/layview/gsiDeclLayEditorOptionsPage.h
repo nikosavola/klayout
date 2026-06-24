@@ -40,21 +40,21 @@ class EditorOptionsPageImpl
 public:
   EditorOptionsPageImpl (const std::string &title, int index);
 
-  virtual std::string title () const
+  std::string title () const override
   {
     return m_title;
   }
 
-  virtual int order () const
+  int order () const override
   {
     return m_index;
   }
 
   void call_edited ();
-  virtual void apply (lay::Dispatcher *root);
-  virtual void setup (lay::Dispatcher *root);
-  virtual void cancel ();
-  virtual void commit (lay::Dispatcher *root);
+  void apply (lay::Dispatcher *root) override;
+  void setup (lay::Dispatcher *root) override;
+  void cancel () override;
+  void commit (lay::Dispatcher *root) override;
 
   gsi::Callback f_apply;
   gsi::Callback f_setup;

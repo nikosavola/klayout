@@ -78,7 +78,7 @@ Q_OBJECT
 
 public:
   Navigator (MainWindow *main_window);
-  ~Navigator ();
+  ~Navigator () override;
 
   void update ();
   void freeze_clicked (); 
@@ -86,9 +86,9 @@ public:
   void show_images (bool f);
 
 protected:
-  virtual void closeEvent (QCloseEvent *event);
-  virtual void showEvent (QShowEvent *event);
-  virtual void resizeEvent (QResizeEvent *event);
+  void closeEvent (QCloseEvent *event) override;
+  void showEvent (QShowEvent *event) override;
+  void resizeEvent (QResizeEvent *event) override;
 
 private slots:
   void menu_changed ();

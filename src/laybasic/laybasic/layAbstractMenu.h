@@ -131,7 +131,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~Action ();
+  ~Action () override;
 
   /**
    *  @brief Set the title
@@ -494,7 +494,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~ConfigureAction ();
+  ~ConfigureAction () override;
 
   /**
    *  @brief Configuration parameter name setter
@@ -536,7 +536,7 @@ public:
   void configure (const std::string &value);
   
 protected:
-  virtual void triggered ();
+  void triggered () override;
 
 private:
   ConfigureAction (const ConfigureAction &action); 
@@ -701,7 +701,7 @@ public:
   /** 
    *  @brief Destroy the abstract menu object
    */
-  ~AbstractMenu ();
+  ~AbstractMenu () override;
 
   /**
    *  @brief Returns a value indicating that a special "extras" menu is needed

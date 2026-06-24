@@ -78,7 +78,7 @@ public:
 
   ScriptError (const ScriptError &d);
 
-  virtual ~ScriptError ()
+  ~ScriptError () override
   { }
 
   const std::string &sourcefile () const 
@@ -126,7 +126,7 @@ public:
     return m_backtrace; 
   }
 
-  virtual std::string msg () const;
+  std::string msg () const override;
 
 private:
   std::string m_sourcefile;

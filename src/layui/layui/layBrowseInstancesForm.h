@@ -49,8 +49,8 @@ class BrowseInstancesConfigPage
 public:
   BrowseInstancesConfigPage (QWidget *parent);
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 public slots:
   void context_changed (int);
@@ -68,9 +68,9 @@ public:
   enum window_type { DontChange = 0, FitCell, FitMarker, Center, CenterSize };
 
   BrowseInstancesForm (lay::Dispatcher *root, lay::LayoutViewBase *view);
-  ~BrowseInstancesForm ();
+  ~BrowseInstancesForm () override;
 
-  bool eventFilter (QObject *watched, QEvent *event);
+  bool eventFilter (QObject *watched, QEvent *event) override;
 
 public slots:
   void cell_changed (QTreeWidgetItem *, QTreeWidgetItem *);
@@ -116,14 +116,14 @@ private:
   bool adv_cell (bool up);
 
   //  implementation of the lay::Plugin interface
-  virtual bool configure (const std::string &name, const std::string &value);
+  bool configure (const std::string &name, const std::string &value) override;
 
   //  implementation of the lay::Browser interface
-  virtual void activated ();
-  virtual void deactivated ();
+  void activated () override;
+  void deactivated () override;
 
   //  implementation of the lay::Plugin interface
-  void menu_activated (const std::string &symbol);
+  void menu_activated (const std::string &symbol) override;
 
   //  change to the given cell in the given cellview
   void change_cell (db::cell_index_type cell, int cv_index);

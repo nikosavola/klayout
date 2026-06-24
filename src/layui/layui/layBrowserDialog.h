@@ -72,7 +72,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~BrowserDialog ();
+  ~BrowserDialog () override;
 
   /**
    *  @brief Connect to a source object
@@ -124,7 +124,7 @@ public:
   }
 
 private:
-  virtual void accept ();
+  void accept () override;
 
   BrowserSource m_default_source;
 };

@@ -79,7 +79,7 @@ public:
   /**  
    *  @brief Destructor
    */
-  ~MAGReader ();
+  ~MAGReader () override;
 
   /** 
    *  @brief The basic read method 
@@ -97,7 +97,7 @@ public:
    *  @param create true, if new layers should be created
    *  @return The LayerMap object that tells where which layer was loaded
    */
-  virtual const LayerMap &read (db::Layout &layout, const LoadLayoutOptions &options);
+  const LayerMap &read (db::Layout &layout, const LoadLayoutOptions &options) override;
 
   /** 
    *  @brief The basic read method (without mapping)
@@ -112,26 +112,26 @@ public:
    *  @param layout The layout object to write to
    *  @return The LayerMap object
    */
-  virtual const LayerMap &read (db::Layout &layout);
+  const LayerMap &read (db::Layout &layout) override;
 
   /**
    *  @brief Format
    */
-  virtual const char *format () const { return "MAG"; }
+  const char *format () const override { return "MAG"; }
 
   /**
    *  @brief Issue an error with positional information
    *
    *  Reimplements MAGDiagnostics
    */
-  virtual void error (const std::string &txt);
+  void error (const std::string &txt) override;
 
   /**
    *  @brief Issue a warning with positional information
    *
    *  Reimplements MAGDiagnostics
    */
-  virtual void warn (const std::string &txt, int wl = 1);
+  void warn (const std::string &txt, int wl = 1) override;
 
 private:
   tl::TextInputStream m_stream;

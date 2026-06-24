@@ -91,7 +91,7 @@ public:
     : m_iter (iter)
   { }
 
-  virtual void put (const Polygon &polygon)
+  void put (const Polygon &polygon) override
   {
     *m_iter++ = polygon;
   }

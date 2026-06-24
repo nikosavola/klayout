@@ -118,7 +118,7 @@ private:
   void reset_geometry_ref ();
 
   //  implementation of CircuitCallback
-  bool new_cell (cell_index_type ci) const;
+  bool new_cell (cell_index_type ci) const override;
 };
 
 }
@@ -153,7 +153,7 @@ public:
   LayoutToNetlistStandardWriter (tl::OutputStream &stream, bool short_version);
 
 protected:
-  void do_write (const db::LayoutToNetlist *l2n);
+  void do_write (const db::LayoutToNetlist *l2n) override;
 
 private:
   tl::OutputStream *mp_stream;

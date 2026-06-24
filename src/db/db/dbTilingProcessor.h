@@ -62,7 +62,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~TileOutputReceiver ()
+  ~TileOutputReceiver () override
   {
     //  .. nothing yet ..
   }

@@ -72,12 +72,12 @@ public:
   /**
    *  @brief Destructor
    */
-  ~SignalHandler ();
+  ~SignalHandler () override;
 
   /**
    *  @brief Implementation of the callback interface
    */
-  virtual void call (const gsi::MethodBase *method, gsi::SerialArgs &args, gsi::SerialArgs &ret) const;
+  void call (const gsi::MethodBase *method, gsi::SerialArgs &args, gsi::SerialArgs &ret) const override;
 
   /**
    *  @brief Adds a callable to the list of targets

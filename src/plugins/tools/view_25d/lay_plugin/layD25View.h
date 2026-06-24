@@ -58,12 +58,12 @@ Q_OBJECT
 
 public:
   D25View (lay::Dispatcher *root, lay::LayoutViewBase *view);
-  ~D25View ();
+  ~D25View () override;
 
-  virtual bool configure (const std::string &name, const std::string &value);
-  virtual void menu_activated (const std::string &symbol);
-  virtual void deactivated ();
-  virtual void activated ();
+  bool configure (const std::string &name, const std::string &value) override;
+  void menu_activated (const std::string &symbol) override;
+  void deactivated () override;
+  void activated () override;
 
   static D25View *open (lay::LayoutViewBase *view);
   void close ();
@@ -77,8 +77,8 @@ public:
   void finish ();
 
 protected:
-  void accept ();
-  void reject ();
+  void accept () override;
+  void reject () override;
 
 private slots:
   void fit_button_clicked ();

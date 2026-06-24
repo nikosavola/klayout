@@ -52,7 +52,7 @@ class TwoTerminalDeviceCombiner
   : public db::DeviceCombiner
 {
 public:
-  bool combine_devices(db::Device *a, db::Device *b) const
+  bool combine_devices(db::Device *a, db::Device *b) const override
   {
     db::Net *na1 = a->net_for_terminal (0);
     db::Net *na2 = a->net_for_terminal (1);
@@ -112,7 +112,7 @@ class ResistorDeviceCombiner
   : public TwoTerminalDeviceCombiner
 {
 public:
-  void parallel (Device *a, Device *b) const
+  void parallel (Device *a, Device *b) const override
   {
     double va = a->parameter_value (0);
     double vb = b->parameter_value (0);
@@ -145,7 +145,7 @@ public:
     a->set_parameter_value (4, pa + pb);
   }
 
-  void serial (Device *a, Device *b) const
+  void serial (Device *a, Device *b) const override
   {
     double va = a->parameter_value (0);
     double vb = b->parameter_value (0);
@@ -182,7 +182,7 @@ class ResistorWithBulkDeviceCombiner
   : public ResistorDeviceCombiner
 {
 public:
-  bool combine_devices (Device *a, Device *b) const
+  bool combine_devices (Device *a, Device *b) const override
   {
     db::Net *nab = a->net_for_terminal (2);
     db::Net *nbb = b->net_for_terminal (2);
@@ -200,7 +200,7 @@ class CapacitorDeviceCombiner
   : public TwoTerminalDeviceCombiner
 {
 public:
-  void serial (Device *a, Device *b) const
+  void serial (Device *a, Device *b) const override
   {
     double va = a->parameter_value (0);
     double vb = b->parameter_value (0);
@@ -217,7 +217,7 @@ public:
     a->set_parameter_value (2, pa + pb);
   }
 
-  void parallel (Device *a, Device *b) const
+  void parallel (Device *a, Device *b) const override
   {
     double va = a->parameter_value (0);
     double vb = b->parameter_value (0);
@@ -237,7 +237,7 @@ class CapacitorWithBulkDeviceCombiner
   : public CapacitorDeviceCombiner
 {
 public:
-  bool combine_devices (Device *a, Device *b) const
+  bool combine_devices (Device *a, Device *b) const override
   {
     db::Net *nab = a->net_for_terminal (2);
     db::Net *nbb = b->net_for_terminal (2);
@@ -255,14 +255,14 @@ class InductorDeviceCombiner
   : public TwoTerminalDeviceCombiner
 {
 public:
-  void parallel (Device *a, Device *b) const
+  void parallel (Device *a, Device *b) const override
   {
     double va = a->parameter_value (0);
     double vb = b->parameter_value (0);
     a->set_parameter_value (0, va + vb < 1e-30 ? 0.0 : va * vb / (va + vb));
   }
 
-  void serial (Device *a, Device *b) const
+  void serial (Device *a, Device *b) const override
   {
     double va = a->parameter_value (0);
     double vb = b->parameter_value (0);
@@ -274,7 +274,7 @@ class DiodeDeviceCombiner
   : public db::DeviceCombiner
 {
 public:
-  bool combine_devices (Device *a, Device *b) const
+  bool combine_devices (Device *a, Device *b) const override
   {
     const db::Net *na1 = a->net_for_terminal (0);
     const db::Net *na2 = a->net_for_terminal (1);
@@ -302,7 +302,7 @@ class MOS3DeviceCombiner
   : public db::DeviceCombiner
 {
 public:
-  bool combine_devices (Device *a, Device *b) const
+  bool combine_devices (Device *a, Device *b) const override
   {
     const db::Net *nas = a->net_for_terminal (0);
     const db::Net *nag = a->net_for_terminal (1);
@@ -352,7 +352,7 @@ class MOS4DeviceCombiner
   : public MOS3DeviceCombiner
 {
 public:
-  bool combine_devices (Device *a, Device *b) const
+  bool combine_devices (Device *a, Device *b) const override
   {
     const db::Net *nas = a->net_for_terminal (0);
     const db::Net *nag = a->net_for_terminal (1);
@@ -396,7 +396,7 @@ class BJT3DeviceCombiner
   : public db::DeviceCombiner
 {
 public:
-  bool combine_devices (Device *a, Device *b) const
+  bool combine_devices (Device *a, Device *b) const override
   {
     const db::Net *nac = a->net_for_terminal (0);
     const db::Net *nab = a->net_for_terminal (1);
@@ -433,7 +433,7 @@ class BJT4DeviceCombiner
   : public BJT3DeviceCombiner
 {
 public:
-  bool combine_devices (Device *a, Device *b) const
+  bool combine_devices (Device *a, Device *b) const override
   {
     const db::Net *nac = a->net_for_terminal (0);
     const db::Net *nab = a->net_for_terminal (1);

@@ -37,23 +37,23 @@ class TextService
 {
 public:
   TextService (db::Manager *manager, lay::LayoutViewBase *view);
-  ~TextService ();
+  ~TextService () override;
   
 #if defined(HAVE_QT)
-  virtual std::vector<lay::PropertiesPage *> properties_pages (db::Manager *manager, QWidget *parent);
+  std::vector<lay::PropertiesPage *> properties_pages (db::Manager *manager, QWidget *parent) override;
 #endif
-  virtual void do_begin_edit (const db::DPoint &p);
-  virtual void do_mouse_transform (const db::DPoint &p, db::DFTrans trans);
-  virtual void do_mouse_move (const db::DPoint &p);
-  virtual void do_mouse_move_inactive (const db::DPoint &p);
-  virtual bool do_mouse_click (const db::DPoint &p);
-  virtual void do_finish_edit (bool);
-  virtual void do_cancel_edit ();
-  virtual bool do_activated ();
-  virtual bool selection_applies (const lay::ObjectInstPath &sel) const;
+  void do_begin_edit (const db::DPoint &p) override;
+  void do_mouse_transform (const db::DPoint &p, db::DFTrans trans) override;
+  void do_mouse_move (const db::DPoint &p) override;
+  void do_mouse_move_inactive (const db::DPoint &p) override;
+  bool do_mouse_click (const db::DPoint &p) override;
+  void do_finish_edit (bool) override;
+  void do_cancel_edit () override;
+  bool do_activated () override;
+  bool selection_applies (const lay::ObjectInstPath &sel) const override;
 
 protected:
-  virtual bool configure (const std::string &name, const std::string &value);
+  bool configure (const std::string &name, const std::string &value) override;
 
 private:
   db::DText m_text;

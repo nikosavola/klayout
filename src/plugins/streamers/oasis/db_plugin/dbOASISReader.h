@@ -79,12 +79,12 @@ public:
   /**  
    *  @brief Destructor
    */
-  ~OASISReader ();
+  ~OASISReader () override;
 
   /**
    *  @brief Format
    */
-  virtual const char *format () const { return "OASIS"; }
+  const char *format () const override { return "OASIS"; }
 
 protected:
   /**
@@ -92,19 +92,19 @@ protected:
    *
    *  Reimplements OASISDiagnostics
    */
-  virtual void error (const std::string &txt);
+  void error (const std::string &txt) override;
 
   /**
    *  @brief Issue a warning with positional information
    *
    *  Reimplements OASISDiagnostics
    */
-  virtual void warn (const std::string &txt, int warn_level = 1);
+  void warn (const std::string &txt, int warn_level = 1) override;
 
-  virtual void common_reader_error (const std::string &msg) { error (msg); }
-  virtual void common_reader_warn (const std::string &msg, int warn_level = 1) { warn (msg, warn_level); }
-  virtual void init (const LoadLayoutOptions &options);
-  virtual void do_read (db::Layout &layout);
+  void common_reader_error (const std::string &msg) override { error (msg); }
+  void common_reader_warn (const std::string &msg, int warn_level = 1) override { warn (msg, warn_level); }
+  void init (const LoadLayoutOptions &options) override;
+  void do_read (db::Layout &layout) override;
 
 private:
   typedef db::coord_traits<db::Coord>::distance_type distance_type;

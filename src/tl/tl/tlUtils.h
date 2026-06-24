@@ -224,7 +224,7 @@ struct func_delegate
 {
   func_delegate (Op &op) : m_op (op) { }
   
-  virtual Value operator () (const Value &v) 
+  Value operator () (const Value &v) override 
   { 
     return m_op (v); 
   }

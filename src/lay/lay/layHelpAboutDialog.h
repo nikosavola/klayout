@@ -43,7 +43,7 @@ class LAY_PUBLIC HelpAboutDialog
 {
 public:
   HelpAboutDialog (QWidget *parent);
-  ~HelpAboutDialog ();
+  ~HelpAboutDialog () override;
 
 private:
   Ui::HelpAboutDialog *mp_ui;

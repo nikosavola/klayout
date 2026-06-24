@@ -46,44 +46,44 @@ namespace
       set ();
     }
 
-    virtual bool is_addressable() const
+    bool is_addressable() const override
     {
       return false;
     }
 
-    virtual bool at_end () const
+    bool at_end () const override
     {
       return m_rec_iter.at_end ();
     }
 
-    virtual void increment ()
+    void increment () override
     {
       do_increment ();
       set ();
     }
 
-    virtual const value_type *get () const
+    const value_type *get () const override
     {
       return &m_shape;
     }
 
-    virtual db::properties_id_type prop_id () const
+    db::properties_id_type prop_id () const override
     {
       return m_prop_id;
     }
 
-    virtual OriginalLayerTextsIterator *clone () const
+    OriginalLayerTextsIterator *clone () const override
     {
       return new OriginalLayerTextsIterator (*this);
     }
 
-    virtual bool equals (const generic_shape_iterator_delegate_base<value_type> *other) const
+    bool equals (const generic_shape_iterator_delegate_base<value_type> *other) const override
     {
       const OriginalLayerTextsIterator *o = dynamic_cast<const OriginalLayerTextsIterator *> (other);
       return o && o->m_rec_iter == m_rec_iter && o->m_iter_trans.equal (m_iter_trans);
     }
 
-    virtual void do_reset (const db::Box &region, bool overlapping)
+    void do_reset (const db::Box &region, bool overlapping) override
     {
       if (region == db::Box::world ()) {
         m_rec_iter.set_region (region);
@@ -94,7 +94,7 @@ namespace
       set ();
     }
 
-    virtual db::Box bbox () const
+    db::Box bbox () const override
     {
       return m_iter_trans * m_rec_iter.bbox ();
     }

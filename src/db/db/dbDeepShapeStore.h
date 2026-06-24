@@ -368,7 +368,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~DeepShapeStore ();
+  ~DeepShapeStore () override;
 
   /**
    *  @brief Returns true, if the DeepShapeStore is singular

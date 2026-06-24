@@ -70,7 +70,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~DitherPatternSelectionButton ();
+  ~DitherPatternSelectionButton () override;
 
   /**
    *  @brief Associate with a view 
@@ -132,7 +132,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~LineStyleSelectionButton ();
+  ~LineStyleSelectionButton () override;
 
   /**
    *  @brief Associate with a view
@@ -196,7 +196,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~LibrarySelectionComboBox ();
+  ~LibrarySelectionComboBox () override;
 
   /**
    *  @brief Set the current library
@@ -250,7 +250,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~LayerSelectionComboBox ();
+  ~LayerSelectionComboBox () override;
 
   /**
    *  @brief Associate with a layout
@@ -376,7 +376,7 @@ Q_OBJECT
 
 public:
   CellViewSelectionComboBox (QWidget *parent);
-  ~CellViewSelectionComboBox ();
+  ~CellViewSelectionComboBox () override;
 
   void set_layout_view (const lay::LayoutViewBase *view);
   const lay::LayoutViewBase *layout_view () const;
@@ -504,7 +504,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~DecoratedLineEdit ();
+  ~DecoratedLineEdit () override;
 
   /**
    *  @brief Sets a value indicating whether the clear button is enabled
@@ -595,12 +595,12 @@ signals:
   void clear_pressed ();
 
 protected:
-  void mousePressEvent (QMouseEvent *event);
-  void mouseReleaseEvent (QMouseEvent *event);
-  void resizeEvent (QResizeEvent *event);
-  void keyPressEvent (QKeyEvent *event);
-  bool focusNextPrevChild (bool next);
-  bool event (QEvent *event);
+  void mousePressEvent (QMouseEvent *event) override;
+  void mouseReleaseEvent (QMouseEvent *event) override;
+  void resizeEvent (QResizeEvent *event) override;
+  void keyPressEvent (QKeyEvent *event) override;
+  bool focusNextPrevChild (bool next) override;
+  bool event (QEvent *event) override;
 
 private:
   bool m_clear_button_enabled;

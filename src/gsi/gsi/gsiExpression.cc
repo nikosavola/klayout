@@ -266,13 +266,13 @@ public:
     //  .. nothing yet ..
   }
 
-  bool supports_keyword_parameters () const
+  bool supports_keyword_parameters () const override
   {
     //  for future extensions
     return true;
   }
 
-  void execute (const tl::ExpressionParserContext & /*context*/, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> *kwargs) const
+  void execute (const tl::ExpressionParserContext & /*context*/, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> *kwargs) const override
   {
     if (! args.empty () || kwargs) {
       throw tl::Exception (tl::to_string (tr ("Class '%s' is not a function - use 'new' to create a new object")), mp_var_cls->name ());

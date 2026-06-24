@@ -73,12 +73,12 @@ Q_OBJECT
 
 public:
   EditorOptionsGeneric (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher);
-  ~EditorOptionsGeneric ();
+  ~EditorOptionsGeneric () override;
 
-  virtual std::string title () const;
-  virtual int order () const { return -10; }
-  void apply (lay::Dispatcher *root);
-  void setup (lay::Dispatcher *root);
+  std::string title () const override;
+  int order () const override { return -10; }
+  void apply (lay::Dispatcher *root) override;
+  void setup (lay::Dispatcher *root) override;
 
 public slots:
   void grid_changed (int);
@@ -96,12 +96,12 @@ class EditorOptionsText
 {
 public:
   EditorOptionsText (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher);
-  ~EditorOptionsText ();
+  ~EditorOptionsText () override;
 
-  virtual std::string title () const;
-  virtual int order () const { return 0; }
-  void apply (lay::Dispatcher *root);
-  void setup (lay::Dispatcher *root);
+  std::string title () const override;
+  int order () const override { return 0; }
+  void apply (lay::Dispatcher *root) override;
+  void setup (lay::Dispatcher *root) override;
 
 private:
   Ui::EditorOptionsText *mp_ui;
@@ -117,12 +117,12 @@ Q_OBJECT
 
 public:
   EditorOptionsPath (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher);
-  ~EditorOptionsPath ();
+  ~EditorOptionsPath () override;
 
-  virtual std::string title () const;
-  virtual int order () const { return 0; }
-  void apply (lay::Dispatcher *root);
-  void setup (lay::Dispatcher *root);
+  std::string title () const override;
+  int order () const override { return 0; }
+  void apply (lay::Dispatcher *root) override;
+  void setup (lay::Dispatcher *root) override;
 
 public slots:
   void type_changed (int);
@@ -141,12 +141,12 @@ Q_OBJECT
 
 public:
   EditorOptionsInst (lay::LayoutViewBase *view, lay::Dispatcher *root);
-  ~EditorOptionsInst ();
+  ~EditorOptionsInst () override;
 
-  virtual std::string title () const;
-  virtual int order () const { return 0; }
-  void apply (lay::Dispatcher *root);
-  void setup (lay::Dispatcher *root);
+  std::string title () const override;
+  int order () const override { return 0; }
+  void apply (lay::Dispatcher *root) override;
+  void setup (lay::Dispatcher *root) override;
 
 private slots:
   void array_changed ();
@@ -159,8 +159,8 @@ private:
   edt::PCellParametersPage *mp_pcell_parameters;
   int m_cv_index;
 
-  virtual void technology_changed (const std::string &);
-  virtual void active_cellview_changed ();
+  void technology_changed (const std::string &) override;
+  void active_cellview_changed () override;
 };
 
 /**
@@ -173,12 +173,12 @@ Q_OBJECT
 
 public:
   EditorOptionsInstPCellParam (lay::LayoutViewBase *view, lay::Dispatcher *root);
-  ~EditorOptionsInstPCellParam ();
+  ~EditorOptionsInstPCellParam () override;
 
-  virtual std::string title () const;
-  virtual int order () const { return 1; }
-  void apply (lay::Dispatcher *root);
-  void setup (lay::Dispatcher *root);
+  std::string title () const override;
+  int order () const override { return 1; }
+  void apply (lay::Dispatcher *root) override;
+  void setup (lay::Dispatcher *root) override;
 
 private slots:
   void update_pcell_parameters ();
@@ -191,7 +191,7 @@ private:
   std::string m_lib_name, m_cell_name;
 
   void update_pcell_parameters (const std::vector <tl::Variant> &parameters);
-  virtual void technology_changed (const std::string &);
+  void technology_changed (const std::string &) override;
 };
 
 /**
@@ -204,13 +204,13 @@ Q_OBJECT
 
 public:
   BoxToolboxWidget (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher);
-  ~BoxToolboxWidget ();
+  ~BoxToolboxWidget () override;
 
-  virtual std::string title () const;
-  virtual int order () const { return 200; }
-  virtual void configure (const std::string &name, const std::string &value);
-  virtual void commit (lay::Dispatcher *root);
-  virtual void deactivated ();
+  std::string title () const override;
+  int order () const override { return 200; }
+  void configure (const std::string &name, const std::string &value) override;
+  void commit (lay::Dispatcher *root) override;
+  void deactivated () override;
 
 private:
   QHBoxLayout *mp_layout;
@@ -227,13 +227,13 @@ Q_OBJECT
 
 public:
   ConnectionToolboxWidget (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher);
-  ~ConnectionToolboxWidget ();
+  ~ConnectionToolboxWidget () override;
 
-  virtual std::string title () const;
-  virtual int order () const { return 200; }
-  virtual void configure (const std::string &name, const std::string &value);
-  virtual void commit (lay::Dispatcher *root);
-  virtual void deactivated ();
+  std::string title () const override;
+  int order () const override { return 200; }
+  void configure (const std::string &name, const std::string &value) override;
+  void commit (lay::Dispatcher *root) override;
+  void deactivated () override;
 
 private:
   QHBoxLayout *mp_layout;
@@ -251,13 +251,13 @@ Q_OBJECT
 
 public:
   PathConnectionToolboxWidget (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher);
-  ~PathConnectionToolboxWidget ();
+  ~PathConnectionToolboxWidget () override;
 
-  virtual std::string title () const;
-  virtual int order () const { return 200; }
-  virtual void configure (const std::string &name, const std::string &value);
-  virtual void commit (lay::Dispatcher *root);
-  virtual void deactivated ();
+  std::string title () const override;
+  int order () const override { return 200; }
+  void configure (const std::string &name, const std::string &value) override;
+  void commit (lay::Dispatcher *root) override;
+  void deactivated () override;
 
 private:
   QHBoxLayout *mp_layout;
@@ -275,13 +275,13 @@ Q_OBJECT
 
 public:
   TextToolboxWidget (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher);
-  ~TextToolboxWidget ();
+  ~TextToolboxWidget () override;
 
-  virtual std::string title () const;
-  virtual int order () const { return 200; }
-  virtual void configure (const std::string &name, const std::string &value);
-  virtual void commit (lay::Dispatcher *root);
-  virtual void deactivated ();
+  std::string title () const override;
+  int order () const override { return 200; }
+  void configure (const std::string &name, const std::string &value) override;
+  void commit (lay::Dispatcher *root) override;
+  void deactivated () override;
 
 private:
   QHBoxLayout *mp_layout;

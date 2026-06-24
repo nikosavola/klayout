@@ -142,7 +142,7 @@ class LAYBASIC_PUBLIC LayoutCanvas
 {
 public:
   LayoutCanvas (lay::LayoutViewBase *view);
-  ~LayoutCanvas ();
+  ~LayoutCanvas () override;
 
 #if defined(HAVE_QT)
   /**
@@ -150,7 +150,7 @@ public:
    *
    *  This method needs to be called after the constructor to establish the drawing widget.
    */
-  virtual void init_ui (QWidget *parent);
+  void init_ui (QWidget *parent) override;
 #endif
 
   void set_colors (tl::Color background, tl::Color foreground, tl::Color active);
@@ -337,12 +337,12 @@ public:
   /**
    *  @brief Reimplementation of ViewObjectCanvas interface
    */
-  double resolution () const;
+  double resolution () const override;
 
   /**
    *  @brief Reimplementation of ViewObjectCanvas interface
    */
-  double font_resolution () const;
+  double font_resolution () const override;
 
   /**
    *  @brief Gets the gamma value
@@ -355,7 +355,7 @@ public:
   /**
    *  @brief Reimplementation of ViewObjectCanvas: Background color 
    */
-  tl::Color background_color () const
+  tl::Color background_color () const override
   { 
     return tl::Color (m_background);
   }
@@ -363,7 +363,7 @@ public:
   /**
    *  @brief Reimplementation of ViewObjectCanvas: Foreground color 
    */
-  tl::Color foreground_color () const
+  tl::Color foreground_color () const override
   { 
     return tl::Color (m_foreground);
   }
@@ -371,7 +371,7 @@ public:
   /**
    *  @brief Reimplementation of ViewObjectCanvas: Active color 
    */
-  tl::Color active_color () const
+  tl::Color active_color () const override
   { 
     return tl::Color (m_active);
   }
@@ -379,7 +379,7 @@ public:
   /**
    *  @brief Reimplementation of ViewObjectCanvas: background image
    */
-  tl::PixelBuffer *bg_image ()
+  tl::PixelBuffer *bg_image () override
   {
     return mp_image;
   }
@@ -387,12 +387,12 @@ public:
   /** 
    *  @brief Reimplementation of RedrawThreadCanvas: signal end of drawing
    */
-  void signal_end_of_drawing ();
+  void signal_end_of_drawing () override;
 
   /** 
    *  @brief Reimplementation of RedrawThreadCanvas: signal transfer
    */
-  void signal_transfer_done ();
+  void signal_transfer_done () override;
 
   /**
    *  @brief Access to the viewport object
@@ -459,18 +459,18 @@ private:
 
   tl::Mutex m_mutex;
 
-  virtual void key_event (unsigned int key, unsigned int buttons);
-  virtual bool shortcut_override_event (unsigned int key, unsigned int buttons);
-  virtual void resize_event (unsigned int width, unsigned int height);
+  void key_event (unsigned int key, unsigned int buttons) override;
+  bool shortcut_override_event (unsigned int key, unsigned int buttons) override;
+  void resize_event (unsigned int width, unsigned int height) override;
   lay::EditorOptionsPage *first_toolbox_widget ();
 
 #if defined(HAVE_QT)
-  virtual void gtf_probe ();
-  virtual void paint_event ();
+  void gtf_probe () override;
+  void paint_event () override;
 #endif
 
   //  implementation of the lay::Drawings interface
-  void update_drawings ();
+  void update_drawings () override;
 
   //  must be called after updating m_viewport
   void update_viewport ();

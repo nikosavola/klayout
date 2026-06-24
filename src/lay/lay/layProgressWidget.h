@@ -65,7 +65,7 @@ public:
   void set_full_width (bool fw);
   bool full_width () const;
 
-  QSize sizeHint () const;
+  QSize sizeHint () const override;
 
 public slots:
   void signal_break ();

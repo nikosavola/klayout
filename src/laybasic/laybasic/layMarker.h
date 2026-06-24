@@ -299,7 +299,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~GenericMarkerBase ();
+  ~GenericMarkerBase () override;
 
   /**
    *  @brief Set the transformation
@@ -363,7 +363,7 @@ public:
   /**
    *  @brief Gets the bounding box
    */
-  db::DBox bbox () const;
+  db::DBox bbox () const override;
 
   /**
    *  @brief Gets the database unit
@@ -405,7 +405,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~ShapeMarker ();
+  ~ShapeMarker () override;
 
   /**
    *  @brief Set the shape the marker is to display
@@ -432,9 +432,9 @@ public:
   }
 
 private:
-  virtual void render (const Viewport &vp, ViewObjectCanvas &canvas);
+  void render (const Viewport &vp, ViewObjectCanvas &canvas) override;
 
-  virtual db::DBox item_bbox () const;
+  db::DBox item_bbox () const override;
 
   db::Shape m_shape; 
 };
@@ -464,7 +464,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~InstanceMarker ();
+  ~InstanceMarker () override;
 
   /**
    *  @brief Gets the instance
@@ -517,9 +517,9 @@ public:
   }
 
 private:
-  virtual void render (const Viewport &vp, ViewObjectCanvas &canvas);
+  void render (const Viewport &vp, ViewObjectCanvas &canvas) override;
 
-  virtual db::DBox item_bbox () const;
+  db::DBox item_bbox () const override;
 
   bool m_draw_outline;
   size_t m_max_shapes;
@@ -562,7 +562,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~Marker ();
+  ~Marker () override;
 
   /**
    *  @brief Set the marker to display nothing.
@@ -742,10 +742,10 @@ public:
   }
 
 protected:
-  virtual db::DBox item_bbox () const;
+  db::DBox item_bbox () const override;
   
 private:
-  virtual void render (const Viewport &vp, ViewObjectCanvas &canvas);
+  void render (const Viewport &vp, ViewObjectCanvas &canvas) override;
 
   void draw (lay::Renderer &r, const db::CplxTrans &t, lay::CanvasPlane *fill, lay::CanvasPlane *contour, lay::CanvasPlane *vertex, lay::CanvasPlane *text);
   void remove_object ();
@@ -797,7 +797,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~DMarker ();
+  ~DMarker () override;
 
   /**
    *  @brief Set the box the marker is to display
@@ -834,10 +834,10 @@ public:
   /**
    *  @brief Gets the bounding box
    */
-  virtual db::DBox bbox () const;
+  db::DBox bbox () const override;
   
 private:
-  virtual void render (const Viewport &vp, ViewObjectCanvas &canvas);
+  void render (const Viewport &vp, ViewObjectCanvas &canvas) override;
 
   void remove_object ();
 

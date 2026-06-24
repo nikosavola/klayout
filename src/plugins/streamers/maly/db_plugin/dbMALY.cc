@@ -130,43 +130,43 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual std::string format_name () const { return "MALY"; }
-  virtual std::string format_desc () const { return "MALY jobdeck"; }
-  virtual std::string format_title () const { return "MALY (MALY jobdeck format)"; }
-  virtual std::string file_format () const { return "MALY jobdeck files (*.maly *.MALY *.mly *.MLY)"; }
+  std::string format_name () const override { return "MALY"; }
+  std::string format_desc () const override { return "MALY jobdeck"; }
+  std::string format_title () const override { return "MALY (MALY jobdeck format)"; }
+  std::string file_format () const override { return "MALY jobdeck files (*.maly *.MALY *.mly *.MLY)"; }
 
-  virtual bool detect (tl::InputStream &s) const 
+  bool detect (tl::InputStream &s) const override 
   {
     db::MALYReader reader (s);
     return reader.test ();
   }
 
-  virtual ReaderBase *create_reader (tl::InputStream &s) const 
+  ReaderBase *create_reader (tl::InputStream &s) const override 
   {
     return new db::MALYReader (s);
   }
 
-  virtual WriterBase *create_writer () const
+  WriterBase *create_writer () const override
   {
     return nullptr;
   }
 
-  virtual bool can_read () const
+  bool can_read () const override
   {
     return true;
   }
 
-  virtual bool can_write () const
+  bool can_write () const override
   {
     return false;
   }
 
-  virtual bool supports_context () const
+  bool supports_context () const override
   {
     return false;
   }
 
-  virtual tl::XMLElementBase *xml_reader_options_element () const
+  tl::XMLElementBase *xml_reader_options_element () const override
   {
     return new db::ReaderOptionsXMLElement<db::MALYReaderOptions> ("maly",
       tl::make_member (&db::MALYReaderOptions::dbu, "dbu") +

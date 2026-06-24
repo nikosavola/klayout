@@ -43,7 +43,7 @@ class DB_PUBLIC MutableTexts
 public:
   MutableTexts ();
   MutableTexts (const MutableTexts &other);
-  virtual ~MutableTexts ();
+  ~MutableTexts () override;
 
   virtual void do_insert (const db::Text &text, db::properties_id_type prop_id) = 0;
 

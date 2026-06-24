@@ -152,14 +152,14 @@ public:
     // .. nothing yet ..
   }
 
-  virtual void read (Database &db) 
+  void read (Database &db) override 
   {
     tl::SelfTimer timer (tl::verbosity () >= 11, "Reading marker database file");
     tl::XMLStreamSource in (m_input_stream, tl::to_string (tr ("Reading RDB")));
     make_rdb_structure (&db).parse (in, db); 
   }
 
-  virtual const char *format () const 
+  const char *format () const override 
   {
     return "KLayout-RDB";
   }
@@ -171,11 +171,11 @@ private:
 class StandardFormatDeclaration 
   : public FormatDeclaration
 {
-  virtual std::string format_name () const { return "KLayout-RDB"; }
-  virtual std::string format_desc () const { return "KLayout report database format"; }
-  virtual std::string file_format () const { return "KLayout RDB files (*.lyrdb *.lyrdb.gz)"; }
+  std::string format_name () const override { return "KLayout-RDB"; }
+  std::string format_desc () const override { return "KLayout report database format"; }
+  std::string file_format () const override { return "KLayout RDB files (*.lyrdb *.lyrdb.gz)"; }
 
-  virtual bool detect (tl::InputStream &stream) const
+  bool detect (tl::InputStream &stream) const override
   {
     tl::TextInputStream text_stream (stream);
 
@@ -191,7 +191,7 @@ class StandardFormatDeclaration
     return false;
   }
 
-  virtual ReaderBase *create_reader (tl::InputStream &s) const 
+  ReaderBase *create_reader (tl::InputStream &s) const override 
   {
     return new StandardReader (s);
   }

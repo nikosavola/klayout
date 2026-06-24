@@ -43,7 +43,7 @@ class DB_PUBLIC MutableEdgePairs
 public:
   MutableEdgePairs ();
   MutableEdgePairs (const MutableEdgePairs &other);
-  virtual ~MutableEdgePairs ();
+  ~MutableEdgePairs () override;
 
   virtual void do_insert (const db::EdgePair &edge_pair, db::properties_id_type prop_id) = 0;
 

@@ -48,7 +48,7 @@ public:
   QWidget *background_widget ();
 
 protected:
-  virtual void resizeEvent (QResizeEvent *)
+  void resizeEvent (QResizeEvent *) override
   {
     resize_children ();
   }

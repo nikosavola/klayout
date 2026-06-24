@@ -57,7 +57,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~Callee ();
+  ~Callee () override;
 
   /**
    *  @brief Adds a callback (given by the CallbackFunction)
@@ -74,12 +74,12 @@ public:
   /**
    *  @brief Implementation of the Callee interface
    */
-  virtual void call (int id, gsi::SerialArgs &args, gsi::SerialArgs &ret) const;
+  void call (int id, gsi::SerialArgs &args, gsi::SerialArgs &ret) const override;
 
   /**
    *  @brief Implementation of the Callee interface
    */
-  virtual bool can_call () const;
+  bool can_call () const override;
 
 private:
   PYAObjectBase *mp_obj;

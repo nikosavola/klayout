@@ -77,17 +77,17 @@ public:
   HelpSource ();
   HelpSource (bool make_index);
 
-  ~HelpSource();
+  ~HelpSource() override;
 
-  virtual std::string get (const std::string &url);
-  virtual BrowserOutline get_outline (const std::string &url);
-  virtual QImage get_image (const std::string &url);
-  virtual std::string get_css (const std::string &url);
+  std::string get (const std::string &url) override;
+  BrowserOutline get_outline (const std::string &url) override;
+  QImage get_image (const std::string &url) override;
+  std::string get_css (const std::string &url) override;
 
-  virtual void search_completers(const std::string &search_string, std::list<std::string> &completers);
+  void search_completers(const std::string &search_string, std::list<std::string> &completers) override;
 
-  virtual std::string next_topic (const std::string &url);
-  virtual std::string prev_topic (const std::string &url);
+  std::string next_topic (const std::string &url) override;
+  std::string prev_topic (const std::string &url) override;
 
   QDomDocument get_dom (const std::string &u);
 

@@ -102,7 +102,7 @@ public:
     m_debugger_scheme = lym::MacroInterpreter::debugger_scheme ();
   }
 
-  ~MacroInterpreterImpl ()
+  ~MacroInterpreterImpl () override
   {
     delete mp_registration;
     mp_registration = nullptr;
@@ -112,7 +112,7 @@ public:
     m_templates.clear ();
   }
 
-  std::pair<std::string, std::string> include_expansion (const lym::Macro *macro)
+  std::pair<std::string, std::string> include_expansion (const lym::Macro *macro) override
   {
     if (m_supports_include_expansion) {
       return lym::MacroInterpreter::include_expansion (macro);
@@ -141,7 +141,7 @@ public:
     mp_registration = new tl::RegisteredClass<lym::MacroInterpreter> (this, 0 /*position*/, name, false /*does not own object*/);
   }
 
-  virtual tl::Executable *executable (const lym::Macro *macro) const
+  tl::Executable *executable (const lym::Macro *macro) const override
   {
     if (f_executable.can_issue ()) {
       return f_executable.issue<MacroInterpreter, tl::Executable *, const lym::Macro *> (&MacroInterpreter::executable, macro);
@@ -165,7 +165,7 @@ public:
     m_storage_scheme = scheme;
   }
 
-  virtual lym::Macro::Format storage_scheme () const
+  lym::Macro::Format storage_scheme () const override
   {
     return m_storage_scheme;
   }
@@ -175,7 +175,7 @@ public:
     m_debugger_scheme = scheme;
   }
 
-  virtual lym::Macro::Interpreter debugger_scheme () const
+  lym::Macro::Interpreter debugger_scheme () const override
   {
     return m_debugger_scheme;
   }
@@ -185,7 +185,7 @@ public:
     m_syntax_scheme = s;
   }
 
-  virtual std::string syntax_scheme () const
+  std::string syntax_scheme () const override
   {
     return m_syntax_scheme;
   }
@@ -195,7 +195,7 @@ public:
     m_description = s;
   }
 
-  virtual std::string description () const
+  std::string description () const override
   {
     return m_description;
   }
@@ -205,7 +205,7 @@ public:
     m_suffix = s;
   }
 
-  virtual std::string suffix () const
+  std::string suffix () const override
   {
     return m_suffix;
   }
@@ -242,7 +242,7 @@ public:
     return m;
   }
 
-  virtual void get_templates (std::vector<lym::Macro *> &tt) const
+  void get_templates (std::vector<lym::Macro *> &tt) const override
   {
     for (std::vector<lym::Macro *>::const_iterator t = m_templates.begin  (); t != m_templates.end (); ++t) {
       tt.push_back (new lym::Macro ());

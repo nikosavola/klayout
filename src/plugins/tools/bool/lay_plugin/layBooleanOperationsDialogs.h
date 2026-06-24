@@ -50,7 +50,7 @@ Q_OBJECT
 
 public:
   BooleanOptionsDialog (QWidget *parent);
-  virtual ~BooleanOptionsDialog ();
+  ~BooleanOptionsDialog () override;
 
   bool exec_dialog (lay::LayoutViewBase *view, int &cv_a, int &layer_a, int &cv_b, int &layer_b, int &cv_res, int &layer_res, int &mode, int &hier_mode, bool &min_coherence);
 
@@ -58,7 +58,7 @@ public slots:
   void cv_changed (int);
 
 private:
-  virtual void accept ();
+  void accept () override;
 
   lay::LayoutViewBase *mp_view;
 };
@@ -74,7 +74,7 @@ Q_OBJECT
 
 public:
   SizingOptionsDialog (QWidget *parent);
-  virtual ~SizingOptionsDialog ();
+  ~SizingOptionsDialog () override;
 
   bool exec_dialog (lay::LayoutViewBase *view, int &cv, int &layer, int &cv_res, int &layer_res, double &dx, double &dy, unsigned int &size_mode, int &hier_mode, bool &min_coherence);
 
@@ -82,7 +82,7 @@ public slots:
   void cv_changed (int);
 
 private:
-  virtual void accept ();
+  void accept () override;
 
   lay::LayoutViewBase *mp_view;
 };
@@ -98,7 +98,7 @@ Q_OBJECT
 
 public:
   MergeOptionsDialog (QWidget *parent);
-  virtual ~MergeOptionsDialog ();
+  ~MergeOptionsDialog () override;
 
   bool exec_dialog (lay::LayoutViewBase *view, int &cv, int &layer, int &cv_res, int &layer_res, unsigned int &min_wc, int &hier_mode, bool &min_coherence);
 
@@ -106,7 +106,7 @@ public slots:
   void cv_changed (int);
 
 private:
-  virtual void accept ();
+  void accept () override;
 
   lay::LayoutViewBase *mp_view;
 };

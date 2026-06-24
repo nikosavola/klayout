@@ -39,12 +39,12 @@ class TextProgressDelegate
 public:
   TextProgressDelegate (MainWindow *mw, int verbosity);
 
-  virtual void update_progress (tl::Progress *progress);
-  virtual void show_progress_bar (bool show);
-  virtual bool progress_wants_widget () const;
-  virtual void progress_add_widget (QWidget *widget);
-  virtual QWidget *progress_get_widget () const;
-  virtual void progress_remove_widget ();
+  void update_progress (tl::Progress *progress) override;
+  void show_progress_bar (bool show) override;
+  bool progress_wants_widget () const override;
+  void progress_add_widget (QWidget *widget) override;
+  QWidget *progress_get_widget () const override;
+  void progress_remove_widget () override;
 
 private:
   MainWindow *mp_mw;

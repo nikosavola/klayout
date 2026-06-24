@@ -51,42 +51,42 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual std::string format_name () const { return "MAG"; }
-  virtual std::string format_desc () const { return "Magic"; }
-  virtual std::string format_title () const { return "MAG (Magic layout format)"; }
-  virtual std::string file_format () const { return "Magic files (*.mag *.MAG *.mag.gz *.MAG.gz)"; }
+  std::string format_name () const override { return "MAG"; }
+  std::string format_desc () const override { return "Magic"; }
+  std::string format_title () const override { return "MAG (Magic layout format)"; }
+  std::string file_format () const override { return "Magic files (*.mag *.MAG *.mag.gz *.MAG.gz)"; }
 
-  virtual bool detect (tl::InputStream &s) const 
+  bool detect (tl::InputStream &s) const override 
   {
     return s.read_all (5) == "magic";
   }
 
-  virtual ReaderBase *create_reader (tl::InputStream &s) const 
+  ReaderBase *create_reader (tl::InputStream &s) const override 
   {
     return new db::MAGReader (s);
   }
 
-  virtual WriterBase *create_writer () const
+  WriterBase *create_writer () const override
   {
     return new db::MAGWriter ();
   }
 
-  virtual bool can_read () const
+  bool can_read () const override
   {
     return true;
   }
 
-  virtual bool can_write () const
+  bool can_write () const override
   {
     return true;
   }
 
-  virtual bool supports_context () const
+  bool supports_context () const override
   {
     return false;
   }
 
-  virtual tl::XMLElementBase *xml_reader_options_element () const
+  tl::XMLElementBase *xml_reader_options_element () const override
   {
     return new db::ReaderOptionsXMLElement<db::MAGReaderOptions> ("mag",
       tl::make_member (&db::MAGReaderOptions::lambda, "lambda") +
@@ -101,7 +101,7 @@ public:
     );
   }
 
-  virtual tl::XMLElementBase *xml_writer_options_element () const
+  tl::XMLElementBase *xml_writer_options_element () const override
   {
     return new db::WriterOptionsXMLElement<db::MAGWriterOptions> ("mag",
       tl::make_member (&db::MAGWriterOptions::lambda, "lambda") +

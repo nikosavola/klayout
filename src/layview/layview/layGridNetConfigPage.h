@@ -42,10 +42,10 @@ Q_OBJECT
 
 public:
   GridNetConfigPage (QWidget *parent);
-  ~GridNetConfigPage ();
+  ~GridNetConfigPage () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::GridNetConfigPage *mp_ui;

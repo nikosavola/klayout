@@ -77,7 +77,7 @@ public:
     }
   }
 
-  ~PropertySelectorOp ()
+  ~PropertySelectorOp () override
   {
     for (std::vector<const PropertySelectorBase *>::iterator b = m_args.begin (); b != m_args.end (); ++b) {
       delete const_cast<PropertySelectorBase *> (*b);
@@ -85,7 +85,7 @@ public:
     m_args.clear ();
   }
 
-  virtual std::string to_string (bool inner, size_t max_len) const
+  std::string to_string (bool inner, size_t max_len) const override
   {
     std::string s;
     if (inner) {
@@ -111,7 +111,7 @@ public:
     m_args.push_back (arg);
   }
 
-  PropertySelectorBase *clone () const 
+  PropertySelectorBase *clone () const override 
   {
     return new PropertySelectorOp (*this);
   }
@@ -134,7 +134,7 @@ public:
     return m_op;
   }
 
-  bool check (const db::PropertiesSet &set) const
+  bool check (const db::PropertiesSet &set) const override
   {
     if (m_op == And) {
       for (std::vector<const PropertySelectorBase *>::const_iterator b = m_args.begin (); b != m_args.end (); ++b) {
@@ -153,7 +153,7 @@ public:
     }
   }
 
-  bool selection (std::set<db::properties_id_type> &ids) const
+  bool selection (std::set<db::properties_id_type> &ids) const override
   {
     //  this algorithm computes the "or" of two sets by using this relationship: a or b or c or .. = !((!a) and (!b) and (!c) and ..)
 
@@ -211,12 +211,12 @@ public:
     return m_op == Or ? !inv : inv;
   }
 
-  unsigned int type_id () const 
+  unsigned int type_id () const override 
   {
     return m_op == And ? 1 : 2; 
   }
 
-  int compare (const PropertySelectorBase *b) const 
+  int compare (const PropertySelectorBase *b) const override 
   {
     if (type_id () != b->type_id ()) {
       return type_id () < b->type_id () ? -1 : 1;
@@ -254,38 +254,38 @@ public:
     //  .. nothing yet ..
   }
 
-  ~PropertySelectorNot ()
+  ~PropertySelectorNot () override
   {
     delete mp_arg;
     mp_arg = nullptr;
   }
 
-  virtual std::string to_string (bool /*inner*/, size_t max_len) const
+  std::string to_string (bool /*inner*/, size_t max_len) const override
   {
     return "!(" + mp_arg->to_string (false, max_len) + ")";
   }
 
-  PropertySelectorBase *clone () const 
+  PropertySelectorBase *clone () const override 
   {
     return new PropertySelectorNot (mp_arg->clone ());
   }
 
-  bool check (const db::PropertiesSet &set) const
+  bool check (const db::PropertiesSet &set) const override
   {
     return ! mp_arg->check (set);
   }
 
-  bool selection (std::set<db::properties_id_type> &ids) const
+  bool selection (std::set<db::properties_id_type> &ids) const override
   {
     return ! mp_arg->selection (ids);
   }
 
-  unsigned int type_id () const 
+  unsigned int type_id () const override 
   {
     return 10;
   }
 
-  int compare (const PropertySelectorBase *b) const 
+  int compare (const PropertySelectorBase *b) const override 
   {
     if (type_id () != b->type_id ()) {
       return type_id () < b->type_id () ? -1 : 1;
@@ -311,12 +311,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ~PropertySelectorEqual ()
+  ~PropertySelectorEqual () override
   {
     //  .. nothing yet ..
   }
 
-  virtual std::string to_string (bool /*inner*/, size_t /*max_len*/) const
+  std::string to_string (bool /*inner*/, size_t /*max_len*/) const override
   {
     std::string s = m_name.to_parsable_string ();
     if (m_equal) {
@@ -328,12 +328,12 @@ public:
     return s;
   }
 
-  PropertySelectorBase *clone () const 
+  PropertySelectorBase *clone () const override 
   {
     return new PropertySelectorEqual (m_name, m_value, m_equal);
   }
 
-  bool check (const db::PropertiesSet &set) const
+  bool check (const db::PropertiesSet &set) const override
   {
     const tl::Variant &value = set.value (m_name);
     if (value.is_nil ()) {
@@ -351,7 +351,7 @@ public:
     }
   }
 
-  bool selection (std::set<db::properties_id_type> &ids) const
+  bool selection (std::set<db::properties_id_type> &ids) const override
   {
     db::PropertiesRepository::properties_id_set idv = db::PropertiesRepository::instance ().properties_ids_by_name_value (db::property_names_id (m_name), db::property_values_id (m_value));
     ids.insert (idv.begin (), idv.end ());
@@ -359,12 +359,12 @@ public:
     return ! m_equal;
   }
 
-  unsigned int type_id () const 
+  unsigned int type_id () const override 
   {
     return m_equal ? 20 : 21;
   }
 
-  int compare (const PropertySelectorBase *b) const 
+  int compare (const PropertySelectorBase *b) const override 
   {
     if (type_id () != b->type_id ()) {
       return type_id () < b->type_id () ? -1 : 1;

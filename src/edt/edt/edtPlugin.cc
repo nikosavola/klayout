@@ -100,7 +100,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override
   {
     if (mp_option_get_f != nullptr) {
       (*mp_option_get_f) (options);
@@ -108,31 +108,31 @@ public:
   }
 
 #if defined(HAVE_QT)
-  virtual lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
+  lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const override
   {
     return nullptr;
   }
 #endif
 
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> & /*menu_entries*/) const
+  void get_menu_entries (std::vector<lay::MenuEntry> & /*menu_entries*/) const override
   {
     //  .. nothing yet ..
   }
 
-  virtual lay::Plugin *create_plugin (db::Manager *manager, lay::Dispatcher *, lay::LayoutViewBase *view) const
+  lay::Plugin *create_plugin (db::Manager *manager, lay::Dispatcher *, lay::LayoutViewBase *view) const override
   {
     Svc *service = new Svc (manager, view);
     service->set_plugin_declaration (this);
     return service;
   }
 
-  virtual bool implements_editable (std::string &title) const
+  bool implements_editable (std::string &title) const override
   {
     title = m_title;
     return true;
   }
   
-  virtual bool implements_mouse_mode (std::string &title) const
+  bool implements_mouse_mode (std::string &title) const override
   {
     if (! m_mouse_mode.empty ()) {
       title = m_mouse_mode;
@@ -142,7 +142,7 @@ public:
     }
   }
 
-  virtual std::vector<std::string> additional_editor_options_pages (lay::LayoutViewBase *) const
+  std::vector<std::string> additional_editor_options_pages (lay::LayoutViewBase *) const override
   {    
     std::vector<std::string> names;
     names.push_back ("GenericEditorOptions");
@@ -216,7 +216,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override
   {
     options.push_back (std::pair<std::string, std::string> (cfg_edit_top_level_selection, "false"));
     options.push_back (std::pair<std::string, std::string> (cfg_edit_hier_copy_mode, "-1"));
@@ -229,13 +229,13 @@ public:
   }
 
 #if defined(HAVE_QT)
-  virtual lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
+  lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const override
   {
     return nullptr;
   }
 #endif
 
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     lay::PluginDeclaration::get_menu_entries (menu_entries);
 
@@ -275,7 +275,7 @@ public:
     menu_entries.push_back (lay::menu_item ("edt::via_down", "via_down:edit_mode", "@secrets.end", tl::to_string (tr ("Via down"))));
   }
 
-  bool configure (const std::string &name, const std::string &value)
+  bool configure (const std::string &name, const std::string &value) override
   {
     if (name == cfg_edit_combine_mode) {
       combine_mode_type cm = CM_Add;
@@ -286,22 +286,22 @@ public:
     return false;
   }
 
-  virtual lay::Plugin *create_plugin (db::Manager *manager, lay::Dispatcher *root, lay::LayoutViewBase *view) const
+  lay::Plugin *create_plugin (db::Manager *manager, lay::Dispatcher *root, lay::LayoutViewBase *view) const override
   {
     return new edt::MainService (manager, view, root);
   }
 
-  virtual bool implements_editable (std::string & /*title*/) const
+  bool implements_editable (std::string & /*title*/) const override
   {
     return false;
   }
 
-  virtual bool implements_mouse_mode (std::string & /*title*/) const
+  bool implements_mouse_mode (std::string & /*title*/) const override
   {
     return false;
   }
 
-  virtual void initialize (lay::Dispatcher *root)
+  void initialize (lay::Dispatcher *root) override
   {
     lay::Dispatcher *mp = lay::Dispatcher::instance ();
     if (! mp || ! mp->has_ui ()) {
@@ -351,7 +351,7 @@ public:
 #endif
   }
 
-  void initialized (lay::Dispatcher *root)
+  void initialized (lay::Dispatcher *root) override
   {
     lay::Dispatcher *mp = lay::Dispatcher::instance ();
     if (! mp || ! mp->has_ui ()) {
@@ -398,24 +398,24 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual lay::Plugin *create_plugin (db::Manager *manager, lay::Dispatcher *root, lay::LayoutViewBase *view) const
+  lay::Plugin *create_plugin (db::Manager *manager, lay::Dispatcher *root, lay::LayoutViewBase *view) const override
   {
     return new edt::PartialService (manager, view, root);
   }
 
-  virtual bool implements_editable (std::string &title) const
+  bool implements_editable (std::string &title) const override
   {
     title = m_title;
     return true;
   }
   
-  virtual bool implements_mouse_mode (std::string &title) const
+  bool implements_mouse_mode (std::string &title) const override
   {
     title = m_mouse_mode;
     return true;
   }
 
-  virtual std::vector<std::string> additional_editor_options_pages (lay::LayoutViewBase *) const
+  std::vector<std::string> additional_editor_options_pages (lay::LayoutViewBase *) const override
   {
     std::vector<std::string> names;
     names.push_back ("GenericEditorOptions");
@@ -442,7 +442,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual lay::Plugin *create_plugin (db::Manager * /*manager*/, lay::Dispatcher * /*root*/, lay::LayoutViewBase *view) const
+  lay::Plugin *create_plugin (db::Manager * /*manager*/, lay::Dispatcher * /*root*/, lay::LayoutViewBase *view) const override
   {
     return new edt::MoveTrackerService (view);
   }

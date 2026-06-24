@@ -52,7 +52,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~CrashMessage ();
+  ~CrashMessage () override;
 
   /**
    *  @brief Configures the dialog for "can resume" or "can't resume"

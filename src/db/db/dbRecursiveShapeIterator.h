@@ -253,7 +253,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~RecursiveShapeIterator ();
+  ~RecursiveShapeIterator () override;
 
   /**
    *  @brief Specify the maximum hierarchy depth to look into

@@ -45,9 +45,9 @@ Q_OBJECT
 public:
   HTMLItemDelegate (QObject *parent);
 
-  virtual void paint (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-  virtual QSize sizeHint (const QStyleOptionViewItem &option, const QModelIndex &index) const;
-  virtual bool editorEvent (QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index);
+  void paint (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+  QSize sizeHint (const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+  bool editorEvent (QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) override;
 
   void set_anchors_clickable (bool a);
   bool anchors_clickable () const

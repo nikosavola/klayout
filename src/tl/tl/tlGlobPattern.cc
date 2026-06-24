@@ -53,12 +53,12 @@ class GlobPatternOp
 public:
   GlobPatternOp () : m_next_owned (false), mp_next (nullptr) { }
 
-  virtual ~GlobPatternOp ()
+  ~GlobPatternOp () override
   {
     set_next (nullptr, false);
   }
 
-  virtual GlobPatternOp *clone () const
+  GlobPatternOp *clone () const override
   {
     GlobPatternOp *op = new GlobPatternOp ();
     init_clone (op);
@@ -75,7 +75,7 @@ public:
     return false;
   }
 
-  virtual bool match (const char *s, std::vector<std::string> *e) const
+  bool match (const char *s, std::vector<std::string> *e) const override
   {
     size_t n = e ? e->size () : 0;
     if (mp_next && mp_next->match (s, e)) { // NOLINT(bugprone-branch-clone)
@@ -90,7 +90,7 @@ public:
     }
   }
 
-  virtual void set_next (GlobPatternOpBase *next, bool owned)
+  void set_next (GlobPatternOpBase *next, bool owned) override
   {
     if (mp_next && m_next_owned) {
       delete mp_next;
@@ -100,12 +100,12 @@ public:
     mp_next = next;
   }
 
-  GlobPatternOpBase *next ()
+  GlobPatternOpBase *next () override
   {
     return mp_next;
   }
 
-  const GlobPatternOpBase *next () const
+  const GlobPatternOpBase *next () const override
   {
     return mp_next;
   }
@@ -146,19 +146,19 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual GlobPatternOp *clone () const
+  GlobPatternOp *clone () const override
   {
     GlobPatternString *op = new GlobPatternString (m_s, m_cs);
     init_clone (op);
     return op;
   }
 
-  virtual bool is_const () const
+  bool is_const () const override
   {
     return next () == nullptr;
   }
 
-  virtual bool match (const char *s, std::vector<std::string> *e) const
+  bool match (const char *s, std::vector<std::string> *e) const override
   {
     if (! m_cs) {
 
@@ -205,19 +205,19 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual GlobPatternOp *clone () const
+  GlobPatternOp *clone () const override
   {
     GlobPatternEmpty *op = new GlobPatternEmpty ();
     init_clone (op);
     return op;
   }
 
-  virtual bool is_const () const
+  bool is_const () const override
   {
     return next () == nullptr;
   }
 
-  virtual bool match (const char *s, std::vector<std::string> *e) const
+  bool match (const char *s, std::vector<std::string> *e) const override
   {
     return GlobPatternOp::match (s, e);
   }
@@ -237,19 +237,19 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual GlobPatternOp *clone () const
+  GlobPatternOp *clone () const override
   {
     GlobPatternPass *op = new GlobPatternPass ();
     init_clone (op);
     return op;
   }
 
-  virtual bool is_catchall () const
+  bool is_catchall () const override
   {
     return true;
   }
 
-  virtual bool match (const char *, std::vector<std::string> *) const
+  bool match (const char *, std::vector<std::string> *) const override
   {
     return true;
   }
@@ -268,14 +268,14 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual GlobPatternOp *clone () const
+  GlobPatternOp *clone () const override
   {
     GlobPatternAny *op = new GlobPatternAny (m_min, m_max);
     init_clone (op);
     return op;
   }
 
-  virtual bool match (const char *s, std::vector<std::string> *e) const
+  bool match (const char *s, std::vector<std::string> *e) const override
   {
     size_t i = 0;
     while (i <= m_max) {
@@ -323,14 +323,14 @@ public:
     }
   }
 
-  virtual GlobPatternOp *clone () const
+  GlobPatternOp *clone () const override
   {
     GlobPatternCharClass *op = new GlobPatternCharClass (m_intervals, m_negate, m_cs);
     init_clone (op);
     return op;
   }
 
-  virtual bool match (const char *s, std::vector<std::string> *e) const
+  bool match (const char *s, std::vector<std::string> *e) const override
   {
     if (!*s) {
       return false;
@@ -377,9 +377,9 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual GlobPatternOp *clone () const { return nullptr; }
+  GlobPatternOp *clone () const override { return nullptr; }
 
-  virtual bool match (const char *s, std::vector<std::string> *e) const
+  bool match (const char *s, std::vector<std::string> *e) const override
   {
     return mp_br->continue_match (s, e);
   }
@@ -401,7 +401,7 @@ public:
     //  .. nothing yet ..
   }
 
-  ~GlobPatternBranch ()
+  ~GlobPatternBranch () override
   {
     for (std::vector<GlobPatternOp *>::const_iterator i = m_choices.begin (); i != m_choices.end (); ++i) {
       delete *i;
@@ -415,7 +415,7 @@ public:
     m_choices.push_back (op);
   }
 
-  virtual GlobPatternOp *clone () const
+  GlobPatternOp *clone () const override
   {
     GlobPatternBranch *br = new GlobPatternBranch ();
     for (std::vector<GlobPatternOp *>::const_iterator i = m_choices.begin (); i != m_choices.end (); ++i) {
@@ -425,7 +425,7 @@ public:
     return br;
   }
 
-  virtual bool match (const char *s, std::vector<std::string> *e) const
+  bool match (const char *s, std::vector<std::string> *e) const override
   {
     for (std::vector<GlobPatternOp *>::const_iterator i = m_choices.begin (); i != m_choices.end (); ++i) {
       if ((*i)->match (s, e)) {
@@ -458,7 +458,7 @@ public:
     //  .. nothing yet ..
   }
 
-  ~GlobPatternBracket ()
+  ~GlobPatternBracket () override
   {
     delete mp_inner;
     mp_inner = nullptr;
@@ -471,7 +471,7 @@ public:
     mp_inner = op;
   }
 
-  virtual GlobPatternOp *clone () const
+  GlobPatternOp *clone () const override
   {
     GlobPatternBracket *br = new GlobPatternBracket ();
     if (mp_inner) {
@@ -481,7 +481,7 @@ public:
     return br;
   }
 
-  virtual bool match (const char *s, std::vector<std::string> *e) const
+  bool match (const char *s, std::vector<std::string> *e) const override
   {
     if (mp_inner) {
 

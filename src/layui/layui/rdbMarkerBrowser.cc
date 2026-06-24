@@ -291,7 +291,7 @@ class MarkerBrowserPluginDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override
   {
     options.push_back (std::pair<std::string, std::string> (cfg_rdb_context_mode, "database-top"));
     options.push_back (std::pair<std::string, std::string> (cfg_rdb_window_mode, "fit-marker"));
@@ -306,7 +306,7 @@ public:
     options.push_back (std::pair<std::string, std::string> (cfg_rdb_marker_dither_pattern, "-1"));
   }
 
-  virtual std::vector<std::pair <std::string, lay::ConfigPage *> > config_pages (QWidget *parent) const 
+  std::vector<std::pair <std::string, lay::ConfigPage *> > config_pages (QWidget *parent) const override 
   {
     std::vector<std::pair <std::string, lay::ConfigPage *> > pages;
     pages.push_back (std::make_pair (tl::to_string (QObject::tr ("Marker Database Browser|Setup")), new MarkerBrowserConfigPage (parent)));
@@ -314,7 +314,7 @@ public:
     return pages;
   }
 
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     lay::PluginDeclaration::get_menu_entries (menu_entries);
     menu_entries.push_back (lay::menu_item ("marker_browser::show", "browse_markers", "tools_menu.end", tl::to_string (QObject::tr ("Marker Browser"))));
@@ -323,7 +323,7 @@ public:
     menu_entries.push_back (lay::menu_item ("marker_browser::scan_layers_flat", "scan_layers_flat", "tools_menu.shapes_to_markers.end", tl::to_string (QObject::tr ("Flat"))));
   }
 
-  virtual lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *root, lay::LayoutViewBase *view) const
+  lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *root, lay::LayoutViewBase *view) const override
   {
     if (lay::has_gui ()) {
       return new rdb::MarkerBrowserDialog (root, view);

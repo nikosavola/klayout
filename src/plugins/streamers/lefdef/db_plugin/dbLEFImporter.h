@@ -55,7 +55,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~LEFImporter ();
+  ~LEFImporter () override;
 
   /**
    *  @brief Get the width for a layer with the given name
@@ -105,7 +105,7 @@ public:
   /**
    *  @brief Returns the number of masks for the given layer
    */
-  virtual unsigned int number_of_masks (const std::string &layer) const
+  unsigned int number_of_masks (const std::string &layer) const override
   {
     std::map<std::string, unsigned int>::const_iterator nm = m_num_masks.find (layer);
     return nm != m_num_masks.end () ? nm->second : 1;
@@ -148,7 +148,7 @@ public:
   void finish_lef (db::Layout &layout);
 
 protected:
-  void do_read (db::Layout &layout);
+  void do_read (db::Layout &layout) override;
 
 private:
   std::map<std::string, std::map<std::string, std::pair<double, double> > > m_nondefault_widths;

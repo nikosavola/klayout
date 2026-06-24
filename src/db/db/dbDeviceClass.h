@@ -322,7 +322,7 @@ class DB_PUBLIC DeviceParameterCompareDelegate
 {
 public:
   DeviceParameterCompareDelegate () { }
-  virtual ~DeviceParameterCompareDelegate () { }
+  ~DeviceParameterCompareDelegate () override { }
 
   virtual bool less (const db::Device &a, const db::Device &b) const = 0;
 };
@@ -341,7 +341,7 @@ public:
   EqualDeviceParameters (size_t parameter_id, bool ignore = false);
   EqualDeviceParameters (size_t parameter_id, double absolute, double relative);
 
-  virtual bool less (const db::Device &a, const db::Device &b) const;
+  bool less (const db::Device &a, const db::Device &b) const override;
 
   //  for test purposes
   std::string to_string () const;
@@ -368,7 +368,7 @@ class DB_PUBLIC AllDeviceParametersAreEqual
 public:
   AllDeviceParametersAreEqual (double relative);
 
-  virtual bool less (const db::Device &a, const db::Device &b) const;
+  bool less (const db::Device &a, const db::Device &b) const override;
 
 private:
   double m_relative;
@@ -384,7 +384,7 @@ class DB_PUBLIC DeviceCombiner
 {
 public:
   DeviceCombiner () { }
-  virtual ~DeviceCombiner () { }
+  ~DeviceCombiner () override { }
 
   /**
    *  @brief Combines two devices
@@ -876,12 +876,12 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual bool is_of (const db::DeviceClass *dc) const
+  bool is_of (const db::DeviceClass *dc) const override
   {
     return dynamic_cast<const T *> (dc) != nullptr;
   }
 
-  virtual DeviceClass *create () const
+  DeviceClass *create () const override
   {
     return new T ();
   }

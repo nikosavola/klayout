@@ -78,12 +78,12 @@ public:
     // .. nothing yet ..
   }
 
-  StreamWriterOptionsPage *format_specific_options_page (QWidget *parent) const
+  StreamWriterOptionsPage *format_specific_options_page (QWidget *parent) const override
   {
     return new DXFWriterOptionPage (parent);
   }
 
-  db::FormatSpecificWriterOptions *create_specific_options () const
+  db::FormatSpecificWriterOptions *create_specific_options () const override
   {
     return new db::DXFWriterOptions ();
   }

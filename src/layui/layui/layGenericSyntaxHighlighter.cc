@@ -163,12 +163,12 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual GenericSyntaxHighlighterRuleBase *clone () const
+  GenericSyntaxHighlighterRuleBase *clone () const override
   {
     return new GenericSyntaxHighlighterRuleString (m_s, m_dynamic);
   }
 
-  virtual bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> &input_args, QList<QString> & /*output_args*/) const
+  bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> &input_args, QList<QString> & /*output_args*/) const override
   {
     QString s;
     const QString *ps = &m_s;
@@ -192,7 +192,7 @@ public:
     return true;
   }
 
-  virtual void dump () const
+  void dump () const override
   {
     std::cout << "    rule(string) '" << tl::to_string (m_s) << "' dynamic=" << m_dynamic << ", insensitive=" << m_insensitive << '\n';
   }
@@ -215,12 +215,12 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual GenericSyntaxHighlighterRuleBase *clone () const
+  GenericSyntaxHighlighterRuleBase *clone () const override
   {
     return new GenericSyntaxHighlighterRuleRange (m_s1, m_s2, m_dynamic);
   }
 
-  virtual bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> &input_args, QList<QString> & /*output_args*/) const
+  bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> &input_args, QList<QString> & /*output_args*/) const override
   {
     QString s;
     const QString *ps = &m_s1;
@@ -261,7 +261,7 @@ public:
     return true;
   }
 
-  virtual void dump () const
+  void dump () const override
   {
     std::cout << "    rule(range) '" << tl::to_string (m_s1) << "'..'" << tl::to_string (m_s2) << "' dynamic=" << m_dynamic << '\n';
   }
@@ -283,12 +283,12 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual GenericSyntaxHighlighterRuleBase *clone () const
+  GenericSyntaxHighlighterRuleBase *clone () const override
   {
     return new GenericSyntaxHighlighterRuleInt ();
   }
 
-  virtual bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> & /*input_args*/, QList<QString> & /*output_args*/) const
+  bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> & /*input_args*/, QList<QString> & /*output_args*/) const override
   {
     end_index = index;
     if (end_index < input.length () && input [end_index] == QChar::fromLatin1 ('-')) {
@@ -304,7 +304,7 @@ public:
     return any;
   }
 
-  virtual void dump () const
+  void dump () const override
   {
     std::cout << "    rule(int)" << '\n';
   }
@@ -322,12 +322,12 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual GenericSyntaxHighlighterRuleBase *clone () const
+  GenericSyntaxHighlighterRuleBase *clone () const override
   {
     return new GenericSyntaxHighlighterRuleFloat ();
   }
 
-  virtual bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> & /*input_args*/, QList<QString> & /*output_args*/) const
+  bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> & /*input_args*/, QList<QString> & /*output_args*/) const override
   {
     bool any = false;
 
@@ -366,7 +366,7 @@ public:
     return true;
   }
 
-  virtual void dump () const
+  void dump () const override
   {
     std::cout << "    rule(float)" << '\n';
   }
@@ -384,12 +384,12 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual GenericSyntaxHighlighterRuleBase *clone () const
+  GenericSyntaxHighlighterRuleBase *clone () const override
   {
     return new GenericSyntaxHighlighterRuleIdentifier ();
   }
 
-  virtual bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> & /*input_args*/, QList<QString> & /*output_args*/) const
+  bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> & /*input_args*/, QList<QString> & /*output_args*/) const override
   {
     for (end_index = index; end_index != input.length (); ++end_index) {
       if (end_index == index && ! input [end_index].isLetter ()) { // NOLINT(bugprone-branch-clone)
@@ -401,7 +401,7 @@ public:
     return end_index != index;
   }
 
-  virtual void dump () const
+  void dump () const override
   {
     std::cout << "    rule(identifier)" << '\n';
   }
@@ -419,17 +419,17 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual GenericSyntaxHighlighterRuleBase *clone () const
+  GenericSyntaxHighlighterRuleBase *clone () const override
   {
     return new GenericSyntaxHighlighterRuleLineContinue ();
   }
 
-  virtual bool match (const QString &input, unsigned int /*generation_id*/, int index, int & /*end_index*/, const QList<QString> & /*input_args*/, QList<QString> & /*output_args*/) const
+  bool match (const QString &input, unsigned int /*generation_id*/, int index, int & /*end_index*/, const QList<QString> & /*input_args*/, QList<QString> & /*output_args*/) const override
   {
     return input.length () == index + 1 && input [index] == QChar::fromLatin1 ('\\');
   }
 
-  virtual void dump () const
+  void dump () const override
   {
     std::cout << "    rule(line continue)" << '\n';
   }
@@ -447,12 +447,12 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual GenericSyntaxHighlighterRuleBase *clone () const
+  GenericSyntaxHighlighterRuleBase *clone () const override
   {
     return new GenericSyntaxHighlighterRuleSpaces ();
   }
 
-  virtual bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> & /*input_args*/, QList<QString> & /*output_args*/) const
+  bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> & /*input_args*/, QList<QString> & /*output_args*/) const override
   {
     bool any = false;
     while (index < input.length () && input [index].isSpace ()) {
@@ -467,7 +467,7 @@ public:
     }
   }
 
-  virtual void dump () const
+  void dump () const override
   {
     std::cout << "    rule(spaces)" << '\n';
   }
@@ -486,12 +486,12 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual GenericSyntaxHighlighterRuleBase *clone () const
+  GenericSyntaxHighlighterRuleBase *clone () const override
   {
     return new GenericSyntaxHighlighterRuleAnyChar (m_s);
   }
 
-  virtual bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> & /*input_args*/, QList<QString> & /*output_args*/) const
+  bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> & /*input_args*/, QList<QString> & /*output_args*/) const override
   {
     if (m_s.indexOf (input [index]) >= 0) {
       end_index = index + 1;
@@ -501,7 +501,7 @@ public:
     }
   }
 
-  virtual void dump () const
+  void dump () const override
   {
     std::cout << "    rule(any char) '" << tl::to_string (m_s) << '\n';
   }
@@ -542,12 +542,12 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual GenericSyntaxHighlighterRuleBase *clone () const
+  GenericSyntaxHighlighterRuleBase *clone () const override
   {
     return new GenericSyntaxHighlighterRuleRegExp (m_re, m_dynamic, m_c);
   }
 
-  virtual bool match (const QString &input, unsigned int generation_id, int index, int &end_index, const QList<QString> &input_args, QList<QString> &output_args) const
+  bool match (const QString &input, unsigned int generation_id, int index, int &end_index, const QList<QString> &input_args, QList<QString> &output_args) const override
   {
     //  shortcut
     if (m_c != QChar::Null && (input.length () <= index || input [index] != m_c)) {
@@ -615,7 +615,7 @@ public:
 
   }
 
-  virtual void dump () const
+  void dump () const override
   {
     std::cout << "    rule(regexp) '" << tl::to_string (m_re.pattern ()) << "' dynamic=" << m_dynamic << '\n';
   }

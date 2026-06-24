@@ -597,12 +597,12 @@ public:
   /**
    *  @brief Gets the special method type
    */
-  virtual special_method_type smt () const
+  special_method_type smt () const override
   {
     return m_smt;
   }
 
-  virtual MethodBase *clone () const
+  MethodBase *clone () const override
   {
     return new SpecialMethod (*this);
   }
@@ -682,14 +682,14 @@ public:
     // .. nothing yet ..
   }
 
-  virtual void set_callback (void *v, const Callback &cb) const
+  void set_callback (void *v, const Callback &cb) const override
   {
     typedef typename non_const_x<X>::nc_x nc_x;
     nc_x *x = (nc_x *)v;
     x->*m_cb = cb;
   }
 
-  virtual bool is_callback () const
+  bool is_callback () const override
   {
     return m_cb != nullptr;
   }
@@ -766,19 +766,19 @@ public:
   { 
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     //  Note: a constant must not return a reference to an existing object, hence "set_return_new":
     this->template set_return_new<R> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new ConstantGetter (*this);
   }
 
-  virtual void call (void *, SerialArgs &, SerialArgs &ret) const 
+  void call (void *, SerialArgs &, SerialArgs &ret) const override 
   {
     mark_called ();
     ret.write<R> ((*m_m) ());
@@ -809,19 +809,19 @@ public:
   {
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     //  Note: a constant must not return a reference to an existing object, hence "set_return_new":
     this->template set_return_new<R> ();
   }
 
-  virtual MethodBase *clone () const
+  MethodBase *clone () const override
   {
     return new ConstantValueGetter (*this);
   }
 
-  virtual void call (void *, SerialArgs &, SerialArgs &ret) const
+  void call (void *, SerialArgs &, SerialArgs &ret) const override
   {
     mark_called ();
     ret.write<R> (m_v);

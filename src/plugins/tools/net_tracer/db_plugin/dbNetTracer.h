@@ -279,7 +279,7 @@ public:
       : mp_region (region)
     { }
 
-    ~RegionHolder ()
+    ~RegionHolder () override
     {
       delete mp_region;
       mp_region = nullptr;

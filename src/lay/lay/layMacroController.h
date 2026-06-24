@@ -89,37 +89,37 @@ public:
   /**
    *  @brief Reimplementation of the PluginDeclaration interface
    */
-  virtual void initialized (lay::Dispatcher *root);
+  void initialized (lay::Dispatcher *root) override;
 
   /**
    *  @brief Reimplementation of the PluginDeclaration interface
    */
-  virtual void uninitialize (lay::Dispatcher *root);
+  void uninitialize (lay::Dispatcher *root) override;
 
   /**
    *  @brief Reimplementation of the PluginDeclaration interface
    */
-  virtual bool configure (const std::string &key, const std::string &value);
+  bool configure (const std::string &key, const std::string &value) override;
 
   /**
    *  @brief Reimplementation of the PluginDeclaration interface
    */
-  virtual void config_finalize();
+  void config_finalize() override;
 
   /**
    *  @brief Reimplementation of the PluginDeclaration interface
    */
-  virtual bool can_exit (lay::Dispatcher *root) const;
+  bool can_exit (lay::Dispatcher *root) const override;
 
   /**
    *  @brief Gets a value indicating whether the plugin will accept a dropped file with the given URL or path
    */
-  virtual bool accepts_drop (const std::string &path_or_url) const;
+  bool accepts_drop (const std::string &path_or_url) const override;
 
   /**
    *  @brief Gets called when a file or URL is dropped on the plugin
    */
-  virtual void drop_url (const std::string &path_or_url);
+  void drop_url (const std::string &path_or_url) override;
 
   /**
    *  @brief Enables or disables implicit macros

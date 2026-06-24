@@ -77,7 +77,7 @@ public:
   /**
    *  @brief Implements the reload feature
    */
-  virtual std::string reload ();
+  std::string reload () override;
 
   /**
    *  @brief Set the paths

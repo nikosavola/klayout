@@ -62,7 +62,7 @@ class LAYUI_PUBLIC LoadLayoutOptionsDialog
 
 public:
   LoadLayoutOptionsDialog (QWidget *parent, const std::string &title);
-  ~LoadLayoutOptionsDialog ();
+  ~LoadLayoutOptionsDialog () override;
 
   bool edit_global_options (lay::Dispatcher *dispatcher, db::Technologies *technologies);
   bool get_options (db::LoadLayoutOptions &options);
@@ -101,10 +101,10 @@ class LAYUI_PUBLIC SpecificLoadLayoutOptionsDialog
 {
 public:
   SpecificLoadLayoutOptionsDialog (QWidget *parent, db::LoadLayoutOptions *options, const std::string &format_name);
-  ~SpecificLoadLayoutOptionsDialog ();
+  ~SpecificLoadLayoutOptionsDialog () override;
 
 protected:
-  void accept ();
+  void accept () override;
 
 private:
   Ui::SpecificLoadLayoutOptionsDialog *mp_ui;

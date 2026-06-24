@@ -39,9 +39,9 @@ class ControlWidgetStack
 public:
   ControlWidgetStack (QWidget *parent = nullptr, const char *name = nullptr, bool size_follows_content = false);
 
-  void focusInEvent (QFocusEvent *);
+  void focusInEvent (QFocusEvent *) override;
 
-  QSize sizeHint () const;
+  QSize sizeHint () const override;
 
   void add_widget (QWidget *w);
   void remove_widget (size_t index);
@@ -60,7 +60,7 @@ public:
   }
 
 protected:
-  virtual void resizeEvent (QResizeEvent *)
+  void resizeEvent (QResizeEvent *) override
   {
     resize_children ();
   }
@@ -68,7 +68,7 @@ protected:
   void resize_children ();
   void update_geometry ();
 
-  bool event (QEvent *e);
+  bool event (QEvent *e) override;
 
 
   std::vector <QWidget *> m_widgets;

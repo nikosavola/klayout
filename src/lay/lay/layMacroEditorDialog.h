@@ -104,7 +104,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~MacroEditorDialog ();
+  ~MacroEditorDialog () override;
 
   /**
    *  @brief Gets the singleton instance of the macro editor
@@ -114,27 +114,27 @@ public:
   /**
    *  @brief Reimplementation of gsi::Console:
    */
-  void write_str (const char *text, output_stream os);
+  void write_str (const char *text, output_stream os) override;
 
   /**
    *  @brief Reimplementation of gsi::Console:
    */
-  void flush ();
+  void flush () override;
 
   /**
    *  @brief Reimplementation of gsi::Console:
    */
-  bool is_tty ();
+  bool is_tty () override;
 
   /**
    *  @brief Reimplementation of gsi::Console:
    */
-  int columns ();
+  int columns () override;
 
   /**
    *  @brief Reimplementation of gsi::Console:
    */
-  int rows ();
+  int rows () override;
 
   /**
    *  @brief Perform all operations on application exit and return true if this is possible
@@ -262,12 +262,12 @@ protected slots:
   }
 
 protected:
-  void showEvent (QShowEvent *);
-  void closeEvent (QCloseEvent *);
-  void reject ();
-  void accept ();
+  void showEvent (QShowEvent *) override;
+  void closeEvent (QCloseEvent *) override;
+  void reject () override;
+  void accept () override;
 
-  bool eventFilter (QObject *obj, QEvent *event);
+  bool eventFilter (QObject *obj, QEvent *event) override;
   void execute (const QString &cmd);
 
 private:
@@ -280,11 +280,11 @@ private:
   void ensure_writeable_collection_selected ();
   void update_console_text ();
   void do_current_tab_changed ();
-  void start_exec (gsi::Interpreter *interpreter);
-  void end_exec (gsi::Interpreter *interpreter);
-  size_t id_for_path (gsi::Interpreter *interpreter, const std::string &path);
-  void trace (gsi::Interpreter *interpreter, size_t file_id, int line, const gsi::StackTraceProvider *stack_trace_provider);
-  void exception_thrown (gsi::Interpreter *interpreter, size_t file_id, int line, const std::string &eclass, const std::string &emsg, const gsi::StackTraceProvider *stack_trace_provider);
+  void start_exec (gsi::Interpreter *interpreter) override;
+  void end_exec (gsi::Interpreter *interpreter) override;
+  size_t id_for_path (gsi::Interpreter *interpreter, const std::string &path) override;
+  void trace (gsi::Interpreter *interpreter, size_t file_id, int line, const gsi::StackTraceProvider *stack_trace_provider) override;
+  void exception_thrown (gsi::Interpreter *interpreter, size_t file_id, int line, const std::string &eclass, const std::string &emsg, const gsi::StackTraceProvider *stack_trace_provider) override;
   void enter_exec_mode ();
   void leave_exec_mode ();
   void enter_breakpoint_mode (gsi::Interpreter *interpreter, const gsi::StackTraceProvider *stack_trace_provider);
@@ -310,8 +310,8 @@ private:
   void do_search_edited ();
   void set_editor_focus ();
   void select_trace (size_t index);
-  bool configure (const std::string &name, const std::string &value);
-  void config_finalize ();
+  bool configure (const std::string &name, const std::string &value) override;
+  void config_finalize () override;
   void translate_pseudo_id (size_t &file_id, int &line);
   void exit_if_needed ();
 

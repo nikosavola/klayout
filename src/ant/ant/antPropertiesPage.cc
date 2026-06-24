@@ -49,7 +49,7 @@ public:
   }
 
 protected:
-  void property_changed ()
+  void property_changed () override
   {
     m_modified = true;
     ant::Object::property_changed ();

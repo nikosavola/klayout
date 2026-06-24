@@ -70,15 +70,15 @@ public:
   /**  
    *  @brief Destructor
    */
-  ~GDS2Reader ();
+  ~GDS2Reader () override;
 
   /**
    *  @brief Format
    */
-  virtual const char *format () const { return "GDS2"; }
+  const char *format () const override { return "GDS2"; }
 
 protected:
-  virtual void init (const LoadLayoutOptions &options);
+  void init (const LoadLayoutOptions &options) override;
 
 private:
   tl::InputStream &m_stream;
@@ -91,21 +91,21 @@ private:
   bool m_allow_big_records;
   tl::AbsoluteProgress m_progress;
 
-  virtual void error (const std::string &txt);
-  virtual void warn (const std::string &txt, int wl = 1);
+  void error (const std::string &txt) override;
+  void warn (const std::string &txt, int wl = 1) override;
 
-  virtual std::string path () const;
-  virtual const char *get_string ();
-  virtual void get_string (std::string &s) const;
-  virtual int get_int ();
-  virtual short get_short ();
-  virtual unsigned short get_ushort ();
-  virtual double get_double ();
-  virtual short get_record ();
-  virtual void unget_record (short rec_id);
-  virtual void get_time (unsigned int *mod_time, unsigned int *access_time);
-  virtual GDS2XY *get_xy_data (unsigned int &length);
-  virtual void progress_checkpoint ();
+  std::string path () const override;
+  const char *get_string () override;
+  void get_string (std::string &s) const override;
+  int get_int () override;
+  short get_short () override;
+  unsigned short get_ushort () override;
+  double get_double () override;
+  short get_record () override;
+  void unget_record (short rec_id) override;
+  void get_time (unsigned int *mod_time, unsigned int *access_time) override;
+  GDS2XY *get_xy_data (unsigned int &length) override;
+  void progress_checkpoint () override;
 
   void record_underflow_error ();
 };

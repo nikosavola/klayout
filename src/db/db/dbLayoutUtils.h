@@ -57,7 +57,7 @@ public:
    *  This method can return false in the first member of the returned pair to indicate that no mapping shall
    *  be performed. Otherwise it must return the layer index in the second member.
    */
-  virtual std::pair <bool, unsigned int> map_layer (const LayerProperties &lprops);
+  std::pair <bool, unsigned int> map_layer (const LayerProperties &lprops) override;
 
 private:
   std::map <db::LayerProperties, unsigned int, db::LPLogicalLessFunc> m_lmap;

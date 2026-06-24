@@ -41,23 +41,23 @@ class EditLineStyleWidget
 public:
   EditLineStyleWidget (QWidget *parent);
 
-  virtual QSize sizeHint () const;
+  QSize sizeHint () const override;
   virtual QSize minimumSize () const;
 
   void set_style (uint32_t s, unsigned int sx);
 
-  void undo (db::Op *op);
-  void redo (db::Op *op);
+  void undo (db::Op *op) override;
+  void redo (db::Op *op) override;
 
   uint32_t style () const
   {
     return m_style;
   }
 
-  virtual void paintEvent (QPaintEvent *event);
-  virtual void mouseMoveEvent (QMouseEvent *event);
-  virtual void mousePressEvent (QMouseEvent *event);
-  virtual void mouseReleaseEvent (QMouseEvent *event);
+  void paintEvent (QPaintEvent *event) override;
+  void mouseMoveEvent (QMouseEvent *event) override;
+  void mousePressEvent (QMouseEvent *event) override;
+  void mouseReleaseEvent (QMouseEvent *event) override;
 
   void set_size (unsigned int sx);
 

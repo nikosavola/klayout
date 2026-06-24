@@ -43,24 +43,24 @@ public:
   OriginalLayerEdgePairs (const OriginalLayerEdgePairs &other);
   OriginalLayerEdgePairs (const RecursiveShapeIterator &si);
   OriginalLayerEdgePairs (const RecursiveShapeIterator &si, const db::ICplxTrans &trans);
-  virtual ~OriginalLayerEdgePairs ();
+  ~OriginalLayerEdgePairs () override;
 
-  EdgePairsDelegate *clone () const;
+  EdgePairsDelegate *clone () const override;
 
-  virtual EdgePairsIteratorDelegate *begin () const;
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const;
+  EdgePairsIteratorDelegate *begin () const override;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const override;
 
-  virtual bool empty () const;
+  bool empty () const override;
 
-  virtual const db::EdgePair *nth (size_t n) const;
-  virtual db::properties_id_type nth_prop_id (size_t n) const;
-  virtual bool has_valid_edge_pairs () const;
+  const db::EdgePair *nth (size_t n) const override;
+  db::properties_id_type nth_prop_id (size_t n) const override;
+  bool has_valid_edge_pairs () const override;
 
-  virtual const db::RecursiveShapeIterator *iter () const;
-  virtual void apply_property_translator (const db::PropertiesTranslator &pt);
+  const db::RecursiveShapeIterator *iter () const override;
+  void apply_property_translator (const db::PropertiesTranslator &pt) override;
 
-  virtual bool equals (const EdgePairs &other) const;
-  virtual bool less (const EdgePairs &other) const;
+  bool equals (const EdgePairs &other) const override;
+  bool less (const EdgePairs &other) const override;
 
 private:
   OriginalLayerEdgePairs &operator= (const OriginalLayerEdgePairs &other);

@@ -100,7 +100,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~EdgePairs ();
+  ~EdgePairs () override;
 
   /**
    *  @brief Constructor from a delegate
@@ -207,7 +207,7 @@ public:
   /**
    *  @brief Converts the shape collection to a deep one using the specified layer
    */
-  virtual void convert_to_deep (const db::DeepLayer &layer);
+  void convert_to_deep (const db::DeepLayer &layer) override;
 
   /**
    *  @brief Writes the edge pair collection to a file
@@ -220,7 +220,7 @@ public:
   /**
    *  @brief Implementation of the ShapeCollection interface
    */
-  ShapeCollectionDelegateBase *get_delegate () const
+  ShapeCollectionDelegateBase *get_delegate () const override
   {
     return mp_delegate;
   }

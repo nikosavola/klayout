@@ -69,10 +69,10 @@ Q_OBJECT
 
 public:
   LayoutViewConfigPage (QWidget *parent);
-  ~LayoutViewConfigPage ();
+  ~LayoutViewConfigPage () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::LayoutViewConfigPage *mp_ui;
@@ -85,10 +85,10 @@ Q_OBJECT
 
 public:
   LayoutViewConfigPage1 (QWidget *parent);
-  ~LayoutViewConfigPage1 ();
+  ~LayoutViewConfigPage1 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::LayoutViewConfigPage1 *mp_ui;
@@ -101,10 +101,10 @@ Q_OBJECT
 
 public:
   LayoutViewConfigPage2a (QWidget *parent);
-  ~LayoutViewConfigPage2a ();
+  ~LayoutViewConfigPage2a () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::LayoutViewConfigPage2a *mp_ui;
@@ -117,10 +117,10 @@ Q_OBJECT
 
 public:
   LayoutViewConfigPage2b (QWidget *parent);
-  ~LayoutViewConfigPage2b ();
+  ~LayoutViewConfigPage2b () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::LayoutViewConfigPage2b *mp_ui;
@@ -133,10 +133,10 @@ Q_OBJECT
 
 public:
   LayoutViewConfigPage2c (QWidget *parent);
-  ~LayoutViewConfigPage2c ();
+  ~LayoutViewConfigPage2c () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::LayoutViewConfigPage2c *mp_ui;
@@ -149,10 +149,10 @@ Q_OBJECT
 
 public:
   LayoutViewConfigPage2d (QWidget *parent);
-  ~LayoutViewConfigPage2d ();
+  ~LayoutViewConfigPage2d () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::LayoutViewConfigPage2d *mp_ui;
@@ -165,10 +165,10 @@ Q_OBJECT
 
 public:
   LayoutViewConfigPage3a (QWidget *parent);
-  ~LayoutViewConfigPage3a ();
+  ~LayoutViewConfigPage3a () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::LayoutViewConfigPage3a *mp_ui;
@@ -181,10 +181,10 @@ Q_OBJECT
 
 public:
   LayoutViewConfigPage3b (QWidget *parent);
-  ~LayoutViewConfigPage3b ();
+  ~LayoutViewConfigPage3b () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::LayoutViewConfigPage3b *mp_ui;
@@ -197,10 +197,10 @@ Q_OBJECT
 
 public:
   LayoutViewConfigPage3c (QWidget *parent);
-  ~LayoutViewConfigPage3c ();
+  ~LayoutViewConfigPage3c () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::LayoutViewConfigPage3c *mp_ui;
@@ -213,10 +213,10 @@ Q_OBJECT
 
 public:
   LayoutViewConfigPage3f (QWidget *parent);
-  ~LayoutViewConfigPage3f ();
+  ~LayoutViewConfigPage3f () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::LayoutViewConfigPage3f *mp_ui;
@@ -230,13 +230,13 @@ Q_OBJECT
 
 public:
   LayoutViewConfigPage4 (QWidget *parent);
-  ~LayoutViewConfigPage4 ();
+  ~LayoutViewConfigPage4 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
-  virtual void undo (db::Op *op);
-  virtual void redo (db::Op *op);
+  void undo (db::Op *op) override;
+  void redo (db::Op *op) override;
 
 public slots:
   void color_button_clicked ();
@@ -262,10 +262,10 @@ Q_OBJECT
 
 public:
   LayoutViewConfigPage5 (QWidget *parent);
-  ~LayoutViewConfigPage5 ();
+  ~LayoutViewConfigPage5 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 public slots:
   void browse_clicked ();
@@ -282,13 +282,13 @@ Q_OBJECT
 
 public:
   LayoutViewConfigPage6 (QWidget *parent);
-  ~LayoutViewConfigPage6 ();
+  ~LayoutViewConfigPage6 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
-  virtual void undo (db::Op *op);
-  virtual void redo (db::Op *op);
+  void undo (db::Op *op) override;
+  void redo (db::Op *op) override;
 
 public slots:
   void stipple_button_clicked ();
@@ -316,13 +316,13 @@ Q_OBJECT
 
 public:
   LayoutViewConfigPage6a (QWidget *parent);
-  ~LayoutViewConfigPage6a ();
+  ~LayoutViewConfigPage6a () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
-  virtual void undo (db::Op *op);
-  virtual void redo (db::Op *op);
+  void undo (db::Op *op) override;
+  void redo (db::Op *op) override;
 
 public slots:
   void line_style_button_clicked ();
@@ -347,10 +347,10 @@ Q_OBJECT
 
 public:
   LayoutViewConfigPage7 (QWidget *parent);
-  ~LayoutViewConfigPage7 ();
+  ~LayoutViewConfigPage7 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::LayoutViewConfigPage7 *mp_ui;
@@ -363,10 +363,10 @@ Q_OBJECT
 
 public:
   LayoutViewConfigPage8 (QWidget *parent);
-  ~LayoutViewConfigPage8 ();
+  ~LayoutViewConfigPage8 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::LayoutViewConfigPage8 *mp_ui;

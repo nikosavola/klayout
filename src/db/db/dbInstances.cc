@@ -96,7 +96,7 @@ public:
     }
   }
 
-  virtual void undo (Instances *insts)
+  void undo (Instances *insts) override
   {
     if (m_insert) {
       erase (insts);
@@ -105,7 +105,7 @@ public:
     }
   }
 
-  virtual void redo (Instances *insts)
+  void redo (Instances *insts) override
   {
     if (m_insert) {
       insert (insts);

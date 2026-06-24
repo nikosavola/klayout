@@ -684,7 +684,7 @@ public:
     }
   }
 
-  void triggered ()
+  void triggered () override
   {
     if (mp_lym.get ()) {
       mp_lym->run ();

@@ -39,7 +39,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     if (!args.empty()) {
       throw tl::EvalError (tl::to_string (tr ("'shape' function does not take arguments")), context);
@@ -61,7 +61,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void execute (const tl::ExpressionParserContext &context, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     if (args.size () != 1) {
       throw tl::EvalError (tl::to_string (tr ("'skip' function takes one argument (flag)")), context);
@@ -83,7 +83,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     if (args.size () != 1) {
       throw tl::EvalError (tl::to_string (tr ("'value' function takes one argument")), context);
@@ -105,7 +105,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     if (args.size () != 1) {
       throw tl::EvalError (tl::to_string (tr ("'values' function takes one argument")), context);
@@ -127,7 +127,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     if (!args.empty()) {
       throw tl::EvalError (tl::to_string (tr ("Property getter function does not take arguments")), context);
@@ -150,7 +150,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void execute (const tl::ExpressionParserContext &context, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     if (args.size () != 2) {
       throw tl::EvalError (tl::to_string (tr ("'put' function takes two arguments (name, value)")), context);
@@ -361,7 +361,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void execute (const tl::ExpressionParserContext &context, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     if (args.size () != 2) {
       throw tl::EvalError (tl::to_string (tr ("'put' function takes two arguments (name, value)")), context);
@@ -383,7 +383,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void execute (const tl::ExpressionParserContext &context, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     bool flag = true;
     if (args.size () > 1) {
@@ -436,9 +436,9 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual bool supports_keyword_parameters () const { return true; }
+  bool supports_keyword_parameters () const override { return true; }
 
-  virtual void execute (const tl::ExpressionParserContext &context, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> *kwargs) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> *kwargs) const override
   {
     bool flag = true;
     size_t limit = std::numeric_limits<size_t>::max ();
@@ -503,7 +503,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     if (!args.empty()) {
       throw tl::EvalError (tl::to_string (tr ("'db' function does not take any argument")), context);
@@ -525,7 +525,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     if (!args.empty()) {
       throw tl::EvalError (tl::to_string (tr ("'net' function does not take any argument")), context);
@@ -547,7 +547,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     if (args.size () > 1) {
       throw tl::EvalError (tl::to_string (tr ("'area' function takes one optional argument (layer symbol)")), context);
@@ -569,7 +569,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     if (args.size () > 1) {
       throw tl::EvalError (tl::to_string (tr ("'perimeter' function takes one optional argument (layer symbol)")), context);

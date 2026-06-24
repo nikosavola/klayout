@@ -501,7 +501,7 @@ namespace
       //  .. nothing yet ..
     }
 
-    virtual void put (const PolygonType &poly)
+    void put (const PolygonType &poly) override
     {
       right_of_line->put (poly);
     }
@@ -568,7 +568,7 @@ namespace
       m_tr = tr;
     }
 
-    virtual void put (const IPolygonType &p)
+    void put (const IPolygonType &p) override
     {
       PolygonType pp = p.transformed_ext (m_tr, false);
       mp_next->put (pp);
@@ -943,9 +943,9 @@ class ErrorCatchingEdgeSink
 {
   //  TODO: we should not use exceptions to indicate a condition, but right now, there is no good alternative
   //  and this is considered an error anyway.
-  virtual void put (const db::Edge &) { throw OddPolygonException (); }
-  virtual void put (const db::Edge &, int) { }
-  virtual void crossing_edge (const db::Edge &) { throw OddPolygonException (); }
+  void put (const db::Edge &) override { throw OddPolygonException (); }
+  void put (const db::Edge &, int) override { }
+  void crossing_edge (const db::Edge &) override { throw OddPolygonException (); }
 };
 
 }
@@ -2644,7 +2644,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void put (const db::SimplePolygon &polygon)
+  void put (const db::SimplePolygon &polygon) override
   {
     if (m_swap_xy) {
       db::SimplePolygon p (polygon);
@@ -2865,7 +2865,7 @@ namespace {
       //  .. nothing yet ..
     }
 
-    virtual void put (const db::SimplePolygon &polygon)
+    void put (const db::SimplePolygon &polygon) override
     {
       decompose_convex_to_trapezoids (polygon, m_horizontal, *mp_target);
     }

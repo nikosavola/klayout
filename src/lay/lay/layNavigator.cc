@@ -61,7 +61,7 @@ public:
     //  .. nothing yet ..
   }
 
-  ~NavigatorService ()
+  ~NavigatorService () override
   {
     if (mp_viewport_marker) {
       delete mp_viewport_marker;
@@ -93,7 +93,7 @@ public:
     set_colors (c, contrast);
   }
 
-  bool mouse_release_event (const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/) 
+  bool mouse_release_event (const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/) override 
   { 
     if (mp_box) {
 
@@ -120,7 +120,7 @@ public:
     }
   }
 
-  bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio) 
+  bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio) override 
   { 
     if (! prio && (buttons & lay::RightButton) != 0) {
       db::DBox vp = ui ()->mouse_event_viewport ();
@@ -132,7 +132,7 @@ public:
     return false;
   }
 
-  bool mouse_press_event (const db::DPoint &p, unsigned int buttons, bool prio) 
+  bool mouse_press_event (const db::DPoint &p, unsigned int buttons, bool prio) override 
   { 
     if (! prio && (buttons & lay::RightButton) != 0) {
 
@@ -165,7 +165,7 @@ public:
   }
 
   //  Taken from ZoomBox service
-  bool wheel_event (int delta, bool /*horizontal*/, const db::DPoint &p, unsigned int buttons, bool prio)
+  bool wheel_event (int delta, bool /*horizontal*/, const db::DPoint &p, unsigned int buttons, bool prio) override
   {
     //  Only act without the mouse being grabbed.
     if (! prio) {
@@ -238,7 +238,7 @@ public:
     return false;
   }
 
-  bool mouse_move_event (const db::DPoint &p, unsigned int /*buttons*/, bool prio) 
+  bool mouse_move_event (const db::DPoint &p, unsigned int /*buttons*/, bool prio) override 
   { 
     bool ret_value = false;
 
@@ -382,7 +382,7 @@ public:
     }
   }
 
-  void drag_cancel ()
+  void drag_cancel () override
   {
     //  cancel zoom box dragging
     if (mp_box) {
@@ -392,7 +392,7 @@ public:
     ui ()->ungrab_mouse (this);
   }
 
-  void set_colors (tl::Color /*background*/, tl::Color color)
+  void set_colors (tl::Color /*background*/, tl::Color color) override
   {
     //  set zoom box color
     m_color = color.rgb ();
@@ -779,7 +779,7 @@ class NavigatorPluginDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     std::string at;
 

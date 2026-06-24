@@ -558,7 +558,7 @@ public:
     return m_connectivity.end ();
   }
 
-  db::NetTracerTechnologyComponent *clone () const
+  db::NetTracerTechnologyComponent *clone () const override
   {
     return new NetTracerTechnologyComponent (*this);
   }

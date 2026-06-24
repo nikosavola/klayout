@@ -251,7 +251,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~LineStyles ();
+  ~LineStyles () override;
 
   /**
    *  @brief Assignment operator
@@ -352,12 +352,12 @@ public:
   /**
    *  @brief Implementation of the db::Object interface
    */
-  void undo (db::Op *op);
+  void undo (db::Op *op) override;
 
   /**
    *  @brief Implementation of the db::Object interface
    */
-  void redo (db::Op *op);
+  void redo (db::Op *op) override;
 
   /**
    *  @brief Accessor to the default style (solid)

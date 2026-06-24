@@ -449,7 +449,7 @@ public:
     // .. nothing yet ..
   }
 
-  void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector <tl::Variant> &vv, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector <tl::Variant> &vv, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     if (!vv.empty()) {
       throw tl::EvalError (tl::to_string (tr ("Annotation function must not have arguments")), context);

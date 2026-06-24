@@ -1638,7 +1638,7 @@ class LayoutViewConfigDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual std::vector<std::pair <std::string, ConfigPage *> > config_pages (QWidget *parent) const 
+  std::vector<std::pair <std::string, ConfigPage *> > config_pages (QWidget *parent) const override 
   {
     std::vector<std::pair <std::string, ConfigPage *> > pages;
 

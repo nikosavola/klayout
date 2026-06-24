@@ -71,7 +71,7 @@ struct DB_PUBLIC EdgeLengthFilter
   /**
    *  @brief Returns true if the edge length matches the criterion
    */
-  virtual bool selected (const db::Edge &edge, db::properties_id_type) const
+  bool selected (const db::Edge &edge, db::properties_id_type) const override
   {
     return check (edge.length ());
   }
@@ -79,7 +79,7 @@ struct DB_PUBLIC EdgeLengthFilter
   /**
    *  @brief Returns true if the total edge length matches the criterion
    */
-  bool selected_set (const std::unordered_set<db::EdgeWithProperties> &edges) const
+  bool selected_set (const std::unordered_set<db::EdgeWithProperties> &edges) const override
   {
     length_type l = 0;
     for (std::unordered_set<db::EdgeWithProperties>::const_iterator e = edges.begin (); e != edges.end (); ++e) {
@@ -91,7 +91,7 @@ struct DB_PUBLIC EdgeLengthFilter
   /**
    *  @brief This filter is isotropic
    */
-  virtual const TransformationReducer *vars () const
+  const TransformationReducer *vars () const override
   {
     return &m_vars;
   }
@@ -99,7 +99,7 @@ struct DB_PUBLIC EdgeLengthFilter
   /**
    *  @brief Requires merged input
    */
-  virtual bool requires_raw_input () const
+  bool requires_raw_input () const override
   {
     return false;
   }
@@ -107,7 +107,7 @@ struct DB_PUBLIC EdgeLengthFilter
   /**
    *  @brief Wants to build variants
    */
-  virtual bool wants_variants () const
+  bool wants_variants () const override
   {
     return true;
   }
@@ -204,12 +204,12 @@ struct DB_PUBLIC EdgeOrientationFilter
   /**
    *  @brief Returns true if the edge orientation matches the criterion
    */
-  virtual bool selected (const db::Edge &edge, properties_id_type) const;
+  bool selected (const db::Edge &edge, properties_id_type) const override;
 
   /**
    *  @brief Returns true if all edge orientations match the criterion
    */
-  virtual bool selected_set (const std::unordered_set<db::EdgeWithProperties> &edges) const
+  bool selected_set (const std::unordered_set<db::EdgeWithProperties> &edges) const override
   {
     for (std::unordered_set<db::EdgeWithProperties>::const_iterator e = edges.begin (); e != edges.end (); ++e) {
       if (! selected (*e, e->properties_id ())) {
@@ -222,7 +222,7 @@ struct DB_PUBLIC EdgeOrientationFilter
   /**
    *  @brief This filter is not isotropic
    */
-  virtual const TransformationReducer *vars () const
+  const TransformationReducer *vars () const override
   {
     return &m_vars;
   }
@@ -230,7 +230,7 @@ struct DB_PUBLIC EdgeOrientationFilter
   /**
    *  @brief Requires merged input
    */
-  virtual bool requires_raw_input () const
+  bool requires_raw_input () const override
   {
     return false;
   }
@@ -238,7 +238,7 @@ struct DB_PUBLIC EdgeOrientationFilter
   /**
    *  @brief Wants to build variants
    */
-  virtual bool wants_variants () const
+  bool wants_variants () const override
   {
     return true;
   }
@@ -273,12 +273,12 @@ struct DB_PUBLIC SpecialEdgeOrientationFilter
   /**
    *  @brief Returns true if the edge orientation matches the criterion
    */
-  virtual bool selected (const db::Edge &edge, db::properties_id_type) const;
+  bool selected (const db::Edge &edge, db::properties_id_type) const override;
 
   /**
    *  @brief Returns true if all edge orientations match the criterion
    */
-  virtual bool selected_set (const std::unordered_set<db::EdgeWithProperties> &edges) const
+  bool selected_set (const std::unordered_set<db::EdgeWithProperties> &edges) const override
   {
     for (std::unordered_set<db::EdgeWithProperties>::const_iterator e = edges.begin (); e != edges.end (); ++e) {
       if (! selected (*e, e->properties_id ())) {
@@ -291,7 +291,7 @@ struct DB_PUBLIC SpecialEdgeOrientationFilter
   /**
    *  @brief This filter is not isotropic
    */
-  virtual const TransformationReducer *vars () const
+  const TransformationReducer *vars () const override
   {
     return &m_vars;
   }
@@ -299,7 +299,7 @@ struct DB_PUBLIC SpecialEdgeOrientationFilter
   /**
    *  @brief Requires merged input
    */
-  virtual bool requires_raw_input () const
+  bool requires_raw_input () const override
   {
     return false;
   }
@@ -307,7 +307,7 @@ struct DB_PUBLIC SpecialEdgeOrientationFilter
   /**
    *  @brief Wants to build variants
    */
-  virtual bool wants_variants () const
+  bool wants_variants () const override
   {
     return true;
   }
@@ -330,7 +330,7 @@ struct DB_PUBLIC AllEdgesMustMatchFilter
    */
   AllEdgesMustMatchFilter () { }
 
-  virtual bool selected_set (const std::unordered_set<db::EdgeWithProperties> &edges) const
+  bool selected_set (const std::unordered_set<db::EdgeWithProperties> &edges) const override
   {
     for (std::unordered_set<db::EdgeWithProperties>::const_iterator p = edges.begin (); p != edges.end (); ++p) {
       if (! selected (*p, p->properties_id ())) {
@@ -372,7 +372,7 @@ public:
     tl_assert (!m_counting || mode != EdgesOutside);
   }
 
-  void finish (const db::Edge *o, size_t p)
+  void finish (const db::Edge *o, size_t p) override
   {
     if (p != 0) {
       return;
@@ -400,7 +400,7 @@ public:
     }
   }
 
-  void add (const db::Edge *o1, size_t p1, const db::Edge *o2, size_t p2)
+  void add (const db::Edge *o1, size_t p1, const db::Edge *o2, size_t p2) override
   {
     //  Select the edges which intersect
     if (p1 != p2) {
@@ -580,7 +580,7 @@ public:
     m_requires_different_layers = requires_different_layers;
   }
 
-  void add (const db::Edge *o1, size_t p1, const db::Edge *o2, size_t p2)
+  void add (const db::Edge *o1, size_t p1, const db::Edge *o2, size_t p2) override
   {
     //  Overlap or inside checks require input from different layers
     if (! m_requires_different_layers || ((p1 ^ p2) & 1) != 0) {
@@ -643,7 +643,7 @@ public:
     : m_ext_b (ext_b), m_ext_e (ext_e), m_ext_o (ext_o), m_ext_i (ext_i)
   { }
 
-  virtual void process (const EdgeWithProperties &edge, std::vector<db::PolygonWithProperties> &res) const
+  void process (const EdgeWithProperties &edge, std::vector<db::PolygonWithProperties> &res) const override
   {
     res.push_back (db::PolygonWithProperties (extended_edge (edge, m_ext_b, m_ext_e, m_ext_o, m_ext_i), edge.properties_id ()));
   }
@@ -660,15 +660,15 @@ class DB_PUBLIC EdgeSegmentSelector
 {
 public:
   EdgeSegmentSelector (int mode, Edge::distance_type length, double fraction);
-  ~EdgeSegmentSelector ();
+  ~EdgeSegmentSelector () override;
 
-  virtual void process (const db::EdgeWithProperties &edge, std::vector<db::EdgeWithProperties> &res) const;
+  void process (const db::EdgeWithProperties &edge, std::vector<db::EdgeWithProperties> &res) const override;
 
-  virtual const TransformationReducer *vars () const { return &m_vars; }
-  virtual bool result_is_merged () const { return false; }
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool result_must_not_be_merged () const { return m_length <= 0; }
-  virtual bool wants_variants () const { return true; }
+  const TransformationReducer *vars () const override { return &m_vars; }
+  bool result_is_merged () const override { return false; }
+  bool requires_raw_input () const override { return false; }
+  bool result_must_not_be_merged () const override { return m_length <= 0; }
+  bool wants_variants () const override { return true; }
 
 private:
   int m_mode;

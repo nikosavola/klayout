@@ -59,12 +59,12 @@ Q_OBJECT
 
 public:
   XORToolDialog (QWidget *parent);
-  ~XORToolDialog ();
+  ~XORToolDialog () override;
 
   int exec_dialog (lay::LayoutViewBase *view);
 
 protected:
-  void accept ();
+  void accept () override;
   void run_xor ();
 
 protected slots:

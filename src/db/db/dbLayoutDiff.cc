@@ -1240,7 +1240,7 @@ class PrintingDifferenceReceiver
 {
 public:
   PrintingDifferenceReceiver ();
-  virtual ~PrintingDifferenceReceiver () { }
+  ~PrintingDifferenceReceiver () override { }
 
   void set_max_count (size_t n);
   size_t max_count () const
@@ -1254,45 +1254,45 @@ public:
     return m_print_properties;
   }
 
-  void dbu_differs (double dbu_a, double dbu_b);
-  void layout_meta_info_differs (const std::string &name, const tl::Variant &a, const tl::Variant &b);
-  void layer_in_a_only (const db::LayerProperties &la);
-  void layer_in_b_only (const db::LayerProperties &lb);
-  void layer_name_differs (const db::LayerProperties &la, const db::LayerProperties &lb);
-  void cell_in_a_only (const std::string &cellname, db::cell_index_type ci);
-  void cell_in_b_only (const std::string &cellname, db::cell_index_type ci);
-  void cell_name_differs (const std::string &cellname_a, db::cell_index_type cia, const std::string &cellname_b, db::cell_index_type cib);
-  void begin_cell (const std::string &cellname, db::cell_index_type cia, db::cell_index_type cib);
-  void cell_meta_info_differs (const std::string &name, const tl::Variant &a, const tl::Variant &b);
-  void bbox_differs (const db::Box &ba, const db::Box &bb);
-  void begin_inst_differences ();
-  void instances_in_a (const std::vector <db::CellInstArrayWithProperties> &insts_a, const std::vector <std::string> &cell_names);
-  void instances_in_b (const std::vector <db::CellInstArrayWithProperties> &insts_b, const std::vector <std::string> &cell_names);
-  void instances_in_a_only (const std::vector <db::CellInstArrayWithProperties> &anotb, const db::Layout &a);
-  void instances_in_b_only (const std::vector <db::CellInstArrayWithProperties> &bnota, const db::Layout &b);
-  void end_inst_differences ();
-  void begin_layer (const db::LayerProperties &layer, unsigned int layer_index_a, bool is_valid_a, unsigned int layer_index_b, bool is_valid_b);
-  void per_layer_bbox_differs (const db::Box &ba, const db::Box &bb);
-  void begin_polygon_differences ();
-  void detailed_diff (const std::vector <std::pair <db::Polygon, db::properties_id_type> > &a, const std::vector <std::pair <db::Polygon, db::properties_id_type> > &b);
-  void end_polygon_differences ();
-  void begin_path_differences ();
-  void detailed_diff (const std::vector <std::pair <db::Path, db::properties_id_type> > &a, const std::vector <std::pair <db::Path, db::properties_id_type> > &b);
-  void end_path_differences ();
-  void begin_box_differences ();
-  void detailed_diff (const std::vector <std::pair <db::Box, db::properties_id_type> > &a, const std::vector <std::pair <db::Box, db::properties_id_type> > &b);
-  void end_box_differences ();
-  void begin_edge_differences ();
-  void detailed_diff (const std::vector <std::pair <db::Edge, db::properties_id_type> > &a, const std::vector <std::pair <db::Edge, db::properties_id_type> > &b);
-  void end_edge_differences ();
-  void begin_edge_pair_differences ();
-  void detailed_diff (const std::vector <std::pair <db::EdgePair, db::properties_id_type> > &a, const std::vector <std::pair <db::EdgePair, db::properties_id_type> > &b);
-  void end_edge_pair_differences ();
-  void begin_text_differences ();
-  void detailed_diff (const std::vector <std::pair <db::Text, db::properties_id_type> > &a, const std::vector <std::pair <db::Text, db::properties_id_type> > &b);
-  void end_text_differences ();
-  void end_layer ();
-  void end_cell ();
+  void dbu_differs (double dbu_a, double dbu_b) override;
+  void layout_meta_info_differs (const std::string &name, const tl::Variant &a, const tl::Variant &b) override;
+  void layer_in_a_only (const db::LayerProperties &la) override;
+  void layer_in_b_only (const db::LayerProperties &lb) override;
+  void layer_name_differs (const db::LayerProperties &la, const db::LayerProperties &lb) override;
+  void cell_in_a_only (const std::string &cellname, db::cell_index_type ci) override;
+  void cell_in_b_only (const std::string &cellname, db::cell_index_type ci) override;
+  void cell_name_differs (const std::string &cellname_a, db::cell_index_type cia, const std::string &cellname_b, db::cell_index_type cib) override;
+  void begin_cell (const std::string &cellname, db::cell_index_type cia, db::cell_index_type cib) override;
+  void cell_meta_info_differs (const std::string &name, const tl::Variant &a, const tl::Variant &b) override;
+  void bbox_differs (const db::Box &ba, const db::Box &bb) override;
+  void begin_inst_differences () override;
+  void instances_in_a (const std::vector <db::CellInstArrayWithProperties> &insts_a, const std::vector <std::string> &cell_names) override;
+  void instances_in_b (const std::vector <db::CellInstArrayWithProperties> &insts_b, const std::vector <std::string> &cell_names) override;
+  void instances_in_a_only (const std::vector <db::CellInstArrayWithProperties> &anotb, const db::Layout &a) override;
+  void instances_in_b_only (const std::vector <db::CellInstArrayWithProperties> &bnota, const db::Layout &b) override;
+  void end_inst_differences () override;
+  void begin_layer (const db::LayerProperties &layer, unsigned int layer_index_a, bool is_valid_a, unsigned int layer_index_b, bool is_valid_b) override;
+  void per_layer_bbox_differs (const db::Box &ba, const db::Box &bb) override;
+  void begin_polygon_differences () override;
+  void detailed_diff (const std::vector <std::pair <db::Polygon, db::properties_id_type> > &a, const std::vector <std::pair <db::Polygon, db::properties_id_type> > &b) override;
+  void end_polygon_differences () override;
+  void begin_path_differences () override;
+  void detailed_diff (const std::vector <std::pair <db::Path, db::properties_id_type> > &a, const std::vector <std::pair <db::Path, db::properties_id_type> > &b) override;
+  void end_path_differences () override;
+  void begin_box_differences () override;
+  void detailed_diff (const std::vector <std::pair <db::Box, db::properties_id_type> > &a, const std::vector <std::pair <db::Box, db::properties_id_type> > &b) override;
+  void end_box_differences () override;
+  void begin_edge_differences () override;
+  void detailed_diff (const std::vector <std::pair <db::Edge, db::properties_id_type> > &a, const std::vector <std::pair <db::Edge, db::properties_id_type> > &b) override;
+  void end_edge_differences () override;
+  void begin_edge_pair_differences () override;
+  void detailed_diff (const std::vector <std::pair <db::EdgePair, db::properties_id_type> > &a, const std::vector <std::pair <db::EdgePair, db::properties_id_type> > &b) override;
+  void end_edge_pair_differences () override;
+  void begin_text_differences () override;
+  void detailed_diff (const std::vector <std::pair <db::Text, db::properties_id_type> > &a, const std::vector <std::pair <db::Text, db::properties_id_type> > &b) override;
+  void end_text_differences () override;
+  void end_layer () override;
+  void end_cell () override;
 
 private:
   std::string m_cellname;

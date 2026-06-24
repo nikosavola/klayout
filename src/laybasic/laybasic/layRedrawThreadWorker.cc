@@ -2044,7 +2044,7 @@ public:
     //  .. nothing yet ..
   }
        
-  void trigger () const
+  void trigger () const override
   {
     if (mp_parent) {
       mp_parent->trigger ();

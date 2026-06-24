@@ -50,7 +50,7 @@ class HeapObjectCont : public HeapObjectBase
 {
 public:
   HeapObjectCont (X *x) : mp_x (x) { }
-  ~HeapObjectCont () { delete mp_x; }
+  ~HeapObjectCont () override { delete mp_x; }
 private:
   X *mp_x;
 };

@@ -77,7 +77,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~MALYReader ();
+  ~MALYReader () override;
 
   /**
    *  @brief Tests, if the stream is a valid MALY file
@@ -102,7 +102,7 @@ public:
    *  @param create true, if new layers should be created
    *  @return The LayerMap object that tells where which layer was loaded
    */
-  virtual const LayerMap &read (db::Layout &layout, const LoadLayoutOptions &options);
+  const LayerMap &read (db::Layout &layout, const LoadLayoutOptions &options) override;
 
   /** 
    *  @brief The basic read method (without mapping)
@@ -117,26 +117,26 @@ public:
    *  @param layout The layout object to write to
    *  @return The LayerMap object
    */
-  virtual const LayerMap &read (db::Layout &layout);
+  const LayerMap &read (db::Layout &layout) override;
 
   /**
    *  @brief Format
    */
-  virtual const char *format () const { return "MALY"; }
+  const char *format () const override { return "MALY"; }
 
   /**
    *  @brief Issue an error with positional information
    *
    *  Reimplements MALYDiagnostics
    */
-  virtual void error (const std::string &txt);
+  void error (const std::string &txt) override;
 
   /**
    *  @brief Issue a warning with positional information
    *
    *  Reimplements MALYDiagnostics
    */
-  virtual void warn (const std::string &txt, int wl = 1);
+  void warn (const std::string &txt, int wl = 1) override;
 
   /**
    *  @brief Reads the MALY file into a MALYData structure

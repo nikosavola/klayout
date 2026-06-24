@@ -35,10 +35,10 @@ class PluginDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const;
-  virtual lay::Plugin *create_plugin (db::Manager *manager, lay::Dispatcher *, lay::LayoutViewBase *view) const;
-  virtual bool implements_editable (std::string &title) const;
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const;
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override;
+  lay::Plugin *create_plugin (db::Manager *manager, lay::Dispatcher *, lay::LayoutViewBase *view) const override;
+  bool implements_editable (std::string &title) const override;
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override;
 };
 
 }

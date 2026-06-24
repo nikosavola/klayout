@@ -385,7 +385,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void perform_task (tl::Task *task)
+  void perform_task (tl::Task *task) override
   {
     static_cast<local_processor_context_computation_task<TS, TI, TR> *> (task)->perform ();
   }
@@ -419,7 +419,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void perform_task (tl::Task *task)
+  void perform_task (tl::Task *task) override
   {
     static_cast<local_processor_result_computation_task<TS, TI, TR> *> (task)->perform ();
   }

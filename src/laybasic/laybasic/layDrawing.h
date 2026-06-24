@@ -79,7 +79,7 @@ public:
   /**
    *  @brief The destructor
    */
-  virtual ~Drawing ();
+  ~Drawing () override;
 
   /**
    *  @brief Paint on the planes provided (called by the drawing thread)

@@ -35,43 +35,43 @@ namespace db
 class GDS2FormatDeclaration
   : public db::StreamFormatDeclaration
 {
-  virtual std::string format_name () const { return "GDS2"; }
-  virtual std::string format_desc () const { return "GDS2"; }
-  virtual std::string format_title () const { return "GDS2"; }
-  virtual std::string file_format () const { return "GDS2 files (*.gds *.GDS *.gds.gz *.GDS.gz *.GDS2 *.gds2 *.gds2.gz *.GDS2.gz)"; }
+  std::string format_name () const override { return "GDS2"; }
+  std::string format_desc () const override { return "GDS2"; }
+  std::string format_title () const override { return "GDS2"; }
+  std::string file_format () const override { return "GDS2 files (*.gds *.GDS *.gds.gz *.GDS.gz *.GDS2 *.gds2 *.gds2.gz *.GDS2.gz)"; }
 
-  virtual bool detect (tl::InputStream &stream) const 
+  bool detect (tl::InputStream &stream) const override 
   {
     const char *hdr = stream.get (4);
     return (hdr && hdr[0] == 0x00 && hdr[1] == 0x06 && hdr[2] == 0x00 && hdr[3] == 0x02);
   }
 
-  virtual ReaderBase *create_reader (tl::InputStream &s) const 
+  ReaderBase *create_reader (tl::InputStream &s) const override 
   {
     return new db::GDS2Reader (s);
   }
 
-  virtual WriterBase *create_writer () const 
+  WriterBase *create_writer () const override 
   {
     return new db::GDS2Writer ();
   }
 
-  virtual bool can_read () const
+  bool can_read () const override
   {
     return true;
   }
 
-  virtual bool can_write () const
+  bool can_write () const override
   {
     return true;
   }
 
-  virtual bool supports_context () const
+  bool supports_context () const override
   {
     return true;
   }
 
-  virtual tl::XMLElementBase *xml_writer_options_element () const
+  tl::XMLElementBase *xml_writer_options_element () const override
   {
     return new db::WriterOptionsXMLElement<db::GDS2WriterOptions> ("gds2",
       tl::make_member (&db::GDS2WriterOptions::write_timestamps, "write-timestamps") +
@@ -86,7 +86,7 @@ class GDS2FormatDeclaration
     );
   }
 
-  virtual tl::XMLElementBase *xml_reader_options_element () const
+  tl::XMLElementBase *xml_reader_options_element () const override
   {
     return new db::ReaderOptionsXMLElement<db::GDS2ReaderOptions> ("gds2",
       tl::make_member (&db::GDS2ReaderOptions::box_mode, "box-mode") +

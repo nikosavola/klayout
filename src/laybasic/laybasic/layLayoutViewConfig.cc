@@ -38,7 +38,7 @@ class LayoutViewBasicConfigDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override
   {
     lay::ColorConverter cc;
     options.push_back (std::pair<std::string, std::string> (cfg_default_lyp_file, ""));

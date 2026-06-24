@@ -291,14 +291,14 @@ class InfoChannel : public Channel
 {
 public:
   InfoChannel (int verbosity);
-  ~InfoChannel ();
+  ~InfoChannel () override;
 
 protected:
-  virtual void puts (const char *s);
-  virtual void endl ();
-  virtual void end ();
-  virtual void begin ();
-  virtual void yield () { }
+  void puts (const char *s) override;
+  void endl () override;
+  void end () override;
+  void begin () override;
+  void yield () override { }
 
 private:
   int m_verbosity;
@@ -364,14 +364,14 @@ class WarningChannel : public Channel
 {
 public:
   WarningChannel ();
-  ~WarningChannel ();
+  ~WarningChannel () override;
 
 protected:
-  virtual void puts (const char *s);
-  virtual void endl ();
-  virtual void end ();
-  virtual void begin ();
-  virtual void yield () { }
+  void puts (const char *s) override;
+  void endl () override;
+  void end () override;
+  void begin () override;
+  void yield () override { }
 
 private:
   bool m_colorized;
@@ -443,14 +443,14 @@ class ErrorChannel : public Channel
 {
 public:
   ErrorChannel ();
-  ~ErrorChannel ();
+  ~ErrorChannel () override;
 
 protected:
-  virtual void puts (const char *s);
-  virtual void endl ();
-  virtual void end ();
-  virtual void begin ();
-  virtual void yield () { }
+  void puts (const char *s) override;
+  void endl () override;
+  void end () override;
+  void begin () override;
+  void yield () override { }
 
 private:
   bool m_colorized;

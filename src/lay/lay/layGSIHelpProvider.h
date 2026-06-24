@@ -40,10 +40,10 @@ class GSIHelpProvider
 public:
   GSIHelpProvider ();
 
-  virtual std::string folder (lay::HelpSource *src) const;
-  virtual std::string title (lay::HelpSource *src) const;
+  std::string folder (lay::HelpSource *src) const override;
+  std::string title (lay::HelpSource *src) const override;
   virtual void toc (lay::HelpSource *src, std::vector<std::string> &t);
-  virtual QDomDocument get (lay::HelpSource *src, const std::string &u) const;
+  QDomDocument get (lay::HelpSource *src, const std::string &u) const override;
 
 private:
   std::string produce_class_doc (const std::string &cls) const;

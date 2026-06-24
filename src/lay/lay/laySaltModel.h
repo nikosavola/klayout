@@ -67,32 +67,32 @@ public:
   /**
    *  @brief Implementation of the QAbstractItemModel interface
    */
-  QVariant data (const QModelIndex &index, int role) const;
+  QVariant data (const QModelIndex &index, int role) const override;
 
   /**
    *  @brief Implementation of the QAbstractItemModel interface
    */
-  Qt::ItemFlags flags (const QModelIndex &index) const;
+  Qt::ItemFlags flags (const QModelIndex &index) const override;
 
   /**
    *  @brief Implementation of the QAbstractItemModel interface
    */
-  QModelIndex index (int row, int column, const QModelIndex &parent) const;
+  QModelIndex index (int row, int column, const QModelIndex &parent) const override;
 
   /**
    *  @brief Implementation of the QAbstractItemModel interface
    */
-  QModelIndex parent (const QModelIndex & /*index*/) const;
+  QModelIndex parent (const QModelIndex & /*index*/) const override;
 
   /**
    *  @brief Implementation of the QAbstractItemModel interface
    */
-  int columnCount(const QModelIndex & /*parent*/) const;
+  int columnCount(const QModelIndex & /*parent*/) const override;
 
   /**
    *  @brief Implementation of the QAbstractItemModel interface
    */
-  int rowCount (const QModelIndex &parent) const;
+  int rowCount (const QModelIndex &parent) const override;
 
   /**
    *  @brief Gets the grain pointer from a model index

@@ -89,17 +89,17 @@ public:
   /**
    *  @brief Destructor
    */
-  ~ColorBar ();
+  ~ColorBar () override;
 
-  void mouseMoveEvent (QMouseEvent *event);
-  void mousePressEvent (QMouseEvent *event);
-  void mouseReleaseEvent (QMouseEvent *event);
-  void mouseDoubleClickEvent (QMouseEvent *event);
-  void keyPressEvent (QKeyEvent *event);
+  void mouseMoveEvent (QMouseEvent *event) override;
+  void mousePressEvent (QMouseEvent *event) override;
+  void mouseReleaseEvent (QMouseEvent *event) override;
+  void mouseDoubleClickEvent (QMouseEvent *event) override;
+  void keyPressEvent (QKeyEvent *event) override;
 
-  void paintEvent (QPaintEvent *event);
+  void paintEvent (QPaintEvent *event) override;
 
-  QSize sizeHint () const;
+  QSize sizeHint () const override;
 
   int selected_node () const
   {

@@ -69,7 +69,7 @@ Q_OBJECT
 public:
   InputHttpStreamPrivateData (InputHttpStream *stream, const std::string &url);
 
-  virtual ~InputHttpStreamPrivateData ();
+  ~InputHttpStreamPrivateData () override;
 
   void send ();
   void close ();

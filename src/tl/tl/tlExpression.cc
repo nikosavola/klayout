@@ -306,7 +306,7 @@ class TL_PUBLIC ListClass
   : public EvalClass
 {
 public:
-  void execute (const ExpressionParserContext &context, tl::Variant &out, tl::Variant &object, const std::string &method, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> *kwargs) const
+  void execute (const ExpressionParserContext &context, tl::Variant &out, tl::Variant &object, const std::string &method, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> *kwargs) const override
   {
     if (method == "push") {
 
@@ -343,7 +343,7 @@ class TL_PUBLIC ArrayClass
   : public EvalClass
 {
 public:
-  void execute (const ExpressionParserContext &context, tl::Variant &out, tl::Variant &object, const std::string &method, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> *kwargs) const
+  void execute (const ExpressionParserContext &context, tl::Variant &out, tl::Variant &object, const std::string &method, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> *kwargs) const override
   {
     if (method == "insert") {
 
@@ -458,12 +458,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new AssignExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget a;
     m_c[0]->execute (v);
@@ -496,12 +496,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new LessExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -546,12 +546,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new LessOrEqualExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -596,12 +596,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new GreaterExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -646,12 +646,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new GreaterOrEqualExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -696,12 +696,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new EqualExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -746,12 +746,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new NotEqualExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -796,12 +796,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new MatchExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -854,12 +854,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new MatchSubstringReferenceNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     if (int (mp_eval->match_substrings ().size ()) > m_index && m_index >= 0) {
       v.set (mp_eval->match_substrings () [m_index]);
@@ -893,12 +893,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new NoMatchExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -943,12 +943,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new LogAndExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     m_c[0]->execute (v);
 
@@ -985,12 +985,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new LogOrExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     m_c[0]->execute (v);
 
@@ -1027,12 +1027,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new IfExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     m_c[0]->execute (v);
 
@@ -1064,12 +1064,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new ShiftLeftExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -1120,12 +1120,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new ShiftRightExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -1176,12 +1176,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new PlusExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -1238,12 +1238,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new MinusExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -1298,12 +1298,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new StarExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -1388,12 +1388,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new SlashExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -1472,12 +1472,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new PercentExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -1544,12 +1544,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new AmpersandExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -1600,12 +1600,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new PipeExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -1656,12 +1656,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new AcuteExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget b;
     m_c[0]->execute (v);
@@ -1712,12 +1712,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new IndexExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     EvalTarget e;
     m_c[0]->execute (v);
@@ -1793,12 +1793,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new UnaryMinusExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     m_c[0]->execute (v);
 
@@ -1850,12 +1850,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new UnaryTildeExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     m_c[0]->execute (v);
 
@@ -1905,12 +1905,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new UnaryNotExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     m_c[0]->execute (v);
 
@@ -1942,12 +1942,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new ConstantExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     v.set (m_value);
   }
@@ -1975,12 +1975,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const
+  ExpressionNode *clone (const tl::Expression *expr) const override
   {
     return new ContextEvaluationNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const
+  void execute (EvalTarget &v) const override
   {
     m_c[0]->execute (v);
     std::string s = v->to_string ();
@@ -2015,12 +2015,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new MethodExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     m_c[0]->execute (v);
 
@@ -2081,12 +2081,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new ListExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     v.set (tl::Variant::empty_list ());
     v.get ().reserve (m_c.size ());
@@ -2118,12 +2118,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new ArrayExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     v.set (tl::Variant::empty_array ());
     for (std::vector<ExpressionNode *>::const_iterator c = m_c.begin (); c != m_c.end (); c += 2) {
@@ -2154,12 +2154,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new SequenceExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     for (std::vector<ExpressionNode *>::const_iterator c = m_c.begin (); c != m_c.end (); ++c) {
       (*c)->execute (v);
@@ -2186,12 +2186,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new StaticFunctionExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     std::vector<tl::Variant> vv;
     std::map<std::string, tl::Variant> kwargs;
@@ -2240,12 +2240,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new RVariableExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     v.set (*mp_var);
   }
@@ -2273,12 +2273,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ExpressionNode *clone (const tl::Expression *expr) const 
+  ExpressionNode *clone (const tl::Expression *expr) const override 
   {
     return new LVariableExpressionNode (*this, expr);
   }
 
-  void execute (EvalTarget &v) const 
+  void execute (EvalTarget &v) const override 
   {
     v.set_lvalue (mp_var);
   }
@@ -2970,12 +2970,12 @@ public:
     ms_functions.insert (std::make_pair (name, this));
   }
 
-  ~EvalStaticFunction ()
+  ~EvalStaticFunction () override
   {
     ms_functions.erase (m_name);
   }
 
-  void execute (const ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     m_func (context, out, args);
   }

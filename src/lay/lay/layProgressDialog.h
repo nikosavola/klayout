@@ -44,7 +44,7 @@ class ProgressDialog
 public:
   ProgressDialog (QWidget *parent, lay::ProgressReporter *pr);
 
-  void closeEvent (QCloseEvent * /*event*/);
+  void closeEvent (QCloseEvent * /*event*/) override;
 
   void set_progress (tl::Progress *progress);
   void add_widget (QWidget *widget);

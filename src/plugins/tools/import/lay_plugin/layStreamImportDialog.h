@@ -93,11 +93,11 @@ Q_OBJECT
 
 public:
   StreamImportDialog (QWidget *parent, StreamImportData *data);
-  ~StreamImportDialog ();
+  ~StreamImportDialog () override;
 
-  int exec ();
-  void accept ();
-  void reject ();
+  int exec () override;
+  void accept () override;
+  void reject () override;
 
 public slots:
   void next_page ();

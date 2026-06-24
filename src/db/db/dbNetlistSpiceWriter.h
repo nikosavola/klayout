@@ -52,7 +52,7 @@ class DB_PUBLIC NetlistSpiceWriterDelegate
 {
 public:
   NetlistSpiceWriterDelegate ();
-  virtual ~NetlistSpiceWriterDelegate ();
+  ~NetlistSpiceWriterDelegate () override;
 
   virtual void write_header () const;
   virtual void write_device_intro (const db::DeviceClass &cls) const;
@@ -83,9 +83,9 @@ class DB_PUBLIC NetlistSpiceWriter
 {
 public:
   NetlistSpiceWriter (NetlistSpiceWriterDelegate *delegate = nullptr);
-  virtual ~NetlistSpiceWriter ();
+  ~NetlistSpiceWriter () override;
 
-  virtual void write (tl::OutputStream &stream, const db::Netlist &netlist, const std::string &description);
+  void write (tl::OutputStream &stream, const db::Netlist &netlist, const std::string &description) override;
 
   void set_use_net_names (bool use_net_names);
   bool use_net_names () const

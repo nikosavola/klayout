@@ -72,7 +72,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~SubCircuit ();
+  ~SubCircuit () override;
 
   /**
    *  @brief Gets the subcircuit ID

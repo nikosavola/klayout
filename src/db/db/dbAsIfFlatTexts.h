@@ -41,50 +41,50 @@ class DB_PUBLIC AsIfFlatTexts
 public:
   AsIfFlatTexts ();
   AsIfFlatTexts (const AsIfFlatTexts &other);
-  virtual ~AsIfFlatTexts ();
+  ~AsIfFlatTexts () override;
 
-  virtual size_t count () const;
-  virtual size_t hier_count () const;
-  virtual std::string to_string (size_t) const;
-  virtual Box bbox () const;
+  size_t count () const override;
+  size_t hier_count () const override;
+  std::string to_string (size_t) const override;
+  Box bbox () const override;
 
-  virtual TextsDelegate *filter_in_place (const TextFilterBase &filter)
+  TextsDelegate *filter_in_place (const TextFilterBase &filter) override
   {
     return filtered (filter);
   }
 
-  virtual TextsDelegate *filtered (const TextFilterBase &) const;
-  virtual std::pair<TextsDelegate *, TextsDelegate *> filtered_pair (const TextFilterBase &filter) const;
+  TextsDelegate *filtered (const TextFilterBase &) const override;
+  std::pair<TextsDelegate *, TextsDelegate *> filtered_pair (const TextFilterBase &filter) const override;
 
-  virtual TextsDelegate *process_in_place (const TextProcessorBase &proc)
+  TextsDelegate *process_in_place (const TextProcessorBase &proc) override
   {
     return processed (proc);
   }
 
-  virtual TextsDelegate *processed (const TextProcessorBase &proc) const;
-  virtual RegionDelegate *processed_to_polygons (const TextToPolygonProcessorBase &filter) const;
+  TextsDelegate *processed (const TextProcessorBase &proc) const override;
+  RegionDelegate *processed_to_polygons (const TextToPolygonProcessorBase &filter) const override;
 
-  virtual TextsDelegate *add_in_place (const Texts &other)
+  TextsDelegate *add_in_place (const Texts &other) override
   {
     return add (other);
   }
 
-  virtual TextsDelegate *add (const Texts &other) const;
+  TextsDelegate *add (const Texts &other) const override;
 
-  virtual RegionDelegate *polygons (db::Coord e, const tl::Variant &text_prop) const;
-  virtual EdgesDelegate *edges () const;
+  RegionDelegate *polygons (db::Coord e, const tl::Variant &text_prop) const override;
+  EdgesDelegate *edges () const override;
 
-  virtual TextsDelegate *in (const Texts &, bool) const;
+  TextsDelegate *in (const Texts &, bool) const override;
 
-  virtual bool equals (const Texts &other) const;
-  virtual bool less (const Texts &other) const;
+  bool equals (const Texts &other) const override;
+  bool less (const Texts &other) const override;
 
-  virtual void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const;
-  virtual void insert_into_as_polygons (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer, db::Coord enl) const;
+  void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const override;
+  void insert_into_as_polygons (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer, db::Coord enl) const override;
 
-  virtual RegionDelegate *pull_interacting (const Region &) const;
-  virtual TextsDelegate *selected_interacting (const Region &other) const;
-  virtual TextsDelegate *selected_not_interacting (const Region &other) const;
+  RegionDelegate *pull_interacting (const Region &) const override;
+  TextsDelegate *selected_interacting (const Region &other) const override;
+  TextsDelegate *selected_not_interacting (const Region &other) const override;
 
 protected:
   void update_bbox (const db::Box &box);

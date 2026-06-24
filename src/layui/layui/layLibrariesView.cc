@@ -830,7 +830,7 @@ class LibraryViewPluginDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     std::string at;
 

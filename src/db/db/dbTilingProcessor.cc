@@ -227,7 +227,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void put (size_t /*ix*/, size_t /*iy*/, const db::Box &tile, size_t /*id*/, const tl::Variant &obj, double dbu, const db::ICplxTrans &trans, bool clip)
+  void put (size_t /*ix*/, size_t /*iy*/, const db::Box &tile, size_t /*id*/, const tl::Variant &obj, double dbu, const db::ICplxTrans &trans, bool clip) override
   {
     db::ICplxTrans t (db::ICplxTrans (dbu / mp_layout->dbu ()) * trans);
     db::Shapes &shapes = mp_cell->shapes (m_layer);
@@ -236,12 +236,12 @@ public:
     insert_var (inserter, obj, tile, clip);
   }
 
-  void begin (size_t /*nx*/, size_t /*ny*/, const db::DPoint & /*p0*/, double /*dx*/, double /*dy*/, const db::DBox & /*frame*/)
+  void begin (size_t /*nx*/, size_t /*ny*/, const db::DPoint & /*p0*/, double /*dx*/, double /*dy*/, const db::DBox & /*frame*/) override
   { 
     mp_layout->start_changes ();
   }
 
-  void finish (bool /*success*/)
+  void finish (bool /*success*/) override
   { 
     mp_layout->end_changes ();
   }
@@ -263,7 +263,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void put (size_t /*ix*/, size_t /*iy*/, const db::Box &tile, size_t /*id*/, const tl::Variant &obj, double /*dbu*/, const db::ICplxTrans &trans, bool clip)
+  void put (size_t /*ix*/, size_t /*iy*/, const db::Box &tile, size_t /*id*/, const tl::Variant &obj, double /*dbu*/, const db::ICplxTrans &trans, bool clip) override
   {
     //  optimisation
     if (obj.is_user<db::Region> () && ! clip) {
@@ -289,7 +289,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void put (size_t /*ix*/, size_t /*iy*/, const db::Box &tile, size_t /*id*/, const tl::Variant &obj, double /*dbu*/, const db::ICplxTrans &trans, bool clip)
+  void put (size_t /*ix*/, size_t /*iy*/, const db::Box &tile, size_t /*id*/, const tl::Variant &obj, double /*dbu*/, const db::ICplxTrans &trans, bool clip) override
   {
     //  optimisation
     if (obj.is_user<db::Edges> () && ! clip) {
@@ -314,7 +314,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void put (size_t /*ix*/, size_t /*iy*/, const db::Box &tile, size_t /*id*/, const tl::Variant &obj, double /*dbu*/, const db::ICplxTrans &trans, bool clip)
+  void put (size_t /*ix*/, size_t /*iy*/, const db::Box &tile, size_t /*id*/, const tl::Variant &obj, double /*dbu*/, const db::ICplxTrans &trans, bool clip) override
   {
     EdgePairsInserter inserter (mp_edge_pairs, trans);
     insert_var (inserter, obj, tile, clip);
@@ -334,7 +334,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void put (size_t /*ix*/, size_t /*iy*/, const db::Box &tile, size_t /*id*/, const tl::Variant &obj, double /*dbu*/, const db::ICplxTrans &trans, bool clip)
+  void put (size_t /*ix*/, size_t /*iy*/, const db::Box &tile, size_t /*id*/, const tl::Variant &obj, double /*dbu*/, const db::ICplxTrans &trans, bool clip) override
   {
     TextsInserter inserter (mp_texts, trans);
     insert_var (inserter, obj, tile, clip);
@@ -387,9 +387,9 @@ public:
     return mp_proc;
   }
 
-  virtual tl::Worker *create_worker ();
+  tl::Worker *create_worker () override;
 
-  virtual void after_sync_task (tl::Task *task);
+  void after_sync_task (tl::Task *task) override;
 
 private:
   TilingProcessor *mp_proc;
@@ -462,7 +462,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void perform_task (tl::Task *task) 
+  void perform_task (tl::Task *task) override 
   {
     TilingProcessorTask *tile_task = dynamic_cast <TilingProcessorTask *> (task);
     if (tile_task) {
@@ -487,7 +487,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void execute (const tl::ExpressionParserContext & /*context*/, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext & /*context*/, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     out = mp_proc->receiver (args);
   }
@@ -506,7 +506,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void execute (const tl::ExpressionParserContext & /*context*/, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext & /*context*/, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     mp_proc->put (m_ix, m_iy, m_tile_box, args);
   }
@@ -526,7 +526,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void execute (const tl::ExpressionParserContext & /*context*/, tl::Variant & /*out*/, const std::vector<tl::Variant> & /*args*/, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext & /*context*/, tl::Variant & /*out*/, const std::vector<tl::Variant> & /*args*/, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     // TODO: ... implement ..
   }

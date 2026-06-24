@@ -58,84 +58,84 @@ public:
 
   FlatRegion (const FlatRegion &other);
 
-  virtual ~FlatRegion ();
+  ~FlatRegion () override;
 
-  RegionDelegate *clone () const
+  RegionDelegate *clone () const override
   {
     return new FlatRegion (*this);
   }
 
-  virtual void reserve (size_t);
+  void reserve (size_t) override;
 
-  virtual RegionIteratorDelegate *begin () const;
-  virtual RegionIteratorDelegate *begin_merged () const;
-  virtual RegionIteratorDelegate *begin_unmerged () const;
+  RegionIteratorDelegate *begin () const override;
+  RegionIteratorDelegate *begin_merged () const override;
+  RegionIteratorDelegate *begin_unmerged () const override;
 
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const;
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_merged_iter () const;
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_unmerged_iter () const;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const override;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_merged_iter () const override;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_unmerged_iter () const override;
 
-  virtual bool empty () const;
-  virtual size_t count () const;
-  virtual size_t hier_count () const;
-  virtual bool is_merged () const;
+  bool empty () const override;
+  size_t count () const override;
+  size_t hier_count () const override;
+  bool is_merged () const override;
 
-  virtual void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const;
+  void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const override;
 
-  virtual RegionDelegate *merged_in_place ();
-  virtual RegionDelegate *merged_in_place (bool min_coherence, unsigned int min_wc, bool join_properties_on_merge);
-  virtual RegionDelegate *merged () const;
-  virtual RegionDelegate *merged (bool min_coherence, unsigned int min_wc, bool join_properties_on_merge) const
+  RegionDelegate *merged_in_place () override;
+  RegionDelegate *merged_in_place (bool min_coherence, unsigned int min_wc, bool join_properties_on_merge) override;
+  RegionDelegate *merged () const override;
+  RegionDelegate *merged (bool min_coherence, unsigned int min_wc, bool join_properties_on_merge) const override
   {
     return db::AsIfFlatRegion::merged (min_coherence, min_wc, join_properties_on_merge);
   }
 
-  virtual RegionDelegate *process_in_place (const PolygonProcessorBase &filter);
-  virtual RegionDelegate *filter_in_place (const PolygonFilterBase &filter);
+  RegionDelegate *process_in_place (const PolygonProcessorBase &filter) override;
+  RegionDelegate *filter_in_place (const PolygonFilterBase &filter) override;
 
-  virtual RegionDelegate *add_in_place (const Region &other);
-  virtual RegionDelegate *add (const Region &other) const;
+  RegionDelegate *add_in_place (const Region &other) override;
+  RegionDelegate *add (const Region &other) const override;
 
-  virtual const db::Polygon *nth (size_t n) const;
-  virtual db::properties_id_type nth_prop_id (size_t) const;
-  virtual bool has_valid_polygons () const;
-  virtual bool has_valid_merged_polygons () const;
+  const db::Polygon *nth (size_t n) const override;
+  db::properties_id_type nth_prop_id (size_t) const override;
+  bool has_valid_polygons () const override;
+  bool has_valid_merged_polygons () const override;
 
-  virtual const db::RecursiveShapeIterator *iter () const;
-  virtual void apply_property_translator (const db::PropertiesTranslator &pt);
+  const db::RecursiveShapeIterator *iter () const override;
+  void apply_property_translator (const db::PropertiesTranslator &pt) override;
 
-  void do_insert (const db::Polygon &polygon, db::properties_id_type prop_id);
+  void do_insert (const db::Polygon &polygon, db::properties_id_type prop_id) override;
 
-  void do_transform (const db::Trans &t)
+  void do_transform (const db::Trans &t) override
   {
     transform_generic (t);
   }
 
-  void do_transform (const db::ICplxTrans &t)
+  void do_transform (const db::ICplxTrans &t) override
   {
     transform_generic (t);
   }
 
-  virtual void do_transform (const db::IMatrix2d &t)
+  void do_transform (const db::IMatrix2d &t) override
   {
     transform_generic (t);
   }
 
-  virtual void do_transform (const db::IMatrix3d &t)
+  void do_transform (const db::IMatrix3d &t) override
   {
     transform_generic (t);
   }
 
-  void flatten () { }
+  void flatten () override { }
 
   db::Shapes &raw_polygons () { return *mp_polygons; }
   const db::Shapes &raw_polygons () const { return *mp_polygons; }
 
 protected:
-  virtual void merged_semantics_changed ();
-  virtual void join_properties_on_merge_changed ();
-  virtual void min_coherence_changed ();
-  virtual Box compute_bbox () const;
+  void merged_semantics_changed () override;
+  void join_properties_on_merge_changed () override;
+  void min_coherence_changed () override;
+  Box compute_bbox () const override;
   void invalidate_cache ();
   void set_is_merged (bool m);
 

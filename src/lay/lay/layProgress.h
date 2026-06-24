@@ -47,7 +47,7 @@ class LAY_PUBLIC ProgressBar
   : public tl::Object
 {
 public:
-  virtual ~ProgressBar () { }
+  ~ProgressBar () override { }
 
   virtual void update_progress (tl::Progress *progress) = 0;
   virtual bool progress_wants_widget () const { return false; }
@@ -62,13 +62,13 @@ class LAY_PUBLIC ProgressReporter
 {
 public:
   ProgressReporter ();
-  virtual ~ProgressReporter ();
+  ~ProgressReporter () override;
 
-  virtual void register_object (tl::Progress *progress);
-  virtual void unregister_object (tl::Progress *progress);
-  virtual void trigger (tl::Progress *progress);
-  virtual void yield (tl::Progress *progress);
-  virtual bool eventFilter (QObject *dest, QEvent *event);
+  void register_object (tl::Progress *progress) override;
+  void unregister_object (tl::Progress *progress) override;
+  void trigger (tl::Progress *progress) override;
+  void yield (tl::Progress *progress) override;
+  bool eventFilter (QObject *dest, QEvent *event) override;
 
   void set_progress_bar (lay::ProgressBar *pb);
 

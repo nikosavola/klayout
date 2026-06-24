@@ -105,7 +105,7 @@ public:
   };
 
   Proxy (const gsi::ClassBase *_cls_decl);
-  ~Proxy ();
+  ~Proxy () override;
 
   void keep ();
   void release ();
@@ -166,8 +166,8 @@ public:
 
   VALUE signal_handler (const gsi::MethodBase *meth);
 
-  virtual void call (int id, gsi::SerialArgs &args, gsi::SerialArgs &ret) const;
-  virtual bool can_call () const;
+  void call (int id, gsi::SerialArgs &args, gsi::SerialArgs &ret) const override;
+  bool can_call () const override;
 
 private:
   const gsi::ClassBase *m_cls_decl;
@@ -203,14 +203,14 @@ public:
   static void define_class (VALUE module, const char *name);
 
   SignalHandler ();
-  ~SignalHandler ();
+  ~SignalHandler () override;
 
   void initialize (VALUE obj);
   void assign (VALUE proc);
   void clear ();
   void add (VALUE proc);
   void remove (VALUE proc);
-  virtual void call (const gsi::MethodBase *meth, gsi::SerialArgs &args, gsi::SerialArgs &ret) const;
+  void call (const gsi::MethodBase *meth, gsi::SerialArgs &args, gsi::SerialArgs &ret) const override;
   void mark_this ();
 
 private:

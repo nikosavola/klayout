@@ -174,17 +174,17 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~Bitmap ();
+  ~Bitmap () override;
   
   /**  
    *  @brief Clear the bitmap but do not resize
    */
-  virtual void clear ();
+  void clear () override;
 
   /**
    *  @brief Create a rectangle of one pixel size
    */
-  virtual void pixel (unsigned int x, unsigned int y)
+  void pixel (unsigned int x, unsigned int y) override
   {
     fill (y, x, x + 1);
   }

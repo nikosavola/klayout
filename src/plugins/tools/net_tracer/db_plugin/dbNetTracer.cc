@@ -523,20 +523,20 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void reset ()
+  void reset () override
   {
     m_wcv.clear ();
     m_inside.clear ();
   }
 
-  virtual void reserve (size_t n)
+  void reserve (size_t n) override
   {
     m_wcv.clear ();
     m_inside.clear ();
     m_wcv.resize (n, 0);
   }
 
-  virtual int edge (bool north, bool enter, db::EdgeEvaluatorBase::property_type p)
+  int edge (bool north, bool enter, db::EdgeEvaluatorBase::property_type p) override
   {
     if (! north) {
       return 0;
@@ -561,7 +561,7 @@ public:
     }
   }
 
-  virtual int compare_ns () const
+  int compare_ns () const override
   {
     if (m_inside.find (0) == m_inside.end ()) {
       m_outside.insert (m_inside.begin (), m_inside.end ());
@@ -569,7 +569,7 @@ public:
     return 0;
   }
 
-  virtual bool is_reset () const 
+  bool is_reset () const override 
   { 
     return m_inside.empty ();
   }

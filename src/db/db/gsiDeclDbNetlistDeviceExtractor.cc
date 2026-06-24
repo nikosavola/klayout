@@ -51,7 +51,7 @@ public:
     return db::NetlistDeviceExtractor::setup ();
   }
 
-  virtual void setup ()
+  void setup () override
   {
     if (cb_setup.can_issue ()) {
       cb_setup.issue<GenericDeviceExtractor> (&GenericDeviceExtractor::setup_fb);
@@ -65,7 +65,7 @@ public:
     return db::NetlistDeviceExtractor::get_connectivity (layout, layers);
   }
 
-  virtual db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const
+  db::Connectivity get_connectivity (const db::Layout &layout, const std::vector<unsigned int> &layers) const override
   {
     if (cb_get_connectivity.can_issue ()) {
       return cb_get_connectivity.issue<GenericDeviceExtractor, db::Connectivity, const db::Layout &, const std::vector<unsigned int> &> (&GenericDeviceExtractor::get_connectivity_fb, layout, layers);
@@ -79,7 +79,7 @@ public:
     return db::NetlistDeviceExtractor::extract_devices (layer_geometry);
   }
 
-  virtual void extract_devices (const std::vector<db::Region> &layer_geometry)
+  void extract_devices (const std::vector<db::Region> &layer_geometry) override
   {
     if (cb_extract_devices.can_issue ()) {
       cb_extract_devices.issue<GenericDeviceExtractor, const std::vector<db::Region> &> (&GenericDeviceExtractor::extract_devices_fb, layer_geometry);
@@ -106,7 +106,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual db::DeviceClass *create_class () const
+  db::DeviceClass *create_class () const override
   {
     if (cb_create_class.can_issue ()) {
       return cb_create_class.issue<db::DeviceClassFactory, db::DeviceClass *> (&db::DeviceClassFactory::create_class);

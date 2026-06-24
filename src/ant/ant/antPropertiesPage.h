@@ -41,17 +41,17 @@ Q_OBJECT
 
 public:
   PropertiesPage (ant::Service *rulers, db::Manager *manager, QWidget *parent);
-  ~PropertiesPage ();
+  ~PropertiesPage () override;
 
-  virtual size_t count () const;
-  virtual void select_entries (const std::vector<size_t> &entries);
-  virtual std::string description (size_t entry) const;
-  virtual std::string description () const;
-  virtual void confine_selection (const std::vector<size_t> &remaining_entries);
-  virtual void update ();
-  virtual void leave ();
-  virtual bool readonly ();
-  virtual void apply (bool commit);
+  size_t count () const override;
+  void select_entries (const std::vector<size_t> &entries) override;
+  std::string description (size_t entry) const override;
+  std::string description () const override;
+  void confine_selection (const std::vector<size_t> &remaining_entries) override;
+  void update () override;
+  void leave () override;
+  bool readonly () override;
+  void apply (bool commit) override;
 
 private slots:
   void swap_points_clicked ();

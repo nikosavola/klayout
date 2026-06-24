@@ -103,7 +103,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~PythonInterpreter ();
+  ~PythonInterpreter () override;
 
   /**
    *  @brief Registers a module
@@ -116,22 +116,22 @@ public:
   /**
    *  @brief Add the given path to the search path
    */
-  void add_path (const std::string &path, bool prepend = false);
+  void add_path (const std::string &path, bool prepend = false) override;
 
   /**
    *  @brief Adds a package location to this interpreter
    */
-  void add_package_location (const std::string &package_path);
+  void add_package_location (const std::string &package_path) override;
 
   /**
    *  @brief Removes a package location from this interpreter
    */
-  void remove_package_location (const std::string &package_path);
+  void remove_package_location (const std::string &package_path) override;
 
   /**
    *  @brief Requires the given module
    */
-  void require (const std::string &filename);
+  void require (const std::string &filename) override;
 
   /**
    *  @brief Set the given debugger scope
@@ -140,64 +140,64 @@ public:
    *  Specifically this suppresses calls from inner functions called from that file.
    *  This is useful for DSL implementations.
    */
-  void set_debugger_scope (const std::string &filename);
+  void set_debugger_scope (const std::string &filename) override;
 
   /**
    *  @brief Removes the debugger scope
    */
-  void remove_debugger_scope ();
+  void remove_debugger_scope () override;
 
   /**
    *  @brief Ignores the next exception
    *
    *  This is useful for suppressing re-raised exceptions in the debugger.
    */
-  void ignore_next_exception ();
+  void ignore_next_exception () override;
 
   /**
    *  @brief Load the given file
    */
-  void load_file (const std::string &filename);
+  void load_file (const std::string &filename) override;
 
   /**
    *  @brief Implementation of gsi::Interpreter::eval_string
    */
-  void eval_string (const char *string, const char *filename = nullptr, int line = 1, int context = -1);
+  void eval_string (const char *string, const char *filename = nullptr, int line = 1, int context = -1) override;
 
   /**
    *  @brief Implementation of gsi::Interpreter::eval_expr
    */
-  tl::Variant eval_expr (const char *string, const char *filename = nullptr, int line = 1, int context = -1);
+  tl::Variant eval_expr (const char *string, const char *filename = nullptr, int line = 1, int context = -1) override;
 
   /**
    *  @brief Implementation of gsi::Interpreter::eval_string_and_print
    */
-  void eval_string_and_print (const char *string, const char *filename = nullptr, int line = 1, int context = -1);
+  void eval_string_and_print (const char *string, const char *filename = nullptr, int line = 1, int context = -1) override;
 
   /**
    *  @brief Returns an inspector for the given context
    */
-  virtual gsi::Inspector *inspector (int context = -1);
+  gsi::Inspector *inspector (int context = -1) override;
 
   /**
    *  @brief Defines a global variable with the given name and value
    */
-  void define_variable (const std::string &name, const tl::Variant &value);
+  void define_variable (const std::string &name, const tl::Variant &value) override;
 
   /**
    *  @brief Gets a value indicating whether the interpreter is available
    */
-  bool available () const;
+  bool available () const override;
 
   /**
    *  @brief Installs the given console for output
    */
-  void push_console (gsi::Console *console);
+  void push_console (gsi::Console *console) override;
 
   /**
    *  @brief Removes the given console
    */
-  void remove_console (gsi::Console *console);
+  void remove_console (gsi::Console *console) override;
 
   /**
    *  @brief Installs the given execution handler
@@ -207,19 +207,19 @@ public:
    *  During execution, the handler receives trace events which allow him to intercept
    *  execution.
    */
-  void push_exec_handler (gsi::ExecutionHandler *exec_handler);
+  void push_exec_handler (gsi::ExecutionHandler *exec_handler) override;
 
   /**
    *  @brief Removes the given execution handler
    */
-  void remove_exec_handler (gsi::ExecutionHandler *exec_handler);
+  void remove_exec_handler (gsi::ExecutionHandler *exec_handler) override;
 
   /**
    *  @brief Fetch the version string
    *
    *  Returns an empty string when no Python interpreter is installed.
    */
-  std::string version () const;
+  std::string version () const override;
 
   /**
    *  @brief Returns the current console

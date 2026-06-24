@@ -141,12 +141,12 @@ public:
     // .. nothing yet ..
   }
 
-  StreamWriterOptionsPage *format_specific_options_page (QWidget *parent) const
+  StreamWriterOptionsPage *format_specific_options_page (QWidget *parent) const override
   {
     return new GDS2WriterOptionPage (parent);
   }
 
-  db::FormatSpecificWriterOptions *create_specific_options () const
+  db::FormatSpecificWriterOptions *create_specific_options () const override
   {
     return new db::GDS2WriterOptions ();
   }
@@ -184,12 +184,12 @@ public:
     // .. nothing yet ..
   }
 
-  virtual const char *options_alias () const
+  const char *options_alias () const override
   {
     return db::GDS2WriterOptions ().format_name ().c_str ();
   }
 
-  StreamWriterOptionsPage *format_specific_options_page (QWidget *) const
+  StreamWriterOptionsPage *format_specific_options_page (QWidget *) const override
   {
     return nullptr;
   }

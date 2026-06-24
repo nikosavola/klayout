@@ -52,7 +52,7 @@ class NetExportDialog
 
 public:
   NetExportDialog (QWidget *parent);
-  ~NetExportDialog ();
+  ~NetExportDialog () override;
 
   void set_net_prefix (const std::string &net_prefix);
   std::string net_prefix ();
@@ -78,7 +78,7 @@ public:
   int exec_dialog (lay::Dispatcher *mp_plugin_root);
 
 protected:
-  void accept ();
+  void accept () override;
 
 private:
   Ui::NetExportDialog *ui;

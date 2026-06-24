@@ -903,7 +903,7 @@ public:
     set_title (title);
   }
 
-  void triggered ()
+  void triggered () override
   {
     if (mp_view) {
       mp_view->goto_view (mp_view->bookmarks ().state (m_id));

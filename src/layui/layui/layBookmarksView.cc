@@ -45,17 +45,17 @@ public:
     //  .. nothing yet ..
   }
 
-  int rowCount (const QModelIndex &index) const
+  int rowCount (const QModelIndex &index) const override
   {
     return index.isValid () ? 0 : int (mp_bookmarks->size ());
   }
 
-  int columnCount (const QModelIndex &) const
+  int columnCount (const QModelIndex &) const override
   {
     return 1;
   }
 
-  QVariant data (const QModelIndex &index, int role) const
+  QVariant data (const QModelIndex &index, int role) const override
   {
     if (role == Qt::DisplayRole && index.row () >= 0 && index.row () < int (mp_bookmarks->size ())) {
       return tl::to_qstring (mp_bookmarks->name (size_t (index.row ())));
@@ -64,7 +64,7 @@ public:
     return QVariant ();
   }
 
-  QModelIndex index (int row, int column, const QModelIndex &parent) const
+  QModelIndex index (int row, int column, const QModelIndex &parent) const override
   {
     if (parent.isValid ()) {
       return QModelIndex ();
@@ -73,7 +73,7 @@ public:
     }
   }
 
-  QModelIndex parent(const QModelIndex &) const
+  QModelIndex parent(const QModelIndex &) const override
   {
     return QModelIndex ();
   }
@@ -192,7 +192,7 @@ class BookmarksViewPluginDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     std::string at;
 

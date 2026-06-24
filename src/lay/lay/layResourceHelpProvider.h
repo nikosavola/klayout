@@ -40,17 +40,17 @@ class ResourceHelpProvider
 public:
   ResourceHelpProvider (const char *folder, const std::string &title);
 
-  std::string folder (lay::HelpSource * /*src*/) const
+  std::string folder (lay::HelpSource * /*src*/) const override
   {
     return m_folder;
   }
 
-  std::string title (lay::HelpSource * /*src*/) const
+  std::string title (lay::HelpSource * /*src*/) const override
   {
     return m_title;
   }
 
-  virtual QDomDocument get (lay::HelpSource *src, const std::string &path) const;
+  QDomDocument get (lay::HelpSource *src, const std::string &path) const override;
 
 private:
   std::string m_folder, m_title;

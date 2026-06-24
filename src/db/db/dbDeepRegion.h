@@ -49,104 +49,104 @@ public:
   DeepRegion (const DeepRegion &other);
   DeepRegion (const DeepLayer &dl);
 
-  virtual ~DeepRegion ();
+  ~DeepRegion () override;
 
-  RegionDelegate *clone () const;
+  RegionDelegate *clone () const override;
 
-  virtual void do_insert (const db::Polygon &polygon, db::properties_id_type prop_id);
+  void do_insert (const db::Polygon &polygon, db::properties_id_type prop_id) override;
 
-  virtual void do_transform (const db::Trans &t);
-  virtual void do_transform (const db::ICplxTrans &t);
-  virtual void do_transform (const db::IMatrix2d &t);
-  virtual void do_transform (const db::IMatrix3d &t);
+  void do_transform (const db::Trans &t) override;
+  void do_transform (const db::ICplxTrans &t) override;
+  void do_transform (const db::IMatrix2d &t) override;
+  void do_transform (const db::IMatrix3d &t) override;
 
-  virtual void flatten ();
+  void flatten () override;
 
-  virtual void reserve (size_t);
+  void reserve (size_t) override;
 
-  virtual RegionIteratorDelegate *begin () const;
-  virtual RegionIteratorDelegate *begin_merged () const;
-  virtual RegionIteratorDelegate *begin_unmerged () const;
+  RegionIteratorDelegate *begin () const override;
+  RegionIteratorDelegate *begin_merged () const override;
+  RegionIteratorDelegate *begin_unmerged () const override;
 
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const;
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_merged_iter () const;
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_unmerged_iter () const;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const override;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_merged_iter () const override;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_unmerged_iter () const override;
 
-  virtual bool empty () const;
-  virtual bool is_merged () const;
+  bool empty () const override;
+  bool is_merged () const override;
 
-  virtual const db::Polygon *nth (size_t n) const;
-  virtual db::properties_id_type nth_prop_id (size_t n) const;
-  virtual bool has_valid_polygons () const;
-  virtual bool has_valid_merged_polygons () const;
+  const db::Polygon *nth (size_t n) const override;
+  db::properties_id_type nth_prop_id (size_t n) const override;
+  bool has_valid_polygons () const override;
+  bool has_valid_merged_polygons () const override;
 
-  virtual const db::RecursiveShapeIterator *iter () const;
-  virtual void apply_property_translator (const db::PropertiesTranslator &pt);
+  const db::RecursiveShapeIterator *iter () const override;
+  void apply_property_translator (const db::PropertiesTranslator &pt) override;
 
-  virtual bool equals (const Region &other) const;
-  virtual bool less (const Region &other) const;
+  bool equals (const Region &other) const override;
+  bool less (const Region &other) const override;
 
-  virtual bool is_box () const;
-  virtual size_t count () const;
-  virtual size_t hier_count () const;
+  bool is_box () const override;
+  size_t count () const override;
+  size_t hier_count () const override;
 
-  virtual area_type area (const db::Box &box) const;
-  virtual perimeter_type perimeter (const db::Box &box) const;
-  virtual Box bbox () const;
+  area_type area (const db::Box &box) const override;
+  perimeter_type perimeter (const db::Box &box) const override;
+  Box bbox () const override;
 
-  virtual std::string to_string (size_t nmax) const;
+  std::string to_string (size_t nmax) const override;
 
-  virtual EdgePairsDelegate *cop_to_edge_pairs (db::CompoundRegionOperationNode &node, db::PropertyConstraint prop_constraint);
-  virtual RegionDelegate *cop_to_region (db::CompoundRegionOperationNode &node, db::PropertyConstraint prop_constraint);
-  virtual EdgesDelegate *cop_to_edges (db::CompoundRegionOperationNode &node, db::PropertyConstraint prop_constraint);
+  EdgePairsDelegate *cop_to_edge_pairs (db::CompoundRegionOperationNode &node, db::PropertyConstraint prop_constraint) override;
+  RegionDelegate *cop_to_region (db::CompoundRegionOperationNode &node, db::PropertyConstraint prop_constraint) override;
+  EdgesDelegate *cop_to_edges (db::CompoundRegionOperationNode &node, db::PropertyConstraint prop_constraint) override;
 
-  virtual RegionDelegate *and_with (const Region &other, db::PropertyConstraint property_constraint) const;
-  virtual RegionDelegate *not_with (const Region &other, db::PropertyConstraint property_constraint) const;
-  virtual RegionDelegate *xor_with (const Region &other, db::PropertyConstraint property_constraint) const;
-  virtual RegionDelegate *or_with (const Region &other, db::PropertyConstraint property_constraint) const;
-  virtual std::pair<RegionDelegate *, RegionDelegate *> andnot_with (const Region &, db::PropertyConstraint property_constraint) const;
+  RegionDelegate *and_with (const Region &other, db::PropertyConstraint property_constraint) const override;
+  RegionDelegate *not_with (const Region &other, db::PropertyConstraint property_constraint) const override;
+  RegionDelegate *xor_with (const Region &other, db::PropertyConstraint property_constraint) const override;
+  RegionDelegate *or_with (const Region &other, db::PropertyConstraint property_constraint) const override;
+  std::pair<RegionDelegate *, RegionDelegate *> andnot_with (const Region &, db::PropertyConstraint property_constraint) const override;
 
-  virtual RegionDelegate *add_in_place (const Region &other);
-  virtual RegionDelegate *add (const Region &other) const;
+  RegionDelegate *add_in_place (const Region &other) override;
+  RegionDelegate *add (const Region &other) const override;
 
-  virtual EdgePairsDelegate *grid_check (db::Coord gx, db::Coord gy) const;
-  virtual EdgePairsDelegate *angle_check (double min, double max, bool inverse) const;
+  EdgePairsDelegate *grid_check (db::Coord gx, db::Coord gy) const override;
+  EdgePairsDelegate *angle_check (double min, double max, bool inverse) const override;
 
-  virtual RegionDelegate *snapped_in_place (db::Coord gx, db::Coord gy)
+  RegionDelegate *snapped_in_place (db::Coord gx, db::Coord gy) override
   {
     return snapped (gx, gy);
   }
 
-  virtual RegionDelegate *snapped (db::Coord gx, db::Coord gy);
+  RegionDelegate *snapped (db::Coord gx, db::Coord gy) override;
 
-  virtual EdgesDelegate *edges (const EdgeFilterBase *filter, const db::PolygonToEdgeProcessorBase *proc) const;
+  EdgesDelegate *edges (const EdgeFilterBase *filter, const db::PolygonToEdgeProcessorBase *proc) const override;
 
-  virtual RegionDelegate *process_in_place (const PolygonProcessorBase &filter);
-  virtual RegionDelegate *processed (const PolygonProcessorBase &filter) const;
-  virtual EdgesDelegate *processed_to_edges (const PolygonToEdgeProcessorBase &filter) const;
-  virtual EdgePairsDelegate *processed_to_edge_pairs (const PolygonToEdgePairProcessorBase &filter) const;
-  virtual RegionDelegate *filter_in_place (const PolygonFilterBase &filter);
-  virtual RegionDelegate *filtered (const PolygonFilterBase &filter) const;
-  virtual std::pair<RegionDelegate *, RegionDelegate *> filtered_pair (const PolygonFilterBase &filter) const;
+  RegionDelegate *process_in_place (const PolygonProcessorBase &filter) override;
+  RegionDelegate *processed (const PolygonProcessorBase &filter) const override;
+  EdgesDelegate *processed_to_edges (const PolygonToEdgeProcessorBase &filter) const override;
+  EdgePairsDelegate *processed_to_edge_pairs (const PolygonToEdgePairProcessorBase &filter) const override;
+  RegionDelegate *filter_in_place (const PolygonFilterBase &filter) override;
+  RegionDelegate *filtered (const PolygonFilterBase &filter) const override;
+  std::pair<RegionDelegate *, RegionDelegate *> filtered_pair (const PolygonFilterBase &filter) const override;
 
-  virtual RegionDelegate *merged_in_place ();
-  virtual RegionDelegate *merged_in_place (bool min_coherence, unsigned int min_wc, bool join_properties_on_merge);
+  RegionDelegate *merged_in_place () override;
+  RegionDelegate *merged_in_place (bool min_coherence, unsigned int min_wc, bool join_properties_on_merge) override;
 
-  virtual RegionDelegate *merged () const;
-  virtual RegionDelegate *merged (bool min_coherence, unsigned int min_wc, bool join_properties_on_merge) const;
+  RegionDelegate *merged () const override;
+  RegionDelegate *merged (bool min_coherence, unsigned int min_wc, bool join_properties_on_merge) const override;
 
-  virtual RegionDelegate *sized (coord_type d, unsigned int mode) const;
-  virtual RegionDelegate *sized (coord_type dx, coord_type dy, unsigned int mode) const;
-  virtual RegionDelegate *sized_inside (const Region &inside, bool outside, coord_type d, int steps, unsigned int mode) const;
-  virtual RegionDelegate *sized_inside (const Region &inside, bool outside, coord_type dx, coord_type dy, int steps, unsigned int mode) const;
+  RegionDelegate *sized (coord_type d, unsigned int mode) const override;
+  RegionDelegate *sized (coord_type dx, coord_type dy, unsigned int mode) const override;
+  RegionDelegate *sized_inside (const Region &inside, bool outside, coord_type d, int steps, unsigned int mode) const override;
+  RegionDelegate *sized_inside (const Region &inside, bool outside, coord_type dx, coord_type dy, int steps, unsigned int mode) const override;
 
-  virtual RegionDelegate *peel (double complexity_factor) const;
+  RegionDelegate *peel (double complexity_factor) const override;
 
-  virtual void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const;
+  void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const override;
 
-  virtual RegionDelegate *nets (LayoutToNetlist *l2n, NetPropertyMode prop_mode, const tl::Variant &net_prop_name, const std::vector<const Net *> *nets) const;
+  RegionDelegate *nets (LayoutToNetlist *l2n, NetPropertyMode prop_mode, const tl::Variant &net_prop_name, const std::vector<const Net *> *nets) const override;
 
-  virtual DeepShapeCollectionDelegateBase *deep ()
+  DeepShapeCollectionDelegateBase *deep () override
   {
     return this;
   }
@@ -157,19 +157,19 @@ public:
   const DeepLayer &merged_deep_layer () const;
 
 protected:
-  virtual void merged_semantics_changed ();
-  virtual void min_coherence_changed ();
-  virtual void join_properties_on_merge_changed ();
+  void merged_semantics_changed () override;
+  void min_coherence_changed () override;
+  void join_properties_on_merge_changed () override;
 
-  virtual EdgePairsDelegate *run_check (db::edge_relation_type rel, bool different_polygons, const Region *other, db::Coord d, const RegionCheckOptions &options) const;
-  virtual EdgePairsDelegate *run_single_polygon_check (db::edge_relation_type rel, db::Coord d, const RegionCheckOptions &options) const;
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_generic (const Region &other, int mode, bool touching, InteractingOutputMode output_mode, size_t min_count, size_t max_count) const;
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_generic (const Edges &other, InteractingOutputMode output_mode, size_t min_count, size_t max_count) const;
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_generic (const Texts &other, InteractingOutputMode output_mode, size_t min_count, size_t max_count) const;
-  virtual RegionDelegate *pull_generic (const Region &other, int mode, bool touching) const;
-  virtual EdgesDelegate *pull_generic (const Edges &other) const;
-  virtual TextsDelegate *pull_generic (const Texts &other) const;
-  virtual std::pair<RegionDelegate *, RegionDelegate *> in_and_out_generic (const Region &other, InteractingOutputMode output_mode) const;
+  EdgePairsDelegate *run_check (db::edge_relation_type rel, bool different_polygons, const Region *other, db::Coord d, const RegionCheckOptions &options) const override;
+  EdgePairsDelegate *run_single_polygon_check (db::edge_relation_type rel, db::Coord d, const RegionCheckOptions &options) const override;
+  std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_generic (const Region &other, int mode, bool touching, InteractingOutputMode output_mode, size_t min_count, size_t max_count) const override;
+  std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_generic (const Edges &other, InteractingOutputMode output_mode, size_t min_count, size_t max_count) const override;
+  std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_generic (const Texts &other, InteractingOutputMode output_mode, size_t min_count, size_t max_count) const override;
+  RegionDelegate *pull_generic (const Region &other, int mode, bool touching) const override;
+  EdgesDelegate *pull_generic (const Edges &other) const override;
+  TextsDelegate *pull_generic (const Texts &other) const override;
+  std::pair<RegionDelegate *, RegionDelegate *> in_and_out_generic (const Region &other, InteractingOutputMode output_mode) const override;
 
 private:
   friend class DeepEdges;

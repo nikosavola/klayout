@@ -259,7 +259,7 @@ namespace
     : public ShapesTransformer
   {
   public:
-    void insert_transformed (Shapes &into, const Shapes &from, const ICplxTrans &trans) const
+    void insert_transformed (Shapes &into, const Shapes &from, const ICplxTrans &trans) const override
     {
       into.insert_transformed (from, trans);
     }

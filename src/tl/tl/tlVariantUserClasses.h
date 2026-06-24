@@ -178,67 +178,67 @@ class VariantUserClassImpl
   : public tl::VariantUserClass<T>
 {
 public:
-  virtual void *create () const 
+  void *create () const override 
   { 
     return new T (); 
   }
 
-  virtual void destroy (void *a) const 
+  void destroy (void *a) const override 
   {
     delete (T *)a; 
   }
 
-  virtual bool equal (const void *a, const void *b) const
+  bool equal (const void *a, const void *b) const override
   { 
     return _var_user_equal_impl<T, tl::has_equal_operator<T>::value>::call ((const T *) a, (const T *) b);
   }
 
-  virtual bool less (const void *a, const void *b) const
+  bool less (const void *a, const void *b) const override
   { 
     return _var_user_less_impl<T, tl::has_less_operator<T>::value>::call ((const T *) a, (const T *) b);
   }
 
-  virtual void *clone (const void *a) const
+  void *clone (const void *a) const override
   { 
     return _var_user_clone_impl<T, std::is_copy_constructible<T>::value>::call ((const T *) a);
   }
 
-  virtual void assign (void *a, const void *b) const
+  void assign (void *a, const void *b) const override
   {
     _var_user_assign_impl<T, std::is_copy_assignable<T>::value>::call ((T *) a, (const T *)b);
   }
 
-  virtual std::string to_string (const void *a) const
+  std::string to_string (const void *a) const override
   { 
     return _var_user_to_string_impl<T, tl::has_to_string<T>::value>::call ((const T *) a);
   }
 
-  virtual int to_int (const void *a) const
+  int to_int (const void *a) const override
   {
     return _var_user_to_int_impl<T, tl::has_to_int<T>::value>::call ((const T *) a);
   }
 
-  virtual double to_double (const void *a) const
+  double to_double (const void *a) const override
   {
     return _var_user_to_double_impl<T, tl::has_to_double<T>::value>::call ((const T *) a);
   }
 
-  virtual void to_variant (const void *a, tl::Variant &v) const
+  void to_variant (const void *a, tl::Variant &v) const override
   {
     v = _var_user_to_variant_impl<T, tl::has_to_variant<T>::value>::call ((const T *) a);
   }
 
-  virtual void read (void *a, tl::Extractor &ex) const
+  void read (void *a, tl::Extractor &ex) const override
   { 
     ex.read (*(T *)a);
   }
 
-  virtual const char *name () const 
+  const char *name () const override 
   { 
     return ""; 
   }
 
-  virtual bool is_const () const 
+  bool is_const () const override 
   { 
     return false; 
   }
@@ -248,18 +248,18 @@ public:
     return false;
   }
 
-  virtual void *deref_proxy (tl::Object *obj) const
+  void *deref_proxy (tl::Object *obj) const override
   {
     //  By default, the tl::Object is considered to be the first base class of the actual object
     return obj;
   }
 
-  virtual const gsi::ClassBase *gsi_cls () const
+  const gsi::ClassBase *gsi_cls () const override
   { 
     return nullptr; 
   }
 
-  virtual const tl::EvalClass *eval_cls () const 
+  const tl::EvalClass *eval_cls () const override 
   { 
     return nullptr; 
   }

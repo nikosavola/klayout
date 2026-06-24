@@ -61,7 +61,7 @@ struct LayoutOp
   : public db::Op
 {
   LayoutOp () { }
-  virtual ~LayoutOp () { }
+  ~LayoutOp () override { }
 
   virtual void redo (db::Layout *) const = 0;
   virtual void undo (db::Layout *) const = 0;
@@ -74,12 +74,12 @@ struct SetLayoutPropId
     : m_from (f), m_to (t)
   { }
 
-  virtual void redo (db::Layout *layout) const
+  void redo (db::Layout *layout) const override
   {
     layout->prop_id (m_to);
   }
 
-  virtual void undo (db::Layout *layout) const
+  void undo (db::Layout *layout) const override
   {
     layout->prop_id (m_from);
   }
@@ -95,12 +95,12 @@ struct SetLayoutTechName
     : m_from (from), m_to (to)
   { }
 
-  virtual void redo (db::Layout *layout) const
+  void redo (db::Layout *layout) const override
   {
     layout->set_technology_name_without_update (m_to);
   }
 
-  virtual void undo (db::Layout *layout) const
+  void undo (db::Layout *layout) const override
   {
     layout->set_technology_name_without_update (m_from);
   }
@@ -116,12 +116,12 @@ struct SetLayoutDBU
     : m_from (f), m_to (t)
   { }
 
-  virtual void redo (db::Layout *layout) const
+  void redo (db::Layout *layout) const override
   {
     layout->dbu (m_to);
   }
 
-  virtual void undo (db::Layout *layout) const
+  void undo (db::Layout *layout) const override
   {
     layout->dbu (m_from);
   }
@@ -137,12 +137,12 @@ struct RenameCellOp
     : m_cell_index (i), m_from (f), m_to (t)
   { }
 
-  virtual void redo (db::Layout *layout) const
+  void redo (db::Layout *layout) const override
   {
     layout->rename_cell (m_cell_index, m_to.c_str ());
   }
 
-  virtual void undo (db::Layout *layout) const
+  void undo (db::Layout *layout) const override
   {
     layout->rename_cell (m_cell_index, m_from.c_str ());
   }
@@ -159,14 +159,14 @@ struct NewRemoveCellOp
     : m_cell_index (i), m_name (name), m_remove (remove), mp_cell (cell)
   { }
 
-  ~NewRemoveCellOp ()
+  ~NewRemoveCellOp () override
   {
     if (mp_cell) {
       delete mp_cell;
     }
   }
 
-  virtual void redo (db::Layout *layout) const
+  void redo (db::Layout *layout) const override
   {
     if (m_remove) {
       remove_cell (layout);
@@ -175,7 +175,7 @@ struct NewRemoveCellOp
     }
   }
 
-  virtual void undo (db::Layout *layout) const
+  void undo (db::Layout *layout) const override
   {
     if (m_remove) {
       new_cell (layout);
@@ -211,12 +211,12 @@ struct SetLayerPropertiesOp
     : m_layer_index (l), m_new_props (new_props), m_old_props (old_props)
   { }
 
-  virtual void redo (db::Layout *layout) const
+  void redo (db::Layout *layout) const override
   {
     layout->set_properties (m_layer_index, m_new_props);
   }
 
-  virtual void undo (db::Layout *layout) const
+  void undo (db::Layout *layout) const override
   {
     layout->set_properties (m_layer_index, m_old_props);
   }
@@ -233,7 +233,7 @@ struct InsertRemoveLayerOp
     : m_layer_index (l), m_props (props), m_insert (insert)
   { }
 
-  virtual void redo (db::Layout *layout) const
+  void redo (db::Layout *layout) const override
   {
     if (m_insert) {
       layout->insert_layer (m_layer_index, m_props);
@@ -242,7 +242,7 @@ struct InsertRemoveLayerOp
     }
   }
 
-  virtual void undo (db::Layout *layout) const
+  void undo (db::Layout *layout) const override
   {
     if (! m_insert) {
       layout->insert_layer (m_layer_index, m_props);
@@ -271,7 +271,7 @@ struct SetLayoutMetaInfoOp
     }
   }
 
-  virtual void redo (db::Layout *layout) const
+  void redo (db::Layout *layout) const override
   {
     if (! m_has_to) {
       layout->remove_meta_info (m_name_id);
@@ -280,7 +280,7 @@ struct SetLayoutMetaInfoOp
     }
   }
 
-  virtual void undo (db::Layout *layout) const
+  void undo (db::Layout *layout) const override
   {
     if (! m_has_from) {
       layout->remove_meta_info (m_name_id);
@@ -309,7 +309,7 @@ struct SetCellMetaInfoOp
     }
   }
 
-  virtual void redo (db::Layout *layout) const
+  void redo (db::Layout *layout) const override
   {
     if (! m_has_to) {
       layout->remove_meta_info (m_ci, m_name_id);
@@ -318,7 +318,7 @@ struct SetCellMetaInfoOp
     }
   }
 
-  virtual void undo (db::Layout *layout) const
+  void undo (db::Layout *layout) const override
   {
     if (! m_has_from) {
       layout->remove_meta_info (m_ci, m_name_id);

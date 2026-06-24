@@ -43,7 +43,7 @@ class NetTracerPluginDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override
   {
     options.push_back (std::pair<std::string, std::string> (cfg_nt_window_mode, "fit-net"));
     options.push_back (std::pair<std::string, std::string> (cfg_nt_window_dim, "1.0"));
@@ -58,14 +58,14 @@ public:
     options.push_back (std::pair<std::string, std::string> (cfg_nt_marker_intensity, "50"));
   }
 
-  virtual std::vector<std::pair <std::string, lay::ConfigPage *> > config_pages (QWidget *parent) const
+  std::vector<std::pair <std::string, lay::ConfigPage *> > config_pages (QWidget *parent) const override
   {
     std::vector<std::pair <std::string, lay::ConfigPage *> > pages;
     pages.push_back (std::make_pair (tl::to_string (QObject::tr ("Other Tools|Net Tracer")), new NetTracerConfigPage (parent)));
     return pages;
   }
 
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     //  TODO: where should that go?
     lay::PluginDeclaration::get_menu_entries (menu_entries);
@@ -77,7 +77,7 @@ public:
     menu_entries.push_back (lay::menu_item ("lay::edit_layer_stack", "edit_layer_stack", "tools_menu.end", tl::to_string (QObject::tr ("Edit Layer Stack"))));
   }
 
-  virtual lay::Plugin *create_plugin (db::Manager * /*manager*/, lay::Dispatcher *root, lay::LayoutViewBase *view) const
+  lay::Plugin *create_plugin (db::Manager * /*manager*/, lay::Dispatcher *root, lay::LayoutViewBase *view) const override
   {
     if (lay::has_gui ()) {
       return new NetTracerDialog (root, view);
@@ -93,7 +93,7 @@ class NetTracerTechnologyEditorProvider
   : public lay::TechnologyEditorProvider
 {
 public:
-  virtual lay::TechnologyComponentEditor *create_editor (QWidget *parent) const
+  lay::TechnologyComponentEditor *create_editor (QWidget *parent) const override
   {
     return new NetTracerTechComponentEditor (parent);
   }

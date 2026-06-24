@@ -1162,7 +1162,7 @@ struct cluster_building_receiver
     }
   }
 
-  void add (const T *s1, std::pair<unsigned int, size_t> p1, const T *s2, std::pair<unsigned int, size_t> p2)
+  void add (const T *s1, std::pair<unsigned int, size_t> p1, const T *s2, std::pair<unsigned int, size_t> p2) override
   {
     if (m_separate_attributes && p1.second != p2.second) {
       return;
@@ -1266,7 +1266,7 @@ struct cluster_building_receiver
     }
   }
 
-  void finish (const T *s, std::pair<unsigned int, size_t> p)
+  void finish (const T *s, std::pair<unsigned int, size_t> p) override
   {
     //  if the shape has not been handled yet, insert a single cluster with only this shape
     typename std::map<const T *, typename std::list<cluster_value>::iterator>::iterator ic = m_shape_to_clusters.find (s);
@@ -1963,7 +1963,7 @@ public:
   /**
    *  @brief Receiver main event for instance-to-instance interactions
    */
-  void add (const db::Instance *i1, db::Box /*p1*/, const db::Instance *i2, db::Box /*p2*/)
+  void add (const db::Instance *i1, db::Box /*p1*/, const db::Instance *i2, db::Box /*p2*/) override
   {
     db::ICplxTrans t;
 
@@ -1976,7 +1976,7 @@ public:
   /**
    *  @brief Single-instance treatment - may be required because of interactions between array members
    */
-  void finish (const db::Instance *i, db::Box /*p1*/)
+  void finish (const db::Instance *i, db::Box /*p1*/) override
   {
     consider_single_inst (*i);
   }
@@ -2071,9 +2071,9 @@ public:
   }
 
   //  needs explicit implementation because we have two base classes:
-  bool stop () const { return false; }
-  void initialize () { }
-  void finalize (bool) { }
+  bool stop () const override { return false; }
+  void initialize () override { }
+  void finalize (bool) override { }
 
 private:
   const db::Layout *mp_layout;

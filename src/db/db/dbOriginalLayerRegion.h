@@ -45,41 +45,41 @@ public:
   OriginalLayerRegion (const OriginalLayerRegion &other);
   OriginalLayerRegion (const RecursiveShapeIterator &si, bool is_merged = false);
   OriginalLayerRegion (const RecursiveShapeIterator &si, const db::ICplxTrans &trans, bool merged_semantics, bool is_merged = false);
-  virtual ~OriginalLayerRegion ();
+  ~OriginalLayerRegion () override;
 
-  RegionDelegate *clone () const;
+  RegionDelegate *clone () const override;
 
-  virtual RegionIteratorDelegate *begin () const;
-  virtual RegionIteratorDelegate *begin_merged () const;
-  virtual RegionIteratorDelegate *begin_unmerged () const;
+  RegionIteratorDelegate *begin () const override;
+  RegionIteratorDelegate *begin_merged () const override;
+  RegionIteratorDelegate *begin_unmerged () const override;
 
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const;
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_merged_iter () const;
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_unmerged_iter () const;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const override;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_merged_iter () const override;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_unmerged_iter () const override;
 
-  virtual bool empty () const;
+  bool empty () const override;
 
-  virtual bool is_merged () const;
-  virtual size_t count () const;
-  virtual size_t hier_count () const;
+  bool is_merged () const override;
+  size_t count () const override;
+  size_t hier_count () const override;
 
-  virtual const db::Polygon *nth (size_t n) const;
-  virtual db::properties_id_type nth_prop_id (size_t) const;
-  virtual bool has_valid_polygons () const;
-  virtual bool has_valid_merged_polygons () const;
+  const db::Polygon *nth (size_t n) const override;
+  db::properties_id_type nth_prop_id (size_t) const override;
+  bool has_valid_polygons () const override;
+  bool has_valid_merged_polygons () const override;
 
-  virtual const db::RecursiveShapeIterator *iter () const;
-  virtual void apply_property_translator (const db::PropertiesTranslator &pt);
+  const db::RecursiveShapeIterator *iter () const override;
+  void apply_property_translator (const db::PropertiesTranslator &pt) override;
 
-  virtual bool equals (const Region &other) const;
-  virtual bool less (const Region &other) const;
+  bool equals (const Region &other) const override;
+  bool less (const Region &other) const override;
 
-  virtual void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const;
+  void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const override;
 
 protected:
-  virtual void merged_semantics_changed ();
-  virtual void join_properties_on_merge_changed ();
-  virtual void min_coherence_changed ();
+  void merged_semantics_changed () override;
+  void join_properties_on_merge_changed () override;
+  void min_coherence_changed () override;
 
 private:
   OriginalLayerRegion &operator= (const OriginalLayerRegion &other);

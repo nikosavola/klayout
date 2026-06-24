@@ -328,22 +328,22 @@ public:
   /**
    *  @brief Destructor
    */
-  ~AbstractProgress ();
+  ~AbstractProgress () override;
 
   /**
    *  @brief Delivers the current progress as a string (empty for the abstract progress)
    */
-  std::string formatted_value () const { return std::string (); }
+  std::string formatted_value () const override { return std::string (); }
 
   /**
    *  @brief Delivers the relative progress (0 for the abstract progress)
    */
-  double value () const { return 0.0; }
+  double value () const override { return 0.0; }
 
   /**
    *  @brief Indicates this progress reporter is abstract
    */
-  bool is_abstract() const { return true; }
+  bool is_abstract() const override { return true; }
 };
 
 /**
@@ -369,12 +369,12 @@ public:
    */
   RelativeProgress (const std::string &desc, size_t max_count = 0, size_t yield_interval = 0, bool can_cancel = true);
 
-  ~RelativeProgress ();
+  ~RelativeProgress () override;
 
   /**
    *  @brief Delivers the current progress as a string
    */
-  std::string formatted_value () const;
+  std::string formatted_value () const override;
 
   /**
    *  @brief Delivers the relative progress (a value between 0 and 1 for 0 to 100%).
@@ -382,12 +382,12 @@ public:
    *  The value can be bigger and the default progress bar will wrap around for 
    *  values >= 1.
    */
-  double value () const;
+  double value () const override;
 
   /**
    *  @brief Indicates this progress reporter isn't abstract
    */
-  bool is_abstract() const { return false; }
+  bool is_abstract() const override { return false; }
 
   /** 
    *  @brief Set the format of the output.
@@ -448,12 +448,12 @@ public:
   /**
    *  @brief Destructor
    */
-  ~AbsoluteProgress ();
+  ~AbsoluteProgress () override;
 
   /**
    *  @brief Delivers the current progress as a string
    */
-  std::string formatted_value () const;
+  std::string formatted_value () const override;
 
   /**
    *  @brief Delivers the relative progress (a value between 0 and 1 for 0 to 100%).
@@ -461,12 +461,12 @@ public:
    *  The value can be bigger and the default progress bar will wrap around for 
    *  values >= 1.
    */
-  double value () const;
+  double value () const override;
 
   /**
    *  @brief Indicates this progress reporter isn't abstract
    */
-  bool is_abstract() const { return false; }
+  bool is_abstract() const override { return false; }
 
   /**
    *  @brief Set the format of the output.

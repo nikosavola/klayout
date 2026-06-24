@@ -49,7 +49,7 @@ class EditStipplesForm
 
 public:
   EditStipplesForm (QWidget *parent, lay::LayoutViewBase *view, const lay::DitherPattern &pattern);
-  ~EditStipplesForm ();
+  ~EditStipplesForm () override;
 
   //  ...
 
@@ -63,8 +63,8 @@ public:
     return m_selected;
   }
   
-  void undo (db::Op *op);
-  void redo (db::Op *op);
+  void undo (db::Op *op) override;
+  void redo (db::Op *op) override;
 
 public slots:
   void sel_changed (QListWidgetItem *current, QListWidgetItem *); 

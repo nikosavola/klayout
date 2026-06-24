@@ -1184,7 +1184,7 @@ public:
   /**
    *  @brief Implementation of the box scanner receiver class
    */
-  void finish (const Obj *obj, Prop prop)
+  void finish (const Obj *obj, Prop prop) override
   {
     om_iterator_type omi = m_om.find (om_key_type (obj, prop));
     if (omi != m_om.end ()) {
@@ -1237,7 +1237,7 @@ public:
   /**
    *  @brief Implementation of the box scanner receiver class
    */
-  void add (const Obj *o1, Prop p1, const Obj *o2, Prop p2)
+  void add (const Obj *o1, Prop p1, const Obj *o2, Prop p2) override
   {
     om_iterator_type om1 = m_om.find (om_key_type (o1, p1));
     om_iterator_type om2 = m_om.find (om_key_type (o2, p2));

@@ -39,7 +39,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void begin_netlist (const db::Netlist *a, const db::Netlist *b)
+  void begin_netlist (const db::Netlist *a, const db::Netlist *b) override
   {
     if (cb_begin_netlist.can_issue ()) {
       cb_begin_netlist.issue<GenericNetlistCompareLogger> (&GenericNetlistCompareLogger::begin_netlist_fb, a, b);
@@ -53,7 +53,7 @@ public:
     db::NetlistCompareLogger::begin_netlist (a, b);
   }
 
-  virtual void end_netlist (const db::Netlist *a, const db::Netlist *b)
+  void end_netlist (const db::Netlist *a, const db::Netlist *b) override
   {
     if (cb_end_netlist.can_issue ()) {
       cb_end_netlist.issue<GenericNetlistCompareLogger> (&GenericNetlistCompareLogger::end_netlist_fb, a, b);
@@ -67,7 +67,7 @@ public:
     db::NetlistCompareLogger::end_netlist (a, b);
   }
 
-  virtual void device_class_mismatch (const db::DeviceClass *a, const db::DeviceClass *b, const std::string &msg)
+  void device_class_mismatch (const db::DeviceClass *a, const db::DeviceClass *b, const std::string &msg) override
   {
     if (cb_device_class_mismatch.can_issue ()) {
       cb_device_class_mismatch.issue<GenericNetlistCompareLogger, const db::DeviceClass *, const db::DeviceClass *, const std::string &> (&GenericNetlistCompareLogger::device_class_mismatch_fb, a, b, msg);
@@ -81,7 +81,7 @@ public:
     db::NetlistCompareLogger::device_class_mismatch (a, b, msg);
   }
 
-  virtual void begin_circuit (const db::Circuit *a, const db::Circuit *b)
+  void begin_circuit (const db::Circuit *a, const db::Circuit *b) override
   {
     if (cb_begin_circuit.can_issue ()) {
       cb_begin_circuit.issue<GenericNetlistCompareLogger> (&GenericNetlistCompareLogger::begin_circuit_fb, a, b);
@@ -95,7 +95,7 @@ public:
     db::NetlistCompareLogger::begin_circuit (a, b);
   }
 
-  virtual void end_circuit (const db::Circuit *a, const db::Circuit *b, bool matching, const std::string &msg)
+  void end_circuit (const db::Circuit *a, const db::Circuit *b, bool matching, const std::string &msg) override
   {
     if (cb_end_circuit.can_issue ()) {
       cb_end_circuit.issue<GenericNetlistCompareLogger, const db::Circuit *, const db::Circuit *, bool, const std::string &> (&GenericNetlistCompareLogger::end_circuit_fb, a, b, matching, msg);
@@ -109,7 +109,7 @@ public:
     db::NetlistCompareLogger::end_circuit (a, b, matching, msg);
   }
 
-  virtual void circuit_skipped (const db::Circuit *a, const db::Circuit *b, const std::string &msg)
+  void circuit_skipped (const db::Circuit *a, const db::Circuit *b, const std::string &msg) override
   {
     if (cb_circuit_skipped.can_issue ()) {
       cb_circuit_skipped.issue<GenericNetlistCompareLogger, const db::Circuit *, const db::Circuit *, const std::string &> (&GenericNetlistCompareLogger::circuit_skipped_fb, a, b, msg);
@@ -123,7 +123,7 @@ public:
     db::NetlistCompareLogger::circuit_skipped (a, b, msg);
   }
 
-  virtual void circuit_mismatch (const db::Circuit *a, const db::Circuit *b, const std::string &msg)
+  void circuit_mismatch (const db::Circuit *a, const db::Circuit *b, const std::string &msg) override
   {
     if (cb_circuit_mismatch.can_issue ()) {
       cb_circuit_mismatch.issue<GenericNetlistCompareLogger, const db::Circuit *, const db::Circuit *, const std::string &> (&GenericNetlistCompareLogger::circuit_mismatch_fb, a, b, msg);
@@ -137,7 +137,7 @@ public:
     db::NetlistCompareLogger::circuit_mismatch (a, b, msg);
   }
 
-  virtual void log_entry (db::Severity severity, const std::string &msg)
+  void log_entry (db::Severity severity, const std::string &msg) override
   {
     if (cb_log_entry.can_issue ()) {
       cb_log_entry.issue<GenericNetlistCompareLogger, db::Severity, const std::string &> (&GenericNetlistCompareLogger::log_entry, severity, msg);
@@ -151,7 +151,7 @@ public:
     db::NetlistCompareLogger::log_entry (severity, msg);
   }
 
-  virtual void match_nets (const db::Net *a, const db::Net *b)
+  void match_nets (const db::Net *a, const db::Net *b) override
   {
     if (cb_match_nets.can_issue ()) {
       cb_match_nets.issue<GenericNetlistCompareLogger> (&GenericNetlistCompareLogger::match_nets_fb, a, b);
@@ -165,7 +165,7 @@ public:
     db::NetlistCompareLogger::match_nets (a, b);
   }
 
-  virtual void match_ambiguous_nets (const db::Net *a, const db::Net *b, const std::string &msg)
+  void match_ambiguous_nets (const db::Net *a, const db::Net *b, const std::string &msg) override
   {
     if (cb_match_ambiguous_nets.can_issue ()) {
       cb_match_ambiguous_nets.issue<GenericNetlistCompareLogger, const db::Net *, const db::Net *, const std::string &> (&GenericNetlistCompareLogger::match_ambiguous_nets_fb, a, b, msg);
@@ -179,7 +179,7 @@ public:
     db::NetlistCompareLogger::match_ambiguous_nets (a, b, msg);
   }
 
-  virtual void net_mismatch (const db::Net *a, const db::Net *b, const std::string &msg)
+  void net_mismatch (const db::Net *a, const db::Net *b, const std::string &msg) override
   {
     if (cb_net_mismatch.can_issue ()) {
       cb_net_mismatch.issue<GenericNetlistCompareLogger, const db::Net *, const db::Net *, const std::string &> (&GenericNetlistCompareLogger::net_mismatch_fb, a, b, msg);
@@ -193,7 +193,7 @@ public:
     db::NetlistCompareLogger::net_mismatch (a, b, msg);
   }
 
-  virtual void match_devices (const db::Device *a, const db::Device *b)
+  void match_devices (const db::Device *a, const db::Device *b) override
   {
     if (cb_match_devices.can_issue ()) {
       cb_match_devices.issue<GenericNetlistCompareLogger> (&GenericNetlistCompareLogger::match_devices_fb, a, b);
@@ -207,7 +207,7 @@ public:
     db::NetlistCompareLogger::match_devices (a, b);
   }
 
-  virtual void match_devices_with_different_parameters (const db::Device *a, const db::Device *b)
+  void match_devices_with_different_parameters (const db::Device *a, const db::Device *b) override
   {
     if (cb_match_devices_with_different_parameters.can_issue ()) {
       cb_match_devices_with_different_parameters.issue<GenericNetlistCompareLogger> (&GenericNetlistCompareLogger::match_devices_with_different_parameters_fb, a, b);
@@ -221,7 +221,7 @@ public:
     db::NetlistCompareLogger::match_devices_with_different_parameters (a, b);
   }
 
-  virtual void match_devices_with_different_device_classes (const db::Device *a, const db::Device *b)
+  void match_devices_with_different_device_classes (const db::Device *a, const db::Device *b) override
   {
     if (cb_match_devices_with_different_device_classes.can_issue ()) {
       cb_match_devices_with_different_device_classes.issue<GenericNetlistCompareLogger> (&GenericNetlistCompareLogger::match_devices_with_different_device_classes_fb, a, b);
@@ -235,7 +235,7 @@ public:
     db::NetlistCompareLogger::match_devices_with_different_device_classes (a, b);
   }
 
-  virtual void device_mismatch (const db::Device *a, const db::Device *b, const std::string &msg)
+  void device_mismatch (const db::Device *a, const db::Device *b, const std::string &msg) override
   {
     if (cb_device_mismatch.can_issue ()) {
       cb_device_mismatch.issue<GenericNetlistCompareLogger, const db::Device *, const db::Device *, const std::string &> (&GenericNetlistCompareLogger::device_mismatch_fb, a, b, msg);
@@ -249,7 +249,7 @@ public:
     db::NetlistCompareLogger::device_mismatch (a, b, msg);
   }
 
-  virtual void match_pins (const db::Pin *a, const db::Pin *b)
+  void match_pins (const db::Pin *a, const db::Pin *b) override
   {
     if (cb_match_pins.can_issue ()) {
       cb_match_pins.issue<GenericNetlistCompareLogger> (&GenericNetlistCompareLogger::match_pins_fb, a, b);
@@ -263,7 +263,7 @@ public:
     db::NetlistCompareLogger::match_pins (a, b);
   }
 
-  virtual void pin_mismatch (const db::Pin *a, const db::Pin *b, const std::string &msg)
+  void pin_mismatch (const db::Pin *a, const db::Pin *b, const std::string &msg) override
   {
     if (cb_pin_mismatch.can_issue ()) {
       cb_pin_mismatch.issue<GenericNetlistCompareLogger, const db::Pin *, const db::Pin *, const std::string &> (&GenericNetlistCompareLogger::pin_mismatch_fb, a, b, msg);
@@ -277,7 +277,7 @@ public:
     db::NetlistCompareLogger::pin_mismatch (a, b, msg);
   }
 
-  virtual void match_subcircuits (const db::SubCircuit *a, const db::SubCircuit *b)
+  void match_subcircuits (const db::SubCircuit *a, const db::SubCircuit *b) override
   {
     if (cb_match_subcircuits.can_issue ()) {
       cb_match_subcircuits.issue<GenericNetlistCompareLogger> (&GenericNetlistCompareLogger::match_subcircuits_fb, a, b);
@@ -291,7 +291,7 @@ public:
     db::NetlistCompareLogger::match_subcircuits (a, b);
   }
 
-  virtual void subcircuit_mismatch (const db::SubCircuit *a, const db::SubCircuit *b, const std::string &msg)
+  void subcircuit_mismatch (const db::SubCircuit *a, const db::SubCircuit *b, const std::string &msg) override
   {
     if (cb_subcircuit_mismatch.can_issue ()) {
       cb_subcircuit_mismatch.issue<GenericNetlistCompareLogger, const db::SubCircuit *, const db::SubCircuit *, const std::string &> (&GenericNetlistCompareLogger::subcircuit_mismatch_fb, a, b, msg);

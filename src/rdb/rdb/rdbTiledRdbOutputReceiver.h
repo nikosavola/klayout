@@ -64,7 +64,7 @@ class TiledRdbOutputReceiver
 public:
   TiledRdbOutputReceiver (rdb::Database *rdb, size_t cell_id, size_t category_id);
 
-  void put (size_t ix, size_t iy, const db::Box &tile, size_t id, const tl::Variant &obj, double dbu, const db::ICplxTrans &trans, bool clip);
+  void put (size_t ix, size_t iy, const db::Box &tile, size_t id, const tl::Variant &obj, double dbu, const db::ICplxTrans &trans, bool clip) override;
 
 private:
   rdb::Database *mp_rdb;

@@ -62,7 +62,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~FileDialog ();
+  ~FileDialog () override;
 
   /**
    *  @brief Gets a file name to read

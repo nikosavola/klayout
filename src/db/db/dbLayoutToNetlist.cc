@@ -1776,7 +1776,7 @@ public:
     return m_perimeter;
   }
 
-  virtual void put (const db::Polygon &poly)
+  void put (const db::Polygon &poly) override
   {
     m_area += poly.area ();
     m_perimeter += poly.perimeter ();

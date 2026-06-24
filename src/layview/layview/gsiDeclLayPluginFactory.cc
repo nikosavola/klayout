@@ -47,7 +47,7 @@ public:
     //  .. nothing yet ..
   }
 
-  ~PluginFactoryBase ()
+  ~PluginFactoryBase () override
   {
     for (auto f = s_factories.begin (); f != s_factories.end (); ++f) {
       if (f->second == this) {
@@ -98,7 +98,7 @@ public:
     register_plugin ();
   }
 
-  virtual bool configure (const std::string &name, const std::string &value)
+  bool configure (const std::string &name, const std::string &value) override
   {
     if (f_configure.can_issue ()) {
       return f_configure.issue<lay::PluginDeclaration, bool, const std::string &, const std::string &> (&lay::PluginDeclaration::configure, name, value);
@@ -107,7 +107,7 @@ public:
     }
   }
 
-  virtual void config_finalize ()
+  void config_finalize () override
   {
     if (f_config_finalize.can_issue ()) {
       f_config_finalize.issue<lay::PluginDeclaration> (&lay::PluginDeclaration::config_finalize);
@@ -116,7 +116,7 @@ public:
     }
   }
 
-  virtual bool menu_activated (const std::string &symbol) const
+  bool menu_activated (const std::string &symbol) const override
   {
     if (f_menu_activated.can_issue ()) {
       return f_menu_activated.issue<lay::PluginDeclaration, bool, const std::string &> (&lay::PluginDeclaration::menu_activated, symbol);
@@ -125,7 +125,7 @@ public:
     }
   }
 
-  virtual void initialize (lay::Dispatcher *root)
+  void initialize (lay::Dispatcher *root) override
   {
     if (f_initialize.can_issue ()) {
       f_initialize.issue<lay::PluginDeclaration> (&lay::PluginDeclaration::initialize, root);
@@ -134,7 +134,7 @@ public:
     }
   }
     
-  virtual void uninitialize (lay::Dispatcher *root)
+  void uninitialize (lay::Dispatcher *root) override
   {
     if (f_uninitialize.can_issue ()) {
       f_uninitialize.issue<lay::PluginDeclaration> (&lay::PluginDeclaration::uninitialize, root);
@@ -155,7 +155,7 @@ public:
     //  .. nothing here ..
   }
 
-  virtual void get_editor_options_pages (std::vector<lay::EditorOptionsPage *> &pages_out, lay::LayoutViewBase *view, lay::Dispatcher *dispatcher) const
+  void get_editor_options_pages (std::vector<lay::EditorOptionsPage *> &pages_out, lay::LayoutViewBase *view, lay::Dispatcher *dispatcher) const override
   {
     try {
 
@@ -196,7 +196,7 @@ public:
     //  .. nothing here ..
   }
 
-  virtual std::vector<std::pair <std::string, lay::ConfigPage *> > config_pages (QWidget *parent) const
+  std::vector<std::pair <std::string, lay::ConfigPage *> > config_pages (QWidget *parent) const override
   {
     std::vector<std::pair <std::string, lay::ConfigPage *> > pages_out;
 
@@ -231,7 +231,7 @@ public:
   }
 #endif
 
-  virtual lay::Plugin *create_plugin (db::Manager *manager, lay::Dispatcher *root, lay::LayoutViewBase *view) const
+  lay::Plugin *create_plugin (db::Manager *manager, lay::Dispatcher *root, lay::LayoutViewBase *view) const override
   {
     if (f_create_plugin.can_issue ()) {
       return create_plugin_gsi (manager, root, view);
@@ -264,12 +264,12 @@ public:
     return ret;
   }
 
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     menu_entries = m_menu_entries;
   }
 
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const 
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override 
   {
     options = m_options;
   }
@@ -318,7 +318,7 @@ public:
     m_additional_editor_options_pages.push_back (name);
   }
 
-  virtual std::vector<std::string> additional_editor_options_pages (lay::LayoutViewBase *) const
+  std::vector<std::string> additional_editor_options_pages (lay::LayoutViewBase *) const override
   {
     return m_additional_editor_options_pages;
   }
@@ -328,7 +328,7 @@ public:
     m_implements_mouse_mode = f;
   }
 
-  virtual bool implements_mouse_mode (std::string &title) const
+  bool implements_mouse_mode (std::string &title) const override
   {
     title = m_mouse_mode_title;
     return m_implements_mouse_mode;

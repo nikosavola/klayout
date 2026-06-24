@@ -224,7 +224,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void setEditorData (QWidget *widget, const QModelIndex &index) const
+  void setEditorData (QWidget *widget, const QModelIndex &index) const override
   {
     QLineEdit *editor = dynamic_cast<QLineEdit *> (widget);
     if (editor) {
@@ -232,7 +232,7 @@ public:
     }
   }
 
-  void setModelData (QWidget *widget, QAbstractItemModel *model, const QModelIndex &index) const
+  void setModelData (QWidget *widget, QAbstractItemModel *model, const QModelIndex &index) const override
   {
     QLineEdit *editor = dynamic_cast<QLineEdit *> (widget);
     if (editor) {
@@ -3917,13 +3917,13 @@ class MacroEditorPluginDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual lay::ConfigPage *config_page (QWidget *parent, std::string &title) const
+  lay::ConfigPage *config_page (QWidget *parent, std::string &title) const override
   {
     title = tl::to_string (QObject::tr ("Application|Macro Development IDE"));
     return new MacroEditorSetupPage (parent);
   }
 
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override
   {
     options.push_back (std::pair<std::string, std::string> (cfg_macro_editor_styles, ""));
     options.push_back (std::pair<std::string, std::string> (cfg_macro_editor_save_all_on_run, "false"));

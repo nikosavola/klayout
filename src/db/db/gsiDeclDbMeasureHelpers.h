@@ -119,7 +119,7 @@ public:
     }
   }
 
-  virtual void process (const db::object_with_properties<shape_type> &shape, std::vector<db::object_with_properties<shape_type> > &res) const
+  virtual void process (const db::object_with_properties<shape_type> &shape, std::vector<db::object_with_properties<shape_type> > &res) const // NOLINT(modernize-use-override)
   {
     try {
 
@@ -196,7 +196,7 @@ public:
     m_eval.parse (m_expression, ex);
   }
 
-  virtual bool selected (const shape_type &shape, db::properties_id_type prop_id) const
+  virtual bool selected (const shape_type &shape, db::properties_id_type prop_id) const // NOLINT(modernize-use-override)
   {
     try {
 

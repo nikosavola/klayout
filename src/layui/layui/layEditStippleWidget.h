@@ -41,24 +41,24 @@ class EditStippleWidget
 public:
   EditStippleWidget (QWidget *parent);
 
-  virtual QSize sizeHint () const;
+  QSize sizeHint () const override;
   virtual QSize minimumSize () const;
 
   void set_pattern (const uint32_t *pattern, unsigned int sx, unsigned int sy);
   void set_pattern (const uint32_t * const *pattern, unsigned int sx, unsigned int sy);
 
-  void undo (db::Op *op);
-  void redo (db::Op *op);
+  void undo (db::Op *op) override;
+  void redo (db::Op *op) override;
 
   const uint32_t *pattern () const
   {
     return m_pattern;
   }
 
-  virtual void paintEvent (QPaintEvent *event);
-  virtual void mouseMoveEvent (QMouseEvent *event);
-  virtual void mousePressEvent (QMouseEvent *event);
-  virtual void mouseReleaseEvent (QMouseEvent *event);
+  void paintEvent (QPaintEvent *event) override;
+  void mouseMoveEvent (QMouseEvent *event) override;
+  void mousePressEvent (QMouseEvent *event) override;
+  void mouseReleaseEvent (QMouseEvent *event) override;
 
   void set_size (unsigned int sx, unsigned int sy);
 

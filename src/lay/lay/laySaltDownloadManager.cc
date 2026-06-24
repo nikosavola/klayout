@@ -454,7 +454,7 @@ namespace
       mp_dialog->mark_fetching (m_name);
     }
 
-    virtual void yield (tl::Progress * /*progress*/)
+    void yield (tl::Progress * /*progress*/) override
     {
       QCoreApplication::processEvents (QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents, 100);
       if (mp_dialog->is_aborted ()) {
@@ -463,12 +463,12 @@ namespace
       }
     }
 
-    virtual void wait_for_input ()
+    void wait_for_input () override
     {
       yield (nullptr);
     }
 
-    virtual void trigger (tl::Progress *progress)
+    void trigger (tl::Progress *progress) override
     {
       mp_dialog->set_progress (m_name, progress->value ());
     }

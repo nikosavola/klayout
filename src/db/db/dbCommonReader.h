@@ -114,7 +114,7 @@ public:
   /**
    *  @brief Implementation of FormatSpecificReaderOptions
    */
-  virtual FormatSpecificReaderOptions *clone () const
+  FormatSpecificReaderOptions *clone () const override
   {
     return new CommonReaderOptions (*this);
   }
@@ -122,7 +122,7 @@ public:
   /**
    *  @brief Implementation of FormatSpecificReaderOptions
    */
-  virtual const std::string &format_name () const
+  const std::string &format_name () const override
   {
     static const std::string n ("Common");
     return n;
@@ -312,13 +312,13 @@ public:
   CommonReader ();
 
   //  Reimplementation of the ReaderBase interace
-  virtual const db::LayerMap &read (db::Layout &layout, const db::LoadLayoutOptions &options);
-  virtual const db::LayerMap &read (db::Layout &layout);
+  const db::LayerMap &read (db::Layout &layout, const db::LoadLayoutOptions &options) override;
+  const db::LayerMap &read (db::Layout &layout) override;
 
 protected:
   friend class CommonReaderLayerMapping;
 
-  virtual void init (const LoadLayoutOptions &options);
+  void init (const LoadLayoutOptions &options) override;
   virtual void do_read (db::Layout &layout) = 0;
 };
 
@@ -335,7 +335,7 @@ public:
     //  .. nothing yet ..
   }
 
-  std::pair<bool, unsigned int> map_layer (const db::LayerProperties &lprops)
+  std::pair<bool, unsigned int> map_layer (const db::LayerProperties &lprops) override
   {
     //  named layers that are imported from a library are ignored
     if (lprops.is_named ()) {

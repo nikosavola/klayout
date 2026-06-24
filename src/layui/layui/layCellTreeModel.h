@@ -106,18 +106,18 @@ public:
   /**
    *  @brief Dtor
    */
-  ~CellTreeModel ();
+  ~CellTreeModel () override;
 
   //  Implementation of the QAbstractItemModel interface 
-  virtual Qt::ItemFlags flags (const QModelIndex &index) const;
-  virtual int columnCount (const QModelIndex &) const;
-  virtual QVariant data (const QModelIndex &index, int role) const;
-  virtual QVariant headerData (int /*section*/, Qt::Orientation /*orientation*/, int /*role*/) const;
-  virtual int rowCount (const QModelIndex &parent) const;
-  virtual QModelIndex index (int row, int column, const QModelIndex &parent) const;
-  virtual QModelIndex parent (const QModelIndex &index) const;
-  virtual QStringList mimeTypes () const;
-  virtual QMimeData *mimeData (const QModelIndexList &indexes) const;
+  Qt::ItemFlags flags (const QModelIndex &index) const override;
+  int columnCount (const QModelIndex &) const override;
+  QVariant data (const QModelIndex &index, int role) const override;
+  QVariant headerData (int /*section*/, Qt::Orientation /*orientation*/, int /*role*/) const override;
+  int rowCount (const QModelIndex &parent) const override;
+  QModelIndex index (int row, int column, const QModelIndex &parent) const override;
+  QModelIndex parent (const QModelIndex &index) const override;
+  QStringList mimeTypes () const override;
+  QMimeData *mimeData (const QModelIndexList &indexes) const override;
 
   /**
    *  @brief Reconfigures the model with a LayoutView

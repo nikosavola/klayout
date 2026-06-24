@@ -547,8 +547,8 @@ class TL_PUBLIC WorkerProgressAdaptor : public tl::ProgressAdaptor
 public:
   WorkerProgressAdaptor (Worker *worker);
   
-  virtual void trigger (Progress *progress);
-  virtual void yield (Progress *progress);
+  void trigger (Progress *progress) override;
+  void yield (Progress *progress) override;
 
 private:
   Worker *mp_worker;

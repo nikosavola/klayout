@@ -101,7 +101,7 @@ public:
   /**
    *  @brief Implementation of the extraction function
    */
-  virtual void extract (const db::Polygon &polygon, const std::vector<db::Point> &vertex_ports, const std::vector<db::Polygon> &polygon_ports, RNetwork &rnetwork);
+  void extract (const db::Polygon &polygon, const std::vector<db::Point> &vertex_ports, const std::vector<db::Polygon> &polygon_ports, RNetwork &rnetwork) override;
 
 private:
   db::plc::TriangulationParameters m_tri_param;

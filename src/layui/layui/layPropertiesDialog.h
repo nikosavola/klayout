@@ -78,12 +78,12 @@ public:
   /**
    *  @brief The Destructor
    */
-  ~PropertiesDialog ();
+  ~PropertiesDialog () override;
 
   /**
    *  @brief Implementation of PropertiesPageSet
    */
-  virtual const std::vector<lay::PropertiesPage *> &properties_pages () const
+  const std::vector<lay::PropertiesPage *> &properties_pages () const override
   {
     return mp_properties_pages;
   }
@@ -126,8 +126,8 @@ public slots:
   void selection_changed ();
 
 protected:
-  void reject ();
-  void accept ();
+  void reject () override;
+  void accept () override;
 
 private:
   Ui::PropertiesDialog *mp_ui;

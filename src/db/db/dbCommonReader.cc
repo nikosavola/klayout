@@ -639,42 +639,42 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual std::string format_name () const { return "Common"; }
-  virtual std::string format_desc () const { return "GDS2+OASIS"; }
-  virtual std::string format_title () const { return "Common GDS2+OASIS"; }
-  virtual std::string file_format () const { return std::string (); }
+  std::string format_name () const override { return "Common"; }
+  std::string format_desc () const override { return "GDS2+OASIS"; }
+  std::string format_title () const override { return "Common GDS2+OASIS"; }
+  std::string file_format () const override { return std::string (); }
 
-  virtual bool detect (tl::InputStream & /*s*/) const
+  bool detect (tl::InputStream & /*s*/) const override
   {
     return false;
   }
 
-  virtual ReaderBase *create_reader (tl::InputStream & /*s*/) const
+  ReaderBase *create_reader (tl::InputStream & /*s*/) const override
   {
     return nullptr;
   }
 
-  virtual WriterBase *create_writer () const
+  WriterBase *create_writer () const override
   {
     return nullptr;
   }
 
-  virtual bool can_read () const
+  bool can_read () const override
   {
     return false;
   }
 
-  virtual bool can_write () const
+  bool can_write () const override
   {
     return false;
   }
 
-  virtual bool supports_context () const
+  bool supports_context () const override
   {
     return false;
   }
 
-  virtual tl::XMLElementBase *xml_reader_options_element () const
+  tl::XMLElementBase *xml_reader_options_element () const override
   {
     return new db::ReaderOptionsXMLElement<db::CommonReaderOptions> ("common",
       tl::make_member (&db::CommonReaderOptions::create_other_layers, "create-other-layers") +

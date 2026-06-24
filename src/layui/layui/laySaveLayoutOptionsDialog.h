@@ -62,7 +62,7 @@ class LAYUI_PUBLIC SaveLayoutAsOptionsDialog
 
 public:
   SaveLayoutAsOptionsDialog (QWidget *parent, const std::string &title);
-  ~SaveLayoutAsOptionsDialog ();
+  ~SaveLayoutAsOptionsDialog () override;
 
   bool get_options (lay::LayoutViewBase *view, unsigned int cv_index, const std::string &fn, tl::OutputStream::OutputStreamMode &compression, db::SaveLayoutOptions &options);
 
@@ -86,7 +86,7 @@ class LAYUI_PUBLIC SaveLayoutOptionsDialog
 
 public:
   SaveLayoutOptionsDialog (QWidget *parent, const std::string &title);
-  ~SaveLayoutOptionsDialog ();
+  ~SaveLayoutOptionsDialog () override;
 
   bool edit_global_options (lay::Dispatcher *dispatcher, db::Technologies *technologies);
   bool get_options (db::SaveLayoutOptions &options);

@@ -46,9 +46,9 @@ public:
   }
 
   void commit_impl (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void commit (lay::Dispatcher *root) override;
   void setup_impl (lay::Dispatcher *root);
-  virtual void setup (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
 
   gsi::Callback f_commit;
   gsi::Callback f_setup;

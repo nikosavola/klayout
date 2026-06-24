@@ -51,14 +51,14 @@ public:
   /**
    *  @brief Destructor
    */
-  ~DeferredMethodSchedulerQt ();
+  ~DeferredMethodSchedulerQt () override;
 
 protected:
   /**
    *  @brief Reimplementation of the interface: queue an event
    *  In effect, the event should later trigger a call to do_execute ().
    */
-  void queue_event ();
+  void queue_event () override;
 
 private slots:
   void timer ();
@@ -67,7 +67,7 @@ private:
   QTimer m_timer, m_fallback_timer;
   int m_event_type;
 
-  virtual bool event (QEvent *event);
+  bool event (QEvent *event) override;
 };
 
 }

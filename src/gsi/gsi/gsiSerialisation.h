@@ -721,7 +721,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~StringAdaptor () { }
+  ~StringAdaptor () override { }
 
   /**
    *  @brief Returns the size of the string
@@ -741,7 +741,7 @@ public:
   /**
    *  @brief copy_to implementation
    */
-  virtual void copy_to (AdaptorBase *target, tl::Heap &heap) const 
+  void copy_to (AdaptorBase *target, tl::Heap &heap) const override 
   {
     StringAdaptor *s = dynamic_cast<StringAdaptor *>(target);
     tl_assert (s);
@@ -792,30 +792,30 @@ public:
     mp_s = &m_s; 
   }
 
-  virtual ~StringAdaptorImpl () 
+  ~StringAdaptorImpl () override 
   { 
     //  .. nothing yet ..
   }
 
-  virtual size_t size () const 
+  size_t size () const override 
   { 
     return mp_s->toUtf8 ().size (); 
   }
 
-  virtual const char *c_str () const
+  const char *c_str () const override
   {
     m_s_utf8 = mp_s->toUtf8 ();
     return m_s_utf8.constData ();
   }
 
-  virtual void set (const char *c_str, size_t s, tl::Heap &) 
+  void set (const char *c_str, size_t s, tl::Heap &) override 
   {
     if (! m_is_const) {
       *mp_s = QString::fromUtf8 (c_str, int (s));
     }
   }
 
-  virtual void copy_to (AdaptorBase *target, tl::Heap &heap) const
+  void copy_to (AdaptorBase *target, tl::Heap &heap) const override
   {
     StringAdaptorImpl<QString> *s = dynamic_cast<StringAdaptorImpl<QString> *>(target);
     if (s) {
@@ -864,23 +864,23 @@ public:
     mp_s = &m_s; 
   }
 
-  virtual ~StringAdaptorImpl () 
+  ~StringAdaptorImpl () override 
   { 
     //  .. nothing yet ..
   }
 
-  virtual size_t size () const 
+  size_t size () const override 
   { 
     return mp_s->toString ().toUtf8 ().size ();
   }
 
-  virtual const char *c_str () const
+  const char *c_str () const override
   {
     m_s_utf8 = mp_s->toString ().toUtf8 ();
     return m_s_utf8.constData ();
   }
 
-  virtual void set (const char *c_str, size_t s, tl::Heap &heap) 
+  void set (const char *c_str, size_t s, tl::Heap &heap) override 
   {
     if (! m_is_const) {
       QString *qstr = new QString (QString::fromUtf8 (c_str, int (s)));
@@ -889,7 +889,7 @@ public:
     }
   }
 
-  virtual void copy_to (AdaptorBase *target, tl::Heap &heap) const
+  void copy_to (AdaptorBase *target, tl::Heap &heap) const override
   {
     StringAdaptorImpl<QStringRef> *s = dynamic_cast<StringAdaptorImpl<QStringRef> *>(target);
     if (s) {
@@ -1020,23 +1020,23 @@ public:
     mp_s = &m_s;
   }
 
-  virtual ~StringAdaptorImpl ()
+  ~StringAdaptorImpl () override
   {
     //  .. nothing yet ..
   }
 
-  virtual size_t size () const
+  size_t size () const override
   {
     return QString::fromLatin1 (mp_s->data (), mp_s->size ()).toUtf8 ().size ();
   }
 
-  virtual const char *c_str () const
+  const char *c_str () const override
   {
     m_s_utf8 = QString::fromLatin1 (mp_s->data (), mp_s->size ()).toUtf8 ();
     return m_s_utf8.constData ();
   }
 
-  virtual void set (const char *c_str, size_t s, tl::Heap &heap)
+  void set (const char *c_str, size_t s, tl::Heap &heap) override
   {
     if (! m_is_const) {
       QByteArray *latin1_holder = new QByteArray (QString::fromUtf8 (c_str, int (s)).toLatin1 ());
@@ -1088,29 +1088,29 @@ public:
     mp_s = &m_s; 
   }
 
-  virtual ~StringAdaptorImpl () 
+  ~StringAdaptorImpl () override 
   { 
     //  .. nothing yet ..
   }
 
-  virtual size_t size () const 
+  size_t size () const override 
   { 
     return mp_s->size (); 
   }
 
-  virtual const char *c_str () const
+  const char *c_str () const override
   {
     return mp_s->c_str ();
   }
 
-  virtual void set (const char *c_str, size_t s, tl::Heap &) 
+  void set (const char *c_str, size_t s, tl::Heap &) override 
   {
     if (! m_is_const) {
       *mp_s = std::string (c_str, s);
     }
   }
 
-  virtual void copy_to (AdaptorBase *target, tl::Heap &heap) const
+  void copy_to (AdaptorBase *target, tl::Heap &heap) const override
   {
     StringAdaptorImpl<std::string> *s = dynamic_cast<StringAdaptorImpl<std::string> *>(target);
     if (s) {
@@ -1158,22 +1158,22 @@ public:
     mp_s = 0; 
   }
 
-  virtual ~StringAdaptorImplCCP () 
+  ~StringAdaptorImplCCP () override 
   { 
     //  .. nothing yet ..
   }
 
-  virtual size_t size () const 
+  size_t size () const override 
   { 
     return mp_s ? strlen ((const char *) *mp_s) : m_s.size ();
   }
 
-  virtual const char *c_str () const
+  const char *c_str () const override
   {
     return mp_s ? (const char *) *mp_s : m_s.c_str ();
   }
 
-  virtual void set (const char *c_str, size_t s, tl::Heap &heap) 
+  void set (const char *c_str, size_t s, tl::Heap &heap) override 
   {
     if (! m_is_const) {
       if (! mp_s) {
@@ -1261,7 +1261,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~ByteArrayAdaptor () { }
+  ~ByteArrayAdaptor () override { }
 
   /**
    *  @brief Returns the size of the string
@@ -1281,7 +1281,7 @@ public:
   /**
    *  @brief copy_to implementation
    */
-  virtual void copy_to (AdaptorBase *target, tl::Heap &heap) const
+  void copy_to (AdaptorBase *target, tl::Heap &heap) const override
   {
     ByteArrayAdaptor *s = dynamic_cast<ByteArrayAdaptor *>(target);
     tl_assert (s);
@@ -1332,29 +1332,29 @@ public:
     mp_s = &m_s;
   }
 
-  virtual ~ByteArrayAdaptorImpl ()
+  ~ByteArrayAdaptorImpl () override
   {
     //  .. nothing yet ..
   }
 
-  virtual size_t size () const
+  size_t size () const override
   {
     return mp_s->size ();
   }
 
-  virtual const char *c_str () const
+  const char *c_str () const override
   {
     return mp_s->constData ();
   }
 
-  virtual void set (const char *c_str, size_t s, tl::Heap &)
+  void set (const char *c_str, size_t s, tl::Heap &) override
   {
     if (! m_is_const) {
       *mp_s = QByteArray (c_str, int (s));
     }
   }
 
-  virtual void copy_to (AdaptorBase *target, tl::Heap &heap) const
+  void copy_to (AdaptorBase *target, tl::Heap &heap) const override
   {
     ByteArrayAdaptorImpl<QByteArray> *s = dynamic_cast<ByteArrayAdaptorImpl<QByteArray> *>(target);
     if (s) {
@@ -1482,29 +1482,29 @@ public:
     mp_s = &m_s;
   }
 
-  virtual ~ByteArrayAdaptorImpl ()
+  ~ByteArrayAdaptorImpl () override
   {
     //  .. nothing yet ..
   }
 
-  virtual size_t size () const
+  size_t size () const override
   {
     return mp_s->size ();
   }
 
-  virtual const char *c_str () const
+  const char *c_str () const override
   {
     return &mp_s->front ();
   }
 
-  virtual void set (const char *c_str, size_t s, tl::Heap &)
+  void set (const char *c_str, size_t s, tl::Heap &) override
   {
     if (! m_is_const) {
       *mp_s = std::vector<char> (c_str, c_str + s);
     }
   }
 
-  virtual void copy_to (AdaptorBase *target, tl::Heap &heap) const
+  void copy_to (AdaptorBase *target, tl::Heap &heap) const override
   {
     ByteArrayAdaptorImpl<std::vector<char> > *s = dynamic_cast<ByteArrayAdaptorImpl<std::vector<char> > *>(target);
     if (s) {
@@ -1539,7 +1539,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~VariantAdaptor () { }
+  ~VariantAdaptor () override { }
 
   /**
    *  @brief Gets the tl::Variant representing this variant
@@ -1554,7 +1554,7 @@ public:
   /**
    *  @brief Implementation of copy_to
    */
-  virtual void copy_to (AdaptorBase *target, tl::Heap &heap) const
+  void copy_to (AdaptorBase *target, tl::Heap &heap) const override
   {
     VariantAdaptor *v = dynamic_cast<VariantAdaptor *>(target);
     tl_assert (v);
@@ -1605,12 +1605,12 @@ public:
     mp_v = &m_v; 
   }
 
-  virtual ~VariantAdaptorImpl () 
+  ~VariantAdaptorImpl () override 
   { 
     //  .. nothing yet ..
   }
 
-  virtual tl::Variant var () const 
+  tl::Variant var () const override 
   { 
     return tl::Variant (*mp_v);
   }
@@ -1620,14 +1620,14 @@ public:
     return *mp_v;
   }
 
-  virtual void set (const tl::Variant &v, tl::Heap & /*heap*/)
+  void set (const tl::Variant &v, tl::Heap & /*heap*/) override
   {
     if (! m_is_const) {
       *mp_v = v.to_qvariant ();
     }
   }
 
-  virtual void copy_to (AdaptorBase *target, tl::Heap &heap) const
+  void copy_to (AdaptorBase *target, tl::Heap &heap) const override
   {
     VariantAdaptorImpl<QVariant> *v = dynamic_cast<VariantAdaptorImpl<QVariant> *>(target);
     if (v) {
@@ -1677,17 +1677,17 @@ public:
     mp_v = &m_v;
   }
 
-  virtual ~VariantAdaptorImpl ()
+  ~VariantAdaptorImpl () override
   {
     //  .. nothing yet ..
   }
 
-  virtual tl::Variant var () const
+  tl::Variant var () const override
   {
     return tl::Variant::make_variant_ref (mp_v->get ());
   }
 
-  virtual void set (const tl::Variant &v, tl::Heap & /*heap*/)
+  void set (const tl::Variant &v, tl::Heap & /*heap*/) override
   {
     if (m_is_const) {
       //  .. can't change
@@ -1708,7 +1708,7 @@ public:
     }
   }
 
-  virtual void copy_to (AdaptorBase *target, tl::Heap &heap) const
+  void copy_to (AdaptorBase *target, tl::Heap &heap) const override
   {
     VariantAdaptorImpl<QPointer<T>> *v = dynamic_cast<VariantAdaptorImpl<QPointer<T>> *>(target);
     if (v) {
@@ -1764,12 +1764,12 @@ public:
     mp_v = &m_v; 
   }
 
-  virtual ~VariantAdaptorImpl () 
+  ~VariantAdaptorImpl () override 
   { 
     //  .. nothing yet ..
   }
 
-  virtual tl::Variant var () const 
+  tl::Variant var () const override 
   { 
     return *mp_v;
   }
@@ -1784,14 +1784,14 @@ public:
     return *mp_v;
   }
 
-  virtual void set (const tl::Variant &v, tl::Heap & /*heap*/)
+  void set (const tl::Variant &v, tl::Heap & /*heap*/) override
   {
     if (! m_is_const) {
       *mp_v = v;
     }
   }
 
-  virtual void copy_to (AdaptorBase *target, tl::Heap &heap) const
+  void copy_to (AdaptorBase *target, tl::Heap &heap) const override
   {
     VariantAdaptorImpl<tl::Variant> *v = dynamic_cast<VariantAdaptorImpl<tl::Variant> *>(target);
     if (v) {
@@ -1940,7 +1940,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~VectorAdaptor () { }
+  ~VectorAdaptor () override { }
 
   /**
    *  @brief Returns the size of the array
@@ -1974,7 +1974,7 @@ public:
   /**
    *  @brief Implementation of copy_to
    */
-  virtual void copy_to (AdaptorBase *target, tl::Heap &heap) const
+  void copy_to (AdaptorBase *target, tl::Heap &heap) const override
   {
     VectorAdaptor *v = dynamic_cast<VectorAdaptor *>(target);
     tl_assert (v);
@@ -2008,17 +2008,17 @@ public:
   {
   }
 
-  void get (SerialArgs &ww, tl::Heap &) const 
+  void get (SerialArgs &ww, tl::Heap &) const override 
   {
     ww.write<value_type> (*m_b);
   }
 
-  bool at_end () const 
+  bool at_end () const override 
   {
     return m_b == m_e;
   }
 
-  void inc () 
+  void inc () override 
   {
     ++m_b;
   }
@@ -2108,41 +2108,41 @@ public:
     mp_v = &m_v; 
   }
 
-  virtual ~VectorAdaptorImpl () 
+  ~VectorAdaptorImpl () override 
   { 
     //  .. nothing yet ..
   }
 
-  virtual size_t size () const 
+  size_t size () const override 
   { 
     return mp_v->size (); 
   }
 
-  virtual VectorAdaptorIterator *create_iterator () const 
+  VectorAdaptorIterator *create_iterator () const override 
   {
     return new VectorAdaptorIteratorImpl<Cont> (*mp_v);
   }
 
-  virtual void push (SerialArgs &r, tl::Heap &heap) 
+  void push (SerialArgs &r, tl::Heap &heap) override 
   {
     if (! m_is_const) {
       push_vector<value_type> (*mp_v, r.read<value_type> (heap));
     }
   }
 
-  virtual void clear () 
+  void clear () override 
   {
     if (! m_is_const) {
       mp_v->clear ();
     }
   }
 
-  virtual size_t serial_size () const 
+  size_t serial_size () const override 
   {
     return gsi::type_traits<value_type>::serial_size ();
   }
 
-  virtual void copy_to (AdaptorBase *target, tl::Heap &heap) const
+  void copy_to (AdaptorBase *target, tl::Heap &heap) const override
   {
     //  simplify copies to identical kinds
     VectorAdaptorImpl<Cont> *t = dynamic_cast<VectorAdaptorImpl<Cont> *> (target);
@@ -2215,7 +2215,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~MapAdaptor () { }
+  ~MapAdaptor () override { }
 
   /**
    *  @brief Returns the size of the map
@@ -2249,7 +2249,7 @@ public:
   /**
    *  @brief Copies the content of this to the target
    */
-  virtual void copy_to (AdaptorBase *target, tl::Heap &heap) const
+  void copy_to (AdaptorBase *target, tl::Heap &heap) const override
   {
     MapAdaptor *v = dynamic_cast<MapAdaptor *>(target);
     tl_assert (v);
@@ -2369,18 +2369,18 @@ public:
   {
   }
 
-  void get (SerialArgs &ww, tl::Heap &) const 
+  void get (SerialArgs &ww, tl::Heap &) const override 
   {
     ww.write<key_type> (map_access<Cont>::get_key (m_b));
     ww.write<value_type> (map_access<Cont>::get_value (m_b));
   }
 
-  bool at_end () const 
+  bool at_end () const override 
   {
     return m_b == m_e;
   }
 
-  void inc () 
+  void inc () override 
   {
     ++m_b;
   }
@@ -2424,34 +2424,34 @@ public:
     mp_m = &m_m; 
   }
 
-  virtual ~MapAdaptorImpl () 
+  ~MapAdaptorImpl () override 
   { 
     //  .. nothing yet ..
   }
 
-  virtual size_t size () const 
+  size_t size () const override 
   { 
     return mp_m->size (); 
   }
 
-  virtual void clear () 
+  void clear () override 
   {
     if (! m_is_const) {
       mp_m->clear ();
     }
   }
 
-  virtual size_t serial_size () const
+  size_t serial_size () const override
   {
     return (gsi::type_traits<key_type>::serial_size () + gsi::type_traits<value_type>::serial_size ());
   }
 
-  virtual MapAdaptorIterator *create_iterator () const 
+  MapAdaptorIterator *create_iterator () const override 
   {
     return new MapAdaptorIteratorImpl<Cont> (*mp_m);
   }
 
-  virtual void insert (SerialArgs &rr, tl::Heap &heap) 
+  void insert (SerialArgs &rr, tl::Heap &heap) override 
   {
     if (! m_is_const) {
       key_type x = rr.read<key_type> (heap);
@@ -2460,7 +2460,7 @@ public:
     }
   }
 
-  virtual void copy_to (AdaptorBase *target, tl::Heap &heap) const
+  void copy_to (AdaptorBase *target, tl::Heap &heap) const override
   {
     //  simplify copies to identical kinds
     MapAdaptorImpl<Cont> *t = dynamic_cast<MapAdaptorImpl<Cont> *> (target);

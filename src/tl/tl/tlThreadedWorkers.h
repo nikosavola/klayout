@@ -320,7 +320,7 @@ public:
   { }
 
 protected:
-  virtual Worker *create_worker () 
+  Worker *create_worker () override 
   {
     return new W();
   }
@@ -348,7 +348,7 @@ public:
   /**
    *  @brief The destructor
    */
-  virtual ~Worker ();
+  ~Worker () override;
 
   /** 
    *  @brief Returns the index of the worker 
@@ -403,7 +403,7 @@ protected:
   }
 
 private:
-  virtual void run ();
+  void run () override;
   void stop_request ();
   void reset_stop_request ();
   void start (JobBase *job, int worker_index);

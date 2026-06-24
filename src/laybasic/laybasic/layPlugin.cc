@@ -113,7 +113,7 @@ public:
     : Action (title), mp_dispatcher (dispatcher), m_symbol (symbol)
   { }
 
-  void triggered ()
+  void triggered () override
   {
     if (mp_dispatcher) {
       mp_dispatcher->menu_activated (m_symbol);
@@ -133,7 +133,7 @@ public:
     : Action (title), mp_dispatcher (dispatcher), m_mode (mode)
   { }
 
-  void triggered ()
+  void triggered () override
   {
     if (mp_dispatcher) {
       mp_dispatcher->select_mode (m_mode);
@@ -141,7 +141,7 @@ public:
     }
   }
 
-  bool is_for_mode (int mode_id) const
+  bool is_for_mode (int mode_id) const override
   {
     return mode_id == m_mode;
   }

@@ -356,7 +356,7 @@ class NetlistBrowserPluginDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override
   {
     options.push_back (std::pair<std::string, std::string> (cfg_l2ndb_window_mode, "fit-net"));
     options.push_back (std::pair<std::string, std::string> (cfg_l2ndb_window_dim, "1.0"));
@@ -381,7 +381,7 @@ public:
     options.push_back (std::pair<std::string, std::string> (cfg_l2ndb_export_device_cell_prefix, "DEVICE_"));
   }
 
-  virtual std::vector<std::pair <std::string, lay::ConfigPage *> > config_pages (QWidget *parent) const
+  std::vector<std::pair <std::string, lay::ConfigPage *> > config_pages (QWidget *parent) const override
   {
     std::vector<std::pair <std::string, lay::ConfigPage *> > pages;
     pages.push_back (std::make_pair (tl::to_string (QObject::tr ("Netlist Browser|Setup")), new NetlistBrowserConfigPage (parent)));
@@ -389,13 +389,13 @@ public:
     return pages;
   }
 
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     lay::PluginDeclaration::get_menu_entries (menu_entries);
     menu_entries.push_back (lay::menu_item ("netlist_browser::show", "browse_netlists", "tools_menu.end", tl::to_string (QObject::tr ("Netlist Browser"))));
   }
 
-  virtual lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *root, lay::LayoutViewBase *view) const
+  lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *root, lay::LayoutViewBase *view) const override
   {
     if (has_gui ()) {
       return new lay::NetlistBrowserDialog (root, view);

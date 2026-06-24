@@ -246,8 +246,8 @@ Q_OBJECT
 public:
   LCPActiveLabel (int index, QWidget *parent, const char *name = "button");
 
-  virtual void mousePressEvent (QMouseEvent *e);
-  virtual void mouseReleaseEvent (QMouseEvent *e);
+  void mousePressEvent (QMouseEvent *e) override;
+  void mouseReleaseEvent (QMouseEvent *e) override;
 
 signals: 
   void clicked (int);
@@ -274,7 +274,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~LayerToolbox ();
+  ~LayerToolbox () override;
 
   /**
    *  @brief Associate a toolbox with a layout view
@@ -301,12 +301,12 @@ public:
   /**
    *  @brief The sizeHint implementation for Qt layout management
    */
-  virtual QSize sizeHint () const;
+  QSize sizeHint () const override;
 
   /** 
    *  @brief The Qt resize event
    */
-  virtual void resizeEvent (QResizeEvent *re);
+  void resizeEvent (QResizeEvent *re) override;
 
   /** 
    *  @brief The Qt resize function that does the layout management

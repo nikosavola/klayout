@@ -85,7 +85,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~Region ();
+  ~Region () override;
 
   /**
    *  @brief Constructor from a delegate
@@ -259,12 +259,12 @@ public:
   /**
    *  @brief Converts the shape collection to a deep one using the specified layer
    */
-  virtual void convert_to_deep (const db::DeepLayer &layer);
+  void convert_to_deep (const db::DeepLayer &layer) override;
 
   /**
    *  @brief Implementation of the ShapeCollection interface
    */
-  ShapeCollectionDelegateBase *get_delegate () const
+  ShapeCollectionDelegateBase *get_delegate () const override
   {
     return mp_delegate;
   }
@@ -2096,7 +2096,7 @@ public:
   /**
    *  @brief Start the sequence
    */
-  virtual void start ()
+  void start () override
   {
     if (m_clear) {
       mp_region->clear ();
@@ -2106,7 +2106,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  virtual void put (const db::Polygon &polygon)
+  void put (const db::Polygon &polygon) override
   {
     mp_region->insert (polygon);
   }

@@ -47,23 +47,23 @@ class FillDialogPluginDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > & /*options*/) const
+  void get_options (std::vector < std::pair<std::string, std::string> > & /*options*/) const override
   {
     //  .. no options yet ..
   }
 
-  virtual lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
+  lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const override
   {
     return nullptr; //  .. no config page yet ..
   }
 
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     lay::PluginDeclaration::get_menu_entries (menu_entries);
     menu_entries.push_back (lay::menu_item ("fill_tool::show", "fill_tool:edit_mode", "edit_menu.utils_menu.end", tl::to_string (QObject::tr ("Fill Tool"))));
   }
  
-  virtual lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *, lay::LayoutViewBase *view) const
+  lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *, lay::LayoutViewBase *view) const override
   {
     if (lay::has_gui ()) {
       return new FillDialog (lay::MainWindow::instance (), view);

@@ -531,7 +531,7 @@ public:
     //  .. nothing yet ..
   }
 
-  std::string get (const std::string &url)
+  std::string get (const std::string &url) override
   {
     auto p = m_page_cache.find (url);
     if (p != m_page_cache.end ()) {

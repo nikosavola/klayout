@@ -43,10 +43,10 @@ Q_OBJECT
 
 public:
   MacroEditorSetupPage (QWidget *parent);
-  ~MacroEditorSetupPage ();
+  ~MacroEditorSetupPage () override;
 
-  virtual void setup (Dispatcher *root);
-  virtual void commit (Dispatcher *root);
+  void setup (Dispatcher *root) override;
+  void commit (Dispatcher *root) override;
 
 protected slots:
   void current_attribute_changed (QListWidgetItem *current, QListWidgetItem *previous);

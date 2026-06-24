@@ -291,7 +291,7 @@ struct EdgeBooleanClusterCollector
     //  .. nothing yet ..
   }
 
-  void add (const db::Edge *o1, size_t p1, const db::Edge *o2, size_t p2)
+  void add (const db::Edge *o1, size_t p1, const db::Edge *o2, size_t p2) override
   {
     //  Select edges which are:
     //  1.) not degenerate
@@ -436,7 +436,7 @@ struct EdgeBooleanClusterCollector
    *  This method pushes those points which don't interact with the edges to the output container
    *  as degenerate edges. It needs to be called after the pass has been made.
    */
-  void finalize (bool)
+  void finalize (bool) override
   {
     add_orphan_dots (m_dots, mp_output);
     if (mp_output2) {

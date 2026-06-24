@@ -62,17 +62,17 @@ public:
     //  .. nothing yet ..
   }
 
-  QWidget *createEditor (QWidget *parent, const QStyleOptionViewItem & /*option*/, const QModelIndex & /*index*/) const
+  QWidget *createEditor (QWidget *parent, const QStyleOptionViewItem & /*option*/, const QModelIndex & /*index*/) const override
   {
     return new QLineEdit (parent);
   }
 
-  void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex & /*index*/) const
+  void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex & /*index*/) const override
   {
     editor->setGeometry(option.rect);
   }
 
-  void setEditorData (QWidget *widget, const QModelIndex &index) const
+  void setEditorData (QWidget *widget, const QModelIndex &index) const override
   {
     QLineEdit *editor = dynamic_cast<QLineEdit *> (widget);
     if (editor) {
@@ -89,7 +89,7 @@ public:
     }
   }
 
-  void setModelData (QWidget *widget, QAbstractItemModel *model, const QModelIndex &index) const
+  void setModelData (QWidget *widget, QAbstractItemModel *model, const QModelIndex &index) const override
   {
     QLineEdit *editor = dynamic_cast<QLineEdit *> (widget);
     if (editor) {
@@ -115,7 +115,7 @@ public:
     }
   }
 
-  QSize sizeHint (const QStyleOptionViewItem &option, const QModelIndex &index) const
+  QSize sizeHint (const QStyleOptionViewItem &option, const QModelIndex &index) const override
   {
     QWidget *editor = createEditor (nullptr, option, index);
     QSize size = editor->sizeHint ();

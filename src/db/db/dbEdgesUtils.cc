@@ -399,9 +399,9 @@ struct DetectTagEdgeSink
   DetectTagEdgeSink (int tag)
     : fail_tag (tag), result (true) { }
 
-  virtual void put (const db::Edge &) { }
+  void put (const db::Edge &) override { }
 
-  virtual void put (const db::Edge &, int tag)
+  void put (const db::Edge &, int tag) override
   {
     if (tag == fail_tag) {
       result = false;

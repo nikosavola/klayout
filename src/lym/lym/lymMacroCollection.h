@@ -79,7 +79,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~MacroCollection ();
+  ~MacroCollection () override;
 
   /**
    *  @brief Add a folder (will also scan the folder)

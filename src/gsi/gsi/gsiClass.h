@@ -159,7 +159,7 @@ public:
     //  .. nothing yet ..
   }
 
-  ~VariantUserClass ()
+  ~VariantUserClass () override
   {
     mp_cls = nullptr;
     tl::VariantUserClass<T>::unregister_instance (this, m_is_const);
@@ -179,12 +179,12 @@ public:
     }
   }
 
-  const tl::EvalClass *eval_cls () const 
+  const tl::EvalClass *eval_cls () const override 
   {
     return this;
   }
 
-  void *deref_proxy (tl::Object *proxy) const
+  void *deref_proxy (tl::Object *proxy) const override
   {
     Proxy *p = dynamic_cast<Proxy *> (proxy);
     if (p) {
@@ -194,72 +194,72 @@ public:
     }
   }
 
-  virtual bool equal (const void *a, const void *b) const
+  bool equal (const void *a, const void *b) const override
   {
     return gsi::_var_user_equal_impl<T, tl::has_equal_operator<T>::value>::call ((const T *) a, (const T *) b, this);
   }
 
-  virtual bool less (const void *a, const void *b) const
+  bool less (const void *a, const void *b) const override
   {
     return gsi::_var_user_less_impl<T, tl::has_less_operator<T>::value>::call ((const T *) a, (const T *) b, this);
   }
 
-  virtual void to_variant (const void *a, tl::Variant &var) const
+  void to_variant (const void *a, tl::Variant &var) const override
   {
     var = gsi::_var_user_to_variant_impl<T, tl::has_to_variant<T>::value>::call ((const T *) a, this);
   }
 
-  virtual std::string to_string (const void *a) const
+  std::string to_string (const void *a) const override
   {
     return gsi::_var_user_to_string_impl<T, tl::has_to_string<T>::value>::call ((const T *) a, this);
   }
 
-  virtual int to_int (const void *a) const
+  int to_int (const void *a) const override
   {
     return gsi::_var_user_to_int_impl<T, tl::has_to_int<T>::value>::call ((const T *) a, this);
   }
 
-  virtual double to_double (const void *a) const
+  double to_double (const void *a) const override
   {
     return gsi::_var_user_to_double_impl<T, tl::has_to_double<T>::value>::call ((const T *) a, this);
   }
 
-  void *clone (const void *obj) const
+  void *clone (const void *obj) const override
   {
     void *new_obj = mp_cls->create ();
     mp_cls->assign (new_obj, obj);
     return new_obj;
   }
 
-  void assign (void *self, const void *other) const
+  void assign (void *self, const void *other) const override
   {
     mp_cls->assign (self, other);
   }
 
-  void *create () const
+  void *create () const override
   {
     return mp_cls->create ();
   }
 
-  void destroy (void *obj) const 
+  void destroy (void *obj) const override 
   {
     if (obj) {
       mp_cls->destroy (obj);
     }
   }
 
-  const char *name () const
+  const char *name () const override
   {
     return mp_cls ? mp_cls->name ().c_str() : nullptr;
   }
 
-  void read (void *a, tl::Extractor &ex) const
+  void read (void *a, tl::Extractor &ex) const override
   {
     T *t = (T *) a;
     ex.read (*t);
   }
 
-  const gsi::ClassBase *gsi_cls () const
+  const gsi::ClassBase *gsi_cls () const override
   {
     return mp_cls;
   }
@@ -269,7 +269,7 @@ public:
     return mp_object_cls != nullptr; 
   }
 
-  bool is_const () const
+  bool is_const () const override
   { 
     return m_is_const; 
   }
@@ -332,7 +332,7 @@ class SubClassTester<X, B, true>
   : public SubClassTesterBase 
 {
 public:
-  virtual bool can_upcast (const void *p) const 
+  bool can_upcast (const void *p) const override 
   {
     return dynamic_cast<const X *>((const B *)p) != nullptr;
   }
@@ -346,7 +346,7 @@ class SubClassTester<X, B, false>
   : public SubClassTesterBase 
 {
 public:
-  virtual bool can_upcast (const void *) const 
+  bool can_upcast (const void *) const override 
   {
     //  Non-polymorphic classes can't be upcast, hence we always return false here
     return false;
@@ -389,12 +389,12 @@ public:
     set_name (name);
   }
 
-  virtual bool binds () const
+  bool binds () const override
   {
     return false;
   }
 
-  virtual const std::type_info &type () const
+  const std::type_info &type () const override
   {
     return typeid (X);
   }
@@ -404,12 +404,12 @@ public:
    *  The main declaration object is 0 initially indicating that the classes
    *  have not been merged.
    */
-  virtual const ClassBase *declaration () const 
+  const ClassBase *declaration () const override 
   {
     return mp_declaration;
   }
 
-  virtual bool consolidate () const
+  bool consolidate () const override
   {
     //  gets the "real" declaration by the type info
     //  TODO: ugly const_cast hack
@@ -555,22 +555,22 @@ public:
     set_base (&base);
   }
 
-  virtual const std::type_info *adapted_type_info () const 
+  const std::type_info *adapted_type_info () const override 
   {
     return adaptor_type_info<X, Adapted>::type_info ();
   }
 
-  virtual const ClassBase *declaration () const
+  const ClassBase *declaration () const override
   {
     return this;
   }
 
-  virtual bool consolidate () const
+  bool consolidate () const override
   {
     return true;
   }
 
-  void initialize ()
+  void initialize () override
   {
     ClassBase::initialize ();
     m_var_cls.initialize (this, nullptr, false);
@@ -578,73 +578,73 @@ public:
     m_var_cls_cls.initialize (this, &m_var_cls, false);
   }
 
-  bool is_managed () const
+  bool is_managed () const override
   {
     return tl::is_derived<gsi::ObjectBase, X> ();
   }
 
-  gsi::ObjectBase *gsi_object (void *p, bool /*required*/) const
+  gsi::ObjectBase *gsi_object (void *p, bool /*required*/) const override
   {
     return tl::try_static_cast<gsi::ObjectBase, X> ((X *) p);
   }
 
-  virtual void destroy (void *p) const
+  void destroy (void *p) const override
   {
     X *x = (X *)p;
     _destroy<X, std::is_destructible<X>::value>::call (x);
   }
 
-  virtual void *create () const
+  void *create () const override
   {
     return _create<X, std::is_default_constructible<X>::value>::call ();
   }
 
-  virtual void *create_from_adapted (const void *x) const
+  void *create_from_adapted (const void *x) const override
   {
     return adaptor_type_info<X, Adapted>::create ((const Adapted *) x);
   }
 
-  virtual void *create_from_adapted_consume (void *x) const
+  void *create_from_adapted_consume (void *x) const override
   {
     return adaptor_type_info<X, Adapted>::create_consume ((Adapted *) x);
   }
 
-  virtual const void *adapted_from_obj (const void *obj) const
+  const void *adapted_from_obj (const void *obj) const override
   {
     return adaptor_type_info<X, Adapted>::get ((const X *) obj);
   }
 
-  virtual void *create_adapted_from_obj (const void *obj) const
+  void *create_adapted_from_obj (const void *obj) const override
   {
     return adaptor_type_info<X, Adapted>::create_adapted ((const X *) obj);
   }
 
-  virtual void *clone (const void *other) const
+  void *clone (const void *other) const override
   {
     return _clone<X, std::is_copy_constructible<X>::value>::call (other);
   }
 
-  virtual void assign (void *dest, const void *src) const
+  void assign (void *dest, const void *src) const override
   {
     _assign<X, std::is_copy_assignable<X>::value>::call (dest, src);
   }
 
-  virtual bool can_destroy () const
+  bool can_destroy () const override
   {
     return std::is_destructible<X>::value;
   }
 
-  virtual bool can_copy () const
+  bool can_copy () const override
   {
     return std::is_copy_constructible<X>::value;
   }
 
-  virtual bool can_default_create () const
+  bool can_default_create () const override
   {
     return std::is_default_constructible<X>::value;
   }
 
-  virtual const ClassBase *subclass_decl (const void *p) const 
+  const ClassBase *subclass_decl (const void *p) const override 
   {
     if (p) {
       for (tl::weak_collection<ClassBase>::const_iterator s = subclasses ().begin (); s != subclasses ().end (); ++s) {
@@ -657,27 +657,27 @@ public:
     return this;
   }
 
-  virtual bool can_upcast (const void *p) const 
+  bool can_upcast (const void *p) const override 
   {
     return m_subclass_tester.get () && m_subclass_tester->can_upcast (p);
   }
 
-  virtual bool binds () const
+  bool binds () const override
   {
     return true;
   }
 
-  virtual const std::type_info &type () const
+  const std::type_info &type () const override
   {
     return typeid (X);
   }
 
-  virtual const tl::VariantUserClassBase *var_cls_cls () const
+  const tl::VariantUserClassBase *var_cls_cls () const override
   {
     return &m_var_cls_cls;
   }
 
-  virtual const tl::VariantUserClassBase *var_cls (bool is_const) const
+  const tl::VariantUserClassBase *var_cls (bool is_const) const override
   {
     if (is_const) {
       return &m_var_cls_c;
@@ -717,7 +717,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual bool consolidate () const
+  bool consolidate () const override
   {
     //  TODO: ugly const_cast
     SubClass<X, B, Adapted> *non_const_this = const_cast<SubClass<X, B, Adapted> *> (this);
@@ -749,7 +749,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual bool consolidate () const
+  bool consolidate () const override
   {
     //  TODO: ugly const cast
     ClassBase *non_const_pcls = const_cast<ClassBase *> (cls_decl<P> ());
@@ -783,7 +783,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual bool consolidate () const
+  bool consolidate () const override
   {
     //  TODO: ugly const cast
     ClassBase *non_const_pcls = const_cast<ClassBase *> (cls_decl<P> ());

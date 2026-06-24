@@ -43,7 +43,7 @@ class DB_PUBLIC MutableRegion
 public:
   MutableRegion ();
   MutableRegion (const MutableRegion &other);
-  virtual ~MutableRegion ();
+  ~MutableRegion () override;
 
   virtual void do_insert (const db::Polygon &polygon, db::properties_id_type prop_id) = 0;
 

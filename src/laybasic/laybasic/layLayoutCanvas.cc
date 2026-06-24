@@ -699,7 +699,7 @@ public:
     }
   }
 
-  ~DetachedViewObjectCanvas ()
+  ~DetachedViewObjectCanvas () override
   {
     clear_fg_bitmaps ();
 
@@ -709,22 +709,22 @@ public:
     }
   }
 
-  tl::Color background_color () const
+  tl::Color background_color () const override
   {
     return m_bg;
   }
 
-  tl::Color foreground_color () const
+  tl::Color foreground_color () const override
   {
     return m_fg;
   }
 
-  tl::Color active_color () const
+  tl::Color active_color () const override
   {
     return m_ac;
   }
 
-  virtual tl::PixelBuffer *bg_image ()
+  tl::PixelBuffer *bg_image () override
   {
     return mp_image_l ? mp_image_l : mp_image;
   }
@@ -775,22 +775,22 @@ public:
     //  .. nothing yet ..
   }
 
-  ~DetachedViewObjectCanvasMono ()
+  ~DetachedViewObjectCanvasMono () override
   {
     clear_fg_bitmaps ();
   }
 
-  tl::Color background_color () const
+  tl::Color background_color () const override
   {
     return m_bg ? 0xffffffff : 0;
   }
 
-  tl::Color foreground_color () const
+  tl::Color foreground_color () const override
   {
     return m_fg ? 0xffffffff : 0;
   }
 
-  tl::Color active_color () const
+  tl::Color active_color () const override
   {
     return m_ac ? 0xffffffff : 0;
   }

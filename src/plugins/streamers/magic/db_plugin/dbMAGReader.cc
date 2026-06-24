@@ -264,7 +264,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void resolve_name (const std::string &name, const tl::EvalFunction *&function, const tl::Variant *&value, tl::Variant *&var)
+  void resolve_name (const std::string &name, const tl::EvalFunction *&function, const tl::Variant *&value, tl::Variant *&var) override
   {
     tl::Eval::resolve_name (name, function, value, var);
 

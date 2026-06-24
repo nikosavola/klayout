@@ -40,24 +40,24 @@ class LAYBASIC_PUBLIC ZoomService
 {
 public: 
   ZoomService (lay::LayoutViewBase *view);
-  ~ZoomService ();
+  ~ZoomService () override;
 
-  void set_colors (tl::Color background, tl::Color text);
+  void set_colors (tl::Color background, tl::Color text) override;
   void begin (const db::DPoint &pos);
   void begin_pan (const db::DPoint &pos);
 
-  lay::ViewService *view_service_interface ()
+  lay::ViewService *view_service_interface () override
   {
     return this;
   }
 
 private:
-  virtual bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual bool mouse_release_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual bool mouse_press_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual bool wheel_event (int delta, bool horizontal, const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual void drag_cancel ();
+  bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  bool mouse_release_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  bool mouse_press_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  bool wheel_event (int delta, bool horizontal, const db::DPoint &p, unsigned int buttons, bool prio) override;
+  void drag_cancel () override;
 
   db::DPoint m_p1, m_p2;
   db::DBox m_vp;

@@ -39,123 +39,123 @@ class DB_PUBLIC EmptyRegion
 {
 public:
   EmptyRegion ();
-  virtual ~EmptyRegion ();
+  ~EmptyRegion () override;
 
   EmptyRegion (const EmptyRegion &other);
-  RegionDelegate *clone () const;
+  RegionDelegate *clone () const override;
 
-  virtual RegionIteratorDelegate *begin () const { return nullptr; }
-  virtual RegionIteratorDelegate *begin_merged () const { return nullptr; }
-  virtual RegionIteratorDelegate *begin_unmerged () const { return nullptr; }
+  RegionIteratorDelegate *begin () const override { return nullptr; }
+  RegionIteratorDelegate *begin_merged () const override { return nullptr; }
+  RegionIteratorDelegate *begin_unmerged () const override { return nullptr; }
 
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const { return std::make_pair (db::RecursiveShapeIterator (), db::ICplxTrans ()); }
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_merged_iter () const { return std::make_pair (db::RecursiveShapeIterator (), db::ICplxTrans ()); }
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_unmerged_iter () const { return std::make_pair (db::RecursiveShapeIterator (), db::ICplxTrans ()); }
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const override { return std::make_pair (db::RecursiveShapeIterator (), db::ICplxTrans ()); }
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_merged_iter () const override { return std::make_pair (db::RecursiveShapeIterator (), db::ICplxTrans ()); }
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_unmerged_iter () const override { return std::make_pair (db::RecursiveShapeIterator (), db::ICplxTrans ()); }
 
-  virtual bool empty () const { return true; }
-  virtual size_t count () const { return 0; }
-  virtual size_t hier_count () const { return 0; }
-  virtual std::string to_string (size_t) const { return std::string (); }
+  bool empty () const override { return true; }
+  size_t count () const override { return 0; }
+  size_t hier_count () const override { return 0; }
+  std::string to_string (size_t) const override { return std::string (); }
 
-  virtual bool is_box () const { return false; }
-  virtual bool is_merged () const { return true; }
-  virtual area_type area (const db::Box &) const { return 0; }
-  virtual perimeter_type perimeter (const db::Box &) const { return 0; }
+  bool is_box () const override { return false; }
+  bool is_merged () const override { return true; }
+  area_type area (const db::Box &) const override { return 0; }
+  perimeter_type perimeter (const db::Box &) const override { return 0; }
 
-  virtual Box bbox () const { return Box (); }
+  Box bbox () const override { return Box (); }
 
-  virtual EdgePairsDelegate *cop_to_edge_pairs (db::CompoundRegionOperationNode &node, PropertyConstraint);
-  virtual RegionDelegate *cop_to_region (db::CompoundRegionOperationNode &node, PropertyConstraint);
-  virtual EdgesDelegate *cop_to_edges (db::CompoundRegionOperationNode &node, PropertyConstraint);
+  EdgePairsDelegate *cop_to_edge_pairs (db::CompoundRegionOperationNode &node, PropertyConstraint) override;
+  RegionDelegate *cop_to_region (db::CompoundRegionOperationNode &node, PropertyConstraint) override;
+  EdgesDelegate *cop_to_edges (db::CompoundRegionOperationNode &node, PropertyConstraint) override;
 
-  virtual EdgePairsDelegate *width_check (db::Coord, const RegionCheckOptions &) const;
-  virtual EdgePairsDelegate *space_check (db::Coord, const RegionCheckOptions &) const;
-  virtual EdgePairsDelegate *isolated_check (db::Coord, const RegionCheckOptions &) const;
-  virtual EdgePairsDelegate *notch_check (db::Coord, const RegionCheckOptions &) const;
-  virtual EdgePairsDelegate *enclosing_check (const Region &, db::Coord, const RegionCheckOptions &) const;
-  virtual EdgePairsDelegate *overlap_check (const Region &, db::Coord, const RegionCheckOptions &) const;
-  virtual EdgePairsDelegate *separation_check (const Region &, db::Coord, const RegionCheckOptions &) const;
-  virtual EdgePairsDelegate *inside_check (const Region &, db::Coord, const RegionCheckOptions &) const;
-  virtual EdgePairsDelegate *grid_check (db::Coord, db::Coord) const;
-  virtual EdgePairsDelegate *angle_check (double, double, bool) const;
+  EdgePairsDelegate *width_check (db::Coord, const RegionCheckOptions &) const override;
+  EdgePairsDelegate *space_check (db::Coord, const RegionCheckOptions &) const override;
+  EdgePairsDelegate *isolated_check (db::Coord, const RegionCheckOptions &) const override;
+  EdgePairsDelegate *notch_check (db::Coord, const RegionCheckOptions &) const override;
+  EdgePairsDelegate *enclosing_check (const Region &, db::Coord, const RegionCheckOptions &) const override;
+  EdgePairsDelegate *overlap_check (const Region &, db::Coord, const RegionCheckOptions &) const override;
+  EdgePairsDelegate *separation_check (const Region &, db::Coord, const RegionCheckOptions &) const override;
+  EdgePairsDelegate *inside_check (const Region &, db::Coord, const RegionCheckOptions &) const override;
+  EdgePairsDelegate *grid_check (db::Coord, db::Coord) const override;
+  EdgePairsDelegate *angle_check (double, double, bool) const override;
 
-  virtual RegionDelegate *snapped_in_place (db::Coord, db::Coord) { return this; }
-  virtual RegionDelegate *snapped (db::Coord, db::Coord) { return new EmptyRegion (); }
-  virtual RegionDelegate *scaled_and_snapped_in_place (db::Coord, db::Coord, db::Coord, db::Coord, db::Coord, db::Coord) { return this; }
-  virtual RegionDelegate *scaled_and_snapped (db::Coord, db::Coord, db::Coord, db::Coord, db::Coord, db::Coord) { return new EmptyRegion (); }
+  RegionDelegate *snapped_in_place (db::Coord, db::Coord) override { return this; }
+  RegionDelegate *snapped (db::Coord, db::Coord) override { return new EmptyRegion (); }
+  RegionDelegate *scaled_and_snapped_in_place (db::Coord, db::Coord, db::Coord, db::Coord, db::Coord, db::Coord) override { return this; }
+  RegionDelegate *scaled_and_snapped (db::Coord, db::Coord, db::Coord, db::Coord, db::Coord, db::Coord) override { return new EmptyRegion (); }
 
-  virtual EdgesDelegate *edges (const EdgeFilterBase *, const PolygonToEdgeProcessorBase *) const;
-  virtual RegionDelegate *filter_in_place (const PolygonFilterBase &) { return this; }
-  virtual RegionDelegate *filtered (const PolygonFilterBase &) const { return new EmptyRegion (); }
-  virtual std::pair<RegionDelegate *, RegionDelegate *> filtered_pair (const PolygonFilterBase &) const { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
-  virtual RegionDelegate *process_in_place (const PolygonProcessorBase &) { return this; }
-  virtual RegionDelegate *processed (const PolygonProcessorBase &) const { return new EmptyRegion (); }
-  virtual EdgesDelegate *processed_to_edges (const PolygonToEdgeProcessorBase &) const;
-  virtual EdgePairsDelegate *processed_to_edge_pairs (const PolygonToEdgePairProcessorBase &) const;
+  EdgesDelegate *edges (const EdgeFilterBase *, const PolygonToEdgeProcessorBase *) const override;
+  RegionDelegate *filter_in_place (const PolygonFilterBase &) override { return this; }
+  RegionDelegate *filtered (const PolygonFilterBase &) const override { return new EmptyRegion (); }
+  std::pair<RegionDelegate *, RegionDelegate *> filtered_pair (const PolygonFilterBase &) const override { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
+  RegionDelegate *process_in_place (const PolygonProcessorBase &) override { return this; }
+  RegionDelegate *processed (const PolygonProcessorBase &) const override { return new EmptyRegion (); }
+  EdgesDelegate *processed_to_edges (const PolygonToEdgeProcessorBase &) const override;
+  EdgePairsDelegate *processed_to_edge_pairs (const PolygonToEdgePairProcessorBase &) const override;
 
-  virtual RegionDelegate *merged_in_place () { return this; }
-  virtual RegionDelegate *merged_in_place (bool, unsigned int, bool) { return this; }
-  virtual RegionDelegate *merged () const { return new EmptyRegion (); }
-  virtual RegionDelegate *merged (bool, unsigned int, bool) const { return new EmptyRegion (); }
+  RegionDelegate *merged_in_place () override { return this; }
+  RegionDelegate *merged_in_place (bool, unsigned int, bool) override { return this; }
+  RegionDelegate *merged () const override { return new EmptyRegion (); }
+  RegionDelegate *merged (bool, unsigned int, bool) const override { return new EmptyRegion (); }
 
-  virtual RegionDelegate *sized (coord_type, unsigned int) const { return new EmptyRegion (); }
-  virtual RegionDelegate *sized (coord_type, coord_type, unsigned int) const { return new EmptyRegion (); }
-  virtual RegionDelegate *sized_inside (const Region &, bool, coord_type, int, unsigned int) const { return new EmptyRegion (); }
-  virtual RegionDelegate *sized_inside (const Region &, bool, coord_type, coord_type, int, unsigned int) const { return new EmptyRegion (); }
+  RegionDelegate *sized (coord_type, unsigned int) const override { return new EmptyRegion (); }
+  RegionDelegate *sized (coord_type, coord_type, unsigned int) const override { return new EmptyRegion (); }
+  RegionDelegate *sized_inside (const Region &, bool, coord_type, int, unsigned int) const override { return new EmptyRegion (); }
+  RegionDelegate *sized_inside (const Region &, bool, coord_type, coord_type, int, unsigned int) const override { return new EmptyRegion (); }
 
-  virtual RegionDelegate *and_with (const Region &, db::PropertyConstraint) const { return new EmptyRegion (); }
-  virtual RegionDelegate *not_with (const Region &, db::PropertyConstraint) const { return new EmptyRegion (); }
-  virtual std::pair<RegionDelegate *, RegionDelegate *> andnot_with (const Region &, db::PropertyConstraint) const { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
-  virtual RegionDelegate *xor_with (const Region &other, db::PropertyConstraint prop_constraint) const;
-  virtual RegionDelegate *or_with (const Region &other, db::PropertyConstraint prop_constraint) const;
-  virtual RegionDelegate *add_in_place (const Region &other);
-  virtual RegionDelegate *add (const Region &other) const;
+  RegionDelegate *and_with (const Region &, db::PropertyConstraint) const override { return new EmptyRegion (); }
+  RegionDelegate *not_with (const Region &, db::PropertyConstraint) const override { return new EmptyRegion (); }
+  std::pair<RegionDelegate *, RegionDelegate *> andnot_with (const Region &, db::PropertyConstraint) const override { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
+  RegionDelegate *xor_with (const Region &other, db::PropertyConstraint prop_constraint) const override;
+  RegionDelegate *or_with (const Region &other, db::PropertyConstraint prop_constraint) const override;
+  RegionDelegate *add_in_place (const Region &other) override;
+  RegionDelegate *add (const Region &other) const override;
 
-  virtual RegionDelegate *peel (double /*complexity_factor*/) const { return new EmptyRegion (); }
+  RegionDelegate *peel (double /*complexity_factor*/) const override { return new EmptyRegion (); }
 
-  virtual RegionDelegate *selected_outside (const Region &) const { return new EmptyRegion (); }
-  virtual RegionDelegate *selected_not_outside (const Region &) const { return new EmptyRegion (); }
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_outside_pair (const Region &) const { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
-  virtual RegionDelegate *selected_inside (const Region &) const { return new EmptyRegion (); }
-  virtual RegionDelegate *selected_not_inside (const Region &) const { return new EmptyRegion (); }
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_inside_pair (const Region &) const { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
-  virtual RegionDelegate *selected_enclosing (const Region &, size_t, size_t) const { return new EmptyRegion (); }
-  virtual RegionDelegate *selected_not_enclosing (const Region &, size_t, size_t) const { return new EmptyRegion (); }
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_enclosing_pair (const Region &, size_t, size_t) const { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
-  virtual RegionDelegate *selected_interacting (const Region &, size_t, size_t) const { return new EmptyRegion (); }
-  virtual RegionDelegate *selected_not_interacting (const Region &, size_t, size_t) const { return new EmptyRegion (); }
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_pair (const Region &, size_t, size_t) const { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
-  virtual RegionDelegate *selected_interacting (const Edges &, size_t, size_t) const { return new EmptyRegion (); }
-  virtual RegionDelegate *selected_not_interacting (const Edges &, size_t, size_t) const { return new EmptyRegion (); }
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_pair (const Edges &, size_t, size_t) const { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
-  virtual RegionDelegate *selected_interacting (const Texts &, size_t, size_t) const { return new EmptyRegion (); }
-  virtual RegionDelegate *selected_not_interacting (const Texts &, size_t, size_t) const { return new EmptyRegion (); }
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_pair (const Texts &, size_t, size_t) const { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
-  virtual RegionDelegate *selected_overlapping (const Region &, size_t, size_t) const { return new EmptyRegion (); }
-  virtual RegionDelegate *selected_not_overlapping (const Region &, size_t, size_t) const { return new EmptyRegion (); }
-  virtual std::pair<RegionDelegate *, RegionDelegate *> selected_overlapping_pair (const Region &, size_t, size_t) const { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
-  virtual RegionDelegate *pull_inside (const Region &) const  { return new EmptyRegion (); }
-  virtual RegionDelegate *pull_interacting (const Region &) const  { return new EmptyRegion (); }
-  virtual EdgesDelegate *pull_interacting (const Edges &) const  { return new EmptyEdges (); }
-  virtual TextsDelegate *pull_interacting (const Texts &) const  { return new EmptyTexts (); }
-  virtual RegionDelegate *pull_overlapping (const Region &) const  { return new EmptyRegion (); }
-  virtual RegionDelegate *in (const Region &, bool) const { return new EmptyRegion (); }
-  virtual std::pair<RegionDelegate *, RegionDelegate *> in_and_out (const Region &) const { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
+  RegionDelegate *selected_outside (const Region &) const override { return new EmptyRegion (); }
+  RegionDelegate *selected_not_outside (const Region &) const override { return new EmptyRegion (); }
+  std::pair<RegionDelegate *, RegionDelegate *> selected_outside_pair (const Region &) const override { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
+  RegionDelegate *selected_inside (const Region &) const override { return new EmptyRegion (); }
+  RegionDelegate *selected_not_inside (const Region &) const override { return new EmptyRegion (); }
+  std::pair<RegionDelegate *, RegionDelegate *> selected_inside_pair (const Region &) const override { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
+  RegionDelegate *selected_enclosing (const Region &, size_t, size_t) const override { return new EmptyRegion (); }
+  RegionDelegate *selected_not_enclosing (const Region &, size_t, size_t) const override { return new EmptyRegion (); }
+  std::pair<RegionDelegate *, RegionDelegate *> selected_enclosing_pair (const Region &, size_t, size_t) const override { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
+  RegionDelegate *selected_interacting (const Region &, size_t, size_t) const override { return new EmptyRegion (); }
+  RegionDelegate *selected_not_interacting (const Region &, size_t, size_t) const override { return new EmptyRegion (); }
+  std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_pair (const Region &, size_t, size_t) const override { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
+  RegionDelegate *selected_interacting (const Edges &, size_t, size_t) const override { return new EmptyRegion (); }
+  RegionDelegate *selected_not_interacting (const Edges &, size_t, size_t) const override { return new EmptyRegion (); }
+  std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_pair (const Edges &, size_t, size_t) const override { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
+  RegionDelegate *selected_interacting (const Texts &, size_t, size_t) const override { return new EmptyRegion (); }
+  RegionDelegate *selected_not_interacting (const Texts &, size_t, size_t) const override { return new EmptyRegion (); }
+  std::pair<RegionDelegate *, RegionDelegate *> selected_interacting_pair (const Texts &, size_t, size_t) const override { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
+  RegionDelegate *selected_overlapping (const Region &, size_t, size_t) const override { return new EmptyRegion (); }
+  RegionDelegate *selected_not_overlapping (const Region &, size_t, size_t) const override { return new EmptyRegion (); }
+  std::pair<RegionDelegate *, RegionDelegate *> selected_overlapping_pair (const Region &, size_t, size_t) const override { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
+  RegionDelegate *pull_inside (const Region &) const override  { return new EmptyRegion (); }
+  RegionDelegate *pull_interacting (const Region &) const override  { return new EmptyRegion (); }
+  EdgesDelegate *pull_interacting (const Edges &) const override  { return new EmptyEdges (); }
+  TextsDelegate *pull_interacting (const Texts &) const override  { return new EmptyTexts (); }
+  RegionDelegate *pull_overlapping (const Region &) const override  { return new EmptyRegion (); }
+  RegionDelegate *in (const Region &, bool) const override { return new EmptyRegion (); }
+  std::pair<RegionDelegate *, RegionDelegate *> in_and_out (const Region &) const override { return std::make_pair (new EmptyRegion (), new EmptyRegion ()); }
 
-  virtual bool has_valid_polygons () const { return true; }
-  virtual bool has_valid_merged_polygons () const { return true; }
-  virtual const db::Polygon *nth (size_t) const { tl_assert (false); }
-  virtual db::properties_id_type nth_prop_id (size_t) const { tl_assert (false); }
+  bool has_valid_polygons () const override { return true; }
+  bool has_valid_merged_polygons () const override { return true; }
+  const db::Polygon *nth (size_t) const override { tl_assert (false); }
+  db::properties_id_type nth_prop_id (size_t) const override { tl_assert (false); }
 
-  virtual const db::RecursiveShapeIterator *iter () const { return nullptr; }
-  virtual void apply_property_translator (const db::PropertiesTranslator &) { }
+  const db::RecursiveShapeIterator *iter () const override { return nullptr; }
+  void apply_property_translator (const db::PropertiesTranslator &) override { }
 
-  virtual bool equals (const Region &other) const;
-  virtual bool less (const Region &other) const;
+  bool equals (const Region &other) const override;
+  bool less (const Region &other) const override;
 
-  virtual void insert_into (Layout *, db::cell_index_type, unsigned int) const { }
+  void insert_into (Layout *, db::cell_index_type, unsigned int) const override { }
 
-  virtual RegionDelegate *nets (LayoutToNetlist *, NetPropertyMode, const tl::Variant &, const std::vector<const db::Net *> *) const { return new EmptyRegion (); }
+  RegionDelegate *nets (LayoutToNetlist *, NetPropertyMode, const tl::Variant &, const std::vector<const db::Net *> *) const override { return new EmptyRegion (); }
 
 private:
   EmptyRegion &operator= (const EmptyRegion &other);

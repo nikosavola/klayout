@@ -67,7 +67,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual size_t tryRead (void *buffer, size_t /*min_bytes*/, size_t max_bytes)
+  size_t tryRead (void *buffer, size_t /*min_bytes*/, size_t max_bytes) override
   {
     size_t n = mp_is->base ()->read ((char *) buffer, max_bytes);
     m_pos_before = m_pos;
@@ -145,12 +145,12 @@ public:
   /**  
    *  @brief Destructor
    */
-  ~Reader () noexcept;
+  ~Reader () noexcept override;
 
   /**
    *  @brief Format
    */
-  virtual const char *format () const { return "LStream"; }
+  const char *format () const override { return "LStream"; }
 
 protected:
   /**
@@ -159,7 +159,7 @@ protected:
    *  This method will read the information from the stream
    *  passed in the constructor.
    */
-  virtual void do_read (db::Layout &layout);
+  void do_read (db::Layout &layout) override;
 
   /**
    *  @brief Implementation of db::CommonReader InputStream
@@ -167,7 +167,7 @@ protected:
    *  This method is called to initialize the reader 
    *  from the given options.
    */
-  virtual void init (const db::LoadLayoutOptions &options);
+  void init (const db::LoadLayoutOptions &options) override;
 
   /**
    *  @brief Issues an errors
@@ -258,8 +258,8 @@ private:
   template <class Object>
   void make_object_array_explode (unsigned int li, db::properties_id_type prop_id, const Object &object, stream::repetition::Repetition::Reader repetition);
 
-  virtual void common_reader_error (const std::string &msg) { error (msg); }
-  virtual void common_reader_warn (const std::string &msg, int warn_level = 1) { warn (msg, warn_level); }
+  void common_reader_error (const std::string &msg) override { error (msg); }
+  void common_reader_warn (const std::string &msg, int warn_level = 1) override { warn (msg, warn_level); }
 };
 
 }

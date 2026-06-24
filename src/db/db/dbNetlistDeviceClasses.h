@@ -40,7 +40,7 @@ class DB_PUBLIC DeviceClassResistor
 public:
   DeviceClassResistor ();
 
-  virtual db::DeviceClass *clone () const
+  db::DeviceClass *clone () const override
   {
     return new DeviceClassResistor (*this);
   }
@@ -66,7 +66,7 @@ class DB_PUBLIC DeviceClassResistorWithBulk
 public:
   DeviceClassResistorWithBulk ();
 
-  virtual db::DeviceClass *clone () const
+  db::DeviceClass *clone () const override
   {
     return new DeviceClassResistorWithBulk (*this);
   }
@@ -85,7 +85,7 @@ class DB_PUBLIC DeviceClassCapacitor
 public:
   DeviceClassCapacitor ();
 
-  virtual db::DeviceClass *clone () const
+  db::DeviceClass *clone () const override
   {
     return new DeviceClassCapacitor (*this);
   }
@@ -109,7 +109,7 @@ class DB_PUBLIC DeviceClassCapacitorWithBulk
 public:
   DeviceClassCapacitorWithBulk ();
 
-  virtual db::DeviceClass *clone () const
+  db::DeviceClass *clone () const override
   {
     return new DeviceClassCapacitorWithBulk (*this);
   }
@@ -128,7 +128,7 @@ class DB_PUBLIC DeviceClassInductor
 public:
   DeviceClassInductor ();
 
-  virtual db::DeviceClass *clone () const
+  db::DeviceClass *clone () const override
   {
     return new DeviceClassInductor (*this);
   }
@@ -157,7 +157,7 @@ public:
   static size_t terminal_id_A;
   static size_t terminal_id_C;
 
-  virtual db::DeviceClass *clone () const
+  db::DeviceClass *clone () const override
   {
     return new DeviceClassDiode (*this);
   }
@@ -186,7 +186,7 @@ public:
   static size_t terminal_id_G;
   static size_t terminal_id_D;
 
-  virtual db::DeviceClass *clone () const
+  db::DeviceClass *clone () const override
   {
     return new DeviceClassMOS3Transistor (*this);
   }
@@ -226,13 +226,13 @@ public:
 
   static size_t terminal_id_B;
 
-  virtual db::DeviceClass *clone () const
+  db::DeviceClass *clone () const override
   {
     return new DeviceClassMOS4Transistor (*this);
   }
 
 protected:
-  virtual bool has_bulk_pin () const;
+  bool has_bulk_pin () const override;
 };
 
 /**
@@ -259,7 +259,7 @@ public:
   static size_t terminal_id_B;
   static size_t terminal_id_E;
 
-  virtual db::DeviceClass *clone () const
+  db::DeviceClass *clone () const override
   {
     return new DeviceClassBJT3Transistor (*this);
   }
@@ -278,7 +278,7 @@ public:
 
   static size_t terminal_id_S;
 
-  virtual db::DeviceClass *clone () const
+  db::DeviceClass *clone () const override
   {
     return new DeviceClassBJT4Transistor (*this);
   }

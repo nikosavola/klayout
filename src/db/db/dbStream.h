@@ -263,7 +263,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual tl::XMLElementBase *clone () const
+  tl::XMLElementBase *clone () const override
   {
     return new ReaderOptionsXMLElement (*this);
   }
@@ -293,7 +293,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual tl::XMLElementBase *clone () const
+  tl::XMLElementBase *clone () const override
   {
     return new WriterOptionsXMLElement (*this);
   }

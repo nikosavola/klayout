@@ -110,7 +110,7 @@ public:
   /**
    *  @brief Write the layout object
    */
-  void write (db::Layout &layout, tl::OutputStream &stream, const db::SaveLayoutOptions &options);
+  void write (db::Layout &layout, tl::OutputStream &stream, const db::SaveLayoutOptions &options) override;
 
   void write (const db::CellInstArray &inst_array, const db::Repetition &rep)
   {

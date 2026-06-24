@@ -47,7 +47,7 @@ class SelectLineStyleForm
 public:
   SelectLineStyleForm (QWidget *parent, const lay::LineStyles &styles, bool include_nil = false);
 
-  ~SelectLineStyleForm ();
+  ~SelectLineStyleForm () override;
 
   int selected () const
   {

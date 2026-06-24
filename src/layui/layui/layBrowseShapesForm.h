@@ -48,8 +48,8 @@ class BrowseShapesConfigPage
 public:
   BrowseShapesConfigPage (QWidget *parent);
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 public slots:
   void context_changed (int);
@@ -67,9 +67,9 @@ public:
   enum window_type { DontChange = 0, FitCell, FitMarker, Center, CenterSize };
 
   BrowseShapesForm (lay::Dispatcher *root, LayoutViewBase *view);
-  ~BrowseShapesForm ();
+  ~BrowseShapesForm () override;
 
-  bool eventFilter (QObject *watched, QEvent *event);
+  bool eventFilter (QObject *watched, QEvent *event) override;
 
 public slots:
   void cell_changed(QTreeWidgetItem *, QTreeWidgetItem *);
@@ -121,14 +121,14 @@ private:
   bool adv_cell_inst (bool up);
 
   //  implementation of the lay::Plugin interface
-  virtual bool configure (const std::string &name, const std::string &value);
+  bool configure (const std::string &name, const std::string &value) override;
 
   //  implementation of the lay::Browser interface
-  virtual void activated ();
-  virtual void deactivated ();
+  void activated () override;
+  void deactivated () override;
 
   //  implementation of the lay::Plugin interface
-  void menu_activated (const std::string &symbol);
+  void menu_activated (const std::string &symbol) override;
 
 };
 

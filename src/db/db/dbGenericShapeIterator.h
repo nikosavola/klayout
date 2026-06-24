@@ -69,42 +69,42 @@ public:
   { }
 
 protected:
-  virtual bool is_addressable () const
+  bool is_addressable () const override
   {
     return addressable;
   }
 
-  virtual void do_reset (const db::Box &, bool)
+  void do_reset (const db::Box &, bool) override
   {
     m_iter = m_from;
   }
 
-  virtual bool at_end () const
+  bool at_end () const override
   {
     return m_iter == m_to;
   }
 
-  virtual void increment ()
+  void increment () override
   {
     ++m_iter;
   }
 
-  virtual const value_type *get () const
+  const value_type *get () const override
   {
     return m_iter.operator-> ();
   }
 
-  virtual db::properties_id_type prop_id () const
+  db::properties_id_type prop_id () const override
   {
     return 0;
   }
 
-  generic_shape_iterator_delegate_base<value_type> *clone () const
+  generic_shape_iterator_delegate_base<value_type> *clone () const override
   {
     return new generic_shape_iterator_delegate2<Iter> (*this);
   }
 
-  virtual bool equals (const generic_shape_iterator_delegate_base<value_type> *other) const
+  bool equals (const generic_shape_iterator_delegate_base<value_type> *other) const override
   {
     const generic_shape_iterator_delegate2<Iter> *o = dynamic_cast<const generic_shape_iterator_delegate2<Iter> *> (other);
 #if defined(_MSC_VER) && defined(_ITERATOR_DEBUG_LEVEL) && _ITERATOR_DEBUG_LEVEL >= 2
@@ -194,12 +194,12 @@ public:
   }
 
 protected:
-  virtual bool is_addressable () const
+  bool is_addressable () const override
   {
     return m_is_addressable;
   }
 
-  virtual void do_reset (const db::Box &box, bool overlapping)
+  void do_reset (const db::Box &box, bool overlapping) override
   {
     //  NOTE: to allow multiple iterators acting on the same Shapes container at once, we always sort before we deliver the iterator -
     //  also in the non-region case. Without this, sorting may happen while another iterator is progressing.
@@ -217,18 +217,18 @@ protected:
     set ();
   }
 
-  virtual bool at_end () const
+  bool at_end () const override
   {
     return m_iter.at_end ();
   }
 
-  virtual void increment ()
+  void increment () override
   {
     ++m_iter;
     set ();
   }
 
-  virtual const T *get () const
+  const T *get () const override
   {
     if (m_is_addressable) {
       return m_iter->basic_ptr (typename T::tag ());
@@ -237,22 +237,22 @@ protected:
     }
   }
 
-  virtual db::properties_id_type prop_id () const
+  db::properties_id_type prop_id () const override
   {
     return m_iter->prop_id ();
   }
 
-  generic_shape_iterator_delegate_base<T> *clone () const
+  generic_shape_iterator_delegate_base<T> *clone () const override
   {
     return new generic_shapes_iterator_delegate<T> (*this);
   }
 
-  virtual db::Box bbox () const
+  db::Box bbox () const override
   {
     return mp_shapes->bbox ();
   }
 
-  virtual bool equals (const generic_shape_iterator_delegate_base<T> *other) const
+  bool equals (const generic_shape_iterator_delegate_base<T> *other) const override
   {
     const generic_shapes_iterator_delegate<T> *o = dynamic_cast<const generic_shapes_iterator_delegate<T> *> (other);
     return o && o->mp_shapes == mp_shapes && o->m_iter.at_end () == m_iter.at_end () && (m_iter.at_end () || *o->m_iter == *m_iter);
@@ -448,48 +448,48 @@ public:
     set ();
   }
 
-  generic_shape_iterator_with_properties_delegate *clone () const
+  generic_shape_iterator_with_properties_delegate *clone () const override
   {
     return new generic_shape_iterator_with_properties_delegate (m_basic);
   }
 
-  virtual void do_reset (const db::Box &region, bool overlapping)
+  void do_reset (const db::Box &region, bool overlapping) override
   {
     m_basic.reset (region, overlapping);
   }
 
-  virtual db::Box bbox () const
+  db::Box bbox () const override
   {
     return m_basic.bbox ();
   }
 
-  virtual bool is_addressable () const
+  bool is_addressable () const override
   {
     return false;
   }
 
-  virtual bool at_end () const
+  bool at_end () const override
   {
     return m_basic.at_end ();
   }
 
-  virtual void increment ()
+  void increment () override
   {
     ++m_basic;
     set ();
   }
 
-  virtual const db::object_with_properties<T> *get () const
+  const db::object_with_properties<T> *get () const override
   {
     return &m_object;
   }
 
-  virtual db::properties_id_type prop_id () const
+  db::properties_id_type prop_id () const override
   {
     return m_object.properties_id ();
   }
 
-  virtual bool equals (const generic_shape_iterator_delegate_base<db::object_with_properties<T> > *other) const
+  bool equals (const generic_shape_iterator_delegate_base<db::object_with_properties<T> > *other) const override
   {
     const generic_shape_iterator_with_properties_delegate<T> *other_cast = dynamic_cast<const generic_shape_iterator_with_properties_delegate<T> *> (other);
     return other_cast && m_basic == other_cast->m_basic;

@@ -43,8 +43,8 @@ public:
 
   void set_value (double v, const std::string &value);
 
-  QSize sizeHint () const;
-  QSize minimumSizeHint () const;
+  QSize sizeHint () const override;
+  QSize minimumSizeHint () const override;
 
 private:
   double m_value;
@@ -54,8 +54,8 @@ private:
   int m_fw;
   int m_bw;
 
-  void paintEvent (QPaintEvent *event); 
-  void resizeEvent (QResizeEvent *event); 
+  void paintEvent (QPaintEvent *event) override; 
+  void resizeEvent (QResizeEvent *event) override; 
 };
 
 ProgressBarWidget::ProgressBarWidget (QWidget *parent, const char *name)

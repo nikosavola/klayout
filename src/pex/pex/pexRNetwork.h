@@ -246,7 +246,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~RNetwork ();
+  ~RNetwork () override;
 
   /**
    *  @brief Creates a node with the given type and port index

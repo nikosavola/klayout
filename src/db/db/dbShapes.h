@@ -582,7 +582,7 @@ public:
   /**
    *  @brief Dtor: clear all ..
    */
-  ~Shapes ()  // NOLINT(bugprone-exception-escape)
+  ~Shapes () override  // NOLINT(bugprone-exception-escape)
   {
     clear ();
     mp_cell = nullptr;
@@ -1539,12 +1539,12 @@ public:
   /**
    *  @brief Implementation of the redo method
    */
-  void redo (db::Op *op);
+  void redo (db::Op *op) override;
 
   /** 
    *  @brief Implementation of the undo method
    */
-  void undo (db::Op *op);
+  void undo (db::Op *op) override;
 
   /**
    *  @brief Collect memory usage
@@ -1758,7 +1758,7 @@ public:
     }
   }
 
-  virtual void undo (Shapes *shapes)
+  void undo (Shapes *shapes) override
   {
     if (m_insert) {
       erase (shapes);
@@ -1767,7 +1767,7 @@ public:
     }
   }
 
-  virtual void redo (Shapes *shapes)
+  void redo (Shapes *shapes) override
   {
     if (m_insert) {
       insert (shapes);
@@ -1828,7 +1828,7 @@ public:
     //  .. nothing yet ..
   }
 
-  ~FullLayerOp ()
+  ~FullLayerOp () override
   {
     if (m_owns_layer) {
       delete mp_layer;
@@ -1836,7 +1836,7 @@ public:
     }
   }
 
-  virtual void undo (Shapes *shapes)
+  void undo (Shapes *shapes) override
   {
     if (m_insert) {
       erase (shapes);
@@ -1845,7 +1845,7 @@ public:
     }
   }
 
-  virtual void redo (Shapes *shapes)
+  void redo (Shapes *shapes) override
   {
     if (m_insert) {
       insert (shapes);

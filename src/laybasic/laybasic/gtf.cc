@@ -321,7 +321,7 @@ public:
 
   void set (const QMouseEvent &me);
 
-  virtual void paintEvent (QPaintEvent *pe);
+  void paintEvent (QPaintEvent *pe) override;
 
 private:
   QPixmap *mp_current_pixmap;
@@ -405,14 +405,14 @@ class GtfXmlHandler
 public:
   GtfXmlHandler (EventList *list);
 
-  bool characters (const QString &ch);
-  bool endElement (const QString &namespaceURI, const QString &localName, const QString &qName);
-  bool startElement (const QString &namespaceURI, const QString &localName, const QString &qName, const QXmlAttributes &atts);
-  bool error (const QXmlParseException &exception);
-  bool fatalError (const QXmlParseException &exception);
+  bool characters (const QString &ch) override;
+  bool endElement (const QString &namespaceURI, const QString &localName, const QString &qName) override;
+  bool startElement (const QString &namespaceURI, const QString &localName, const QString &qName, const QXmlAttributes &atts) override;
+  bool error (const QXmlParseException &exception) override;
+  bool fatalError (const QXmlParseException &exception) override;
   bool fatalError (const std::string &msg);
-  bool warning (const QXmlParseException &exception);
-  void setDocumentLocator (QXmlLocator *locator);
+  bool warning (const QXmlParseException &exception) override;
+  void setDocumentLocator (QXmlLocator *locator) override;
 
 private:
   QXmlLocator *mp_locator;
@@ -519,12 +519,12 @@ public:
     return m_target;
   }
 
-  virtual void attributes (std::vector< std::pair<std::string, std::string> > &attr) const
+  void attributes (std::vector< std::pair<std::string, std::string> > &attr) const override
   {
     attr.push_back (std::make_pair (std::string ("target"), m_target));
   }
   
-  bool equals (const LogEventBase &b) const
+  bool equals (const LogEventBase &b) const override
   {
     const LogTargetedEvent *be = dynamic_cast <const LogTargetedEvent *> (&b);
     if (! be) {
@@ -581,7 +581,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void issue_event () 
+  void issue_event () override 
   {
     QWidget *target = target_widget ();
     
@@ -594,7 +594,7 @@ public:
     Player::instance ()->issue_event (target, &me);
   }
 
-  virtual const char *name () const
+  const char *name () const override
   { 
     const char *event_name = "";
     if (m_mouse_event->type () == QEvent::MouseMove) {
@@ -609,7 +609,7 @@ public:
     return event_name;
   }
 
-  virtual void attributes (std::vector< std::pair<std::string, std::string> > &attr) const
+  void attributes (std::vector< std::pair<std::string, std::string> > &attr) const override
   {
     LogTargetedEvent::attributes (attr);
 
@@ -638,7 +638,7 @@ public:
                                           m_mouse_event->modifiers ()));
   }
 
-  bool equals (const LogEventBase &b) const
+  bool equals (const LogEventBase &b) const override
   {
     const LogMouseEvent *be = dynamic_cast <const LogMouseEvent *> (&b);
     if (! be) {
@@ -666,13 +666,13 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void issue_event () 
+  void issue_event () override 
   {
     std::unique_ptr<QKeyEvent> ke (new QKeyEvent (m_key_event->type (), m_key_event->key (), m_key_event->modifiers ()));
     Player::instance ()->issue_event (target_widget (), ke.get ());
   }
 
-  virtual const char *name () const
+  const char *name () const override
   {
     if (m_key_event->type() == QEvent::KeyPress) {
       return "key_press";
@@ -681,7 +681,7 @@ public:
     }
   }
 
-  virtual void attributes (std::vector< std::pair<std::string, std::string> > &attr) const
+  void attributes (std::vector< std::pair<std::string, std::string> > &attr) const override
   {
     LogTargetedEvent::attributes (attr);
 
@@ -695,7 +695,7 @@ public:
     attr.push_back (std::make_pair (std::string ("modifiers"), tl::sprintf ("%x", int (m_key_event->modifiers ()))));
   }
 
-  bool equals (const LogEventBase &b) const
+  bool equals (const LogEventBase &b) const override
   {
     const LogKeyEvent *be = dynamic_cast <const LogKeyEvent *> (&b);
     if (! be) {
@@ -721,7 +721,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void issue_event () 
+  void issue_event () override 
   {
     QList<QAction *> actions = target_widget ()->findChildren<QAction *> (tl::to_qstring (m_action_name));
     if (actions.empty()) {
@@ -732,18 +732,18 @@ public:
     }
   }
 
-  virtual const char *name () const
+  const char *name () const override
   {
     return "action";
   }
 
-  virtual void attributes (std::vector< std::pair<std::string, std::string> > &attr) const
+  void attributes (std::vector< std::pair<std::string, std::string> > &attr) const override
   {
     LogTargetedEvent::attributes (attr);
     attr.push_back (std::make_pair (std::string ("action"), m_action_name));
   }
 
-  bool equals (const LogEventBase &b) const
+  bool equals (const LogEventBase &b) const override
   {
     const LogActionEvent *be = dynamic_cast <const LogActionEvent *> (&b);
     if (! be) {
@@ -768,17 +768,17 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void issue_event () 
+  void issue_event () override 
   {
     target_widget ()->resize (m_size);
   }
 
-  virtual const char *name () const
+  const char *name () const override
   {
     return "resize";
   }
 
-  virtual void attributes (std::vector< std::pair<std::string, std::string> > &attr) const
+  void attributes (std::vector< std::pair<std::string, std::string> > &attr) const override
   {
     LogTargetedEvent::attributes (attr);
     attr.push_back (std::make_pair (std::string ("xsize"), tl::to_string (m_size.width ())));
@@ -797,7 +797,7 @@ public:
     return m_size;
   }
   
-  bool equals (const LogEventBase &b) const
+  bool equals (const LogEventBase &b) const override
   {
     const LogResizeEvent *be = dynamic_cast <const LogResizeEvent *> (&b);
     if (! be) {
@@ -809,7 +809,7 @@ public:
            m_old_size == be->m_old_size;
   }
 
-  virtual bool spontaneous () const
+  bool spontaneous () const override
   {
     return true;
   }
@@ -835,7 +835,7 @@ public:
     set_data (d);
   }
 
-  virtual void issue_event () 
+  void issue_event () override 
   {
     if (gtf::Recorder::instance () && gtf::Recorder::instance ()->recording ()) {
 
@@ -851,7 +851,7 @@ public:
     }
   }
 
-  virtual const char *name () const
+  const char *name () const override
   {
     return "probe";
   }
@@ -873,22 +873,22 @@ public:
     set_data (tl::Variant (text));
   }
 
-  virtual void issue_event () 
+  void issue_event () override 
   {
     //  .. error events are not "issued" ..
   }
 
-  virtual const char *name () const
+  const char *name () const override
   {
     return "error";
   }
 
-  virtual void attributes (std::vector< std::pair<std::string, std::string> > & /*attr*/) const
+  void attributes (std::vector< std::pair<std::string, std::string> > & /*attr*/) const override
   {
     //  the error text is stored in the data
   }
 
-  bool equals (const LogEventBase &b) const
+  bool equals (const LogEventBase &b) const override
   {
     return dynamic_cast <const LogErrorEvent *> (&b) != nullptr;
   }
@@ -1106,11 +1106,11 @@ public:
   { }
 
 protected:
-  virtual void puts (const char *s) { mp_rec->errlog_puts (s); }
-  virtual void endl () { mp_rec->errlog_endl (); }
-  virtual void end () { mp_rec->errlog_end (); }
-  virtual void begin () { mp_rec->errlog_begin (); }
-  virtual void yield () { }
+  void puts (const char *s) override { mp_rec->errlog_puts (s); }
+  void endl () override { mp_rec->errlog_endl (); }
+  void end () override { mp_rec->errlog_end (); }
+  void begin () override { mp_rec->errlog_begin (); }
+  void yield () override { }
 
 private:
   Recorder *mp_rec;

@@ -52,7 +52,7 @@ public:
   /**
    *  @brief Implementation of FormatSpecificReaderOptions
    */
-  virtual db::FormatSpecificReaderOptions *clone () const
+  db::FormatSpecificReaderOptions *clone () const override
   {
     return new ReaderOptions (*this);
   }
@@ -60,7 +60,7 @@ public:
   /**
    *  @brief Implementation of FormatSpecificReaderOptions
    */
-  virtual const std::string &format_name () const
+  const std::string &format_name () const override
   {
     static const std::string n ("LStream");
     return n;
@@ -111,7 +111,7 @@ public:
   /** 
    *  @brief Implementation of FormatSpecificWriterOptions
    */
-  virtual db::FormatSpecificWriterOptions *clone () const
+  db::FormatSpecificWriterOptions *clone () const override
   {
     return new WriterOptions (*this);
   }
@@ -119,7 +119,7 @@ public:
   /**
    *  @brief Implementation of FormatSpecificWriterOptions
    */
-  virtual const std::string &format_name () const
+  const std::string &format_name () const override
   {
     static std::string n ("LStream");
     return n;

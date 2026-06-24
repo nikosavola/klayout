@@ -54,12 +54,12 @@ public:
   /**
    *  @brief The destructor
    */
-  ~LibraryProxy ();
+  ~LibraryProxy () override;
 
   /**
    *  @brief Cloning 
    */
-  virtual Cell *clone (Layout &layout) const;
+  Cell *clone (Layout &layout) const override;
 
   /**
    *  @brief Get the library id 
@@ -80,7 +80,7 @@ public:
   /**
    *  @brief Update the layout
    */
-  virtual void update (ImportLayerMapping *layer_mapping = nullptr);
+  void update (ImportLayerMapping *layer_mapping = nullptr) override;
 
   /**
    *  @brief Tell, if this cell is a proxy cell
@@ -88,7 +88,7 @@ public:
    *  Proxy cells are such whose layout represents a snapshot of another entity.
    *  Such cells can be PCell variants or library references for example.
    */
-  virtual bool is_proxy () const 
+  bool is_proxy () const override 
   { 
     return true; 
   }
@@ -99,35 +99,35 @@ public:
    *  This attribute is evaluated by file writers to skip cell replicas for
    *  library cells that do not want to replicated.
    */
-  virtual bool can_skip_replica () const;
+  bool can_skip_replica () const override;
 
   /**
    *  @brief Gets the basic name
    *
    *  This returns the basic name of the proxy target
    */
-  virtual std::string get_basic_name () const;
+  std::string get_basic_name () const override;
 
   /**
    *  @brief Gets the variant name
    *
    *  This returns the basic name of the proxy target
    */
-  virtual std::string get_variant_name () const;
+  std::string get_variant_name () const override;
 
   /**
    *  @brief Gets the display name
    *
    *  This returns the basic name of the proxy target
    */
-  virtual std::string get_display_name () const;
+  std::string get_display_name () const override;
 
   /**
    *  @brief Gets the qualified name
    *
    *  Gets a combination of the library name and the target cell's qualified name
    */
-  virtual std::string get_qualified_name () const;
+  std::string get_qualified_name () const override;
 
   /**
    *  @brief Resets the binding of this proxy
@@ -137,12 +137,12 @@ public:
   /**
    *  @brief Reimplemented from Cell: unregisters the proxy at the layout
    */
-  virtual void unregister ();
+  void unregister () override;
 
   /**
    *  @brief Reimplemented from Cell: reregisters the proxy at the layout
    */
-  virtual void reregister ();
+  void reregister () override;
 
 private:
   lib_id_type m_lib_id;

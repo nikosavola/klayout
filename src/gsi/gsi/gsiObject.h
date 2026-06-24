@@ -209,7 +209,7 @@ class GSI_PUBLIC Proxy
 {
 public:
   Proxy (const gsi::ClassBase *_cls_decl);
-  ~Proxy ();
+  ~Proxy () override;
 
   void destroy ();
   void detach ();

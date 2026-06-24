@@ -47,24 +47,24 @@ public:
     //  .. nothing yet ..
   }
   
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override
   {
     options.push_back (std::pair<std::string, std::string> (cfg_stream_import_spec, ""));
   }
 
-  virtual lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
+  lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const override
   {
     // .. nothing yet ..
     return nullptr;
   }
 
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     lay::PluginDeclaration::get_menu_entries (menu_entries);
     menu_entries.push_back (lay::menu_item ("lay::import_stream", "import_stream:edit", "file_menu.import_menu.end", tl::to_string (QObject::tr ("Other Files Into Current"))));
   }
 
-  virtual bool configure (const std::string &name, const std::string &value)
+  bool configure (const std::string &name, const std::string &value) override
   {
     if (name == cfg_stream_import_spec) {
       m_import_spec = value;
@@ -74,12 +74,12 @@ public:
     }
   }
 
-  virtual void config_finalize ()
+  void config_finalize () override
   {
     // .. nothing yet ..
   }
 
-  virtual bool menu_activated (const std::string &symbol) const
+  bool menu_activated (const std::string &symbol) const override
   {
     if (symbol == "lay::import_stream") {
 

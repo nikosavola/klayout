@@ -162,7 +162,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~PartialService ();
+  ~PartialService () override;
 
   /**
    *  @brief Access to the view object
@@ -176,7 +176,7 @@ public:
   /**
    *  @brief Obtain the lay::ViewService interface
    */
-  lay::ViewService *view_service_interface ()
+  lay::ViewService *view_service_interface () override
   {
     return this;
   }
@@ -184,7 +184,7 @@ public:
   /**
    *  @brief Obtain the lay::Editable interface
    */
-  lay::Editable *editable_interface ()
+  lay::Editable *editable_interface () override
   {
     return this;
   }
@@ -192,52 +192,52 @@ public:
   /** 
    *  @brief Implementation of the menu functions
    */
-  virtual void menu_activated (const std::string &symbol);
+  void menu_activated (const std::string &symbol) override;
 
   /**
    *  @brief Implementation of "Plugin" interface: configuration setup
    */
-  bool configure (const std::string &name, const std::string &value);
+  bool configure (const std::string &name, const std::string &value) override;
 
   /**
    *  @brief Implementation of "Plugin" interface: configuration finalization
    */
-  void config_finalize ();
+  void config_finalize () override;
 
   /**
    *  @brief Implement the wheel event (for resetting hove state)
    */
-  virtual bool wheel_event (int delta, bool horizontal, const db::DPoint &p, unsigned int buttons, bool prio);
+  bool wheel_event (int delta, bool horizontal, const db::DPoint &p, unsigned int buttons, bool prio) override;
 
   /**
    *  @brief Implement the mouse mode: move event
    */
-  virtual bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio);
+  bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
 
   /**
    *  @brief Implement the mouse mode: button press event
    */
-  virtual bool mouse_press_event (const db::DPoint &p, unsigned int buttons, bool prio);
+  bool mouse_press_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
 
   /**
    *  @brief Implement the mouse mode: button clicked (pressed and released)
    */
-  virtual bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio);
+  bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
 
   /**
    *  @brief Implement the mouse mode: button double clicked 
    */
-  virtual bool mouse_double_click_event (const db::DPoint &p, unsigned int buttons, bool prio);
+  bool mouse_double_click_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
 
   /**
    *  @brief Implement the mouse mode: button release
    */
-  virtual bool mouse_release_event (const db::DPoint &p, unsigned int buttons, bool prio);
+  bool mouse_release_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
 
   /**
    *  @brief Key handling event
    */
-  virtual bool key_event (unsigned int key, unsigned int buttons);
+  bool key_event (unsigned int key, unsigned int buttons) override;
 
   /**
    *  @brief Transforms the selection
@@ -245,87 +245,87 @@ public:
    *  Currently only displacements are allowed which basically moves the partial selection 
    *  by the given distance
    */
-  virtual void transform (const db::DCplxTrans &tr);
+  void transform (const db::DCplxTrans &tr) override;
 
   /**
    *  @brief Gets the catch distance (for single click)
    */
-  virtual double catch_distance ();
+  double catch_distance () override;
 
   /**
    *  @brief Gets the catch distance (for box)
    */
-  virtual double catch_distance_box ();
+  double catch_distance_box () override;
 
   /**
    *  @brief Indicates whether objects are selected
    */
-  virtual bool has_selection ();
+  bool has_selection () override;
 
   /**
    *  @brief Indicates how many objects are selected
    */
-  virtual size_t selection_size ();
+  size_t selection_size () override;
 
   /**
    *  @brief Indicates whether objects are selected in transient mode
    */
-  virtual bool has_transient_selection ();
+  bool has_transient_selection () override;
 
   /**
    *  @brief Gets the selection bounding box
    */
-  virtual db::DBox selection_bbox ();
+  db::DBox selection_bbox () override;
 
   /**
    *  @brief Start a "move" operation
    */
-  virtual bool begin_move (MoveMode sel, const db::DPoint &p, lay::angle_constraint_type ac);
+  bool begin_move (MoveMode sel, const db::DPoint &p, lay::angle_constraint_type ac) override;
 
   /**
    *  @brief Continue a "move" operation
    */
-  virtual void move (const db::DPoint &p, lay::angle_constraint_type ac);
+  void move (const db::DPoint &p, lay::angle_constraint_type ac) override;
 
   /**
    *  @brief Terminate a "move" operation
    */
-  virtual void end_move (const db::DPoint &p, lay::angle_constraint_type ac);
+  void end_move (const db::DPoint &p, lay::angle_constraint_type ac) override;
 
   /**
    *  @brief Terminate a "move" operation with compulsory move vector
    */
-  virtual void end_move (const db::DVector &v);
+  void end_move (const db::DVector &v) override;
 
   /**
    *  @brief Implement the "select" method at least to clear the selection
    */
-  virtual bool select (const db::DBox &box, SelectionMode mode);
+  bool select (const db::DBox &box, SelectionMode mode) override;
 
   /** 
    *  @brief "delete" operation
    */
-  virtual void del ();
+  void del () override;
 
   /**
    *  @brief Implement the mouse mode: deactivate mouse mode
    */
-  virtual void deactivated ();
+  void deactivated () override;
 
   /**
    *  @brief Implement the mouse mode: mode activated
    */
-  virtual void activated ();
+  void activated () override;
 
   /**
    *  @brief Reimplementation of the ViewService interface: set the colors
    */
-  virtual void set_colors (tl::Color background, tl::Color text);
+  void set_colors (tl::Color background, tl::Color text) override;
 
   /**
    *  @brief Cancel any edit operations (in this case, unselect all & cancel any drag operation)
    */
-  virtual void edit_cancel ();
+  void edit_cancel () override;
 
   /**
    *  @brief Issues editor hook calls ("modified") for the current selection and the given move transformation
@@ -382,7 +382,7 @@ private:
   //  Deferred method to update the selection
   tl::DeferredMethod<edt::PartialService> dm_selection_to_view;
 
-  void hover_reset ();
+  void hover_reset () override;
 
   void clear_partial_transient_selection ();
   bool partial_select (const db::DBox &box, lay::Editable::SelectionMode mode);

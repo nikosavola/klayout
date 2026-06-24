@@ -104,8 +104,8 @@ private:
   void select_entry (lay::CellView::cell_index_type n);
   void commit_cv ();
   void store_config ();
-  void accept ();
-  void reject ();
+  void accept () override;
+  void reject () override;
 };
 
 /**
@@ -209,7 +209,7 @@ private:
   void select_entry (db::cell_index_type n);
   void select_pcell_entry (db::pcell_id_type n);
   void update_cell_list ();
-  void accept ();
+  void accept () override;
 };
 
 }

@@ -321,9 +321,9 @@ public:
     : mp_fc (fc)
   { }
 
-  virtual bool supports_keyword_parameters () const { return true; }
+  bool supports_keyword_parameters () const override { return true; }
 
-  virtual void execute (const tl::ExpressionParserContext &context, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> *kwargs) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> *kwargs) const override
   {
     if (args.empty() || args.size () > 2) {
       throw tl::EvalError (tl::to_string (tr ("'define' function needs one or two arguments (a path or a name and path)")), context);
@@ -404,7 +404,7 @@ public:
     : mp_fc (fc)
   { }
 
-  virtual void execute (const tl::ExpressionParserContext &context, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant & /*out*/, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     if (args.size () != 1) {
       throw tl::EvalError (tl::to_string (tr ("'include' function needs exactly one argument (the include file path)")), context);

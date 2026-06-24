@@ -1525,12 +1525,12 @@ public:
     //  .. nothing yet ..
   }
 
-  int columnCount (const QModelIndex &) const
+  int columnCount (const QModelIndex &) const override
   {
     return 1;
   }
 
-  QVariant data (const QModelIndex &index, int role) const
+  QVariant data (const QModelIndex &index, int role) const override
   {
     if (role == Qt::DisplayRole) {
       int delta;
@@ -1550,7 +1550,7 @@ public:
     return QVariant ();
   }
 
-  QModelIndex index (int row, int column, const QModelIndex &parent) const
+  QModelIndex index (int row, int column, const QModelIndex &parent) const override
   {
     if (parent.isValid ()) {
       return QModelIndex ();
@@ -1559,12 +1559,12 @@ public:
     }
   }
 
-  QModelIndex parent(const QModelIndex &) const
+  QModelIndex parent(const QModelIndex &) const override
   {
     return QModelIndex ();
   }
 
-  int rowCount (const QModelIndex &parent) const
+  int rowCount (const QModelIndex &parent) const override
   {
     if (parent.isValid ()) {
       return 0;

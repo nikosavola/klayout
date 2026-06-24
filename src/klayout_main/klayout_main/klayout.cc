@@ -223,27 +223,27 @@ public:
     return m_os->good ();
   }
 
-  void puts (const char *s)
+  void puts (const char *s) override
   {
     if (m_os && tl::verbosity () >= m_min_verbosity) {
       m_os->write (s, strlen (s));
     }
   }
 
-  void endl ()
+  void endl () override
   {
     puts ("\n");
     m_new_line = true;
   }
 
-  void end ()
+  void end () override
   {
     if (m_os && tl::verbosity () >= m_min_verbosity) {
       m_os->flush ();
     }
   }
 
-  void begin ()
+  void begin () override
   {
     if (m_new_line) {
       puts (m_prefix.c_str ());
@@ -251,7 +251,7 @@ public:
     }
   }
 
-  void yield () { }
+  void yield () override { }
 
 private:
   int m_min_verbosity;

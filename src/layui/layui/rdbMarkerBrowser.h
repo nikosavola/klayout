@@ -51,10 +51,10 @@ class MarkerBrowserConfigPage
 
 public:
   MarkerBrowserConfigPage (QWidget *parent);
-  ~MarkerBrowserConfigPage ();
+  ~MarkerBrowserConfigPage () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 public slots:
   void window_changed (int);
@@ -70,10 +70,10 @@ class MarkerBrowserConfigPage2
 
 public:
   MarkerBrowserConfigPage2 (QWidget *parent);
-  ~MarkerBrowserConfigPage2 ();
+  ~MarkerBrowserConfigPage2 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::MarkerBrowserConfigPage2 *mp_ui;

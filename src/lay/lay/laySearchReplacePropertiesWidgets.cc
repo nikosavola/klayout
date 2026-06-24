@@ -326,7 +326,7 @@ public:
     setupUi (this);
   }
 
-  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     std::string v;
     if (config_root->config_get (pfx + cfg_suffix_instance_cellname_op, v)) {
@@ -337,13 +337,13 @@ public:
     }
   }
 
-  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     config_root->config_set (pfx + cfg_suffix_instance_cellname_op, tl::to_string (instance_cellname_op->currentText ()));
     config_root->config_set (pfx + cfg_suffix_instance_cellname_value, tl::to_string (instance_cellname_value->text ()));
   }
 
-  std::string search_expression (const std::string &cell_expr) const
+  std::string search_expression (const std::string &cell_expr) const override
   {
     std::string r = "instances of ";
     //  the cell expression may start of "instances of " itself - remove that one in that case
@@ -364,7 +364,7 @@ public:
     return r;
   }
 
-  std::string description () const
+  std::string description () const override
   {
     return tl::to_string (QObject::tr ("Instance"));
   }
@@ -387,7 +387,7 @@ public:
     shape_layer->set_new_layer_enabled (false);
   }
 
-  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     std::string v;
     if (config_root->config_get (pfx + cfg_suffix_shape_layer, v)) {
@@ -407,7 +407,7 @@ public:
     }
   }
 
-  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     config_root->config_set (pfx + cfg_suffix_shape_layer, tl::to_string (shape_layer->currentText ()));
     config_root->config_set (pfx + cfg_suffix_shape_area_op, tl::to_string (shape_area_op->currentText ()));
@@ -416,7 +416,7 @@ public:
     config_root->config_set (pfx + cfg_suffix_shape_perimeter_value, tl::to_string (shape_perimeter_value->text ()));
   }
 
-  std::string search_expression (const std::string &cell_expr) const
+  std::string search_expression (const std::string &cell_expr) const override
   {
     std::string r = "shapes";
 
@@ -437,7 +437,7 @@ public:
     return r;
   }
 
-  std::string description () const
+  std::string description () const override
   {
     return tl::to_string (QObject::tr ("Shape"));
   }
@@ -455,7 +455,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     std::string v;
     if (config_root->config_get (pfx + cfg_suffix_polygon_layer, v)) {
@@ -475,7 +475,7 @@ public:
     }
   }
 
-  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     config_root->config_set (pfx + cfg_suffix_polygon_layer, tl::to_string (shape_layer->currentText ()));
     config_root->config_set (pfx + cfg_suffix_polygon_area_op, tl::to_string (shape_area_op->currentText ()));
@@ -484,7 +484,7 @@ public:
     config_root->config_set (pfx + cfg_suffix_polygon_perimeter_value, tl::to_string (shape_perimeter_value->text ()));
   }
 
-  std::string search_expression (const std::string &cell_expr) const
+  std::string search_expression (const std::string &cell_expr) const override
   {
     std::string r = "polygons";
 
@@ -505,7 +505,7 @@ public:
     return r;
   }
 
-  std::string description () const
+  std::string description () const override
   {
     return tl::to_string (QObject::tr ("Polygon"));
   }
@@ -528,7 +528,7 @@ public:
     box_layer->set_new_layer_enabled (false);
   }
 
-  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     std::string v;
     if (config_root->config_get (pfx + cfg_suffix_box_layer, v)) {
@@ -548,7 +548,7 @@ public:
     }
   }
 
-  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     config_root->config_set (pfx + cfg_suffix_box_layer, tl::to_string (box_layer->currentText ()));
     config_root->config_set (pfx + cfg_suffix_box_width_op, tl::to_string (box_width_op->currentText ()));
@@ -557,7 +557,7 @@ public:
     config_root->config_set (pfx + cfg_suffix_box_height_value, tl::to_string (box_height_value->text ()));
   }
 
-  std::string search_expression (const std::string &cell_expr) const
+  std::string search_expression (const std::string &cell_expr) const override
   {
     std::string r = "boxes";
 
@@ -580,7 +580,7 @@ public:
     return r;
   }
 
-  std::string description () const
+  std::string description () const override
   {
     return tl::to_string (QObject::tr ("Box"));
   }
@@ -603,7 +603,7 @@ public:
     path_layer->set_new_layer_enabled (false);
   }
 
-  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     std::string v;
     if (config_root->config_get (pfx + cfg_suffix_path_layer, v)) {
@@ -623,7 +623,7 @@ public:
     }
   }
 
-  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     config_root->config_set (pfx + cfg_suffix_path_layer, tl::to_string (path_layer->currentText ()));
     config_root->config_set (pfx + cfg_suffix_path_width_op, tl::to_string (path_width_op->currentText ()));
@@ -632,7 +632,7 @@ public:
     config_root->config_set (pfx + cfg_suffix_path_length_value, tl::to_string (path_length_value->text ()));
   }
 
-  std::string search_expression (const std::string &cell_expr) const
+  std::string search_expression (const std::string &cell_expr) const override
   {
     std::string r = "paths";
 
@@ -653,7 +653,7 @@ public:
     return r;
   }
 
-  std::string description () const
+  std::string description () const override
   {
     return tl::to_string (QObject::tr ("Path"));
   }
@@ -676,7 +676,7 @@ public:
     text_layer->set_new_layer_enabled (false);
   }
 
-  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     std::string v;
     if (config_root->config_get (pfx + cfg_suffix_text_layer, v)) {
@@ -702,7 +702,7 @@ public:
     }
   }
 
-  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     config_root->config_set (pfx + cfg_suffix_text_layer, tl::to_string (text_layer->currentText ()));
     config_root->config_set (pfx + cfg_suffix_text_string_op, tl::to_string (text_string_op->currentText ()));
@@ -713,7 +713,7 @@ public:
     config_root->config_set (pfx + cfg_suffix_text_size_value, tl::to_string (text_size_value->text ()));
   }
 
-  std::string search_expression (const std::string &cell_expr) const
+  std::string search_expression (const std::string &cell_expr) const override
   {
     std::string r = "texts";
 
@@ -735,7 +735,7 @@ public:
     return r;
   }
 
-  std::string description () const
+  std::string description () const override
   {
     return tl::to_string (QObject::tr ("Text"));
   }
@@ -754,7 +754,7 @@ public:
     setupUi (this);
   }
 
-  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     std::string v;
     if (config_root->config_get (pfx + cfg_suffix_instance_cellname_value, v)) {
@@ -762,12 +762,12 @@ public:
     }
   }
 
-  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     config_root->config_set (pfx + cfg_suffix_instance_cellname_value, tl::to_string (instance_cellname->text ()));
   }
 
-  std::string replace_expression () const
+  std::string replace_expression () const override
   {
     std::string expr;
     add_cell_index_assignment (expr, instance_cellname, "inst.cell_index");
@@ -796,7 +796,7 @@ public:
     shape_layer->set_no_layer_available (true);
   }
 
-  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     std::string v;
     if (config_root->config_get (pfx + cfg_suffix_shape_layer, v)) {
@@ -804,12 +804,12 @@ public:
     }
   }
 
-  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     config_root->config_set (pfx + cfg_suffix_shape_layer, tl::to_string (shape_layer->currentText ()));
   }
 
-  std::string replace_expression () const
+  std::string replace_expression () const override
   {
     std::string expr;
     add_layer_assignment (expr, shape_layer, "shape.layer");
@@ -834,7 +834,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     std::string v;
     if (config_root->config_get (pfx + cfg_suffix_polygon_layer, v)) {
@@ -842,12 +842,12 @@ public:
     }
   }
 
-  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     config_root->config_set (pfx + cfg_suffix_polygon_layer, tl::to_string (shape_layer->currentText ()));
   }
 
-  std::string replace_expression () const
+  std::string replace_expression () const override
   {
     std::string expr;
     add_layer_assignment (expr, shape_layer, "shape.layer");
@@ -876,7 +876,7 @@ public:
     box_layer->set_no_layer_available (true);
   }
 
-  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     std::string v;
     if (config_root->config_get (pfx + cfg_suffix_box_layer, v)) {
@@ -890,14 +890,14 @@ public:
     }
   }
 
-  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     config_root->config_set (pfx + cfg_suffix_box_layer, tl::to_string (box_layer->currentText ()));
     config_root->config_set (pfx + cfg_suffix_box_width_value, tl::to_string (box_width->text ()));
     config_root->config_set (pfx + cfg_suffix_box_height_value, tl::to_string (box_height->text ()));
   }
 
-  std::string replace_expression () const
+  std::string replace_expression () const override
   {
     std::string expr;
     add_layer_assignment (expr, box_layer, "shape.layer");
@@ -928,7 +928,7 @@ public:
     path_layer->set_no_layer_available (true);
   }
 
-  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     std::string v;
     if (config_root->config_get (pfx + cfg_suffix_path_layer, v)) {
@@ -939,13 +939,13 @@ public:
     }
   }
 
-  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     config_root->config_set (pfx + cfg_suffix_path_layer, tl::to_string (path_layer->currentText ()));
     config_root->config_set (pfx + cfg_suffix_path_width_value, tl::to_string (path_width->text ()));
   }
 
-  std::string replace_expression () const
+  std::string replace_expression () const override
   {
     std::string expr;
     add_layer_assignment (expr, path_layer, "shape.layer");
@@ -975,7 +975,7 @@ public:
     text_layer->set_no_layer_available (true);
   }
 
-  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void restore_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     std::string v;
     if (config_root->config_get (pfx + cfg_suffix_text_layer, v)) {
@@ -992,7 +992,7 @@ public:
     }
   }
 
-  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const
+  void save_state (const std::string &pfx, lay::Dispatcher *config_root) const override
   {
     config_root->config_set (pfx + cfg_suffix_text_layer, tl::to_string (text_layer->currentText ()));
     config_root->config_set (pfx + cfg_suffix_text_string_value, tl::to_string (text_string->text ()));
@@ -1000,7 +1000,7 @@ public:
     config_root->config_set (pfx + cfg_suffix_text_size_value, tl::to_string (text_size->text ()));
   }
 
-  std::string replace_expression () const
+  std::string replace_expression () const override
   {
     std::string expr;
     add_layer_assignment (expr, text_layer, "shape.layer");

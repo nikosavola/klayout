@@ -60,7 +60,7 @@ public:
   typedef db::Box box_type;
 
   TextsDelegate ();
-  virtual ~TextsDelegate ();
+  ~TextsDelegate () override;
 
   TextsDelegate (const TextsDelegate &other);
   TextsDelegate &operator= (const TextsDelegate &other);
@@ -113,7 +113,7 @@ public:
   virtual bool has_valid_texts () const = 0;
 
   virtual const db::RecursiveShapeIterator *iter () const = 0;
-  virtual void apply_property_translator (const db::PropertiesTranslator &pt) = 0;
+  void apply_property_translator (const db::PropertiesTranslator &pt) override = 0;
 
   virtual bool equals (const Texts &other) const = 0;
   virtual bool less (const Texts &other) const = 0;

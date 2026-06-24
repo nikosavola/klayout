@@ -53,7 +53,7 @@ public:
   void set_grain (const SaltGrain *g);
 
 protected:
-  virtual QVariant loadResource (int type, const QUrl &url);
+  QVariant loadResource (int type, const QUrl &url) override;
 
 public slots:
   void show_detailed_view (bool f);

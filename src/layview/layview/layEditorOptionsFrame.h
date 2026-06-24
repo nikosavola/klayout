@@ -37,7 +37,7 @@ class LAYVIEW_PUBLIC EditorOptionsFrame
 {
 public:
   EditorOptionsFrame (QWidget *parent);
-  virtual ~EditorOptionsFrame ();
+  ~EditorOptionsFrame () override;
 
   void populate (lay::LayoutViewBase *view);
 

@@ -78,7 +78,7 @@ Q_OBJECT
 
 public:
   FillDialog (QWidget *parent, lay::LayoutViewBase *view);
-  ~FillDialog ();
+  ~FillDialog () override;
 
 public slots:
   void fill_area_changed (int);
@@ -89,10 +89,10 @@ public slots:
 
 private:
   //  implementation of the lay::Plugin interface
-  virtual bool configure (const std::string &name, const std::string &value);
+  bool configure (const std::string &name, const std::string &value) override;
 
   //  implementation of the lay::Plugin interface
-  void menu_activated (const std::string &symbol);
+  void menu_activated (const std::string &symbol) override;
 
   void generate_fill (const FillParameters &fp);
   FillParameters get_fill_parameters ();

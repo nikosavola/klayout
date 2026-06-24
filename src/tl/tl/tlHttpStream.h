@@ -41,7 +41,7 @@ class TL_PUBLIC HttpCredentialProvider
 {
 public:
   HttpCredentialProvider () { }
-  virtual ~HttpCredentialProvider () { }
+  ~HttpCredentialProvider () override { }
 
   /**
    *  @brief Gets the user name and password for the given URL and authentication realm
@@ -96,7 +96,7 @@ public:
    *
    *  The destructor will automatically close the connection.
    */
-  virtual ~InputHttpStream ();
+  ~InputHttpStream () override;
 
   /**
    *  @brief Gets the timeout value (in seconds)
@@ -157,7 +157,7 @@ public:
   /**
    *  @brief Closes the connection
    */
-  void close ();
+  void close () override;
 
   /**
    *  @brief Sets the request verb
@@ -201,12 +201,12 @@ public:
    *  @brief Read from the stream
    *  Implements the basic read method.
    */
-  virtual size_t read (char *b, size_t n);
+  size_t read (char *b, size_t n) override;
 
-  virtual void reset ();
-  virtual std::string source () const;
-  virtual std::string absolute_path () const;
-  virtual std::string filename () const;
+  void reset () override;
+  std::string source () const override;
+  std::string absolute_path () const override;
+  std::string filename () const override;
 
 private:
   InputHttpStreamPrivateData *mp_data;

@@ -128,7 +128,7 @@ public:
   /**
    *  @brief Dtor: clear all ..
    */
-  ~AnnotationShapes (); 
+  ~AnnotationShapes () override; 
 
   /**
    *  @brief Copy ctor
@@ -363,12 +363,12 @@ public:
   /** 
    *  @brief Implementation of the redo method
    */
-  void redo (db::Op *op);
+  void redo (db::Op *op) override;
 
   /** 
    *  @brief Implementation of the undo method
    */
-  void undo (db::Op *op);
+  void undo (db::Op *op) override;
 
   /**
    *  @brief Collect memory usage
@@ -381,7 +381,7 @@ private:
     invalidate_bboxes (std::numeric_limits<unsigned int>::max ());
   }
 
-  virtual void do_update ();
+  void do_update () override;
 
   layer_type m_layer;
 };

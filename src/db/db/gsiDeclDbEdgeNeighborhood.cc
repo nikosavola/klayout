@@ -44,7 +44,7 @@ public:
     //  just for signature
   }
 
-  void on_edge (const db::Layout *layout, const db::Cell *cell, const db::EdgeWithProperties &edge, const db::EdgeNeighborhoodVisitor::neighbors_type &neighbors)
+  void on_edge (const db::Layout *layout, const db::Cell *cell, const db::EdgeWithProperties &edge, const db::EdgeNeighborhoodVisitor::neighbors_type &neighbors) override
   {
     if (f_on_edge.can_issue ()) {
 
@@ -64,7 +64,7 @@ public:
     //  just for signature
   }
 
-  void begin_polygon (const db::Layout *layout, const db::Cell *cell, const db::PolygonWithProperties &poly)
+  void begin_polygon (const db::Layout *layout, const db::Cell *cell, const db::PolygonWithProperties &poly) override
   {
     if (f_begin_polygon.can_issue ()) {
       //  NOTE: as scripts are potentially thread unsafe, we lock here
@@ -80,7 +80,7 @@ public:
     //  just for signature
   }
 
-  void end_polygon ()
+  void end_polygon () override
   {
     if (f_end_polygon.can_issue ()) {
       //  NOTE: as scripts are potentially thread unsafe, we lock here

@@ -2643,7 +2643,7 @@ public:
     tl_assert (mp_inst_service);
   }
 
-  void shape_inserted (db::cell_index_type cell, int layer, const db::Shape &shape) 
+  void shape_inserted (db::cell_index_type cell, int layer, const db::Shape &shape) override 
   {
     lay::ObjectInstPath sel;
     sel.set_cv_index (m_cv_index);
@@ -2666,7 +2666,7 @@ public:
     } 
   }
 
-  void instance_inserted (db::cell_index_type cell, const db::Instance &instance) 
+  void instance_inserted (db::cell_index_type cell, const db::Instance &instance) override 
   {
     lay::ObjectInstPath sel;
     sel.set_cv_index (m_cv_index);

@@ -57,7 +57,7 @@ public:
   /**
    *  @brief Write the layout object
    */
-  void write (db::Layout &layout, tl::OutputStream &stream, const db::SaveLayoutOptions &options);
+  void write (db::Layout &layout, tl::OutputStream &stream, const db::SaveLayoutOptions &options) override;
 
 protected:
   /**

@@ -54,10 +54,10 @@ class NetlistBrowserConfigPage
 
 public:
   NetlistBrowserConfigPage (QWidget *parent);
-  ~NetlistBrowserConfigPage ();
+  ~NetlistBrowserConfigPage () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 public slots:
   void window_changed (int);
@@ -73,10 +73,10 @@ class NetlistBrowserConfigPage2
 
 public:
   NetlistBrowserConfigPage2 (QWidget *parent);
-  ~NetlistBrowserConfigPage2 ();
+  ~NetlistBrowserConfigPage2 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 public slots:
   void color_button_clicked ();

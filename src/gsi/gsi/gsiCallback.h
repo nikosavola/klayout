@@ -38,7 +38,7 @@ struct GSI_PUBLIC Callee
   : public tl::Object
 {
   Callee () { }
-  virtual ~Callee () { }
+  ~Callee () override { }
 
   virtual void call (int id, SerialArgs &args, SerialArgs &ret) const = 0;
   virtual bool can_call () const { return true; }

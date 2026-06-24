@@ -875,13 +875,13 @@ public:
     set_return (a);
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new ExternalMethod (*this);
   }
 
   //  this class is not intended to go functional. It's just a hook for the documentation
-  virtual void call(void*, gsi::SerialArgs&, gsi::SerialArgs&) const
+  void call(void*, gsi::SerialArgs&, gsi::SerialArgs&) const override
   {
     tl_assert (false); 
   }
@@ -909,17 +909,17 @@ public:
     return m_category;
   }
 
-  virtual bool consolidate () const
+  bool consolidate () const override
   {
     return true;
   }
 
-  virtual bool is_external () const
+  bool is_external () const override
   {
     return true;
   }
 
-  virtual bool can_upcast (const void *) const
+  bool can_upcast (const void *) const override
   {
     //  It does not make sense to upcast-check vs. an external class
     //  An external class is only provided as a stub.

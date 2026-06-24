@@ -516,7 +516,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~Layout ();
+  ~Layout () override;
 
   /**
    *  @brief Assignment operator
@@ -1706,12 +1706,12 @@ public:
   /**
    *  @brief Implementation of the undo operations
    */
-  virtual void undo (db::Op *op);
+  void undo (db::Op *op) override;
 
   /**
    *  @brief Implementation of the redo operations
    */
-  virtual void redo (db::Op *op);
+  void redo (db::Op *op) override;
 
   /** 
    *  @brief Database unit read accessor
@@ -2169,7 +2169,7 @@ protected:
    *  This will guarantee mainly that region queries can be performed
    *  on all levels of the graph.
    */
-  virtual void do_update ();
+  void do_update () override;
 
 private:
   db::Library *mp_library;

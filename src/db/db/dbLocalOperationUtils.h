@@ -56,7 +56,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  virtual void put (const db::Polygon &polygon)
+  void put (const db::Polygon &polygon) override
   {
     mp_output->put (polygon.transformed (m_trans));
   }
@@ -86,7 +86,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  void put (const db::Polygon &polygon)
+  void put (const db::Polygon &polygon) override
   {
     tl::MutexLocker locker (&mp_layout->lock ());
     mp_polyrefs->insert (db::PolygonRef (polygon, mp_layout->shape_repository ()));
@@ -114,7 +114,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  void put (const db::Polygon &polygon)
+  void put (const db::Polygon &polygon) override
   {
     tl::MutexLocker locker (&mp_layout->lock ());
     mp_polyrefs->insert (db::PolygonRefWithProperties (db::PolygonRef (polygon, mp_layout->shape_repository ()), db::properties_id_type (0)));
@@ -142,7 +142,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  virtual void put (const db::Polygon &polygon)
+  void put (const db::Polygon &polygon) override
   {
     mp_polygons->insert (polygon);
   }
@@ -168,7 +168,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  virtual void put (const db::Polygon &polygon)
+  void put (const db::Polygon &polygon) override
   {
     mp_polygons->insert (db::PolygonWithProperties (polygon, db::properties_id_type (0)));
   }
@@ -199,7 +199,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  void put (const db::Polygon &polygon)
+  void put (const db::Polygon &polygon) override
   {
     tl::MutexLocker locker (&mp_layout->lock ());
     mp_polyrefs->insert (db::PolygonRefWithProperties (db::PolygonRef (polygon, mp_layout->shape_repository ()), m_prop_id));
@@ -228,7 +228,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  virtual void put (const db::Polygon &polygon)
+  void put (const db::Polygon &polygon) override
   {
     mp_polygons->insert (db::PolygonWithProperties (polygon, m_prop_id));
   }
@@ -257,7 +257,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  virtual void put (const db::Edge &edge)
+  void put (const db::Edge &edge) override
   {
     if (mp_edges) {
       mp_edges->insert (edge);
@@ -270,7 +270,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  virtual void put (const db::Edge &edge, int tag)
+  void put (const db::Edge &edge, int tag) override
   {
     if (m_tag == 0 || m_tag == tag) {
       if (mp_edges) {
@@ -310,7 +310,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  virtual void put (const db::Polygon &polygon);
+  void put (const db::Polygon &polygon) override;
 
 private:
   db::Layout *mp_layout;
@@ -324,10 +324,10 @@ class DB_PUBLIC PolygonSplitter
 public:
   PolygonSplitter (PolygonSink &sink, double max_area_ratio, size_t max_vertex_count);
 
-  virtual void put (const db::Polygon &poly);
+  void put (const db::Polygon &poly) override;
 
-  virtual void start () { mp_sink->start (); }
-  virtual void flush () { mp_sink->flush (); }
+  void start () override { mp_sink->start (); }
+  void flush () override { mp_sink->flush (); }
 
 private:
   PolygonSink *mp_sink;

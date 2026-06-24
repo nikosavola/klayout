@@ -338,7 +338,7 @@ public:
     return m_id;
   }
 
-  bool event(QEvent *e)
+  bool event(QEvent *e) override
   {
     if (e->type() == QEvent::Shortcut) {
 

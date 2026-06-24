@@ -933,7 +933,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual bool less (const db::Device &a, const db::Device &b) const
+  bool less (const db::Device &a, const db::Device &b) const override
   {
     if (cb_less.can_issue ()) {
       return cb_less.issue<db::EqualDeviceParameters, bool, const db::Device &, const db::Device &> (&db::EqualDeviceParameters::less, a, b);
@@ -958,7 +958,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual bool combine_devices (db::Device *a, db::Device *b) const
+  bool combine_devices (db::Device *a, db::Device *b) const override
   {
     if (cb_combine.can_issue ()) {
       return cb_combine.issue<db::DeviceCombiner, bool, db::Device *, db::Device *> (&db::DeviceCombiner::combine_devices, a, b);
@@ -2305,7 +2305,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void write_header () const
+  void write_header () const override
   {
     if (cb_write_header.can_issue ()) {
       cb_write_header.issue<db::NetlistSpiceWriterDelegate> (&db::NetlistSpiceWriterDelegate::write_header);
@@ -2314,7 +2314,7 @@ public:
     }
   }
 
-  virtual void write_device_intro (const db::DeviceClass &ccls) const
+  void write_device_intro (const db::DeviceClass &ccls) const override
   {
     reimpl_write_device_intro (const_cast<db::DeviceClass &> (ccls));
   }
@@ -2335,7 +2335,7 @@ public:
     db::NetlistSpiceWriterDelegate::write_device_intro (cls);
   }
 
-  virtual void write_device (const db::Device &cdev) const
+  void write_device (const db::Device &cdev) const override
   {
     reimpl_write_device (const_cast<db::Device &> (cdev));
   }
@@ -2600,7 +2600,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void error (const std::string &msg)
+  void error (const std::string &msg) override
   {
     //  doing this avoids passing exceptions through script code which spoils the message
     //  (the exception will be decorated with a stack trace). TODO: a better solution was
@@ -2609,7 +2609,7 @@ public:
     db::NetlistSpiceReaderDelegate::error (msg);
   }
 
-  virtual void start (db::Netlist *netlist)
+  void start (db::Netlist *netlist) override
   {
     try {
       m_error.clear ();
@@ -2627,7 +2627,7 @@ public:
     }
   }
 
-  virtual void finish (db::Netlist *netlist)
+  void finish (db::Netlist *netlist) override
   {
     try {
       m_error.clear ();
@@ -2645,7 +2645,7 @@ public:
     }
   }
 
-  virtual bool control_statement (const std::string &line)
+  bool control_statement (const std::string &line) override
   {
     try {
       m_error.clear ();
@@ -2664,7 +2664,7 @@ public:
     }
   }
 
-  virtual bool wants_subcircuit (const std::string &circuit_name)
+  bool wants_subcircuit (const std::string &circuit_name) override
   {
     try {
       m_error.clear ();
@@ -2683,7 +2683,7 @@ public:
     }
   }
 
-  virtual std::string translate_net_name (const std::string &nn)
+  std::string translate_net_name (const std::string &nn) override
   {
     try {
       m_error.clear ();
@@ -2709,7 +2709,7 @@ public:
     return data;
   }
 
-  virtual void parse_element (const std::string &s, const std::string &element, std::string &model, double &value, std::vector<std::string> &nn, db::NetlistSpiceReader::parameters_type &pv, const db::NetlistSpiceReader::parameters_type &variables)
+  void parse_element (const std::string &s, const std::string &element, std::string &model, double &value, std::vector<std::string> &nn, db::NetlistSpiceReader::parameters_type &pv, const db::NetlistSpiceReader::parameters_type &variables) override
   {
     try {
 
@@ -2743,7 +2743,7 @@ public:
     }
   }
 
-  virtual bool element (db::Circuit *circuit, const std::string &element, const std::string &name, const std::string &model, double value, const std::vector<db::Net *> &nets, const db::NetlistSpiceReader::parameters_type &params)
+  bool element (db::Circuit *circuit, const std::string &element, const std::string &name, const std::string &model, double value, const std::vector<db::Net *> &nets, const db::NetlistSpiceReader::parameters_type &params) override
   {
     try {
       m_error.clear ();

@@ -171,7 +171,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~Object ();
+  ~Object () override;
 
   /**
    *  @brief Constructor for monochrome or color images with zero pixel values
@@ -478,28 +478,28 @@ public:
    *
    *  This method reimplements the db::DUserObjectBase interface.
    */
-  virtual bool equals (const db::DUserObjectBase *d) const;
+  bool equals (const db::DUserObjectBase *d) const override;
 
   /**
    *  @brief The generic "less" operator
    *
    *  This method reimplements the db::DUserObjectBase interface.
    */
-  virtual bool less (const db::DUserObjectBase *d) const;
+  bool less (const db::DUserObjectBase *d) const override;
 
   /**
    *  @brief Get the class Id which internally distinguishes the img::Object's class from other classes
    *
    *  This method reimplements the db::DUserObjectBase interface.
    */
-  virtual unsigned int class_id () const;
+  unsigned int class_id () const override;
 
   /**
    *  @brief Clone the object
    *
    *  This method reimplements the db::DUserObjectBase interface.
    */
-  virtual db::DUserObjectBase *clone () const;
+  db::DUserObjectBase *clone () const override;
 
   /**
    *  @brief Get the bounding box
@@ -510,7 +510,7 @@ public:
    *  image may extend into the forbidden z space. For a more exact representation use 
    *  the image_box_polygon method which delivers the box clipped to a certain viewport.
    */
-  virtual db::DBox box () const;
+  db::DBox box () const override;
 
   /**
    *  @brief Get the transformed image box clipped by the given viewport in post-transformation space
@@ -535,21 +535,21 @@ public:
    *
    *  This method reimplements the db::DUserObjectBase interface.
    */
-  virtual void transform (const db::DCplxTrans &t);
+  void transform (const db::DCplxTrans &t) override;
 
   /**
    *  @brief Transform with a given standard transformation
    *
    *  This method reimplements the db::DUserObjectBase interface.
    */
-  virtual void transform (const db::DTrans &t);
+  void transform (const db::DTrans &t) override;
 
   /**
    *  @brief Transform with a given fixpoint transformation
    *
    *  This method reimplements the db::DUserObjectBase interface.
    */
-  virtual void transform (const db::DFTrans &t);
+  void transform (const db::DFTrans &t) override;
 
   /**
    *  @brief Return the transformed object
@@ -1016,7 +1016,7 @@ public:
   /**
    *  @brief The class name for the generic user object factory 
    */
-  virtual const char *class_name () const;
+  const char *class_name () const override;
 
   /**
    *  @brief Fill from a string
@@ -1024,7 +1024,7 @@ public:
    *  This method needs to be implemented mainly if the object is to be created from the
    *  generic factory.
    */
-  virtual void from_string (const char *str, const char *base_dir = nullptr);
+  void from_string (const char *str, const char *base_dir = nullptr) override;
 
   /**
    *  @brief Convert to a string
@@ -1032,7 +1032,7 @@ public:
    *  This method needs to be implemented mainly if the object is to be created from the
    *  generic factory.
    */
-  virtual std::string to_string () const;
+  std::string to_string () const override;
 
   /**
    *  @brief Swap with another image object
@@ -1042,7 +1042,7 @@ public:
   /**
    *  @brief Return the memory used in bytes
    */
-  virtual void mem_stat (db::MemStatistics *stat, db::MemStatistics::purpose_t purpose, int cat, bool no_self, void *parent) const;
+  void mem_stat (db::MemStatistics *stat, db::MemStatistics::purpose_t purpose, int cat, bool no_self, void *parent) const override;
 
 protected:
   /**

@@ -68,7 +68,7 @@ Q_OBJECT
 
 public:
   HCPCellTreeWidget (QWidget *parent, const char *name, QWidget *key_event_receiver);
-  ~HCPCellTreeWidget ();
+  ~HCPCellTreeWidget () override;
 
 signals:
   void cell_clicked (const QModelIndex &);
@@ -77,13 +77,13 @@ signals:
   void search_triggered (const QString &t);
 
 protected:
-  virtual void mouseDoubleClickEvent (QMouseEvent *event);
-  virtual void mousePressEvent (QMouseEvent *event);
-  virtual void mouseReleaseEvent (QMouseEvent *event);
-  virtual void startDrag (Qt::DropActions supportedActions);
-  virtual bool focusNextPrevChild (bool next);
-  virtual void keyPressEvent (QKeyEvent *event);
-  virtual bool event (QEvent *event);
+  void mouseDoubleClickEvent (QMouseEvent *event) override;
+  void mousePressEvent (QMouseEvent *event) override;
+  void mouseReleaseEvent (QMouseEvent *event) override;
+  void startDrag (Qt::DropActions supportedActions) override;
+  bool focusNextPrevChild (bool next) override;
+  void keyPressEvent (QKeyEvent *event) override;
+  bool event (QEvent *event) override;
 
   QWidget *mp_key_event_receiver;
 };
@@ -117,12 +117,12 @@ public:
   /** 
    *  @brief Destructor
    */
-  ~HierarchyControlPanel ();
+  ~HierarchyControlPanel () override;
 
   /**
    *  @brief The sizeHint implementation for Qt layout management
    */
-  virtual QSize sizeHint () const;
+  QSize sizeHint () const override;
 
   /**
    *  @brief Changing of the background color
@@ -224,7 +224,7 @@ public:
    *  The object subclasses the event handler in order to intercept 
    *  the GTF probe events (Qt::MaxUser).
    */
-  virtual bool event (QEvent *e);
+  bool event (QEvent *e) override;
 
   /**
    *  @brief Update the contents if necessary

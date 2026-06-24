@@ -113,13 +113,13 @@ public:
   }
 
   //  overrides virtual method
-  virtual const db::TransformationReducer *vars () const
+  virtual const db::TransformationReducer *vars () const // NOLINT(modernize-use-override)
   {
     return mp_vars;
   }
 
   //  maybe overrides virtual method
-  virtual bool requires_raw_input () const
+  virtual bool requires_raw_input () const // NOLINT(modernize-use-override)
   {
     return m_requires_raw_input;
   }
@@ -130,7 +130,7 @@ public:
   }
 
   //  overrides virtual method
-  virtual bool wants_variants () const
+  virtual bool wants_variants () const // NOLINT(modernize-use-override)
   {
     return m_wants_variants;
   }
@@ -262,13 +262,13 @@ public:
   }
 
   //  overrides virtual method
-  virtual const db::TransformationReducer *vars () const
+  virtual const db::TransformationReducer *vars () const // NOLINT(modernize-use-override)
   {
     return mp_vars;
   }
 
   //  maybe overrides virtual method
-  virtual bool requires_raw_input () const
+  virtual bool requires_raw_input () const // NOLINT(modernize-use-override)
   {
     return m_requires_raw_input;
   }
@@ -279,7 +279,7 @@ public:
   }
 
   //  overrides virtual method
-  virtual bool wants_variants () const
+  virtual bool wants_variants () const // NOLINT(modernize-use-override)
   {
     return m_wants_variants;
   }
@@ -290,7 +290,7 @@ public:
   }
 
   //  overrides virtual method
-  virtual bool result_is_merged () const
+  virtual bool result_is_merged () const // NOLINT(modernize-use-override)
   {
     return m_result_is_merged;
   }
@@ -301,7 +301,7 @@ public:
   }
 
   //  overrides virtual method
-  virtual bool result_must_not_be_merged () const
+  virtual bool result_must_not_be_merged () const // NOLINT(modernize-use-override)
   {
     return m_result_must_not_be_merged;
   }
@@ -451,7 +451,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void process (const db::object_with_properties<shape_type> &shape, std::vector<db::object_with_properties<result_type> > &res) const
+  virtual void process (const db::object_with_properties<shape_type> &shape, std::vector<db::object_with_properties<result_type> > &res) const // NOLINT(modernize-use-override)
   {
     res = do_process_wp (shape);
 

@@ -46,8 +46,8 @@ public:
    */
   TextProgress (int verbosity);
 
-  virtual void update_progress (tl::Progress *progress);
-  virtual void show_progress_bar (bool show);
+  void update_progress (tl::Progress *progress) override;
+  void show_progress_bar (bool show) override;
 
 private:
   int m_verbosity;

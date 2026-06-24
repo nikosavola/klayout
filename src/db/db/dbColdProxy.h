@@ -58,12 +58,12 @@ public:
   /**
    *  @brief The destructor
    */
-  ~ColdProxy ();
+  ~ColdProxy () override;
 
   /**
    *  @brief Cloning 
    */
-  virtual Cell *clone (Layout &layout) const;
+  Cell *clone (Layout &layout) const override;
 
   /**
    *  @brief Get the library id 
@@ -76,7 +76,7 @@ public:
   /**
    *  @brief Indicates that this cell is a proxy cell
    */
-  virtual bool is_proxy () const 
+  bool is_proxy () const override 
   { 
     return true; 
   }
@@ -84,12 +84,12 @@ public:
   /**
    *  @brief Reimplemented from Cell: unregisters the proxy at the layout
    */
-  virtual void unregister ();
+  void unregister () override;
 
   /**
    *  @brief Reimplemented from Cell: reregisters the proxy at the layout
    */
-  virtual void reregister ();
+  void reregister () override;
 
   /**
    *  @brief Gets a list of cold proxies for a given library name
@@ -99,17 +99,17 @@ public:
   /**
    *  @brief Gets the basic name
    */
-  virtual std::string get_basic_name () const;
+  std::string get_basic_name () const override;
 
   /**
    *  @brief Gets the display name
    */
-  virtual std::string get_display_name () const;
+  std::string get_display_name () const override;
 
   /**
    *  @brief Gets the qualified name
    */
-  virtual std::string get_qualified_name () const;
+  std::string get_qualified_name () const override;
 
 private:
   LayoutOrCellContextInfo *mp_context_info;

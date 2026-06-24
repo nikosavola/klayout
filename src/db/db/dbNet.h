@@ -413,7 +413,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~Net ();
+  ~Net () override;
 
   /**
    *  @brief Assignment

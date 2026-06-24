@@ -47,12 +47,12 @@ Q_OBJECT
 
 public:
   RulerOptionsPage (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher);
-  ~RulerOptionsPage ();
+  ~RulerOptionsPage () override;
 
-  virtual std::string title () const;
-  virtual int order () const { return -10; }
-  void apply (lay::Dispatcher *root);
-  void setup (lay::Dispatcher *root);
+  std::string title () const override;
+  int order () const override { return -10; }
+  void apply (lay::Dispatcher *root) override;
+  void setup (lay::Dispatcher *root) override;
 
 private:
   Ui::RulerOptions *mp_ui;

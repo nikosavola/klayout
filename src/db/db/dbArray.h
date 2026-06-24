@@ -157,7 +157,7 @@ struct basic_array
     //  .. nothing yet ..
   }
 
-  virtual ~basic_array ()
+  ~basic_array () override
   {
     //  .. nothing yet ..
   }
@@ -168,7 +168,7 @@ struct basic_array
   
   virtual std::pair<basic_array_iterator<Coord> *, bool> begin_regular (long /*a*/, long /*b*/) const { return begin (); }
   
-  virtual ArrayBase *basic_clone () const 
+  ArrayBase *basic_clone () const override 
   {
     return clone ();
   }
@@ -201,12 +201,12 @@ struct basic_array
     return complex_trans_type (s); 
   }
 
-  virtual unsigned int type () const
+  unsigned int type () const override
   {
     return 0;
   }
 
-  virtual const ArrayBase *cast (const ArrayBase *other) const
+  const ArrayBase *cast (const ArrayBase *other) const override
   {
     return dynamic_cast <const basic_array<Coord> *> (other);
   }
@@ -330,17 +330,17 @@ struct regular_array_iterator
     }
   }
 
-  virtual ~regular_array_iterator ()
+  ~regular_array_iterator () override
   {
     //  .. nothing yet .. 
   }
 
-  virtual disp_type get () const 
+  disp_type get () const override 
   {
     return disp_type (vector_type (m_ai * m_a.x () + m_bi * m_b.x (), m_ai * m_a.y () + m_bi * m_b.y ()));
   }
   
-  virtual void inc () 
+  void inc () override 
   {
     ++m_ai;
     if (m_ai >= m_amax) {
@@ -349,22 +349,22 @@ struct regular_array_iterator
     }
   }
 
-  virtual bool at_end () const 
+  bool at_end () const override 
   {
     return m_bi >= m_bmax;
   }
 
-  virtual basic_array_iterator<Coord> *clone () const 
+  basic_array_iterator<Coord> *clone () const override 
   {
     return new regular_array_iterator <Coord> (*this);
   }
 
-  virtual long index_a () const 
+  long index_a () const override 
   { 
     return long (m_ai); 
   }
 
-  virtual long index_b () const 
+  long index_b () const override 
   { 
     return long (m_bi); 
   }
@@ -400,13 +400,13 @@ struct regular_array
     compute_det ();
   }
 
-  virtual ~regular_array ()
+  ~regular_array () override
   {
     //  .. nothing yet .. 
   }
 
-  virtual std::pair<basic_array_iterator<Coord> *, bool>
-  begin_touching (const box_type &b) const
+  std::pair<basic_array_iterator<Coord> *, bool>
+  begin_touching (const box_type &b) const override
   {
     if (b.empty ()) {
 
@@ -502,24 +502,24 @@ struct regular_array
     }
   }
   
-  virtual std::pair <basic_array_iterator <Coord> *, bool>
-  begin_regular (long a, long b) const
+  std::pair <basic_array_iterator <Coord> *, bool>
+  begin_regular (long a, long b) const override
   {
     return std::make_pair (new regular_array_iterator <Coord> (m_a, m_b, (unsigned long) std::max (long (0), a), m_amax, (unsigned long) std::max (long (0), b), m_bmax), false);
   }
 
-  virtual std::pair <basic_array_iterator <Coord> *, bool>
-  begin () const
+  std::pair <basic_array_iterator <Coord> *, bool>
+  begin () const override
   {
     return std::make_pair (new regular_array_iterator <Coord> (m_a, m_b, 0, m_amax, 0, m_bmax), false);
   }
 
-  virtual basic_array <Coord> *clone () const 
+  basic_array <Coord> *clone () const override 
   {
     return new regular_array <Coord> (*this);
   }
 
-  virtual box_type bbox (const box_type &obox) const
+  box_type bbox (const box_type &obox) const override
   {
     if (obox.empty ()) {
       return obox;
@@ -542,12 +542,12 @@ struct regular_array
     }
   }
 
-  virtual size_t size () const 
+  size_t size () const override 
   {
     return m_amax * m_bmax;
   }
 
-  virtual void invert (simple_trans_type &t) 
+  void invert (simple_trans_type &t) override 
   {
     t.invert ();
     db::fixpoint_trans<coord_type> f (t.rot ());
@@ -556,19 +556,19 @@ struct regular_array
     compute_det ();
   }
 
-  virtual bool equal (const ArrayBase *b) const
+  bool equal (const ArrayBase *b) const override
   {
     const regular_array<Coord> *d = static_cast<const regular_array<Coord> *> (b);
     return (m_a == d->m_a && m_b == d->m_b && m_amax == d->m_amax && m_bmax == d->m_bmax);
   }
 
-  virtual bool fuzzy_equal (const ArrayBase *b) const
+  bool fuzzy_equal (const ArrayBase *b) const override
   {
     const regular_array<Coord> *d = static_cast<const regular_array<Coord> *> (b);
     return (m_a.equal (d->m_a) && m_b.equal (d->m_b) && m_amax == d->m_amax && m_bmax == d->m_bmax);
   }
 
-  virtual bool less (const ArrayBase *b) const
+  bool less (const ArrayBase *b) const override
   {
     const regular_array<Coord> *d = static_cast<const regular_array<Coord> *> (b);
     return m_a < d->m_a || (m_a == d->m_a && (
@@ -576,7 +576,7 @@ struct regular_array
            m_amax < d->m_amax || (m_amax == d->m_amax && m_bmax < d->m_bmax)))));
   }
 
-  virtual bool fuzzy_less (const ArrayBase *b) const
+  bool fuzzy_less (const ArrayBase *b) const override
   {
     const regular_array<Coord> *d = static_cast<const regular_array<Coord> *> (b);
     return m_a.less (d->m_a) || (m_a.equal (d->m_a) && (
@@ -584,7 +584,7 @@ struct regular_array
            m_amax < d->m_amax || (m_amax == d->m_amax && m_bmax < d->m_bmax)))));
   }
 
-  virtual bool is_regular_array (vector_type &a, vector_type &b, unsigned long &amax, unsigned long &bmax) const
+  bool is_regular_array (vector_type &a, vector_type &b, unsigned long &amax, unsigned long &bmax) const override
   {
     a = m_a;
     b = m_b;
@@ -593,26 +593,26 @@ struct regular_array
     return true;
   }
 
-  virtual void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self, void *parent) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self, void *parent) const override
   {
     if (!no_self) {
       stat->add (typeid (*this), (void *) this, sizeof (*this), sizeof (*this), parent, purpose, cat);
     }
   }
 
-  virtual unsigned int type () const
+  unsigned int type () const override
   {
     return 1;
   }
 
-  virtual void transform (const simple_trans_type &st) 
+  void transform (const simple_trans_type &st) override 
   { 
     m_a.transform (st.fp_trans ());
     m_b.transform (st.fp_trans ());
     compute_det ();
   }
 
-  virtual void transform (const complex_trans_type &ct) 
+  void transform (const complex_trans_type &ct) override 
   { 
     //  transform with the matrix, do not displace, since a and b are displacements already
     m_a = vector_type (ct * m_a);
@@ -694,12 +694,12 @@ struct regular_complex_array
     //  .. nothing yet ..
   }
 
-  virtual basic_array <Coord> *clone () const 
+  basic_array <Coord> *clone () const override 
   {
     return new regular_complex_array <Coord> (*this);
   }
 
-  virtual void invert (simple_trans_type &t) 
+  void invert (simple_trans_type &t) override 
   {
     //  recompute the array parameters such that every per-instance transformation
     //  is inverted. 
@@ -712,7 +712,7 @@ struct regular_complex_array
     regular_array<Coord>::compute_det ();
   }
 
-  virtual bool equal (const ArrayBase *b) const
+  bool equal (const ArrayBase *b) const override
   {
     const regular_complex_array<Coord> *d = static_cast<const regular_complex_array<Coord> *> (b);
     if (fabs (m_acos - d->m_acos) > epsilon) {
@@ -724,7 +724,7 @@ struct regular_complex_array
     return regular_array<Coord>::equal (b);
   }
 
-  virtual bool fuzzy_equal (const ArrayBase *b) const
+  bool fuzzy_equal (const ArrayBase *b) const override
   {
     const regular_complex_array<Coord> *d = static_cast<const regular_complex_array<Coord> *> (b);
     if (fabs (m_acos - d->m_acos) > epsilon) {
@@ -736,7 +736,7 @@ struct regular_complex_array
     return regular_array<Coord>::fuzzy_equal (b);
   }
 
-  virtual bool less (const ArrayBase *b) const
+  bool less (const ArrayBase *b) const override
   {
     const regular_complex_array<Coord> *d = static_cast<const regular_complex_array<Coord> *> (b);
     if (fabs (m_acos - d->m_acos) > epsilon) {
@@ -748,7 +748,7 @@ struct regular_complex_array
     return regular_array<Coord>::less (b);
   }
 
-  virtual bool fuzzy_less (const ArrayBase *b) const
+  bool fuzzy_less (const ArrayBase *b) const override
   {
     const regular_complex_array<Coord> *d = static_cast<const regular_complex_array<Coord> *> (b);
     if (fabs (m_acos - d->m_acos) > epsilon) {
@@ -760,24 +760,24 @@ struct regular_complex_array
     return regular_array<Coord>::fuzzy_less (b);
   }
 
-  virtual void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self, void *parent) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self, void *parent) const override
   {
     if (!no_self) {
       stat->add (typeid (*this), (void *) this, sizeof (*this), sizeof (*this), parent, purpose, cat);
     }
   }
 
-  virtual complex_trans_type complex_trans (const simple_trans_type &s) const
+  complex_trans_type complex_trans (const simple_trans_type &s) const override
   {
     return complex_trans_type (s, m_acos, m_mag);
   }
 
-  virtual bool is_complex () const
+  bool is_complex () const override
   {
     return true;
   }
 
-  virtual unsigned int type () const
+  unsigned int type () const override
   {
     return 2;
   }
@@ -819,17 +819,17 @@ struct iterated_array_iterator
     m_t = from; // NOLINT(performance-unnecessary-value-param)
   }
 
-  virtual ~iterated_array_iterator ()
+  ~iterated_array_iterator () override
   {
     //  .. nothing yet .. 
   }
 
-  virtual disp_type get () const 
+  disp_type get () const override 
   {
     return disp_type (m_normal ? *m_b : *m_t);
   }
   
-  virtual void inc () 
+  void inc () override 
   {
     if (m_normal) {
       ++m_b;
@@ -838,7 +838,7 @@ struct iterated_array_iterator
     }
   }
 
-  virtual bool at_end () const 
+  bool at_end () const override 
   {
     if (m_normal) {
       return m_b == m_e;
@@ -847,22 +847,22 @@ struct iterated_array_iterator
     }
   }
 
-  virtual basic_array_iterator<Coord> *clone () const 
+  basic_array_iterator<Coord> *clone () const override 
   {
     return new iterated_array_iterator <Coord> (*this);
   }
 
-  virtual size_t quad_id () const
+  size_t quad_id () const override
   {
     return m_t.quad_id ();
   }
 
-  virtual box_type quad_box () const
+  box_type quad_box () const override
   {
     return m_t.quad_box ();
   }
 
-  virtual void skip_quad ()
+  void skip_quad () override
   {
     m_t.skip_quad ();
   }
@@ -907,7 +907,7 @@ struct iterated_array
     assign (from, to);
   }
 
-  virtual ~iterated_array ()
+  ~iterated_array () override
   {
     //  .. nothing yet .. 
   }
@@ -944,7 +944,7 @@ struct iterated_array
     }
   }
 
-  virtual bool is_iterated_array (std::vector<vector_type> *v)
+  bool is_iterated_array (std::vector<vector_type> *v) override
   {
     if (v) {
       v->clear ();
@@ -961,8 +961,8 @@ struct iterated_array
     m_v.sort (db::box_convert <vector_type> ());
   }
 
-  virtual std::pair <basic_array_iterator <Coord> *, bool>
-  begin_touching (const box_type &b) const
+  std::pair <basic_array_iterator <Coord> *, bool>
+  begin_touching (const box_type &b) const override
   {
     if (b.empty () || ! b.touches (m_box)) {
       return std::make_pair (new iterated_array_iterator <Coord> (m_v.end (), m_v.end ()), false);
@@ -972,18 +972,18 @@ struct iterated_array
     }
   }
   
-  virtual std::pair <basic_array_iterator <Coord> *, bool>
-  begin () const
+  std::pair <basic_array_iterator <Coord> *, bool>
+  begin () const override
   {
     return std::make_pair (new iterated_array_iterator <Coord> (m_v.begin (), m_v.end ()), false);
   }
 
-  virtual basic_array <Coord> *clone () const 
+  basic_array <Coord> *clone () const override 
   {
     return new iterated_array <Coord> (*this);
   }
 
-  virtual box_type bbox (const box_type &obox) const
+  box_type bbox (const box_type &obox) const override
   {
     if (obox.empty ()) {
       return obox;
@@ -992,12 +992,12 @@ struct iterated_array
     }
   }
 
-  virtual size_t size () const 
+  size_t size () const override 
   {
     return m_v.size ();
   }
 
-  virtual void invert (simple_trans_type &t) 
+  void invert (simple_trans_type &t) override 
   {
     t.invert ();
     db::fixpoint_trans<coord_type> f (t.rot ());
@@ -1009,7 +1009,7 @@ struct iterated_array
     sort ();
   }
 
-  virtual bool equal (const ArrayBase *b) const
+  bool equal (const ArrayBase *b) const override
   {
     const iterated_array<Coord> *d = static_cast<const iterated_array<Coord> *> (b);
     if (m_v.size () != d->m_v.size ()) {
@@ -1023,7 +1023,7 @@ struct iterated_array
     return true;
   }
 
-  virtual bool fuzzy_equal (const ArrayBase *b) const
+  bool fuzzy_equal (const ArrayBase *b) const override
   {
     const iterated_array<Coord> *d = static_cast<const iterated_array<Coord> *> (b);
     if (m_v.size () != d->m_v.size ()) {
@@ -1037,7 +1037,7 @@ struct iterated_array
     return true;
   }
 
-  virtual bool less (const ArrayBase *b) const
+  bool less (const ArrayBase *b) const override
   {
     const iterated_array<Coord> *d = static_cast<const iterated_array<Coord> *> (b);
     if (m_v.size () != d->m_v.size ()) {
@@ -1051,7 +1051,7 @@ struct iterated_array
     return false;
   }
 
-  virtual bool fuzzy_less (const ArrayBase *b) const
+  bool fuzzy_less (const ArrayBase *b) const override
   {
     const iterated_array<Coord> *d = static_cast<const iterated_array<Coord> *> (b);
     if (m_v.size () != d->m_v.size ()) {
@@ -1065,7 +1065,7 @@ struct iterated_array
     return false;
   }
 
-  virtual void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self, void *parent) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self, void *parent) const override
   {
     if (!no_self) {
       stat->add (typeid (*this), (void *) this, sizeof (*this), sizeof (*this), parent, purpose, cat);
@@ -1073,12 +1073,12 @@ struct iterated_array
     db::mem_stat (stat, purpose, cat, m_v, true, (void *) this);
   }
 
-  virtual unsigned int type () const
+  unsigned int type () const override
   {
     return 3;
   }
 
-  virtual void transform (const complex_trans_type &ct)
+  void transform (const complex_trans_type &ct) override
   { 
     m_box = box_type ();
     for (iterator p = m_v.begin (); p != m_v.end (); ++p) {
@@ -1088,7 +1088,7 @@ struct iterated_array
     sort ();
   }
 
-  virtual void transform (const simple_trans_type &st)
+  void transform (const simple_trans_type &st) override
   {
     for (iterator p = m_v.begin (); p != m_v.end (); ++p) {
       *p = vector_type (st * *p);
@@ -1137,12 +1137,12 @@ struct iterated_complex_array
     //  .. nothing yet ..
   }
 
-  virtual basic_array <Coord> *clone () const 
+  basic_array <Coord> *clone () const override 
   {
     return new iterated_complex_array <Coord> (*this);
   }
 
-  virtual void invert (simple_trans_type &t) 
+  void invert (simple_trans_type &t) override 
   {
     //  recompute the array parameters such that every per-instance transformation
     //  is inverted. This code is somewhat complex to maintain the splitting between 
@@ -1160,7 +1160,7 @@ struct iterated_complex_array
     iterated_array<Coord>::sort ();
   }
 
-  virtual bool equal (const ArrayBase *b) const
+  bool equal (const ArrayBase *b) const override
   {
     const iterated_complex_array<Coord> *d = static_cast<const iterated_complex_array<Coord> *> (b);
     if (fabs (m_acos - d->m_acos) > epsilon) {
@@ -1172,7 +1172,7 @@ struct iterated_complex_array
     return iterated_array<Coord>::equal (b);
   }
 
-  virtual bool fuzzy_equal (const ArrayBase *b) const
+  bool fuzzy_equal (const ArrayBase *b) const override
   {
     const iterated_complex_array<Coord> *d = static_cast<const iterated_complex_array<Coord> *> (b);
     if (fabs (m_acos - d->m_acos) > epsilon) {
@@ -1184,7 +1184,7 @@ struct iterated_complex_array
     return iterated_array<Coord>::fuzzy_equal (b);
   }
 
-  virtual bool less (const ArrayBase *b) const
+  bool less (const ArrayBase *b) const override
   {
     const iterated_complex_array<Coord> *d = static_cast<const iterated_complex_array<Coord> *> (b);
     if (fabs (m_acos - d->m_acos) > epsilon) {
@@ -1196,7 +1196,7 @@ struct iterated_complex_array
     return iterated_array<Coord>::less (b);
   }
 
-  virtual bool fuzzy_less (const ArrayBase *b) const
+  bool fuzzy_less (const ArrayBase *b) const override
   {
     const iterated_complex_array<Coord> *d = static_cast<const iterated_complex_array<Coord> *> (b);
     if (fabs (m_acos - d->m_acos) > epsilon) {
@@ -1208,17 +1208,17 @@ struct iterated_complex_array
     return iterated_array<Coord>::fuzzy_less (b);
   }
 
-  virtual complex_trans_type complex_trans (const simple_trans_type &s) const
+  complex_trans_type complex_trans (const simple_trans_type &s) const override
   {
     return complex_trans_type (s, m_acos, m_mag);
   }
 
-  virtual bool is_complex () const
+  bool is_complex () const override
   {
     return true;
   }
 
-  virtual unsigned int type () const
+  unsigned int type () const override
   {
     return 4;
   }
@@ -1250,34 +1250,34 @@ struct single_complex_inst
     //  .. nothing yet ..
   }
 
-  virtual std::pair <basic_array_iterator <Coord> *, bool>
-  begin_touching (const box_type &b) const
+  std::pair <basic_array_iterator <Coord> *, bool>
+  begin_touching (const box_type &b) const override
   {
     return std::make_pair ((basic_array_iterator <Coord> *) nullptr, ! b.contains (point_type (0, 0))); 
   }
   
-  virtual std::pair <basic_array_iterator <Coord> *, bool>
-  begin () const
+  std::pair <basic_array_iterator <Coord> *, bool>
+  begin () const override
   {
     return std::make_pair ((basic_array_iterator <Coord> *) nullptr, false);
   }
 
-  virtual basic_array <Coord> *clone () const 
+  basic_array <Coord> *clone () const override 
   {
     return new single_complex_inst <Coord> (*this);
   }
 
-  virtual box_type bbox (const box_type &obox) const
+  box_type bbox (const box_type &obox) const override
   {
     return obox;
   }
 
-  virtual size_t size () const 
+  size_t size () const override 
   {
     return 1;
   }
 
-  virtual void invert (simple_trans_type &t) 
+  void invert (simple_trans_type &t) override 
   {
     complex_trans_type r = complex_trans_type (t, m_acos, m_mag).inverted ();
     m_mag = r.mag ();
@@ -1285,7 +1285,7 @@ struct single_complex_inst
     t = simple_trans_type (r);
   }
 
-  virtual bool equal (const ArrayBase *b) const 
+  bool equal (const ArrayBase *b) const override 
   {
     const double epsilon = 1e-10;
     const single_complex_inst<Coord> *d = static_cast<const single_complex_inst<Coord> *> (b);
@@ -1298,12 +1298,12 @@ struct single_complex_inst
     return true;
   }
 
-  virtual bool fuzzy_equal (const ArrayBase *b) const
+  bool fuzzy_equal (const ArrayBase *b) const override
   {
     return equal (b);
   }
 
-  virtual bool less (const ArrayBase *b) const
+  bool less (const ArrayBase *b) const override
   {
     const double epsilon = 1e-10;
     const single_complex_inst<Coord> *d = static_cast<const single_complex_inst<Coord> *> (b);
@@ -1316,29 +1316,29 @@ struct single_complex_inst
     return false;
   }
 
-  virtual bool fuzzy_less (const ArrayBase *b) const
+  bool fuzzy_less (const ArrayBase *b) const override
   {
     return less (b);
   }
 
-  virtual void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self, void *parent) const
+  void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, bool no_self, void *parent) const override
   {
     if (!no_self) {
       stat->add (typeid (*this), (void *) this, sizeof (*this), sizeof (*this), parent, purpose, cat);
     }
   }
 
-  virtual complex_trans_type complex_trans (const simple_trans_type &s) const
+  complex_trans_type complex_trans (const simple_trans_type &s) const override
   {
     return complex_trans_type (s, m_acos, m_mag);
   }
 
-  virtual bool is_complex () const
+  bool is_complex () const override
   {
     return true;
   }
 
-  virtual unsigned int type () const
+  unsigned int type () const override
   {
     return 5;
   }

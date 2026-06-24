@@ -37,26 +37,26 @@ class PathService
 {
 public:
   PathService (db::Manager *manager, lay::LayoutViewBase *view);
-  ~PathService ();
+  ~PathService () override;
   
 #if defined(HAVE_QT)
-  virtual std::vector<lay::PropertiesPage *> properties_pages (db::Manager *manager, QWidget *parent);
+  std::vector<lay::PropertiesPage *> properties_pages (db::Manager *manager, QWidget *parent) override;
 #endif
-  virtual void do_begin_edit (const db::DPoint &p);
-  virtual void do_mouse_move (const db::DPoint &p);
-  virtual bool do_mouse_click (const db::DPoint &p);
-  virtual void do_mouse_move_inactive (const db::DPoint &p);
-  virtual void do_delete ();
-  virtual void do_finish_edit (bool accept);
-  virtual void do_cancel_edit ();
-  virtual bool do_activated ();
-  virtual void via (int dir);
-  virtual bool selection_applies (const lay::ObjectInstPath &sel) const;
-  virtual void function (const std::string &name, const std::string &value);
+  void do_begin_edit (const db::DPoint &p) override;
+  void do_mouse_move (const db::DPoint &p) override;
+  bool do_mouse_click (const db::DPoint &p) override;
+  void do_mouse_move_inactive (const db::DPoint &p) override;
+  void do_delete () override;
+  void do_finish_edit (bool accept) override;
+  void do_cancel_edit () override;
+  bool do_activated () override;
+  void via (int dir) override;
+  bool selection_applies (const lay::ObjectInstPath &sel) const override;
+  void function (const std::string &name, const std::string &value) override;
 
 protected:
-  bool configure (const std::string &name, const std::string &value);
-  void config_finalize ();
+  bool configure (const std::string &name, const std::string &value) override;
+  void config_finalize () override;
 
 private:
   struct PathSegment

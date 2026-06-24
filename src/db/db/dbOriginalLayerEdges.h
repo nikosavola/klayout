@@ -43,33 +43,33 @@ public:
   OriginalLayerEdges (const OriginalLayerEdges &other);
   OriginalLayerEdges (const RecursiveShapeIterator &si, bool is_merged = false);
   OriginalLayerEdges (const RecursiveShapeIterator &si, const db::ICplxTrans &trans, bool merged_semantics, bool is_merged = false);
-  virtual ~OriginalLayerEdges ();
+  ~OriginalLayerEdges () override;
 
-  EdgesDelegate *clone () const;
+  EdgesDelegate *clone () const override;
 
-  virtual EdgesIteratorDelegate *begin () const;
-  virtual EdgesIteratorDelegate *begin_merged () const;
+  EdgesIteratorDelegate *begin () const override;
+  EdgesIteratorDelegate *begin_merged () const override;
 
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const;
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_merged_iter () const;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const override;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_merged_iter () const override;
 
-  virtual bool empty () const;
+  bool empty () const override;
 
-  virtual bool is_merged () const;
+  bool is_merged () const override;
 
-  virtual const db::Edge *nth (size_t n) const;
-  virtual db::properties_id_type nth_prop_id (size_t n) const;
-  virtual bool has_valid_edges () const;
-  virtual bool has_valid_merged_edges () const;
+  const db::Edge *nth (size_t n) const override;
+  db::properties_id_type nth_prop_id (size_t n) const override;
+  bool has_valid_edges () const override;
+  bool has_valid_merged_edges () const override;
 
-  virtual const db::RecursiveShapeIterator *iter () const;
-  virtual void apply_property_translator (const db::PropertiesTranslator &pt);
+  const db::RecursiveShapeIterator *iter () const override;
+  void apply_property_translator (const db::PropertiesTranslator &pt) override;
 
-  virtual bool equals (const Edges &other) const;
-  virtual bool less (const Edges &other) const;
+  bool equals (const Edges &other) const override;
+  bool less (const Edges &other) const override;
 
 protected:
-  virtual void merged_semantics_changed ();
+  void merged_semantics_changed () override;
 
 private:
   OriginalLayerEdges &operator= (const OriginalLayerEdges &other);

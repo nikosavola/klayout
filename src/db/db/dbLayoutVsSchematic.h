@@ -82,7 +82,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~LayoutVsSchematic ();
+  ~LayoutVsSchematic () override;
 
   /**
    *  @brief Sets the reference netlist

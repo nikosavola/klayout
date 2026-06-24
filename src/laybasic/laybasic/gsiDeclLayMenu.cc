@@ -31,21 +31,21 @@ class ActionStub
   : public lay::Action
 {
 public:
-  virtual void triggered ()
+  void triggered () override
   {
     if (triggered_cb.can_issue ()) {
       triggered_cb.issue<lay::Action> (&lay::Action::triggered);
     }
   }
 
-  virtual void menu_opening ()
+  void menu_opening () override
   {
     if (menu_opening_cb.can_issue ()) {
       menu_opening_cb.issue<lay::Action> (&lay::Action::menu_opening);
     }
   }
 
-  virtual bool wants_visible () const
+  bool wants_visible () const override
   {
     if (wants_visible_cb.can_issue ()) {
       return wants_visible_cb.issue<lay::Action, bool> (&lay::Action::wants_visible);
@@ -54,7 +54,7 @@ public:
     }
   }
 
-  virtual bool wants_enabled () const
+  bool wants_enabled () const override
   {
     if (wants_enabled_cb.can_issue ()) {
       return wants_enabled_cb.issue<lay::Action, bool> (&lay::Action::wants_enabled);

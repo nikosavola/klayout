@@ -387,15 +387,15 @@ class SAXHandler
 public:
   SAXHandler (XMLStructureHandler *sh);
 
-  virtual bool characters (const QString &ch);
-  virtual bool endElement (const QString &namespaceURI, const QString &localName, const QString &qName);
-  virtual bool startElement (const QString &namespaceURI, const QString &localName, const QString &qName, const QXmlAttributes &atts);
-  virtual bool error (const QXmlParseException &exception);
-  virtual bool fatalError (const QXmlParseException &exception);
-  virtual bool warning (const QXmlParseException &exception);
-  virtual QString errorString () const;
+  bool characters (const QString &ch) override;
+  bool endElement (const QString &namespaceURI, const QString &localName, const QString &qName) override;
+  bool startElement (const QString &namespaceURI, const QString &localName, const QString &qName, const QXmlAttributes &atts) override;
+  bool error (const QXmlParseException &exception) override;
+  bool fatalError (const QXmlParseException &exception) override;
+  bool warning (const QXmlParseException &exception) override;
+  QString errorString () const override;
 
-  void setDocumentLocator (QXmlLocator *locator);
+  void setDocumentLocator (QXmlLocator *locator) override;
 
   const tl::XMLLocatedException *exception () const
   {
@@ -630,7 +630,7 @@ public:
     open (QIODevice::ReadOnly);
   }
 
-  ~StreamIODevice ()
+  ~StreamIODevice () override
   {
     if (mp_progress) {
       delete mp_progress;
@@ -638,17 +638,17 @@ public:
     }
   }
 
-  virtual bool isSequential () const
+  bool isSequential () const override
   {
     return true;
   }
 
-  qint64 writeData (const char *, qint64) 
+  qint64 writeData (const char *, qint64) override 
   {
     tl_assert (false);
   }
 
-  qint64 readData (char *data, qint64 n)
+  qint64 readData (char *data, qint64 n) override
   {
     try {
 
@@ -703,7 +703,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void fetchData ()
+  void fetchData () override
   {
     QXmlInputSource::fetchData ();
 

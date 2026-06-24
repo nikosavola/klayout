@@ -1211,7 +1211,7 @@ public:
     : ArgSpecBase (name, false)
   { }
 
-  virtual ArgSpecBase *clone () const
+  ArgSpecBase *clone () const override
   {
     return new ArgSpec<void> (*this);
   }
@@ -1222,7 +1222,7 @@ public:
     tl_assert (false);
   }
 
-  tl::Variant default_value () const
+  tl::Variant default_value () const override
   {
     return tl::Variant ();
   }
@@ -1255,7 +1255,7 @@ public:
     : ArgSpecBase (name, false)
   { }
 
-  virtual ArgSpecBase *clone () const
+  ArgSpecBase *clone () const override
   {
     return new ArgSpecImpl (*this);
   }
@@ -1266,7 +1266,7 @@ public:
     tl_assert (false);
   }
 
-  tl::Variant default_value () const
+  tl::Variant default_value () const override
   {
     return tl::Variant ();
   }
@@ -1334,7 +1334,7 @@ public:
     : ArgSpecBase (name, true, init_doc), mp_init (new T (init))
   { }
 
-  virtual ~ArgSpecImpl ()
+  ~ArgSpecImpl () override
   {
     if (mp_init) {
       delete mp_init;
@@ -1342,7 +1342,7 @@ public:
     }
   }
 
-  virtual ArgSpecBase *clone () const
+  ArgSpecBase *clone () const override
   {
     return new ArgSpecImpl (*this);
   }
@@ -1358,7 +1358,7 @@ public:
     return *mp_init;
   }
 
-  tl::Variant default_value () const
+  tl::Variant default_value () const override
   {
     if (mp_init) {
       return tl::Variant (*mp_init);
@@ -1402,7 +1402,7 @@ public:
     : Base (name, init, init_doc)
   { }
 
-  virtual ArgSpecBase *clone () const
+  ArgSpecBase *clone () const override
   {
     return new ArgSpec (*this);
   }
@@ -1439,7 +1439,7 @@ public:
     : Base (name, init, init_doc)
   { }
 
-  virtual ArgSpecBase *clone () const
+  ArgSpecBase *clone () const override
   {
     return new ArgSpec (*this);
   }
@@ -1483,7 +1483,7 @@ public:
     return const_cast<T &> (Base::init ());
   }
 
-  virtual ArgSpecBase *clone () const
+  ArgSpecBase *clone () const override
   {
     return new ArgSpec (*this);
   }

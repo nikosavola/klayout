@@ -46,15 +46,15 @@ public:
   MacroTreeModel (QObject *parent, lay::MacroEditorDialog *dialog, lym::MacroCollection *root, const std::string &cat);
   MacroTreeModel (QWidget *parent, lym::MacroCollection *root, const std::string &cat);
 
-  int columnCount (const QModelIndex &parent) const;
-  QVariant data (const QModelIndex &index, int role) const;
-  Qt::ItemFlags flags (const QModelIndex &index) const;
-  bool hasChildren (const QModelIndex &parent) const;
-  QModelIndex index (int row, int column, const QModelIndex &parent) const;
-  QModelIndex parent (const QModelIndex &index) const;
-  int rowCount (const QModelIndex &parent) const;
-  bool setData (const QModelIndex &index, const QVariant &v, int role);
-  Qt::DropActions supportedDropActions() const;
+  int columnCount (const QModelIndex &parent) const override;
+  QVariant data (const QModelIndex &index, int role) const override;
+  Qt::ItemFlags flags (const QModelIndex &index) const override;
+  bool hasChildren (const QModelIndex &parent) const override;
+  QModelIndex index (int row, int column, const QModelIndex &parent) const override;
+  QModelIndex parent (const QModelIndex &index) const override;
+  int rowCount (const QModelIndex &parent) const override;
+  bool setData (const QModelIndex &index, const QVariant &v, int role) override;
+  Qt::DropActions supportedDropActions() const override;
   QModelIndex index_for (lym::Macro *macro) const;
   QModelIndex index_for (lym::MacroCollection *mc) const;
 
@@ -78,9 +78,9 @@ private slots:
 
 private:
   void invalidate_cache ();
-  QMimeData *mimeData (const QModelIndexList &indexes) const;
-  QStringList mimeTypes () const;
-  bool dropMimeData (const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
+  QMimeData *mimeData (const QModelIndexList &indexes) const override;
+  QStringList mimeTypes () const override;
+  bool dropMimeData (const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
 
   lay::MacroEditorDialog *mp_dialog;
   QWidget *mp_parent;

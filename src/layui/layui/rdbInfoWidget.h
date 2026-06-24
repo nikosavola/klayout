@@ -39,7 +39,7 @@ class InfoWidget
 public:
   InfoWidget (QWidget *parent);
 
-  virtual QVariant loadResource (int type, const QUrl &name);
+  QVariant loadResource (int type, const QUrl &name) override;
 
   void set_image (const QImage &image);
 

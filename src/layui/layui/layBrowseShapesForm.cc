@@ -58,7 +58,7 @@ class BrowseShapesPluginDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override
   {
     options.push_back (std::pair<std::string, std::string> (cfg_shb_context_cell, ""));
     options.push_back (std::pair<std::string, std::string> (cfg_shb_context_mode, "any-top"));
@@ -69,20 +69,20 @@ public:
     options.push_back (std::pair<std::string, std::string> (cfg_shb_max_shape_count, "1000"));
   }
 
-  virtual lay::ConfigPage *config_page (QWidget *parent, std::string &title) const
+  lay::ConfigPage *config_page (QWidget *parent, std::string &title) const override
   {
     title = tl::to_string (QObject::tr ("Browsers|Shape Browser"));
     return new BrowseShapesConfigPage (parent); 
   }
 
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     lay::PluginDeclaration::get_menu_entries (menu_entries);
     menu_entries.push_back (lay::separator ("browser_group", "tools_menu.end"));
     menu_entries.push_back (lay::menu_item ("browse_shapes::show", "browse_shapes", "tools_menu.end", tl::to_string (QObject::tr ("Browse Shapes"))));
   }
  
-  virtual lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *root, lay::LayoutViewBase *view) const
+  lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *root, lay::LayoutViewBase *view) const override
   {
     if (lay::has_gui ()) {
       return new BrowseShapesForm (root, view);
@@ -263,7 +263,7 @@ public:
     setText (0, tl::to_qstring (text));
   }  
      
-  virtual bool operator< (const QTreeWidgetItem &i) const
+  bool operator< (const QTreeWidgetItem &i) const override
   {
     const BrowseShapesFormLVI *other = dynamic_cast <const BrowseShapesFormLVI *> (&i);
     if (other) {

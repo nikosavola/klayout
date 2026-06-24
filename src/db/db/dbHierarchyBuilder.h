@@ -70,13 +70,13 @@ class DB_PUBLIC HierarchyBuilderShapeInserter
 public:
   HierarchyBuilderShapeInserter () { }
 
-  virtual void push (const db::Shape &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target)
+  void push (const db::Shape &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override
   {
     tl::const_map<db::Layout::properties_id_type> pm (prop_id);
     target->insert (shape, trans, pm);
   }
 
-  virtual void push (const db::Box &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target)
+  void push (const db::Box &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override
   {
     if (trans.is_ortho ()) {
       if (prop_id != 0) {
@@ -95,7 +95,7 @@ public:
     }
   }
 
-  virtual void push (const db::Polygon &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target)
+  void push (const db::Polygon &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override
   {
     if (trans.is_unity ()) {
       if (prop_id != 0) {
@@ -122,9 +122,9 @@ class DB_PUBLIC ClippingHierarchyBuilderShapeReceiver
 public:
   ClippingHierarchyBuilderShapeReceiver (HierarchyBuilderShapeReceiver *pipe = nullptr);
 
-  virtual void push (const db::Shape &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
-  virtual void push (const db::Box &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
-  virtual void push (const db::Polygon &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
+  void push (const db::Shape &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override;
+  void push (const db::Box &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override;
+  void push (const db::Polygon &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override;
 
 private:
   void insert_clipped (const db::Box &box, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &region, const db::RecursiveShapeReceiver::box_tree_type *complex_region, db::Shapes *target);
@@ -144,9 +144,9 @@ class DB_PUBLIC ReducingHierarchyBuilderShapeReceiver
 public:
   ReducingHierarchyBuilderShapeReceiver (HierarchyBuilderShapeReceiver *pipe = nullptr, double area_ratio = 3.0, size_t max_vertex_count = 16, bool reject_odd_polygons = false);
 
-  virtual void push (const db::Shape &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
-  virtual void push (const db::Box &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
-  virtual void push (const db::Polygon &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
+  void push (const db::Shape &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override;
+  void push (const db::Box &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override;
+  void push (const db::Polygon &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override;
 
 private:
   void reduce (const db::Polygon &poly, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &region, const db::RecursiveShapeReceiver::box_tree_type *complex_region, db::Shapes *target, bool check = true);
@@ -166,9 +166,9 @@ class DB_PUBLIC PolygonReferenceHierarchyBuilderShapeReceiver
 public:
   PolygonReferenceHierarchyBuilderShapeReceiver (db::Layout *layout, int text_enlargement = -1, const tl::Variant &text_prop_name = tl::Variant ());
 
-  virtual void push (const db::Shape &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
-  virtual void push (const db::Box &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
-  virtual void push (const db::Polygon &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
+  void push (const db::Shape &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override;
+  void push (const db::Box &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override;
+  void push (const db::Polygon &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override;
 
 private:
   void make_pref (db::Shapes *target, const db::Polygon &polygon, db::properties_id_type prop_id);
@@ -188,9 +188,9 @@ class DB_PUBLIC EdgeBuildingHierarchyBuilderShapeReceiver
 public:
   EdgeBuildingHierarchyBuilderShapeReceiver (bool as_edges);
 
-  virtual void push (const db::Shape &shape, properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
-  virtual void push (const db::Box &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
-  virtual void push (const db::Polygon &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
+  void push (const db::Shape &shape, properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override;
+  void push (const db::Box &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override;
+  void push (const db::Polygon &shape, db::properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override;
 
 private:
   bool m_as_edges;
@@ -205,9 +205,9 @@ class DB_PUBLIC EdgePairBuildingHierarchyBuilderShapeReceiver
 public:
   EdgePairBuildingHierarchyBuilderShapeReceiver ();
 
-  virtual void push (const db::Shape &shape, properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
-  virtual void push (const db::Box &, db::properties_id_type, const db::ICplxTrans &, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *) { }
-  virtual void push (const db::Polygon &, db::properties_id_type, const db::ICplxTrans &, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *) { }
+  void push (const db::Shape &shape, properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override;
+  void push (const db::Box &, db::properties_id_type, const db::ICplxTrans &, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *) override { }
+  void push (const db::Polygon &, db::properties_id_type, const db::ICplxTrans &, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *) override { }
 };
 
 /**
@@ -219,9 +219,9 @@ class DB_PUBLIC TextBuildingHierarchyBuilderShapeReceiver
 public:
   TextBuildingHierarchyBuilderShapeReceiver (db::Layout *layout);
 
-  virtual void push (const db::Shape &shape, properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target);
-  virtual void push (const db::Box &, db::properties_id_type, const db::ICplxTrans &, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *) { }
-  virtual void push (const db::Polygon &, db::properties_id_type, const db::ICplxTrans &, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *) { }
+  void push (const db::Shape &shape, properties_id_type prop_id, const db::ICplxTrans &trans, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *target) override;
+  void push (const db::Box &, db::properties_id_type, const db::ICplxTrans &, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *) override { }
+  void push (const db::Polygon &, db::properties_id_type, const db::ICplxTrans &, const db::Box &, const db::RecursiveShapeReceiver::box_tree_type *, db::Shapes *) override { }
 
 private:
   db::Layout *mp_layout;
@@ -281,7 +281,7 @@ public:
 
   HierarchyBuilder (db::Layout *target, unsigned int target_layer, const db::ICplxTrans &trans = db::ICplxTrans (), HierarchyBuilderShapeReceiver *pipe = nullptr);
   HierarchyBuilder (db::Layout *target, const db::ICplxTrans &trans = db::ICplxTrans (), HierarchyBuilderShapeReceiver *pipe = nullptr);
-  virtual ~HierarchyBuilder ();
+  ~HierarchyBuilder () override;
 
   /**
    *  @brief Installs a custom shape receiver
@@ -289,14 +289,14 @@ public:
    */
   void set_shape_receiver (HierarchyBuilderShapeReceiver *pipe);
 
-  virtual bool wants_all_cells () const { return m_wants_all_cells; }
-  virtual void begin (const RecursiveShapeIterator *iter);
-  virtual void end (const RecursiveShapeIterator *iter);
-  virtual void enter_cell (const RecursiveShapeIterator *iter, const db::Cell *cell, const db::Box &region, const box_tree_type *complex_region);
-  virtual void leave_cell (const RecursiveShapeIterator *iter, const db::Cell *cell);
-  virtual new_inst_mode new_inst (const RecursiveShapeIterator *iter, const db::CellInstArray &inst, const ICplxTrans &always_apply, const db::Box &region, const box_tree_type *complex_region, bool all, bool skip_shapes);
-  virtual bool new_inst_member (const RecursiveShapeIterator *iter, const db::CellInstArray &inst, const ICplxTrans &always_apply, const db::ICplxTrans &trans, const db::Box &region, const box_tree_type *complex_region, bool all, bool skip_shapes);
-  virtual void shape (const RecursiveShapeIterator *iter, const db::Shape &shape, const db::ICplxTrans &always_apply, const db::ICplxTrans &trans, const db::Box &region, const box_tree_type *complex_region);
+  bool wants_all_cells () const override { return m_wants_all_cells; }
+  void begin (const RecursiveShapeIterator *iter) override;
+  void end (const RecursiveShapeIterator *iter) override;
+  void enter_cell (const RecursiveShapeIterator *iter, const db::Cell *cell, const db::Box &region, const box_tree_type *complex_region) override;
+  void leave_cell (const RecursiveShapeIterator *iter, const db::Cell *cell) override;
+  new_inst_mode new_inst (const RecursiveShapeIterator *iter, const db::CellInstArray &inst, const ICplxTrans &always_apply, const db::Box &region, const box_tree_type *complex_region, bool all, bool skip_shapes) override;
+  bool new_inst_member (const RecursiveShapeIterator *iter, const db::CellInstArray &inst, const ICplxTrans &always_apply, const db::ICplxTrans &trans, const db::Box &region, const box_tree_type *complex_region, bool all, bool skip_shapes) override;
+  void shape (const RecursiveShapeIterator *iter, const db::Shape &shape, const db::ICplxTrans &always_apply, const db::ICplxTrans &trans, const db::Box &region, const box_tree_type *complex_region) override;
 
   /**
    *  @brief Sets the target layer - shapes will be put there

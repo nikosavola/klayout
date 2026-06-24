@@ -47,7 +47,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual ~DeferredMethodBase () { }
+  ~DeferredMethodBase () override { }
   virtual void execute () = 0;
 
 private:
@@ -217,7 +217,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~DeferredMethod ()
+  ~DeferredMethod () override
   {
     if (DeferredMethodScheduler::instance ()) {
       DeferredMethodScheduler::instance ()->unqueue (this);
@@ -251,7 +251,7 @@ public:
   /**
    *  @brief Execute the call immediately
    */
-  void execute ()
+  void execute () override
   {
     (mp_t->*m_method) ();
   }

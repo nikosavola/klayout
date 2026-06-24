@@ -57,12 +57,12 @@ public:
     : QAbstractItemModel (dialog), mp_dialog (dialog), m_icon_width (icon_width), m_icon_height (icon_height)
   { }
 
-  int columnCount (const QModelIndex &) const
+  int columnCount (const QModelIndex &) const override
   {
     return 1;
   }
 
-  QVariant data (const QModelIndex &index, int role) const
+  QVariant data (const QModelIndex &index, int role) const override
   {
     if (role == Qt::DisplayRole) {
       if (tree_id_type (index.internalId ()) < tree_id_type (mp_dialog->properties_pages ().size ())) {
@@ -84,7 +84,7 @@ public:
     return QVariant ();
   }
 
-  Qt::ItemFlags flags (const QModelIndex &index) const
+  Qt::ItemFlags flags (const QModelIndex &index) const override
   {
     Qt::ItemFlags f = QAbstractItemModel::flags (index);
     if (tree_id_type (index.internalId ()) >= tree_id_type (mp_dialog->properties_pages ().size ()) && ! mp_dialog->properties_pages () [index.row ()]->can_apply_to_all ()) {
@@ -93,12 +93,12 @@ public:
     return f;
   }
 
-  bool hasChildren (const QModelIndex &parent) const
+  bool hasChildren (const QModelIndex &parent) const override
   {
     return (! parent.isValid () || tree_id_type (parent.internalId ()) >= tree_id_type (mp_dialog->properties_pages ().size ()));
   }
 
-  QModelIndex index (int row, int column, const QModelIndex &parent) const
+  QModelIndex index (int row, int column, const QModelIndex &parent) const override
   {
     if (! parent.isValid ()) {
       return createIndex (row, column, tree_id_type (mp_dialog->properties_pages ().size ()));
@@ -107,7 +107,7 @@ public:
     }
   }
 
-  QModelIndex parent (const QModelIndex &child) const
+  QModelIndex parent (const QModelIndex &child) const override
   {
     if (tree_id_type (child.internalId ()) < tree_id_type (mp_dialog->properties_pages ().size ())) {
       return createIndex (int (child.internalId ()), child.column (), tree_id_type (mp_dialog->properties_pages ().size ()));
@@ -116,7 +116,7 @@ public:
     }
   }
 
-  int rowCount (const QModelIndex &parent) const
+  int rowCount (const QModelIndex &parent) const override
   {
     if (! hasChildren (parent)) {
       return 0;

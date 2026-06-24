@@ -189,7 +189,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~BrowserSource ();
+  ~BrowserSource () override;
 
   /**
    *  @brief Get the HTML code for a given "int" URL.
@@ -277,7 +277,7 @@ public:
     mp_panel = panel;
   }
 
-  virtual QVariant loadResource (int type, const QUrl &url);
+  QVariant loadResource (int type, const QUrl &url) override;
 
 private:
   BrowserPanel *mp_panel;
@@ -324,7 +324,7 @@ public:
   /**
    *  @brief Dtor
    */
-  ~BrowserPanel ();
+  ~BrowserPanel () override;
 
   /**
    *  @brief Connects the panel to a configuration dispatcher
@@ -451,7 +451,7 @@ protected slots:
 
 protected:
   virtual QVariant loadResource (int type, const QUrl &url);
-  virtual QSize sizeHint () const;
+  QSize sizeHint () const override;
 
 private:
   bool m_enable_load, m_enable_reject;

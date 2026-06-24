@@ -67,7 +67,7 @@ public:
    *  @param stream The stream to write to
    *  @param options The writer options to use
    */
-  void write (db::Layout &layout, tl::OutputStream &stream, const db::SaveLayoutOptions &options);
+  void write (db::Layout &layout, tl::OutputStream &stream, const db::SaveLayoutOptions &options) override;
 
 private:
   tl::OutputStream *mp_stream;

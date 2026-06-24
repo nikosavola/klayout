@@ -98,14 +98,14 @@ public:
   };
 
   D25ViewWidget (QWidget *parent);
-  ~D25ViewWidget ();
+  ~D25ViewWidget () override;
 
-  void keyPressEvent (QKeyEvent *event);
-  void keyReleaseEvent (QKeyEvent *event);
-  void wheelEvent (QWheelEvent *event);
-  void mousePressEvent (QMouseEvent *event);
-  void mouseReleaseEvent (QMouseEvent *event);
-  void mouseMoveEvent (QMouseEvent *event);
+  void keyPressEvent (QKeyEvent *event) override;
+  void keyReleaseEvent (QKeyEvent *event) override;
+  void wheelEvent (QWheelEvent *event) override;
+  void mousePressEvent (QMouseEvent *event) override;
+  void mouseReleaseEvent (QMouseEvent *event) override;
+  void mouseMoveEvent (QMouseEvent *event) override;
 
   void attach_view(lay::LayoutViewBase *view);
 
@@ -173,9 +173,9 @@ signals:
   void init_failed ();
 
 protected:
-  virtual void camera_changed ();
-  virtual double aspect_ratio () const;
-  virtual void showEvent (QShowEvent *);
+  void camera_changed () override;
+  double aspect_ratio () const override;
+  void showEvent (QShowEvent *) override;
 
 public slots:
   void fit ();
@@ -200,9 +200,9 @@ private:
 
   std::vector<LayerInfo> m_layers;
 
-  void initializeGL ();
-  void paintGL ();
-  void resizeGL (int w, int h);
+  void initializeGL () override;
+  void paintGL () override;
+  void resizeGL (int w, int h) override;
 
   void do_initialize_gl ();
   void render_region (tl::AbsoluteProgress &progress, D25ViewWidget::triangle_chunks_type &vertex_chunks, triangle_chunks_type &normals, D25ViewWidget::line_chunks_type &line_chunks, const db::Region &region, double dbu, const db::Box &clip_box, double zstart, double zstop);

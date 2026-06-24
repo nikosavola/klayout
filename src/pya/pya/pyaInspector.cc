@@ -130,18 +130,18 @@ public:
     }
   }
 
-  std::string description () const
+  std::string description () const override
   {
     return std::string ("...");
   }
 
-  bool equiv (const gsi::Inspector *o) const
+  bool equiv (const gsi::Inspector *o) const override
   {
     const DictInspector *other = dynamic_cast<const DictInspector *> (o);
     return other && other->m_dict.get () == m_dict.get ();
   }
 
-  tl::Variant keyv (size_t index) const
+  tl::Variant keyv (size_t index) const override
   {
     if (m_keys && PyList_Check (m_keys.get ()) && Py_ssize_t (index) < PyList_GET_SIZE (m_keys.get ())) {
       return python2c<tl::Variant> (PyList_GET_ITEM (m_keys.get (), index));
@@ -150,7 +150,7 @@ public:
     }
   }
 
-  std::string key (size_t index) const
+  std::string key (size_t index) const override
   {
     if (! m_symbolic) {
       return std::string ();
@@ -167,7 +167,7 @@ public:
     }
   }
   
-  tl::Variant value (size_t index) const 
+  tl::Variant value (size_t index) const override 
   {
     if (m_values && PyList_Check (m_values.get ()) && Py_ssize_t (index) < PyList_Size (m_values.get ())) {
       return python2c<tl::Variant> (PyList_GET_ITEM (m_values.get (), index));
@@ -176,7 +176,7 @@ public:
     }
   }
 
-  std::string type (size_t index) const 
+  std::string type (size_t index) const override 
   {
     if (m_values && PyList_Check (m_values.get ()) && Py_ssize_t (index) < PyList_Size (m_values.get ())) {
       return type_str (PyList_GET_ITEM (m_values.get (), index));
@@ -185,7 +185,7 @@ public:
     }
   }
 
-  gsi::Inspector::Visibility visibility (size_t index) const 
+  gsi::Inspector::Visibility visibility (size_t index) const override 
   {
     if (m_symbolic && m_keys && m_values && PyList_Check (m_values.get ()) && Py_ssize_t (index) < PyList_Size (m_values.get ()) && PyList_Check (m_keys.get ()) && Py_ssize_t (index) < PyList_Size (m_keys.get ())) {
       return visibility_flag (PyList_GET_ITEM (m_values.get (), index), PyList_GET_ITEM (m_keys.get (), index));
@@ -194,7 +194,7 @@ public:
     }
   }
 
-  size_t count () const 
+  size_t count () const override 
   {
     if (m_keys && PyList_Check (m_keys.get ())) {
       return size_t (PyList_GET_SIZE (m_keys.get ()));
@@ -203,7 +203,7 @@ public:
     }
   }
 
-  virtual bool has_children (size_t index) const
+  bool has_children (size_t index) const override
   {
     if (m_values && PyList_Check (m_values.get ()) && Py_ssize_t (index) < PyList_Size (m_values.get ())) {
       return !is_plain_type (PyList_GET_ITEM (m_values.get (), index));
@@ -212,7 +212,7 @@ public:
     }
   }
 
-  virtual Inspector *child_inspector (size_t index) const
+  Inspector *child_inspector (size_t index) const override
   {
     if (m_values && PyList_Check (m_values.get ()) && Py_ssize_t (index) < PyList_Size (m_values.get ())) {
       return create_inspector (PyList_GET_ITEM (m_values.get (), index));
@@ -239,23 +239,23 @@ public:
   {
   }
 
-  std::string description () const
+  std::string description () const override
   {
     return std::string ("...");
   }
 
-  bool equiv (const gsi::Inspector *o) const
+  bool equiv (const gsi::Inspector *o) const override
   {
     const ListInspector *other = dynamic_cast<const ListInspector *> (o);
     return other && other->m_values.get () == m_values.get ();
   }
 
-  bool has_keys () const
+  bool has_keys () const override
   {
     return false;
   }
   
-  std::string type (size_t index) const 
+  std::string type (size_t index) const override 
   {
     if (m_values && PyList_Check (m_values.get ()) && Py_ssize_t (index) < PyList_Size (m_values.get ())) {
       return type_str (PyList_GET_ITEM (m_values.get (), index));
@@ -264,7 +264,7 @@ public:
     }
   }
 
-  tl::Variant value (size_t index) const 
+  tl::Variant value (size_t index) const override 
   {
     if (m_values && PyList_Check (m_values.get ()) && Py_ssize_t (index) < PyList_Size (m_values.get ())) {
       return python2c<tl::Variant> (PyList_GET_ITEM (m_values.get (), index));
@@ -273,12 +273,12 @@ public:
     }
   }
 
-  gsi::Inspector::Visibility visibility (size_t /*index*/) const 
+  gsi::Inspector::Visibility visibility (size_t /*index*/) const override 
   {
     return gsi::Inspector::Always;
   }
 
-  size_t count () const 
+  size_t count () const override 
   {
     if (m_values && PyList_Check (m_values.get ())) {
       return size_t (PyList_GET_SIZE (m_values.get ()));
@@ -287,7 +287,7 @@ public:
     }
   }
 
-  virtual bool has_children (size_t index) const
+  bool has_children (size_t index) const override
   {
     if (m_values && PyList_Check (m_values.get ()) && Py_ssize_t (index) < PyList_Size (m_values.get ())) {
       return !is_plain_type (PyList_GET_ITEM (m_values.get (), index));
@@ -296,7 +296,7 @@ public:
     }
   }
 
-  virtual Inspector *child_inspector (size_t index) const
+  Inspector *child_inspector (size_t index) const override
   {
     if (m_values && PyList_Check (m_values.get ()) && Py_ssize_t (index) < PyList_Size (m_values.get ())) {
       return create_inspector (PyList_GET_ITEM (m_values.get (), index));
@@ -321,23 +321,23 @@ public:
   {
   }
 
-  std::string description () const
+  std::string description () const override
   {
     return std::string ("...");
   }
 
-  bool equiv (const gsi::Inspector *o) const
+  bool equiv (const gsi::Inspector *o) const override
   {
     const TupleInspector *other = dynamic_cast<const TupleInspector *> (o);
     return other && other->m_values.get () == m_values.get ();
   }
 
-  bool has_keys () const
+  bool has_keys () const override
   {
     return false;
   }
 
-  std::string type (size_t index) const 
+  std::string type (size_t index) const override 
   {
     if (m_values && PyTuple_Check (m_values.get ()) && Py_ssize_t (index) < PyTuple_Size (m_values.get ())) {
       return type_str (PyTuple_GET_ITEM (m_values.get (), index));
@@ -346,7 +346,7 @@ public:
     }
   }
 
-  tl::Variant value (size_t index) const 
+  tl::Variant value (size_t index) const override 
   {
     if (m_values && PyTuple_Check (m_values.get ()) && Py_ssize_t (index) < PyTuple_Size (m_values.get ())) {
       return python2c<tl::Variant> (PyTuple_GET_ITEM (m_values.get (), index));
@@ -355,12 +355,12 @@ public:
     }
   }
 
-  gsi::Inspector::Visibility visibility (size_t /*index*/) const 
+  gsi::Inspector::Visibility visibility (size_t /*index*/) const override 
   {
     return gsi::Inspector::Always;
   }
 
-  size_t count () const 
+  size_t count () const override 
   {
     if (m_values && PyTuple_Check (m_values.get ())) {
       return size_t (PyTuple_GET_SIZE (m_values.get ()));
@@ -369,7 +369,7 @@ public:
     }
   }
 
-  virtual bool has_children (size_t index) const
+  bool has_children (size_t index) const override
   {
     if (m_values && PyTuple_Check (m_values.get ()) && Py_ssize_t (index) < PyTuple_Size (m_values.get ())) {
       return !is_plain_type (PyTuple_GET_ITEM (m_values.get (), index));
@@ -378,7 +378,7 @@ public:
     }
   }
 
-  virtual Inspector *child_inspector (size_t index) const
+  Inspector *child_inspector (size_t index) const override
   {
     if (m_values && PyTuple_Check (m_values.get ()) && Py_ssize_t (index) < PyTuple_Size (m_values.get ())) {
       return create_inspector (PyTuple_GET_ITEM (m_values.get (), index));
@@ -415,7 +415,7 @@ public:
     }
   }
 
-  std::string description () const
+  std::string description () const override
   {
     PythonRef rep (PyObject_Repr (m_obj.get ()));
     if (! rep) {
@@ -426,13 +426,13 @@ public:
     }
   }
 
-  bool equiv (const gsi::Inspector *o) const
+  bool equiv (const gsi::Inspector *o) const override
   {
     const ObjectInspector *other = dynamic_cast<const ObjectInspector *> (o);
     return other && other->m_obj.get () == m_obj.get ();
   }
 
-  std::string key (size_t index) const 
+  std::string key (size_t index) const override 
   {
     try {
       if (m_keys && PyList_Check (m_keys.get ()) && Py_ssize_t (index) < PyList_GET_SIZE (m_keys.get ())) {
@@ -445,7 +445,7 @@ public:
     }
   }
   
-  tl::Variant value (size_t index) const 
+  tl::Variant value (size_t index) const override 
   {
     if (m_keys && PyList_Check (m_keys.get ()) && Py_ssize_t (index) < PyList_Size (m_keys.get ())) {
       PythonRef value (PyObject_GetAttr (m_obj.get (), PyList_GET_ITEM (m_keys.get (), index)));
@@ -458,7 +458,7 @@ public:
     }
   }
 
-  std::string type (size_t index) const 
+  std::string type (size_t index) const override 
   {
     if (m_keys && PyList_Check (m_keys.get ()) && Py_ssize_t (index) < PyList_Size (m_keys.get ())) {
       PythonRef value (PyObject_GetAttr (m_obj.get (), PyList_GET_ITEM (m_keys.get (), index)));
@@ -471,7 +471,7 @@ public:
     return std::string ();
   }
 
-  gsi::Inspector::Visibility visibility (size_t index) const 
+  gsi::Inspector::Visibility visibility (size_t index) const override 
   {
     if (m_keys && PyList_Check (m_keys.get ()) && Py_ssize_t (index) < PyList_Size (m_keys.get ())) {
       PythonRef value (PyObject_GetAttr (m_obj.get (), PyList_GET_ITEM (m_keys.get (), index)));
@@ -484,7 +484,7 @@ public:
     return gsi::Inspector::Always;
   }
 
-  size_t count () const 
+  size_t count () const override 
   {
     if (m_keys && PyList_Check (m_keys.get ())) {
       return size_t (PyList_GET_SIZE (m_keys.get ()));
@@ -493,7 +493,7 @@ public:
     }
   }
 
-  virtual bool has_children (size_t index) const
+  bool has_children (size_t index) const override
   {
     if (m_keys && PyList_Check (m_keys.get ()) && Py_ssize_t (index) < PyList_Size (m_keys.get ())) {
       PythonRef value (PyObject_GetAttr (m_obj.get (), PyList_GET_ITEM (m_keys.get (), index)));
@@ -506,7 +506,7 @@ public:
     }
   }
 
-  virtual Inspector *child_inspector (size_t index) const
+  Inspector *child_inspector (size_t index) const override
   {
     if (m_keys && PyList_Check (m_keys.get ()) && Py_ssize_t (index) < PyList_Size (m_keys.get ())) {
       PythonRef value (PyObject_GetAttr (m_obj.get (), PyList_GET_ITEM (m_keys.get (), index)));

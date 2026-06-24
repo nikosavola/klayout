@@ -66,7 +66,7 @@ public:
     return false;
   }
 
-  virtual bool selected (const db::Polygon &polygon, db::properties_id_type prop_id) const
+  bool selected (const db::Polygon &polygon, db::properties_id_type prop_id) const override
   {
     if (f_selected.can_issue ()) {
       return f_selected.issue<PolygonFilterImpl, bool, const db::PolygonWithProperties &> (&PolygonFilterImpl::issue_selected, db::PolygonWithProperties (polygon, prop_id));
@@ -75,7 +75,7 @@ public:
     }
   }
 
-  virtual bool selected (const db::PolygonRef &polygon, db::properties_id_type prop_id) const
+  bool selected (const db::PolygonRef &polygon, db::properties_id_type prop_id) const override
   {
     db::Polygon p;
     polygon.instantiate (p);

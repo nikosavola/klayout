@@ -46,11 +46,11 @@ class GridNetPluginDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const;
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override;
 #if defined(HAVE_QT)
-  virtual lay::ConfigPage *config_page (QWidget *parent, std::string &title) const;
+  lay::ConfigPage *config_page (QWidget *parent, std::string &title) const override;
 #endif
-  virtual lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *, lay::LayoutViewBase *view) const;
+  lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *, lay::LayoutViewBase *view) const override;
 };
 
 class GridNet
@@ -71,10 +71,10 @@ public:
   GridNet (lay::LayoutViewBase *view);
 
 private:
-  virtual void render_bg (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas);
+  void render_bg (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas) override;
 
   //  implementation of the lay::Plugin interface
-  virtual bool configure (const std::string &name, const std::string &value);
+  bool configure (const std::string &name, const std::string &value) override;
 
   lay::LayoutViewBase *mp_view;
   bool m_visible;

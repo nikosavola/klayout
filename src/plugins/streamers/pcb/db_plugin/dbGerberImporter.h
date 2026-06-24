@@ -189,7 +189,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~GerberFileReader () { }
+  ~GerberFileReader () override { }
 
   /**
    *  @brief Detect the file format

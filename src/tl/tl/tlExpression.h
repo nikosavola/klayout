@@ -137,7 +137,7 @@ public:
   /**
    *  @brief Reimplementation of tl::Extractor's error method
    */
-  virtual void error (const std::string &message);
+  void error (const std::string &message) override;
 
   /**
    *  @brief Gets a string indication where we are currently

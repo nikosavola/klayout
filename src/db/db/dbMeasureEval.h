@@ -67,7 +67,7 @@ public:
   }
 
 protected:
-  virtual void resolve_name (const std::string &name, const tl::EvalFunction *&function, const tl::Variant *&value, tl::Variant *&var);
+  void resolve_name (const std::string &name, const tl::EvalFunction *&function, const tl::Variant *&value, tl::Variant *&var) override;
 
 private:
   friend class ShapeFunction;

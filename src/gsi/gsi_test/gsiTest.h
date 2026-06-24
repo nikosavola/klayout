@@ -91,7 +91,7 @@ struct A
   /**
    *  @brief Destructor
    */
-  ~A ();
+  ~A () override;
 
   /**
    *  @brief Assignment
@@ -1157,12 +1157,12 @@ class C_P
   : public C
 {
 public:
-  virtual unsigned int f (const std::string &s) const
+  unsigned int f (const std::string &s) const override
   {
     return f_cb.can_issue () ? f_cb.issue<C, unsigned int, const std::string &> (&C::f, s) : C::f (s);
   }
 
-  virtual void vfunc (const CopyDetector &cd)
+  void vfunc (const CopyDetector &cd) override
   {
     return vfunc_cb.can_issue () ? vfunc_cb.issue<C, const CopyDetector &> (&C::vfunc, cd) : C::vfunc (cd);
   }
@@ -1175,7 +1175,7 @@ struct E
   : public gsi::ObjectBase
 {
   E ();
-  ~E ();
+  ~E () override;
 
   static void reset_inst ();
   static int inst_count();
@@ -1243,7 +1243,7 @@ public:
   X (const char *x);
   X (const X &x);
   X &operator= (const X &x);
-  virtual ~X ();
+  ~X () override;
 
   int x1 () const { return 17; }
   int x2 () const { return 42; }
@@ -1273,7 +1273,7 @@ class Y
 public:
   Y ();
   Y (const char *x);
-  ~Y ();
+  ~Y () override;
 
   int x1() const { return 1; }
   int y1() const { return 117; }
@@ -1289,7 +1289,7 @@ public:
   static std::vector<const Y *> vy_cptr ();
   static std::vector<Y *> vy0_ptr ();
   static std::vector<Y *> vy_ptr (); 
-  virtual std::string cls_name () const;
+  std::string cls_name () const override;
   int i () const;
 
 private:
@@ -1323,7 +1323,7 @@ class YY : public Y
 public:
   YY ();
   YY (const char *x);
-  virtual std::string cls_name() const;
+  std::string cls_name() const override;
 };
 
 class Z
@@ -1345,7 +1345,7 @@ class Z_P
   : public Z
 {
 public:
-  virtual std::string f (X *x);
+  std::string f (X *x) override;
   std::string f_org (X *x);
   std::string f_with_x (const std::string &s);
   std::string f_with_y (const std::string &s);
@@ -1374,7 +1374,7 @@ class GObject_P : public GObject
 {
 public:
   GObject_P ();
-  virtual int g ();
+  int g () override;
 
   gsi::Callback g_cb;
 };
@@ -1397,7 +1397,7 @@ class GFactory_P : public GFactory
 {
 public:
   GFactory_P ();
-  virtual GObject *f (int z);
+  GObject *f (int z) override;
 
   gsi::Callback f_cb;
 };

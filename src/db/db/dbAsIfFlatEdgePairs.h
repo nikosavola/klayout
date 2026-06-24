@@ -40,65 +40,65 @@ class DB_PUBLIC AsIfFlatEdgePairs
 public:
   AsIfFlatEdgePairs ();
   AsIfFlatEdgePairs (const AsIfFlatEdgePairs &other);
-  virtual ~AsIfFlatEdgePairs ();
+  ~AsIfFlatEdgePairs () override;
 
-  virtual size_t count () const;
-  virtual size_t hier_count () const;
-  virtual std::string to_string (size_t) const;
-  virtual Box bbox () const;
+  size_t count () const override;
+  size_t hier_count () const override;
+  std::string to_string (size_t) const override;
+  Box bbox () const override;
 
-  virtual EdgePairsDelegate *filter_in_place (const EdgePairFilterBase &filter)
+  EdgePairsDelegate *filter_in_place (const EdgePairFilterBase &filter) override
   {
     return filtered (filter);
   }
 
-  virtual EdgePairsDelegate *filtered (const EdgePairFilterBase &) const;
-  virtual std::pair<EdgePairsDelegate *, EdgePairsDelegate *> filtered_pair (const EdgePairFilterBase &filter) const;
+  EdgePairsDelegate *filtered (const EdgePairFilterBase &) const override;
+  std::pair<EdgePairsDelegate *, EdgePairsDelegate *> filtered_pair (const EdgePairFilterBase &filter) const override;
 
-  virtual EdgePairsDelegate *process_in_place (const EdgePairProcessorBase &proc)
+  EdgePairsDelegate *process_in_place (const EdgePairProcessorBase &proc) override
   {
     return processed (proc);
   }
 
-  virtual EdgePairsDelegate *processed (const EdgePairProcessorBase &proc) const;
-  virtual RegionDelegate *processed_to_polygons (const EdgePairToPolygonProcessorBase &proc) const;
-  virtual EdgesDelegate *processed_to_edges (const EdgePairToEdgeProcessorBase &proc) const;
+  EdgePairsDelegate *processed (const EdgePairProcessorBase &proc) const override;
+  RegionDelegate *processed_to_polygons (const EdgePairToPolygonProcessorBase &proc) const override;
+  EdgesDelegate *processed_to_edges (const EdgePairToEdgeProcessorBase &proc) const override;
 
-  virtual RegionDelegate *pull_interacting (const Region &) const;
-  virtual EdgesDelegate *pull_interacting (const Edges &) const;
-  virtual EdgePairsDelegate *selected_interacting (const Region &other, size_t min_count, size_t max_count) const;
-  virtual EdgePairsDelegate *selected_not_interacting (const Region &other, size_t min_count, size_t max_count) const;
-  virtual EdgePairsDelegate *selected_interacting (const Edges &other, size_t min_count, size_t max_count) const;
-  virtual EdgePairsDelegate *selected_not_interacting (const Edges &other, size_t min_count, size_t max_count) const;
-  virtual std::pair<EdgePairsDelegate *, EdgePairsDelegate *> selected_interacting_pair (const Region &other, size_t min_count, size_t max_count) const;
-  virtual std::pair<EdgePairsDelegate *, EdgePairsDelegate *> selected_interacting_pair (const Edges &other, size_t min_count, size_t max_count) const;
+  RegionDelegate *pull_interacting (const Region &) const override;
+  EdgesDelegate *pull_interacting (const Edges &) const override;
+  EdgePairsDelegate *selected_interacting (const Region &other, size_t min_count, size_t max_count) const override;
+  EdgePairsDelegate *selected_not_interacting (const Region &other, size_t min_count, size_t max_count) const override;
+  EdgePairsDelegate *selected_interacting (const Edges &other, size_t min_count, size_t max_count) const override;
+  EdgePairsDelegate *selected_not_interacting (const Edges &other, size_t min_count, size_t max_count) const override;
+  std::pair<EdgePairsDelegate *, EdgePairsDelegate *> selected_interacting_pair (const Region &other, size_t min_count, size_t max_count) const override;
+  std::pair<EdgePairsDelegate *, EdgePairsDelegate *> selected_interacting_pair (const Edges &other, size_t min_count, size_t max_count) const override;
 
-  virtual EdgePairsDelegate *selected_outside (const Region &other) const;
-  virtual EdgePairsDelegate *selected_not_outside (const Region &other) const;
-  virtual std::pair<EdgePairsDelegate *, EdgePairsDelegate *> selected_outside_pair (const Region &other) const;
-  virtual EdgePairsDelegate *selected_inside (const Region &other) const;
-  virtual EdgePairsDelegate *selected_not_inside (const Region &other) const;
-  virtual std::pair<EdgePairsDelegate *, EdgePairsDelegate *> selected_inside_pair (const Region &other) const;
+  EdgePairsDelegate *selected_outside (const Region &other) const override;
+  EdgePairsDelegate *selected_not_outside (const Region &other) const override;
+  std::pair<EdgePairsDelegate *, EdgePairsDelegate *> selected_outside_pair (const Region &other) const override;
+  EdgePairsDelegate *selected_inside (const Region &other) const override;
+  EdgePairsDelegate *selected_not_inside (const Region &other) const override;
+  std::pair<EdgePairsDelegate *, EdgePairsDelegate *> selected_inside_pair (const Region &other) const override;
 
-  virtual EdgePairsDelegate *add_in_place (const EdgePairs &other)
+  EdgePairsDelegate *add_in_place (const EdgePairs &other) override
   {
     return add (other);
   }
 
-  virtual EdgePairsDelegate *add (const EdgePairs &other) const;
+  EdgePairsDelegate *add (const EdgePairs &other) const override;
 
-  virtual RegionDelegate *polygons (db::Coord e) const;
-  virtual EdgesDelegate *edges () const;
-  virtual EdgesDelegate *first_edges () const;
-  virtual EdgesDelegate *second_edges () const;
+  RegionDelegate *polygons (db::Coord e) const override;
+  EdgesDelegate *edges () const override;
+  EdgesDelegate *first_edges () const override;
+  EdgesDelegate *second_edges () const override;
 
-  virtual EdgePairsDelegate *in (const EdgePairs &, bool) const;
+  EdgePairsDelegate *in (const EdgePairs &, bool) const override;
 
-  virtual bool equals (const EdgePairs &other) const;
-  virtual bool less (const EdgePairs &other) const;
+  bool equals (const EdgePairs &other) const override;
+  bool less (const EdgePairs &other) const override;
 
-  virtual void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const;
-  virtual void insert_into_as_polygons (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer, db::Coord enl) const;
+  void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const override;
+  void insert_into_as_polygons (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer, db::Coord enl) const override;
 
 protected:
   void update_bbox (const db::Box &box);

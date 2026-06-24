@@ -140,7 +140,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~Object ();
+  ~Object () override;
 
   /**
    *  @brief Less operator
@@ -165,29 +165,29 @@ public:
    *  This is the generic equality that involves an other object
    *  of any kind.
    */
-  virtual bool equals (const db::DUserObjectBase *d) const;
+  bool equals (const db::DUserObjectBase *d) const override;
 
   /**
    *  @brief Less criterion
    *  This is the generic equality that involves an other object
    *  of any kind.
    */
-  virtual bool less (const db::DUserObjectBase *d) const;
+  bool less (const db::DUserObjectBase *d) const override;
 
   /**
    *  @brief Gets the user object class ID
    */
-  virtual unsigned int class_id () const;
+  unsigned int class_id () const override;
 
   /**
    *  @brief Clones the user object
    */
-  virtual db::DUserObjectBase *clone () const;
+  db::DUserObjectBase *clone () const override;
 
   /**
    *  @brief Returns the bounding box of the object
    */
-  virtual db::DBox box () const;
+  db::DBox box () const override;
 
   /**
    *  @brief Transforms the object (in place)
@@ -201,7 +201,7 @@ public:
   /**
    *  @brief Transforms the object (in place)
    */
-  virtual void transform (const db::DCplxTrans &t)
+  void transform (const db::DCplxTrans &t) override
   {
     for (auto p = m_points.begin (); p != m_points.end (); ++p) {
       *p = t * *p;
@@ -212,7 +212,7 @@ public:
   /**
    *  @brief Transforms the object (in place)
    */
-  virtual void transform (const db::DTrans &t)
+  void transform (const db::DTrans &t) override
   {
     for (auto p = m_points.begin (); p != m_points.end (); ++p) {
       *p = t * *p;
@@ -223,7 +223,7 @@ public:
   /**
    *  @brief Transforms the object (in place)
    */
-  virtual void transform (const db::DFTrans &t)
+  void transform (const db::DFTrans &t) override
   {
     for (auto p = m_points.begin (); p != m_points.end (); ++p) {
       *p = t * *p;
@@ -746,7 +746,7 @@ public:
   /**
    *  @brief Gets the class name for the generic user object factory
    */
-  virtual const char *class_name () const;
+  const char *class_name () const override;
 
   /**
    *  @brief Initializes the object from a string
@@ -754,7 +754,7 @@ public:
    *  This method needs to be implemented mainly if the object is to be created from the
    *  generic factory.
    */
-  virtual void from_string (const char *s, const char *base_dir = nullptr);
+  void from_string (const char *s, const char *base_dir = nullptr) override;
 
   /**
    *  @brief Converts the object to a string
@@ -762,7 +762,7 @@ public:
    *  This method needs to be implemented mainly if the object is to be created from the
    *  generic factory.
    */
-  virtual std::string to_string () const;
+  std::string to_string () const override;
 
   /**
    *  @brief Computes the parameters for an angle ruler

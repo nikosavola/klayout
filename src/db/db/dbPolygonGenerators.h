@@ -88,47 +88,47 @@ public:
   /**
    *  @brief Destructor
    */
-  ~PolygonGenerator ();
+  ~PolygonGenerator () override;
 
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void start ();
+  void start () override;
 
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void flush ();
+  void flush () override;
 
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void begin_scanline (db::Coord y);
+  void begin_scanline (db::Coord y) override;
 
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void end_scanline (db::Coord y);
+  void end_scanline (db::Coord y) override;
 
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void crossing_edge (const db::Edge &e);
+  void crossing_edge (const db::Edge &e) override;
 
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void skip_n (size_t n);
+  void skip_n (size_t n) override;
 
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void put (const db::Edge &e);
+  void put (const db::Edge &e) override;
 
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void put (const db::Edge & /*e*/, int /*tag*/) { }
+  void put (const db::Edge & /*e*/, int /*tag*/) override { }
 
   /**
    *  @brief Sets the way how holes are resolved dynamically
@@ -230,47 +230,47 @@ public:
   /**
    *  @brief Destructor
    */
-  ~TrapezoidGenerator ();
+  ~TrapezoidGenerator () override;
 
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void start ();
+  void start () override;
 
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void flush ();
+  void flush () override;
 
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void begin_scanline (db::Coord y);
+  void begin_scanline (db::Coord y) override;
 
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void end_scanline (db::Coord y);
+  void end_scanline (db::Coord y) override;
 
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void crossing_edge (const db::Edge &e);
+  void crossing_edge (const db::Edge &e) override;
 
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void skip_n (size_t n);
+  void skip_n (size_t n) override;
 
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void put (const db::Edge &e);
+  void put (const db::Edge &e) override;
 
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void put (const db::Edge & /*e*/, int /*tag*/) { }
+  void put (const db::Edge & /*e*/, int /*tag*/) override { }
 
 private:
   db::Coord m_y;
@@ -357,7 +357,7 @@ public:
   /**
    *  @brief Start the sequence
    */
-  virtual void start ()
+  void start () override
   {
     if (m_clear) {
       mp_polygons->clear ();
@@ -385,7 +385,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  virtual void put (const db::SimplePolygon &polygon) 
+  void put (const db::SimplePolygon &polygon) override 
   {
     mp_polygons->push_back (polygon);
   }
@@ -424,7 +424,7 @@ public:
   /**
    *  @brief Start the sequence
    */
-  virtual void start ()
+  void start () override
   {
     if (m_clear) {
       mp_polygons->clear ();
@@ -452,7 +452,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  virtual void put (const db::SimplePolygon &polygon)
+  void put (const db::SimplePolygon &polygon) override
   {
     mp_polygons->push_back (db::SimplePolygonWithProperties (polygon, m_prop_id));
   }
@@ -549,7 +549,7 @@ public:
   /**
    *  @brief Start the sequence
    */
-  virtual void start ()
+  void start () override
   {
     if (m_clear) {
       mp_polygons->clear ();
@@ -561,7 +561,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  virtual void put (const db::Polygon &polygon) 
+  void put (const db::Polygon &polygon) override 
   {
     mp_polygons->push_back (polygon);
   }
@@ -616,7 +616,7 @@ public:
   /**
    *  @brief Start the sequence
    */
-  virtual void start ()
+  void start () override
   {
     if (m_clear) {
       mp_polygons->clear ();
@@ -628,7 +628,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  virtual void put (const db::Polygon &polygon)
+  void put (const db::Polygon &polygon) override
   {
     mp_polygons->push_back (db::PolygonWithProperties (polygon, m_prop_id));
   }
@@ -659,7 +659,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  virtual void put (const db::Polygon &polygon);
+  void put (const db::Polygon &polygon) override;
 
 private:
   EdgeProcessor m_sizing_processor;
@@ -681,7 +681,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void put (const db::Polygon &polygon)
+  void put (const db::Polygon &polygon) override
   {
     mp_ep->insert (polygon, m_prop);
     m_prop += m_prop_step;

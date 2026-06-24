@@ -55,28 +55,28 @@ Q_OBJECT
 
 public: 
   SelectionService (lay::LayoutViewBase *view);
-  ~SelectionService ();
+  ~SelectionService () override;
 
-  lay::ViewService *view_service_interface ()
+  lay::ViewService *view_service_interface () override
   {
     return this;
   }
 
-  void set_colors (tl::Color background, tl::Color color);
+  void set_colors (tl::Color background, tl::Color color) override;
   void begin (const db::DPoint &pos);
 
   bool dragging () const { return mp_box != nullptr; }
 
   //  called by lay::Move, so these methods need to be public
-  virtual bool leave_event (bool prio);
-  virtual bool enter_event (bool prio);
-  virtual bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual bool mouse_release_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual bool mouse_press_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual bool mouse_double_click_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual bool wheel_event (int delta, bool horizontal, const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual void hover_reset ();
+  bool leave_event (bool prio) override;
+  bool enter_event (bool prio) override;
+  bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  bool mouse_release_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  bool mouse_press_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  bool mouse_double_click_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  bool wheel_event (int delta, bool horizontal, const db::DPoint &p, unsigned int buttons, bool prio) override;
+  void hover_reset () override;
 
 #if defined (HAVE_QT)
 public slots:
@@ -84,7 +84,7 @@ public slots:
 #endif
 
 private:
-  virtual void deactivated ();
+  void deactivated () override;
 
   db::DPoint m_p1, m_p2;
   db::DPoint m_current_position;

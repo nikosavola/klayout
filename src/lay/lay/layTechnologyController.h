@@ -54,12 +54,12 @@ public:
    */
   TechnologyController ();
 
-  void initialize (lay::Dispatcher *root);
-  void initialized (lay::Dispatcher *root);
-  void uninitialize (lay::Dispatcher *root);
+  void initialize (lay::Dispatcher *root) override;
+  void initialized (lay::Dispatcher *root) override;
+  void uninitialize (lay::Dispatcher *root) override;
 
-  void get_options (std::vector < std::pair<std::string, std::string> > &options) const;
-  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const;
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override;
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override;
 
   void show_editor ();
 
@@ -141,9 +141,9 @@ private:
   void view_changed ();
   void technologies_changed ();
   void technology_changed (db::Technology *);
-  bool configure (const std::string &name, const std::string &value);
-  void config_finalize ();
-  bool menu_activated (const std::string &symbol) const;
+  bool configure (const std::string &name, const std::string &value) override;
+  void config_finalize () override;
+  bool menu_activated (const std::string &symbol) const override;
   void update_current_technology (Dispatcher *dispatcher);
   void update_menu (lay::Dispatcher *dispatcher);
   void replace_technologies (const db::Technologies &technologies);

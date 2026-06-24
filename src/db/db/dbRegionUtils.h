@@ -57,37 +57,37 @@ struct DB_PUBLIC RegionPerimeterFilter
   /**
    *  @brief Returns true if the polygon's perimeter matches the criterion
    */
-  virtual bool selected (const db::Polygon &poly, properties_id_type) const;
+  bool selected (const db::Polygon &poly, properties_id_type) const override;
 
   /**
    *  @brief Returns true if the polygon's perimeter matches the criterion
    */
-  virtual bool selected (const db::PolygonRef &poly, properties_id_type) const;
+  bool selected (const db::PolygonRef &poly, properties_id_type) const override;
 
   /**
    *  @brief Returns true if the polygon's perimeter sum matches the criterion
    */
-  virtual bool selected_set (const std::unordered_set<db::PolygonRefWithProperties> &polygons) const;
+  bool selected_set (const std::unordered_set<db::PolygonRefWithProperties> &polygons) const override;
 
   /**
    *  @brief Returns true if the polygon's perimeter sum matches the criterion
    */
-  virtual bool selected_set (const std::unordered_set<PolygonWithProperties> &polygons) const;
+  bool selected_set (const std::unordered_set<PolygonWithProperties> &polygons) const override;
 
   /**
    *  @brief This filter is isotropic
    */
-  virtual const TransformationReducer *vars () const;
+  const TransformationReducer *vars () const override;
 
   /**
    *  @brief This filter prefers producing variants
    */
-  virtual bool wants_variants () const { return true; }
+  bool wants_variants () const override { return true; }
 
   /**
    *  @brief This filter wants merged input
    */
-  virtual bool requires_raw_input () const { return false; }
+  bool requires_raw_input () const override { return false; }
 
 private:
   perimeter_type m_pmin, m_pmax;
@@ -123,37 +123,37 @@ struct DB_PUBLIC RegionAreaFilter
   /**
    *  @brief Returns true if the polygon's area matches the criterion
    */
-  virtual bool selected (const db::Polygon &poly, properties_id_type) const;
+  bool selected (const db::Polygon &poly, properties_id_type) const override;
 
   /**
    *  @brief Returns true if the polygon's area matches the criterion
    */
-  virtual bool selected (const db::PolygonRef &poly, properties_id_type) const;
+  bool selected (const db::PolygonRef &poly, properties_id_type) const override;
 
   /**
    *  @brief Returns true if the polygon's area sum matches the criterion
    */
-  virtual bool selected_set (const std::unordered_set<db::PolygonRefWithProperties> &polygons) const;
+  bool selected_set (const std::unordered_set<db::PolygonRefWithProperties> &polygons) const override;
 
   /**
    *  @brief Returns true if the polygon's area sum matches the criterion
    */
-  virtual bool selected_set (const std::unordered_set<PolygonWithProperties> &polygons) const;
+  bool selected_set (const std::unordered_set<PolygonWithProperties> &polygons) const override;
 
   /**
    *  @brief This filter is isotropic
    */
-  virtual const TransformationReducer *vars () const;
+  const TransformationReducer *vars () const override;
 
   /**
    *  @brief This filter prefers producing variants
    */
-  virtual bool wants_variants () const { return true; }
+  bool wants_variants () const override { return true; }
 
   /**
    *  @brief This filter wants merged input
    */
-  virtual bool requires_raw_input () const { return false; }
+  bool requires_raw_input () const override { return false; }
 
 private:
   area_type m_amin, m_amax;
@@ -175,7 +175,7 @@ struct DB_PUBLIC AllMustMatchFilter
    */
   AllMustMatchFilter () { }
 
-  virtual bool selected_set (const std::unordered_set<db::PolygonRefWithProperties> &polygons) const
+  bool selected_set (const std::unordered_set<db::PolygonRefWithProperties> &polygons) const override
   {
     for (std::unordered_set<db::PolygonRefWithProperties>::const_iterator p = polygons.begin (); p != polygons.end (); ++p) {
       if (! selected (*p, p->properties_id ())) {
@@ -185,7 +185,7 @@ struct DB_PUBLIC AllMustMatchFilter
     return true;
   }
 
-  virtual bool selected_set (const std::unordered_set<db::PolygonWithProperties> &polygons) const
+  bool selected_set (const std::unordered_set<db::PolygonWithProperties> &polygons) const override
   {
     for (std::unordered_set<db::PolygonWithProperties>::const_iterator p = polygons.begin (); p != polygons.end (); ++p) {
       if (! selected (*p, p->properties_id ())) {
@@ -215,27 +215,27 @@ struct DB_PUBLIC RectilinearFilter
   /**
    *  @brief Returns true if the polygon is rectilinear
    */
-  virtual bool selected (const db::Polygon &poly, properties_id_type) const;
+  bool selected (const db::Polygon &poly, properties_id_type) const override;
 
   /**
    *  @brief Returns true if the polygon is rectilinear
    */
-  virtual bool selected (const db::PolygonRef &poly, properties_id_type) const;
+  bool selected (const db::PolygonRef &poly, properties_id_type) const override;
 
   /**
    *  @brief This filter does not need variants
    */
-  virtual const TransformationReducer *vars () const;
+  const TransformationReducer *vars () const override;
 
   /**
    *  @brief This filter prefers producing variants
    */
-  virtual bool wants_variants () const { return true; }
+  bool wants_variants () const override { return true; }
 
   /**
    *  @brief This filter wants merged input
    */
-  virtual bool requires_raw_input () const { return false; }
+  bool requires_raw_input () const override { return false; }
 
 private:
   bool m_inverse;
@@ -259,27 +259,27 @@ struct DB_PUBLIC RectangleFilter
   /**
    *  @brief Returns true if the polygon is a rectangle
    */
-  virtual bool selected (const db::Polygon &poly, properties_id_type) const;
+  bool selected (const db::Polygon &poly, properties_id_type) const override;
 
   /**
    *  @brief Returns true if the polygon is a rectangle
    */
-  virtual bool selected (const db::PolygonRef &poly, properties_id_type) const;
+  bool selected (const db::PolygonRef &poly, properties_id_type) const override;
 
   /**
    *  @brief This filter does not need variants
    */
-  virtual const TransformationReducer *vars () const;
+  const TransformationReducer *vars () const override;
 
   /**
    *  @brief This filter prefers producing variants
    */
-  virtual bool wants_variants () const { return true; }
+  bool wants_variants () const override { return true; }
 
   /**
    *  @brief This filter wants merged input
    */
-  virtual bool requires_raw_input () const { return false; }
+  bool requires_raw_input () const override { return false; }
 
 private:
   bool m_is_square;
@@ -304,27 +304,27 @@ struct DB_PUBLIC HoleCountFilter
   /**
    *  @brief Returns true if the polygon is a rectangle
    */
-  virtual bool selected (const db::Polygon &poly, properties_id_type) const;
+  bool selected (const db::Polygon &poly, properties_id_type) const override;
 
   /**
    *  @brief Returns true if the polygon is a rectangle
    */
-  virtual bool selected (const db::PolygonRef &poly, properties_id_type) const;
+  bool selected (const db::PolygonRef &poly, properties_id_type) const override;
 
   /**
    *  @brief This filter does not need variants
    */
-  virtual const TransformationReducer *vars () const;
+  const TransformationReducer *vars () const override;
 
   /**
    *  @brief This filter prefers producing variants
    */
-  virtual bool wants_variants () const { return true; }
+  bool wants_variants () const override { return true; }
 
   /**
    *  @brief This filter wants merged input
    */
-  virtual bool requires_raw_input () const { return false; }
+  bool requires_raw_input () const override { return false; }
 
 private:
   size_t m_min_count, m_max_count;
@@ -375,27 +375,27 @@ struct DB_PUBLIC RegionBBoxFilter
   /**
    *  @brief Returns true if the polygon's bounding box matches the criterion
    */
-  virtual bool selected (const db::Polygon &poly, properties_id_type) const;
+  bool selected (const db::Polygon &poly, properties_id_type) const override;
 
   /**
    *  @brief Returns true if the polygon's bounding box matches the criterion
    */
-  virtual bool selected (const db::PolygonRef &poly, properties_id_type) const;
+  bool selected (const db::PolygonRef &poly, properties_id_type) const override;
 
   /**
    *  @brief This filter is isotropic unless the parameter is width or height
    */
-  virtual const TransformationReducer *vars () const;
+  const TransformationReducer *vars () const override;
 
   /**
    *  @brief This filter prefers producing variants
    */
-  virtual bool wants_variants () const { return true; }
+  bool wants_variants () const override { return true; }
 
   /**
    *  @brief This filter wants merged input
    */
-  virtual bool requires_raw_input () const { return false; }
+  bool requires_raw_input () const override { return false; }
 
 private:
   value_type m_vmin, m_vmax;
@@ -444,27 +444,27 @@ struct DB_PUBLIC RegionRatioFilter
   /**
    *  @brief Returns true if the polygon's area matches the criterion
    */
-  virtual bool selected (const db::Polygon &poly, properties_id_type) const;
+  bool selected (const db::Polygon &poly, properties_id_type) const override;
 
   /**
    *  @brief Returns true if the polygon's area matches the criterion
    */
-  virtual bool selected (const db::PolygonRef &poly, properties_id_type) const;
+  bool selected (const db::PolygonRef &poly, properties_id_type) const override;
 
   /**
    *  @brief This filter is isotropic unless the parameter is width or height
    */
-  virtual const TransformationReducer *vars () const;
+  const TransformationReducer *vars () const override;
 
   /**
    *  @brief This filter prefers producing variants
    */
-  virtual bool wants_variants () const { return true; }
+  bool wants_variants () const override { return true; }
 
   /**
    *  @brief This filter wants merged input
    */
-  virtual bool requires_raw_input () const { return false; }
+  bool requires_raw_input () const override { return false; }
 
 private:
   double m_vmin, m_vmax;
@@ -486,15 +486,15 @@ class DB_PUBLIC StrangePolygonCheckProcessor
 {
 public:
   StrangePolygonCheckProcessor ();
-  ~StrangePolygonCheckProcessor ();
+  ~StrangePolygonCheckProcessor () override;
 
-  virtual void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &res) const;
+  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &res) const override;
 
-  virtual const TransformationReducer *vars () const { return nullptr; }
-  virtual bool result_is_merged () const { return false; }
-  virtual bool requires_raw_input () const { return true; }
-  virtual bool wants_variants () const { return true; }
-  virtual bool result_must_not_be_merged () const { return false; }
+  const TransformationReducer *vars () const override { return nullptr; }
+  bool result_is_merged () const override { return false; }
+  bool requires_raw_input () const override { return true; }
+  bool wants_variants () const override { return true; }
+  bool result_must_not_be_merged () const override { return false; }
 };
 
 /**
@@ -505,15 +505,15 @@ class DB_PUBLIC SmoothingProcessor
 {
 public:
   SmoothingProcessor (db::Coord d, bool keep_hv);
-  ~SmoothingProcessor ();
+  ~SmoothingProcessor () override;
 
-  virtual void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &res) const;
+  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &res) const override;
 
-  virtual const TransformationReducer *vars () const { return &m_vars; }
-  virtual bool result_is_merged () const { return false; }
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool wants_variants () const { return true; }
-  virtual bool result_must_not_be_merged () const { return false; }
+  const TransformationReducer *vars () const override { return &m_vars; }
+  bool result_is_merged () const override { return false; }
+  bool requires_raw_input () const override { return false; }
+  bool wants_variants () const override { return true; }
+  bool result_must_not_be_merged () const override { return false; }
 
 private:
   db::Coord m_d;
@@ -529,15 +529,15 @@ class DB_PUBLIC RoundedCornersProcessor
 {
 public:
   RoundedCornersProcessor (double rinner, double router, unsigned int n);
-  ~RoundedCornersProcessor ();
+  ~RoundedCornersProcessor () override;
 
-  virtual void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &res) const;
+  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &res) const override;
 
-  virtual const TransformationReducer *vars () const { return &m_vars; }
-  virtual bool result_is_merged () const { return true; }   //  we believe so ...
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool wants_variants () const { return true; }
-  virtual bool result_must_not_be_merged () const { return false; }
+  const TransformationReducer *vars () const override { return &m_vars; }
+  bool result_is_merged () const override { return true; }   //  we believe so ...
+  bool requires_raw_input () const override { return false; }
+  bool wants_variants () const override { return true; }
+  bool result_must_not_be_merged () const override { return false; }
 
 private:
   double m_rinner, m_router;
@@ -553,15 +553,15 @@ class DB_PUBLIC HolesExtractionProcessor
 {
 public:
   HolesExtractionProcessor ();
-  ~HolesExtractionProcessor ();
+  ~HolesExtractionProcessor () override;
 
-  virtual void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &res) const;
+  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &res) const override;
 
-  virtual const TransformationReducer *vars () const { return nullptr; }
-  virtual bool result_is_merged () const { return false; }  //  isn't merged for nested holes :(
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool wants_variants () const { return true; }
-  virtual bool result_must_not_be_merged () const { return false; }
+  const TransformationReducer *vars () const override { return nullptr; }
+  bool result_is_merged () const override { return false; }  //  isn't merged for nested holes :(
+  bool requires_raw_input () const override { return false; }
+  bool wants_variants () const override { return true; }
+  bool result_must_not_be_merged () const override { return false; }
 };
 
 /**
@@ -572,15 +572,15 @@ class DB_PUBLIC HullExtractionProcessor
 {
 public:
   HullExtractionProcessor ();
-  ~HullExtractionProcessor ();
+  ~HullExtractionProcessor () override;
 
-  virtual void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &res) const;
+  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &res) const override;
 
-  virtual const TransformationReducer *vars () const { return nullptr; }
-  virtual bool result_is_merged () const { return false; }   //  isn't merged for nested hulls :(
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool wants_variants () const { return true; }
-  virtual bool result_must_not_be_merged () const { return false; }
+  const TransformationReducer *vars () const override { return nullptr; }
+  bool result_is_merged () const override { return false; }   //  isn't merged for nested hulls :(
+  bool requires_raw_input () const override { return false; }
+  bool wants_variants () const override { return true; }
+  bool result_must_not_be_merged () const override { return false; }
 };
 
 /**
@@ -592,9 +592,9 @@ class DB_PUBLIC SinglePolygonCheck
 public:
   SinglePolygonCheck (db::edge_relation_type rel, db::Coord d, const RegionCheckOptions &options);
 
-  virtual void process (const db::PolygonWithProperties &polygon, std::vector<db::EdgePairWithProperties> &res) const;
-  virtual const TransformationReducer *vars () const { return &m_vars; }
-  virtual bool wants_variants () const { return true; }
+  void process (const db::PolygonWithProperties &polygon, std::vector<db::EdgePairWithProperties> &res) const override;
+  const TransformationReducer *vars () const override { return &m_vars; }
+  bool wants_variants () const override { return true; }
 
 private:
   db::edge_relation_type m_relation;

@@ -55,7 +55,7 @@ Q_OBJECT
 
 public:
   DiffToolDialog (QWidget *parent);
-  ~DiffToolDialog ();
+  ~DiffToolDialog () override;
 
   int exec_dialog (lay::LayoutViewBase *view);
 
@@ -63,7 +63,7 @@ protected slots:
   void xor_changed () { update (); }
 
 protected:
-  void accept ();
+  void accept () override;
   void run_diff ();
   void update ();
 

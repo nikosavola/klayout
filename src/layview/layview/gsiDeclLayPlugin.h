@@ -43,7 +43,7 @@ public:
   void ungrab_mouse ();
   void set_cursor (int c);
 
-  virtual void menu_activated (const std::string &symbol);
+  void menu_activated (const std::string &symbol) override;
   db::DPoint snap (db::DPoint p) const;
   db::DVector snap_vector (db::DVector v) const;
   db::DPoint snap_from_to (const db::DPoint &p, const db::DPoint &plast, bool connect, lay::angle_constraint_type ac) const;
@@ -57,32 +57,32 @@ public:
   bool configure_impl (const std::string &name, const std::string &value);
   //  for testing
   void configure_test (const std::string &name, const std::string &value);
-  virtual bool configure (const std::string &name, const std::string &value);
+  bool configure (const std::string &name, const std::string &value) override;
   //  NOTE: The implementation does not allow to bypass the base class configuration call
   virtual void config_finalize_impl ();
-  virtual void config_finalize ();
-  virtual bool key_event (unsigned int key, unsigned int buttons);
-  virtual bool shortcut_override_event (unsigned int key, unsigned int buttons);
-  virtual bool mouse_press_event (const db::DPoint &p, unsigned int buttons, bool prio) ;
+  void config_finalize () override;
+  bool key_event (unsigned int key, unsigned int buttons) override;
+  bool shortcut_override_event (unsigned int key, unsigned int buttons) override;
+  bool mouse_press_event (const db::DPoint &p, unsigned int buttons, bool prio) override ;
   bool mouse_press_event_noref (db::DPoint p, unsigned int buttons, bool prio);
-  virtual bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio);
+  bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
   bool mouse_click_event_noref (db::DPoint p, unsigned int buttons, bool prio);
-  virtual bool mouse_double_click_event (const db::DPoint &p, unsigned int buttons, bool prio);
+  bool mouse_double_click_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
   bool mouse_double_click_event_noref (db::DPoint p, unsigned int buttons, bool prio);
-  virtual bool leave_event (bool prio);
-  virtual bool enter_event (bool prio);
-  virtual bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio);
+  bool leave_event (bool prio) override;
+  bool enter_event (bool prio) override;
+  bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
   bool mouse_move_event_noref (db::DPoint p, unsigned int buttons, bool prio);
-  virtual bool mouse_release_event (const db::DPoint &p, unsigned int buttons, bool prio);
+  bool mouse_release_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
   bool mouse_release_event_noref (db::DPoint p, unsigned int buttons, bool prio);
-  virtual bool wheel_event (int delta, bool horizontal, const db::DPoint &p, unsigned int buttons, bool prio);
+  bool wheel_event (int delta, bool horizontal, const db::DPoint &p, unsigned int buttons, bool prio) override;
   bool wheel_event_noref (int delta, bool horizontal, db::DPoint p, unsigned int buttons, bool prio);
   void activated_impl ();
-  virtual void activated ();
+  void activated () override;
   void deactivated_impl ();
-  virtual void deactivated ();
-  virtual void drag_cancel ();
-  virtual void update ();
+  void deactivated () override;
+  void drag_cancel () override;
+  void update () override;
   void add_mouse_cursor_dpoint (const db::DPoint &p, bool emphasize);
   void add_mouse_cursor_point (const db::Point &p, int cv_index, const db::LayerProperties &lp, bool emphasize);
   void add_edge_marker_dedge (const db::DEdge &p, bool emphasize);
@@ -90,15 +90,15 @@ public:
 
   //  for testing
   bool has_tracking_position_test () const;
-  virtual bool has_tracking_position () const;
+  bool has_tracking_position () const override;
 
   //  for testing
   db::DPoint tracking_position_test () const;
-  virtual db::DPoint tracking_position () const;
+  db::DPoint tracking_position () const override;
 
-  virtual int focus_page_open ();
+  int focus_page_open () override;
 
-  virtual lay::ViewService *view_service_interface ()
+  lay::ViewService *view_service_interface () override
   {
     return this;
   }

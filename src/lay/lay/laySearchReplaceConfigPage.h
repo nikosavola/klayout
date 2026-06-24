@@ -56,8 +56,8 @@ class SearchReplaceConfigPage
 public:
   SearchReplaceConfigPage (QWidget *parent);
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 public slots:
   void window_changed (int);

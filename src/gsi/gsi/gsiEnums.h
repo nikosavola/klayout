@@ -105,17 +105,17 @@ public:
   {
   }
 
-  virtual void initialize () 
+  void initialize () override 
   {
     set_return<E> ();
   }
     
-  virtual void call (void * /*obj*/, SerialArgs & /*args*/, SerialArgs &ret) const 
+  void call (void * /*obj*/, SerialArgs & /*args*/, SerialArgs &ret) const override 
   {
     ret.write<E> (m_evalue);
   }
 
-  virtual MethodBase *clone () const
+  MethodBase *clone () const override
   {
     return new EnumConst (*this);
   }
@@ -395,7 +395,7 @@ public:
   {
   }
 
-  virtual bool consolidate () const
+  bool consolidate () const override
   {
     //  TODO: ugly const cast
     ClassBase *non_const_pcls = const_cast<ClassBase *> (cls_decl<P> ());

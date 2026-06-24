@@ -51,7 +51,7 @@ class LAYUI_PUBLIC ConfigurationDialog
 public:
   ConfigurationDialog (QWidget *parent, lay::Dispatcher *root, lay::PluginDeclaration *decl, const char *name = "");
   ConfigurationDialog (QWidget *parent, lay::Dispatcher *root, const std::string &plugin_name, const char *name = "");
-  ~ConfigurationDialog ();
+  ~ConfigurationDialog () override;
   
   void commit ();
 

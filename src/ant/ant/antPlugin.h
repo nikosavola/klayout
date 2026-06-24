@@ -38,23 +38,23 @@ class PluginDeclaration
 {
 public:
   PluginDeclaration ();
-  ~PluginDeclaration ();
+  ~PluginDeclaration () override;
 
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const;
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const;
-  virtual lay::Plugin *create_plugin (db::Manager *manager, lay::Dispatcher *, lay::LayoutViewBase *view) const;
-  virtual bool implements_editable (std::string &title) const;
-  virtual bool implements_mouse_mode (std::string &title) const;
-  virtual bool configure (const std::string &name, const std::string &value);
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override;
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override;
+  lay::Plugin *create_plugin (db::Manager *manager, lay::Dispatcher *, lay::LayoutViewBase *view) const override;
+  bool implements_editable (std::string &title) const override;
+  bool implements_mouse_mode (std::string &title) const override;
+  bool configure (const std::string &name, const std::string &value) override;
 #if defined(HAVE_QT)
-  virtual std::vector<std::pair <std::string, lay::ConfigPage *> > config_pages (QWidget *parent) const;
+  std::vector<std::pair <std::string, lay::ConfigPage *> > config_pages (QWidget *parent) const override;
 #endif
-  virtual void config_finalize ();
-  virtual void initialized (lay::Dispatcher *);
-  virtual void uninitialize (lay::Dispatcher *);
-  virtual bool menu_activated (const std::string &symbol) const;
+  void config_finalize () override;
+  void initialized (lay::Dispatcher *) override;
+  void uninitialize (lay::Dispatcher *) override;
+  bool menu_activated (const std::string &symbol) const override;
 
-  virtual std::vector<std::string> additional_editor_options_pages (lay::LayoutViewBase *view) const;
+  std::vector<std::string> additional_editor_options_pages (lay::LayoutViewBase *view) const override;
 
   void register_annotation_template (const ant::Template &t, lay::Plugin *plugin = nullptr);
   void unregister_annotation_template (const std::string &category, lay::Plugin *plugin = nullptr);

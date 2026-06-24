@@ -52,11 +52,11 @@ protected:
   db::Cell &cell () const              { return *mp_cell; }
   db::Layout &layout () const          { return *mp_layout; }
 
-  virtual void do_mouse_move_inactive (const db::DPoint &p);
-  virtual void tap (const db::DPoint &initial);
+  void do_mouse_move_inactive (const db::DPoint &p) override;
+  void tap (const db::DPoint &initial) override;
 
-  virtual bool configure (const std::string &name, const std::string &value);
-  virtual void activated ();
+  bool configure (const std::string &name, const std::string &value) override;
+  void activated () override;
 
 protected:
   std::pair <bool, db::DPoint> interpolate (const db::DPoint &m, const db::DPoint &o, const db::DPoint &p) const;

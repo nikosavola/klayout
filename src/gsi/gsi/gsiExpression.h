@@ -46,7 +46,7 @@ class GSI_PUBLIC VariantUserClassImpl
 {
 public:
   VariantUserClassImpl ();
-  ~VariantUserClassImpl ();
+  ~VariantUserClassImpl () override;
 
   bool equal_impl (void *, void *) const;
   bool less_impl (void *, void *) const;
@@ -55,7 +55,7 @@ public:
   int to_int_impl (void *) const;
   double to_double_impl (void *) const;
 
-  virtual void execute (const tl::ExpressionParserContext &context, tl::Variant &out, tl::Variant &object, const std::string &method, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> *kwargs) const;
+  void execute (const tl::ExpressionParserContext &context, tl::Variant &out, tl::Variant &object, const std::string &method, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> *kwargs) const override;
 
   void initialize (const gsi::ClassBase *cls, const tl::VariantUserClassBase *self, const tl::VariantUserClassBase *object_cls, bool is_const);
 

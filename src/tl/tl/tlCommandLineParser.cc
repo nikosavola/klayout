@@ -133,12 +133,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ArgBase *clone () const
+  ArgBase *clone () const override
   {
     return new HelpArg ();
   }
 
-  void action (CommandLineOptions *options) const
+  void action (CommandLineOptions *options) const override
   {
     options->produce_help (options->program_name (), false);
     throw tl::CancelException ();
@@ -155,12 +155,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ArgBase *clone () const
+  ArgBase *clone () const override
   {
     return new AdvancedHelpArg ();
   }
 
-  void action (CommandLineOptions *options) const
+  void action (CommandLineOptions *options) const override
   {
     options->produce_help (options->program_name (), true);
     throw tl::CancelException ();
@@ -177,12 +177,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ArgBase *clone () const
+  ArgBase *clone () const override
   {
     return new LicenseArg ();
   }
 
-  void action (CommandLineOptions *options) const
+  void action (CommandLineOptions *options) const override
   {
     options->produce_license ();
     throw tl::CancelException ();
@@ -199,12 +199,12 @@ public:
     //  .. nothing yet ..
   }
 
-  ArgBase *clone () const
+  ArgBase *clone () const override
   {
     return new VersionArg ();
   }
 
-  void action (CommandLineOptions *options) const
+  void action (CommandLineOptions *options) const override
   {
     options->produce_version ();
     throw tl::CancelException ();
@@ -229,17 +229,17 @@ public:
     //  .. nothing yet ..
   }
 
-  ArgBase *clone () const
+  ArgBase *clone () const override
   {
     return new VerbosityArg ();
   }
 
-  bool wants_value () const
+  bool wants_value () const override
   {
     return true;
   }
 
-  void take_value (tl::Extractor &ex)
+  void take_value (tl::Extractor &ex) override
   {
     int d = 0;
     ex.read (d);

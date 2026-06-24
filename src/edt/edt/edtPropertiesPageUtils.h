@@ -85,13 +85,13 @@ public:
   CombinedChangeApplicator ();
   CombinedChangeApplicator (ChangeApplicator *a1);
   CombinedChangeApplicator (ChangeApplicator *a1, ChangeApplicator *a2);
-  ~CombinedChangeApplicator ();
+  ~CombinedChangeApplicator () override;
       
   void add (ChangeApplicator *a);
 
-  bool supports_relative_mode () const;
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
-  db::Instance do_apply_inst (db::Cell &cell, const db::Instance &instance, double dbu, bool relative) const;
+  bool supports_relative_mode () const override;
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
+  db::Instance do_apply_inst (db::Cell &cell, const db::Instance &instance, double dbu, bool relative) const override;
 
 private:
   std::vector<ChangeApplicator *> m_appl;
@@ -106,9 +106,9 @@ class ChangePropertiesApplicator
 public:
   ChangePropertiesApplicator (db::properties_id_type prop_id);
 
-  bool supports_relative_mode () const { return false; }
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
-  db::Instance do_apply_inst (db::Cell &cell, const db::Instance &instance, double dbu, bool relative) const;
+  bool supports_relative_mode () const override { return false; }
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
+  db::Instance do_apply_inst (db::Cell &cell, const db::Instance &instance, double dbu, bool relative) const override;
 
 private:
   db::properties_id_type m_prop_id;
@@ -124,8 +124,8 @@ public:
   ChangeLayerApplicator (const ChangeLayerApplicator &other);
   ChangeLayerApplicator (unsigned int cv_index, unsigned int new_layer);
 
-  bool supports_relative_mode () const { return false; }
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
+  bool supports_relative_mode () const override { return false; }
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
   void skip_layer (unsigned int l);
 
 private:
@@ -142,8 +142,8 @@ class BoxDimensionsChangeApplicator
 public:
   BoxDimensionsChangeApplicator (db::Coord dl, db::Coord db, db::Coord dr, db::Coord dt, db::Coord l, db::Coord b, db::Coord r, db::Coord t);
 
-  bool supports_relative_mode () const { return true; }
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
+  bool supports_relative_mode () const override { return true; }
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
 
 private:
   db::Coord m_dl, m_db, m_dr, m_dt;
@@ -159,8 +159,8 @@ class PointDimensionsChangeApplicator
 public:
   PointDimensionsChangeApplicator (const db::Point &point, const db::Point &org_point);
 
-  bool supports_relative_mode () const { return true; }
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
+  bool supports_relative_mode () const override { return true; }
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
 
 private:
   db::Point m_point, m_org_point;
@@ -175,8 +175,8 @@ class PolygonChangeApplicator
 public:
   PolygonChangeApplicator (const db::Polygon &poly, const db::Polygon &org_poly);
 
-  bool supports_relative_mode () const { return true; }
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
+  bool supports_relative_mode () const override { return true; }
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
 
 private:
   db::Polygon m_poly, m_org_poly;
@@ -191,8 +191,8 @@ class TextOrientationChangeApplicator
 public:
   TextOrientationChangeApplicator (const db::FTrans &trans);
 
-  bool supports_relative_mode () const { return false; }
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
+  bool supports_relative_mode () const override { return false; }
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
 
 private:
   db::FTrans m_trans;
@@ -207,8 +207,8 @@ class TextPositionChangeApplicator
 public:
   TextPositionChangeApplicator (const db::Vector &disp, const db::Vector &org_disp);
 
-  bool supports_relative_mode () const { return true; }
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
+  bool supports_relative_mode () const override { return true; }
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
 
 private:
   db::Vector m_disp, m_org_disp;
@@ -223,8 +223,8 @@ class TextHAlignChangeApplicator
 public:
   TextHAlignChangeApplicator (db::HAlign halign);
 
-  bool supports_relative_mode () const { return false; }
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
+  bool supports_relative_mode () const override { return false; }
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
 
 private:
   db::HAlign m_halign;
@@ -239,8 +239,8 @@ class TextVAlignChangeApplicator
 public:
   TextVAlignChangeApplicator (db::VAlign valign);
 
-  bool supports_relative_mode () const { return false; }
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
+  bool supports_relative_mode () const override { return false; }
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
 
 private:
   db::VAlign m_valign;
@@ -255,8 +255,8 @@ class TextSizeChangeApplicator
 public:
   TextSizeChangeApplicator (db::Coord size);
 
-  bool supports_relative_mode () const { return false; }
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
+  bool supports_relative_mode () const override { return false; }
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
 
 private:
   db::Coord m_size;
@@ -271,8 +271,8 @@ class TextStringChangeApplicator
 public:
   TextStringChangeApplicator (const std::string &string);
 
-  bool supports_relative_mode () const { return false; }
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
+  bool supports_relative_mode () const override { return false; }
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
 
 private:
   std::string m_string;
@@ -287,8 +287,8 @@ class PathPointsChangeApplicator
 public:
   PathPointsChangeApplicator (const std::vector<db::Point> &points, const std::vector<db::Point> &org_points);
 
-  bool supports_relative_mode () const { return true; }
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
+  bool supports_relative_mode () const override { return true; }
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
 
 private:
   std::vector<db::Point> m_points, m_org_points;
@@ -303,8 +303,8 @@ class PathWidthChangeApplicator
 public:
   PathWidthChangeApplicator (db::Coord w, db::Coord org_w);
 
-  bool supports_relative_mode () const { return true; }
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
+  bool supports_relative_mode () const override { return true; }
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
 
 private:
   db::Coord m_width, m_org_width;
@@ -319,8 +319,8 @@ class PathStartExtensionChangeApplicator
 public:
   PathStartExtensionChangeApplicator (db::Coord e);
 
-  bool supports_relative_mode () const { return false; }
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
+  bool supports_relative_mode () const override { return false; }
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
 
 private:
   db::Coord m_ext;
@@ -335,8 +335,8 @@ class PathEndExtensionChangeApplicator
 public:
   PathEndExtensionChangeApplicator (db::Coord e);
 
-  bool supports_relative_mode () const { return false; }
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
+  bool supports_relative_mode () const override { return false; }
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
 
 private:
   db::Coord m_ext;
@@ -351,8 +351,8 @@ class PathRoundEndChangeApplicator
 public:
   PathRoundEndChangeApplicator (bool r);
 
-  bool supports_relative_mode () const { return false; }
-  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const;
+  bool supports_relative_mode () const override { return false; }
+  db::Shape do_apply (db::Shapes &shapes, const db::Shape &shape, double dbu, unsigned int cv_index, unsigned int layer, bool relative) const override;
 
 private:
   bool m_round;
@@ -367,8 +367,8 @@ class ChangeTargetCellApplicator
 public:
   ChangeTargetCellApplicator (db::cell_index_type cell_index);
 
-  bool supports_relative_mode () const { return false; }
-  db::Instance do_apply_inst (db::Cell &cell, const db::Instance &instance, double dbu, bool relative) const;
+  bool supports_relative_mode () const override { return false; }
+  db::Instance do_apply_inst (db::Cell &cell, const db::Instance &instance, double dbu, bool relative) const override;
 
 private:
   db::cell_index_type m_cell_index;
@@ -383,8 +383,8 @@ class ChangeTargetPCellApplicator
 public:
   ChangeTargetPCellApplicator (db::pcell_id_type pcell_id, bool apply_new_id, db::Library *new_lib, bool apply_new_lib, const std::map<std::string, tl::Variant> &modified_parameters);
 
-  bool supports_relative_mode () const { return false; }
-  db::Instance do_apply_inst (db::Cell &cell, const db::Instance &instance, double dbu, bool relative) const;
+  bool supports_relative_mode () const override { return false; }
+  db::Instance do_apply_inst (db::Cell &cell, const db::Instance &instance, double dbu, bool relative) const override;
 
 private:
   db::pcell_id_type m_pcell_id;
@@ -403,8 +403,8 @@ class ChangeInstanceTransApplicator
 public:
   ChangeInstanceTransApplicator (double a, double org_a, bool mirror, bool org_mirror, double m, double org_m, const db::DVector &disp, const db::DVector &org_disp);
 
-  bool supports_relative_mode () const { return true; }
-  db::Instance do_apply_inst (db::Cell &cell, const db::Instance &instance, double dbu, bool relative) const;
+  bool supports_relative_mode () const override { return true; }
+  db::Instance do_apply_inst (db::Cell &cell, const db::Instance &instance, double dbu, bool relative) const override;
 
 private:
   double m_angle, m_org_angle;
@@ -422,8 +422,8 @@ class ChangeInstanceArrayApplicator
 public:
   ChangeInstanceArrayApplicator (const db::DVector &a, bool set_a, const db::DVector &b, bool set_b, unsigned long na, bool set_na, unsigned long nb, bool set_nb);
 
-  bool supports_relative_mode () const { return false; }
-  db::Instance do_apply_inst (db::Cell &cell, const db::Instance &instance, double dbu, bool relative) const;
+  bool supports_relative_mode () const override { return false; }
+  db::Instance do_apply_inst (db::Cell &cell, const db::Instance &instance, double dbu, bool relative) const override;
 
 private:
   db::DVector m_a;
@@ -445,8 +445,8 @@ class InstanceRemoveArrayApplicator
 public:
   InstanceRemoveArrayApplicator ();
 
-  bool supports_relative_mode () const { return false; }
-  db::Instance do_apply_inst (db::Cell &cell, const db::Instance &instance, double dbu, bool relative) const;
+  bool supports_relative_mode () const override { return false; }
+  db::Instance do_apply_inst (db::Cell &cell, const db::Instance &instance, double dbu, bool relative) const override;
 };
 
 // -------------------------------------------------------------------------

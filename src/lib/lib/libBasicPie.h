@@ -46,27 +46,27 @@ public:
   /**
    *  @brief Get the layer declarations
    */
-  virtual std::vector<db::PCellLayerDeclaration> get_layer_declarations (const db::pcell_parameters_type &parameters) const;
+  std::vector<db::PCellLayerDeclaration> get_layer_declarations (const db::pcell_parameters_type &parameters) const override;
 
   /**
    *  @brief Coerces the parameters (in particular updates the computed ones)
    */
-  virtual void coerce_parameters (const db::Layout &layout, db::pcell_parameters_type &parameters) const;
+  void coerce_parameters (const db::Layout &layout, db::pcell_parameters_type &parameters) const override;
 
   /**
    *  @brief Produces the layout
    */
-  virtual void produce (const db::Layout &layout, const std::vector<unsigned int> &layer_ids, const db::pcell_parameters_type &parameters, db::Cell &cell) const;
+  void produce (const db::Layout &layout, const std::vector<unsigned int> &layer_ids, const db::pcell_parameters_type &parameters, db::Cell &cell) const override;
 
   /**
    *  @brief Get the display name for a PCell with the given parameters
    */
-  virtual std::string get_display_name (const db::pcell_parameters_type &) const;
+  std::string get_display_name (const db::pcell_parameters_type &) const override;
 
   /**
    *  @brief Get the parameter declarations
    */
-  virtual std::vector<db::PCellParameterDeclaration> get_parameter_declarations () const;
+  std::vector<db::PCellParameterDeclaration> get_parameter_declarations () const override;
 };
 
 }

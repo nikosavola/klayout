@@ -87,12 +87,12 @@ public:
     //  .. nothing yet ..
   }
 
-  bool selected (const db::Polygon &, db::properties_id_type prop_id) const
+  bool selected (const db::Polygon &, db::properties_id_type prop_id) const override
   {
     return PropertiesFilter::prop_selected (prop_id);
   }
 
-  bool selected (const db::PolygonRef &, db::properties_id_type prop_id) const
+  bool selected (const db::PolygonRef &, db::properties_id_type prop_id) const override
   {
     return PropertiesFilter::prop_selected (prop_id);
   }
@@ -121,7 +121,7 @@ public:
     //  .. nothing yet ..
   }
 
-  bool selected (const ShapeType &, db::properties_id_type prop_id) const
+  bool selected (const ShapeType &, db::properties_id_type prop_id) const override
   {
     return PropertiesFilter::prop_selected (prop_id);
   }

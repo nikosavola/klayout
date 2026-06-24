@@ -119,7 +119,7 @@ class DB_PUBLIC ShapeCollection
 {
 public:
   ShapeCollection () { }
-  virtual ~ShapeCollection () { }
+  ~ShapeCollection () override { }
 
   virtual ShapeCollectionDelegateBase *get_delegate () const = 0;
 

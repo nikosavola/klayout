@@ -89,7 +89,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~LayerProperties ();
+  ~LayerProperties () override;
 
   /**
    *  @brief Copy constructor
@@ -1010,7 +1010,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~LayerPropertiesNode ();
+  ~LayerPropertiesNode () override;
 
   /**
    *  @brief Constructor for a leaf element
@@ -1233,8 +1233,8 @@ public:
     return m_id;
   }
 
-  virtual void realize_source () const;
-  virtual void realize_visual () const;
+  void realize_source () const override;
+  void realize_visual () const override;
 
   void set_expanded_silent (bool ex)
   {
@@ -1242,8 +1242,8 @@ public:
   }
 
 protected: 
-  virtual void need_realize (unsigned int flags, bool force);
-  virtual void expanded_state_changed ();
+  void need_realize (unsigned int flags, bool force) override;
+  void expanded_state_changed () override;
   void set_parent (const LayerPropertiesNode *);
 
 private:
@@ -1686,7 +1686,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~LayerPropertiesList ();
+  ~LayerPropertiesList () override;
 
   /**
    *  @brief Copy constructor
@@ -2045,9 +2045,9 @@ private:
   tl::weak_ptr<LayerPropertiesNode> mp_node;
   size_t m_synched_gen_id;
 
-  virtual void need_realize (unsigned int flags, bool force);
-  virtual void expanded_state_changed ();
-  virtual void refresh () const;
+  void need_realize (unsigned int flags, bool force) override;
+  void expanded_state_changed () override;
+  void refresh () const override;
 };
 
 }

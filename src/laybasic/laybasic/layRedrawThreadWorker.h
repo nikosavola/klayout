@@ -167,13 +167,13 @@ public:
   typedef std::map<std::pair<db::cell_index_type, unsigned int>, bool> micro_instance_cache_t;
 
   RedrawThreadWorker (RedrawThread *redraw_thread);
-  virtual ~RedrawThreadWorker ();
+  ~RedrawThreadWorker () override;
 
   void setup (LayoutViewBase *view, RedrawThreadCanvas *canvas, const std::vector<db::Box> &redraw_region, const db::DCplxTrans &vp_trans);
   void finish ();
 
 protected:
-  void perform_task (tl::Task *task);
+  void perform_task (tl::Task *task) override;
 
 private:
   void draw_layer (bool drawing_context, db::cell_index_type ci, const db::CplxTrans &trans, const std::vector <db::Box> &redraw_regions, int level);

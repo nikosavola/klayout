@@ -46,7 +46,7 @@ class LAYUI_PUBLIC LayoutPropertiesForm
 public:
   LayoutPropertiesForm (QWidget *parent, lay::LayoutViewBase *view, const char *name);
 
-  void accept ();
+  void accept () override;
   void commit ();
 
 public slots:

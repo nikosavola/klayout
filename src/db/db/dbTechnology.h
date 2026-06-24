@@ -66,7 +66,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~Technologies ();
+  ~Technologies () override;
 
   /**
    *  @brief Copy ctor
@@ -285,7 +285,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~Technology ();
+  ~Technology () override;
 
   /**
    *  @brief Assignment
@@ -910,7 +910,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual tl::XMLElementBase *clone () const 
+  tl::XMLElementBase *clone () const override 
   {
     return new TechnologyComponentXMLElement (*this);
   }

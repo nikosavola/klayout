@@ -86,7 +86,7 @@ public:
     return tl::to_string (name_edit->text ());
   }
 
-  void accept ()
+  void accept () override
   {
     name_alert->clear ();
     std::string name = tl::to_string (name_edit->text ().simplified ());
@@ -1153,7 +1153,7 @@ class ProcessEventCallback
   : public tl::InputHttpStreamCallback
 {
 public:
-  virtual void wait_for_input ()
+  void wait_for_input () override
   {
     QApplication::processEvents (QEventLoop::ExcludeUserInputEvents);
   }
@@ -1170,7 +1170,7 @@ public:
     m_counter = 0;
   }
 
-  virtual void yield (tl::Progress *progress)
+  void yield (tl::Progress *progress) override
   {
     QCoreApplication::processEvents (QEventLoop::ExcludeUserInputEvents | QEventLoop::WaitForMoreEvents, 100);
 
@@ -1181,7 +1181,7 @@ public:
     mp_details->setHtml (m_html.arg (tl::to_qstring (tl::sprintf (tl::to_string (tr ("Downloading %.0f%% %s")), progress->value (), dots))));
   }
 
-  virtual void trigger (tl::Progress * /*progress*/)
+  void trigger (tl::Progress * /*progress*/) override
   {
     //  .. nothing yet ..
   }

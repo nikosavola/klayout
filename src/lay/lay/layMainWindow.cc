@@ -3117,12 +3117,12 @@ public:
     : lay::Action (), mp_mw (mw), m_n (n), m_open_meth (open_meth), m_avail_meth (avail_meth)
   { }
 
-  void triggered ()
+  void triggered () override
   {
     (mp_mw->*m_open_meth) (m_n);
   }
 
-  bool wants_enabled () const
+  bool wants_enabled () const override
   {
     return (mp_mw->*m_avail_meth) (m_n);
   }
@@ -3144,7 +3144,7 @@ public:
     set_title (tl::to_string (tr ("Clear List")));
   }
 
-  void triggered ()
+  void triggered () override
   {
     dispatcher ()->config_set (m_cfg, std::string ());
   }
@@ -4458,7 +4458,7 @@ class MainWindowPluginDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     std::string at;
 

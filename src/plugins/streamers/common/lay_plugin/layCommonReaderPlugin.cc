@@ -91,12 +91,12 @@ public:
     // .. nothing yet ..
   }
 
-  StreamReaderOptionsPage *format_specific_options_page (QWidget *parent) const
+  StreamReaderOptionsPage *format_specific_options_page (QWidget *parent) const override
   {
     return new CommonReaderOptionPage (parent);
   }
 
-  db::FormatSpecificReaderOptions *create_specific_options () const
+  db::FormatSpecificReaderOptions *create_specific_options () const override
   {
     return new db::CommonReaderOptions ();
   }

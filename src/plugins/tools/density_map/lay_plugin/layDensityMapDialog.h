@@ -46,12 +46,12 @@ Q_OBJECT
 
 public:
   DensityMapDialog (lay::Dispatcher *root, lay::LayoutViewBase *view);
-  ~DensityMapDialog ();
+  ~DensityMapDialog () override;
 
 public slots:
   void layer_mode_changed (int);
   void region_mode_changed (int);
-  void accept ();
+  void accept () override;
   void apply ();
 
 private:
@@ -84,10 +84,10 @@ private:
   };
 
   //  implementation of the lay::Plugin interface
-  virtual bool configure (const std::string &name, const std::string &value);
+  bool configure (const std::string &name, const std::string &value) override;
 
   //  implementation of the lay::Plugin interface
-  void menu_activated (const std::string &symbol);
+  void menu_activated (const std::string &symbol) override;
 
   void make_density_map ();
   void compute_density_map (const DensityMapParameters &par);

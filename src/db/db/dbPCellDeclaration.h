@@ -599,7 +599,7 @@ public:
   /**
    *  @brief The destructor
    */
-  virtual ~PCellDeclaration ()
+  ~PCellDeclaration () override
   {
     // .. nothing yet ..
   }

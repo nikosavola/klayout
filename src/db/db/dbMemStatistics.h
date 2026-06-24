@@ -99,7 +99,7 @@ public:
    */
   void print ();
 
-  virtual void add (const std::type_info &ti, void *ptr, size_t size, size_t used, void *parent, purpose_t purpose, int cat);
+  void add (const std::type_info &ti, void *ptr, size_t size, size_t used, void *parent, purpose_t purpose, int cat) override;
 
 private:
   bool m_detailed;
@@ -130,7 +130,7 @@ public:
     return m_used;
   }
 
-  virtual void add (const std::type_info & /*ti*/, void * /*ptr*/, size_t size, size_t used, void * /*parent*/, purpose_t /*purpose*/, int /*cat*/)
+  void add (const std::type_info & /*ti*/, void * /*ptr*/, size_t size, size_t used, void * /*parent*/, purpose_t /*purpose*/, int /*cat*/) override
   {
     m_size += size;
     m_used += used;

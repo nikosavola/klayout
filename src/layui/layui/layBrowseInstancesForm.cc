@@ -59,7 +59,7 @@ class BrowseInstancesPluginDeclaration
   : public lay::PluginDeclaration
 {
 public:
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override
   {
     options.push_back (std::pair<std::string, std::string> (cfg_cib_context_cell, ""));
     options.push_back (std::pair<std::string, std::string> (cfg_cib_context_mode, "any-top"));
@@ -69,19 +69,19 @@ public:
     options.push_back (std::pair<std::string, std::string> (cfg_cib_max_inst_count, "1000"));
   }
 
-  virtual lay::ConfigPage *config_page (QWidget *parent, std::string &title) const
+  lay::ConfigPage *config_page (QWidget *parent, std::string &title) const override
   {
     title = tl::to_string (QObject::tr ("Browsers|Cell Instance Browser"));
     return new BrowseInstancesConfigPage (parent); 
   }
 
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     lay::PluginDeclaration::get_menu_entries (menu_entries);
     menu_entries.push_back (lay::menu_item ("browse_instances::show", "browse_instances", "tools_menu.end", tl::to_string (QObject::tr ("Browse Instances"))));
   }
 
-  virtual lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *root, lay::LayoutViewBase *view) const
+  lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *root, lay::LayoutViewBase *view) const override
   {
     if (lay::has_gui ()) {
       return new BrowseInstancesForm (root, view);

@@ -79,7 +79,7 @@ public:
   /**
    *  @brief The constructor
    */
-  virtual ~Editable ();
+  ~Editable () override;
 
   /**
    *  @brief "delete" operation
@@ -484,7 +484,7 @@ public:
   /**
    *  @brief The destructor
    */
-  virtual ~Editables ();
+  ~Editables () override;
 
   /**
    *  @brief The delete operation

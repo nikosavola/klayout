@@ -60,53 +60,53 @@ public:
     set ();
   }
 
-  virtual ~DeepEdgesIterator () { }
+  ~DeepEdgesIterator () override { }
 
-  virtual bool at_end () const
+  bool at_end () const override
   {
     return m_iter.at_end ();
   }
 
-  virtual void increment ()
+  void increment () override
   {
     ++m_iter;
     set ();
   }
 
-  virtual bool is_addressable() const
+  bool is_addressable() const override
   {
     return false;
   }
 
-  virtual const value_type *get () const
+  const value_type *get () const override
   {
     return &m_edge;
   }
 
-  virtual db::properties_id_type prop_id () const
+  db::properties_id_type prop_id () const override
   {
     return m_prop_id;
   }
 
-  virtual bool equals (const generic_shape_iterator_delegate_base<value_type> *other) const
+  bool equals (const generic_shape_iterator_delegate_base<value_type> *other) const override
   {
     const DeepEdgesIterator *o = dynamic_cast<const DeepEdgesIterator *> (other);
     return o && o->m_iter == m_iter;
   }
 
-  virtual EdgesIteratorDelegate *clone () const
+  EdgesIteratorDelegate *clone () const override
   {
     return new DeepEdgesIterator (*this);
   }
 
-  virtual void do_reset (const db::Box &region, bool overlapping)
+  void do_reset (const db::Box &region, bool overlapping) override
   {
     m_iter.set_region (region);
     m_iter.set_overlapping (overlapping);
     set ();
   }
 
-  virtual db::Box bbox () const
+  db::Box bbox () const override
   {
     return m_iter.bbox ();
   }
@@ -1789,7 +1789,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void do_compute_local (db::Layout * /*layout*/, db::Cell *cell, const shape_interactions<db::Edge, db::Edge> &interactions, std::vector<std::unordered_set<db::EdgePair> > &results, const db::LocalProcessorBase *proc) const
+  void do_compute_local (db::Layout * /*layout*/, db::Cell *cell, const shape_interactions<db::Edge, db::Edge> &interactions, std::vector<std::unordered_set<db::EdgePair> > &results, const db::LocalProcessorBase *proc) const override
   {
     tl_assert (results.size () == 1);
     std::unordered_set<db::EdgePair> &result = results.front ();
@@ -1844,23 +1844,23 @@ public:
     scanner.process (edge_check, check.distance (), db::box_convert<db::Edge> ());
   }
 
-  virtual db::Coord dist () const
+  db::Coord dist () const override
   {
     //  TODO: will the distance be sufficient? Or should we take somewhat more?
     return m_check.distance ();
   }
 
-  virtual OnEmptyIntruderHint on_empty_intruder_hint () const
+  OnEmptyIntruderHint on_empty_intruder_hint () const override
   {
     return Drop;
   }
 
-  virtual std::string description () const
+  std::string description () const override
   {
     return tl::to_string (tr ("Generic DRC check"));
   }
 
-  virtual const db::TransformationReducer *vars () const
+  const db::TransformationReducer *vars () const override
   {
     return &m_vars;
   }

@@ -26,6 +26,7 @@ Checks: >
   readability-static-accessed-through-instance,
   modernize-use-nullptr,
   modernize-use-bool-literals,
+  modernize-use-override,
   misc-redundant-expression,
   misc-unused-using-decls,
   misc-unused-parameters,

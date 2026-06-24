@@ -47,7 +47,7 @@ class DB_PUBLIC FormatSpecificReaderOptions
 {
 public:
   FormatSpecificReaderOptions () { }  
-  virtual ~FormatSpecificReaderOptions () { }  //  to enable RTTI
+  ~FormatSpecificReaderOptions () override { }  //  to enable RTTI
 
   virtual FormatSpecificReaderOptions *clone () const = 0;
   virtual const std::string &format_name () const = 0;

@@ -490,12 +490,12 @@ public:
     : mp_class_name (class_name) 
   { }
 
-  virtual const char *class_name () const 
+  const char *class_name () const override 
   { 
     return mp_class_name; 
   }
 
-  virtual user_object_base<C> *create () const 
+  user_object_base<C> *create () const override 
   {
     return new X ();
   }

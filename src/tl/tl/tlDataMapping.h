@@ -100,7 +100,7 @@ public:
   /**
    *  @brief The destructor
    */
-  virtual ~TableDataMapping () { }
+  ~TableDataMapping () override { }
 
   /**
    *  @brief Get the minimum x value for the data mapping
@@ -108,7 +108,7 @@ public:
    *  Any reimplementation of this class must provide the minimum value for the 
    *  x value that is data mapping is covering. 
    */
-  virtual double xmin () const 
+  double xmin () const override 
   {
     return m_xmin;
   }
@@ -119,7 +119,7 @@ public:
    *  Any reimplementation of this class must provide the maximum value for the 
    *  x value that is data mapping is covering. 
    */
-  virtual double xmax () const 
+  double xmax () const override 
   {
     return m_xmax;
   }
@@ -130,7 +130,7 @@ public:
    *  Any reimplementation of this class must provide a list of x/y pairs sorted by x.
    *  Mapping for x values outside this range is performed by constant extrapolation.
    */
-  virtual void generate_table (std::vector< std::pair<double, double> > &table) 
+  void generate_table (std::vector< std::pair<double, double> > &table) override 
   {
     table = m_table;
   }
@@ -157,7 +157,7 @@ public:
   /**
    *  @brief Dump the contents
    */
-  virtual void dump () const;
+  void dump () const override;
 
 public:
   double m_xmin, m_xmax;
@@ -186,33 +186,33 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~CombinedDataMapping ();
+  ~CombinedDataMapping () override;
 
   /**
    *  @brief Get the minimum x value for the data mapping
    *
    *  Implementation of the DataMappingBase interface.
    */
-  double xmin () const;
+  double xmin () const override;
 
   /**
    *  @brief Get the maximum x value for the data mapping
    *
    *  Implementation of the DataMappingBase interface.
    */
-  double xmax () const;
+  double xmax () const override;
 
   /**
    *  @brief Create the table
    *
    *  Implementation of the DataMappingBase interface.
    */
-  void generate_table (std::vector< std::pair<double, double> > &table);
+  void generate_table (std::vector< std::pair<double, double> > &table) override;
 
   /**
    *  @brief Dump the contents
    */
-  virtual void dump () const;
+  void dump () const override;
 
 private:
   DataMappingBase *mp_o, *mp_i;
@@ -246,33 +246,33 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~LinearCombinationDataMapping ();
+  ~LinearCombinationDataMapping () override;
 
   /**
    *  @brief Get the minimum x value for the data mapping
    *
    *  Implementation of the DataMappingBase interface.
    */
-  double xmin () const;
+  double xmin () const override;
 
   /**
    *  @brief Get the maximum x value for the data mapping
    *
    *  Implementation of the DataMappingBase interface.
    */
-  double xmax () const;
+  double xmax () const override;
 
   /**
    *  @brief Create the table
    *
    *  Implementation of the DataMappingBase interface.
    */
-  void generate_table (std::vector< std::pair<double, double> > &table);
+  void generate_table (std::vector< std::pair<double, double> > &table) override;
 
   /**
    *  @brief Dump the contents
    */
-  virtual void dump () const;
+  void dump () const override;
 
 private:
   DataMappingBase *mp_a, *mp_b;

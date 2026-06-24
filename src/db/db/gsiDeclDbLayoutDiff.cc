@@ -85,105 +85,105 @@ public:
     return res;
   }
 
-  virtual void dbu_differs (double dbu_a, double dbu_b)
+  void dbu_differs (double dbu_a, double dbu_b) override
   {
     dbu_differs_event (dbu_a, dbu_b);
   }
 
-  virtual void layout_meta_info_differs (const std::string &name, const tl::Variant &value_a, const tl::Variant &value_b)
+  void layout_meta_info_differs (const std::string &name, const tl::Variant &value_a, const tl::Variant &value_b) override
   {
     layout_meta_info_differs_event (name, value_a, value_b);
   }
 
-  virtual void layer_in_a_only (const db::LayerProperties &la)
+  void layer_in_a_only (const db::LayerProperties &la) override
   {
     layer_in_a_only_event (la);
   }
 
-  virtual void layer_in_b_only (const db::LayerProperties &lb)
+  void layer_in_b_only (const db::LayerProperties &lb) override
   {
     layer_in_b_only_event (lb);
   }
 
-  virtual void layer_name_differs (const db::LayerProperties &la, const db::LayerProperties &lb)
+  void layer_name_differs (const db::LayerProperties &la, const db::LayerProperties &lb) override
   {
     layer_name_differs_event (la, lb);
   }
 
-  virtual void cell_name_differs (const std::string & /*cellname_a*/, db::cell_index_type cia, const std::string & /*cellname_b*/, db::cell_index_type cib)
+  void cell_name_differs (const std::string & /*cellname_a*/, db::cell_index_type cia, const std::string & /*cellname_b*/, db::cell_index_type cib) override
   {
     cell_name_differs_event (&mp_layout_a->cell (cia), &mp_layout_b->cell (cib));
   }
 
-  virtual void cell_in_a_only (const std::string & /*cellname*/, db::cell_index_type ci)
+  void cell_in_a_only (const std::string & /*cellname*/, db::cell_index_type ci) override
   {
     cell_in_a_only_event (&mp_layout_a->cell (ci));
   }
 
-  virtual void cell_in_b_only (const std::string & /*cellname*/, db::cell_index_type ci)
+  void cell_in_b_only (const std::string & /*cellname*/, db::cell_index_type ci) override
   {
     cell_in_b_only_event (&mp_layout_b->cell (ci));
   }
 
-  virtual void bbox_differs (const db::Box &ba, const db::Box &bb)
+  void bbox_differs (const db::Box &ba, const db::Box &bb) override
   {
     bbox_differs_event (ba, bb);
   }
 
-  virtual void begin_cell (const std::string & /*cellname*/, db::cell_index_type cia, db::cell_index_type cib)
+  void begin_cell (const std::string & /*cellname*/, db::cell_index_type cia, db::cell_index_type cib) override
   {
     mp_cell_a = &mp_layout_a->cell (cia);
     mp_cell_b = &mp_layout_b->cell (cib);
     begin_cell_event (mp_cell_a, mp_cell_b);
   }
 
-  virtual void cell_meta_info_differs (const std::string &name, const tl::Variant &value_a, const tl::Variant &value_b)
+  void cell_meta_info_differs (const std::string &name, const tl::Variant &value_a, const tl::Variant &value_b) override
   {
     cell_meta_info_differs_event (name, value_a, value_b);
   }
 
-  virtual void begin_inst_differences ()
+  void begin_inst_differences () override
   {
     begin_inst_differences_event ();
   }
 
-  virtual void instances_in_a_only (const std::vector <db::CellInstArrayWithProperties> &anotb, const db::Layout & /*a*/)
+  void instances_in_a_only (const std::vector <db::CellInstArrayWithProperties> &anotb, const db::Layout & /*a*/) override
   {
     for (std::vector <db::CellInstArrayWithProperties>::const_iterator i = anotb.begin (); i != anotb.end (); ++i) {
       instance_in_a_only_event (*i, i->properties_id ());
     }
   }
 
-  virtual void instances_in_b_only (const std::vector <db::CellInstArrayWithProperties> &bnota, const db::Layout & /*b*/)
+  void instances_in_b_only (const std::vector <db::CellInstArrayWithProperties> &bnota, const db::Layout & /*b*/) override
   {
     for (std::vector <db::CellInstArrayWithProperties>::const_iterator i = bnota.begin (); i != bnota.end (); ++i) {
       instance_in_b_only_event (*i, i->properties_id ());
     }
   }
 
-  virtual void end_inst_differences ()
+  void end_inst_differences () override
   {
     end_inst_differences_event ();
   }
 
-  virtual void begin_layer (const db::LayerProperties &layer, unsigned int layer_index_a, bool is_valid_a, unsigned int layer_index_b, bool is_valid_b)
+  void begin_layer (const db::LayerProperties &layer, unsigned int layer_index_a, bool is_valid_a, unsigned int layer_index_b, bool is_valid_b) override
   {
     m_layer_index_a = is_valid_a ? int (layer_index_a) : -1;
     m_layer_index_b = is_valid_b ? int (layer_index_b) : -1;
     begin_layer_event (layer, m_layer_index_a, m_layer_index_b);
   }
 
-  virtual void per_layer_bbox_differs (const db::Box &ba, const db::Box &bb)
+  void per_layer_bbox_differs (const db::Box &ba, const db::Box &bb) override
   {
     per_layer_bbox_differs_event (ba, bb);
   }
 
-  virtual void begin_polygon_differences ()
+  void begin_polygon_differences () override
   {
     begin_polygon_differences_event ();
   }
 
-  virtual void detailed_diff (const std::vector <std::pair <db::Polygon, db::properties_id_type> > &a, const std::vector <std::pair <db::Polygon, db::properties_id_type> > &b)
+  void detailed_diff (const std::vector <std::pair <db::Polygon, db::properties_id_type> > &a, const std::vector <std::pair <db::Polygon, db::properties_id_type> > &b) override
   {
     for (std::vector <std::pair <db::Polygon, db::properties_id_type> >::const_iterator i = a.begin (); i != a.end (); ++i) {
       polygon_in_a_only_event (i->first, i->second);
@@ -193,17 +193,17 @@ public:
     }
   }
 
-  virtual void end_polygon_differences ()
+  void end_polygon_differences () override
   {
     end_polygon_differences_event ();
   }
 
-  virtual void begin_path_differences ()
+  void begin_path_differences () override
   {
     begin_path_differences_event ();
   }
 
-  virtual void detailed_diff (const std::vector <std::pair <db::Path, db::properties_id_type> > &a, const std::vector <std::pair <db::Path, db::properties_id_type> > &b)
+  void detailed_diff (const std::vector <std::pair <db::Path, db::properties_id_type> > &a, const std::vector <std::pair <db::Path, db::properties_id_type> > &b) override
   {
     for (std::vector <std::pair <db::Path, db::properties_id_type> >::const_iterator i = a.begin (); i != a.end (); ++i) {
       path_in_a_only_event (i->first, i->second);
@@ -213,17 +213,17 @@ public:
     }
   }
 
-  virtual void end_path_differences ()
+  void end_path_differences () override
   {
     end_path_differences_event ();
   }
 
-  virtual void begin_box_differences ()
+  void begin_box_differences () override
   {
     begin_box_differences_event ();
   }
 
-  virtual void detailed_diff (const std::vector <std::pair <db::Box, db::properties_id_type> > &a, const std::vector <std::pair <db::Box, db::properties_id_type> > &b)
+  void detailed_diff (const std::vector <std::pair <db::Box, db::properties_id_type> > &a, const std::vector <std::pair <db::Box, db::properties_id_type> > &b) override
   {
     for (std::vector <std::pair <db::Box, db::properties_id_type> >::const_iterator i = a.begin (); i != a.end (); ++i) {
       box_in_a_only_event (i->first, i->second);
@@ -233,17 +233,17 @@ public:
     }
   }
 
-  virtual void end_box_differences ()
+  void end_box_differences () override
   {
     end_box_differences_event ();
   }
 
-  virtual void begin_edge_differences ()
+  void begin_edge_differences () override
   {
     begin_edge_differences_event ();
   }
 
-  virtual void detailed_diff (const std::vector <std::pair <db::Edge, db::properties_id_type> > &a, const std::vector <std::pair <db::Edge, db::properties_id_type> > &b)
+  void detailed_diff (const std::vector <std::pair <db::Edge, db::properties_id_type> > &a, const std::vector <std::pair <db::Edge, db::properties_id_type> > &b) override
   {
     for (std::vector <std::pair <db::Edge, db::properties_id_type> >::const_iterator i = a.begin (); i != a.end (); ++i) {
       edge_in_a_only_event (i->first, i->second);
@@ -253,17 +253,17 @@ public:
     }
   }
 
-  virtual void end_edge_differences ()
+  void end_edge_differences () override
   {
     end_edge_differences_event ();
   }
 
-  virtual void begin_edge_pair_differences ()
+  void begin_edge_pair_differences () override
   {
     begin_edge_pair_differences_event ();
   }
 
-  virtual void detailed_diff (const std::vector <std::pair <db::EdgePair, db::properties_id_type> > &a, const std::vector <std::pair <db::EdgePair, db::properties_id_type> > &b)
+  void detailed_diff (const std::vector <std::pair <db::EdgePair, db::properties_id_type> > &a, const std::vector <std::pair <db::EdgePair, db::properties_id_type> > &b) override
   {
     for (std::vector <std::pair <db::EdgePair, db::properties_id_type> >::const_iterator i = a.begin (); i != a.end (); ++i) {
       edge_pair_in_a_only_event (i->first, i->second);
@@ -273,17 +273,17 @@ public:
     }
   }
 
-  virtual void end_edge_pair_differences ()
+  void end_edge_pair_differences () override
   {
     end_edge_pair_differences_event ();
   }
 
-  virtual void begin_text_differences ()
+  void begin_text_differences () override
   {
     begin_text_differences_event ();
   }
 
-  virtual void detailed_diff (const std::vector <std::pair <db::Text, db::properties_id_type> > &a, const std::vector <std::pair <db::Text, db::properties_id_type> > &b)
+  void detailed_diff (const std::vector <std::pair <db::Text, db::properties_id_type> > &a, const std::vector <std::pair <db::Text, db::properties_id_type> > &b) override
   {
     for (std::vector <std::pair <db::Text, db::properties_id_type> >::const_iterator i = a.begin (); i != a.end (); ++i) {
       text_in_a_only_event (i->first, i->second);
@@ -293,19 +293,19 @@ public:
     }
   }
 
-  virtual void end_text_differences ()
+  void end_text_differences () override
   {
     end_text_differences_event ();
   }
 
-  virtual void end_layer ()
+  void end_layer () override
   {
     end_layer_event ();
     m_layer_index_a = -1;
     m_layer_index_b = -1;
   }
 
-  virtual void end_cell ()
+  void end_cell () override
   {
     end_cell_event ();
   }

@@ -121,18 +121,18 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void reset (FilterStateBase *previous) 
+  void reset (FilterStateBase *previous) override 
   {
     FilterStateBase::reset (previous);
     m_done = false;
   }
 
-  virtual void next (bool) 
+  void next (bool) override 
   {
     m_done = true;
   }
 
-  virtual bool at_end () 
+  bool at_end () override 
   {
     return m_done;
   }
@@ -298,7 +298,7 @@ public:
     }
   }
 
-  virtual void reset (FilterStateBase *previous) 
+  void reset (FilterStateBase *previous) override 
   {
     FilterStateBase::reset (previous);
 
@@ -327,7 +327,7 @@ public:
     }
   }
 
-  virtual void next (bool) 
+  void next (bool) override 
   {
     if (mp_parent) {
 
@@ -361,12 +361,12 @@ public:
     }  
   }
 
-  virtual bool at_end () 
+  bool at_end () override 
   {
     return !mp_parent || m_lindex >= m_layers.size ();
   }
 
-  bool get_property (unsigned int id, tl::Variant &v)
+  bool get_property (unsigned int id, tl::Variant &v) override
   {
     if (id == m_pids.bbox || id == m_pids.shape_bbox) {
 
@@ -403,7 +403,7 @@ public:
     }
   }
 
-  virtual void dump () const
+  void dump () const override
   {
     std::cout << "ShapeFilterState";
     FilterStateBase::dump ();
@@ -435,17 +435,17 @@ public:
     // .. nothing yet ..
   }
 
-  FilterStateBase *do_create_state (db::Layout *layout, tl::Eval &eval) const
+  FilterStateBase *do_create_state (db::Layout *layout, tl::Eval &eval) const override
   {
     return new ShapeFilterState (this, m_layers, m_flags, eval, layout, m_reading, m_pids);
   }
 
-  FilterBase *clone (LayoutQuery *q) const
+  FilterBase *clone (LayoutQuery *q) const override
   {
     return new ShapeFilter (q, m_layers, m_flags, m_reading);
   }
 
-  virtual void dump (unsigned int l) const
+  void dump (unsigned int l) const override
   {
     for (unsigned int i = 0; i < l; ++i) {
       std::cout << "  ";
@@ -624,7 +624,7 @@ public:
     }
   }
 
-  virtual void do_init ()
+  void do_init () override
   {
     if (m_pattern.is_catchall () || m_pattern.needs_eval ()) {
 
@@ -686,7 +686,7 @@ public:
     validate_instance ();
   }
 
-  virtual void reset (FilterStateBase *previous)
+  void reset (FilterStateBase *previous) override
   {
     FilterStateBase::reset (previous);
 
@@ -767,7 +767,7 @@ public:
     }
   }
 
-  virtual void next (bool) 
+  void next (bool) override 
   {
     if (mp_parent) {
 
@@ -840,7 +840,7 @@ public:
     }
   }
 
-  virtual bool at_end () 
+  bool at_end () override 
   {
     if (mp_parent) {
       if (m_instance_mode == NoInstances) {
@@ -866,7 +866,7 @@ public:
     }
   }
 
-  bool get_property (unsigned int id, tl::Variant &v)
+  bool get_property (unsigned int id, tl::Variant &v) override
   {
     if (id == m_pids.bbox || id == m_pids.cell_bbox) {
 
@@ -1331,7 +1331,7 @@ public:
     }
   }
 
-  virtual void dump () const
+  void dump () const override
   {
     std::cout << "ChildCellFilterState";
     FilterStateBase::dump ();
@@ -1369,17 +1369,17 @@ public:
     // .. nothing yet ..
   }
 
-  FilterStateBase *do_create_state (db::Layout *layout, tl::Eval &eval) const
+  FilterStateBase *do_create_state (db::Layout *layout, tl::Eval &eval) const override
   {
     return new ChildCellFilterState (this, m_pattern, m_instance_mode, eval, layout, m_reading, m_pids);
   }
 
-  FilterBase *clone (LayoutQuery *q) const
+  FilterBase *clone (LayoutQuery *q) const override
   {
     return new ChildCellFilter (q, m_pattern, m_instance_mode, m_reading);
   }
 
-  virtual void dump (unsigned int l) const
+  void dump (unsigned int l) const override
   {
     for (unsigned int i = 0; i < l; ++i) {
       std::cout << "  ";
@@ -1481,7 +1481,7 @@ public:
     }
   }
 
-  virtual void reset (FilterStateBase *previous) 
+  void reset (FilterStateBase *previous) override 
   {
     FilterStateBase::reset (previous);
 
@@ -1504,19 +1504,19 @@ public:
     m_cell_counter.reset (nullptr);
   }
 
-  virtual void next (bool) 
+  void next (bool) override 
   {
     do {
       ++m_cell;
     } while (m_cell != m_cell_end && !cell_matches (*m_cell));
   }
 
-  virtual bool at_end () 
+  bool at_end () override 
   {
     return m_cell == m_cell_end;
   }
 
-  bool get_property (unsigned int id, tl::Variant &v)
+  bool get_property (unsigned int id, tl::Variant &v) override
   {
     if (id == m_pids.bbox || id == m_pids.cell_bbox) {
 
@@ -1626,7 +1626,7 @@ public:
     }
   }
 
-  virtual void dump () const
+  void dump () const override
   {
     std::cout << "CellFilterState";
     FilterStateBase::dump ();
@@ -1655,17 +1655,17 @@ public:
     // .. nothing yet ..
   }
 
-  FilterStateBase *do_create_state (db::Layout *layout, tl::Eval &eval) const
+  FilterStateBase *do_create_state (db::Layout *layout, tl::Eval &eval) const override
   {
     return new CellFilterState (this, m_pattern, eval, layout, m_reading, m_pids);
   }
 
-  FilterBase *clone (LayoutQuery *q) const
+  FilterBase *clone (LayoutQuery *q) const override
   {
     return new CellFilter (q, m_pattern, m_reading);
   }
 
-  virtual void dump (unsigned int l) const
+  void dump (unsigned int l) const override
   {
     for (unsigned int i = 0; i < l; ++i) {
       std::cout << "  ";
@@ -1713,7 +1713,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void reset (FilterStateBase *previous) 
+  void reset (FilterStateBase *previous) override 
   {
     FilterStateBase::reset (previous);
 
@@ -1724,7 +1724,7 @@ public:
     }
   } 
 
-  virtual void next (bool skip) 
+  void next (bool skip) override 
   {
     if (m_transparent) {
       if (! m_count && ! skip) {
@@ -1734,17 +1734,17 @@ public:
     }
   }
 
-  virtual bool at_end () 
+  bool at_end () override 
   {
     return ! m_transparent || m_count > 0;
   }
 
-  bool get_property (unsigned int id, tl::Variant &v)
+  bool get_property (unsigned int id, tl::Variant &v) override
   {
     return m_transparent && FilterStateBase::get_property (id, v);
   }
 
-  virtual void dump () const
+  void dump () const override
   {
     if (m_transparent) {
       std::cout << "TransparentDeleteFilterState";
@@ -1800,7 +1800,7 @@ public:
     // .. nothing yet ..
   }
 
-  FilterStateBase *do_create_state (db::Layout *layout, tl::Eval &eval) const
+  FilterStateBase *do_create_state (db::Layout *layout, tl::Eval &eval) const override
   {
     if (! layout->is_editable ()) {
       throw tl::Exception (tl::to_string (tr ("Cannot execute a delete query on a non-editable layout")));
@@ -1808,12 +1808,12 @@ public:
     return new DeleteFilterState (this, eval, layout, m_pids, m_transparent);
   }
 
-  FilterBase *clone (LayoutQuery *q) const
+  FilterBase *clone (LayoutQuery *q) const override
   {
     return new DeleteFilter (q, m_transparent);
   }
 
-  virtual void dump (unsigned int l) const
+  void dump (unsigned int l) const override
   {
     for (unsigned int i = 0; i < l; ++i) {
       std::cout << "  ";
@@ -1846,7 +1846,7 @@ public:
     }
   }
 
-  virtual void reset (FilterStateBase *previous) 
+  void reset (FilterStateBase *previous) override 
   {
     FilterStateBase::reset (previous);
     if (m_transparent) {
@@ -1856,7 +1856,7 @@ public:
     }
   }
 
-  virtual void next (bool skip) 
+  void next (bool skip) override 
   {
     if (m_transparent) {
       if (! m_count && ! skip) {
@@ -1866,17 +1866,17 @@ public:
     }
   }
 
-  virtual bool at_end () 
+  bool at_end () override 
   {
     return !m_transparent || m_count > 0;
   }
 
-  bool get_property (unsigned int id, tl::Variant &v)
+  bool get_property (unsigned int id, tl::Variant &v) override
   {
     return m_transparent && FilterStateBase::get_property (id, v);
   }
 
-  virtual void dump () const
+  void dump () const override
   {
     if (m_transparent) {
       std::cout << "TransparentWithDoFilterState";
@@ -1903,7 +1903,7 @@ public:
     // .. nothing yet ..
   }
 
-  FilterStateBase *do_create_state (db::Layout *layout, tl::Eval &eval) const
+  FilterStateBase *do_create_state (db::Layout *layout, tl::Eval &eval) const override
   {
     if (! layout->is_editable ()) {
       throw tl::Exception (tl::to_string (tr ("Cannot execute a with .. do query on a non-editable layout")));
@@ -1911,12 +1911,12 @@ public:
     return new WithDoFilterState (this, m_do_expression, eval, layout, m_transparent);
   }
 
-  FilterBase *clone (LayoutQuery *q) const
+  FilterBase *clone (LayoutQuery *q) const override
   {
     return new WithDoFilter (q, m_do_expression, m_transparent);
   }
 
-  virtual void dump (unsigned int l) const
+  void dump (unsigned int l) const override
   {
     for (unsigned int i = 0; i < l; ++i) {
       std::cout << "  ";
@@ -1959,12 +1959,12 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void reset (FilterStateBase * /*previous*/)
+  void reset (FilterStateBase * /*previous*/) override
   {
     m_sorted = m_sorted_data.begin ();
   }
 
-  virtual void next (bool) 
+  void next (bool) override 
   {
     std::multimap <tl::Variant, tl::Variant>::const_iterator s = m_sorted;
     do {
@@ -1972,12 +1972,12 @@ public:
     } while (m_unique && m_sorted != m_sorted_data.end () && m_sorted->second == s->second); 
   }
 
-  virtual bool at_end () 
+  bool at_end () override 
   {
     return (m_sorted == m_sorted_data.end ());
   }
 
-  bool get_property (unsigned int id, tl::Variant &v)
+  bool get_property (unsigned int id, tl::Variant &v) override
   {
     if (id == m_pids.data) {
       v = m_sorted->second;
@@ -2052,7 +2052,7 @@ public:
     }
   }
 
-  virtual void reset (FilterStateBase *previous)
+  void reset (FilterStateBase *previous) override
   {
     if (m_has_sorting) {
 
@@ -2078,12 +2078,12 @@ public:
     m_done = false;
   }
 
-  virtual void next (bool) 
+  void next (bool) override 
   {
     m_done = true;
   }
 
-  virtual bool at_end () 
+  bool at_end () override 
   {
     if (m_has_sorting) {
       return true;
@@ -2092,7 +2092,7 @@ public:
     }
   }
 
-  bool get_property (unsigned int id, tl::Variant &v)
+  bool get_property (unsigned int id, tl::Variant &v) override
   {
     if (id == m_pids.data) {
       get_data (v);
@@ -2108,7 +2108,7 @@ public:
     }
   }
 
-  virtual void dump () const
+  void dump () const override
   {
     std::cout << "SelectFilterState";
     FilterStateBase::dump ();
@@ -2139,17 +2139,17 @@ public:
     // .. nothing yet ..
   }
 
-  FilterStateBase *do_create_state (db::Layout *layout, tl::Eval &eval) const
+  FilterStateBase *do_create_state (db::Layout *layout, tl::Eval &eval) const override
   {
     return new SelectFilterState (this, m_expressions, m_sort_expression, m_unique, eval, layout, m_pids);
   }
 
-  FilterBase *clone (LayoutQuery *q) const
+  FilterBase *clone (LayoutQuery *q) const override
   {
     return new SelectFilter (q, m_expressions, m_sort_expression, m_unique);
   }
 
-  virtual void dump (unsigned int l) const
+  void dump (unsigned int l) const override
   {
     for (unsigned int i = 0; i < l; ++i) {
       std::cout << "  ";
@@ -2188,23 +2188,23 @@ public:
     eval.parse (m_expression, expr, true);
   }
 
-  virtual void reset (FilterStateBase *previous) 
+  void reset (FilterStateBase *previous) override 
   {
     FilterStateBase::reset (previous);
     m_select = m_expression.execute ().to_bool ();
   }
 
-  virtual void next (bool) 
+  void next (bool) override 
   {
     m_select = false;
   }
 
-  virtual bool at_end () 
+  bool at_end () override 
   {
     return ! m_select;
   }
 
-  virtual void dump () const
+  void dump () const override
   {
     std::cout << "ConditionalFilterState";
     FilterStateBase::dump ();
@@ -2225,17 +2225,17 @@ public:
     // .. nothing yet ..
   }
 
-  FilterStateBase *do_create_state (db::Layout *layout, tl::Eval &eval) const
+  FilterStateBase *do_create_state (db::Layout *layout, tl::Eval &eval) const override
   {
     return new ConditionalFilterState (this, eval, m_expr, layout);
   }
 
-  FilterBase *clone (LayoutQuery *q) const
+  FilterBase *clone (LayoutQuery *q) const override
   {
     return new ConditionalFilter (q, m_expr);
   }
 
-  virtual void dump (unsigned int l) const
+  void dump (unsigned int l) const override
   {
     for (unsigned int i = 0; i < l; ++i) {
       std::cout << "  ";
@@ -2262,7 +2262,7 @@ public:
     //  .. nothing yet ..
   }
 
-  void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const
+  void execute (const tl::ExpressionParserContext &context, tl::Variant &out, const std::vector<tl::Variant> &args, const std::map<std::string, tl::Variant> * /*kwargs*/) const override
   {
     if (!args.empty()) {
       throw tl::EvalError (tl::to_string (tr ("Query function does not allow parameters")), context);

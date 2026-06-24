@@ -59,7 +59,7 @@ public:
   /**
    *  @brief The destructor
    */
-  ~LandmarkMarker ()
+  ~LandmarkMarker () override
   {
     //  .. nothing yet ..
   }
@@ -101,7 +101,7 @@ private:
   bool m_selected;
   bool m_position_set;
 
-  virtual void render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
+  void render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas) override
   {
     if (! m_position_set) {
       return;
@@ -153,13 +153,13 @@ public:
     update ();
   }
 
-  ~LandmarkEditorService ()
+  ~LandmarkEditorService () override
   {
     drag_cancel ();
     clear ();
   }
 
-  bool mouse_release_event (const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/) 
+  bool mouse_release_event (const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/) override 
   { 
     // ...
     return false;
@@ -194,7 +194,7 @@ public:
     }
   }
 
-  bool mouse_click_event (const db::DPoint &p, unsigned int /*buttons*/, bool prio) 
+  bool mouse_click_event (const db::DPoint &p, unsigned int /*buttons*/, bool prio) override 
   { 
     if (prio) {
 
@@ -287,13 +287,13 @@ public:
     update_internal ();
   }
 
-  bool mouse_press_event (const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/) 
+  bool mouse_press_event (const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/) override 
   { 
     // ..
     return false;
   }
 
-  bool mouse_move_event (const db::DPoint &p, unsigned int /*buttons*/, bool prio) 
+  bool mouse_move_event (const db::DPoint &p, unsigned int /*buttons*/, bool prio) override 
   { 
     if (prio) {
 
@@ -338,7 +338,7 @@ public:
     }
   }
 
-  void drag_cancel ()
+  void drag_cancel () override
   {
     if (m_dragging) {
       m_dragging = false;
@@ -347,7 +347,7 @@ public:
     ui ()->ungrab_mouse (this);
   }
 
-  void set_colors (tl::Color /*background*/, tl::Color /*color*/)
+  void set_colors (tl::Color /*background*/, tl::Color /*color*/) override
   {
     // ...
   }
@@ -391,7 +391,7 @@ private:
     }
   }
 
-  void update ()
+  void update () override
   {
     update_internal ();
     updated_event ();

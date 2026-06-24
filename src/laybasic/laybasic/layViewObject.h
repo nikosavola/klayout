@@ -361,7 +361,7 @@ public:
   /**
    *  @brief The destructor
    */
-  virtual ~BackgroundViewObject ();
+  ~BackgroundViewObject () override;
 
   /**
    *  @brief Render the object on the background 
@@ -461,7 +461,7 @@ public:
   /**
    *  @brief The destructor
    */
-  virtual ~ViewObject ();
+  ~ViewObject () override;
 
   /**
    *  @brief Attaches a view object to a widget
@@ -635,7 +635,7 @@ public:
   /**
    *  @brief dtor
    */
-  ~ViewObjectUI ();
+  ~ViewObjectUI () override;
 
 #if defined(HAVE_QT)
   /**
@@ -1280,7 +1280,7 @@ public:
   /**
    *  @brief The destructor 
    */
-  virtual ~BitmapViewObjectCanvas ();
+  ~BitmapViewObjectCanvas () override;
 
   /**
    *  @brief CanvasPlane provider
@@ -1291,7 +1291,7 @@ public:
    *  be displayed. CanvasPlanes may be shared if the style is identical.
    *  The plane index of the ViewOp is not used. 
    */
-  virtual lay::CanvasPlane *plane (const lay::ViewOp &style);
+  lay::CanvasPlane *plane (const lay::ViewOp &style) override;
 
   /**
    *  @brief CanvasPlane provider for a sequence of operations on the same plane
@@ -1303,17 +1303,17 @@ public:
    *  CanvasPlanes may be shared if the styles are identical.
    *  The plane index of the ViewOp is not used. 
    */
-  virtual lay::CanvasPlane *plane (const std::vector<lay::ViewOp> &style);
+  lay::CanvasPlane *plane (const std::vector<lay::ViewOp> &style) override;
 
   /**
    *  @brief Sort the planes in the painting order
    */
-  virtual void sort_planes ();
+  void sort_planes () override;
 
   /**
    *  @brief Provide the renderer
    */
-  virtual lay::Renderer &renderer () 
+  lay::Renderer &renderer () override 
   { 
     return m_renderer; 
   }
@@ -1321,7 +1321,7 @@ public:
   /**
    *  @brief Get the resolution
    */
-  virtual double resolution () const 
+  double resolution () const override 
   {
     return m_resolution;
   }
@@ -1329,7 +1329,7 @@ public:
   /**
    *  @brief Get the font resolution
    */
-  virtual double font_resolution () const
+  double font_resolution () const override
   {
     return m_font_resolution;
   }

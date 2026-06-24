@@ -52,8 +52,8 @@ class XORProgress
 public:
   XORProgress (const std::string &title, size_t max_count, size_t yield_interval);
 
-  virtual QWidget *progress_widget () const;
-  virtual void render_progress (QWidget *widget) const;
+  QWidget *progress_widget () const override;
+  void render_progress (QWidget *widget) const override;
 
   void configure (double dbu, int nx, int ny, const std::vector<db::Coord> &tol);
   void merge_results (std::map<std::pair<db::LayerProperties, db::Coord>, std::vector<std::vector<size_t> > > &results);

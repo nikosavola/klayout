@@ -318,7 +318,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~Player ();
+  ~Player () override;
 
   /**
    *  @brief Start replaying the events
@@ -429,7 +429,7 @@ public:
   /**
    *  @brief Destroy the recorder.
    */
-  ~Recorder ();
+  ~Recorder () override;
 
   /**
    *  @brief Start the recording
@@ -526,7 +526,7 @@ public:
   }
 
 protected:
-  bool eventFilter (QObject *object, QEvent *event);
+  bool eventFilter (QObject *object, QEvent *event) override;
 
 private:
   //  no copying

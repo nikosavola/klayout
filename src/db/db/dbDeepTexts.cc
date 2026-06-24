@@ -54,53 +54,53 @@ public:
     set ();
   }
 
-  virtual ~DeepTextsIterator () { }
+  ~DeepTextsIterator () override { }
 
-  virtual bool at_end () const
+  bool at_end () const override
   {
     return m_iter.at_end ();
   }
 
-  virtual void increment ()
+  void increment () override
   {
     ++m_iter;
     set ();
   }
 
-  virtual bool is_addressable() const
+  bool is_addressable() const override
   {
     return false;
   }
 
-  virtual const value_type *get () const
+  const value_type *get () const override
   {
     return &m_text;
   }
 
-  virtual db::properties_id_type prop_id () const
+  db::properties_id_type prop_id () const override
   {
     return m_prop_id;
   }
 
-  virtual bool equals (const generic_shape_iterator_delegate_base<value_type> *other) const
+  bool equals (const generic_shape_iterator_delegate_base<value_type> *other) const override
   {
     const DeepTextsIterator *o = dynamic_cast<const DeepTextsIterator *> (other);
     return o && o->m_iter == m_iter;
   }
 
-  virtual TextsIteratorDelegate *clone () const
+  TextsIteratorDelegate *clone () const override
   {
     return new DeepTextsIterator (*this);
   }
 
-  virtual void do_reset (const db::Box &region, bool overlapping)
+  void do_reset (const db::Box &region, bool overlapping) override
   {
     m_iter.set_region (region);
     m_iter.set_overlapping (overlapping);
     set ();
   }
 
-  virtual db::Box bbox () const
+  db::Box bbox () const override
   {
     return m_iter.bbox ();
   }
@@ -635,13 +635,13 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual db::Coord dist () const
+  db::Coord dist () const override
   {
     //  touching is sufficient
     return 1;
   }
 
-  virtual void do_compute_local (db::Layout * /*layout*/, db::Cell * /*cell*/, const shape_interactions<db::TextRef, db::PolygonRef> &interactions, std::vector<std::unordered_set<db::TextRef> > &results, const db::LocalProcessorBase * /*proc*/) const
+  void do_compute_local (db::Layout * /*layout*/, db::Cell * /*cell*/, const shape_interactions<db::TextRef, db::PolygonRef> &interactions, std::vector<std::unordered_set<db::TextRef> > &results, const db::LocalProcessorBase * /*proc*/) const override
   {
     tl_assert (results.size () == 1);
     std::unordered_set<db::TextRef> &result = results.front ();
@@ -687,7 +687,7 @@ public:
     }
   }
 
-  virtual OnEmptyIntruderHint on_empty_intruder_hint () const
+  OnEmptyIntruderHint on_empty_intruder_hint () const override
   {
     if (m_inverse) {
       return Copy;
@@ -696,7 +696,7 @@ public:
     }
   }
 
-  virtual std::string description () const
+  std::string description () const override
   {
     return tl::to_string (tr ("Select interacting texts"));
   }
@@ -734,13 +734,13 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual db::Coord dist () const
+  db::Coord dist () const override
   {
     //  touching is sufficient
     return 1;
   }
 
-  virtual void do_compute_local (db::Layout *layout, db::Cell * /*cell*/, const shape_interactions<db::TextRef, db::PolygonRef> &interactions, std::vector<std::unordered_set<db::PolygonRef> > &results, const db::LocalProcessorBase * /*proc*/) const
+  void do_compute_local (db::Layout *layout, db::Cell * /*cell*/, const shape_interactions<db::TextRef, db::PolygonRef> &interactions, std::vector<std::unordered_set<db::PolygonRef> > &results, const db::LocalProcessorBase * /*proc*/) const override
   {
     tl_assert (results.size () == 1);
     std::unordered_set<db::PolygonRef> &result = results.front ();
@@ -770,12 +770,12 @@ public:
     scanner.process (filter, 1, db::box_convert<db::TextRef> (), db::box_convert<db::Polygon> ());
   }
 
-  virtual OnEmptyIntruderHint on_empty_intruder_hint () const
+  OnEmptyIntruderHint on_empty_intruder_hint () const override
   {
     return Drop;
   }
 
-  virtual std::string description () const
+  std::string description () const override
   {
     return tl::to_string (tr ("Select interacting regions"));
   }

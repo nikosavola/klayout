@@ -146,15 +146,15 @@ public:
     return m_cell_result;
   }
 
-  int columnCount (const QModelIndex &parent) const;
-  QVariant data (const QModelIndex &index, int role) const;
-  Qt::ItemFlags flags (const QModelIndex &index) const;
-  bool hasChildren (const QModelIndex &parent) const;
+  int columnCount (const QModelIndex &parent) const override;
+  QVariant data (const QModelIndex &index, int role) const override;
+  Qt::ItemFlags flags (const QModelIndex &index) const override;
+  bool hasChildren (const QModelIndex &parent) const override;
   bool hasIndex (int row, int column, const QModelIndex &parent) const;
-  QVariant headerData (int section, Qt::Orientation orientation, int role) const;
-  QModelIndex index (int row, int column, const QModelIndex &parent) const;
-  QModelIndex parent (const QModelIndex &index) const;
-  int rowCount (const QModelIndex &parent) const;
+  QVariant headerData (int section, Qt::Orientation orientation, int role) const override;
+  QModelIndex index (int row, int column, const QModelIndex &parent) const override;
+  QModelIndex parent (const QModelIndex &index) const override;
+  int rowCount (const QModelIndex &parent) const override;
   void has_more (bool hm);
 
   void export_csv (const std::string &file, const std::set<int> *rows = nullptr);
@@ -195,14 +195,14 @@ public:
   };
 
   SearchReplaceDialog (lay::Dispatcher *root, lay::LayoutViewBase *view);
-  ~SearchReplaceDialog ();
+  ~SearchReplaceDialog () override;
 
 private:
   //  implementation of the lay::Plugin interface
-  virtual bool configure (const std::string &name, const std::string &value);
+  bool configure (const std::string &name, const std::string &value) override;
 
   //  implementation of the lay::Plugin interface
-  void menu_activated (const std::string &symbol);
+  void menu_activated (const std::string &symbol) override;
 
   lay::LayoutViewBase *mp_view;
   std::vector<std::string> m_mru;
@@ -269,8 +269,8 @@ private:
   void layout_changed ();
 
   //  implementation of the lay::Browser interface
-  virtual void activated ();
-  virtual void deactivated ();
+  void activated () override;
+  void deactivated () override;
 };
 
 }

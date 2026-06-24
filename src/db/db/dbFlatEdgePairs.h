@@ -53,66 +53,66 @@ public:
 
   FlatEdgePairs (const FlatEdgePairs &other);
 
-  virtual ~FlatEdgePairs ();
+  ~FlatEdgePairs () override;
 
-  EdgePairsDelegate *clone () const
+  EdgePairsDelegate *clone () const override
   {
     return new FlatEdgePairs (*this);
   }
 
-  void reserve (size_t);
+  void reserve (size_t) override;
 
-  virtual EdgePairsIteratorDelegate *begin () const;
-  virtual std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const;
+  EdgePairsIteratorDelegate *begin () const override;
+  std::pair<db::RecursiveShapeIterator, db::ICplxTrans> begin_iter () const override;
 
-  virtual bool empty () const;
-  virtual size_t count () const;
-  virtual size_t hier_count () const;
+  bool empty () const override;
+  size_t count () const override;
+  size_t hier_count () const override;
 
-  virtual EdgePairsDelegate *filter_in_place (const EdgePairFilterBase &filter);
+  EdgePairsDelegate *filter_in_place (const EdgePairFilterBase &filter) override;
 
-  virtual EdgePairsDelegate *add_in_place (const EdgePairs &other);
-  virtual EdgePairsDelegate *add (const EdgePairs &other) const;
+  EdgePairsDelegate *add_in_place (const EdgePairs &other) override;
+  EdgePairsDelegate *add (const EdgePairs &other) const override;
 
-  virtual const db::EdgePair *nth (size_t n) const;
-  virtual db::properties_id_type nth_prop_id (size_t n) const;
-  virtual bool has_valid_edge_pairs () const;
+  const db::EdgePair *nth (size_t n) const override;
+  db::properties_id_type nth_prop_id (size_t n) const override;
+  bool has_valid_edge_pairs () const override;
 
-  virtual const db::RecursiveShapeIterator *iter () const;
-  virtual void apply_property_translator (const db::PropertiesTranslator &pt);
+  const db::RecursiveShapeIterator *iter () const override;
+  void apply_property_translator (const db::PropertiesTranslator &pt) override;
 
-  virtual void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const;
-  virtual void insert_into_as_polygons (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer, db::Coord enl) const;
+  void insert_into (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer) const override;
+  void insert_into_as_polygons (Layout *layout, db::cell_index_type into_cell, unsigned int into_layer, db::Coord enl) const override;
 
-  virtual void do_insert (const db::EdgePair &edge_pair, db::properties_id_type prop_id);
+  void do_insert (const db::EdgePair &edge_pair, db::properties_id_type prop_id) override;
 
-  virtual void do_transform (const db::Trans &t)
+  void do_transform (const db::Trans &t) override
   {
     transform_generic (t);
   }
 
-  virtual void do_transform (const db::ICplxTrans &t)
+  void do_transform (const db::ICplxTrans &t) override
   {
     transform_generic (t);
   }
 
-  virtual void do_transform (const db::IMatrix2d &t)
+  void do_transform (const db::IMatrix2d &t) override
   {
     transform_generic (t);
   }
 
-  virtual void do_transform (const db::IMatrix3d &t)
+  void do_transform (const db::IMatrix3d &t) override
   {
     transform_generic (t);
   }
 
-  virtual void flatten () { }
+  void flatten () override { }
 
   db::Shapes &raw_edge_pairs () { return *mp_edge_pairs; }
   const db::Shapes &raw_edge_pairs () const { return *mp_edge_pairs; }
 
 protected:
-  virtual Box compute_bbox () const;
+  Box compute_bbox () const override;
   void invalidate_cache ();
 
 private:

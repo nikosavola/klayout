@@ -78,7 +78,7 @@ Q_OBJECT
 
 public:
   LayerSourceDialog (QWidget *parent);
-  ~LayerSourceDialog ();
+  ~LayerSourceDialog () override;
 
   bool exec_dialog (std::string &s);
 
@@ -96,12 +96,12 @@ Q_OBJECT
 
 public:
   NewCellPropertiesDialog (QWidget *parent);
-  virtual ~NewCellPropertiesDialog ();
+  ~NewCellPropertiesDialog () override;
 
   bool exec_dialog (const db::Layout *layout, std::string &cell_name, double &size);
 
 private:
-  virtual void accept ();
+  void accept () override;
 
   Ui::NewCellPropertiesDialog *mp_ui;
   const db::Layout *mp_layout;
@@ -117,13 +117,13 @@ Q_OBJECT
 
 public:
   NewLayerPropertiesDialog (QWidget *parent);
-  virtual ~NewLayerPropertiesDialog ();
+  ~NewLayerPropertiesDialog () override;
 
   bool exec_dialog (const lay::CellView &cv, db::LayerProperties &src);
   bool exec_dialog (db::LayerProperties &src);
 
 private:
-  virtual void accept ();
+  void accept () override;
   void get (db::LayerProperties &src);
 
   Ui::NewLayerPropertiesDialog *mp_ui;
@@ -142,7 +142,7 @@ Q_OBJECT
 
 public:
   LayoutViewFunctionDialog (QWidget *parent, const QString &title, const QString &label);
-  virtual ~LayoutViewFunctionDialog ();
+  ~LayoutViewFunctionDialog () override;
 
   bool exec_dialog (QString &value);
 
@@ -153,7 +153,7 @@ private slots:
   void apply_clicked ();
 
 private:
-  virtual void accept ();
+  void accept () override;
 
   Ui::LayoutViewFunctionDialog *mp_ui;
 };
@@ -169,7 +169,7 @@ Q_OBJECT
 
 public:
   MoveOptionsDialog (QWidget *parent);
-  virtual ~MoveOptionsDialog ();
+  ~MoveOptionsDialog () override;
 
   bool exec_dialog (db::DVector &disp);
 
@@ -180,7 +180,7 @@ private slots:
   void apply_clicked ();
 
 private:
-  virtual void accept ();
+  void accept () override;
   db::DVector vector ();
 
   Ui::MoveOptionsDialog *mp_ui;
@@ -196,7 +196,7 @@ Q_OBJECT
 
 public:
   MoveToOptionsDialog (QWidget *parent);
-  virtual ~MoveToOptionsDialog ();
+  ~MoveToOptionsDialog () override;
 
   bool exec_dialog (int &mode_x, int &mode_y, db::DPoint &target);
 
@@ -204,7 +204,7 @@ private slots:
   void button_clicked ();
 
 private:
-  virtual void accept ();
+  void accept () override;
 
   Ui::MoveToOptionsDialog *mp_ui;
 };
@@ -219,12 +219,12 @@ Q_OBJECT
 
 public:
   RenameCellDialog (QWidget *parent);
-  virtual ~RenameCellDialog ();
+  ~RenameCellDialog () override;
 
   bool exec_dialog (const db::Layout &layout, std::string &name);
 
 private:
-  virtual void accept ();
+  void accept () override;
 
   Ui::RenameCellDialog *mp_ui;
   const db::Layout *mp_layout;
@@ -240,7 +240,7 @@ Q_OBJECT
 
 public:
   ReplaceCellOptionsDialog (QWidget *parent);
-  virtual ~ReplaceCellOptionsDialog ();
+  ~ReplaceCellOptionsDialog () override;
 
   /** 
    *  @brief Execute the dialog
@@ -250,7 +250,7 @@ public:
   bool exec_dialog (const lay::CellView &cv, int &replace_mode, db::cell_index_type &cell);
 
 protected:
-  virtual void accept ();
+  void accept () override;
 
 private:
   Ui::ReplaceCellOptionsDialog *mp_ui;
@@ -266,7 +266,7 @@ Q_OBJECT
 
 public:
   CopyCellModeDialog (QWidget *parent);
-  virtual ~CopyCellModeDialog ();
+  ~CopyCellModeDialog () override;
 
   /** 
    *  @brief Execute the dialog
@@ -289,7 +289,7 @@ Q_OBJECT
 
 public:
   DeleteCellModeDialog (QWidget *parent);
-  virtual ~DeleteCellModeDialog ();
+  ~DeleteCellModeDialog () override;
 
   /** 
    *  @brief Execute the dialog
@@ -312,7 +312,7 @@ Q_OBJECT
 
 public:
   ClearLayerModeDialog (QWidget *parent);
-  virtual ~ClearLayerModeDialog ();
+  ~ClearLayerModeDialog () override;
 
   /** 
    *  @brief Execute the dialog
@@ -335,7 +335,7 @@ Q_OBJECT
 
 public:
   OpenLayoutModeDialog (QWidget *parent);
-  virtual ~OpenLayoutModeDialog ();
+  ~OpenLayoutModeDialog () override;
 
   /** 
    *  @brief Execute the dialog
@@ -358,7 +358,7 @@ Q_OBJECT
 
 public:
   NewLayoutPropertiesDialog (QWidget *parent);
-  virtual ~NewLayoutPropertiesDialog ();
+  ~NewLayoutPropertiesDialog () override;
 
   bool exec_dialog (std::string &tech_name, std::string &cell_name, double &dbu, double &window_size, std::vector<db::LayerProperties> &layers, bool &current_panel);
 
@@ -366,7 +366,7 @@ private slots:
   void tech_changed ();
 
 private:
-  virtual void accept ();
+  void accept () override;
 
   Ui::NewLayoutPropertiesDialog *mp_ui;
   double m_default_dbu;
@@ -382,7 +382,7 @@ Q_OBJECT
 
 public:
   DuplicateLayerDialog (QWidget *parent);
-  virtual ~DuplicateLayerDialog ();
+  ~DuplicateLayerDialog () override;
 
   bool exec_dialog (lay::LayoutViewBase *view, int &cv, int &layer, int &cv_res, int &layer_res, int &hier_mode, bool &clear_before);
 
@@ -390,7 +390,7 @@ public slots:
   void cv_changed (int);
 
 private:
-  virtual void accept ();
+  void accept () override;
 
   Ui::DuplicateLayerDialog *mp_ui;
   lay::LayoutViewBase *mp_view;
@@ -421,13 +421,13 @@ Q_OBJECT
 
 public:
   AlignCellOptionsDialog (QWidget *parent);
-  virtual ~AlignCellOptionsDialog ();
+  ~AlignCellOptionsDialog () override;
 
   bool exec_dialog (AlignCellOptions &data);
 
 private slots:
   void button_clicked ();
-  void accept ();
+  void accept () override;
 
 private:
   Ui::AlignCellOptionsDialog *mp_ui;
@@ -441,7 +441,7 @@ class LAYUI_PUBLIC FlattenInstOptionsDialog
 {
 public:
   FlattenInstOptionsDialog (QWidget *parent, bool enable_pruning = true);
-  virtual ~FlattenInstOptionsDialog ();
+  ~FlattenInstOptionsDialog () override;
 
   bool exec_dialog (int &levels, bool &prune); 
 
@@ -459,7 +459,7 @@ Q_OBJECT
 
 public:
   UserPropertiesForm (QWidget *parent);
-  virtual ~UserPropertiesForm ();
+  ~UserPropertiesForm () override;
 
   bool show (lay::LayoutViewBase *view, unsigned int cv_index, db::properties_id_type &prop_id);
   bool show (lay::LayoutViewBase *view, unsigned int cv_index, db::properties_id_type &prop_id, db::Layout::meta_info_iterator begin_meta, db::Layout::meta_info_iterator end_meta);
@@ -475,7 +475,7 @@ private:
   db::PropertiesSet get_properties (int tab);
   void set_properties (const db::PropertiesSet &props);
   void set_meta_info (db::Layout::meta_info_iterator begin_meta, db::Layout::meta_info_iterator end_meta, const db::Layout &layout);
-  void accept ();
+  void accept () override;
 
   bool m_editable;
   Ui::UserPropertiesForm *mp_ui;
@@ -491,10 +491,10 @@ class LAYUI_PUBLIC UserPropertiesEditForm
 {
 public:
   UserPropertiesEditForm (QWidget *parent);
-  virtual ~UserPropertiesEditForm ();
+  ~UserPropertiesEditForm () override;
 
   bool show (QString &key, QString &value);
-  virtual void accept ();
+  void accept () override;
 
   Ui::UserPropertiesEditForm *mp_ui;
 };
@@ -509,7 +509,7 @@ Q_OBJECT
 
 public:
   UndoRedoListForm (QWidget *parent, db::Manager *manager, bool for_undo);
-  virtual ~UndoRedoListForm ();
+  ~UndoRedoListForm () override;
 
   bool exec (int &steps);
 

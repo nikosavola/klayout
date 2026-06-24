@@ -63,7 +63,7 @@ public:
   /**
    *  @brief The destructor
    */
-  virtual ~Library ();
+  ~Library () override;
 
   /**
    *  @brief Called to reload the library

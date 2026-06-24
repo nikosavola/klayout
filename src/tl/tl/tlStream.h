@@ -130,7 +130,7 @@ public:
     //  .. nothing yet ..
   }
 
-  ~InputMemoryStream ()
+  ~InputMemoryStream () override
   {
     if (m_owns_data) {
       delete [] const_cast<char *> (mp_data);
@@ -138,7 +138,7 @@ public:
     mp_data = nullptr;
   }
 
-  virtual size_t read (char *b, size_t n)
+  size_t read (char *b, size_t n) override
   {
     if (m_pos + n > m_length) {
       n = m_length - m_pos;
@@ -148,27 +148,27 @@ public:
     return n;
   }
 
-  virtual void reset ()
+  void reset () override
   {
     m_pos = 0;
   }
 
-  virtual void close ()
+  void close () override
   {
     //  .. nothing yet ..
   }
 
-  virtual std::string source () const
+  std::string source () const override
   {
     return "data";
   }
 
-  virtual std::string absolute_path () const
+  std::string absolute_path () const override
   {
     return "data";
   }
 
-  virtual std::string filename () const
+  std::string filename () const override
   {
     return "data";
   }
@@ -209,7 +209,7 @@ public:
    *
    *  The destructor will automatically close the file.
    */
-  virtual ~InputZLibFile ();
+  ~InputZLibFile () override;
 
   /**
    *  @brief Read from a file
@@ -217,20 +217,20 @@ public:
    *  Implements the basic read method.
    *  Will throw a ZLibReadErrorException if an error occurs.
    */
-  virtual size_t read (char *b, size_t n);
+  size_t read (char *b, size_t n) override;
 
-  virtual void reset ();
+  void reset () override;
 
-  virtual void close ();
+  void close () override;
 
-  virtual std::string source () const
+  std::string source () const override
   {
     return m_source;
   }
 
-  virtual std::string absolute_path () const;
+  std::string absolute_path () const override;
 
-  virtual std::string filename () const;
+  std::string filename () const override;
 
 private:
   //  no copying
@@ -267,22 +267,22 @@ public:
    *
    *  The destructor will automatically close the file.
    */
-  virtual ~InputFile ();
+  ~InputFile () override;
 
-  virtual size_t read (char *b, size_t n);
+  size_t read (char *b, size_t n) override;
 
-  virtual void reset ();
+  void reset () override;
 
-  virtual void close ();
+  void close () override;
 
-  virtual std::string source () const
+  std::string source () const override
   {
     return m_source;
   }
 
-  virtual std::string absolute_path () const;
+  std::string absolute_path () const override;
 
-  virtual std::string filename () const;
+  std::string filename () const override;
 
 private:
   //  no copying
@@ -319,7 +319,7 @@ public:
    *
    *  The destructor will automatically close the pipe.
    */
-  virtual ~InputPipe ();
+  ~InputPipe () override;
 
   /**
    *  @brief Read from the pipe
@@ -327,36 +327,36 @@ public:
    *  Implements the basic read method.
    *  Will throw a FilePReadErrorException if an error occurs.
    */
-  virtual size_t read (char *b, size_t n);
+  size_t read (char *b, size_t n) override;
 
   /**
    *  @brief Reset to the beginning of the file
    */
-  virtual void reset ();
+  void reset () override;
 
   /**
    *  @brief Closes the pipe
    *  This method will wait for the child process to terminate.
    */
-  virtual void close ();
+  void close () override;
 
   /**
    *  @brief Get the source specification (the file name)
    *
    *  Returns an empty string if no file name is available.
    */
-  virtual std::string source () const
+  std::string source () const override
   {
     return m_source;
   }
 
-  virtual std::string absolute_path () const
+  std::string absolute_path () const override
   {
     //  No source (in the sense of a file name) is available ..
     return std::string ();
   }
 
-  virtual std::string filename () const
+  std::string filename () const override
   {
     //  No source (in the sense of a file name) is available ..
     return std::string ();
@@ -645,30 +645,30 @@ public:
     return mp_delegate;
   }
 
-  virtual size_t read (char *b, size_t n);
+  size_t read (char *b, size_t n) override;
 
-  virtual void reset ()
+  void reset () override
   {
     m_inflating_stream.reset ();
     enter_inflate ();
   }
 
-  virtual void close ()
+  void close () override
   {
     m_inflating_stream.close ();
   }
 
-  virtual std::string source () const
+  std::string source () const override
   {
     return m_inflating_stream.source ();
   }
 
-  virtual std::string absolute_path () const
+  std::string absolute_path () const override
   {
     return m_inflating_stream.absolute_file_path ();
   }
 
-  virtual std::string filename () const
+  std::string filename () const override
   {
     return m_inflating_stream.filename ();
   }
@@ -890,7 +890,7 @@ public:
    *
    *  Implements the basic write method. 
    */
-  virtual void write (const char *b, size_t n)
+  void write (const char *b, size_t n) override
   {
     m_buffer.insert (m_buffer.end (), b, b + n);
   }
@@ -949,7 +949,7 @@ public:
    *
    *  Implements the basic write method. 
    */
-  virtual void write (const char *b, size_t n)
+  void write (const char *b, size_t n) override
   {
     m_stream.write (b, n);
   }
@@ -959,7 +959,7 @@ public:
    *
    *  Writing continues at that position after a seek.
    */
-  void seek (size_t s)
+  void seek (size_t s) override
   {
     m_stream.seekp (s);
   }
@@ -967,7 +967,7 @@ public:
   /**
    *  @brief Returns a value indicating whether that stream supports seek
    */
-  bool supports_seek () 
+  bool supports_seek () override 
   {
     return true;
   }
@@ -1026,14 +1026,14 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~OutputFileBase ();
+  ~OutputFileBase () override;
 
   /**
    *  @brief Seek to the specified position
    *
    *  Writing continues at that position after a seek.
    */
-  virtual void seek (size_t s);
+  void seek (size_t s) override;
 
   /**
    *  @brief Write to a file
@@ -1041,12 +1041,12 @@ public:
    *  Implements the basic write method.
    *  Will throw a FileWriteErrorException if an error occurs.
    */
-  virtual void write (const char *b, size_t n);
+  void write (const char *b, size_t n) override;
 
   /**
    *  @brief Unrolls the output
    */
-  virtual void reject ();
+  void reject () override;
 
   /**
    *  @brief Gets the actual path
@@ -1100,7 +1100,7 @@ public:
    *
    *  The destructor will automatically close the file.
    */
-  virtual ~OutputZLibFile ();
+  ~OutputZLibFile () override;
 
 protected:
   /**
@@ -1109,17 +1109,17 @@ protected:
    *  Implements the basic write method.
    *  Will throw a ZLibWriteErrorException if an error occurs.
    */
-  virtual void write_file (const char *b, size_t n);
+  void write_file (const char *b, size_t n) override;
 
   /**
    *  @brief The seek operation isn't implemented for zlib files
    */
-  virtual void seek_file (size_t /*s*/) { }
+  void seek_file (size_t /*s*/) override { }
 
   /**
    *  @brief Returns a value indicating whether this steam is compressing
    */
-  virtual bool is_compressing () const { return true; }
+  bool is_compressing () const override { return true; }
 
 private:
   //  No copying
@@ -1155,12 +1155,12 @@ public:
    *
    *  The destructor will automatically close the file.
    */
-  virtual ~OutputFile ();
+  ~OutputFile () override;
 
   /**
    *  @brief Returns a value indicating whether that stream supports seek
    */
-  virtual bool supports_seek ()
+  bool supports_seek () override
   {
     return true;
   }
@@ -1171,7 +1171,7 @@ protected:
    *
    *  Writing continues at that position after a seek.
    */
-  virtual void seek_file (size_t s);
+  void seek_file (size_t s) override;
 
   /**
    *  @brief Write to a file
@@ -1179,7 +1179,7 @@ protected:
    *  Implements the basic write method.
    *  Will throw a FileWriteErrorException if an error occurs.
    */
-  virtual void write_file (const char *b, size_t n);
+  void write_file (const char *b, size_t n) override;
 
 private:
   //  No copying
@@ -1216,7 +1216,7 @@ public:
    *
    *  The destructor will automatically close the pipe.
    */
-  virtual ~OutputPipe ();
+  ~OutputPipe () override;
 
   /**
    *  @brief Write to a file
@@ -1224,7 +1224,7 @@ public:
    *  Implements the basic write method.
    *  Will throw a FilePWriteErrorException if an error occurs.
    */
-  virtual void write (const char *b, size_t n);
+  void write (const char *b, size_t n) override;
 
 private:
   //  No copying

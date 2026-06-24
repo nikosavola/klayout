@@ -39,7 +39,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void begin_create_shapes (lay::CellViewRef &cv, const lay::LayerProperties &layer)
+  void begin_create_shapes (lay::CellViewRef &cv, const lay::LayerProperties &layer) override
   {
     if (f_begin_create_shapes.can_issue ()) {
       f_begin_create_shapes.issue<edt::EditorHooks, lay::CellViewRef &, const lay::LayerProperties &> (&edt::EditorHooks::begin_create_shapes, cv, layer);
@@ -48,7 +48,7 @@ public:
     }
   }
 
-  virtual void begin_new_shapes ()
+  void begin_new_shapes () override
   {
     if (f_begin_new_shapes.can_issue ()) {
       f_begin_new_shapes.issue<edt::EditorHooks> (&edt::EditorHooks::begin_new_shapes);
@@ -57,7 +57,7 @@ public:
     }
   }
 
-  virtual void create_shape (const db::Shape &shape, const db::CplxTrans &view_trans)
+  void create_shape (const db::Shape &shape, const db::CplxTrans &view_trans) override
   {
     if (f_create_shape.can_issue ()) {
       f_create_shape.issue<edt::EditorHooks, const db::Shape &, const db::CplxTrans &> (&edt::EditorHooks::create_shape, shape, view_trans);
@@ -66,7 +66,7 @@ public:
     }
   }
 
-  virtual void end_new_shapes ()
+  void end_new_shapes () override
   {
     if (f_end_new_shapes.can_issue ()) {
       f_end_new_shapes.issue<edt::EditorHooks> (&edt::EditorHooks::end_new_shapes);
@@ -75,7 +75,7 @@ public:
     }
   }
 
-  virtual void commit_shapes ()
+  void commit_shapes () override
   {
     if (f_commit_shapes.can_issue ()) {
       f_commit_shapes.issue<edt::EditorHooks> (&edt::EditorHooks::commit_shapes);
@@ -84,7 +84,7 @@ public:
     }
   }
 
-  virtual void end_create_shapes ()
+  void end_create_shapes () override
   {
     if (f_end_create_shapes.can_issue ()) {
       f_end_create_shapes.issue<edt::EditorHooks> (&edt::EditorHooks::end_create_shapes);
@@ -93,7 +93,7 @@ public:
     }
   }
 
-  virtual void begin_create_instances (lay::CellViewRef &cv)
+  void begin_create_instances (lay::CellViewRef &cv) override
   {
     if (f_begin_create_instances.can_issue ()) {
       f_begin_create_instances.issue<edt::EditorHooks, lay::CellViewRef &> (&edt::EditorHooks::begin_create_instances, cv);
@@ -102,7 +102,7 @@ public:
     }
   }
 
-  virtual void begin_new_instances ()
+  void begin_new_instances () override
   {
     if (f_begin_new_instances.can_issue ()) {
       f_begin_new_instances.issue<edt::EditorHooks> (&edt::EditorHooks::begin_new_instances);
@@ -111,7 +111,7 @@ public:
     }
   }
 
-  virtual void create_instance (const db::Instance &object, const db::CplxTrans &view_trans)
+  void create_instance (const db::Instance &object, const db::CplxTrans &view_trans) override
   {
     if (f_create_instance.can_issue ()) {
       f_create_instance.issue<edt::EditorHooks, const db::Instance &, const db::CplxTrans &> (&edt::EditorHooks::create_instance, object, view_trans);
@@ -120,7 +120,7 @@ public:
     }
   }
 
-  virtual void end_new_instances ()
+  void end_new_instances () override
   {
     if (f_end_new_instances.can_issue ()) {
       f_end_new_instances.issue<edt::EditorHooks> (&edt::EditorHooks::end_new_instances);
@@ -129,7 +129,7 @@ public:
     }
   }
 
-  virtual void commit_instances ()
+  void commit_instances () override
   {
     if (f_commit_instances.can_issue ()) {
       f_commit_instances.issue<edt::EditorHooks> (&edt::EditorHooks::commit_instances);
@@ -138,7 +138,7 @@ public:
     }
   }
 
-  virtual void end_create_instances ()
+  void end_create_instances () override
   {
     if (f_end_create_instances.can_issue ()) {
       f_end_create_instances.issue<edt::EditorHooks> (&edt::EditorHooks::end_create_instances);
@@ -147,7 +147,7 @@ public:
     }
   }
 
-  virtual void begin_edit (lay::CellViewRef &cv_ref)
+  void begin_edit (lay::CellViewRef &cv_ref) override
   {
     if (f_begin_edit.can_issue ()) {
       f_begin_edit.issue<edt::EditorHooks, lay::CellViewRef &> (&edt::EditorHooks::begin_edit, cv_ref);
@@ -156,7 +156,7 @@ public:
     }
   }
 
-  virtual void begin_edits ()
+  void begin_edits () override
   {
     if (f_begin_edits.can_issue ()) {
       f_begin_edits.issue<edt::EditorHooks> (&edt::EditorHooks::begin_edits);
@@ -165,7 +165,7 @@ public:
     }
   }
 
-  virtual void transformed (const lay::ObjectInstPath &object, const db::ICplxTrans &applied_trans, const db::CplxTrans &view_trans)
+  void transformed (const lay::ObjectInstPath &object, const db::ICplxTrans &applied_trans, const db::CplxTrans &view_trans) override
   {
     if (f_transformed.can_issue ()) {
       f_transformed.issue<edt::EditorHooks, const lay::ObjectInstPath &, const db::ICplxTrans &, const db::CplxTrans &> (&edt::EditorHooks::transformed, object, applied_trans, view_trans);
@@ -174,7 +174,7 @@ public:
     }
   }
 
-  virtual void modified (const lay::ObjectInstPath &object, const db::Shape &shape, const db::CplxTrans &view_trans)
+  void modified (const lay::ObjectInstPath &object, const db::Shape &shape, const db::CplxTrans &view_trans) override
   {
     if (f_modified.can_issue ()) {
       f_modified.issue<edt::EditorHooks, const lay::ObjectInstPath &, const db::Shape &, const db::CplxTrans &> (&edt::EditorHooks::modified, object, shape, view_trans);
@@ -183,7 +183,7 @@ public:
     }
   }
 
-  virtual void end_edits ()
+  void end_edits () override
   {
     if (f_end_edits.can_issue ()) {
       f_end_edits.issue<edt::EditorHooks> (&edt::EditorHooks::end_edits);
@@ -192,7 +192,7 @@ public:
     }
   }
 
-  virtual void commit_edit ()
+  void commit_edit () override
   {
     if (f_commit_edit.can_issue ()) {
       f_commit_edit.issue<edt::EditorHooks> (&edt::EditorHooks::commit_edit);
@@ -201,7 +201,7 @@ public:
     }
   }
 
-  virtual void end_edit ()
+  void end_edit () override
   {
     if (f_end_edit.can_issue ()) {
       f_end_edit.issue<edt::EditorHooks> (&edt::EditorHooks::end_edit);

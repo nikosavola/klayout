@@ -321,11 +321,11 @@ protected:
     m_tries = n;
   }
 
-  virtual void checkpoint ();
-  virtual void reset_counter ();
+  void checkpoint () override;
+  void reset_counter () override;
 
 private:
-  virtual void visit_cell (const db::Cell &cell, const db::Box &hit_box, const db::Box &scan_box, const db::DCplxTrans &vp, const db::ICplxTrans &t, int level);
+  void visit_cell (const db::Cell &cell, const db::Box &hit_box, const db::Box &scan_box, const db::DCplxTrans &vp, const db::ICplxTrans &t, int level) override;
 
   bool find_internal (LayoutViewBase *view,
                       unsigned int cv_index,
@@ -390,11 +390,11 @@ public:
     return m_founds.end ();
   }
 
-  virtual void checkpoint ();
-  virtual void reset_counter ();
+  void checkpoint () override;
+  void reset_counter () override;
 
 private:
-  virtual void visit_cell (const db::Cell &cell, const db::Box &hit_box, const db::Box &scan_box, const db::DCplxTrans &vp, const db::ICplxTrans &t, int level);
+  void visit_cell (const db::Cell &cell, const db::Box &hit_box, const db::Box &scan_box, const db::DCplxTrans &vp, const db::ICplxTrans &t, int level) override;
 
   bool find_internal (LayoutViewBase *view, unsigned int cv_index, const db::DCplxTrans &trans_mu, const db::DBox &region_mu);
   bool consider_cell (const db::Cell &cell) const;

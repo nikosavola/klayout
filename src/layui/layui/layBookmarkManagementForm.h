@@ -56,7 +56,7 @@ public:
     return m_bookmarks;
   }
 
-  virtual void accept ();
+  void accept () override;
 
 public slots:
   void delete_pressed ();

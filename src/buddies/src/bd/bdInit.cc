@@ -69,10 +69,10 @@ class ProgressAdaptor
 {
 public:
   ProgressAdaptor (int verbosity);
-  virtual ~ProgressAdaptor ();
+  ~ProgressAdaptor () override;
 
-  virtual void trigger (tl::Progress *progress);
-  virtual void yield (tl::Progress *progress);
+  void trigger (tl::Progress *progress) override;
+  void yield (tl::Progress *progress) override;
 
 private:
   int m_verbosity;

@@ -75,7 +75,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  virtual void put (const db::Polygon &polygon) 
+  void put (const db::Polygon &polygon) override 
   {
     if (m_prop_id) {
       mp_shapes->insert (db::PolygonWithProperties (polygon, m_prop_id));
@@ -87,7 +87,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  virtual void start () 
+  void start () override 
   { 
     if (m_clear_shapes) {
       mp_shapes->clear ();
@@ -127,7 +127,7 @@ public:
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void put (const db::Edge &edge) 
+  void put (const db::Edge &edge) override 
   {
     mp_shapes->insert (edge);
     if (mp_chained) {
@@ -138,7 +138,7 @@ public:
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void put (const db::Edge &edge, int tag)
+  void put (const db::Edge &edge, int tag) override
   {
     if (m_tag == 0 || m_tag == tag) {
       mp_shapes->insert (edge);
@@ -151,7 +151,7 @@ public:
   /**
    *  @brief Implementation of the PolygonSink interface
    */
-  virtual void start () 
+  void start () override 
   { 
     if (m_clear_shapes) {
       mp_shapes->clear ();

@@ -89,12 +89,12 @@ public:
     m_focus_dist = (widget->cam_position () - hp).length ();
   }
 
-  virtual ~D25PanInteractionMode ()
+  ~D25PanInteractionMode () override
   {
     //  .. nothing yet ..
   }
 
-  virtual void mouse_move (QMouseEvent *event)
+  void mouse_move (QMouseEvent *event) override
   {
     QPoint d = event->pos () - m_start_pos;
     double f = tan ((view ()->cam_fov () / 2) / 180.0 * M_PI) * m_focus_dist * 2.0 / double (view ()->height ());
@@ -128,12 +128,12 @@ public:
     m_start_cam_elevation = widget->cam_elevation ();
   }
 
-  virtual ~D25Rotate2DInteractionMode ()
+  ~D25Rotate2DInteractionMode () override
   {
     //  .. nothing yet ..
   }
 
-  virtual void mouse_move (QMouseEvent *event)
+  void mouse_move (QMouseEvent *event) override
   {
     //  fixed focus point for rotation
     double focus_dist = 2.0;
@@ -167,12 +167,12 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual ~D25RotateAzimuthInteractionMode ()
+  ~D25RotateAzimuthInteractionMode () override
   {
     //  .. nothing yet ..
   }
 
-  virtual void mouse_move (QMouseEvent *event)
+  void mouse_move (QMouseEvent *event) override
   {
     //  simple change of azimuth only - with center in the middle
 

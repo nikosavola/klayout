@@ -66,7 +66,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~MarkerBrowserPage ();
+  ~MarkerBrowserPage () override;
 
   /**
    *  @brief Sets the plugin root object for this object
@@ -242,7 +242,7 @@ private:
 
   void release_markers ();
   void update_marker_list (int selection_mode);
-  bool eventFilter (QObject *watched, QEvent *event);
+  bool eventFilter (QObject *watched, QEvent *event) override;
   bool adv_tree (bool up);
   bool adv_list (bool up);
   void mark_visited (bool visited);

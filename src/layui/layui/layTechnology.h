@@ -57,7 +57,7 @@ public:
   /**
    *  @brief The destructor
    */
-  virtual ~TechnologyComponentEditor ()
+  ~TechnologyComponentEditor () override
   {
     // .. nothing yet ..
   }

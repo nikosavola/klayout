@@ -205,24 +205,24 @@ public:
   }
 
 protected:
-  virtual void write (const db::Point &obj,                       const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::PointWithProperties &obj,         const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::Box &obj,                         const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::BoxWithProperties &obj,           const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::Edge &obj,                        const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::EdgeWithProperties &obj,          const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::EdgePair &obj,                    const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::EdgePairWithProperties &obj,      const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::Polygon &obj,                     const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::PolygonWithProperties &obj,       const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::SimplePolygon &obj,               const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::SimplePolygonWithProperties &obj, const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::Path &obj,                        const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::PathWithProperties &obj,          const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::Text &obj,                        const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::TextWithProperties &obj,          const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::CellInstArray &obj,               const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
-  virtual void write (const db::CellInstArrayWithProperties &obj, const RegularArray &array, const disp_vector &irregular) { store (obj, array, irregular); }
+  void write (const db::Point &obj,                       const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::PointWithProperties &obj,         const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::Box &obj,                         const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::BoxWithProperties &obj,           const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::Edge &obj,                        const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::EdgeWithProperties &obj,          const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::EdgePair &obj,                    const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::EdgePairWithProperties &obj,      const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::Polygon &obj,                     const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::PolygonWithProperties &obj,       const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::SimplePolygon &obj,               const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::SimplePolygonWithProperties &obj, const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::Path &obj,                        const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::PathWithProperties &obj,          const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::Text &obj,                        const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::TextWithProperties &obj,          const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::CellInstArray &obj,               const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
+  void write (const db::CellInstArrayWithProperties &obj, const RegularArray &array, const disp_vector &irregular) override { store (obj, array, irregular); }
 
 private:
   compressed_container<db::Point> m_points;

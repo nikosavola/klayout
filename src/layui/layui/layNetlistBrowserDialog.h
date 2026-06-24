@@ -56,7 +56,7 @@ class LAYUI_PUBLIC NetlistBrowserDialog
 
 public:
   NetlistBrowserDialog (lay::Dispatcher *root, lay::LayoutViewBase *view);
-  ~NetlistBrowserDialog ();
+  ~NetlistBrowserDialog () override;
 
   void load (int lay_index, int cv_index);
 
@@ -109,17 +109,17 @@ public:
 
 private:
   //  implementation of the lay::Browser interface
-  virtual void activated ();
-  virtual void deactivated ();
+  void activated () override;
+  void deactivated () override;
 
-  virtual bool configure (const std::string &name, const std::string &value);
+  bool configure (const std::string &name, const std::string &value) override;
 
-  virtual bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio);
-  virtual lay::ViewService *view_service_interface ();
+  bool mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  bool mouse_click_event (const db::DPoint &p, unsigned int buttons, bool prio) override;
+  lay::ViewService *view_service_interface () override;
 
   //  implementation of the lay::Plugin interface
-  virtual void menu_activated (const std::string &symbol);
+  void menu_activated (const std::string &symbol) override;
 
   void cellviews_changed ();
   void cellview_changed (int index);

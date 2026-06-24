@@ -118,7 +118,7 @@ public:
 #endif
   }
 
-  QSize sizeHint () const
+  QSize sizeHint () const override
   {
     int w = int (m_tolerance_labels.size ()) * (m_column_width + m_spacing) + m_first_column_width;
     int col = std::max (1, width () / w);
@@ -257,7 +257,7 @@ public:
     update ();
   }
 
-  void paintEvent (QPaintEvent * /*ev*/)
+  void paintEvent (QPaintEvent * /*ev*/) override
   {
     QPainter painter (this);
 

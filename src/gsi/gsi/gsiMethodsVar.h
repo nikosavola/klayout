@@ -62,22 +62,22 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(MethodVoid) (*this);
   }
 
 #if _COUNT != 0
-  virtual void call (void *cls, SerialArgs &args, SerialArgs &) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &) const 
 #else
-  virtual void call (void *cls, SerialArgs &, SerialArgs &) const 
-#endif
+  void call (void *cls, SerialArgs &, SerialArgs &) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS;
@@ -105,22 +105,22 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(ConstMethodVoid) (*this);
   }
 
 #if _COUNT != 0
-  virtual void call (void *cls, SerialArgs &args, SerialArgs &) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &) const 
 #else
-  virtual void call (void *cls, SerialArgs &, SerialArgs &) const 
-#endif
+  void call (void *cls, SerialArgs &, SerialArgs &) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS;
@@ -148,22 +148,22 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(ExtMethodVoid) (*this);
   }
 
 #if _COUNT != 0
-  virtual void call (void *cls, SerialArgs &args, SerialArgs &) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &) const 
 #else
-  virtual void call (void *cls, SerialArgs &, SerialArgs &) const 
-#endif
+  void call (void *cls, SerialArgs &, SerialArgs &) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS;
@@ -193,22 +193,22 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(StaticMethodVoid) (*this);
   }
 
 #if _COUNT != 0
-  virtual void call (void *, SerialArgs &args, SerialArgs &) const 
+  void call (void *, SerialArgs &args, SerialArgs &) const 
 #else
-  virtual void call (void *, SerialArgs &, SerialArgs &) const 
-#endif
+  void call (void *, SerialArgs &, SerialArgs &) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS;
@@ -236,23 +236,23 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<R, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(Method) (*this);
   }
 
 #if _COUNT != 0
-  virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  virtual void call (void *cls, SerialArgs &, SerialArgs &ret) const 
-#endif
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS;
@@ -280,23 +280,23 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<R, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(ConstMethod) (*this);
   }
 
 #if _COUNT != 0
-  virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  virtual void call (void *cls, SerialArgs &, SerialArgs &ret) const 
-#endif
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS;
@@ -324,23 +324,23 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<R, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(ExtMethod) (*this);
   }
 
 #if _COUNT != 0
-  virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  virtual void call (void *cls, SerialArgs &, SerialArgs &ret) const 
-#endif
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS;
@@ -368,23 +368,23 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<R, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(StaticMethod) (*this);
   }
 
 #if _COUNT != 0
-  virtual void call (void *, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *, SerialArgs &args, SerialArgs &ret) const 
 #else
-  virtual void call (void *, SerialArgs &, SerialArgs &ret) const 
-#endif
+  void call (void *, SerialArgs &, SerialArgs &ret) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS;
@@ -418,14 +418,14 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<iter_adaptor_type, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(MethodPtrIter) (*this);
   }
@@ -433,8 +433,8 @@ public:
 #if _COUNT != 0
   virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  virtual void call (void *cls, SerialArgs &, SerialArgs &ret) const 
-#endif
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS
@@ -565,14 +565,14 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<iter_adaptor_type, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(ConstMethodPtrConstIter) (*this);
   }
@@ -580,8 +580,8 @@ public:
 #if _COUNT != 0
   virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  virtual void call (void *cls, SerialArgs &, SerialArgs &ret) const 
-#endif
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS
@@ -663,14 +663,14 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<iter_adaptor_type, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(ExtMethodPtrConstIter) (*this);
   }
@@ -678,8 +678,8 @@ public:
 #if _COUNT != 0
   virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  virtual void call (void *cls, SerialArgs &, SerialArgs &ret) const 
-#endif
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS
@@ -712,23 +712,23 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<iter_adaptor_type, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(StaticMethodPtrIter) (*this);
   }
 
 #if _COUNT != 0
-  virtual void call (void * /*cls*/, SerialArgs &args, SerialArgs &ret) const
+  void call (void * /*cls*/, SerialArgs &args, SerialArgs &ret) const
 #else
-  virtual void call (void * /*cls*/, SerialArgs &, SerialArgs &ret) const
-#endif
+  void call (void * /*cls*/, SerialArgs &, SerialArgs &ret) const
+#endif override
   {
     this->mark_called ();
     _GETARGVARS
@@ -761,23 +761,23 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<iter_adaptor_type, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(StaticMethodPtrConstIter) (*this);
   }
 
 #if _COUNT != 0
-  virtual void call (void * /*cls*/, SerialArgs &args, SerialArgs &ret) const
+  void call (void * /*cls*/, SerialArgs &args, SerialArgs &ret) const
 #else
-  virtual void call (void * /*cls*/, SerialArgs &, SerialArgs &ret) const
-#endif
+  void call (void * /*cls*/, SerialArgs &, SerialArgs &ret) const
+#endif override
   {
     this->mark_called ();
     _GETARGVARS
@@ -811,14 +811,14 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<iter_adaptor_type, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(MethodBiIter) (*this);
   }
@@ -826,8 +826,8 @@ public:
 #if _COUNT != 0
   virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  virtual void call (void *cls, SerialArgs &, SerialArgs &ret) const 
-#endif
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS
@@ -859,23 +859,23 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<iter_adaptor_type, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(ConstMethodBiIter) (*this);
   }
 
 #if _COUNT != 0
-  virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  virtual void call (void *cls, SerialArgs &, SerialArgs &ret) const 
-#endif
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS
@@ -907,23 +907,23 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<iter_adaptor_type, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(ExtMethodBiIter) (*this);
   }
 
 #if _COUNT != 0
-  virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  virtual void call (void *cls, SerialArgs &, SerialArgs &ret) const 
-#endif
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS
@@ -957,23 +957,23 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<iter_adaptor_type, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(StaticMethodBiIter) (*this);
   }
 
 #if _COUNT != 0
-  virtual void call (void *, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *, SerialArgs &args, SerialArgs &ret) const 
 #else
-  virtual void call (void *, SerialArgs &, SerialArgs &ret) const 
-#endif
+  void call (void *, SerialArgs &, SerialArgs &ret) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS
@@ -1007,14 +1007,14 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<iter_adaptor_type, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(MethodFreeIter) (*this);
   }
@@ -1022,8 +1022,8 @@ public:
 #if _COUNT != 0
   virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  virtual void call (void *cls, SerialArgs &, SerialArgs &ret) const 
-#endif
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS
@@ -1054,23 +1054,23 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<iter_adaptor_type, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(ConstMethodFreeIter) (*this);
   }
 
 #if _COUNT != 0
-  virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  virtual void call (void *cls, SerialArgs &, SerialArgs &ret) const 
-#endif
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS
@@ -1101,23 +1101,23 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<iter_adaptor_type, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(ExtMethodFreeIter) (*this);
   }
 
 #if _COUNT != 0
-  virtual void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
+  void call (void *cls, SerialArgs &args, SerialArgs &ret) const 
 #else
-  virtual void call (void *cls, SerialArgs &, SerialArgs &ret) const 
-#endif
+  void call (void *cls, SerialArgs &, SerialArgs &ret) const 
+#endif override
   {
     this->mark_called ();
     _GETARGVARS
@@ -1148,23 +1148,23 @@ public:
     return this;
   }
 
-  void initialize ()
+  void initialize () override
   {
     this->clear ();
     _ADDARGS
     this->template set_return<iter_adaptor_type, Transfer> ();
   }
 
-  virtual MethodBase *clone () const 
+  MethodBase *clone () const override 
   {
     return new _NAME(StaticMethodFreeIter) (*this);
   }
 
 #if _COUNT != 0
-  virtual void call (void * /*cls*/, SerialArgs &args, SerialArgs &ret) const
+  void call (void * /*cls*/, SerialArgs &args, SerialArgs &ret) const
 #else
-  virtual void call (void * /*cls*/, SerialArgs &, SerialArgs &ret) const
-#endif
+  void call (void * /*cls*/, SerialArgs &, SerialArgs &ret) const
+#endif override
   {
     this->mark_called ();
     _GETARGVARS

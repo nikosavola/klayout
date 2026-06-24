@@ -41,7 +41,7 @@ public:
   void set_points (const db::DPoint &begin, const db::DPoint &end);
 
 private:
-  virtual void render (const Viewport &vp, ViewObjectCanvas &canvas);
+  void render (const Viewport &vp, ViewObjectCanvas &canvas) override;
 
   db::DPoint m_p1, m_p2;
   unsigned int m_color;

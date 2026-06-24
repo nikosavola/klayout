@@ -150,17 +150,17 @@ public:
   /**
    *  @brief Destructor
    */
-  ~LayoutView ();
+  ~LayoutView () override;
 
   /**
    *  @brief Adds a notification
    */
-  virtual void add_notification (const LayoutViewNotification &notification);
+  void add_notification (const LayoutViewNotification &notification) override;
 
   /**
    *  @brief Removes a notification
    */
-  virtual void remove_notification (const LayoutViewNotification &notification);
+  void remove_notification (const LayoutViewNotification &notification) override;
 
   /**
    *  @brief Adds a toolbox widget
@@ -168,12 +168,12 @@ public:
    *  This will take ownership over the EditorOptionsPage object until
    *  it is re-parented.
    */
-  virtual void add_toolbox_widget (EditorOptionsPage *toolbox_widget);
+  void add_toolbox_widget (EditorOptionsPage *toolbox_widget) override;
 
   /**
    *  @brief Gets the widget object that view is embedded in
    */
-  QWidget *widget ();
+  QWidget *widget () override;
 
   /**
    *  @brief Makes this view the current one
@@ -198,22 +198,22 @@ public:
    *  This reimplementation of the lay::Editables interface additionally
    *  looks for content providers in the tree views for example.
    */
-  virtual bool has_selection ();
+  bool has_selection () override;
 
   /**
    *  @brief Displays a status message
    */
-  virtual void message (const std::string &s = "", int timeout = 10, int priority = 0);
+  void message (const std::string &s = "", int timeout = 10, int priority = 0) override;
 
   /**
    *  @brief Sets the keyboard focus to the view
    */
-  virtual void set_focus ();
+  void set_focus () override;
 
   /**
    *  @brief Select a certain mode (by index)
    */
-  virtual void mode (int m);
+  void mode (int m) override;
 
   /**
    *  @brief Gets the current mode
@@ -229,7 +229,7 @@ public:
    *  Switches the mode on application level. Use this method to initiate
    *  a mode switch from the view.
    */
-  virtual void switch_mode (int m);
+  void switch_mode (int m) override;
 
   /**
    *  @brief Updates the menu for the given view
@@ -242,7 +242,7 @@ public:
    *
    *  If plugins already exist, they are deleted and created again
    */
-  virtual void create_plugins (const lay::PluginDeclaration *except_this = nullptr);
+  void create_plugins (const lay::PluginDeclaration *except_this = nullptr) override;
 
   /**
    *  @brief Sets the currently active layer by layer properties and cell view index
@@ -263,7 +263,7 @@ public:
    *  The active layer is the one that is active in the layer
    *  browser panel. This method will also select this layer.
    */
-  virtual void set_current_layer (const lay::LayerPropertiesConstIterator &l);
+  void set_current_layer (const lay::LayerPropertiesConstIterator &l) override;
 
   /**
    *  @brief Retrieve the index of the currently active layer
@@ -272,29 +272,29 @@ public:
    *  browser panel.
    *  This method returns a null iterator, if no layer is active.
    */
-  virtual lay::LayerPropertiesConstIterator current_layer () const;
+  lay::LayerPropertiesConstIterator current_layer () const override;
 
   /**
    *  @brief Return the layers that are selected in the layer browser
    *
    *  Returns an empty list if no layer is selected.
    */
-  std::vector<lay::LayerPropertiesConstIterator> selected_layers () const;
+  std::vector<lay::LayerPropertiesConstIterator> selected_layers () const override;
 
   /**
    *  @brief Sets the layers that are selected in the layer browser
    */
-  void set_selected_layers (const std::vector<lay::LayerPropertiesConstIterator> &sel);
+  void set_selected_layers (const std::vector<lay::LayerPropertiesConstIterator> &sel) override;
 
   /**
    *  @brief Get the index of the active cellview (shown in hierarchy browser)
    */
-  int active_cellview_index () const;
+  int active_cellview_index () const override;
 
   /**
    *  @brief Select a certain cellview for the active one
    */
-  virtual void set_active_cellview_index (int index);
+  void set_active_cellview_index (int index) override;
 
   /**
    *  @brief Cell paths of the selected cells
@@ -302,7 +302,7 @@ public:
    *  The current cell is the one highlighted in the browser with the focus rectangle. The
    *  current path is returned for the cellview given by cv_index.
    */
-  void selected_cells_paths (int cv_index, std::vector<cell_path_type> &paths) const;
+  void selected_cells_paths (int cv_index, std::vector<cell_path_type> &paths) const override;
 
   /**
    *  @brief Cell path of the current cell
@@ -310,7 +310,7 @@ public:
    *  The current cell is the one highlighted in the browser with the focus rectangle. The
    *  current path is returned for the cellview given by cv_index.
    */
-  void current_cell_path (int cv_index, cell_path_type &path) const;
+  void current_cell_path (int cv_index, cell_path_type &path) const override;
 
   /**
    *  @brief Cell path of the current cell in the active cellview
@@ -328,7 +328,7 @@ public:
    *  The current cell is the one highlighted in the browser with the focus rectangle. The
    *  cell given by the path is highlighted and scrolled into view.
    */
-  virtual void set_current_cell_path (int cv_index, const cell_path_type &path);
+  void set_current_cell_path (int cv_index, const cell_path_type &path) override;
 
   /**
    *  @brief Internal method: check, if the layer tree is and an consistent state.
@@ -338,12 +338,12 @@ public:
    *  HINT: for the layout this is solved more consistently with the "under construction" attribute
    *  of the layout. There is no equivalent object for the layer tree currently.
    */
-  bool layer_model_updated ();
+  bool layer_model_updated () override;
 
   /**
    *  @brief Returns true, if the layer source shall be shown always in the layer properties tree
    */
-  virtual bool always_show_source () const
+  bool always_show_source () const override
   {
     return m_always_show_source;
   }
@@ -351,7 +351,7 @@ public:
   /**
    *  @brief Returns true, if the layer/datatype shall be shown always in the layer properties tree
    */
-  virtual bool always_show_ld () const
+  bool always_show_ld () const override
   {
     return m_always_show_ld;
   }
@@ -359,7 +359,7 @@ public:
   /**
    *  @brief Returns true, if the layout index shall be shown always in the layer properties tree
    */
-  virtual bool always_show_layout_index () const
+  bool always_show_layout_index () const override
   {
     return m_always_show_layout_index;
   }
@@ -367,7 +367,7 @@ public:
   /**
    *  @brief Indicates the current position
    */
-  virtual void current_pos (double x, double y);
+  void current_pos (double x, double y) override;
 
   /**
    *  @brief Asks for a bookmark name and bookmark the current view under this name
@@ -382,22 +382,22 @@ public:
   /**
    *  @brief Open the RDB browser for a given database and associated cv index
    */
-  virtual void open_rdb_browser (int rdb_index, int cv_index);
+  void open_rdb_browser (int rdb_index, int cv_index) override;
 
   /**
    *  @brief Open the L2NDB browser for a given database and associated cv index
    */
-  virtual void open_l2ndb_browser (int l2ndb_index, int cv_index);
+  void open_l2ndb_browser (int l2ndb_index, int cv_index) override;
 
   /**
    *  @brief Gets the editor options pages
    */
-  virtual lay::EditorOptionsPageCollection *editor_options_pages ();
+  lay::EditorOptionsPageCollection *editor_options_pages () override;
 
   /**
    *  @brief Gets the layer control panel
    */
-  virtual lay::LayerControlPanel *control_panel ()
+  lay::LayerControlPanel *control_panel () override
   {
     return mp_control_panel;
   }
@@ -405,7 +405,7 @@ public:
   /**
    *  @brief Gets the hierarchy panel
    */
-  virtual lay::HierarchyControlPanel *hierarchy_panel ()
+  lay::HierarchyControlPanel *hierarchy_panel () override
   {
     return mp_hierarchy_panel;
   }
@@ -432,7 +432,7 @@ public:
    *  This reimplementation of the lay::Editables interface additionally
    *  looks for copy providers in the tree views for example.
    */
-  virtual void copy ();
+  void copy () override;
 
   /**
    *  @brief Cuts to clipboard
@@ -440,7 +440,7 @@ public:
    *  This reimplementation of the lay::Editables interface additionally
    *  looks for cut & copy providers in the tree views for example.
    */
-  virtual void cut ();
+  void cut () override;
 
   /**
    *  @brief An event signalling that the view is going to close
@@ -484,12 +484,12 @@ public:
   /**
    *  @brief Cancels all edit operations but maintains selection
    */
-  void cancel_edits ();
+  void cancel_edits () override;
 
   /**
    *  @brief Finishes all edit operations and maintains selection
    */
-  void finish_edits ();
+  void finish_edits () override;
 
   /**
    *  @brief Select all levels of hierarchy available
@@ -621,7 +621,7 @@ public:
     LayoutViewBase::redraw_cell_boxes ();
   }
 
-  void deactivate_all_browsers ();
+  void deactivate_all_browsers () override;
 
   void close ();
 
@@ -686,31 +686,31 @@ protected:
   void activate ();
   void deactivate ();
 
-  virtual bool configure (const std::string &name, const std::string &value);
-  virtual void config_finalize ();
+  bool configure (const std::string &name, const std::string &value) override;
+  void config_finalize () override;
 
-  virtual void finish ();
-  virtual tl::Color default_background_color ();
-  virtual void do_set_background_color (tl::Color color, tl::Color contrast);
-  virtual void do_paste ();
-  virtual void begin_layer_updates ();
-  virtual void end_layer_updates ();
-  virtual void update_content_for_cv (int cv_index);
-  virtual void do_set_no_stipples (bool no_stipples);
-  virtual void do_set_phase (int phase);
-  virtual bool set_hier_levels_basic (std::pair<int, int> l);
-  virtual void do_change_active_cellview ();
-  virtual bool is_activated () const;
-  virtual void bookmarks_changed ();
-  virtual void show_properties ();
+  void finish () override;
+  tl::Color default_background_color () override;
+  void do_set_background_color (tl::Color color, tl::Color contrast) override;
+  void do_paste () override;
+  void begin_layer_updates () override;
+  void end_layer_updates () override;
+  void update_content_for_cv (int cv_index) override;
+  void do_set_no_stipples (bool no_stipples) override;
+  void do_set_phase (int phase) override;
+  bool set_hier_levels_basic (std::pair<int, int> l) override;
+  void do_change_active_cellview () override;
+  bool is_activated () const override;
+  void bookmarks_changed () override;
+  void show_properties () override;
 
   //  overrides Editables method to display a message
-  void signal_selection_changed ();
+  void signal_selection_changed () override;
 
-  virtual void emit_edits_enabled_changed ();
-  virtual void emit_title_changed ();
-  virtual void emit_dirty_changed ();
-  virtual void emit_layer_order_changed ();
+  void emit_edits_enabled_changed () override;
+  void emit_title_changed () override;
+  void emit_dirty_changed () override;
+  void emit_layer_order_changed () override;
 
 private:
   using LayoutViewBase::ui;
@@ -764,7 +764,7 @@ public:
   /**
    *  @brief Destructor
    */
-  ~LayoutViewWidget ();
+  ~LayoutViewWidget () override;
 
   /**
    *  @brief Adds a notification
@@ -795,10 +795,10 @@ public:
     return mp_view;
   }
 
-  virtual QSize sizeHint () const;
-  virtual bool eventFilter(QObject *obj, QEvent *event);
-  virtual void showEvent (QShowEvent *);
-  virtual void hideEvent (QHideEvent *);
+  QSize sizeHint () const override;
+  bool eventFilter(QObject *obj, QEvent *event) override;
+  void showEvent (QShowEvent *) override;
+  void hideEvent (QHideEvent *) override;
 
   void emit_title_changed (lay::LayoutView *view) { emit title_changed (view); }
   void emit_dirty_changed (lay::LayoutView *view) { emit dirty_changed (view); }
@@ -899,7 +899,7 @@ private:
   void view_deleted (lay::LayoutView *view);
   void notification_action (const LayoutViewNotification &notification, const std::string &action);
 
-  void resizeEvent (QResizeEvent *event);
+  void resizeEvent (QResizeEvent *event) override;
 
   struct CompareNotificationPointers
   {

@@ -62,14 +62,14 @@ public:
     : m_d (dim, dim), mp_result (nullptr), mp_result_wp (&result_wp)
   { }
 
-  virtual void make_point (const db::Point &pt, const db::Edge &, const db::Edge &) const
+  void make_point (const db::Point &pt, const db::Edge &, const db::Edge &) const override
   {
     if (mp_result) {
       mp_result->push_back (db::Polygon (db::Box (pt - m_d, pt + m_d)));
     }
   }
 
-  virtual void make_point (const db::Point &pt, const db::Edge &, const db::Edge &, db::properties_id_type prop_id) const
+  void make_point (const db::Point &pt, const db::Edge &, const db::Edge &, db::properties_id_type prop_id) const override
   {
     if (mp_result_wp) {
       mp_result_wp->push_back (db::PolygonWithProperties (db::Polygon (db::Box (pt - m_d, pt + m_d)), prop_id));
@@ -97,14 +97,14 @@ public:
     : mp_result (nullptr), mp_result_wp (&result)
   { }
 
-  virtual void make_point (const db::Point &pt, const db::Edge &, const db::Edge &) const
+  void make_point (const db::Point &pt, const db::Edge &, const db::Edge &) const override
   {
     if (mp_result) {
       mp_result->push_back (db::Edge (pt, pt));
     }
   }
 
-  virtual void make_point (const db::Point &pt, const db::Edge &, const db::Edge &, db::properties_id_type prop_id) const
+  void make_point (const db::Point &pt, const db::Edge &, const db::Edge &, db::properties_id_type prop_id) const override
   {
     if (mp_result_wp) {
       mp_result_wp->push_back (db::EdgeWithProperties (db::Edge (pt, pt), prop_id));
@@ -132,14 +132,14 @@ public:
     : mp_result (nullptr), mp_result_wp (&result)
   { }
 
-  virtual void make_point (const db::Point &, const db::Edge &e1, const db::Edge &e2) const
+  void make_point (const db::Point &, const db::Edge &e1, const db::Edge &e2) const override
   {
     if (mp_result) {
       mp_result->push_back (db::EdgePair (e1, e2));
     }
   }
 
-  virtual void make_point (const db::Point &, const db::Edge &e1, const db::Edge &e2, db::properties_id_type prop_id) const
+  void make_point (const db::Point &, const db::Edge &e1, const db::Edge &e2, db::properties_id_type prop_id) const override
   {
     if (mp_result_wp) {
       mp_result_wp->push_back (db::EdgePairWithProperties (db::EdgePair (e1, e2), prop_id));
@@ -180,16 +180,16 @@ public:
     //  .. nothing yet ..
   }
 
-  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const
+  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const override
   {
     detect_corners (poly, CornerRectDelivery (m_dim, result));
   }
 
-  virtual const TransformationReducer *vars () const { return &m_vars; }
-  virtual bool result_is_merged () const { return false; } //  overlaps may happen
-  virtual bool result_must_not_be_merged () const { return false; }
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool wants_variants () const { return false; }
+  const TransformationReducer *vars () const override { return &m_vars; }
+  bool result_is_merged () const override { return false; } //  overlaps may happen
+  bool result_must_not_be_merged () const override { return false; }
+  bool requires_raw_input () const override { return false; }
+  bool wants_variants () const override { return false; }
 
 private:
   db::Coord m_dim;
@@ -209,16 +209,16 @@ public:
     //  .. nothing yet ..
   }
 
-  void process (const db::PolygonWithProperties &poly, std::vector<db::EdgeWithProperties> &result) const
+  void process (const db::PolygonWithProperties &poly, std::vector<db::EdgeWithProperties> &result) const override
   {
     detect_corners (poly, CornerDotDelivery (result));
   }
 
-  virtual const TransformationReducer *vars () const { return nullptr; }
-  virtual bool result_is_merged () const { return false; }
-  virtual bool result_must_not_be_merged () const { return true; }  //  to preserve dots
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool wants_variants () const { return false; }
+  const TransformationReducer *vars () const override { return nullptr; }
+  bool result_is_merged () const override { return false; }
+  bool result_must_not_be_merged () const override { return true; }  //  to preserve dots
+  bool requires_raw_input () const override { return false; }
+  bool wants_variants () const override { return false; }
 };
 
 /**
@@ -234,16 +234,16 @@ public:
     //  .. nothing yet ..
   }
 
-  void process (const db::PolygonWithProperties &poly, std::vector<db::EdgePairWithProperties> &result) const
+  void process (const db::PolygonWithProperties &poly, std::vector<db::EdgePairWithProperties> &result) const override
   {
     detect_corners (poly, CornerEdgePairDelivery (result));
   }
 
-  virtual const TransformationReducer *vars () const { return nullptr; }
-  virtual bool result_is_merged () const { return false; }
-  virtual bool result_must_not_be_merged () const { return true; }  //  to preserve dots
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool wants_variants () const { return false; }
+  const TransformationReducer *vars () const override { return nullptr; }
+  bool result_is_merged () const override { return false; }
+  bool result_must_not_be_merged () const override { return true; }  //  to preserve dots
+  bool requires_raw_input () const override { return false; }
+  bool wants_variants () const override { return false; }
 };
 
 // -----------------------------------------------------------------------------------
@@ -261,13 +261,13 @@ public:
     //  .. nothing yet ..
   }
 
-  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const;
+  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const override;
 
-  virtual const TransformationReducer *vars () const { return nullptr; }
-  virtual bool result_is_merged () const { return false; }
-  virtual bool result_must_not_be_merged () const { return false; }
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool wants_variants () const { return false; }  //  variants are too common, so don't do this
+  const TransformationReducer *vars () const override { return nullptr; }
+  bool result_is_merged () const override { return false; }
+  bool result_must_not_be_merged () const override { return false; }
+  bool requires_raw_input () const override { return false; }
+  bool wants_variants () const override { return false; }  //  variants are too common, so don't do this
 };
 
 /**
@@ -285,13 +285,13 @@ public:
     //  .. nothing yet ..
   }
 
-  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const;
+  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const override;
 
-  virtual const TransformationReducer *vars () const;
-  virtual bool result_is_merged () const { return false; }
-  virtual bool result_must_not_be_merged () const { return false; }
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool wants_variants () const { return false; }  //  variants are too common, so don't do this
+  const TransformationReducer *vars () const override;
+  bool result_is_merged () const override { return false; }
+  bool result_must_not_be_merged () const override { return false; }
+  bool requires_raw_input () const override { return false; }
+  bool wants_variants () const override { return false; }  //  variants are too common, so don't do this
 
 private:
   double m_fx1, m_fy1, m_fx2, m_fy2;
@@ -317,13 +317,13 @@ public:
     //  .. nothing yet ..
   }
 
-  void process (const db::PolygonWithProperties &poly, std::vector<db::EdgeWithProperties> &result) const;
+  void process (const db::PolygonWithProperties &poly, std::vector<db::EdgeWithProperties> &result) const override;
 
-  virtual const TransformationReducer *vars () const;
-  virtual bool result_is_merged () const { return false; }
-  virtual bool result_must_not_be_merged () const;
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool wants_variants () const { return false; }  //  variants are too common, so don't do this
+  const TransformationReducer *vars () const override;
+  bool result_is_merged () const override { return false; }
+  bool result_must_not_be_merged () const override;
+  bool requires_raw_input () const override { return false; }
+  bool wants_variants () const override { return false; }  //  variants are too common, so don't do this
 
 private:
   double m_fx1, m_fy1, m_fx2, m_fy2;
@@ -343,7 +343,7 @@ public:
 
   PolygonToEdgeProcessor (EdgeMode mode = All);
 
-  void process (const db::PolygonWithProperties &poly, std::vector<db::EdgeWithProperties> &result) const;
+  void process (const db::PolygonWithProperties &poly, std::vector<db::EdgeWithProperties> &result) const override;
 
 private:
   EdgeMode m_mode;
@@ -362,13 +362,13 @@ public:
     //  .. nothing yet ..
   }
 
-  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const;
+  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const override;
 
-  virtual const TransformationReducer *vars () const { return &m_vars; }
-  virtual bool result_is_merged () const { return false; }
-  virtual bool result_must_not_be_merged () const { return true; }  //  would spoil the decomposition otherwise
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool wants_variants () const { return true; }
+  const TransformationReducer *vars () const override { return &m_vars; }
+  bool result_is_merged () const override { return false; }
+  bool result_must_not_be_merged () const override { return true; }  //  would spoil the decomposition otherwise
+  bool requires_raw_input () const override { return false; }
+  bool wants_variants () const override { return true; }
 
 private:
   db::PreferredOrientation m_mode;
@@ -388,13 +388,13 @@ public:
     //  .. nothing yet ..
   }
 
-  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const;
+  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const override;
 
-  virtual const TransformationReducer *vars () const { return &m_vars; }
-  virtual bool result_is_merged () const { return false; }
-  virtual bool result_must_not_be_merged () const { return true; }  //  would spoil the decomposition otherwise
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool wants_variants () const { return true; }
+  const TransformationReducer *vars () const override { return &m_vars; }
+  bool result_is_merged () const override { return false; }
+  bool result_must_not_be_merged () const override { return true; }  //  would spoil the decomposition otherwise
+  bool requires_raw_input () const override { return false; }
+  bool wants_variants () const override { return true; }
 
 private:
   db::TrapezoidDecompositionMode m_mode;
@@ -417,13 +417,13 @@ public:
     //  .. nothing yet ..
   }
 
-  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const;
+  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const override;
 
-  virtual const TransformationReducer *vars () const { return nullptr; }
-  virtual bool result_is_merged () const { return false; }
-  virtual bool result_must_not_be_merged () const { return true; }  //  would spoil the decomposition otherwise
-  virtual bool requires_raw_input () const { return true; }  //  acts on original shapes
-  virtual bool wants_variants () const { return false; }
+  const TransformationReducer *vars () const override { return nullptr; }
+  bool result_is_merged () const override { return false; }
+  bool result_must_not_be_merged () const override { return true; }  //  would spoil the decomposition otherwise
+  bool requires_raw_input () const override { return true; }  //  acts on original shapes
+  bool wants_variants () const override { return false; }
 
 private:
   size_t m_max_vertex_count;
@@ -438,16 +438,16 @@ class DB_PUBLIC PolygonSizer
 {
 public:
   PolygonSizer (db::Coord dx, db::Coord dy, unsigned int mode);
-  ~PolygonSizer ();
+  ~PolygonSizer () override;
 
-  virtual const TransformationReducer *vars () const { return m_vars; }
+  const TransformationReducer *vars () const override { return m_vars; }
 
-  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const;
+  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const override;
 
-  virtual bool result_is_merged () const;
-  virtual bool result_must_not_be_merged () const { return false; }
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool wants_variants () const { return true; }
+  bool result_is_merged () const override;
+  bool result_must_not_be_merged () const override { return false; }
+  bool requires_raw_input () const override { return false; }
+  bool wants_variants () const override { return true; }
 
 private:
   TransformationReducer *m_vars;
@@ -464,13 +464,13 @@ class DB_PUBLIC TriangulationProcessor
 public:
   TriangulationProcessor (double max_area = 0.0, double min_b = 1.0);
 
-  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const;
+  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const override;
 
-  virtual const TransformationReducer *vars () const { return &m_vars; }
-  virtual bool result_is_merged () const { return false; }
-  virtual bool result_must_not_be_merged () const { return false; }
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool wants_variants () const { return true; }
+  const TransformationReducer *vars () const override { return &m_vars; }
+  bool result_is_merged () const override { return false; }
+  bool result_must_not_be_merged () const override { return false; }
+  bool requires_raw_input () const override { return false; }
+  bool wants_variants () const override { return true; }
 
 private:
   db::plc::TriangulationParameters m_param;
@@ -492,17 +492,17 @@ public:
     //  .. nothing yet ..
   }
 
-  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const
+  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const override
   {
     result.push_back (db::PolygonWithProperties (db::minkowski_sum (poly, m_q, false), poly.properties_id ()));
   }
 
   //  TODO: could be less if the object is symmetric
-  virtual const TransformationReducer *vars () const { return &m_vars; }
-  virtual bool result_is_merged () const { return false; }
-  virtual bool result_must_not_be_merged () const { return false; }
-  virtual bool requires_raw_input () const { return false; }
-  virtual bool wants_variants () const { return true; }
+  const TransformationReducer *vars () const override { return &m_vars; }
+  bool result_is_merged () const override { return false; }
+  bool result_must_not_be_merged () const override { return false; }
+  bool requires_raw_input () const override { return false; }
+  bool wants_variants () const override { return true; }
 
 private:
   K m_q;
@@ -518,7 +518,7 @@ class DB_PUBLIC_TEMPLATE DRCHullProcessor
 public:
   DRCHullProcessor (db::Coord d, db::metrics_type metrics, size_t n_circle = 64);
 
-  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const;
+  void process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const override;
 
 private:
   db::Coord m_d;

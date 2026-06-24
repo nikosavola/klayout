@@ -140,9 +140,9 @@ public:
   GenericSyntaxHighlighterRuleStringList (const QList<QString> &sl);
   GenericSyntaxHighlighterRuleStringList (const std::set<QString> &s, int ml);
 
-  virtual GenericSyntaxHighlighterRuleBase *clone () const;
-  virtual bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> & /*input_args*/, QList<QString> & /*output_args*/) const;
-  virtual void dump () const;
+  GenericSyntaxHighlighterRuleBase *clone () const override;
+  bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> & /*input_args*/, QList<QString> & /*output_args*/) const override;
+  void dump () const override;
 
 private:
   std::set<QString> m_s;
@@ -733,7 +733,7 @@ public:
   /**
    *  @brief Implementation of the highlighter
    */
-  void highlightBlock(const QString &text);
+  void highlightBlock(const QString &text) override;
 
 private:
   GenericSyntaxHighlighterContexts m_contexts;

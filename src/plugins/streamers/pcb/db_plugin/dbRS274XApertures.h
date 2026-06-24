@@ -86,8 +86,8 @@ class RS274XCircleAperture
 public:
   RS274XCircleAperture (RS274XReader &reader, tl::Extractor &ex);
 
-  virtual void do_produce_flash ();
-  virtual bool do_produce_linear (const db::DPoint &from, const db::DPoint &to);
+  void do_produce_flash () override;
+  bool do_produce_linear (const db::DPoint &from, const db::DPoint &to) override;
 
 private:
   double m_d;
@@ -100,8 +100,8 @@ class RS274XRectAperture
 public:
   RS274XRectAperture (RS274XReader &reader, tl::Extractor &ex);
 
-  virtual void do_produce_flash ();
-  virtual bool do_produce_linear (const db::DPoint &from, const db::DPoint &to);
+  void do_produce_flash () override;
+  bool do_produce_linear (const db::DPoint &from, const db::DPoint &to) override;
 
 private:
   double m_dx, m_dy;
@@ -114,8 +114,8 @@ class RS274XOvalAperture
 public:
   RS274XOvalAperture (RS274XReader &reader, tl::Extractor &ex);
 
-  virtual void do_produce_flash ();
-  virtual bool do_produce_linear (const db::DPoint &from, const db::DPoint &to);
+  void do_produce_flash () override;
+  bool do_produce_linear (const db::DPoint &from, const db::DPoint &to) override;
 
 private:
   double m_dx, m_dy;
@@ -128,8 +128,8 @@ class RS274XRegularAperture
 public:
   RS274XRegularAperture (RS274XReader &reader, tl::Extractor &ex);
 
-  virtual void do_produce_flash ();
-  virtual bool do_produce_linear (const db::DPoint &from, const db::DPoint &to);
+  void do_produce_flash () override;
+  bool do_produce_linear (const db::DPoint &from, const db::DPoint &to) override;
 
 private:
   double m_d, m_a;
@@ -143,8 +143,8 @@ class RS274XRegionAperture
 public:
   RS274XRegionAperture (const db::Region &region);
 
-  virtual void do_produce_flash ();
-  virtual bool do_produce_linear (const db::DPoint &from, const db::DPoint &to);
+  void do_produce_flash () override;
+  bool do_produce_linear (const db::DPoint &from, const db::DPoint &to) override;
 
 private:
   db::Region m_region;
@@ -156,8 +156,8 @@ class RS274XMacroAperture
 public:
   RS274XMacroAperture (RS274XReader &reader, const std::string &name, const std::string &def, tl::Extractor &ex);
 
-  virtual void do_produce_flash ();
-  virtual bool do_produce_linear (const db::DPoint &from, const db::DPoint &to);
+  void do_produce_flash () override;
+  bool do_produce_linear (const db::DPoint &from, const db::DPoint &to) override;
 
 private:
   std::string m_name;

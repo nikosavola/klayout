@@ -56,12 +56,12 @@ public:
   /**
    *  @brief Destructor
    */
-  ~EditorServiceBase ();
+  ~EditorServiceBase () override;
 
   /**
    *  @brief Obtain the lay::ViewService interface
    */
-  lay::ViewService *view_service_interface ()
+  lay::ViewService *view_service_interface () override
   {
     return this;
   }
@@ -69,7 +69,7 @@ public:
   /**
    *  @brief Obtain the lay::Editable interface
    */
-  lay::Editable *editable_interface ()
+  lay::Editable *editable_interface () override
   {
     return this;
   }
@@ -131,7 +131,7 @@ public:
   /**
    *  @brief Gets a value indicating whether a cursor position it set
    */
-  virtual bool has_tracking_position () const
+  bool has_tracking_position () const override
   {
     return m_has_tracking_position;
   }
@@ -139,7 +139,7 @@ public:
   /**
    *  @brief Gets the cursor position if one is set
    */
-  virtual db::DPoint tracking_position () const
+  db::DPoint tracking_position () const override
   {
     return m_tracking_position;
   }
@@ -152,7 +152,7 @@ public:
   /**
    *  @brief Menu command handler
    */
-  virtual void menu_activated (const std::string & /*symbol*/)
+  void menu_activated (const std::string & /*symbol*/) override
   {
     // .. this implementation does nothing ..
   }
@@ -160,12 +160,12 @@ public:
   /**
    *  @brief Sets a configuration option
    */
-  virtual bool configure (const std::string &name, const std::string &value);
+  bool configure (const std::string &name, const std::string &value) override;
 
   /**
    *  @brief Configuration finalization
    */
-  virtual void config_finalize ()
+  void config_finalize () override
   {
     lay::Plugin::config_finalize ();
   }
@@ -173,27 +173,27 @@ public:
   /**
    *  @brief Called when the plugin is deactivated
    */
-  virtual void deactivated ();
+  void deactivated () override;
 
   /**
    *  @brief Called when the plugin is activated
    */
-  virtual void activated ();
+  void activated () override;
 
   /**
    *  @brief Key event handler
    */
-  virtual bool key_event (unsigned int /*key*/, unsigned int /*buttons*/);
+  bool key_event (unsigned int /*key*/, unsigned int /*buttons*/) override;
 
   /**
    *  @brief Shortcut override event handler
    */
-  virtual bool shortcut_override_event (unsigned int /*key*/, unsigned int /*buttons*/);
+  bool shortcut_override_event (unsigned int /*key*/, unsigned int /*buttons*/) override;
 
   /**
    *  @brief Mouse press event handler
    */
-  virtual bool mouse_press_event (const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/)
+  bool mouse_press_event (const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/) override
   {
     return false;
   }
@@ -201,7 +201,7 @@ public:
   /**
    *  @brief Mouse single-click event handler
    */
-  virtual bool mouse_click_event (const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/)
+  bool mouse_click_event (const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/) override
   {
     return false;
   }
@@ -209,7 +209,7 @@ public:
   /**
    *  @brief Mouse double-click event handler
    */
-  virtual bool mouse_double_click_event (const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/)
+  bool mouse_double_click_event (const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/) override
   {
     return false;
   }
@@ -217,7 +217,7 @@ public:
   /**
    *  @brief Mouse leave event handler
    */
-  virtual bool leave_event (bool /*prio*/)
+  bool leave_event (bool /*prio*/) override
   {
     return false;
   }
@@ -225,7 +225,7 @@ public:
   /**
    *  @brief Mouse enter event handler
    */
-  virtual bool enter_event (bool /*prio*/)
+  bool enter_event (bool /*prio*/) override
   {
     return false;
   }
@@ -233,7 +233,7 @@ public:
   /**
    *  @brief Mouse move event handler
    */
-  virtual bool mouse_move_event (const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/)
+  bool mouse_move_event (const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/) override
   {
     return false;
   }
@@ -241,7 +241,7 @@ public:
   /**
    *  @brief Mouse release event handler
    */
-  virtual bool mouse_release_event (const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/)
+  bool mouse_release_event (const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/) override
   {
     return false;
   }
@@ -249,7 +249,7 @@ public:
   /**
    *  @brief Wheel event handler
    */
-  virtual bool wheel_event (int /*delta*/, bool /*horizontal*/, const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/)
+  bool wheel_event (int /*delta*/, bool /*horizontal*/, const db::DPoint & /*p*/, unsigned int /*buttons*/, bool /*prio*/) override
   {
     return false;
   }
@@ -257,7 +257,7 @@ public:
   /**
    *  @brief Updates the internal data after a coordinate system change for example
    */
-  virtual void update ()
+  void update () override
   {
     //  The default implementation does nothing
   }
@@ -265,7 +265,7 @@ public:
   /**
    *  @brief This method is called when some mouse dragging operation should be cancelled
    */
-  virtual void drag_cancel ()
+  void drag_cancel () override
   {
     //  The default implementation does nothing
   }

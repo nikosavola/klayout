@@ -51,7 +51,7 @@ Q_OBJECT
 
 public:
   Navigator (QWidget *parent);
-  ~Navigator ();
+  ~Navigator () override;
 
   void background_color (QColor c);
   img::Object *setup (lay::Dispatcher *root, img::Object *img);

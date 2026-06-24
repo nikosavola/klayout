@@ -54,12 +54,12 @@ public:
   /**
    *  @brief The destructor
    */
-  ~PCellVariant ();
+  ~PCellVariant () override;
 
   /**
    *  @brief Cloning 
    */
-  virtual Cell *clone (Layout &layout) const;
+  Cell *clone (Layout &layout) const override;
 
   /**
    *  @brief Gets the parameter name map for a parameter list
@@ -96,37 +96,37 @@ public:
   /**
    *  @brief Gets the basic name
    */
-  virtual std::string get_basic_name () const;
+  std::string get_basic_name () const override;
 
   /**
    *  @brief Gets the variant name
    */
-  virtual std::string get_variant_name () const;
+  std::string get_variant_name () const override;
 
   /**
    *  @brief Gets the display name
    */
-  virtual std::string get_display_name () const;
+  std::string get_display_name () const override;
 
   /**
    *  @brief Unregisters a cell from its context.
    */
-  virtual void unregister ();
+  void unregister () override;
 
   /**
    *  @brief Re-registers a cell inside its context.
    */
-  virtual void reregister ();
+  void reregister () override;
 
   /**
    *  @brief Updates the layout
    */
-  virtual void update (ImportLayerMapping *layer_mapping = nullptr);
+  void update (ImportLayerMapping *layer_mapping = nullptr) override;
 
   /**
    *  @brief Gets a value indicating if this cell is a proxy cell
    */
-  virtual bool is_proxy () const 
+  bool is_proxy () const override 
   { 
     return true; 
   }

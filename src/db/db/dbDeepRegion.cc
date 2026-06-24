@@ -63,53 +63,53 @@ public:
     set ();
   }
 
-  virtual ~DeepRegionIterator () { }
+  ~DeepRegionIterator () override { }
 
-  virtual bool at_end () const
+  bool at_end () const override
   {
     return m_iter.at_end ();
   }
 
-  virtual void increment ()
+  void increment () override
   {
     ++m_iter;
     set ();
   }
 
-  virtual bool is_addressable() const
+  bool is_addressable() const override
   {
     return false;
   }
 
-  virtual const value_type *get () const
+  const value_type *get () const override
   {
     return &m_polygon;
   }
 
-  virtual db::properties_id_type prop_id () const
+  db::properties_id_type prop_id () const override
   {
     return m_prop_id;
   }
 
-  virtual bool equals (const generic_shape_iterator_delegate_base<value_type> *other) const
+  bool equals (const generic_shape_iterator_delegate_base<value_type> *other) const override
   {
     const DeepRegionIterator *o = dynamic_cast<const DeepRegionIterator *> (other);
     return o && o->m_iter == m_iter;
   }
 
-  virtual RegionIteratorDelegate *clone () const
+  RegionIteratorDelegate *clone () const override
   {
     return new DeepRegionIterator (*this);
   }
 
-  virtual void do_reset (const db::Box &region, bool overlapping)
+  void do_reset (const db::Box &region, bool overlapping) override
   {
     m_iter.set_region (region);
     m_iter.set_overlapping (overlapping);
     set ();
   }
 
-  virtual db::Box bbox () const
+  db::Box bbox () const override
   {
     return m_iter.bbox ();
   }
@@ -896,15 +896,15 @@ public:
     //  .. nothing yet ..
   }
 
-  OnEmptyIntruderHint on_empty_intruder_hint () const { return Copy; }
+  OnEmptyIntruderHint on_empty_intruder_hint () const override { return Copy; }
 
-  std::string description () const
+  std::string description () const override
   {
     return tl::to_string (tr ("'peel' operation"));
   }
 
 
-  virtual void do_compute_local (db::Layout *layout, db::Cell * /*subject_cell*/, const shape_interactions<db::object_with_properties<db::PolygonRef>, db::object_with_properties<db::PolygonRef> > &interactions, std::vector<std::unordered_set<db::object_with_properties<db::PolygonRef> > > &results, const db::LocalProcessorBase *proc) const
+  void do_compute_local (db::Layout *layout, db::Cell * /*subject_cell*/, const shape_interactions<db::object_with_properties<db::PolygonRef>, db::object_with_properties<db::PolygonRef> > &interactions, std::vector<std::unordered_set<db::object_with_properties<db::PolygonRef> > > &results, const db::LocalProcessorBase *proc) const override
   {
     tl_assert (results.size () == 1);
     auto &result = results.front ();

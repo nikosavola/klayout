@@ -49,18 +49,18 @@ class RS274XReader
 {
 public:
   RS274XReader (int warn_level);
-  ~RS274XReader ();
+  ~RS274XReader () override;
 
   double um (double u)
   {
     return u * unit ();
   }
 
-  virtual bool does_accept ();
+  bool does_accept () override;
 
 protected:
-  virtual void do_read ();
-  GerberMetaData do_scan ();
+  void do_read () override;
+  GerberMetaData do_scan () override;
 
 private:
   bool m_clear;

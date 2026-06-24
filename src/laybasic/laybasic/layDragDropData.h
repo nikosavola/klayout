@@ -150,14 +150,14 @@ public:
   /**
    *  @brief Serializes itself to an QByteArray
    */
-  virtual QByteArray serialized () const;
+  QByteArray serialized () const override;
 
   /**
    *  @brief Try deserialization from an QByteArray
    *
    *  Returns false, if deserialization failed.
    */
-  bool deserialize (const QByteArray &ba);
+  bool deserialize (const QByteArray &ba) override;
 
 private:
   const db::Layout *mp_layout;

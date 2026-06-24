@@ -46,29 +46,29 @@ public:
   InstService (db::Manager *manager, lay::LayoutViewBase *view);
   
 #if defined(HAVE_QT)
-  virtual std::vector<lay::PropertiesPage *> properties_pages (db::Manager *manager, QWidget *parent);
+  std::vector<lay::PropertiesPage *> properties_pages (db::Manager *manager, QWidget *parent) override;
 #endif
-  virtual void do_begin_edit (const db::DPoint &p);
-  virtual void do_mouse_move_inactive (const db::DPoint &p);
-  virtual void do_mouse_move (const db::DPoint &p);
-  virtual bool do_mouse_click (const db::DPoint &p);
-  virtual void do_mouse_transform (const db::DPoint &p, db::DFTrans trans);
-  virtual void do_finish_edit (bool accept);
-  virtual void do_cancel_edit ();
-  virtual bool do_activated ();
+  void do_begin_edit (const db::DPoint &p) override;
+  void do_mouse_move_inactive (const db::DPoint &p) override;
+  void do_mouse_move (const db::DPoint &p) override;
+  bool do_mouse_click (const db::DPoint &p) override;
+  void do_mouse_transform (const db::DPoint &p, db::DFTrans trans) override;
+  void do_finish_edit (bool accept) override;
+  void do_cancel_edit () override;
+  bool do_activated () override;
 #if defined(HAVE_QT)
-  virtual bool drag_enter_event (const db::DPoint &p, const lay::DragDropDataBase *data);
-  virtual bool drag_move_event (const db::DPoint &p, const lay::DragDropDataBase *data);
-  virtual void drag_leave_event ();
-  virtual bool drop_event (const db::DPoint &p, const lay::DragDropDataBase *data);
+  bool drag_enter_event (const db::DPoint &p, const lay::DragDropDataBase *data) override;
+  bool drag_move_event (const db::DPoint &p, const lay::DragDropDataBase *data) override;
+  void drag_leave_event () override;
+  bool drop_event (const db::DPoint &p, const lay::DragDropDataBase *data) override;
 #endif
-  virtual bool selection_applies (const lay::ObjectInstPath &sel) const;
+  bool selection_applies (const lay::ObjectInstPath &sel) const override;
 
 protected:
-  bool configure (const std::string &name, const std::string &value);
-  void service_configuration_changed ();
+  bool configure (const std::string &name, const std::string &value) override;
+  void service_configuration_changed () override;
 
-  void config_finalize ();
+  void config_finalize () override;
 
 private:
   double m_angle;

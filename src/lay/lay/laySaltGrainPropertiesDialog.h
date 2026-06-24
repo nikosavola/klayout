@@ -75,7 +75,7 @@ private slots:
   void dependency_changed (QTreeWidgetItem *item, int column);
 
 protected:
-  void accept ();
+  void accept () override;
 
 private:
   lay::SaltGrain m_grain;

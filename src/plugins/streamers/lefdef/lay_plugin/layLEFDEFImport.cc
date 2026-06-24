@@ -55,26 +55,26 @@ public:
     //  .. nothing yet ..
   }
   
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > &options) const
+  void get_options (std::vector < std::pair<std::string, std::string> > &options) const override
   {
     options.push_back (std::pair<std::string, std::string> (cfg_lef_import_spec, ""));
     options.push_back (std::pair<std::string, std::string> (cfg_def_import_spec, ""));
   }
 
-  virtual lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
+  lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const override
   {
     // .. nothing yet ..
     return nullptr;
   }
 
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const
+  void get_menu_entries (std::vector<lay::MenuEntry> &menu_entries) const override
   {
     lay::PluginDeclaration::get_menu_entries (menu_entries);
     menu_entries.push_back (lay::menu_item ("db::import_lef", "import_lef:edit", "file_menu.import_menu.end", tl::to_string (QObject::tr ("LEF"))));
     menu_entries.push_back (lay::menu_item ("db::import_def", "import_def:edit", "file_menu.import_menu.end", tl::to_string (QObject::tr ("DEF/LEF"))));
   }
 
-  virtual bool configure (const std::string &name, const std::string &value)
+  bool configure (const std::string &name, const std::string &value) override
   {
     if (name == cfg_lef_import_spec) {
       m_lef_spec = value;
@@ -87,12 +87,12 @@ public:
     }
   }
 
-  virtual void config_finalize ()
+  void config_finalize () override
   {
     // .. nothing yet ..
   }
 
-  virtual bool menu_activated (const std::string &symbol) const
+  bool menu_activated (const std::string &symbol) const override
   {
     if (symbol == "db::import_lef" || symbol == "db::import_def") {
 

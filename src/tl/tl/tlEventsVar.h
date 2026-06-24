@@ -36,7 +36,7 @@ class TL_PUBLIC_TEMPLATE event_function_base<_TMPLARGLISTP>
 {
 public:
   event_function_base () : tl::Object () { }
-  virtual ~event_function_base () { }
+  ~event_function_base () override { }
   virtual void call (_JOIN(tl::Object *object, _CALLARGLIST)) = 0;
   virtual bool equals (const event_function_base<_TMPLARGLISTP> &other) = 0;
 };
@@ -52,7 +52,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void call (_JOIN(tl::Object *object, _CALLARGLIST))
+  void call (_JOIN(tl::Object *object, _CALLARGLIST)) override
   {
     T *t = dynamic_cast<T *> (object);
     if (t) {
@@ -60,7 +60,7 @@ public:
     }
   }
 
-  virtual bool equals (const event_function_base<_TMPLARGLISTP> &other)
+  bool equals (const event_function_base<_TMPLARGLISTP> &other) override
   {
     const event_function<_JOIN(T, _TMPLARGLIST)> *o = dynamic_cast<const event_function<_JOIN(T, _TMPLARGLIST)> *> (&other);
     return o && o->m_m == m_m;
@@ -81,7 +81,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void call (_JOIN(tl::Object *object, _CALLARGLIST))
+  void call (_JOIN(tl::Object *object, _CALLARGLIST)) override
   {
     T *t = dynamic_cast<T *> (object);
     if (t) {
@@ -89,7 +89,7 @@ public:
     }
   }
 
-  virtual bool equals (const event_function_base<_TMPLARGLISTP> &other)
+  bool equals (const event_function_base<_TMPLARGLISTP> &other) override
   {
     const event_function_with_data<T, _JOIN(D, _TMPLARGLIST)> *o = dynamic_cast<const event_function_with_data<T, _JOIN(D, _TMPLARGLIST)> *> (&other);
     return o && o->m_m == m_m && o->m_d == m_d;
@@ -111,7 +111,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void call (_JOIN(tl::Object *object, _CALLARGLIST))
+  void call (_JOIN(tl::Object *object, _CALLARGLIST)) override
   {
     T *t = dynamic_cast<T *> (object);
     if (t) {
@@ -120,7 +120,7 @@ public:
     }
   }
 
-  virtual bool equals (const event_function_base<_TMPLARGLISTP> &other)
+  bool equals (const event_function_base<_TMPLARGLISTP> &other) override
   {
     const generic_event_function<_JOIN(T, _TMPLARGLIST)> *o = dynamic_cast<const generic_event_function<_JOIN(T, _TMPLARGLIST)> *> (&other);
     return o && o->m_m == m_m;
@@ -141,7 +141,7 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void call (_JOIN(tl::Object *object, _CALLARGLIST))
+  void call (_JOIN(tl::Object *object, _CALLARGLIST)) override
   {
     T *t = dynamic_cast<T *> (object);
     if (t) {
@@ -150,7 +150,7 @@ public:
     }
   }
 
-  virtual bool equals (const event_function_base<_TMPLARGLISTP> &other)
+  bool equals (const event_function_base<_TMPLARGLISTP> &other) override
   {
     const generic_event_function_with_data<T, _JOIN(D, _TMPLARGLIST)> *o = dynamic_cast<const generic_event_function_with_data<T, _JOIN(D, _TMPLARGLIST)> *> (&other);
     return o && o->m_m == m_m && o->m_d == m_d;

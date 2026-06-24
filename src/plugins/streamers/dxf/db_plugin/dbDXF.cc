@@ -51,12 +51,12 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual std::string format_name () const { return "DXF"; }
-  virtual std::string format_desc () const { return "DXF"; }
-  virtual std::string format_title () const { return "DXF (AutoCAD)"; }
-  virtual std::string file_format () const { return "DXF files (*.dxf *.DXF *.dxf.gz *.DXF.gz)"; }
+  std::string format_name () const override { return "DXF"; }
+  std::string format_desc () const override { return "DXF"; }
+  std::string format_title () const override { return "DXF (AutoCAD)"; }
+  std::string file_format () const override { return "DXF files (*.dxf *.DXF *.dxf.gz *.DXF.gz)"; }
 
-  virtual bool detect (tl::InputStream &s) const 
+  bool detect (tl::InputStream &s) const override 
   {
     std::string l;
     tl::Extractor ex;
@@ -120,32 +120,32 @@ public:
     return ! stream.at_end ();
   }
 
-  virtual ReaderBase *create_reader (tl::InputStream &s) const 
+  ReaderBase *create_reader (tl::InputStream &s) const override 
   {
     return new db::DXFReader (s);
   }
 
-  virtual WriterBase *create_writer () const
+  WriterBase *create_writer () const override
   {
     return new db::DXFWriter ();
   }
 
-  virtual bool can_read () const
+  bool can_read () const override
   {
     return true;
   }
 
-  virtual bool can_write () const
+  bool can_write () const override
   {
     return true;
   }
 
-  virtual bool supports_context () const
+  bool supports_context () const override
   {
     return false;
   }
 
-  virtual tl::XMLElementBase *xml_reader_options_element () const
+  tl::XMLElementBase *xml_reader_options_element () const override
   {
     return new db::ReaderOptionsXMLElement<db::DXFReaderOptions> ("dxf",
       tl::make_member (&db::DXFReaderOptions::dbu, "dbu") +
@@ -163,7 +163,7 @@ public:
     );
   }
 
-  virtual tl::XMLElementBase *xml_writer_options_element () const
+  tl::XMLElementBase *xml_writer_options_element () const override
   {
     return new db::WriterOptionsXMLElement<db::DXFWriterOptions> ("cif",
       tl::make_member (&db::DXFWriterOptions::polygon_mode, "polygon-mode")

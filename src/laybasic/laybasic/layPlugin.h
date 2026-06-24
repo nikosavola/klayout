@@ -168,7 +168,7 @@ public:
   /**
    *  @brief Destructor
    */
-  virtual ~PluginDeclaration ();
+  ~PluginDeclaration () override;
 
   /**
    *  @brief Gets the name under which the declaration was registered
@@ -545,7 +545,7 @@ public:
   /**
    *  @brief The destructor
    */
-  virtual ~Plugin ();
+  ~Plugin () override;
 
   /**
    *  @brief Gets a value indicating whether this plugin is a standlone plugin

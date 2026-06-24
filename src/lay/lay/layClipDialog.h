@@ -41,7 +41,7 @@ Q_OBJECT
 
 public:
   ClipDialog (lay::Dispatcher *root, lay::LayoutViewBase *view);
-  ~ClipDialog ();
+  ~ClipDialog () override;
 
 public slots:
   void box1_clicked ();
@@ -52,10 +52,10 @@ public slots:
 
 private:
   //  implementation of the lay::Plugin interface
-  virtual bool configure (const std::string &name, const std::string &value);
+  bool configure (const std::string &name, const std::string &value) override;
 
   //  implementation of the lay::Plugin interface
-  void menu_activated (const std::string &symbol);
+  void menu_activated (const std::string &symbol) override;
 
 };
 

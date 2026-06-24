@@ -59,7 +59,7 @@ public:
     m_progress.set_unit (1024 * 1024);
   }
 
-  virtual void read (Database &db) 
+  void read (Database &db) override 
   {
     try {
       //  TODO: do not allow waivers here?
@@ -447,7 +447,7 @@ public:
 
   }
 
-  virtual const char *format () const 
+  const char *format () const override 
   {
     return "RVE";
   }
@@ -490,11 +490,11 @@ private:
 class RVEFormatDeclaration 
   : public FormatDeclaration
 {
-  virtual std::string format_name () const { return "RVE"; }
-  virtual std::string format_desc () const { return "RVE format"; }
-  virtual std::string file_format () const { return "RVE files (*.rve *.rve.gz *.db *.db.gz)"; }
+  std::string format_name () const override { return "RVE"; }
+  std::string format_desc () const override { return "RVE format"; }
+  std::string file_format () const override { return "RVE files (*.rve *.rve.gz *.db *.db.gz)"; }
 
-  virtual bool detect (tl::InputStream &stream) const
+  bool detect (tl::InputStream &stream) const override
   {
     tl::TextInputStream text_stream (stream);
 
@@ -552,7 +552,7 @@ class RVEFormatDeclaration
     return true;
   }
 
-  virtual ReaderBase *create_reader (tl::InputStream &s) const 
+  ReaderBase *create_reader (tl::InputStream &s) const override 
   {
     return new RVEReader (s);
   }

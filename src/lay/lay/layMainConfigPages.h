@@ -58,10 +58,10 @@ Q_OBJECT
 
 public:
   MainConfigPage (QWidget *parent);
-  ~MainConfigPage ();
+  ~MainConfigPage () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::MainConfigPage *mp_ui;
@@ -74,10 +74,10 @@ Q_OBJECT
 
 public:
   MainConfigPage2 (QWidget *parent);
-  ~MainConfigPage2 ();
+  ~MainConfigPage2 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::MainConfigPage2 *mp_ui;
@@ -90,10 +90,10 @@ Q_OBJECT
 
 public:
   MainConfigPage3 (QWidget *parent);
-  ~MainConfigPage3 ();
+  ~MainConfigPage3 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::MainConfigPage3 *mp_ui;
@@ -106,10 +106,10 @@ Q_OBJECT
 
 public:
   MainConfigPage4 (QWidget *parent);
-  ~MainConfigPage4 ();
+  ~MainConfigPage4 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::MainConfigPage4 *mp_ui;
@@ -122,10 +122,10 @@ Q_OBJECT
 
 public:
   MainConfigPage5 (QWidget *parent);
-  ~MainConfigPage5 ();
+  ~MainConfigPage5 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::MainConfigPage5 *mp_ui;
@@ -138,10 +138,10 @@ Q_OBJECT
 
 public:
   MainConfigPage6 (QWidget *parent);
-  ~MainConfigPage6 ();
+  ~MainConfigPage6 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::MainConfigPage6 *mp_ui;
@@ -154,10 +154,10 @@ Q_OBJECT
 
 public:
   MainConfigPage7 (QWidget *parent);
-  ~MainConfigPage7 ();
+  ~MainConfigPage7 () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private:
   Ui::MainConfigPage7 *mp_ui;
@@ -170,10 +170,10 @@ Q_OBJECT
 
 public:
   CustomizeMenuConfigPage (QWidget *parent);
-  ~CustomizeMenuConfigPage ();
+  ~CustomizeMenuConfigPage () override;
 
-  virtual void setup (lay::Dispatcher *root);
-  virtual void commit (lay::Dispatcher *root);
+  void setup (lay::Dispatcher *root) override;
+  void commit (lay::Dispatcher *root) override;
 
 private slots:
   void current_changed (QTreeWidgetItem *current, QTreeWidgetItem *previous);

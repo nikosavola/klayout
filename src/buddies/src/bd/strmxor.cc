@@ -47,8 +47,8 @@ class HealingCountingReceiver
 public:
   HealingCountingReceiver (size_t *count, bool healing);
 
-  virtual void put (size_t /*ix*/, size_t /*iy*/, const db::Box &tile, size_t /*id*/, const tl::Variant &obj, double /*dbu*/, const db::ICplxTrans & /*trans*/, bool clip);
-  virtual void finish (bool);
+  void put (size_t /*ix*/, size_t /*iy*/, const db::Box &tile, size_t /*id*/, const tl::Variant &obj, double /*dbu*/, const db::ICplxTrans & /*trans*/, bool clip) override;
+  void finish (bool) override;
 
   void keep_for_healing (const db::Polygon &poly);
   void keep_for_healing (const db::Box &box);
@@ -146,10 +146,10 @@ class HealingTileLayoutOutputReceiver
 public:
   HealingTileLayoutOutputReceiver (db::Layout *layout, db::Cell *cell, unsigned int layer, bool healing);
 
-  void put (size_t /*ix*/, size_t /*iy*/, const db::Box &tile, size_t /*id*/, const tl::Variant &obj, double dbu, const db::ICplxTrans &trans, bool clip);
+  void put (size_t /*ix*/, size_t /*iy*/, const db::Box &tile, size_t /*id*/, const tl::Variant &obj, double dbu, const db::ICplxTrans &trans, bool clip) override;
 
-  void begin (size_t /*nx*/, size_t /*ny*/, const db::DPoint & /*p0*/, double /*dx*/, double /*dy*/, const db::DBox & /*frame*/);
-  void finish (bool /*success*/);
+  void begin (size_t /*nx*/, size_t /*ny*/, const db::DPoint & /*p0*/, double /*dx*/, double /*dy*/, const db::DBox & /*frame*/) override;
+  void finish (bool /*success*/) override;
 
   void keep_for_healing (const db::Polygon &poly);
   void keep_for_healing (const db::Box &box);
@@ -812,7 +812,7 @@ public:
   {
   }
 
-  virtual tl::Worker *create_worker ();
+  tl::Worker *create_worker () override;
 };
 
 class XORWorker
@@ -820,7 +820,7 @@ class XORWorker
 {
 public:
   XORWorker (XORJob *job);
-  void perform_task (tl::Task *task);
+  void perform_task (tl::Task *task) override;
 
   db::DeepShapeStore &dss ()
   {

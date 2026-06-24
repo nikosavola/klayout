@@ -201,7 +201,7 @@ public:
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void start () 
+  void start () override 
   {
     if (m_clear) {
       mp_edges->clear ();
@@ -216,7 +216,7 @@ public:
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void put (const db::Edge &e) 
+  void put (const db::Edge &e) override 
   {
     mp_edges->push_back (e);
     if (mp_chained) {
@@ -227,7 +227,7 @@ public:
   /**
    *  @brief Implementation of the EdgeSink interface
    */
-  virtual void put (const db::Edge &e, int tag)
+  void put (const db::Edge &e, int tag) override
   {
     if (m_tag == 0 || tag == m_tag) {
       mp_edges->push_back (e);
@@ -361,12 +361,12 @@ public:
     return m_interactions.end ();
   }
 
-  virtual void reset ();
-  virtual void reserve (size_t n);
-  virtual int edge (bool north, bool enter, property_type p);
-  virtual int compare_ns () const;
-  virtual bool is_reset () const { return m_inside_s.empty () && m_inside_n.empty (); }
-  virtual bool prefer_touch () const { return m_include_touching; }
+  void reset () override;
+  void reserve (size_t n) override;
+  int edge (bool north, bool enter, property_type p) override;
+  int compare_ns () const override;
+  bool is_reset () const override { return m_inside_s.empty () && m_inside_n.empty (); }
+  bool prefer_touch () const override { return m_include_touching; }
 
 private:
   int m_mode;
@@ -396,17 +396,17 @@ public:
     : m_wc_n (0), m_wc_s (0), m_function (function)
   { }
 
-  virtual void reset ()
+  void reset () override
   {
     m_wc_n = m_wc_s = 0;
   }
 
-  virtual void reserve (size_t /*n*/)
+  void reserve (size_t /*n*/) override
   {
     // .. nothing yet ..
   }
 
-  virtual int edge (bool north, bool enter, property_type /*p*/)
+  int edge (bool north, bool enter, property_type /*p*/) override
   {
     int *wc = north ? &m_wc_n : &m_wc_s;
     bool t0 = m_function (*wc);
@@ -425,7 +425,7 @@ public:
     }
   }
 
-  virtual int compare_ns () const
+  int compare_ns () const override
   {
     if (m_function (m_wc_s) && ! m_function (m_wc_n)) {
       return -1;
@@ -436,7 +436,7 @@ public:
     }
   }
 
-  virtual bool is_reset () const
+  bool is_reset () const override
   {
     return (m_wc_n == 0 && m_wc_s == 0);
   }
@@ -520,11 +520,11 @@ public:
    */
   BooleanOp (BoolOp mode);
 
-  virtual void reset ();
-  virtual void reserve (size_t n);
-  virtual int edge (bool north, bool enter, property_type p);
-  virtual int compare_ns () const;
-  virtual bool is_reset () const { return m_zeroes == m_wcv_n.size () + m_wcv_s.size (); }
+  void reset () override;
+  void reserve (size_t n) override;
+  int edge (bool north, bool enter, property_type p) override;
+  int compare_ns () const override;
+  bool is_reset () const override { return m_zeroes == m_wcv_n.size () + m_wcv_s.size (); }
 
 protected:
   template <class InsideFunc> bool result (int wca, int wcb, const InsideFunc &inside_a, const InsideFunc &inside_b) const;
@@ -571,12 +571,12 @@ public:
    */
   EdgePolygonOp (mode_t mode = Inside, bool include_touching = true, int polygon_mode = -1);
 
-  virtual void reset ();
-  virtual int select_edge (bool horizontal, property_type p);
-  virtual int edge (bool north, bool enter, property_type p);
-  virtual bool is_reset () const;
-  virtual bool prefer_touch () const;
-  virtual bool selects_edges () const;
+  void reset () override;
+  int select_edge (bool horizontal, property_type p) override;
+  int edge (bool north, bool enter, property_type p) override;
+  bool is_reset () const override;
+  bool prefer_touch () const override;
+  bool selects_edges () const override;
 
 private:
   mode_t m_mode;
@@ -605,8 +605,8 @@ public:
    */
   BooleanOp2 (BoolOp mode, int wc_mode_a, int wc_mode_b);
 
-  virtual int edge (bool north, bool enter, property_type p);
-  virtual int compare_ns () const;
+  int edge (bool north, bool enter, property_type p) override;
+  int compare_ns () const override;
 
 private:
   int m_wc_mode_a, m_wc_mode_b;
@@ -632,11 +632,11 @@ public:
    */
   MergeOp (unsigned int min_overlap = 0);
 
-  virtual void reset ();
-  virtual void reserve (size_t n);
-  virtual int edge (bool north, bool enter, property_type p);
-  virtual int compare_ns () const;
-  virtual bool is_reset () const { return m_zeroes == m_wcv_n.size () + m_wcv_s.size (); }
+  void reset () override;
+  void reserve (size_t n) override;
+  int edge (bool north, bool enter, property_type p) override;
+  int compare_ns () const override;
+  bool is_reset () const override { return m_zeroes == m_wcv_n.size () + m_wcv_s.size (); }
 
 private:
   int m_wc_n, m_wc_s;
@@ -1165,12 +1165,12 @@ public:
     //  .. nothing yet ..
   }
 
-  virtual void put (const db::Edge &edge)
+  void put (const db::Edge &edge) override
   {
     mp_ep->insert (edge, m_prop);
   }
 
-  virtual void put (const db::Edge &edge, int /*tag*/)
+  void put (const db::Edge &edge, int /*tag*/) override
   {
     mp_ep->insert (edge, m_prop);
   }

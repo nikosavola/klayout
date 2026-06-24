@@ -42,33 +42,33 @@ public:
     //  .. nothing yet ..
   }
   
-  virtual void get_options (std::vector < std::pair<std::string, std::string> > & /*options*/) const
+  void get_options (std::vector < std::pair<std::string, std::string> > & /*options*/) const override
   {
     //  .. nothing yet ..
   }
 
-  virtual lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const
+  lay::ConfigPage *config_page (QWidget * /*parent*/, std::string & /*title*/) const override
   {
     // .. nothing yet ..
     return nullptr;
   }
 
-  virtual void get_menu_entries (std::vector<lay::MenuEntry> & /*menu_entries*/) const
+  void get_menu_entries (std::vector<lay::MenuEntry> & /*menu_entries*/) const override
   {
     // .. nothing yet ..
   }
 
-  virtual bool configure (const std::string & /*name*/, const std::string & /*value*/)
+  bool configure (const std::string & /*name*/, const std::string & /*value*/) override
   {
     return false;
   }
 
-  virtual void config_finalize ()
+  void config_finalize () override
   {
     // .. nothing yet ..
   }
 
-  lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *root, lay::LayoutViewBase *view) const
+  lay::Plugin *create_plugin (db::Manager *, lay::Dispatcher *root, lay::LayoutViewBase *view) const override
   {
     if (lay::has_gui ()) {
       return new D25View (root, view);

@@ -70,9 +70,14 @@ jobs:
           style: ""
           # Directory holding compile_commands.json (repository root).
           database: "."
-          files-changed-only: true
-          # Skip generated Qt bindings (gsiqt) and the vendored Cap'n Proto tree.
-          ignore: ".github|testdata|src/gsiqt|src/plugins/streamers/lstream/runtime|src/plugins/streamers/lstream/db_plugin/capnp"
+          # Lint the whole tree, not just the PR diff.
+          files-changed-only: false
+          # Lint translation units (sources); project headers are covered
+          # transitively through HeaderFilterRegex when their .cc is analysed.
+          extensions: "c,cc,cxx,cpp"
+          # Skip generated Qt bindings (gsiqt), vendored Cap'n Proto and the
+          # unit-test sources (the check set is tuned for the libraries).
+          ignore: ".github|testdata|src/gsiqt|src/plugins/streamers/lstream/runtime|src/plugins/streamers/lstream/db_plugin/capnp|**/unit_tests"
           step-summary: true
 
       - name: Fail on clang-tidy findings

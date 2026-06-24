@@ -75,9 +75,17 @@ jobs:
           # Lint translation units (sources); project headers are covered
           # transitively through HeaderFilterRegex when their .cc is analysed.
           extensions: "c,cc,cxx,cpp"
-          # Skip generated Qt bindings (gsiqt), vendored Cap'n Proto and the
-          # unit-test sources (the check set is tuned for the libraries).
-          ignore: ".github|testdata|src/gsiqt|src/plugins/streamers/lstream/runtime|src/plugins/streamers/lstream/db_plugin/capnp|**/unit_tests"
+          # cpp-linter walks the whole tree, so exclude everything that is not
+          # part of the compiled library sources, otherwise clang-tidy reports
+          # "compile command not found" for files absent from the database:
+          #   - generated Qt bindings (gsiqt), vendored Cap'n Proto, unit tests
+          #   - the build directory (generated moc_*/ui_* sources)
+          #   - scripts/ (mkqtdecl generator inputs, never built)
+          #   - alternative-build variants not in the default build (the *_noqt
+          #     and HTTP-stream variants, the python/ruby stubs, pymod module
+          #     entrypoints, the gtf UI tool, etc.)
+          ignore: >-
+            .github|testdata|scripts|build-release|src/gsiqt|**/unit_tests|src/plugins/streamers/lstream/runtime|src/plugins/streamers/lstream/db_plugin/capnp|src/gtfui|src/pyastub|src/rbastub|src/laybasic/laybasic/gtfdummy.cc|src/layview/layview/gsiDeclLayLayoutView_noqt.cc|src/layview/layview/layLayoutView_noqt.cc|src/plugins/tools/view_25d/lay_plugin/layXORPlugin.cc|src/pymod/QtCore5Compat/QtCore5CompatMain.cc|src/pymod/ant/antMain.cc|src/pymod/edt/edtMain.cc|src/pymod/img/imgMain.cc|src/pymod/lym/lymMain.cc|src/tl/tl/tlHttpStreamCurl.cc|src/tl/tl/tlHttpStreamNoQt.cc|src/tl/tl/tlVector.cc
           step-summary: true
 
       - name: Fail on clang-tidy findings

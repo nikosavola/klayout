@@ -121,7 +121,7 @@ MacroController::finish ()
     //  Add the unspecific paths as "package locations", so we get "ruby", "python" and similar folders as
     //  path components inside the interpreters.
     if (p->cat.empty ()) {
-      for (tl::Registrar<gsi::Interpreter>::iterator i = gsi::interpreters.begin (); i != gsi::interpreters.end (); ++i) {
+      for (tl::Registrar<gsi::Interpreter>::iterator i = tl::Registrar<gsi::Interpreter>::begin (); i != tl::Registrar<gsi::Interpreter>::end (); ++i) {
         i->add_package_location (p->path);
       }
     }
@@ -378,7 +378,7 @@ MacroController::sync_package_paths ()
   //  TODO: maybe that is a performance bottleneck, but right now, remove_package_location doesn't do a lot.
 
   for (std::vector<std::string>::const_iterator p = m_package_locations.begin (); p != m_package_locations.end (); ++p) {
-    for (tl::Registrar<gsi::Interpreter>::iterator i = gsi::interpreters.begin (); i != gsi::interpreters.end (); ++i) {
+    for (tl::Registrar<gsi::Interpreter>::iterator i = tl::Registrar<gsi::Interpreter>::begin (); i != tl::Registrar<gsi::Interpreter>::end (); ++i) {
       i->remove_package_location (*p);
     }
   }
@@ -386,7 +386,7 @@ MacroController::sync_package_paths ()
   m_package_locations = package_locations;
   
   for (std::vector<std::string>::const_iterator p = m_package_locations.begin (); p != m_package_locations.end (); ++p) {
-    for (tl::Registrar<gsi::Interpreter>::iterator i = gsi::interpreters.begin (); i != gsi::interpreters.end (); ++i) {
+    for (tl::Registrar<gsi::Interpreter>::iterator i = tl::Registrar<gsi::Interpreter>::begin (); i != tl::Registrar<gsi::Interpreter>::end (); ++i) {
       i->add_package_location (*p);
     }
   }

@@ -1388,7 +1388,7 @@ namespace
     : public ShapesTransformer
   {
   public:
-    DeepShapeStoreToShapeTransformer (const DeepShapeStore &dss, const db::Layout &layout)
+    DeepShapeStoreToShapeTransformer (const DeepShapeStore &dss, const db::Layout & /*layout*/)
     {
       //  gets the text annotation property ID -
       //  this is how the texts are passed for annotating the net names

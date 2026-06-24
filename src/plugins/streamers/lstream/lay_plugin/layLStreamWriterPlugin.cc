@@ -57,7 +57,7 @@ LStreamWriterOptionPage::setup (const db::FormatSpecificWriterOptions *o, const 
 }
 
 void 
-LStreamWriterOptionPage::commit (db::FormatSpecificWriterOptions *o, const db::Technology * /*tech*/, bool gzip)
+LStreamWriterOptionPage::commit (db::FormatSpecificWriterOptions *o, const db::Technology * /*tech*/, bool  /*gzip*/)
 {
   lstr::WriterOptions *options = dynamic_cast<lstr::WriterOptions *> (o);
   if (options) {

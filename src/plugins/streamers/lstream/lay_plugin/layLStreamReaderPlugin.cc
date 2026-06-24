@@ -42,7 +42,7 @@ public:
     // .. nothing yet ..
   }
 
-  StreamReaderOptionsPage *format_specific_options_page (QWidget *parent) const
+  StreamReaderOptionsPage *format_specific_options_page (QWidget * /*parent*/) const
   {
     return nullptr;
   }

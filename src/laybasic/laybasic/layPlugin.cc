@@ -322,7 +322,7 @@ std::string
 PluginDeclaration::name () const
 {
   auto plugin_reg = tl::Registrar<lay::PluginDeclaration>::get_instance ();
-  for (auto i = plugin_reg->begin (); i != plugin_reg->end (); ++i) {
+  for (auto i = tl::Registrar<lay::PluginDeclaration>::begin (); i != tl::Registrar<lay::PluginDeclaration>::end (); ++i) {
     if (i.operator-> () == this) {
       return i.current_name ();
     }
@@ -340,7 +340,7 @@ PluginDeclaration::get_editor_options_pages (std::vector<lay::EditorOptionsPage 
   }
 
   auto reg = tl::Registrar<lay::EditorOptionsPageFactoryBase>::get_instance ();
-  for (auto i = reg->begin (); i != reg->end (); ++i) {
+  for (auto i = tl::Registrar<lay::EditorOptionsPageFactoryBase>::begin (); i != tl::Registrar<lay::EditorOptionsPageFactoryBase>::end (); ++i) {
     lay::EditorOptionsPage *page = nullptr;
     if (i->name () == n) {
       page = i->create_page (view, dispatcher);
@@ -360,7 +360,7 @@ PluginDeclaration::get_additional_editor_options_pages (std::vector<EditorOption
   std::set<std::string> names_seen;
 
   auto reg = tl::Registrar<lay::EditorOptionsPageFactoryBase>::get_instance ();
-  for (auto i = reg->begin (); i != reg->end (); ++i) {
+  for (auto i = tl::Registrar<lay::EditorOptionsPageFactoryBase>::begin (); i != tl::Registrar<lay::EditorOptionsPageFactoryBase>::end (); ++i) {
     auto n = names.find (i->name ());
     if (n != names.end ()) {
       names_seen.insert (i->name ());

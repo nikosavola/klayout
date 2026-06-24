@@ -84,7 +84,7 @@ static void define_variable_impl (Interpreter *ip, const std::string &name, cons
 
 static gsi::Interpreter *interpreter_by_name (const std::string &name)
 {
-  for (tl::Registrar<gsi::Interpreter>::iterator i = gsi::interpreters.begin (); i != gsi::interpreters.end (); ++i) {
+  for (tl::Registrar<gsi::Interpreter>::iterator i = tl::Registrar<gsi::Interpreter>::begin (); i != tl::Registrar<gsi::Interpreter>::end (); ++i) {
     if (i.current_name () == name) {
       return i->available () ? i.operator-> () : nullptr;
     }

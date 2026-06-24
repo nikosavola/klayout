@@ -239,7 +239,7 @@ static std::string instance_to_string (const db::Instance &inst, const db::ICplx
   r += " " + (db::CplxTrans (dbu) * t * ci.complex_trans () * db::CplxTrans (1.0 / dbu)).to_string ();
 
   db::Vector a, b;
-  unsigned long amax, bmax;
+  unsigned long amax = 0, bmax = 0;
   if (ci.is_regular_array (a, b, amax, bmax)) {
     r += " array=(" + (db::CplxTrans (dbu) * t * a).to_string () + "," + (db::CplxTrans (dbu) * t * b).to_string () + " " + tl::to_string (amax) + "x" + tl::to_string (bmax) + ")";
   }
@@ -389,7 +389,7 @@ SearchReplaceResults::data (const QModelIndex &index, int role) const
 
       if (index.column () == 0 || index.column () == 1) {
 
-        db::cell_index_type cell_index;
+        db::cell_index_type cell_index = 0;
         if (index.column () == 0) {
           cell_index = m_cell_result [index.row ()].cell_index;
         } else {
@@ -893,7 +893,7 @@ SearchReplaceDialog::SearchReplaceDialog (lay::Dispatcher *root, LayoutViewBase 
   menu->addAction (QObject::tr ("To selection"), this, SLOT (select_items ()));
   export_b->setMenu (menu);
 
-  QAction *action;
+  QAction *action = nullptr;
 
   action = new QAction (QObject::tr ("Copy to clipboard"), results);
   connect (action, SIGNAL (triggered ()), this, SLOT (sel_export_csv_to_clipboard ()));

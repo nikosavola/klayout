@@ -954,7 +954,7 @@ LayoutView::configure (const std::string &name, const std::string &value)
 
   if (name == cfg_flat_cell_list) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
     if (mp_hierarchy_panel) {
       mp_hierarchy_panel->set_flat (f);
@@ -963,7 +963,7 @@ LayoutView::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_split_cell_list) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
     if (mp_hierarchy_panel) {
       mp_hierarchy_panel->set_split_mode (f);
@@ -972,7 +972,7 @@ LayoutView::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_split_lib_views) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
     if (mp_libraries_view) {
       mp_libraries_view->set_split_mode (f);
@@ -981,7 +981,7 @@ LayoutView::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_bookmarks_follow_selection) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
     if (mp_bookmarks_view) {
       mp_bookmarks_view->follow_selection (f);
@@ -1019,7 +1019,7 @@ LayoutView::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_hide_empty_layers) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
     if (mp_control_panel) {
       mp_control_panel->set_hide_empty_layers (f);
@@ -1028,7 +1028,7 @@ LayoutView::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_layer_visibility_follows_selection) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
     if (mp_control_panel) {
       mp_control_panel->set_layer_visibility_follows_selection (f);
@@ -1037,7 +1037,7 @@ LayoutView::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_test_shapes_in_view) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
     if (mp_control_panel) {
       mp_control_panel->set_test_shapes_in_view (f);
@@ -1046,7 +1046,7 @@ LayoutView::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_test_shapes_in_view) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
     if (mp_control_panel) {
       mp_control_panel->set_test_shapes_in_view (f);
@@ -1055,7 +1055,7 @@ LayoutView::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_layer_search_as_expressions) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
     if (mp_control_panel) {
       mp_control_panel->set_search_as_expression (f);
@@ -1064,7 +1064,7 @@ LayoutView::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_layer_search_as_filter) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
     if (mp_control_panel) {
       mp_control_panel->set_search_as_filter (f);
@@ -1073,7 +1073,7 @@ LayoutView::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_layer_search_case_sensitive) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
     if (mp_control_panel) {
       mp_control_panel->set_search_case_sensitive (f);
@@ -1082,7 +1082,7 @@ LayoutView::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_cell_search_as_expressions) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
     if (mp_hierarchy_panel) {
       mp_hierarchy_panel->set_search_as_expression (f);
@@ -1091,7 +1091,7 @@ LayoutView::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_cell_search_as_filter) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
     if (mp_hierarchy_panel) {
       mp_hierarchy_panel->set_search_as_filter (f);
@@ -1100,7 +1100,7 @@ LayoutView::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_cell_search_case_sensitive) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
     if (mp_hierarchy_panel) {
       mp_hierarchy_panel->set_search_case_sensitive (f);

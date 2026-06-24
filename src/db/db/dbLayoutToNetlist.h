@@ -1412,11 +1412,11 @@ private:
   tl::weak_ptr<db::LayoutToNetlist> mp_source;
   mutable cell_reuse_table_type m_reuse_table;
   BuildNetHierarchyMode m_hier_mode;
-  bool m_has_net_cell_name_prefix;
+  bool m_has_net_cell_name_prefix{};
   std::string m_net_cell_name_prefix;
-  bool m_has_cell_name_prefix;
+  bool m_has_cell_name_prefix{};
   std::string m_cell_name_prefix;
-  bool m_has_device_cell_name_prefix;
+  bool m_has_device_cell_name_prefix{};
   std::string m_device_cell_name_prefix;
 
   void build_net_rec (const db::Net &net, cell_index_type circuit_cell, const std::map<unsigned int, unsigned int> &lmap, const std::string &add_net_cell_name_prefix, db::properties_id_type netname_propid, const ICplxTrans &tr) const;

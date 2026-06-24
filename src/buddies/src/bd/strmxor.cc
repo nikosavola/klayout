@@ -356,7 +356,7 @@ struct XORData
   db::Layout *output_layout;
   db::cell_index_type output_cell;
   std::map<db::LayerProperties, std::pair<int, int>, db::LPLogicalLessFunc> l2l_map;
-  std::map<std::pair<int, db::LayerProperties>, ResultDescriptor> *results;
+  std::map<std::pair<int, db::LayerProperties>, ResultDescriptor> *results{};
   mutable int layers_missing;
   mutable tl::Mutex lock;
 };
@@ -576,7 +576,7 @@ BD_PUBLIC int strmxor (int argc, char *argv[])
 
   //  Runs the XOR
 
-  bool result;
+  bool result = false;
 
   if (deep) {
     result = run_deep_xor (xor_data);

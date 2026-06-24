@@ -80,7 +80,7 @@ static db::InstElement *new_v ()
 static db::InstElement *new_iab (const db::Instance &i, unsigned long na, unsigned long nb)
 {
   db::Vector a, b;
-  unsigned long amax, bmax;
+  unsigned long amax = 0, bmax = 0;
   if (i.is_regular_array (a, b, amax, bmax)) {
     return new db::InstElement (i, db::CellInstArray::iterator (i.front (), new db::regular_array_iterator <db::Coord> (a, b, na, na, nb, nb)));
   } else {

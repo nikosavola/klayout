@@ -98,7 +98,7 @@ private:
   };
 
   mutable ShapeType m_shape_type;
-  mutable ShapeRef mp_shape;
+  mutable ShapeRef mp_shape{};
   mutable db::properties_id_type m_prop_id;
   mutable bool m_skip;
   mutable db::PropertiesSet m_prop_set_out;
@@ -161,8 +161,8 @@ private:
   mutable bool m_copy_merge;
   mutable size_t m_copy_max_polygons;
   mutable db::PropertiesSet m_prop_set_out;
-  mutable db::cell_index_type m_cell_index;
-  mutable size_t m_cluster_id;
+  mutable db::cell_index_type m_cell_index{};
+  mutable size_t m_cluster_id{};
   mutable std::map<unsigned int, AreaAndPerimeter> m_area_and_perimeter_cache;
   mutable std::unique_ptr<std::map<std::pair<db::cell_index_type, size_t>, const db::Net *> > m_nets_per_cell_and_cluster_id;
 

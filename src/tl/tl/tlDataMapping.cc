@@ -422,7 +422,7 @@ DataMappingLookupTable::update_table (double xmin, double xmax, double delta_y, 
 
     std::vector< std::pair<double, double> >::const_iterator t = table.begin ();
     size_t i = 0;
-    double x;
+    double x = NAN;
     for ( ; i < nsteps; ++i) {
       x = xmin + i * delta_x;
       while (t != table.end () && t->first <= x) {

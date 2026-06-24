@@ -160,7 +160,7 @@ ShapeProcessor::boolean (const std::vector<db::Shape> &in_a, const std::vector<d
   }
   reserve (e + e / 4); // heuristic reserve for crossing points
 
-  size_t n;
+  size_t n = 0;
   n = 0;
   for (std::vector<db::Shape>::const_iterator i = in_a.begin (); i != in_a.end (); ++i, ++n) {
     if (n < trans_a.size ()) {
@@ -199,7 +199,7 @@ ShapeProcessor::boolean (const std::vector<db::Shape> &in_a, const std::vector<d
   }
   reserve (e + e / 4); // heuristic reserve for crossing points
 
-  size_t n;
+  size_t n = 0;
   n = 0;
   for (std::vector<db::Shape>::const_iterator i = in_a.begin (); i != in_a.end (); ++i, ++n) {
     if (n < trans_a.size ()) {
@@ -236,7 +236,7 @@ ShapeProcessor::size (const std::vector<db::Shape> &in, const std::vector<db::Cp
   }
   reserve (e + e / 4); // heuristic reserve for crossing points
 
-  size_t n;
+  size_t n = 0;
   n = 0;
   for (std::vector<db::Shape>::const_iterator i = in.begin (); i != in.end (); ++i, ++n) {
     if (n < trans.size ()) {
@@ -279,7 +279,7 @@ ShapeProcessor::size (const std::vector<db::Shape> &in, const std::vector<db::Cp
   }
   reserve (e + e / 4); // heuristic reserve for crossing points
 
-  size_t n;
+  size_t n = 0;
   n = 0;
   for (std::vector<db::Shape>::const_iterator i = in.begin (); i != in.end (); ++i, ++n) {
     if (n < trans.size ()) {
@@ -370,7 +370,7 @@ ShapeProcessor::boolean (const db::Layout &layout_in_a, const db::Cell &cell_in_
   clear ();
   reserve (ne + ne / 4); // heuristic reserve for crossing points
 
-  size_t pn;
+  size_t pn = 0;
 
   //  collect all shapes of layout a into property ID's 0, 2, 4, 6, ...
   pn = 0;

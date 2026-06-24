@@ -1060,7 +1060,7 @@ method_init_adaptor (int mid, PyObject *self, PyObject *args, PyObject *kwargs)
 static PyObject *
 property_getter_impl (int mid, PyObject *self)
 {
-  const gsi::ClassBase *cls_decl;
+  const gsi::ClassBase *cls_decl = nullptr;
 
   PYAObjectBase *p = nullptr;
   if (! PyType_Check (self)) {
@@ -1142,7 +1142,7 @@ property_getter_func (PyObject *self, void *closure)
 static PyObject *
 property_setter_impl (int mid, PyObject *self, PyObject *value)
 {
-  const gsi::ClassBase *cls_decl;
+  const gsi::ClassBase *cls_decl = nullptr;
 
   PYAObjectBase *p = nullptr;
   if (! PyType_Check (self)) {

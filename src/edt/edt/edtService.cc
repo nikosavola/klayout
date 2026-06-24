@@ -717,7 +717,7 @@ Service::transform (const db::DCplxTrans &trans, const std::vector<db::DCplxTran
   //  HINT: sorting the selected shapes/instances ensures that a shape/instance is not moved twice.
   //  This may happen due to per-instance selection of lower-level shapes.
   
-  size_t n;
+  size_t n = 0;
 
   //  build a list of object references corresponding to the p_trv vector 
   std::vector <EditableSelectionIterator::pointer> obj_ptrs;

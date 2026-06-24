@@ -987,7 +987,7 @@ bool Circuit::combine_serial_devices(const db::DeviceClass &cls)
 
     const std::vector<db::DeviceTerminalDefinition> &terminals = cls.terminal_definitions ();
     for (std::vector<db::DeviceTerminalDefinition>::const_iterator p = terminals.begin (); p != terminals.end (); ++p) {
-      db::Net *on;
+      db::Net *on = nullptr;
       on = dd.first->net_for_terminal (p->id ());
       if (on && ! same_or_swapped (dd, attached_two_devices (*on, cls))) {
         other_nets.push_back (on);

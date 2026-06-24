@@ -356,7 +356,7 @@ PolygonService::update_marker ()
 
     db::Path path (points_dbu.begin (), points_dbu.end (), 0);
 
-    lay::Marker *marker;
+    lay::Marker *marker = nullptr;
     
     marker = new lay::Marker (view (), cv_index ());
     marker->set (path, db::VCplxTrans (1.0 / layout ().dbu ()) * trans ().inverted ());

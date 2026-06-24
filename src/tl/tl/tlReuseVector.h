@@ -959,7 +959,7 @@ public:
 
 private:
   value_type *mp_start, *mp_finish, *mp_capacity;
-  ReuseData *mp_rdata;
+  ReuseData *mp_rdata{};
 
   template<class, bool> friend class reuse_vector_iterator;
   template<class, bool> friend class reuse_vector_const_iterator;

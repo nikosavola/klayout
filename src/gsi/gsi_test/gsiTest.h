@@ -432,8 +432,8 @@ struct A
 
   //  members
   std::vector<double> m_d;
-  int n;
-  bool f;
+  int n{};
+  bool f{};
   Enum e;
 #if defined(HAVE_QT)
   QFlags<Enum> ef;

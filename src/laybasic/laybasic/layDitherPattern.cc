@@ -1005,7 +1005,7 @@ DitherPattern &
 DitherPattern::operator= (const DitherPattern &p)
 {
   if (this != &p) {
-    unsigned int i;
+    unsigned int i = 0;
     for (i = 0; i < p.count (); ++i) {
       replace_pattern (i, p.begin () [i]);
     }
@@ -1160,7 +1160,7 @@ DitherPattern::merge (const DitherPattern &other, std::map<unsigned int, unsigne
   //  map the pattern of other into *this, possibly creating new ones
   for (iterator c = other.begin_custom (); c != other.end (); ++c) {
     std::map <DitherPatternInfo, unsigned int, pattern_less_f>::const_iterator p = patterns.find (*c);
-    unsigned int new_index;
+    unsigned int new_index = 0;
     if (p == patterns.end ()) {
       new_index = add_pattern (*c);
       patterns.insert (std::make_pair (*c, new_index));

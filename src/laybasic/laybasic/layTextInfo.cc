@@ -22,6 +22,8 @@
 
 
 #include "layTextInfo.h"
+
+#include <math.h>
 #include "layFixedFont.h"
 #include "layLayoutViewBase.h"
 #include "layLayoutCanvas.h"
@@ -50,7 +52,7 @@ TextInfo::bbox (const db::DText &text, const db::DCplxTrans &vp_trans) const
   const double offset = 2.0 / vp_trans.mag ();
 
   db::DTrans tt;
-  db::DCoord h;
+  db::DCoord h = NAN;
   db::Font font = text.font () == db::NoFont ? m_default_font : text.font ();
 
   if ((m_apply_text_trans_mode & 2) != 0 && font != db::NoFont && font != db::DefaultFont) {
@@ -102,7 +104,7 @@ TextInfo::bbox (const db::DText &text, const db::DCplxTrans &vp_trans) const
     }
 
     //  compute the actual top left position
-    double ytop;
+    double ytop = NAN;
     double htot = double (ff.line_height () * (lines - 1) + ff.height ());
     if (valign == db::VAlignBottom || valign == db::NoVAlign) {
       ytop = b.bottom ();
@@ -130,7 +132,7 @@ TextInfo::bbox (const db::DText &text, const db::DCplxTrans &vp_trans) const
         ++length;
       }
 
-      double xl;
+      double xl = NAN;
       if (halign == db::HAlignRight) {
         xl = b.right ();
         xl -= double (ff.width () * length);

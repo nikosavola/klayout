@@ -623,7 +623,7 @@ struct regular_array
 protected:
   vector_type m_a, m_b;
   unsigned long m_amax, m_bmax;
-  double m_det;
+  double m_det{};
 
   inline vector_type eff_a () const
   {
@@ -2646,7 +2646,7 @@ private:
 
       //  create a new base object with the transformed base vectors
       vector_type a, b;
-      unsigned long amax, bmax;
+      unsigned long amax = 0, bmax = 0;
       bool is_reg = d.is_regular_array (a, b, amax, bmax);
 
       std::vector<vector_type> v;
@@ -2664,7 +2664,7 @@ private:
 
       //  create a new base object with the transformed base vectors
       vector_type a, b;
-      unsigned long amax, bmax;
+      unsigned long amax = 0, bmax = 0;
       bool is_reg = d.is_regular_array (a, b, amax, bmax);
 
       std::vector<vector_type> v;

@@ -198,7 +198,7 @@ NamedLayerReader::open_layer_uncached (db::Layout &layout, const std::string &n,
     std::map <std::string, unsigned int>::const_iterator nl = m_new_layers.find (n);
     if (nl == m_new_layers.end ()) {
 
-      unsigned int ll;
+      unsigned int ll = 0;
       do {
         ll = m_next_layer_index++;
       } while (! layout.is_free_layer (ll));

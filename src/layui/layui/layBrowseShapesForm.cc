@@ -1089,7 +1089,7 @@ BrowseShapesForm::adv_cell_inst (bool up)
     if (adv_shape (up)) {
 
       //  select first or last item
-      QTreeWidgetItem *ni;
+      QTreeWidgetItem *ni = nullptr;
       if (up) {
         ni = lv_cell_instance->topLevelItem (lv_cell_instance->topLevelItemCount () - 1);
       } else {

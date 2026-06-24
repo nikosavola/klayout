@@ -22,6 +22,8 @@
 
 
 #include "layBitmap.h"
+
+#include <math.h>
 #include "layBitmapRenderer.h"
 #include "layFixedFont.h"
 #include "tlAlgorithm.h"
@@ -579,7 +581,7 @@ Bitmap::render_vertices (std::vector<lay::RenderEdge> &edges, int mode)
 
   for (std::vector<lay::RenderEdge>::iterator e = edges.begin (); e != edges.end (); ++e) {
 
-    double x, y;
+    double x = NAN, y = NAN;
     
     if (mode == 0 || e->delta () > 0) {
       x = e->x1 () + 0.5;
@@ -712,7 +714,7 @@ Bitmap::render_contour (std::vector<lay::RenderEdge> &edges)
 
         while (yint <= yeint) {
 
-          double xx;
+          double xx = NAN;
           if (double (yint) > y2m) { 
             xx = e->x2 () + 0.5;
           } else {
@@ -720,7 +722,7 @@ Bitmap::render_contour (std::vector<lay::RenderEdge> &edges)
             dx = dx1;
           }
 
-          unsigned int xe;
+          unsigned int xe = 0;
           if (xx >= 0.0) {
             if (xx >= (double) width ()) {
               if (x >= (double) width () - 1) {
@@ -749,7 +751,7 @@ Bitmap::render_contour (std::vector<lay::RenderEdge> &edges)
 
         while (yint <= yeint) {
 
-          double xx;
+          double xx = NAN;
           if (double (yint) > y2m) { 
             xx = e->x2 () - 0.5;
           } else {
@@ -757,7 +759,7 @@ Bitmap::render_contour (std::vector<lay::RenderEdge> &edges)
             dx = dx1;
           }
 
-          unsigned int xe;
+          unsigned int xe = 0;
           if (xx < double (width () - 1)) {
             if (xx < 0.0) {
               if (x <= 0.0) {
@@ -811,7 +813,7 @@ Bitmap::render_text (const lay::RenderText &text)
     }
 
     //  compute the actual top left position
-    double y;
+    double y = NAN;
     if (text.valign == db::VAlignBottom || text.valign == db::NoVAlign) {
       y = text.b.bottom ();
       y += double (ff.line_height () * (lines - 1) + ff.height ());
@@ -834,7 +836,7 @@ Bitmap::render_text (const lay::RenderText &text)
         ++length;
       }
 
-      double xx;
+      double xx = NAN;
       if (text.halign == db::HAlignRight) {
         xx = text.b.right ();
         xx -= double (ff.width () * length);

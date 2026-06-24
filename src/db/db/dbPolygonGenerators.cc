@@ -264,7 +264,7 @@ public:
 
   size_t allocate ()
   {
-    size_t index;
+    size_t index = 0;
 
     if (m_free_contours >= 0) {
       index = m_free_contours;
@@ -474,7 +474,7 @@ PolygonGenerator::put (const db::Edge &e)
 #endif
 
   if (m_open_pos != m_open.end ()) {
-    db::Coord x;
+    db::Coord x = 0;
     if (e.p1 ().y () == m_y && e.p2 ().y () == m_y) {
       x = std::min (e.p1 ().x (), e.p2 ().x ());
     } else if (e.p1 ().y () == m_y) {
@@ -1205,7 +1205,7 @@ TrapezoidGenerator::skip_n (size_t n)
 void
 TrapezoidGenerator::put (const db::Edge &e)
 {
-  db::Coord x;
+  db::Coord x = 0;
   if (e.dy () == 0) {
     x = std::max (e.p1 ().x (), e.p2 ().x ());
   } else if (e.dy () < 0) {

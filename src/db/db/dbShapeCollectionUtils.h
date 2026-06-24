@@ -246,7 +246,7 @@ shape_collection_processed_impl (const db::DeepLayer &input, const shape_collect
       const std::set<db::ICplxTrans> &vv = vars->variants (c->cell_index ());
       for (auto v = vv.begin (); v != vv.end (); ++v) {
 
-        db::Shapes *st;
+        db::Shapes *st = nullptr;
         if (vv.size () == 1) {
           st = & c->shapes (res->deep_layer ().layer ());
         } else {
@@ -326,7 +326,7 @@ public:
 
   void process (const db::object_with_properties<Shape> &s, std::vector<db::PolygonWithProperties> &res) const override
   {
-    db::box_convert<db::object_with_properties<Shape> > bc;
+    db::box_convert<db::object_with_properties<Shape> > bc{};
     db::Box box = bc (s).enlarged (db::Vector (m_dx, m_dy));
     if (! box.empty ()) {
       res.push_back (db::PolygonWithProperties (db::Polygon (box), s.properties_id ()));

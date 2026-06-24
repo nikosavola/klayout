@@ -22,6 +22,8 @@
 
 
 #include "layMainConfigPages.h"
+
+#include <math.h>
 #include "laybasicConfig.h"
 #include "layConfig.h"
 #include "layStream.h"
@@ -134,7 +136,7 @@ void
 MainConfigPage::commit (lay::Dispatcher *root)
 {
   try {
-    double g;
+    double g = NAN;
     tl::from_string (tl::to_string (mp_ui->grid_edit->text ()), g);
     root->config_set (cfg_grid, g);
   } catch (...) { } // NOLINT(bugprone-empty-catch)
@@ -331,7 +333,7 @@ MainConfigPage5::~MainConfigPage5 ()
 void 
 MainConfigPage5::setup (lay::Dispatcher *root)
 {
-  int d;
+  int d = 0;
   d = 5;
   root->config_get (cfg_micron_digits, d);
   mp_ui->micron_digits->setValue (d);

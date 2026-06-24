@@ -2040,7 +2040,7 @@ LEFDEFReaderState::foreign_cell (Layout &layout, const std::string &name)
 
   std::pair<bool, db::cell_index_type> cc = layout.cell_by_name (name.c_str ());
 
-  db::cell_index_type ci;
+  db::cell_index_type ci = 0;
   if (cc.first) {
     ci = cc.second;
   } else {
@@ -2404,7 +2404,7 @@ LEFDEFImporter::next ()
 
   m_last_token.clear ();
 
-  char c;
+  char c = 0;
 
   do {
 

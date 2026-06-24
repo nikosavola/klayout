@@ -126,7 +126,7 @@ ConfigPage2::setup (lay::Dispatcher *root)
 void 
 ConfigPage2::commit (lay::Dispatcher *root)
 {
-  int mr;
+  int mr = 0;
   try {
     tl::from_string_ext (tl::to_string (mp_ui->num_rulers_edit->text ()), mr);
   } catch (...) {

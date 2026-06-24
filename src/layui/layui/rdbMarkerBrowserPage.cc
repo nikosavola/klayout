@@ -679,7 +679,7 @@ public:
       return 0;
     }
 
-    MarkerBrowserTreeViewModelCacheEntry *node;
+    MarkerBrowserTreeViewModelCacheEntry *node = nullptr;
     if (! index.isValid ()) {
       node = &m_cache;
     } else {
@@ -1597,7 +1597,7 @@ private:
   std::vector<const rdb::Item *> m_item_list;
   const rdb::Database *mp_database;
   std::vector<std::pair<std::string, rdb::id_type> > m_user_tags;
-  id_type m_flag_tag_ids [sizeof (flag_descriptors) / sizeof (flag_descriptors [0])];
+  id_type m_flag_tag_ids [sizeof (flag_descriptors) / sizeof (flag_descriptors [0])]{};
   id_type m_waived_tag_id;
   id_type m_important_tag_id;
   int m_sorting;
@@ -1747,7 +1747,7 @@ MarkerBrowserPage::MarkerBrowserPage (QWidget * /*parent*/)
   QAction *unwaive_action = new QAction (QObject::tr ("Unwaive"), this);
   connect (unwaive_action, SIGNAL (triggered ()), this, SLOT (unwaive ()));
 
-  QAction *separator;
+  QAction *separator = nullptr;
 
   directory_tree->addAction (m_show_all_action);
   separator = new QAction (this);

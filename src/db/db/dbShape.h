@@ -2842,7 +2842,7 @@ public:
   };
 
   db::Shapes *mp_shapes;
-  generic m_generic;
+  generic m_generic{};
   trans_type m_trans;
   bool m_with_props : 8;
   bool m_stable : 8;

@@ -257,7 +257,7 @@ static PyObject *
 pya_ambiguous_method_dispatcher_get (PyObject *self, PyObject *obj, PyObject *type)
 {
   PYAAmbiguousMethodDispatcher *attr = (PYAAmbiguousMethodDispatcher *) self;
-  PyObject *descr;
+  PyObject *descr = nullptr;
   if (obj == nullptr || obj == Py_None) {
     descr = attr->attr_class;
   } else {
@@ -599,7 +599,7 @@ pya_signal_deallocate (PyObject *self)
   Py_TYPE (self)->tp_free ((PyObject *) self);
 }
 
-PYASignal::PYASignal (PyObject *_origin, pya::SignalHandler *_handler)
+PYASignal::PYASignal (PyObject *_origin, pya::SignalHandler *_handler) : _object()
 {
   if (_origin) {
     //  The iterator will keep a reference to the origin object of the iterator

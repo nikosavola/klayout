@@ -265,7 +265,7 @@ struct DocumentationParser
     return r;
   }
 
-  bool hidden, qt_class;
+  bool hidden{}, qt_class{};
   std::string doc;
   std::string brief_doc;
   std::string alias;
@@ -391,7 +391,7 @@ replace_references (const std::string &t, const gsi::ClassBase *cls_base)
   std::string r;
 
   size_t q = 0;
-  size_t p;
+  size_t p = 0;
   while ((p = t.find ('\\', q)) != std::string::npos) {
 
     r += std::string (t, q, p - q);

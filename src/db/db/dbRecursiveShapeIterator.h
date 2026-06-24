@@ -842,20 +842,20 @@ public:
 
 private:
   std::vector<unsigned int> m_layers;
-  bool m_has_layers;
-  int m_max_depth;
-  int m_min_depth;
-  unsigned int m_shape_flags;
-  const shape_iterator::property_selector *mp_shape_prop_sel;
-  bool m_shape_inv_prop_sel;
-  bool m_overlapping, m_for_merged_input;
+  bool m_has_layers{};
+  int m_max_depth{};
+  int m_min_depth{};
+  unsigned int m_shape_flags{};
+  const shape_iterator::property_selector *mp_shape_prop_sel{};
+  bool m_shape_inv_prop_sel{};
+  bool m_overlapping{}, m_for_merged_input{};
   std::set<db::cell_index_type> m_start, m_stop;
   cplx_trans_type m_global_trans;
   db::PropertiesTranslator m_property_translator;
 
   tl::weak_ptr<layout_type> mp_layout;
-  const cell_type *mp_top_cell;
-  const shapes_type *mp_shapes;
+  const cell_type *mp_top_cell{};
+  const shapes_type *mp_shapes{};
 
   box_type m_region;
   std::unique_ptr<region_type> mp_complex_region;
@@ -865,10 +865,10 @@ private:
   mutable inst_iterator m_inst;
   mutable inst_array_iterator m_inst_array;
   mutable std::map<db::cell_index_type, bool> m_empty_cells_cache;
-  mutable unsigned int m_layer;
-  mutable const cell_type *mp_cell;
-  mutable size_t m_current_layer;
-  mutable bool m_skip_shapes, m_skip_shapes_member;
+  mutable unsigned int m_layer{};
+  mutable const cell_type *mp_cell{};
+  mutable size_t m_current_layer{};
+  mutable bool m_skip_shapes{}, m_skip_shapes_member{};
   mutable shape_iterator m_shape;
   mutable cplx_trans_type m_trans;
   mutable std::vector<cplx_trans_type> m_trans_stack;
@@ -878,10 +878,10 @@ private:
   mutable std::vector<box_tree_type> m_local_complex_region_stack;
   mutable std::vector<box_type> m_local_region_stack;
   mutable std::vector<bool> m_skip_shapes_stack, m_skip_shapes_member_stack;
-  mutable bool m_needs_reinit;
-  mutable size_t m_inst_quad_id;
+  mutable bool m_needs_reinit{};
+  mutable size_t m_inst_quad_id{};
   mutable std::vector<size_t> m_inst_quad_id_stack;
-  mutable size_t m_shape_quad_id;
+  mutable size_t m_shape_quad_id{};
 
   void init ();
   void init_region (const region_type &region);

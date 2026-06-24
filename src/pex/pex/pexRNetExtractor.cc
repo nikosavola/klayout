@@ -23,6 +23,8 @@
 #include "pexCommon.h"
 
 #include "pexRNetExtractor.h"
+
+#include <math.h>
 #include "pexRNetwork.h"
 #include "pexRExtractorTech.h"
 #include "pexSquareCountingRExtractor.h"
@@ -148,8 +150,8 @@ public:
 
 private:
   const RExtractorTechVia *mp_via_tech;
-  std::vector<std::pair<double, db::Point> > *mp_conductances;
-  db::property_names_id_type m_prop_name_id;
+  std::vector<std::pair<double, db::Point> > *mp_conductances{};
+  db::property_names_id_type m_prop_name_id{};
   double m_dbu;
 };
 
@@ -417,7 +419,7 @@ private:
       tl_assert (ia != n2n.end ());
       tl_assert (ia != n2n.end ());
 
-      double c;
+      double c = NAN;
       if (mp_cond->resistance < 1e-10) {
         c = RElement::short_value ();
       } else {

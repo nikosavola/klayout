@@ -24,6 +24,8 @@
 #ifndef HDR_dbBinarySerialize
 #define HDR_dbBinarySerialize
 
+#include <math.h>
+
 #include "dbCommon.h"
 
 #include "dbPoint.h"
@@ -484,7 +486,7 @@ tl::BinaryInputStream &operator>> (tl::BinaryInputStream &s, db::complex_trans<C
   db::vector<R> d;
   read_binary (s, d);
 
-  double asin, acos, mag;
+  double asin = NAN, acos = NAN, mag = NAN;
   s >> asin >> acos >> mag;
 
   t = db::complex_trans<C, D, R> (d, asin, acos, mag);
@@ -510,7 +512,7 @@ tl::BinaryInputStream &operator>> (tl::BinaryInputStream &s, db::text<C> &t)
   C size;
   read_coord (s, size);
 
-  int32_t font, halign, valign;
+  int32_t font = 0, halign = 0, valign = 0;
   s >> font >> halign >> valign;
 
   t = db::text<C> (txt, tr, size, db::Font (font), db::HAlign (halign), db::VAlign (valign));
@@ -541,7 +543,7 @@ tl::BinaryInputStream &operator>> (tl::BinaryInputStream &s, db::path<C> &p)
   read_coord (s, bgn_ext);
   read_coord (s, end_ext);
 
-  bool round;
+  bool round = false;
   s >> round;
 
   p = db::path<C> (pts.begin (), pts.end (), width, bgn_ext, end_ext, round);

@@ -1871,7 +1871,7 @@ LayoutViewFunctions::cm_align_cell_origin ()
         bbox = cell->bbox ();
       }
 
-      db::Coord refx, refy;
+      db::Coord refx = 0, refy = 0;
       switch (m_align_cell_options.mode_x) {
       case -1:
         refx = bbox.left ();

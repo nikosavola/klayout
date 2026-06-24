@@ -1036,7 +1036,7 @@ RedrawThreadWorker::draw_boxes_impl (bool drawing_context, db::cell_index_type c
             if (anything) {
 
               db::Vector a, b;
-              unsigned long amax, bmax;
+              unsigned long amax = 0, bmax = 0;
               bool simplify = false;
               if (cell_inst.is_regular_array (a, b, amax, bmax) && (amax > 1 || bmax > 1)) {
 
@@ -1251,7 +1251,7 @@ RedrawThreadWorker::draw_box_properties_impl (bool drawing_context, db::cell_ind
             if (anything) {
 
               db::Vector a, b;
-              unsigned long amax, bmax; 
+              unsigned long amax = 0, bmax = 0; 
               bool simplify = false;
               if (cell_inst.is_regular_array (a, b, amax, bmax) && (amax > 1 || bmax > 1)) {
 
@@ -2152,7 +2152,7 @@ RedrawThreadWorker::draw_layer (int from_level, int to_level, db::cell_index_typ
       //  only cache if we have more than one instance at all
       if (can_cache && level > 0) {
         db::Cell::parent_inst_iterator p = cell.begin_parent_insts ();
-        size_t n;
+        size_t n = 0;
         for (n = 0; !p.at_end () && n < 2; ++n) 
           ;
         if (n <= 1) {
@@ -2394,7 +2394,7 @@ RedrawThreadWorker::iterate_variants_rec (const std::vector <db::Box> &redraw_re
     //  pull an specific instance from the instance stack and move this one up
     const db::InstElement &ie = m_cellviews [m_cv_index].specific_path ().end () [level - 1];
 
-    db::cell_index_type new_ci;
+    db::cell_index_type new_ci = 0;
     if (level + context_path_length > 1) {
       new_ci = m_cellviews [m_cv_index].specific_path ().end () [level - 2].inst_ptr.cell_index ();
     } else {

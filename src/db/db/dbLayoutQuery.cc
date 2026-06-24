@@ -2587,7 +2587,7 @@ parse_cell_name_filter_seq (tl::Extractor &ex, LayoutQuery *q, FilterBracket *br
 {
   FilterBase *f0 = nullptr;
   FilterBase *fl = nullptr;
-  FilterBase *f;
+  FilterBase *f = nullptr;
 
   while (! ex.at_end ()) {
     
@@ -2609,7 +2609,7 @@ parse_cell_name_filter_seq (tl::Extractor &ex, LayoutQuery *q, FilterBracket *br
   }
 
   //  satisfy instance mode if there is just a cell name filter
-  CellFilter *cf;
+  CellFilter *cf = nullptr;
   if (instance_mode != NoInstances && f0 == fl && (cf = dynamic_cast<CellFilter *> (f0)) != nullptr) { // NOLINT(bugprone-assignment-in-if-condition)
 
     fl = new ChildCellFilter (q, cf->name_filter (), instance_mode, reading);

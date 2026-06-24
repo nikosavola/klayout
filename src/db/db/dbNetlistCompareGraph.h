@@ -476,7 +476,7 @@ private:
   std::vector<NetGraphNode> m_nodes;
   std::map<const db::SubCircuit *, NetGraphNode> m_virtual_nodes;
   std::map<const db::Net *, size_t> m_net_index;
-  const db::Circuit *mp_circuit;
+  const db::Circuit *mp_circuit{};
 };
 
 }

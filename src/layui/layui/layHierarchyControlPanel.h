@@ -337,7 +337,7 @@ public slots:
   void cm_cell_select ();
 
 private:
-  db::Layout *mp_layout;
+  db::Layout *mp_layout{};
   bool m_enable_cb;
   lay::LayoutViewBase *mp_view;
   std::vector <lay::CellView> m_cellviews; 

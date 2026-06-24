@@ -773,7 +773,7 @@ private:
     db::DText *dtext;
     db::CellInstArray *inst;
     void *any;
-  } m_object;
+  } m_object{};
 };
 
 /**
@@ -853,7 +853,7 @@ private:
     db::DPath *path;
     db::DText *text;
     void *any;
-  } m_object;
+  } m_object{};
 };
 
 /**

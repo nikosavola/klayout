@@ -23,6 +23,8 @@
 #if defined(HAVE_QT)
 
 #include "imgPropertiesPage.h"
+
+#include <math.h>
 #include "imgLandmarksDialog.h"
 #include "imgStream.h"
 #include "layLayoutView.h"
@@ -79,7 +81,7 @@ PropertiesPage::init ()
 
   setupUi (this);
 
-  QAction *action;
+  QAction *action = nullptr;
 
   action = new QAction (QObject::tr ("Black To White"), this);
   connect (action, SIGNAL (triggered ()), this, SLOT (black_to_white ()));
@@ -287,7 +289,7 @@ PropertiesPage::min_max_value_changed ()
   colors->setEnabled (false_color_control->has_selection ());
   colors->set_single_mode (false);
 
-  double xmin, xmax;
+  double xmin = NAN, xmax = NAN;
   bool has_error = false;
   get_xmin_xmax (xmin, xmax, has_error);
 
@@ -327,7 +329,7 @@ PropertiesPage::update_controls ()
 
   if (false_color_control->has_selection () && false_color_control->selected_node () > 0 && false_color_control->selected_node () < int (false_color_control->nodes ().size ()) - 1) {
 
-    double xmin, xmax;
+    double xmin = NAN, xmax = NAN;
     get_xmin_xmax (xmin, xmax, has_error);
 
     if (! has_error) {
@@ -365,7 +367,7 @@ PropertiesPage::value_changed ()
   double xx = 0;
   bool has_error = false;
 
-  double xmin, xmax;
+  double xmin = NAN, xmax = NAN;
   get_xmin_xmax (xmin, xmax, has_error);
 
   double x = 0.0;
@@ -522,7 +524,7 @@ PropertiesPage::recompute_histogram ()
 
   try {
 
-    double xmin, xmax;
+    double xmin = NAN, xmax = NAN;
     tl::from_string_ext (tl::to_string (from_le->text ()), xmin);
     tl::from_string_ext (tl::to_string (to_le->text ()), xmax);
     if (xmin >= xmax) {
@@ -661,7 +663,7 @@ PropertiesPage::gamma_slider_changed (int value)
 
   m_no_signals = true;
 
-  double gamma;
+  double gamma = NAN;
   if (value < 50) {
     gamma = 1.0 / ((50 - value) / 50.0 * (1.0 / min_gamma - 1.0) + 1.0);
   } else {
@@ -916,7 +918,7 @@ PropertiesPage::apply (bool /*commit*/)
 
   bool mirror = mirror_cbx->isChecked ();
 
-  double xmin, xmax;
+  double xmin = NAN, xmax = NAN;
   get_xmin_xmax (xmin, xmax, has_error);
 
   if (has_error) {

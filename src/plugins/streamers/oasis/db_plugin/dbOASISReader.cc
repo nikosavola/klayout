@@ -126,7 +126,7 @@ OASISReader::get_uint64 ()
 {
   uint64_t v = 0;
   uint64_t vm = 1;
-  char c;
+  char c = 0;
 
   do {
     unsigned char *b = (unsigned char *) m_stream.get (1);
@@ -172,7 +172,7 @@ OASISReader::get_uint32 ()
 {
   uint32_t v = 0;
   uint32_t vm = 1;
-  char c;
+  char c = 0;
 
   do {
     unsigned char *b = (unsigned char *) m_stream.get (1);
@@ -250,7 +250,7 @@ OASISReader::get_real ()
     union {
       float f;
       uint32_t i;
-    } i2f;
+    } i2f{};
 
     unsigned char *b = (unsigned char *) m_stream.get (sizeof (i2f.i));
     if (! b) {
@@ -269,7 +269,7 @@ OASISReader::get_real ()
     union {
       double d;
       uint64_t i;
-    } i2f;
+    } i2f{};
 
     unsigned char *b = (unsigned char *) m_stream.get (sizeof (i2f.i));
     if (! b) {
@@ -401,7 +401,7 @@ OASISReader::get_gdelta (int64_t grid)
       error (tl::to_string (tr ("Coordinate value overflow")));
     }
 
-    int64_t ly;
+    int64_t ly = 0;
     get (ly);
     ly *= grid;
     if (ly < (int64_t) (std::numeric_limits <db::Coord>::min ()) ||
@@ -589,8 +589,8 @@ make_context_info (const std::vector<tl::Variant> &context_properties)
 void
 OASISReader::do_read (db::Layout &layout)
 {
-  unsigned char r;
-  char *mb;
+  unsigned char r = 0;
+  char *mb = nullptr;
 
   //  prepare
   m_s_gds_property_name_id = db::property_names_id (s_gds_property_propname);
@@ -870,7 +870,7 @@ OASISReader::do_read (db::Layout &layout)
 
       db::ld_type dt1 = 0, dt2 = std::numeric_limits<db::ld_type>::max () - 1;
       db::ld_type l1 = 0, l2 = std::numeric_limits<db::ld_type>::max () - 1;
-      uint32_t it;
+      uint32_t it = 0;
 
       it = get_uint32 ();
       if (it == 0) {
@@ -1536,7 +1536,7 @@ OASISReader::read_properties ()
   if (m & 0x04) {
     if (m & 0x02) {
 
-      uint64_t id;
+      uint64_t id = 0;
       get (id);
 
       std::map <uint64_t, std::string>::const_iterator cid = m_propnames.find (id);
@@ -1581,7 +1581,7 @@ OASISReader::read_properties ()
 
       } else if (t == 8) {
 
-        uint64_t l;
+        uint64_t l = 0;
         get (l);
         if (m_read_properties) {
           mm_last_value_list.get_non_const ().push_back (tl::Variant (int64_t (l)));
@@ -1589,7 +1589,7 @@ OASISReader::read_properties ()
 
       } else if (t == 9) {
 
-        int64_t l;
+        int64_t l = 0;
         get (l);
         if (m_read_properties) {
           mm_last_value_list.get_non_const ().push_back (tl::Variant (l));
@@ -1609,7 +1609,7 @@ OASISReader::read_properties ()
 
       } else if (t == 13 || t == 14 || t == 15) {
 
-        uint64_t id;
+        uint64_t id = 0;
         get (id);
         if (m_read_properties) {
           std::map <uint64_t, std::string>::const_iterator sid = m_propstrings.find (id);
@@ -1879,7 +1879,7 @@ OASISReader::do_read_placement (unsigned char r,
     if (m & 0x40) {
 
       //  cell by id
-      uint64_t id;
+      uint64_t id = 0;
       get (id);
 
       mm_placement_cell = cell_for_instance (layout, id);
@@ -1936,7 +1936,7 @@ OASISReader::do_read_placement (unsigned char r,
   mirror = (m & 0x01) != 0;
 
   if (m & 0x20) {
-    db::Coord x;
+    db::Coord x = 0;
     get (x);
     if (xy_absolute) {
       mm_placement_x = x;
@@ -1946,7 +1946,7 @@ OASISReader::do_read_placement (unsigned char r,
   }
 
   if (m & 0x10) {
-    db::Coord y;
+    db::Coord y = 0;
     get (y);
     if (xy_absolute) {
       mm_placement_y = y;
@@ -1964,7 +1964,7 @@ OASISReader::do_read_placement (unsigned char r,
     std::pair<bool, db::properties_id_type> pp = read_element_properties (false);
 
     db::Vector a, b;
-    size_t na, nb;
+    size_t na = 0, nb = 0;
     if (mm_repetition.get ().is_regular (a, b, na, nb)) {
 
       db::CellInstArray inst;
@@ -2075,7 +2075,7 @@ OASISReader::do_read_text (bool xy_absolute,
   if (m & 0x40) {
     if (m & 0x20) {
 
-      uint64_t id;
+      uint64_t id = 0;
       get (id);
 
       if (m_text_forward_references.find (id) != m_text_forward_references.end ()) {
@@ -2122,7 +2122,7 @@ OASISReader::do_read_text (bool xy_absolute,
   }
 
   if (m & 0x10) {
-    db::Coord x;
+    db::Coord x = 0;
     get (x);
     if (xy_absolute) {
       mm_text_x = x;
@@ -2132,7 +2132,7 @@ OASISReader::do_read_text (bool xy_absolute,
   }
 
   if (m & 0x8) {
-    db::Coord y;
+    db::Coord y = 0;
     get (y);
     if (xy_absolute) {
       mm_text_y = y;
@@ -2169,7 +2169,7 @@ OASISReader::do_read_text (bool xy_absolute,
       //  If the repetition is a regular one, convert the repetition into
       //  a shape array
       db::Vector a, b;
-      size_t na, nb;
+      size_t na = 0, nb = 0;
       if (! layout.is_editable () && mm_repetition.get ().is_regular (a, b, na, nb)) {
 
         db::TextPtr text_ptr (text, layout.shape_repository ());
@@ -2277,7 +2277,7 @@ OASISReader::do_read_rectangle (bool xy_absolute,
   }
 
   if (m & 0x10) {
-    db::Coord x;
+    db::Coord x = 0;
     get (x);
     if (xy_absolute) {
       mm_geometry_x = x;
@@ -2287,7 +2287,7 @@ OASISReader::do_read_rectangle (bool xy_absolute,
   }
 
   if (m & 0x8) {
-    db::Coord y;
+    db::Coord y = 0;
     get (y);
     if (xy_absolute) {
       mm_geometry_y = y;
@@ -2314,7 +2314,7 @@ OASISReader::do_read_rectangle (bool xy_absolute,
       //  If the repetition is a regular one, convert the repetition into
       //  a box array
       db::Vector a, b;
-      size_t na, nb;
+      size_t na = 0, nb = 0;
       if (! layout.is_editable () && mm_repetition.get ().is_regular (a, b, na, nb)) {
 
         //  Create a box array
@@ -2404,7 +2404,7 @@ OASISReader::do_read_polygon (bool xy_absolute, db::cell_index_type cell_index, 
   }
 
   if (m & 0x10) {
-    db::Coord x;
+    db::Coord x = 0;
     get (x);
     if (xy_absolute) {
       mm_geometry_x = x;
@@ -2414,7 +2414,7 @@ OASISReader::do_read_polygon (bool xy_absolute, db::cell_index_type cell_index, 
   }
 
   if (m & 0x8) {
-    db::Coord y;
+    db::Coord y = 0;
     get (y);
     if (xy_absolute) {
       mm_geometry_y = y;
@@ -2448,7 +2448,7 @@ OASISReader::do_read_polygon (bool xy_absolute, db::cell_index_type cell_index, 
         //  If the repetition is a regular one, convert the repetition into
         //  a shape array
         db::Vector a, b;
-        size_t na, nb;
+        size_t na = 0, nb = 0;
         if (! layout.is_editable () && mm_repetition.get ().is_regular (a, b, na, nb)) {
 
           //  creating a SimplePolygonPtr is most efficient with a normalized polygon because no displacement is provided
@@ -2583,7 +2583,7 @@ OASISReader::do_read_path (bool xy_absolute, db::cell_index_type cell_index, db:
   }
 
   if (m & 0x10) {
-    db::Coord x;
+    db::Coord x = 0;
     get (x);
     if (xy_absolute) {
       mm_geometry_x = x;
@@ -2593,7 +2593,7 @@ OASISReader::do_read_path (bool xy_absolute, db::cell_index_type cell_index, db:
   }
 
   if (m & 0x8) {
-    db::Coord y;
+    db::Coord y = 0;
     get (y);
     if (xy_absolute) {
       mm_geometry_y = y;
@@ -2629,7 +2629,7 @@ OASISReader::do_read_path (bool xy_absolute, db::cell_index_type cell_index, db:
         //  If the repetition is a regular one, convert the repetition into
         //  a shape array
         db::Vector a, b;
-        size_t na, nb;
+        size_t na = 0, nb = 0;
         if (! layout.is_editable () && mm_repetition.get ().is_regular (a, b, na, nb)) {
 
           //  creating a PathPtr is most efficient with a normalized path because no displacement is provided
@@ -2754,7 +2754,7 @@ OASISReader::do_read_trapezoid (unsigned char r, bool xy_absolute,db::cell_index
   }
 
   if (m & 0x10) {
-    db::Coord x;
+    db::Coord x = 0;
     get (x);
     if (xy_absolute) {
       mm_geometry_x = x;
@@ -2764,7 +2764,7 @@ OASISReader::do_read_trapezoid (unsigned char r, bool xy_absolute,db::cell_index
   }
 
   if (m & 0x8) {
-    db::Coord y;
+    db::Coord y = 0;
     get (y);
     if (xy_absolute) {
       mm_geometry_y = y;
@@ -2810,7 +2810,7 @@ OASISReader::do_read_trapezoid (unsigned char r, bool xy_absolute,db::cell_index
       //  If the repetition is a regular one, convert the repetition into
       //  a shape array
       db::Vector a, b;
-      size_t na, nb;
+      size_t na = 0, nb = 0;
       if (! layout.is_editable () && mm_repetition.get ().is_regular (a, b, na, nb)) {
 
         //  creating a SimplePolygonPtr is most efficient with a normalized polygon because no displacement is provided
@@ -2921,7 +2921,7 @@ OASISReader::do_read_ctrapezoid (bool xy_absolute,db::cell_index_type cell_index
   }
 
   if (m & 0x10) {
-    db::Coord x;
+    db::Coord x = 0;
     get (x);
     if (xy_absolute) {
       mm_geometry_x = x;
@@ -2931,7 +2931,7 @@ OASISReader::do_read_ctrapezoid (bool xy_absolute,db::cell_index_type cell_index
   }
 
   if (m & 0x8) {
-    db::Coord y;
+    db::Coord y = 0;
     get (y);
     if (xy_absolute) {
       mm_geometry_y = y;
@@ -3182,7 +3182,7 @@ OASISReader::do_read_ctrapezoid (bool xy_absolute,db::cell_index_type cell_index
       //  If the repetition is a regular one, convert the repetition into
       //  a shape array
       db::Vector a, b;
-      size_t na, nb;
+      size_t na = 0, nb = 0;
       if (! layout.is_editable () && mm_repetition.get ().is_regular (a, b, na, nb)) {
 
         db::Vector d (poly.box ().lower_left () - db::Point ());
@@ -3284,7 +3284,7 @@ OASISReader::do_read_circle (bool xy_absolute, db::cell_index_type cell_index, d
   }
 
   if (m & 0x10) {
-    db::Coord x;
+    db::Coord x = 0;
     get (x);
     if (xy_absolute) {
       mm_geometry_x = x;
@@ -3294,7 +3294,7 @@ OASISReader::do_read_circle (bool xy_absolute, db::cell_index_type cell_index, d
   }
 
   if (m & 0x8) {
-    db::Coord y;
+    db::Coord y = 0;
     get (y);
     if (xy_absolute) {
       mm_geometry_y = y;
@@ -3333,7 +3333,7 @@ OASISReader::do_read_circle (bool xy_absolute, db::cell_index_type cell_index, d
       //  If the repetition is a regular one, convert the repetition into
       //  a shape array
       db::Vector a, b;
-      size_t na, nb;
+      size_t na = 0, nb = 0;
       if (! layout.is_editable () && mm_repetition.get ().is_regular (a, b, na, nb)) {
 
         //  creating a PathPtr is most efficient with a normalized path because no displacement is provided
@@ -3558,7 +3558,7 @@ OASISReader::do_read_cell (db::cell_index_type cell_index, db::Layout &layout)
       get_str ();
 
       if (m & 0x10) {
-        db::Coord x;
+        db::Coord x = 0;
         get (x);
         if (xy_absolute) {
           mm_geometry_x = x;
@@ -3568,7 +3568,7 @@ OASISReader::do_read_cell (db::cell_index_type cell_index, db::Layout &layout)
       }
 
       if (m & 0x8) {
-        db::Coord y;
+        db::Coord y = 0;
         get (y);
         if (xy_absolute) {
           mm_geometry_y = y;

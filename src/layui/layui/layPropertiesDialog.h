@@ -98,7 +98,7 @@ private:
   std::vector<std::vector<size_t> > m_object_indexes;
   QStackedLayout *mp_stack;
   QLabel *mp_none;
-  lay::MainWindow *mp_mw;
+  lay::MainWindow *mp_mw{};
   size_t m_objects, m_current_object;
   bool m_auto_applied;
   db::Manager::transaction_id_t m_transaction_id;

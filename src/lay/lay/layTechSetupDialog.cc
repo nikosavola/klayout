@@ -593,7 +593,7 @@ TechSetupDialog::TechSetupDialog (QWidget *parent)
   QAction *refresh_action = new QAction (QObject::tr ("Refresh"), this);
   connect (refresh_action, SIGNAL (triggered ()), this, SLOT (refresh_clicked ()));
 
-  QAction *separator;
+  QAction *separator = nullptr;
 
   mp_ui->tech_tree->addAction (add_action);
   mp_ui->tech_tree->addAction (delete_action);

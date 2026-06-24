@@ -257,7 +257,7 @@ MarkerBrowserConfigPage2::commit (lay::Dispatcher *root)
     root->config_set (cfg_rdb_marker_line_width, -1);
   } else {
     try {
-      int s;
+      int s = 0;
       tl::from_string_ext (tl::to_string (mp_ui->lw_le->text ()), s);
       root->config_set (cfg_rdb_marker_line_width, s);
     } catch (...) { } // NOLINT(bugprone-empty-catch)
@@ -267,7 +267,7 @@ MarkerBrowserConfigPage2::commit (lay::Dispatcher *root)
     root->config_set (cfg_rdb_marker_vertex_size, -1);
   } else {
     try {
-      int s;
+      int s = 0;
       tl::from_string_ext (tl::to_string (mp_ui->vs_le->text ()), s);
       root->config_set (cfg_rdb_marker_vertex_size, s);
     } catch (...) { } // NOLINT(bugprone-empty-catch)

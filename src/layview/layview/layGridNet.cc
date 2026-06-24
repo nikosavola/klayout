@@ -308,7 +308,7 @@ GridNet::render_bg (const lay::Viewport &vp, ViewObjectCanvas &canvas)
     if (style == Dots || style == TenthDottedLines || 
         style == DottedLines || style == LightDottedLines) {
 
-      int n;
+      int n = 0;
 
       double g = grid;
       if (style == TenthDottedLines) {
@@ -348,7 +348,7 @@ GridNet::render_bg (const lay::Viewport &vp, ViewObjectCanvas &canvas)
 
     } else if (style == Lines) {
 
-      int n;
+      int n = 0;
 
       //  the way we iterate here is safe against integer overflow ..
       n = nx;
@@ -367,7 +367,7 @@ GridNet::render_bg (const lay::Viewport &vp, ViewObjectCanvas &canvas)
 
     } else if (style == TenthMarkedLines) {
 
-      int n;
+      int n = 0;
       double g = grid / 10.0;
 
       //  reduce grid if too small
@@ -422,7 +422,7 @@ GridNet::render_bg (const lay::Viewport &vp, ViewObjectCanvas &canvas)
       if (m_style0 == Dots || m_style0 == TenthDottedLines || 
           m_style0 == DottedLines || m_style0 == LightDottedLines) {
 
-        int n;
+        int n = 0;
 
         double g = grid;
         if (m_style0 == TenthDottedLines) {

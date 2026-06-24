@@ -22,6 +22,8 @@
 
 
 #include "layD25ViewWidget.h"
+
+#include <math.h>
 #include "layD25ViewUtils.h"
 #include "layLayoutView.h"
 
@@ -451,7 +453,7 @@ D25ViewWidget::fit ()
       QVector3D p ((i & 1) == 0 ? -0.5 * dim.x () : 0.5 * dim.x (), bll.y () + ((i & 2) == 0 ? 0.0 : dim.y ()), (i & 4) == 0 ? -0.5 * dim.z () : 0.5 * dim.z ());
       p = cam_trans () * p;
 
-      double d;
+      double d = NAN;
 
       d = std::abs (p.x ()) + tfovh * p.z ();
       if (d > 1e-6) {
@@ -1283,7 +1285,7 @@ D25ViewWidget::paintGL ()
 
     m_gridplane_program->setUniformValue ("color", foreground_rgb, foreground_rgb, foreground_rgb, major ? 0.25f : 0.15f);
 
-    double x, y;
+    double x = NAN, y = NAN;
     double step = (major ? gmajor : gminor);
 
     x = ceil (l / step) * step;

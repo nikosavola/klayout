@@ -610,7 +610,7 @@ void
 GDS2WriterBase::write_inst (double sf, const db::Instance &instance, bool normalize, bool resolve_skew_arrays, const db::Layout &layout, db::properties_id_type prop_id)
 {
   db::Vector a, b;
-  unsigned long amax, bmax;
+  unsigned long amax = 0, bmax = 0;
 
   bool is_reg = instance.is_regular_array (a, b, amax, bmax);
 

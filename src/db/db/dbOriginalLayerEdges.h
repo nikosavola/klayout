@@ -74,9 +74,9 @@ protected:
 private:
   OriginalLayerEdges &operator= (const OriginalLayerEdges &other);
 
-  bool m_is_merged;
+  bool m_is_merged{};
   mutable db::Shapes m_merged_edges;
-  mutable bool m_merged_edges_valid;
+  mutable bool m_merged_edges_valid{};
   mutable db::RecursiveShapeIterator m_iter;
   db::ICplxTrans m_iter_trans;
 

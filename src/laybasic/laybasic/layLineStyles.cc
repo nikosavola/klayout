@@ -434,7 +434,7 @@ LineStyles &
 LineStyles::operator= (const LineStyles &p)
 {
   if (this != &p) {
-    unsigned int i;
+    unsigned int i = 0;
     for (i = 0; i < p.count (); ++i) {
       replace_style (i, p.begin () [i]);
     }
@@ -581,7 +581,7 @@ LineStyles::merge (const LineStyles &other, std::map<unsigned int, unsigned int>
   //  map the pattern of other into *this, possibly creating new ones
   for (iterator c = other.begin_custom (); c != other.end (); ++c) {
     std::map <LineStyleInfo, unsigned int, style_less_f>::const_iterator p = styles.find (*c);
-    unsigned int new_index;
+    unsigned int new_index = 0;
     if (p == styles.end ()) {
       new_index = add_style (*c);
       styles.insert (std::make_pair (*c, new_index));

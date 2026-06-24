@@ -535,15 +535,15 @@ public:
   bool is_child_inactive (db::cell_index_type new_child) const;
 
 private:
-  int m_max_depth;
-  int m_min_depth;
-  bool m_overlapping;
+  int m_max_depth{};
+  int m_min_depth{};
+  bool m_overlapping{};
   std::set<db::cell_index_type> m_start, m_stop;
   std::set<db::cell_index_type> m_targets;
-  bool m_all_targets;
+  bool m_all_targets{};
 
   tl::weak_ptr<layout_type> mp_layout;
-  const cell_type *mp_top_cell;
+  const cell_type *mp_top_cell{};
 
   box_type m_region;
   std::unique_ptr<region_type> mp_complex_region;
@@ -554,7 +554,7 @@ private:
   mutable inst_array_iterator m_inst_array;
   mutable instance_element_type m_combined_instance;
   mutable std::map<db::cell_index_type, bool> m_empty_cells_cache;
-  mutable const cell_type *mp_cell;
+  mutable const cell_type *mp_cell{};
   mutable cplx_trans_type m_trans;
   mutable std::vector<cplx_trans_type> m_trans_stack;
   mutable std::vector<inst_iterator> m_inst_iterators;
@@ -562,8 +562,8 @@ private:
   mutable std::vector<const cell_type *> m_cells;
   mutable std::vector<box_tree_type> m_local_complex_region_stack;
   mutable std::vector<box_type> m_local_region_stack;
-  mutable bool m_needs_reinit;
-  mutable size_t m_inst_quad_id;
+  mutable bool m_needs_reinit{};
+  mutable size_t m_inst_quad_id{};
   mutable std::vector<size_t> m_inst_quad_id_stack;
   mutable std::set<db::cell_index_type> m_target_tree;
 

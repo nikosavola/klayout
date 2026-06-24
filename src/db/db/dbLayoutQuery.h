@@ -669,7 +669,7 @@ public:
   void dump () const;
 
 private:
-  FilterStateBase *mp_root_state;
+  FilterStateBase *mp_root_state{};
   std::vector<FilterStateBase *> m_state;
   tl::weak_ptr<LayoutQuery> mp_q;
   db::Layout *mp_layout;

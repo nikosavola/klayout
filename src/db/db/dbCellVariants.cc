@@ -318,7 +318,7 @@ VariantsCollectorBase::separate_variants (std::map<db::cell_index_type, std::map
       int index = 0;
       for (auto v = vc->second.begin (); v != vc->second.end (); ++v, ++index) {
 
-        db::cell_index_type ci_var;
+        db::cell_index_type ci_var = 0;
 
         if (v != vc->second.begin ()) {
 

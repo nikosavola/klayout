@@ -388,7 +388,7 @@ rba_class_new_instance_checked (int argc, VALUE *argv, VALUE klass)
 {
   VALUE ret = Qnil;
 
-  rb_class_new_instance_param p;
+  rb_class_new_instance_param p{};
   p.argc = argc;
   p.argv = argv;
   p.klass = klass;
@@ -440,7 +440,7 @@ VALUE rba_funcall2_checked (VALUE obj, ID id, int argc, VALUE *args)
 
   VALUE ret = Qnil;
 
-  rb_funcall2_params p;
+  rb_funcall2_params p{};
   p.obj  = obj;
   p.id   = id;
   p.argc = argc;
@@ -484,7 +484,7 @@ rba_f_eval_checked (int argc, VALUE *argv, VALUE self)
 {
   VALUE ret = Qnil;
 
-  rb_f_eval_params p;
+  rb_f_eval_params p{};
   p.argc = argc;
   p.argv = argv;
   p.self = self;
@@ -537,7 +537,7 @@ VALUE rba_eval_string_in_context (const char *expr, const char *file, int line, 
     ruby_script (e);
   }
 
-  int argc;
+  int argc = 0;
   VALUE args[4];
   args[0] = rb_str_new (expr, long (strlen (expr)));
   //  use the current binding if there is one. This allows using "eval" in the context of a current trace callback

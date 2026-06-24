@@ -222,7 +222,7 @@ RdbDifferenceReceiver::produce_cell_inst (const db::CellInstArrayWithProperties 
   std::string r = "item: " + tl::sprintf (tl::to_string (QObject::tr ("instance: (%s) %s")), layout->cell_name (ci.object ().cell_index ()), ci.complex_trans ().to_string ());
 
   db::Vector a, b;
-  unsigned long amax, bmax;
+  unsigned long amax = 0, bmax = 0;
   if (ci.is_regular_array (a, b, amax, bmax)) {
     r += tl::sprintf (" [a=%s, b=%s, na=%ld, nb=%ld]", a.to_string (), b.to_string (), amax, bmax);
   } else if (ci.size () > 1) {

@@ -23,6 +23,8 @@
 
 #include "dbPath.h"
 
+#include <math.h>
+
 namespace db
 {
 
@@ -50,7 +52,7 @@ template <class C>
 typename path<C>::perimeter_type 
 path<C>::perimeter () const 
 {
-  double l;
+  double l = NAN;
   if (m_width < 0) {
     //  correction for round path ends. Uses the average radius approximation for the ellipse ends.
     l = M_PI * 0.5 * (sqrt (m_bgn_ext * m_bgn_ext / 2.0 + m_width * m_width / 8.0) + sqrt (m_end_ext * m_end_ext / 2.0 + m_width * m_width / 8.0));
@@ -233,7 +235,7 @@ void path<C>::create_shifted_points (C start, C end, C width, bool forward, Iter
       double sd = sin(a0);
       double c2d = cd * cd - sd * sd;
       double s2d = 2 * cd * sd;
-      double c, s;
+      double c = NAN, s = NAN;
 
       edd = ed * (double(-start) / cd);
       ndd = nd * (disp / cd);
@@ -503,7 +505,7 @@ round_path_corners (const db::DPath &input, double r, int n, double accuracy)
           double ac = M_PI - fabs (a);
           int npts = std::max (2, (int) floor (0.5 + n * ac / (2.0 * M_PI)));
 
-          double x, y;
+          double x = NAN, y = NAN;
           db::DPoint dp;
 
           x = xc + ract * s1.y ();

@@ -36,6 +36,8 @@
 #include "tlExceptions.h"
 #include "tlDeferredExecution.h"
 #include "layLayoutViewBase.h"
+
+#include <math.h>
 #include "layBitmapsToImage.h"
 #include "layViewOp.h"
 #include "layViewObject.h"
@@ -872,14 +874,14 @@ LayoutViewBase::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_ctx_dimming) {
 
-    int n;
+    int n = 0;
     tl::from_string (value, n);
     ctx_dimming (n);
     return true;
 
   } else if (name == cfg_ctx_hollow) {
 
-    bool h;
+    bool h = false;
     tl::from_string (value, h);
     ctx_hollow (h);
     return true;
@@ -893,91 +895,91 @@ LayoutViewBase::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_child_ctx_dimming) {
 
-    int n;
+    int n = 0;
     tl::from_string (value, n);
     child_ctx_dimming (n);
     return true;
 
   } else if (name == cfg_child_ctx_hollow) {
 
-    bool h;
+    bool h = false;
     tl::from_string (value, h);
     child_ctx_hollow (h);
     return true;
 
   } else if (name == cfg_child_ctx_enabled) {
 
-    bool h;
+    bool h = false;
     tl::from_string (value, h);
     child_ctx_enabled (h);
     return true;
 
   } else if (name == cfg_search_range) {
 
-    unsigned int n;
+    unsigned int n = 0;
     tl::from_string (value, n);
     set_search_range (n);
     return true;
 
   } else if (name == cfg_search_range_box) {
 
-    unsigned int n;
+    unsigned int n = 0;
     tl::from_string (value, n);
     set_search_range_box (n);
     return true;
 
   } else if (name == cfg_abstract_mode_enabled) {
 
-    bool e;
+    bool e = false;
     tl::from_string (value, e);
     abstract_mode_enabled (e);
     return true;
 
   } else if (name == cfg_abstract_mode_width) {
 
-    double w;
+    double w = NAN;
     tl::from_string (value, w);
     abstract_mode_width (w);
     return true;
 
   } else if (name == cfg_min_inst_label_size) {
 
-    int n;
+    int n = 0;
     tl::from_string (value, n);
     min_inst_label_size (n);
     return true;
 
   } else if (name == cfg_empty_cell_dimension) {
 
-    double n;
+    double n = NAN;
     tl::from_string (value, n);
     empty_cell_dimension (n);
     return true;
 
   } else if (name == cfg_cell_box_text_font) {
 
-    int n;
+    int n = 0;
     tl::from_string (value, n);
     cell_box_text_font (n);
     return true;
 
   } else if (name == cfg_cell_box_text_transform) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     cell_box_text_transform (flag);
     return true;
 
   } else if (name == cfg_cell_box_visible) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     cell_box_visible (flag);
     return true;
 
   } else if (name == cfg_ghost_cells_visible) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     ghost_cells_visible (flag);
     return true;
@@ -998,119 +1000,119 @@ LayoutViewBase::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_text_visible) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     text_visible (flag);
     return true;
 
   } else if (name == cfg_bitmap_caching) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     bitmap_caching (flag);
     return true;
 
   } else if (name == cfg_text_lazy_rendering) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     text_lazy_rendering (flag);
     return true;
 
   } else if (name == cfg_show_properties) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     show_properties_as_text (flag);
     return true;
 
   } else if (name == cfg_apply_text_trans) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     apply_text_trans (flag);
     return true;
 
   } else if (name == cfg_apply_text_trans_mode) {
 
-    unsigned int mode;
+    unsigned int mode = 0;
     tl::from_string (value, mode);
     apply_text_trans_mode (mode);
     return true;
 
   } else if (name == cfg_markers_visible) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     mp_canvas->set_dismiss_view_objects (! flag);
     return true;
 
   } else if (name == cfg_no_stipple) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     no_stipples (flag);
     return true;
 
   } else if (name == cfg_stipple_offset) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     offset_stipples (flag);
     return true;
 
   } else if (name == cfg_default_text_size) {
 
-    double sz;
+    double sz = NAN;
     tl::from_string (value, sz);
     default_text_size (sz);
     return true;
 
   } else if (name == cfg_text_point_mode) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     text_point_mode (flag);
     return true;
 
   } else if (name == cfg_text_font) {
 
-    int n;
+    int n = 0;
     tl::from_string (value, n);
     text_font (n);
     return true;
 
   } else if (name == cfg_full_hier_new_cell) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     full_hier_new_cell (flag);
     return true;
 
   } else if (name == cfg_fit_new_cell) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     fit_new_cell (flag);
     return true;
 
   } else if (name == cfg_clear_ruler_new_cell) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     clear_ruler_new_cell (flag);
     return true;
 
   } else if (name == cfg_abs_units) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     absolute_coordinates (flag);
     return true;
 
   } else if (name == cfg_auto_create_new_layers) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     auto_create_new_layers (flag);
     return true;
@@ -1162,49 +1164,49 @@ LayoutViewBase::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_pan_distance) {
 
-    double pd;
+    double pd = NAN;
     tl::from_string (value, pd);
     pan_distance (pd);
     return true;
 
   } else if (name == cfg_drawing_workers) {
 
-    int workers;
+    int workers = 0;
     tl::from_string (value, workers);
     set_drawing_workers (workers);
     return true;
 
   } else if (name == cfg_drop_small_cells) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     drop_small_cells (flag);
     return true;
 
   } else if (name == cfg_drop_small_cells_cond) {
 
-    unsigned int n;
+    unsigned int n = 0;
     tl::from_string (value, n);
     drop_small_cells_cond (drop_small_cells_cond_type (n));
     return true;
 
   } else if (name == cfg_drop_small_cells_value) {
 
-    unsigned int n;
+    unsigned int n = 0;
     tl::from_string (value, n);
     drop_small_cells_value (n);
     return true;
 
   } else if (name == cfg_array_border_instances) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
     draw_array_border_instances (f);
     return true;
 
   } else if (name == cfg_dbu_units) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     dbu_coordinates (flag);
     return true;
@@ -1268,7 +1270,7 @@ LayoutViewBase::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_sel_inside_pcells_mode) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
 
     if (m_sel_inside_pcells != flag) {
@@ -1280,7 +1282,7 @@ LayoutViewBase::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_sel_transient_mode) {
 
-    bool flag;
+    bool flag = false;
     tl::from_string (value, flag);
     m_transient_selection_mode = flag;
 
@@ -3275,7 +3277,7 @@ LayoutViewBase::reload_layout (unsigned int cv_index)
     }
   }
 
-  lay::LayoutHandle *handle;
+  lay::LayoutHandle *handle = nullptr;
 
   //  reset the layout: create a dummy handle and install this in between
   //  this will clear the original layout if not further referenced.
@@ -3555,7 +3557,7 @@ LayoutViewBase::load_layout (const std::string &filename, const db::LoadLayoutOp
   lay::LayoutHandle *handle = new lay::LayoutHandle (new db::Layout (is_editable (), manager ()), filename);
   cv.set (handle);
 
-  unsigned int cv_index;
+  unsigned int cv_index = 0;
   db::LayerMap lmap;
 
   try {
@@ -4452,7 +4454,7 @@ LayoutViewBase::set_view_ops ()
 
     lay::ViewOp::Mode mode = lay::ViewOp::Copy;
 
-    tl::color_t fill_color, frame_color, text_color;
+    tl::color_t fill_color = 0, frame_color = 0, text_color = 0;
     int dp = 1; // no stipples for guiding shapes 
 
     if (ctx == 0) {
@@ -4567,7 +4569,7 @@ LayoutViewBase::set_view_ops ()
           }
         }
 
-        tl::color_t fill_color, frame_color, text_color;
+        tl::color_t fill_color = 0, frame_color = 0, text_color = 0;
         int dp = m_no_stipples ? 1 : l->dither_pattern (true /*real*/);
         int ls = l->line_style (true /*real*/);
 
@@ -5718,7 +5720,7 @@ LayoutViewBase::cut ()
 void
 LayoutViewBase::remove_unused_layers ()
 {
-  bool any_deleted;
+  bool any_deleted = false;
   do {
 
     std::vector <lay::LayerPropertiesConstIterator> sel;

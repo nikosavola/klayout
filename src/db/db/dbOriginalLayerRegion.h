@@ -84,9 +84,9 @@ protected:
 private:
   OriginalLayerRegion &operator= (const OriginalLayerRegion &other);
 
-  bool m_is_merged;
+  bool m_is_merged{};
   mutable db::Shapes m_merged_polygons;
-  mutable bool m_merged_polygons_valid;
+  mutable bool m_merged_polygons_valid{};
   mutable db::RecursiveShapeIterator m_iter;
   db::ICplxTrans m_iter_trans;
 

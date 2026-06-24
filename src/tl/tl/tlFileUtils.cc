@@ -407,7 +407,7 @@ std::vector<std::string> dir_entries (const std::string &s, bool with_files, boo
   DIR *h = opendir (tl::to_local (s).c_str ());
   if (h) {
 
-    struct dirent *d;
+    struct dirent *d = nullptr;
     while ((d = readdir (h)) != nullptr) {
 
       std::string e = tl::to_string_from_local (d->d_name);
@@ -747,7 +747,7 @@ static std::pair<std::string, bool> absolute_path_of_existing (const std::string
 
 #else
 
-  char *fp;
+  char *fp = nullptr;
   fp = realpath (tl::to_local (s).c_str (), nullptr);
   if (fp == nullptr) {
     return std::make_pair (std::string (), false);

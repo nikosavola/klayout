@@ -23,6 +23,8 @@
 
 #include "dbLEFImporter.h"
 
+#include <math.h>
+
 #include "tlStream.h"
 
 #include <cctype>
@@ -454,7 +456,7 @@ LEFImporter::read_viadef_by_rule (RuleBasedViaGenerator *vg, ViaDesc &via_desc, 
 {
   while (! at_end () && ! test ("END")) {
 
-    double x, y;
+    double x = NAN, y = NAN;
 
     if (test ("CUTSIZE")) {
 
@@ -734,7 +736,7 @@ read_width_property (const std::string &name, const std::string &value, double &
 
         bool wrongdirection = false;
         double v = 0.0;
-        double vv;
+        double vv = NAN;
         while (! ex.at_end () && *ex != ';') {
           if (ex.try_read (vv)) {
             if (v == 0.0 || vv < v) {

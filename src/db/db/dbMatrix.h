@@ -475,7 +475,7 @@ public:
   bool less (const matrix_2d<C> &d) const;
 
 private:
-  double m_m11, m_m12, m_m21, m_m22;
+  double m_m11{}, m_m12{}, m_m21{}, m_m22{};
 };
 
 typedef matrix_2d<db::DCoord> Matrix2d;
@@ -1003,7 +1003,7 @@ public:
   bool less (const matrix_3d &d) const;
 
 private:
-  double m_m[3][3];
+  double m_m[3][3]{};
 
   void set (double m11, double m12, double m13, double m21, double m22, double m23, double m31, double m32, double m33)
   {

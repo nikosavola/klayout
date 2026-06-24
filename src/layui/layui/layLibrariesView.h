@@ -230,7 +230,7 @@ public slots:
   void search_prev ();
 
 private:
-  db::Layout *mp_layout;
+  db::Layout *mp_layout{};
   bool m_enable_cb;
   lay::LayoutViewBase *mp_view;
   std::vector <QTreeView *> mp_cell_lists;

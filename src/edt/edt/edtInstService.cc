@@ -23,6 +23,8 @@
 
 #include "edtInstService.h"
 
+#include <math.h>
+
 #include "layLayoutViewBase.h"
 #include "layDragDropData.h"
 #include "dbLibraryManager.h"
@@ -550,7 +552,7 @@ InstService::configure (const std::string &name, const std::string &value)
 
   if (name == cfg_edit_inst_place_origin) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
 
     if (f != m_place_origin) {
@@ -564,7 +566,7 @@ InstService::configure (const std::string &name, const std::string &value)
 
   if (name == cfg_edit_inst_scale) {
 
-    double s;
+    double s = NAN;
     tl::from_string (value, s);
 
     if (fabs (s - m_scale) > 1e-10) {
@@ -578,7 +580,7 @@ InstService::configure (const std::string &name, const std::string &value)
 
   if (name == cfg_edit_inst_angle) {
 
-    double a;
+    double a = NAN;
     tl::from_string (value, a);
 
     if (fabs (a - m_angle) > 1e-10) {
@@ -591,7 +593,7 @@ InstService::configure (const std::string &name, const std::string &value)
 
   if (name == cfg_edit_inst_mirror) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
 
     if (f != m_mirror) {
@@ -605,7 +607,7 @@ InstService::configure (const std::string &name, const std::string &value)
 
   if (name == cfg_edit_inst_array) {
 
-    bool f;
+    bool f = false;
     tl::from_string (value, f);
 
     if (f != m_array) {
@@ -619,7 +621,7 @@ InstService::configure (const std::string &name, const std::string &value)
 
   if (name == cfg_edit_inst_rows) {
 
-    unsigned int v;
+    unsigned int v = 0;
     tl::from_string (value, v);
 
     if (v != m_rows) {
@@ -633,7 +635,7 @@ InstService::configure (const std::string &name, const std::string &value)
 
   if (name == cfg_edit_inst_row_x) {
 
-    double v;
+    double v = NAN;
     tl::from_string (value, v);
 
     if (! db::coord_traits<double>::equal (m_row_x, v)) {
@@ -647,7 +649,7 @@ InstService::configure (const std::string &name, const std::string &value)
 
   if (name == cfg_edit_inst_row_y) {
 
-    double v;
+    double v = NAN;
     tl::from_string (value, v);
 
     if (! db::coord_traits<double>::equal (m_row_y, v)) {
@@ -661,7 +663,7 @@ InstService::configure (const std::string &name, const std::string &value)
 
   if (name == cfg_edit_inst_columns) {
 
-    unsigned int v;
+    unsigned int v = 0;
     tl::from_string (value, v);
 
     if (v != m_columns) {
@@ -675,7 +677,7 @@ InstService::configure (const std::string &name, const std::string &value)
 
   if (name == cfg_edit_inst_column_x) {
 
-    double v;
+    double v = NAN;
     tl::from_string (value, v);
 
     if (! db::coord_traits<double>::equal (m_column_x, v)) {
@@ -689,7 +691,7 @@ InstService::configure (const std::string &name, const std::string &value)
 
   if (name == cfg_edit_inst_column_y) {
 
-    double v;
+    double v = NAN;
     tl::from_string (value, v);
 
     if (! db::coord_traits<double>::equal (m_column_y, v)) {

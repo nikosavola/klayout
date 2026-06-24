@@ -71,7 +71,7 @@ private:
     double pixel_size;
 
     //  The window size or zero for "no window"
-    double window_size;
+    double window_size{};
 
     //  The boundary mode
     std::string boundary_mode;

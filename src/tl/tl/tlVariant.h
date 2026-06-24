@@ -1785,7 +1785,7 @@ private:
 #endif
     std::vector<char> *m_bytearray;
     std::string *m_stdstring;
-  } m_var;
+  } m_var{};
 
   //  this will hold the string if it is valid
   mutable char *m_string;

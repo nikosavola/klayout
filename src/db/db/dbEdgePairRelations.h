@@ -376,7 +376,7 @@ private:
   edge_relation_type m_r;
   distance_type m_d;
   metrics_type m_metrics;
-  double m_ignore_angle, m_ignore_angle_cos;
+  double m_ignore_angle, m_ignore_angle_cos{};
   distance_type m_min_projection;
   distance_type m_max_projection;
 };

@@ -161,7 +161,7 @@ NetlistBrowserPage::NetlistBrowserPage (QWidget * /*parent*/)
     lay::ColorButton::build_color_menu (menu, this, SLOT (browse_color_for_net ()), SLOT (select_color_for_net ()));
     color_action->setMenu (menu);
 
-    QAction *sep;
+    QAction *sep = nullptr;
     directory_tree->addAction (m_show_all_action);
     QAction *collapse_all = new QAction (QObject::tr ("Collapse All"), directory_tree);
     connect (collapse_all, SIGNAL (triggered ()), directory_tree, SLOT (collapseAll ()));
@@ -480,7 +480,7 @@ NetlistBrowserPage::select_net (const db::Net *net)
 
   } else {
 
-    NetlistBrowserModel *model;
+    NetlistBrowserModel *model = nullptr;
 
     model = dynamic_cast<NetlistBrowserModel *> (nl_directory_tree->model ());
     tl_assert (model != nullptr);
@@ -508,7 +508,7 @@ NetlistBrowserPage::select_path (const lay::NetlistObjectsPath &path)
 
   } else {
 
-    NetlistBrowserModel *model;
+    NetlistBrowserModel *model = nullptr;
     db::LayoutToNetlist *l2ndb = mp_database.get ();
     db::LayoutVsSchematic *lvsdb = dynamic_cast<db::LayoutVsSchematic *> (l2ndb);
 

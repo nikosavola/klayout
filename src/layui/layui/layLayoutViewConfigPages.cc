@@ -23,6 +23,8 @@
 #if defined(HAVE_QT)
 
 #include "layLayoutViewConfigPages.h"
+
+#include <math.h>
 #include "laybasicConfig.h"
 #include "layConverters.h"
 #include "layDispatcher.h"
@@ -263,13 +265,13 @@ LayoutViewConfigPage2a::commit (lay::Dispatcher *root)
   root->config_set (cfg_guiding_shape_vertex_size, mp_ui->pcell_gs_vs->value ());
 
   try {
-    int n;
+    int n = 0;
     tl::from_string_ext (tl::to_string (mp_ui->cell_min_size_for_label_edit->text ()), n);
     root->config_set (cfg_min_inst_label_size, n);
   } catch (...) { } // NOLINT(bugprone-empty-catch)
 
   try {
-    double ecd;
+    double ecd = NAN;
     tl::from_string_ext (tl::to_string (mp_ui->empty_cell_dimension->text ()), ecd);
     root->config_set (cfg_empty_cell_dimension, ecd);
   } catch (...) { } // NOLINT(bugprone-empty-catch)
@@ -345,7 +347,7 @@ LayoutViewConfigPage2b::commit (lay::Dispatcher *root)
   root->config_set (cfg_text_font, mp_ui->text_font_cb->currentIndex ());
 
   try {
-    double s;
+    double s = NAN;
     tl::from_string_ext (tl::to_string (mp_ui->text_def_size_edit->text ()), s);
     root->config_set (cfg_default_text_size, s);
   } catch (...) { } // NOLINT(bugprone-empty-catch)
@@ -700,7 +702,7 @@ LayoutViewConfigPage3f::commit (lay::Dispatcher *root)
   root->config_set (cfg_drop_small_cells_cond, mp_ui->drop_small_cells_cond_cb->currentIndex ());
 
   try {
-    unsigned int s;
+    unsigned int s = 0;
     tl::from_string_ext (tl::to_string (mp_ui->drop_small_cells_value_le->text ()), s);
     root->config_set (cfg_drop_small_cells_value, s);
   } catch (...) { } // NOLINT(bugprone-empty-catch)

@@ -65,7 +65,7 @@ ClipboardData::add (const db::Layout &layout, unsigned int layer, const db::Shap
 void 
 ClipboardData::add (const db::Layout &layout, const db::Instance &inst, unsigned int mode)
 {
-  db::cell_index_type target_cell_index;
+  db::cell_index_type target_cell_index = 0;
   db::cell_index_type source_cell_index = inst.cell_index ();
 
   //  in mode 1 (deep), first add the target cell 
@@ -84,7 +84,7 @@ ClipboardData::add (const db::Layout &layout, const db::Instance &inst, unsigned
 void 
 ClipboardData::add (const db::Layout &layout, const db::Instance &inst, unsigned int mode, const db::ICplxTrans &trans)
 {
-  db::cell_index_type target_cell_index;
+  db::cell_index_type target_cell_index = 0;
   db::cell_index_type source_cell_index = inst.cell_index ();
 
   //  in mode 1 (deep) first add the target cell 

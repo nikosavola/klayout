@@ -250,7 +250,7 @@ BEGIN_PROTECTED
     return;
   }
 
-  bool ok;
+  bool ok = false;
   QString text = QInputDialog::getText(this, QObject::tr ("Layer Offset"),
                                              QObject::tr ("Enter the first GDS layer that is produced.\nLeave empty for not producing GDS layer numbers at all:"),
                                              QLineEdit::Normal,

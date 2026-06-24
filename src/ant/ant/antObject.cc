@@ -28,6 +28,7 @@
 #include "tlString.h"
 #include "tlExpression.h"
 
+#include <math.h>
 #include <string.h>
 
 namespace ant
@@ -505,7 +506,7 @@ public:
     } else if (m_function == P2Y) {
       out = (trans * p2 (obj, m_index)).y ();
     } else if (m_function == Angle) {
-      double r, a1, a2;
+      double r = NAN, a1 = NAN, a2 = NAN;
       db::DPoint c;
       if (obj.compute_angle_parameters (r, c, a1, a2)) {
         out = tl::Variant ((a2 - a1) * 180.0 / M_PI);

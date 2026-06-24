@@ -87,14 +87,14 @@ public:
 
   struct LayerInfo
   {
-    triangle_chunks_type *vertex_chunk;
-    triangle_chunks_type *normals_chunk;
-    line_chunks_type *line_chunk;
-    GLfloat fill_color [4];
-    GLfloat frame_color [4];
-    bool visible;
+    triangle_chunks_type *vertex_chunk{};
+    triangle_chunks_type *normals_chunk{};
+    line_chunks_type *line_chunk{};
+    GLfloat fill_color [4]{};
+    GLfloat frame_color [4]{};
+    bool visible{};
     std::string name;
-    bool has_name;
+    bool has_name{};
   };
 
   D25ViewWidget (QWidget *parent);
@@ -185,8 +185,8 @@ private:
   QOpenGLShaderProgram *m_shapes_program, *m_lines_program, *m_gridplane_program;
   std::string m_error;
   bool m_has_error;
-  double m_scale_factor;
-  double m_vscale_factor;
+  double m_scale_factor{};
+  double m_vscale_factor{};
   QVector3D m_displacement;
   lay::LayoutViewBase *mp_view;
   db::DBox m_bbox;

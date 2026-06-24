@@ -1936,7 +1936,7 @@ public:
    */
   fixpoint_trans<I> fp_trans () const
   {
-    int c;
+    int c = 0;
     if (m_cos > eps_f () && m_sin >= -eps_f ()) {
       c = 0 /*r0*/;
     } else if (m_cos <= eps_f () && m_sin > eps_f ()) {

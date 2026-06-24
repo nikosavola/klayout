@@ -1055,14 +1055,14 @@ private:
   std::string m_tag;
   db::Matrix3d m_trans;
   DataHeader *mp_data;
-  size_t m_id;
-  double m_min_value, m_max_value;
-  bool m_min_value_set, m_max_value_set;
+  size_t m_id{};
+  double m_min_value{}, m_max_value{};
+  bool m_min_value_set{}, m_max_value_set{};
   DataMapping m_data_mapping;
-  bool m_visible;
+  bool m_visible{};
   mutable const tl::color_t *mp_pixel_data;
   std::vector <db::DPoint> m_landmarks;
-  int m_z_position;
+  int m_z_position{};
   db::LayerProperties m_layer_binding;
   bool m_updates_enabled;
 

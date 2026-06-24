@@ -1604,7 +1604,7 @@ DeepRegion::grid_check (db::Coord gx, db::Coord gy) const
     const std::set<db::ICplxTrans> &vv = vars.variants (c->cell_index ());
     for (auto v = vv.begin (); v != vv.end (); ++v) {
 
-      db::Shapes *markers;
+      db::Shapes *markers = nullptr;
       if (vv.size () == 1) {
         markers = & c->shapes (res->deep_layer ().layer ());
       } else {

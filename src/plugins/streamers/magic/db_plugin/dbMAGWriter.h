@@ -94,7 +94,7 @@ private:
   std::string m_ext;
   size_t m_timestamp;
   std::map<db::cell_index_type, size_t> m_cell_id;
-  double m_sf;
+  double m_sf{};
   std::string m_cellname;
 
   std::string filename_for_cell (db::cell_index_type ci, db::Layout &layout);

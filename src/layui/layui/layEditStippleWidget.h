@@ -92,10 +92,10 @@ signals:
 
 private:
   unsigned int m_last_mx, m_last_my;
-  uint32_t m_last_pattern [32];
+  uint32_t m_last_pattern [32]{};
   unsigned int m_last_sx, m_last_sy;
   bool m_last_pattern_saved;
-  uint32_t m_pattern [32];
+  uint32_t m_pattern [32]{};
   bool m_clearing;
   bool m_readonly;
   unsigned int m_sx, m_sy;

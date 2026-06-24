@@ -34,6 +34,8 @@
 #include "ui_SearchReplaceDialog.h"
 
 #include "laySearchReplacePropertiesWidgets.h"
+
+#include <math.h>
 #include "layMainWindow.h"
 
 #include "dbStreamLayers.h"
@@ -155,7 +157,7 @@ add_numerical_condition (std::string &expr, QComboBox *op, QLineEdit *value, con
       expr += " && ";
     }
 
-    double vv;
+    double vv = NAN;
     tl::Extractor (v.c_str ()).read (vv);
     expr += attribute;
     expr += " ";
@@ -264,7 +266,7 @@ add_numerical_assignment (std::string &expr, QLineEdit *value, const char *attri
       expr += "; ";
     }
 
-    double vv;
+    double vv = NAN;
     tl::Extractor (v.c_str ()).read (vv);
     expr += attribute;
     expr += " = ";

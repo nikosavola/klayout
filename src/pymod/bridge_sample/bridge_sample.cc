@@ -63,7 +63,7 @@ bridge_a2p (PyObject * /*self*/, PyObject *args)
   //  Prepare a vector of points we can create the polygon from later
   std::vector<db::DPoint> points;
 
-  PyObject *item;
+  PyObject *item = nullptr;
   while ((item = PyIter_Next (iterator.get ())) != nullptr) {
 
     //  Iterate over the x/y pair
@@ -178,7 +178,7 @@ struct PyModuleDef bridge_module =
 PyMODINIT_FUNC
 PyInit_bridge_mod ()
 {
-  PyObject *m;
+  PyObject *m = nullptr;
 
   m = PyModule_Create (&bridge_module);
   if (m == nullptr) {

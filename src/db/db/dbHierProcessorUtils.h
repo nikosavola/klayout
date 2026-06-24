@@ -75,7 +75,7 @@ public:
 
     } else {
 
-      const shape_type *ptr;
+      const shape_type *ptr = nullptr;
       {
         tl::MutexLocker locker (&mp_layout->lock ());
         ptr = mp_layout->shape_repository ().repository (typename shape_type::tag ()).insert (ref.obj ());
@@ -101,7 +101,7 @@ public:
 
     } else {
 
-      const shape_type *ptr;
+      const shape_type *ptr = nullptr;
       {
         tl::MutexLocker locker (&mp_layout->lock ());
         ptr = mp_layout->shape_repository ().repository (typename shape_type::tag ()).insert (sh);
@@ -224,7 +224,7 @@ public:
       ref_trans_type red_trans;
       sh.reduce (red_trans);
 
-      const shape_type *ptr;
+      const shape_type *ptr = nullptr;
       {
         tl::MutexLocker locker (&mp_layout->lock ());
         ptr = mp_layout->shape_repository ().repository (typename shape_type::tag ()).insert (sh);

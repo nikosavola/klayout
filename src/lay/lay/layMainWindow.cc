@@ -729,7 +729,7 @@ MainWindow::about_to_exec ()
   //  they usually appear somewhere else. Maybe because this method is called before
   //  the main window is properly set up.
 
-  bool f;
+  bool f = false;
 
   f = false;
   dispatcher ()->config_get (cfg_full_hier_new_cell, f);
@@ -2065,7 +2065,7 @@ MainWindow::load_layer_props_from_file (const std::string &fn)
       items << QString (tl::to_qstring (tl::to_string (QObject::tr ("Apply to ")) + current_view ()->cellview (i)->name () + " (@" + tl::to_string (i + 1) + ")"));
     }
 
-    bool ok;
+    bool ok = false;
     QString item = QInputDialog::getItem(this, QObject::tr ("Apply Layer Properties File"),
                                                QObject::tr ("There are multiple layouts in that panel but the layer properties file contains properties for a single one.\nWhat should be done?"),
                                                items, 1, false, &ok);
@@ -3069,7 +3069,7 @@ MainWindow::add_mru (const std::string &fn_rel, const std::string &tech)
 void
 MainWindow::add_to_other_mru (const std::string &fn_rel, const std::string &cfg)
 {
-  std::vector <std::string> *mru_ptr;
+  std::vector <std::string> *mru_ptr = nullptr;
   if (cfg == cfg_mru_sessions) {
     mru_ptr = &m_mru_sessions;
   } else if (cfg == cfg_mru_layer_properties) {

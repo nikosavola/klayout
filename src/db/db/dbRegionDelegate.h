@@ -311,13 +311,13 @@ protected:
   virtual void join_properties_on_merge_changed () { }
 
 private:
-  bool m_merged_semantics;
-  bool m_join_properties_on_merge;
-  bool m_strict_handling;
-  bool m_merge_min_coherence;
-  bool m_report_progress;
+  bool m_merged_semantics{};
+  bool m_join_properties_on_merge{};
+  bool m_strict_handling{};
+  bool m_merge_min_coherence{};
+  bool m_report_progress{};
   std::string m_progress_desc;
-  int m_base_verbosity;
+  int m_base_verbosity{};
 };
 
 }

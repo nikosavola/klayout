@@ -1508,7 +1508,7 @@ void
 Layout::register_cell_name (const char *name, cell_index_type ci)
 {
   //  enter its index and cell_name
-  char *cp;
+  char *cp = nullptr;
 
   if (name == nullptr) {
     cp = new char [1];
@@ -1701,7 +1701,7 @@ Layout::allocate_new_cell ()
 {
   invalidate_hier ();
 
-  cell_index_type new_index;
+  cell_index_type new_index = 0;
   if (m_free_cell_indices.empty ()) {
     new_index = cell_index_type (m_cell_ptrs.size ());
     m_cell_ptrs.push_back (nullptr);
@@ -2765,7 +2765,7 @@ Layout::register_pcell (const std::string &name, pcell_declaration_type *declara
   //  (for which undo/redo support is available) is too complex ...
   tl_assert (!manager () || !manager ()->transacting ());
 
-  pcell_id_type id;
+  pcell_id_type id = 0;
 
   pcell_name_map::const_iterator pcid = m_pcell_ids.find (name);
   if (pcid != m_pcell_ids.end ()) {
@@ -3117,7 +3117,7 @@ Layout::get_context_info (cell_index_type cell_index, LayoutOrCellContextInfo &i
 
   const db::Layout *ly = this;
 
-  const db::LibraryProxy *lib_proxy;
+  const db::LibraryProxy *lib_proxy = nullptr;
   while (ly != nullptr && (lib_proxy = dynamic_cast <const db::LibraryProxy *> (cptr)) != nullptr) {
 
     const db::Library *lib = db::LibraryManager::instance ().lib (lib_proxy->lib_id ());

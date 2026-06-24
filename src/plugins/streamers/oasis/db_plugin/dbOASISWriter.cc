@@ -767,7 +767,7 @@ OASISWriter::write (float d)
     union {
       float d;
       uint32_t i;
-    } f2i;
+    } f2i{};
 
     f2i.d = d;
     uint32_t i = f2i.i;
@@ -803,7 +803,7 @@ OASISWriter::write (double d)
     union {
       double d;
       uint64_t i;
-    } f2i;
+    } f2i{};
 
     f2i.d = d;
     uint64_t i = f2i.i;
@@ -911,7 +911,7 @@ OASISWriter::write_gdelta (const db::Vector &p, double sf)
 
   } else {
 
-    uint64_t d;
+    uint64_t d = 0;
     if (x < 0) {
       d = ((uint64_t) -x << 2) | 3;
     } else {
@@ -1835,7 +1835,7 @@ OASISWriter::write (const Repetition &rep)
     mm_repetition = rep;
 
     db::Vector a, b;
-    size_t amax, bmax;
+    size_t amax = 0, bmax = 0;
 
     bool is_reg = rep.is_regular (a, b, amax, bmax);
     const std::vector<db::Vector> *iterated = rep.is_iterated ();
@@ -2011,7 +2011,7 @@ OASISWriter::write (const db::CellInstArray &inst, db::properties_id_type prop_i
 
   std::vector<db::Vector> pts;
   db::Vector a, b;
-  unsigned long amax, bmax;
+  unsigned long amax = 0, bmax = 0;
 
   if (inst.is_iterated_array (&pts) && pts.size () > 1) {
 

@@ -261,7 +261,7 @@ NetTracerConfigPage::commit (lay::Dispatcher *root)
     root->config_set (cfg_nt_marker_line_width, -1);
   } else {
     try {
-      int s;
+      int s = 0;
       tl::from_string_ext (tl::to_string (lw_le->text ()), s);
       root->config_set (cfg_nt_marker_line_width, s);
     } catch (...) { } // NOLINT(bugprone-empty-catch)
@@ -271,7 +271,7 @@ NetTracerConfigPage::commit (lay::Dispatcher *root)
     root->config_set (cfg_nt_marker_vertex_size, -1);
   } else {
     try {
-      int s;
+      int s = 0;
       tl::from_string_ext (tl::to_string (vs_le->text ()), s);
       root->config_set (cfg_nt_marker_vertex_size, s);
     } catch (...) { } // NOLINT(bugprone-empty-catch)

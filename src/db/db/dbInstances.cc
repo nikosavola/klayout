@@ -242,7 +242,7 @@ Instance::to_string (bool resolve_cell_name) const
   }
 
   db::vector<coord_type> a, b;
-  unsigned long amax, bmax;
+  unsigned long amax = 0, bmax = 0;
   if (ci.is_regular_array (a, b, amax, bmax)) {
 
     if (ci.is_complex ()) {

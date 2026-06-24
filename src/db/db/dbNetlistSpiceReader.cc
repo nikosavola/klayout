@@ -516,7 +516,7 @@ SpiceCircuitDict::push_stream (const std::string &path, const std::string &lib)
   tl::URI current_uri (m_stream.source ());
   tl::URI new_uri (path);
 
-  tl::InputStream *istream;
+  tl::InputStream *istream = nullptr;
   if (current_uri.scheme ().empty () && new_uri.scheme ().empty ()) {
     if (tl::is_absolute (path)) {
       istream = new tl::InputStream (path);

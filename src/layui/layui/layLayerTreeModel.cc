@@ -718,7 +718,7 @@ LayerTreeModel::data (const QModelIndex &index, int role) const
         QColor cb = m_background_color;
         QColor c0 = QColor ((c1.red () + cb.red ()) / 2, (c1.green () + cb.green ()) / 2, (c1.blue () + cb.blue ()) / 2);
 
-        bool empty;
+        bool empty = false;
         if (m_test_shapes_in_view) {
           empty = empty_within_view_predicate (index);
         } else {

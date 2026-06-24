@@ -237,9 +237,9 @@ public:
   }
 
 private:
-  tl::color_t m_or;
-  tl::color_t m_and;
-  tl::color_t m_xor;
+  tl::color_t m_or{};
+  tl::color_t m_and{};
+  tl::color_t m_xor{};
   unsigned int m_line_style_index;
   unsigned int m_dither_index, m_dither_offset;
   Shape m_shape;

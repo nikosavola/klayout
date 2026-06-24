@@ -89,7 +89,7 @@ private:
   CIFWriterOptions m_options;
   tl::AbsoluteProgress m_progress;
   endl_tag m_endl;
-  unsigned int m_layer;
+  unsigned int m_layer{};
   bool m_needs_emit;
   CIFValidNameGenerator<unsigned int> m_layer_names;
   CIFValidNameGenerator<db::cell_index_type> m_cell_names;

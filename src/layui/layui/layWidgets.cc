@@ -178,7 +178,7 @@ DitherPatternSelectionButton::update_pattern ()
 
   } else {
 
-    const lay::DitherPatternInfo *dp_info;
+    const lay::DitherPatternInfo *dp_info = nullptr;
     if (mp_view) {
       dp_info = & mp_view->dither_pattern ().pattern ((unsigned int) m_dither_pattern).scaled (dpr);
     } else {
@@ -372,7 +372,7 @@ LineStyleSelectionButton::update_pattern ()
 
   } else {
 
-    const lay::LineStyleInfo *dp_info;
+    const lay::LineStyleInfo *dp_info = nullptr;
     if (mp_view) {
       dp_info = & mp_view->line_styles ().style ((unsigned int) m_line_style);
     } else {
@@ -504,12 +504,12 @@ CellViewSelectionComboBox::current_cv_index () const
 struct LayerSelectionComboBoxPrivateData
 {
   std::vector <std::pair <db::LayerProperties, int> > layers;
-  bool no_layer_available;
-  bool new_layer_enabled;
-  bool all_layers;
-  const db::Layout *layout;
-  lay::LayoutViewBase *view;
-  int cv_index;
+  bool no_layer_available{};
+  bool new_layer_enabled{};
+  bool all_layers{};
+  const db::Layout *layout{};
+  lay::LayoutViewBase *view{};
+  int cv_index{};
   db::LayerProperties last_props;
 };
 

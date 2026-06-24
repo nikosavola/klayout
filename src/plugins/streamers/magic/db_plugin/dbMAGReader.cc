@@ -23,6 +23,8 @@
 
 
 #include "dbMAGReader.h"
+
+#include <math.h>
 #include "dbStream.h"
 #include "dbObjectWithProperties.h"
 #include "dbArray.h"
@@ -92,7 +94,7 @@ MAGReader::read (db::Layout &layout, const db::LoadLayoutOptions &options)
 
   tl::URI source_uri (m_stream.source ());
   std::string top_cellname = cell_name_from_path (source_uri.path ());
-  db::cell_index_type top_cell;
+  db::cell_index_type top_cell = 0;
   if (layout.has_cell (top_cellname.c_str ())) {
     top_cell = layout.cell_by_name (top_cellname.c_str ()).second;
   } else {
@@ -171,7 +173,7 @@ MAGReader::cell_from_path (const std::string &path, db::Layout &layout)
   }
 
   //  NOTE: this can lead to cell variants if a cell is present with different library paths ... (L500_CHAR_p)
-  db::cell_index_type ci;
+  db::cell_index_type ci = 0;
   if (layout.has_cell (cellname.c_str ())) {
     //  NOTE: this reuses an existing cell and will add(!) the layout to the latter. This
     //  enables "incremental read" like for GDS files.
@@ -541,7 +543,7 @@ MAGReader::do_merge_part (Layout &layout, cell_index_type cell_index)
 void
 MAGReader::read_rect (tl::Extractor &ex, Layout &layout, cell_index_type cell_index, unsigned int layer, double scale)
 {
-  double l, b, r, t;
+  double l = NAN, b = NAN, r = NAN, t = NAN;
   ex.read (l);
   ex.read (b);
   ex.read (r);
@@ -555,7 +557,7 @@ MAGReader::read_rect (tl::Extractor &ex, Layout &layout, cell_index_type cell_in
 void
 MAGReader::read_tri (tl::Extractor &ex, Layout &layout, cell_index_type cell_index, unsigned int layer, double scale)
 {
-  double l, b, r, t;
+  double l = NAN, b = NAN, r = NAN, t = NAN;
   ex.read (l);
   ex.read (b);
   ex.read (r);
@@ -608,7 +610,7 @@ MAGReader::read_rlabel (tl::Extractor &ex, Layout &layout, cell_index_type cell_
   //  skip sticky flag (optional)
   ex.test ("s");
 
-  double l, b, r, t;
+  double l = NAN, b = NAN, r = NAN, t = NAN;
   ex.read (l);
   ex.read (b);
   ex.read (r);

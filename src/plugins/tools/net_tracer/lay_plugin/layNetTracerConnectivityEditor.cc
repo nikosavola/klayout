@@ -581,7 +581,7 @@ void
 NetTracerConnectivityEditor::update ()
 {
   QStringList labels;
-  int n;
+  int n = 0;
 
   connectivity_table->clear ();
   connectivity_table->setRowCount (int (m_data.size ()));

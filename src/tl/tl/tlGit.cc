@@ -193,7 +193,7 @@ public:
   const git_buf *get () const { return &m_buf; }
 
 private:
-  git_buf m_buf;
+  git_buf m_buf{};
 };
 
 }

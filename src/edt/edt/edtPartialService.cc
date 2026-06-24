@@ -2637,7 +2637,7 @@ PartialService::del ()
 lay::InstanceMarker *
 PartialService::new_inst_marker (size_t &nmarker, unsigned int cv_index, bool transient)
 {
-  lay::InstanceMarker *marker;
+  lay::InstanceMarker *marker = nullptr;
 
   if (transient) {
     if (nmarker >= m_transient_inst_markers.size ()) {
@@ -2663,7 +2663,7 @@ PartialService::new_inst_marker (size_t &nmarker, unsigned int cv_index, bool tr
 lay::Marker *
 PartialService::new_marker (size_t &nmarker, unsigned int cv_index, bool transient)
 {
-  lay::Marker *marker;
+  lay::Marker *marker = nullptr;
 
   if (transient) {
     if (nmarker >= m_transient_markers.size ()) {

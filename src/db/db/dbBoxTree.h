@@ -292,8 +292,8 @@ public:
 
 private:
   box_tree_node *mp_parent;
-  size_t m_lenq, m_len;
-  size_t m_childrefs [4];
+  size_t m_lenq{}, m_len{};
+  size_t m_childrefs [4]{};
   point_type m_center, m_corner;
 
   box_tree_node (const box_tree_node &d);
@@ -1305,7 +1305,7 @@ private:
     }
 
     //  compute sizes of quad fields
-    size_t nx, n[4];
+    size_t nx = 0, n[4];
     size_t nn = 0;
     nx = std::distance (from, qloc[0]);
     for (int i = 0; i < 4; ++i) {
@@ -2267,7 +2267,7 @@ private:
     }
 
     //  compute sizes of quad fields
-    size_t nx, n[4];
+    size_t nx = 0, n[4];
     size_t nn = 0;
     nx = std::distance (from, qloc[0]);
     for (int i = 0; i < 4; ++i) {

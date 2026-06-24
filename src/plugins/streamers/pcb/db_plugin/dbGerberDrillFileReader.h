@@ -73,25 +73,25 @@ protected:
 
 private:
   std::string m_buffer;
-  bool m_relative;
-  bool m_format_set;
-  double m_x, m_y;
-  double m_xoff, m_yoff;
-  double m_current_diameter;
-  int m_current_qty;
+  bool m_relative{};
+  bool m_format_set{};
+  double m_x{}, m_y{};
+  double m_xoff{}, m_yoff{};
+  double m_current_diameter{};
+  int m_current_qty{};
   std::list <std::pair <long, double> > m_qty;
-  int m_current_tool;
+  int m_current_tool{};
   std::map <int, double> m_tools;
   std::vector <DrillHoleDescriptor> m_holes;
   std::vector <DrillHoleDescriptor> m_pattern;
-  size_t m_end_block;
-  bool m_recording;
-  bool m_record_pattern;
-  bool m_in_header;
-  double m_m02_xoffset, m_m02_yoffset;
-  bool m_routing;
-  bool m_plunged;
-  bool m_linear_interpolation;
+  size_t m_end_block{};
+  bool m_recording{};
+  bool m_record_pattern{};
+  bool m_in_header{};
+  double m_m02_xoffset{}, m_m02_yoffset{};
+  bool m_routing{};
+  bool m_plunged{};
+  bool m_linear_interpolation{};
 
   const std::string &get_block ();
   void read_line (std::string &b);

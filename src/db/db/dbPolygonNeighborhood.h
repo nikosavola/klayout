@@ -139,11 +139,11 @@ public:
 private:
   db::CompoundRegionOperationNode::ResultType m_result_type;
   db::ReducerType m_variant_type;
-  mutable std::unordered_set<db::PolygonWithProperties> *mp_polygons;
-  mutable std::unordered_set<db::PolygonRefWithProperties> *mp_polygon_refs;
-  mutable std::unordered_set<db::EdgeWithProperties> *mp_edges;
-  mutable std::unordered_set<db::EdgePairWithProperties> *mp_edge_pairs;
-  mutable db::Layout *mp_layout;
+  mutable std::unordered_set<db::PolygonWithProperties> *mp_polygons{};
+  mutable std::unordered_set<db::PolygonRefWithProperties> *mp_polygon_refs{};
+  mutable std::unordered_set<db::EdgeWithProperties> *mp_edges{};
+  mutable std::unordered_set<db::EdgePairWithProperties> *mp_edge_pairs{};
+  mutable db::Layout *mp_layout{};
   mutable db::ICplxTrans m_trans;
 };
 

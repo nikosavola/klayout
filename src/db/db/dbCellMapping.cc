@@ -936,7 +936,7 @@ CellMapping::create_from_geometry (const db::Layout &layout_a, db::cell_index_ty
       std::string cn_a (layout_a.cell_name (cand->first));
 
       int min_ed = std::numeric_limits<int>::max ();
-      db::cell_index_type min_ed_ci;
+      db::cell_index_type min_ed_ci = 0;
 
       for (std::vector<db::cell_index_type>::const_iterator c = cand->second.begin (); c != cand->second.end (); ++c) {
 

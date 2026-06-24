@@ -81,7 +81,7 @@ MAGWriter::write (db::Layout &layout, tl::OutputStream &stream, const db::SaveLa
 
   m_timestamp = 0;
   if (m_options.write_timestamp) {
-    timespec ts;
+    timespec ts{};
     tl::current_utc_time (&ts);
     m_timestamp = ts.tv_sec;
   }
@@ -201,7 +201,7 @@ MAGWriter::do_write_cell (db::cell_index_type ci, const std::vector <std::pair <
   os << "<< checkpaint >>\n";
   write_polygon (db::Polygon (safe_box (cell.bbox ())), layout, os);
 
-  bool any;
+  bool any = false;
 
   for (std::vector <std::pair <unsigned int, db::LayerProperties> >::const_iterator ll = layers.begin (); ll != layers.end (); ++ll) {
     any = false;

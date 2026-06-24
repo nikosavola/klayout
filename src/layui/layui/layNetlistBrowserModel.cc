@@ -1730,7 +1730,7 @@ CircuitItemNodeData::has_children (NetlistBrowserModel *)
 void
 CircuitItemNodeData::do_ensure_children (NetlistBrowserModel *model)
 {
-  size_t n;
+  size_t n = 0;
 
   if (m_type == Pins) {
 
@@ -1917,7 +1917,7 @@ CircuitNetItemData::do_ensure_children (NetlistBrowserModel *model)
     return;
   }
 
-  size_t n;
+  size_t n = 0;
 
   n = model->indexer ()->net_terminal_count (np ());
   for (size_t i = 0; i < n; ++i) {

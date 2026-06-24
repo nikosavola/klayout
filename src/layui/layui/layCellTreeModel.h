@@ -255,7 +255,7 @@ public:
 
 private:
   bool m_flat, m_pad;
-  bool m_filter_mode, m_is_filtered;
+  bool m_filter_mode, m_is_filtered{};
   unsigned int m_flags;
   Sorting m_sorting;
   QWidget *mp_parent;

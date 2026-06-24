@@ -21,6 +21,8 @@
 */
 
 #include "dbLayoutToNetlistReader.h"
+
+#include <math.h>
 #include "dbLayoutToNetlistFormatDefs.h"
 
 namespace db
@@ -144,7 +146,7 @@ LayoutToNetlistStandardReader::skip ()
 void LayoutToNetlistStandardReader::skip_element ()
 {
   std::string s;
-  double f;
+  double f = NAN;
 
   if (m_ex.try_read_word (s)) {
 
@@ -413,7 +415,7 @@ void LayoutToNetlistStandardReader::read_netlist (db::Netlist *netlist, db::Layo
         throw tl::Exception (tl::to_string (tr ("Duplicate definition of device class: ")) + class_name);
       }
 
-      db::DeviceClass *dc;
+      db::DeviceClass *dc = nullptr;
       if (templ_name.empty ()) {
         //  generic device class (issue #1696)
         dc = new db::DeviceClass ();

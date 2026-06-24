@@ -308,7 +308,7 @@ struct LibFileFunctionContext
 {
   std::string lib_file;
   std::string tech;
-  std::vector<LibraryController::LibFileInfo> *lib_files;
+  std::vector<LibraryController::LibFileInfo> *lib_files{};
 };
 
 static void do_read_lib_file (LibFileFunctionContext &fc);

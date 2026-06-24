@@ -373,7 +373,7 @@ public:
 
   void update_progress ()
   {
-    unsigned int p;
+    unsigned int p = 0;
     {
       tl::MutexLocker locker (&m_mutex);
       p = m_progress_count;
@@ -768,7 +768,7 @@ TilingProcessor::output (const std::string &name, db::Layout &layout, db::cell_i
     }
   }
 
-  unsigned int layer;
+  unsigned int layer = 0;
   if (li != layout.end_layers ()) {
     layer = (*li).first;
   } else {

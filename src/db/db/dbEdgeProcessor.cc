@@ -587,7 +587,7 @@ int EdgePolygonOp::select_edge (bool horizontal, property_type p)
     return 0;
   }
 
-  bool inside;
+  bool inside = false;
 
   if (horizontal) {
     if (m_include_touching) {
@@ -2180,7 +2180,7 @@ EdgeProcessor::redo_or_process (const std::vector<std::pair<db::EdgeSink *, db::
   bool prefer_touch = gs.prefer_touch ();
   bool selects_edges = gs.selects_edges ();
   
-  db::Coord y;
+  db::Coord y = 0;
   std::vector <WorkEdge>::iterator future;
 
   //  step 1: preparation
@@ -2846,7 +2846,7 @@ EdgeProcessor::boolean (const std::vector<db::Polygon> &a, const std::vector<db:
   clear ();
   reserve (count_edges (a) + count_edges (b));
 
-  size_t n;
+  size_t n = 0;
   
   n = 0;
   for (std::vector<db::Polygon>::const_iterator q = a.begin (); q != a.end (); ++q, n += 2) {
@@ -2869,7 +2869,7 @@ EdgeProcessor::boolean (const std::vector<db::Polygon> &a, const std::vector<db:
   clear ();
   reserve (count_edges (a) + count_edges (b));
 
-  size_t n;
+  size_t n = 0;
   
   n = 0;
   if (&a == &out && &b != &out) {

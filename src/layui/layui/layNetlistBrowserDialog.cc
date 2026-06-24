@@ -254,7 +254,7 @@ NetlistBrowserDialog::probe_net (const db::DPoint &p, bool trace_path)
 
   unsigned int start_layer = 0;
   db::Point start_point;
-  unsigned int cv_index;
+  unsigned int cv_index = 0;
 
   //  locate the seed shape to figure out the cv index and layer
   {

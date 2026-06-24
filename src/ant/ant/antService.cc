@@ -38,6 +38,8 @@
 #  include "layProperties.h"
 #endif
 #include "antService.h"
+
+#include <math.h>
 #if defined(HAVE_QT)
 #  include "antPropertiesPage.h"
 #endif
@@ -850,7 +852,7 @@ is_selected_by_circle_segment (const ant::Object &ruler, const db::DPoint &pos, 
   double r = 0.0, a1 = 0.0, a2 = 0.0;
   db::DPoint c;
 
-  bool good;
+  bool good = false;
   if (ruler.outline () == ant::Object::OL_angle) {
     good = ruler.compute_angle_parameters (r, c, a1, a2);
     r *= angle_ruler_radius_factor;
@@ -1023,7 +1025,7 @@ View::render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
   }
 
   //  obtain bitmap to render on
-  lay::CanvasPlane *plane;
+  lay::CanvasPlane *plane = nullptr;
   if (mp_rulers->with_halo ()) {
     std::vector <lay::ViewOp> ops;
     ops.reserve (2);
@@ -1107,7 +1109,7 @@ Service::configure (const std::string &name, const std::string &value)
 
   } else if (name == cfg_ruler_halo) {
 
-    bool halo;
+    bool halo = false;
     tl::from_string (value, halo);
 
     //  make the color available for the dynamic view objects too.
@@ -1439,7 +1441,7 @@ Service::begin_move (lay::Editable::MoveMode mode, const db::DPoint &p, lay::ang
     for (auto r = m_selected.begin (); r != m_selected.end (); ++r) {
       const ant::Object *robj = dynamic_cast<const ant::Object *> ((*r)->ptr ());
       if (robj) {
-        double d;
+        double d = NAN;
         if (is_selected (*robj, p, l, d)) {
           if (! robj_min || d < dmin) {
             robj_min = robj;
@@ -1494,7 +1496,7 @@ Service::begin_move (lay::Editable::MoveMode mode, const db::DPoint &p, lay::ang
     while (! r.at_end ()) {
       const ant::Object *robj = dynamic_cast<const ant::Object *> ((*r).ptr ());
       if (robj) {
-        double d;
+        double d = NAN;
         if (is_selected (*robj, p, l, d)) {
           if (! robj_min || d < dmin) {
             robj_min = robj;
@@ -2603,7 +2605,7 @@ Service::click_proximity (const db::DPoint &pos, lay::Editable::SelectionMode mo
   while (! r.at_end ()) {
     const ant::Object *robj = dynamic_cast<const ant::Object *> ((*r).ptr ());
     if (robj && (! exclude || exclude->find (mp_view->annotation_shapes ().iterator_from_pointer (&*r)) == exclude->end ())) {
-      double d;
+      double d = NAN;
       if (is_selected (*robj, pos, l, d)) {
         if (! any_found || d < dmin) {
           dmin = d;
@@ -2725,7 +2727,7 @@ Service::transient_select (const db::DPoint &pos)
   while (! r.at_end ()) {
     const ant::Object *robj = dynamic_cast<const ant::Object *> ((*r).ptr ());
     if (robj && m_previous_selection.find (mp_view->annotation_shapes ().iterator_from_pointer (&*r)) == m_previous_selection.end ()) {
-      double d;
+      double d = NAN;
       if (is_selected (*robj, pos, l, d)) {
         if (! any_selected || d < dmin) {
           rmin = r;
@@ -2864,7 +2866,7 @@ Service::select (const db::DBox &box, lay::Editable::SelectionMode mode)
       while (! r.at_end ()) {
         const ant::Object *robj = dynamic_cast<const ant::Object *> ((*r).ptr ());
         if (robj && (! exclude || exclude->find (mp_view->annotation_shapes ().iterator_from_pointer (&*r)) == exclude->end ())) {
-          double d;
+          double d = NAN;
           if (is_selected (*robj, box.p1 (), l, d)) {
             if (! any_selected || d < dmin) {
               rmin = r;

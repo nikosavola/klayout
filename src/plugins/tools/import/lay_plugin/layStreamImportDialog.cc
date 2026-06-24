@@ -25,6 +25,8 @@
 #include "layStreamImporter.h"
 #include "layStreamImportDialog.h"
 
+#include <math.h>
+
 #include "tlExceptions.h"
 #include "layFileDialog.h"
 #include "layDialogs.h"
@@ -384,7 +386,7 @@ StreamImportDialog::commit_page ()
 
       } else {
 
-        double x, y;
+        double x = NAN, y = NAN;
 
         pcb_x.read (x);
         pcb_x.expect_end ();

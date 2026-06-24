@@ -253,7 +253,7 @@ public:
 private:
   char *mp_buffer;
   char *mp_read, *mp_write;
-  char m_buffer[200];
+  char m_buffer[200]{};
 
   inline void check_data () const
   {

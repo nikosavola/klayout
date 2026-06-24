@@ -153,7 +153,7 @@ Proxy::keep ()
 void
 Proxy::set (void *obj, bool owned, bool const_ref, bool can_destroy)
 {
-  void *prev_obj;
+  void *prev_obj = nullptr;
 
   {
     tl::MutexLocker locker (&m_lock);

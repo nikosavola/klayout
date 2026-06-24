@@ -503,7 +503,7 @@ private:
     const cell_inst_wp_array_type *pinst;
     char iter[sizeof (cell_inst_array_iterator_type)];
     char piter[sizeof (cell_inst_wp_array_iterator_type)];
-  } m_generic;
+  } m_generic{};
 
   db::Instances *mp_instances;
   bool m_with_props : 8;
@@ -1809,13 +1809,13 @@ private:
     cell_inst_tree_type *unstable_tree;
     stable_cell_inst_tree_type *stable_tree;
     void *any;
-  } m_generic;
+  } m_generic{};
 
   union {
     cell_inst_wp_tree_type *unstable_tree;
     stable_cell_inst_wp_tree_type *stable_tree;
     void *any;
-  } m_generic_wp;
+  } m_generic_wp{};
 
   parent_inst_vector m_parent_insts;
   sorted_inst_vector m_insts_by_cell_index;

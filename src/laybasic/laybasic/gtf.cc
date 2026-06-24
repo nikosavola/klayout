@@ -532,8 +532,8 @@ public:
     }
 
     std::string name1, name2, cls1, cls2;
-    int nwidget1, nwidget2;
-    bool more1, more2;
+    int nwidget1 = 0, nwidget2 = 0;
+    bool more1 = false, more2 = false;
 
     tl::Extractor ex1 (m_target.c_str ());
     tl::Extractor ex2 (be->m_target.c_str ());
@@ -1053,7 +1053,7 @@ EventList::load (const std::string &filename, bool no_spontaneous)
 void 
 EventList::save (const std::string &filename)
 {
-  std::ostream *os;
+  std::ostream *os = nullptr;
   if (filename != "-") {
     os = new std::ofstream (filename.c_str ());
     if (! os->good ()) {

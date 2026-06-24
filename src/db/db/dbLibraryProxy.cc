@@ -215,7 +215,7 @@ LibraryProxy::update (db::ImportLayerMapping *layer_mapping)
 
     //  use the "final lib", so we refer to the actual lib instead
     //  of building chains of lib references
-    LibraryProxy *lp;
+    LibraryProxy *lp = nullptr;
     while ((lp = dynamic_cast<LibraryProxy *> (&real_lib->layout ().cell (real_cil))) != nullptr) {
       real_cil = lp->library_cell_index ();
       real_lib = db::LibraryManager::instance ().lib (lp->lib_id ());

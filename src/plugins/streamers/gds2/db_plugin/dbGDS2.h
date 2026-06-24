@@ -91,7 +91,7 @@ inline void gds2h (int16_t &s)
 {
 #if defined(__BYTE_ORDER__) && __BYTE_ORDER__==__ORDER_LITTLE_ENDIAN__
   //  swap required 
-  char x;
+  char x = 0;
   char *d = (char *)&s;
   x = d[0]; d[0] = d[1]; d[1] = x;
 #elif defined(__BYTE_ORDER__) && __BYTE_ORDER__==__ORDER_BIG_ENDIAN__
@@ -106,7 +106,7 @@ inline void gds2h (int32_t &i)
 {
 #if defined(__BYTE_ORDER__) && __BYTE_ORDER__==__ORDER_LITTLE_ENDIAN__
   //  swap required 
-  char x;
+  char x = 0;
   char *d = (char *)&i;
   x = d[0]; d[0] = d[3]; d[3] = x;
   x = d[1]; d[1] = d[2]; d[2] = x;

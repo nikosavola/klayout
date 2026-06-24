@@ -62,7 +62,7 @@ void usleep (unsigned long us)
 
     // Portable sleep for platforms other than Windows.
 
-    struct timespec wait;
+    struct timespec wait{};
     wait.tv_sec = (us / 1000000ul);
     wait.tv_nsec = (us % 1000000ul) * 1000ul;
 
@@ -84,7 +84,7 @@ void msleep (unsigned long ms)
 
     // Portable sleep for platforms other than Windows.
 
-    struct timespec wait;
+    struct timespec wait{};
     wait.tv_sec = (ms / 1000ul);
     wait.tv_nsec = (ms % 1000ul) * 1000000ul;
 

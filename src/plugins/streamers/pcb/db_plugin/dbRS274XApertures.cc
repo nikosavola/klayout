@@ -22,6 +22,8 @@
 
 
 #include "dbRS274XApertures.h"
+
+#include <math.h>
 #include "dbRS274XReader.h"
 #include "dbPolygonTools.h"
 
@@ -588,7 +590,7 @@ RS274XMacroAperture::RS274XMacroAperture (db::RS274XReader &reader, const std::s
   m_unit = reader.unit ();
 
   while (! ex.at_end ()) {
-    double p;
+    double p = NAN;
     if (! ex.test (",") && ! ex.test ("X")) {
       ex.expect_end ();
     }

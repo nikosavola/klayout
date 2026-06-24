@@ -501,7 +501,7 @@ private:
   std::vector<NetTracerConnectionInfo> m_connections;
   std::vector<NetTracerSymbolInfo> m_symbols;
   std::string m_name, m_description;
-  bool m_is_fallback_default;
+  bool m_is_fallback_default{};
 };
 
 class DB_PLUGIN_PUBLIC NetTracerTechnologyComponent

@@ -260,7 +260,7 @@ render_scanline_px (const uint32_t *dp, unsigned int ds, const lay::Bitmap *pbit
     }
   }
 
-  uint32_t d, dd = 0, dn = 0;
+  uint32_t d = 0, dd = 0, dn = 0;
   for (unsigned int p = 0; p < pixels; ++p) {
     dn |= *(ps[p]++);
   }
@@ -357,7 +357,7 @@ render_scanline_cross (const uint32_t *dp, unsigned int ds, const lay::Bitmap *p
 
     if (bpx1 > 0 || bpx2 > 0) {
 
-      uint32_t d, dd = 0, dn;
+      uint32_t d = 0, dd = 0, dn = 0;
       dn = *(ps[o]++);
 
       unsigned int x = w;

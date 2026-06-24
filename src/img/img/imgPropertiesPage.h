@@ -91,11 +91,11 @@ private slots:
 
 private:
   std::vector <img::Service::obj_iterator> m_selection;
-  size_t m_index;
+  size_t m_index{};
   img::Service *mp_service;
   img::Object *mp_direct_image;
-  bool m_no_signals;
-  bool m_in_color_mapping_signal;
+  bool m_no_signals{};
+  bool m_in_color_mapping_signal{};
 
   void recompute_histogram ();
   void invalidate ();

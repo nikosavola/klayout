@@ -570,7 +570,7 @@ Values::from_string (Database *rdb, const std::string &s)
 void 
 Cells::import_cell (const Cell &c)
 {
-  Cell *cell;
+  Cell *cell = nullptr;
   if (mp_database) {
     cell = mp_database->create_cell (c.name (), c.variant (), c.layout_name ());
   } else {
@@ -891,7 +891,7 @@ Categories::category_by_raw_name (const std::string &name)
 void 
 Categories::import_category (Category *category)
 {
-  Category *cat;
+  Category *cat = nullptr;
 
   if (mp_database) {
     //  assigns an Id:
@@ -1412,7 +1412,7 @@ Database::create_cell (const std::string &name, const std::string &variant, cons
 {
   set_modified ();
 
-  Cell *new_cell;
+  Cell *new_cell = nullptr;
 
   if (variant.empty ()) {
 

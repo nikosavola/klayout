@@ -82,7 +82,7 @@ private:
   lay::LogFile m_log_file;
   QLabel *mp_log_label;
   QFrame *mp_log_frame;
-  bool m_full_width;
+  bool m_full_width{};
   int m_left_col, m_right_col;
   bool m_log_visible;
 

@@ -698,7 +698,7 @@ BEGIN_PROTECTED;
 
   double bx = 0.0, by = 0.0;
   double ax = 0.0, ay = 0.0;
-  int na, nb;
+  int na = 0, nb = 0;
 
   tl::from_string_ext (tl::to_string (column_x_le->text ()), bx);
   tl::from_string_ext (tl::to_string (column_y_le->text ()), by);

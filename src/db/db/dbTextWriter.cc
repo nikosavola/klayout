@@ -200,7 +200,7 @@ TextWriter::write (const db::Layout &layout)
     for (db::Cell::const_iterator inst = cref.begin (); ! inst.at_end (); ++inst) {
 
       db::Vector a, b;
-      unsigned long amax, bmax;
+      unsigned long amax = 0, bmax = 0;
 
       bool is_reg = inst->is_regular_array (a, b, amax, bmax);
 

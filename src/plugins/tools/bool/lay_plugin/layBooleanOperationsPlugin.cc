@@ -384,7 +384,7 @@ public:
         supports_undo = false;
       }
 
-      db::Coord dx_int, dy_int;
+      db::Coord dx_int = 0, dy_int = 0;
       dx_int = db::coord_traits<db::Coord>::rounded (m_boolean_sizex / mp_view->cellview (m_boolean_cva)->layout ().dbu ());
       dy_int = db::coord_traits<db::Coord>::rounded (m_boolean_sizey / mp_view->cellview (m_boolean_cva)->layout ().dbu ());
 

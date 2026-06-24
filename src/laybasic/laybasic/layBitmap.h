@@ -315,13 +315,13 @@ public:
   virtual void render_vertices (std::vector<lay::RenderEdge> &edges, int mode);
 
 private:
-  unsigned int m_width;
-  unsigned int m_height;
-  double m_resolution, m_font_resolution;
+  unsigned int m_width{};
+  unsigned int m_height{};
+  double m_resolution{}, m_font_resolution{};
   std::vector<uint32_t *> m_scanlines;
   std::vector<uint32_t *> m_free;
   uint32_t *m_empty_scanline;
-  unsigned int m_first_sl, m_last_sl;
+  unsigned int m_first_sl{}, m_last_sl{};
 
   void cleanup ();
   void init (unsigned int w, unsigned int h);

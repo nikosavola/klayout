@@ -118,7 +118,7 @@ private slots:
 private:
   std::string m_recent_cfg_name;
   std::list<ConfigurationDescriptor> m_cfg;
-  QTreeWidget *mp_tree_widget;
+  QTreeWidget *mp_tree_widget{};
   tl::DeferredMethod<RecentConfigurationPage> dm_update_list;
 
   void update_list (const std::list<std::vector<std::string> > &stored_values);

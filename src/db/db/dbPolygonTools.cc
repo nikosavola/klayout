@@ -788,7 +788,7 @@ smooth_contour (db::Polygon::polygon_contour_iterator from, db::Polygon::polygon
 
     bool any = false;
 
-    size_t i;
+    size_t i = 0;
     bool first_point_deleted = false;
     for (i = (even ? 0 : 1); i < points.size (); i += 2) {
 
@@ -2543,7 +2543,7 @@ static void decompose_convex_helper (int depth, PreferredOrientation po, const d
               db::vprod (x.second - db::Point (), efc.p1 () - db::Point ()) +
               db::vprod (efc.p1 () - db::Point (), efc.p2 () - db::Point ());
 
-            db::coord_traits<db::Coord>::area_type ac;
+            db::coord_traits<db::Coord>::area_type ac = 0;
             if (a > atot_eff / 2) {
               ac = a - atot_eff / 2;
             } else {
@@ -2782,7 +2782,7 @@ decompose_convex_to_trapezoids (const db::SimplePolygon &sp, bool horizontal, db
       std::swap (x1, x2);
     }
 
-    db::Coord yy;
+    db::Coord yy = 0;
     if (cc == edges.end ()) {
       yy = db::edge_ymax (*c);
       tl_assert (db::edge_ymax (c[1]) == db::edge_ymax (*c));

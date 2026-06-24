@@ -796,7 +796,7 @@ GerberDrillFileReader::read_line (std::string &b)
 
   b.clear ();
 
-  char c;
+  char c = 0;
   while (! stream ().at_end ()) {
     c = stream ().get_char ();
     if (c == '\n' || c == '\r') {

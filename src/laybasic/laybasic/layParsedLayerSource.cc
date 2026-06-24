@@ -1380,7 +1380,7 @@ ParsedLayerSource::parse_from_string (const char *cp)
 
     } else if (x.test ("%")) {
 
-      unsigned int n;
+      unsigned int n = 0;
       x.read (n);
 
       m_layer_index = int (n);
@@ -1447,7 +1447,7 @@ ParsedLayerSource::parse_from_string (const char *cp)
 
         if (x.test ("..")) {
 
-          int t;
+          int t = 0;
           m = HierarchyLevelSelection::absolute;
           if (x.test ("*") || x.test ("(*)")) {
             m_hier_levels.set_to_level (std::numeric_limits<int>::max (), false, HierarchyLevelSelection::absolute);

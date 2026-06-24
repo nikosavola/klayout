@@ -906,7 +906,7 @@ HelpSource::process (const QDomElement &element, const std::string &path, QXmlSt
     QString title = element.text ();
 
     std::string path_wo_anchor = path;
-    std::string::size_type n;
+    std::string::size_type n = 0;
     if ((n = path.rfind ('#')) != std::string::npos) { // NOLINT(bugprone-assignment-in-if-condition)
       path_wo_anchor = std::string (path, 0, n);
     }

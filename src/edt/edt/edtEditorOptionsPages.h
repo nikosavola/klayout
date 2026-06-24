@@ -156,7 +156,7 @@ private slots:
 
 private:
   Ui::EditorOptionsInst *mp_ui;
-  edt::PCellParametersPage *mp_pcell_parameters;
+  edt::PCellParametersPage *mp_pcell_parameters{};
   int m_cv_index;
 
   void technology_changed (const std::string &) override;
@@ -187,7 +187,7 @@ private:
   Ui::EditorOptionsInstPCellParam *mp_ui;
   edt::PCellParametersPage *mp_pcell_parameters;
   QLabel *mp_placeholder_label;
-  int m_cv_index;
+  int m_cv_index{};
   std::string m_lib_name, m_cell_name;
 
   void update_pcell_parameters (const std::vector <tl::Variant> &parameters);

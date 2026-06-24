@@ -434,7 +434,7 @@ Proxy::initialize_callbacks ()
 
       for (int prot = 0; prot < 2; ++prot) {
 
-        VALUE rb_ret;
+        VALUE rb_ret = 0;
         if (prot) {
           rb_ret = rba_funcall2_checked (rb_class_of (m_self), rb_intern ("protected_method_defined?"), 1, &name);
         } else {

@@ -1166,7 +1166,7 @@ Triangulation::ensure_edge_inner (Vertex *from, Vertex *to)
       }
     }
 
-    Vertex *split_vertex;
+    Vertex *split_vertex = nullptr;
     if (dedge.side_of (*split_edge->v1 ()) == 0) {
       split_vertex = split_edge->v1 ();
     } else if (dedge.side_of (*split_edge->v2 ()) == 0) {

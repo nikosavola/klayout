@@ -46,7 +46,7 @@ struct PatternStorageOp
 
   unsigned int width, height;
   bool before;
-  uint32_t pattern [32];
+  uint32_t pattern [32]{};
 };
 
 EditStippleWidget::EditStippleWidget (QWidget *parent)
@@ -156,7 +156,7 @@ EditStippleWidget::mouseMoveEvent (QMouseEvent *event)
 {
   if ((event->buttons () & Qt::LeftButton) != 0 && ! m_readonly) {
 
-    unsigned int mx, my;
+    unsigned int mx = 0, my = 0;
     if (! mouse_to_pixel (event->pos (), mx, my)) {
       return;
     }
@@ -187,7 +187,7 @@ EditStippleWidget::mousePressEvent (QMouseEvent *event)
     m_last_sy = m_sy;
     m_last_pattern_saved = true;
 
-    unsigned int mx, my;
+    unsigned int mx = 0, my = 0;
     if (! mouse_to_pixel (event->pos (), mx, my)) {
       return;
     }

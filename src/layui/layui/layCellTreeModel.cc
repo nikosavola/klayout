@@ -704,7 +704,7 @@ CellTreeModel::mimeData(const QModelIndexList &indexes) const
         const db::Layout *layout = mp_layout;
         const db::Library *library = mp_library;
 
-        const db::LibraryProxy *lib_proxy;
+        const db::LibraryProxy *lib_proxy = nullptr;
         while (layout != nullptr && (lib_proxy = dynamic_cast <const db::LibraryProxy *> (c)) != nullptr) {
 
           const db::Library *lib = db::LibraryManager::instance ().lib (lib_proxy->lib_id ());

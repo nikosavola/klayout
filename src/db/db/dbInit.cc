@@ -70,7 +70,7 @@ static PluginDescriptor load_plugin (const std::string &pp)
 
 #else
 
-  void *handle;
+  void *handle = nullptr;
   handle = dlopen (tl::string_to_system (pp).c_str (), RTLD_LAZY);
   if (! handle) {
     throw tl::Exception (tl::to_string (tr ("Unable to load plugin: %s")), pp);

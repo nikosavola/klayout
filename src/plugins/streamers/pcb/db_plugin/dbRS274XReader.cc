@@ -110,7 +110,7 @@ RS274XReader::do_scan ()
 {
   GerberMetaData data;
 
-  char c;
+  char c = 0;
 
   //  Actually read:
   while ((c = stream ().skip ()) != 0 && !stream ().at_end ()) {
@@ -218,7 +218,7 @@ RS274XReader::do_read ()
 {
   init ();
 
-  char c;
+  char c = 0;
 
   //  Actually read:
   while ((c = stream ().skip ()) != 0 && !stream ().at_end ()) {
@@ -710,7 +710,7 @@ RS274XReader::get_block ()
 
   m_buffer.clear ();
 
-  char c;
+  char c = 0;
   while (! stream ().at_end () && (c = stream ().get_char ()) != '*') {
     m_buffer += c;
   }
@@ -752,7 +752,7 @@ RS274XReader::read_fs_parameter (const std::string &block)
     m_relative = true;
   }
 
-  int i;
+  int i = 0;
   if (ex.test ("N")) {
     ex.read (i);
   }

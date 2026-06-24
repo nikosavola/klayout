@@ -33,6 +33,8 @@
 #include <algorithm>
 
 #include "tlString.h"
+
+#include <math.h>
 #include "tlExpression.h"
 #include "tlInternational.h"
 
@@ -328,7 +330,7 @@ std::string to_string_from_local (const char *cp)
   size_t max = strlen (cp);
 
   while (max > 0) {
-    wchar_t wc;
+    wchar_t wc = 0;
     //  NOTE: mbrtowc uses the current LOCALE, hence "local"
     int length = int (mbrtowc (&wc, cp, max, &state));
     if (length < 1) {
@@ -831,7 +833,7 @@ replaced (const std::string &subject, const std::string &before, const std::stri
 
   std::string s;
 
-  std::string::size_type pos;
+  std::string::size_type pos = 0;
   std::string::size_type last = 0;
   while ((pos = subject.find (before, last)) != std::string::npos) {
     if (pos > last) {
@@ -891,7 +893,7 @@ template <class T>
 static void
 convert_string_to_int (const std::string &s, T &v, bool eval)
 {
-  double x;
+  double x = NAN;
   // HACK: this should be some real string-to-int conversion
   tl::from_string_numeric (s, x, eval);
   if (x < std::numeric_limits <T>::min ()) {

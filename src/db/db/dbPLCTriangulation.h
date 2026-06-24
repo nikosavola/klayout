@@ -326,10 +326,10 @@ protected:
 
 private:
   Graph *mp_graph;
-  bool m_is_constrained;
-  size_t m_level;
-  size_t m_id;
-  mutable size_t m_flips, m_hops;
+  bool m_is_constrained{};
+  size_t m_level{};
+  size_t m_id{};
+  mutable size_t m_flips{}, m_hops{};
 
   void remove_outside_vertex (Vertex *vertex, std::list<tl::weak_ptr<Polygon> > *new_triangles = nullptr);
   void remove_inside_vertex (Vertex *vertex, std::list<tl::weak_ptr<Polygon> > *new_triangles_out = nullptr);

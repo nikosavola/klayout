@@ -232,7 +232,7 @@ inflating_input_stream<Base>::auto_detect_gz ()
   }
 
   if (has_fname) {
-    const char *c;
+    const char *c = nullptr;
     while ((c = m_inflating_stream.get (1)) != nullptr && *c)
       ;
     if (! c) {
@@ -241,7 +241,7 @@ inflating_input_stream<Base>::auto_detect_gz ()
   }
 
   if (has_comment) {
-    const char *c;
+    const char *c = nullptr;
     while ((c = m_inflating_stream.get (1)) != nullptr && *c)
       ;
     if (! c) {
@@ -726,7 +726,7 @@ void InputStream::copy_to (tl::OutputStream &os)
 {
   const size_t chunk = 65536;
   char b [chunk];
-  size_t read;
+  size_t read = 0;
   while (mp_delegate && (read = mp_delegate->read (b, sizeof (b))) > 0) {
     os.put (b, read);
   }

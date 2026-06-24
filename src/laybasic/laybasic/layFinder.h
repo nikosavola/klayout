@@ -403,7 +403,7 @@ private:
   db::cell_index_type m_topcell;
   const std::set<lay::ObjectInstPath> *mp_excludes;
   std::vector<lay::ObjectInstPath> m_founds;
-  int m_tries, m_try_counter;
+  int m_tries, m_try_counter{};
   bool m_full_arrays;
   bool m_enclose_insts;
   bool m_visible_layers;

@@ -72,7 +72,7 @@ tl::Variant LayoutContextHandler::eval_double_bracket (const std::string &s) con
     if (mp_layout_nc) {
 
       std::string libname;
-      const char *cp;
+      const char *cp = nullptr;
       for (cp = s.c_str (); *cp && *cp != '.'; ++cp) {
         libname += *cp;
       }

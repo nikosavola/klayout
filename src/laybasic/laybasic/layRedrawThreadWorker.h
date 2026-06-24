@@ -210,7 +210,7 @@ private:
   std::vector <db::Box> m_redraw_region;
   std::vector <lay::Drawing *> mp_drawings;
   lay::RedrawThreadCanvas *mp_canvas;
-  lay::CanvasPlane *m_planes[planes_per_layer];
+  lay::CanvasPlane *m_planes[planes_per_layer]{};
 
   std::vector<db::Box> m_vv;
   int m_from_level, m_to_level;

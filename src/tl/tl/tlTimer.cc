@@ -113,7 +113,7 @@ static int64_t ns_time ()
 
 #else
 
-  timespec ts;
+  timespec ts{};
   clock_gettime (CLOCK_REALTIME, &ts);
   return int64_t (ts.tv_sec) * 1000000000 + int64_t (ts.tv_nsec);
 
@@ -138,7 +138,7 @@ Timer::start ()
   m_user_ms += clks_ms;
   //  no system time available ..
 #else
-  struct tms clks;
+  struct tms clks{};
   times (&clks);
   const double clk2msec = 1000.0 / sysconf (_SC_CLK_TCK);
 

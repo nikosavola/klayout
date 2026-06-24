@@ -61,7 +61,7 @@ public slots:
 private:
   lay::Dispatcher *mp_root;
   std::vector <lay::ConfigPage *> m_config_pages;
-  Ui::ConfigurationDialog *mp_ui;
+  Ui::ConfigurationDialog *mp_ui{};
 
   void init (const lay::PluginDeclaration *decl);
 };

@@ -66,7 +66,7 @@ struct ArrayOptions
   db::DVector a, b;
   unsigned int na, nb;
   db::DVector space;
-  bool use_visible_layers;
+  bool use_visible_layers{};
 };
 
 // -------------------------------------------------------------

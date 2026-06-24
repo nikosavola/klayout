@@ -38,6 +38,7 @@
 #include <algorithm>
 #include <sstream>
 #include <string>
+#include <math.h>
 #include <memory.h>
 
 #if defined(HAVE_QT)
@@ -270,10 +271,10 @@ DataMapping::create_data_mapping (bool monochrome, double xmin, double xmax, uns
 
     for (unsigned int i = 1; i < false_color_nodes.size (); ++i) {
 
-      unsigned int h1, s1, v1;
+      unsigned int h1 = 0, s1 = 0, v1 = 0;
       false_color_nodes [i - 1].second.second.get_hsv (h1, s1, v1);
 
-      unsigned int h2, s2, v2;
+      unsigned int h2 = 0, s2 = 0, v2 = 0;
       false_color_nodes [i].second.first.get_hsv (h2, s2, v2);
 
       int dh = int (h1) - int (h2);
@@ -758,10 +759,10 @@ private:
   }
 
   size_t m_width, m_height;
-  float *mp_color_data[3];
+  float *mp_color_data[3]{};
   float *mp_data;
   unsigned char *mp_mask;
-  unsigned char *mp_color_byte_data[3];
+  unsigned char *mp_color_byte_data[3]{};
   unsigned char *mp_byte_data;
   int m_ref_count;
 };
@@ -1503,7 +1504,7 @@ Object::from_string (const char *str, const char *base_dir)
 
         ex.test ("[");
 
-        unsigned int d;
+        unsigned int d = 0;
         size_t i = 0;
         while (ex.try_read (d)) {
 
@@ -1549,7 +1550,7 @@ Object::from_string (const char *str, const char *base_dir)
 
         ex.test ("[");
 
-        double d;
+        double d = NAN;
         size_t i = 0;
         while (ex.try_read (d)) {
 
@@ -2253,7 +2254,7 @@ Object::set_data (size_t w, size_t h, const std::vector<double> &red, const std:
   mp_data = new DataHeader (w, h, true /*color*/, false /*float data*/);
   mp_data->add_ref ();
 
-  float *t;
+  float *t = nullptr;
   std::vector<double>::const_iterator s;
 
   t = mp_data->float_data (0);

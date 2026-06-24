@@ -339,8 +339,8 @@ private:
     ImageData &operator= (const ImageData &other);
   };
 
-  unsigned int m_width, m_height;
-  bool m_transparent;
+  unsigned int m_width{}, m_height{};
+  bool m_transparent{};
   tl::copy_on_write_ptr<ImageData> m_data;
   std::vector<std::pair<std::string, std::string> > m_texts;
 };
@@ -568,8 +568,8 @@ private:
     MonoImageData &operator= (const MonoImageData &other);
   };
 
-  unsigned int m_width, m_height;
-  unsigned int m_stride;
+  unsigned int m_width{}, m_height{};
+  unsigned int m_stride{};
   tl::copy_on_write_ptr<MonoImageData> m_data;
   std::vector<std::pair<std::string, std::string> > m_texts;
 };

@@ -196,7 +196,7 @@ DXFReader::safe_from_double (const db::DBox &p)
 void
 DXFReader::parse_entity (const std::string &entity_code, size_t &nsolids, size_t &closed_polylines)
 {
-  int g;
+  int g = 0;
 
   if (entity_code == "HATCH" || entity_code == "SOLID") {
     ++nsolids;
@@ -231,7 +231,7 @@ DXFReader::determine_polyline_mode ()
   size_t closed_polylines = 0;
 
   // Read sections
-  int g;
+  int g = 0;
 
   while (true) {
 
@@ -428,7 +428,7 @@ DXFReader::do_read (db::Layout &layout, db::cell_index_type top)
 
   //  Read sections
 
-  int g;
+  int g = 0;
 
   while (true) {
 
@@ -518,7 +518,7 @@ DXFReader::do_read (db::Layout &layout, db::cell_index_type top)
       } else if (section_name == "ENTITIES") {
 
         //  skip groups to first entity (consume the group code for this one)
-        int g;
+        int g = 0;
         while ((g = read_group_code ()) != 0) {
           skip_value (g);
         }
@@ -585,7 +585,7 @@ DXFReader::read_cell (db::Layout &layout)
   std::string cell_name;
   double xoff = 0.0, yoff = 0.0;
 
-  int g;
+  int g = 0;
   while ((g = read_group_code ()) != 0) {
     if (g == 2) {
       cell_name = read_string (true);
@@ -730,7 +730,7 @@ DXFReader::insert_scaled (db::Shapes &target, const db::Shape &src, const db::Ma
 db::cell_index_type 
 DXFReader::make_layer_variant (db::Layout &layout, const std::string &cellname, db::cell_index_type template_cell, unsigned int layer, double sx, double sy)
 {
-  db::cell_index_type ci;
+  db::cell_index_type ci = 0;
 
   //  for the zero layer the variant is equal to the template cell
   if (layer == m_zero_layer && fabs (sx - 1.0) < 1e-6 && fabs (sy - 1.0) < 1e-6) {
@@ -1446,7 +1446,7 @@ DXFReader::read_entities (db::Layout &layout, db::Cell &cell, const db::DVector 
   std::map <unsigned int, std::vector <db::Edge> > collected_edges;
   db::EdgeProcessor ep (true /* with progress*/);
 
-  int g;
+  int g = 0;
 
   while (true) {
 
@@ -2912,7 +2912,7 @@ DXFReader::prepare_read (bool ignore_empty_lines)
 
   if (m_ascii) {
 
-    const char *c;
+    const char *c = nullptr;
 
     do {
 
@@ -3142,7 +3142,7 @@ DXFReader::read_double ()
     union {
       long long ll;
       double d;
-    } converter;
+    } converter{};
 
     converter.ll = ll;
     return converter.d;
@@ -3191,7 +3191,7 @@ DXFReader::read_string (bool ignore_empty_lines)
     m_line.clear ();
 
     //  read one string 
-    const char *c;
+    const char *c = nullptr;
     while ((c = m_stream.get (1)) != nullptr && *c) {
       m_line += *c;
     }

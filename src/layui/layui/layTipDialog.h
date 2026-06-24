@@ -98,9 +98,9 @@ public slots:
   void no_pressed ();
 
 private:
-  Ui::TipDialog *mp_ui;
+  Ui::TipDialog *mp_ui{};
   std::string m_key;
-  button_type *mp_res;
+  button_type *mp_res{};
 
   bool do_exec_dialog (button_type *button);
   void accept () override; 

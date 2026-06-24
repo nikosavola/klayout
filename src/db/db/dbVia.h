@@ -70,50 +70,50 @@ public:
   /**
    *  @brief The minimum width of the bottom layer of the via
    */
-  double wbmin;
+  double wbmin{};
 
   /**
    *  @brief The maximum width of the bottom layer of the via
    *
    *  A negative value means "not specified" or "infinite".
    */
-  double wbmax;
+  double wbmax{};
 
   /**
    *  @brief The minimum height of the bottom layer of the via
    */
-  double hbmin;
+  double hbmin{};
 
   /**
    *  @brief The maximum height of the bottom layer of the via
    *
    *  A negative value means "not specified" or "infinite".
    */
-  double hbmax;
+  double hbmax{};
 
   /**
    *  @brief The minimum width of the top layer of the via
    */
-  double wtmin;
+  double wtmin{};
 
   /**
    *  @brief The maximum width of the top layer of the via
    *
    *  A negative value means "not specified" or "infinite".
    */
-  double wtmax;
+  double wtmax{};
 
   /**
    *  @brief The minimum height of the top layer of the via
    */
-  double htmin;
+  double htmin{};
 
   /**
    *  @brief The maximum height of the top layer of the via
    *
    *  A negative value means "not specified" or "infinite".
    */
-  double htmax;
+  double htmax{};
 
   /**
    *  @brief The bottom layer
@@ -126,14 +126,14 @@ public:
    *  For example, sheet layers such as diffusion are not wired.
    *  By default, layers are wired.
    */
-  bool bottom_wired;
+  bool bottom_wired{};
 
   /**
    *  @brief The grid of the bottom layer
    *
    *  Via dimensions are rounded to this grid on the bottom layer, if non-zero.
    */
-  double bottom_grid;
+  double bottom_grid{};
 
   /**
    *  @brief The cut layer
@@ -151,14 +151,14 @@ public:
    *  For example, sheet layers such as diffusion are not wired.
    *  By default, layers are wired.
    */
-  bool top_wired;
+  bool top_wired{};
 
   /**
    *  @brief The grid of the top layer
    *
    *  Via dimensions are rounded to this grid on the top layer, if non-zero.
    */
-  double top_grid;
+  double top_grid{};
 
   /**
    *  @brief The name of the via

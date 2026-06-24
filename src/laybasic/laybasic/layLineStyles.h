@@ -211,9 +211,9 @@ public:
   std::string to_string () const;
 
 private:
-  uint32_t m_pattern [32];
+  uint32_t m_pattern [32]{};
   unsigned int m_width;
-  unsigned int m_pattern_stride;
+  unsigned int m_pattern_stride{};
   unsigned int m_order_index;
   std::string m_name;
   mutable std::unique_ptr<std::map<unsigned int, LineStyleInfo> > m_scaled_pattern;

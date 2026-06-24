@@ -97,7 +97,7 @@ bool euclidian_near_part_of_edge (zero_distance_mode zd_mode, db::coord_traits<d
 
   //  s1 = side of g.p1 wrt e
   //  s2 = side of g.p2 wrt e
-  int s1, s2;
+  int s1 = 0, s2 = 0;
   if (e.is_degenerate ()) {
     if (g.contains (e.p1 ())) {
       s1 = s2 = 0;
@@ -262,7 +262,7 @@ static bool var_near_part_of_edge (zero_distance_mode zd_mode, db::coord_traits<
 
   //  s1 = side of g.p1 wrt e
   //  s2 = side of g.p2 wrt e
-  int s1, s2;
+  int s1 = 0, s2 = 0;
   if (e.is_degenerate ()) {
     if (g.contains (e.p1 ())) {
       s1 = s2 = 0;
@@ -503,7 +503,7 @@ EdgeRelationFilter::check (const db::Edge &a, const db::Edge &b, db::EdgePair *o
 
   //  Determine the interacting edge parts
 
-  bool in1, in2;
+  bool in1 = false, in2 = false;
 
   if (m_metrics == Euclidian) {
     in2 = euclidian_near_part_of_edge (m_zero_distance_mode, m_d, an, bn, ! m_whole_edges && output ? &output->second () : nullptr);

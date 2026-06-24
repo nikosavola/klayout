@@ -413,14 +413,14 @@ private:
   union {
     struct _align_helper { long l; } _ah;
     char iter [sizeof (iter_size)];
-  } m_d;
+  } m_d{};
 
   //  This member must be first to guarantee alignment on 64bit systems:
   //  The strange construction and the local dummy class helps to guarantee alignment of the "iter" space
   union {
     struct _align_helper { long l; } _ah;
     char iter [sizeof (array_iter_size)];
-  } m_ad;
+  } m_ad{};
   
   bool m_valid, m_with_props;
   region_mode m_region_mode;

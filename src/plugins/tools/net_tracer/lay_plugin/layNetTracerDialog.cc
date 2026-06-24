@@ -1506,7 +1506,7 @@ BEGIN_PROTECTED
       throw tl::Exception (tl::to_string (QObject::tr ("No net selected to export")));
     }
 
-    bool ok;
+    bool ok = false;
     QString cell_name = tl::to_qstring (m_export_cell_name);
     cell_name = QInputDialog::getText (this, QObject::tr ("Export Net"), QObject::tr ("Export net to cell named"), QLineEdit::Normal, cell_name, &ok);
     if (ok) {

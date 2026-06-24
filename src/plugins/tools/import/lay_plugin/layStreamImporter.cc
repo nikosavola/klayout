@@ -172,7 +172,7 @@ StreamImporter::read (db::Layout &target, db::cell_index_type target_cell_index,
     }
 
     //  Locate the top cell in the source file
-    db::cell_index_type source_topcell;
+    db::cell_index_type source_topcell = 0;
     std::vector <db::cell_index_type> source_cells;
 
     if (m_cell_mapping != StreamImportData::Extra || !m_topcell.empty ()) {

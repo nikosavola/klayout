@@ -55,8 +55,8 @@ struct DB_PUBLIC NetlistCompareGlobalOptions
   NetlistCompareGlobalOptions ();
   void ensure_initialized ();
 
-  bool debug_netcompare;
-  bool debug_netgraph;
+  bool debug_netcompare{};
+  bool debug_netgraph{};
 
   static NetlistCompareGlobalOptions *options ();
 

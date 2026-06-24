@@ -285,7 +285,7 @@ private:
   std::map<db::cell_index_type, std::set<db::ICplxTrans> > m_variants;
   std::set<db::cell_index_type> m_called;
   const TransformationReducer *mp_red;
-  db::Layout *mp_layout;
+  db::Layout *mp_layout{};
 
   void add_variant (std::set<ICplxTrans> &variants, const db::CellInstArray &inst, bool tl_invariant) const;
   void add_variant_non_tl_invariant (std::set<db::ICplxTrans> &variants, const db::CellInstArray &inst) const;

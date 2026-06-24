@@ -237,7 +237,7 @@ public:
 
 private:
   std::map <std::string, FormatSpecificReaderOptions *> m_options;
-  int m_warn_level;
+  int m_warn_level{};
 
   void release ();
 };

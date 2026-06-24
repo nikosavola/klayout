@@ -353,7 +353,7 @@ void signal_handler (int signo, siginfo_t *si, void *)
             has_addr2line = false;
           }
 
-          int l;
+          int l = 0;
           l = strlen (sym);
           if (l > 0 && sym[l - 1] == '\n') {
             sym[l - 1] = 0;
@@ -447,7 +447,7 @@ void signal_handler (int signo, siginfo_t *si, void *)
 
 void install_signal_handlers ()
 {
-  struct sigaction act;
+  struct sigaction act{};
   memset(&act, 0, sizeof(struct sigaction));
   act.sa_sigaction = signal_handler;
   sigemptyset (&act.sa_mask);

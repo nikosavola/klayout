@@ -362,7 +362,7 @@ BrowserPanel::page_search_edited ()
   for (QTextBlock b = doc->firstBlock (); b.isValid (); b = b.next ()) {
 
     int from = 0;
-    int index;
+    int index = 0;
 
     QString t = b.text ();
 

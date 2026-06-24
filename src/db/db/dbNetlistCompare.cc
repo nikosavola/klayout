@@ -1622,7 +1622,7 @@ NetlistComparer::do_device_assignment (const db::Circuit *c1, const db::NetGraph
 
     } else {
 
-      DeviceParametersCompare cmp;
+      DeviceParametersCompare cmp{};
 
       std::sort (unmatched_a.begin (), unmatched_a.end (), cmp);
       std::sort (unmatched_b.begin (), unmatched_b.end (), cmp);

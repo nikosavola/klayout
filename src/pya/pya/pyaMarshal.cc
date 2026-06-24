@@ -195,8 +195,8 @@ private:
   const gsi::ArgType *mp_ainner, *mp_ainner_k;
   Py_ssize_t m_pos;
   PythonPtr m_hash;
-  PyObject *m_key, *m_value;
-  bool m_has_items;
+  PyObject *m_key{}, *m_value{};
+  bool m_has_items{};
 };
 
 /**
@@ -1181,7 +1181,7 @@ struct test_arg_func<gsi::MapType>
     //  instantiate a 2d template with do_on_type2.
     *ret = true;
 
-    PyObject *key, *value;
+    PyObject *key = nullptr, *value = nullptr;
     Py_ssize_t pos = 0;
     while (PyDict_Next(arg, &pos, &key, &value)) {
       if (! test_arg (ainner_k, key, loose, true /*issue-1651*/)) {

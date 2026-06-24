@@ -1533,7 +1533,7 @@ public:
   QVariant data (const QModelIndex &index, int role) const override
   {
     if (role == Qt::DisplayRole) {
-      int delta;
+      int delta = 0;
       if (m_for_undo) {
         delta = -(index.row () + 1);
       } else {

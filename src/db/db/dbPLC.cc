@@ -489,7 +489,7 @@ Polygon::init ()
   //  establish clockwise order of the vertexes
 
   double area = 0.0;
-  const Vertex *vm1 = vertex (-1), *v0;
+  const Vertex *vm1 = vertex (-1), *v0 = nullptr;
   for (auto i = mp_v.begin (); i != mp_v.end (); ++i) {
     v0 = *i;
     area += db::vprod (*vm1 - db::DPoint (), *v0 - *vm1);

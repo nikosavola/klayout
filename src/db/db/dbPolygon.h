@@ -348,7 +348,7 @@ public:
 
       }
 
-      point_type *pts;
+      point_type *pts = nullptr;
 
       m_size = n;
       pts = new point_type [m_size];
@@ -489,8 +489,8 @@ public:
         return;
       }
 
-      point_type *pts;
-      bool clockwise;
+      point_type *pts = nullptr;
+      bool clockwise = false;
 
       //  in ortho mode, allocate only half the number of points and compress
       if (ortho) {

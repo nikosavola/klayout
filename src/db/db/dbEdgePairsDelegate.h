@@ -258,9 +258,9 @@ protected:
   }
 
 private:
-  bool m_report_progress;
+  bool m_report_progress{};
   std::string m_progress_desc;
-  int m_base_verbosity;
+  int m_base_verbosity{};
 };
 
 }

@@ -399,7 +399,7 @@ DEFImporter::produce_routing_geometry (db::Cell &design, const Polygon *style, u
 
       } else if (multipart || (pt0->x () == pt0[1].x () || pt0->y () == pt0[1].y())) {
 
-        db::Coord wxy, wxy_perp;
+        db::Coord wxy = 0, wxy_perp = 0;
 
         if (pt0->x () == pt0 [1].x ()) {
           wxy = w.second;

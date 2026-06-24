@@ -754,7 +754,7 @@ public:
 private:
   template <class D> friend class text;
 
-  char *mp_ptr;
+  char *mp_ptr{};
   trans_type m_trans;
   coord_type m_size;
   Font m_font : 26;

@@ -121,44 +121,44 @@ public:
 
 private:
   std::string m_format;
-  double m_scale_factor;
-  double m_dbu;
-  bool m_dont_write_empty_cells;
-  bool m_keep_instances;
-  bool m_write_context_info;
+  double m_scale_factor{};
+  double m_dbu{};
+  bool m_dont_write_empty_cells{};
+  bool m_keep_instances{};
+  bool m_write_context_info{};
   std::string m_cell_selection;
 
-  unsigned int m_gds2_max_vertex_count;
-  bool m_gds2_no_zero_length_paths;
-  bool m_gds2_multi_xy_records;
-  bool m_gds2_resolve_skew_arrays;
-  unsigned int m_gds2_max_cellname_length;
+  unsigned int m_gds2_max_vertex_count{};
+  bool m_gds2_no_zero_length_paths{};
+  bool m_gds2_multi_xy_records{};
+  bool m_gds2_resolve_skew_arrays{};
+  unsigned int m_gds2_max_cellname_length{};
   std::string m_libname;
-  double m_gds2_user_units;
-  bool m_gds2_write_timestamps;
-  bool m_gds2_write_cell_properties;
-  bool m_gds2_write_file_properties;
-  double m_gds2_default_text_size;
+  double m_gds2_user_units{};
+  bool m_gds2_write_timestamps{};
+  bool m_gds2_write_cell_properties{};
+  bool m_gds2_write_file_properties{};
+  double m_gds2_default_text_size{};
 
-  int m_oasis_compression_level;
-  bool m_oasis_write_cblocks;
-  bool m_oasis_strict_mode;
-  bool m_oasis_recompress;
-  bool m_oasis_permissive;
-  int m_oasis_write_std_properties;
+  int m_oasis_compression_level{};
+  bool m_oasis_write_cblocks{};
+  bool m_oasis_strict_mode{};
+  bool m_oasis_recompress{};
+  bool m_oasis_permissive{};
+  int m_oasis_write_std_properties{};
   std::string m_oasis_subst_char;
 
-  bool m_cif_dummy_calls;
-  bool m_cif_blank_separator;
+  bool m_cif_dummy_calls{};
+  bool m_cif_blank_separator{};
 
-  double m_magic_lambda;
+  double m_magic_lambda{};
   std::string m_magic_tech;
 
-  int m_dxf_polygon_mode;
+  int m_dxf_polygon_mode{};
 
-  int m_lstream_compression_level;
-  bool m_lstream_recompress;
-  bool m_lstream_permissive;
+  int m_lstream_compression_level{};
+  bool m_lstream_recompress{};
+  bool m_lstream_permissive{};
 
   void set_oasis_substitution_char (const std::string &text);
   void init_from_options (const db::SaveLayoutOptions &options);

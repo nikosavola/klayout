@@ -537,7 +537,7 @@ scale_and_snap (db::Layout &layout, db::Cell &cell, db::Coord g, db::Coord m, db
 
       iterated_array_vectors.clear ();
       db::Vector a, b;
-      unsigned long na, nb;
+      unsigned long na = 0, nb = 0;
 
       db::CellInstArray new_array (ia);
 

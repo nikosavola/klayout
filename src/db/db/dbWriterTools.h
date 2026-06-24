@@ -129,7 +129,7 @@ public:
 private:
   std::map <db::cell_index_type, std::string> m_map;
   std::set <std::string> m_cell_names;
-  char m_character_trans [256];
+  char m_character_trans [256]{};
   char m_default_char;
   size_t m_max_cellname_length;
 };

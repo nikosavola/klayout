@@ -32,6 +32,8 @@
 #include "dbEdge.h"
 #include "dbEdgePair.h"
 
+#include <math.h>
+
 #include <cctype>
 #include <cstring>
 
@@ -96,8 +98,8 @@ public:
 
     tl::Extractor ex;
     std::string s;
-    double res;
-    double dbu;
+    double res = NAN;
+    double dbu = NAN;
 
     std::string cell_name;
     db::DCplxTrans trans;
@@ -154,7 +156,7 @@ public:
       }
 
       ex = tl::Extractor (get_line ().c_str ());
-      size_t n1, n2, n3;
+      size_t n1 = 0, n2 = 0, n3 = 0;
       ex.read (n1);
       ex.read (n2);
       ex.read (n3);
@@ -172,7 +174,7 @@ public:
         if (l.size () > 3 && l[0] == 'W' && l[1] == 'E' && isdigit (l[2])) {
 
           size_t n = 0;
-          const char *cp;
+          const char *cp = nullptr;
           for (cp = l.c_str () + 2; *cp && isdigit (*cp); ++cp) {
             n = n * 10 + size_t (*cp - '0');
           }
@@ -226,7 +228,7 @@ public:
 
         Values values;
 
-        size_t nshape, npoints;
+        size_t nshape = 0, npoints = 0;
         valid = valid && ex.try_read (nshape);
         valid = valid && ex.try_read (npoints);
 
@@ -337,7 +339,7 @@ public:
 
         }
         
-        const Cell *cell;
+        const Cell *cell = nullptr;
 
         //  Use the last cell or the top cell if no cell is specified since the start of the category.
         if (cell_name.empty ()) {
@@ -378,7 +380,7 @@ public:
 
             }
 
-            int64_t x, y;
+            int64_t x = 0, y = 0;
             ex.read (x);
             ex.read (y);
             ex.expect_end ();
@@ -406,11 +408,11 @@ public:
 
             }
 
-            int64_t x1, y1;
+            int64_t x1 = 0, y1 = 0;
             ex.read (x1);
             ex.read (y1);
 
-            int64_t x2, y2;
+            int64_t x2 = 0, y2 = 0;
             ex.read (x2);
             ex.read (y2);
 
@@ -501,8 +503,8 @@ class RVEFormatDeclaration
     std::string l;
     tl::Extractor ex;
     std::string s;
-    double d;
-    int i;
+    double d = NAN;
+    int i = 0;
 
     //  The first line must be "<cellname> <resolution>"
     if (text_stream.at_end ()) {

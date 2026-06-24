@@ -143,7 +143,7 @@ EditLineStyleWidget::mouseMoveEvent (QMouseEvent *event)
 {
   if ((event->buttons () & Qt::LeftButton) != 0 && ! m_readonly) {
 
-    unsigned int mx;
+    unsigned int mx = 0;
     if (! mouse_to_pixel (event->pos (), mx)) {
       return;
     }
@@ -172,7 +172,7 @@ EditLineStyleWidget::mousePressEvent (QMouseEvent *event)
     m_last_sx = m_sx;
     m_last_style_saved = true;
 
-    unsigned int mx;
+    unsigned int mx = 0;
     if (! mouse_to_pixel (event->pos (), mx)) {
       return;
     }

@@ -49,8 +49,8 @@ public:
   inline unsigned char b (char c) const { return m_char2bin[(unsigned char) c]; }
 
 private:
-  char m_bin2char[64];
-  unsigned char m_char2bin[256];
+  char m_bin2char[64]{};
+  unsigned char m_char2bin[256]{};
 };
 
 }

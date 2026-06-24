@@ -132,10 +132,10 @@ private:
 
   FlatEdges &operator= (const FlatEdges &other);
 
-  bool m_is_merged;
+  bool m_is_merged{};
   mutable tl::copy_on_write_ptr<db::Shapes> mp_edges;
   mutable tl::copy_on_write_ptr<db::Shapes> mp_merged_edges;
-  mutable bool m_merged_edges_valid;
+  mutable bool m_merged_edges_valid{};
 
   void init ();
   void ensure_merged_edges_valid () const;

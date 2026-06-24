@@ -55,7 +55,7 @@ void crash_me (int reason)
     void (*f_ptr)(int);
     char *c_ptr;
     const char *cc_ptr;
-  } ugly_cast;
+  } ugly_cast{};
 
   if (reason == 0) {
     //  SIGABRT

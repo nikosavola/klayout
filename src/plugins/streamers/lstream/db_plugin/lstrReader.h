@@ -203,7 +203,7 @@ private:
   std::map<uint64_t, db::properties_id_type> m_properties_id_map;
   std::map<uint64_t, const db::StringRef *> m_text_strings_by_id;
   uint64_t m_layout_view_id;
-  uint64_t m_meta_data_view_id;
+  uint64_t m_meta_data_view_id{};
   std::vector<std::pair<db::cell_index_type, std::string> > m_cells;
 
   void yield_progress ();

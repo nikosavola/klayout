@@ -441,8 +441,8 @@ private:
   db::cell_index_type make_cell_variant (const HierarchyBuilder::CellMapKey &key, const std::string &cell_name);
 
   tl::weak_ptr<db::Layout> mp_target;
-  HierarchyBuilderShapeReceiver *mp_pipe;
-  bool m_initial_pass;
+  HierarchyBuilderShapeReceiver *mp_pipe{};
+  bool m_initial_pass{};
   db::RecursiveShapeIterator m_source;
   cell_map_type m_cell_map;
   original_target_to_variants_map_type m_original_targets_to_variants_map;
@@ -452,11 +452,11 @@ private:
   std::set<cell_map_type::key_type> m_cells_seen;
   std::set<db::cell_index_type> m_cells_to_be_filled;
   cell_map_type::const_iterator m_cm_entry;
-  bool m_cm_new_entry;
+  bool m_cm_new_entry{};
   unsigned int m_target_layer;
   bool m_wants_all_cells;
   std::vector<std::pair<bool, std::vector<db::Cell *> > > m_cell_stack;
-  db::Cell *mp_initial_cell;
+  db::Cell *mp_initial_cell{};
 
   db::ICplxTrans m_trans;
 

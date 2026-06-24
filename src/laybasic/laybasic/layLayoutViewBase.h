@@ -3047,9 +3047,9 @@ private:
   tl::DeferredMethod<lay::LayoutViewBase> dm_redraw;
   tl::DeferredMethod<lay::LayoutViewBase> dm_update_layer_sources;
   bool m_editable;
-  int m_disabled_edits;
+  int m_disabled_edits{};
   unsigned int m_options;
-  lay::LayoutCanvas *mp_canvas;
+  lay::LayoutCanvas *mp_canvas{};
   std::list <CellView> m_cellviews;
   lay::AnnotationShapes m_annotation_shapes;
   std::vector <std::set <cell_index_type> > m_hidden_cells;
@@ -3058,119 +3058,119 @@ private:
   tl::vector <rdb::Database *> m_rdbs;
   tl::vector <db::LayoutToNetlist *> m_l2ndbs;
   std::string m_def_lyp_file;
-  bool m_add_other_layers;
-  bool m_synchronous;
-  int m_drawing_workers;
+  bool m_add_other_layers{};
+  bool m_synchronous{};
+  int m_drawing_workers{};
 
-  int m_from_level, m_to_level;
-  double m_pan_distance;
-  int m_paste_display_mode;
-  int m_wheel_mode;
-  bool m_guiding_shape_visible;
+  int m_from_level{}, m_to_level{};
+  double m_pan_distance{};
+  int m_paste_display_mode{};
+  int m_wheel_mode{};
+  bool m_guiding_shape_visible{};
   tl::Color m_guiding_shape_color;
-  int m_guiding_shape_line_width;
-  int m_guiding_shape_vertex_size;
+  int m_guiding_shape_line_width{};
+  int m_guiding_shape_vertex_size{};
 
   tl::Color m_ctx_color;
-  int m_ctx_dimming;
-  bool m_ctx_hollow;
+  int m_ctx_dimming{};
+  bool m_ctx_hollow{};
 
   tl::Color m_child_ctx_color;
-  int m_child_ctx_dimming;
-  bool m_child_ctx_hollow;
-  bool m_child_ctx_enabled;
+  int m_child_ctx_dimming{};
+  bool m_child_ctx_hollow{};
+  bool m_child_ctx_enabled{};
 
-  double m_abstract_mode_width;
-  bool m_abstract_mode_enabled;
+  double m_abstract_mode_width{};
+  bool m_abstract_mode_enabled{};
 
   tl::Color m_box_color;
-  bool m_box_text_transform;
-  unsigned int m_box_font;
-  int m_min_size_for_label;
-  double m_empty_cell_dimension;
-  bool m_cell_box_visible;
-  bool m_ghost_cells_visible;
+  bool m_box_text_transform{};
+  unsigned int m_box_font{};
+  int m_min_size_for_label{};
+  double m_empty_cell_dimension{};
+  bool m_cell_box_visible{};
+  bool m_ghost_cells_visible{};
 
   tl::Color m_marker_color;
-  int m_marker_line_width;
-  int m_marker_vertex_size;
-  int m_marker_dither_pattern;
-  int m_marker_line_style;
-  bool m_marker_halo;
+  int m_marker_line_width{};
+  int m_marker_vertex_size{};
+  int m_marker_dither_pattern{};
+  int m_marker_line_style{};
+  bool m_marker_halo{};
 
   tl::Color m_transient_marker_color;
-  int m_transient_marker_line_width;
-  int m_transient_marker_vertex_size;
-  int m_transient_marker_dither_pattern;
-  int m_transient_marker_line_style;
-  bool m_transient_marker_halo;
+  int m_transient_marker_line_width{};
+  int m_transient_marker_vertex_size{};
+  int m_transient_marker_dither_pattern{};
+  int m_transient_marker_line_style{};
+  bool m_transient_marker_halo{};
 
-  unsigned int m_search_range;
-  unsigned int m_search_range_box;
+  unsigned int m_search_range{};
+  unsigned int m_search_range_box{};
 
-  bool m_transient_selection_mode;
-  bool m_sel_inside_pcells;
+  bool m_transient_selection_mode{};
+  bool m_sel_inside_pcells{};
 
-  int m_default_font_size;
-  bool m_text_visible;
-  bool m_text_lazy_rendering;
-  bool m_bitmap_caching;
-  bool m_show_properties;
+  int m_default_font_size{};
+  bool m_text_visible{};
+  bool m_text_lazy_rendering{};
+  bool m_bitmap_caching{};
+  bool m_show_properties{};
   tl::Color m_text_color;
-  bool m_apply_text_trans;
-  unsigned int m_apply_text_trans_mode;
-  double m_default_text_size;
-  bool m_text_point_mode;
-  unsigned int m_text_font;
-  bool m_show_markers;
-  bool m_no_stipples;
-  bool m_stipple_offset;
+  bool m_apply_text_trans{};
+  unsigned int m_apply_text_trans_mode{};
+  double m_default_text_size{};
+  bool m_text_point_mode{};
+  unsigned int m_text_font{};
+  bool m_show_markers{};
+  bool m_no_stipples{};
+  bool m_stipple_offset{};
 
-  bool m_drop_small_cells;
-  unsigned int m_drop_small_cells_value;
+  bool m_drop_small_cells{};
+  unsigned int m_drop_small_cells_value{};
   drop_small_cells_cond_type m_drop_small_cells_cond;
 
-  bool m_draw_array_border_instances;
+  bool m_draw_array_border_instances{};
 
-  bool m_fit_new_cell;
-  bool m_full_hier_new_cell;
-  bool m_clear_ruler_new_cell;
-  bool m_dbu_coordinates;
-  bool m_absolute_coordinates;
-  bool m_auto_create_new_layers;
+  bool m_fit_new_cell{};
+  bool m_full_hier_new_cell{};
+  bool m_clear_ruler_new_cell{};
+  bool m_dbu_coordinates{};
+  bool m_absolute_coordinates{};
+  bool m_auto_create_new_layers{};
 
-  bool m_dirty;
-  bool m_prop_changed;
-  bool m_animated;
-  unsigned int m_phase;
+  bool m_dirty{};
+  bool m_prop_changed{};
+  bool m_animated{};
+  unsigned int m_phase{};
 
   lay::ColorPalette m_palette;
   lay::StipplePalette m_stipple_palette;
   lay::LineStylePalette m_line_style_palette;
 
   std::vector <DisplayState> m_display_states;
-  unsigned int m_display_state_ptr;
+  unsigned int m_display_state_ptr{};
 
   BookmarkList m_bookmarks;
 
   std::vector<lay::LayerPropertiesList *> m_layer_properties_lists;
-  unsigned int m_current_layer_list;
+  unsigned int m_current_layer_list{};
 
   //  service and editable management
-  int m_mode;
+  int m_mode{};
   
   //  services & editables
-  lay::MouseTracker *mp_tracker;
-  lay::ZoomService *mp_zoom_service;
-  lay::SelectionService *mp_selection_service;
-  lay::MoveService *mp_move_service;
+  lay::MouseTracker *mp_tracker{};
+  lay::ZoomService *mp_zoom_service{};
+  lay::SelectionService *mp_selection_service{};
+  lay::MoveService *mp_move_service{};
 
   std::vector<lay::Plugin *> mp_plugins;
 
-  lay::Plugin *mp_active_plugin;
+  lay::Plugin *mp_active_plugin{};
 
-  int m_active_cellview_index;
-  bool m_active_cellview_changed_event_enabled;
+  int m_active_cellview_index{};
+  bool m_active_cellview_changed_event_enabled{};
   std::set<int> m_active_cellview_changed_events;
 
   lay::LayerPropertiesConstIterator m_current_layer;
@@ -3178,7 +3178,7 @@ private:
 
   std::vector<cell_path_type> m_current_cell_per_cellview;
 
-  bool m_visibility_changed;
+  bool m_visibility_changed{};
 
   tl::Clock m_clock, m_last_checked;
 

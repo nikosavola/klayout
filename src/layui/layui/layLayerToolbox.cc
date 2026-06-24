@@ -155,7 +155,7 @@ LCPDitherPalette::LCPDitherPalette (QWidget *parent, const char *name)
     ll->setContentsMargins (0, 0, 0, 0);
     ll->setSpacing (0);
 
-    LCPActiveLabel *b;
+    LCPActiveLabel *b = nullptr;
 
     //  No pattern
     b = new LCPActiveLabel (-3, f);
@@ -178,7 +178,7 @@ LCPDitherPalette::LCPDitherPalette (QWidget *parent, const char *name)
 
   {
     //  Edit pattern 
-    LCPActiveLabel *b;
+    LCPActiveLabel *b = nullptr;
     b = new LCPActiveLabel (-1, this, "dp_l2");
     b->setFrameStyle (QFrame::Panel | QFrame::Raised);
     b->setLineWidth (1);
@@ -295,9 +295,9 @@ LCPVisibilityPalette::LCPVisibilityPalette (QWidget *parent, const char *name)
   l->setContentsMargins (0, 0, 0, 0);
   l->setSpacing (0);
 
-  QFrame *f;
-  LCPActiveLabel *b;
-  QHBoxLayout *ll;
+  QFrame *f = nullptr;
+  LCPActiveLabel *b = nullptr;
+  QHBoxLayout *ll = nullptr;
 
   QSizePolicy sp (QSizePolicy::Ignored, QSizePolicy::Ignored);
   sp.setHorizontalStretch (0);
@@ -379,9 +379,9 @@ LCPAnimationPalette::LCPAnimationPalette (QWidget *parent, const char *name)
   l->setContentsMargins (0, 0, 0, 0);
   l->setSpacing (0);
 
-  QFrame *f;
-  LCPActiveLabel *b;
-  QHBoxLayout *ll;
+  QFrame *f = nullptr;
+  LCPActiveLabel *b = nullptr;
+  QHBoxLayout *ll = nullptr;
 
   QSizePolicy sp (QSizePolicy::Ignored, QSizePolicy::Ignored);
   sp.setHorizontalStretch (0);
@@ -455,9 +455,9 @@ LCPStylePalette::LCPStylePalette (QWidget *parent, const char *name)
   l->setContentsMargins (0, 0, 0, 0);
   l->setSpacing (0);
 
-  QFrame *f;
-  LCPActiveLabel *b;
-  QHBoxLayout *ll;
+  QFrame *f = nullptr;
+  LCPActiveLabel *b = nullptr;
+  QHBoxLayout *ll = nullptr;
 
   QSizePolicy sp (QSizePolicy::Ignored, QSizePolicy::Ignored);
   sp.setHorizontalStretch (0);
@@ -748,7 +748,7 @@ LCPColorPalette::LCPColorPalette (QWidget *parent, const char *name)
     ll->setContentsMargins (0, 0, 0, 0);
     ll->setSpacing (0);
 
-    LCPActiveLabel *b;
+    LCPActiveLabel *b = nullptr;
 
     //  No color
     b = new LCPActiveLabel (-1, f);
@@ -778,7 +778,7 @@ LCPColorPalette::LCPColorPalette (QWidget *parent, const char *name)
     ll->setContentsMargins (0, 0, 0, 0);
     ll->setSpacing (0);
 
-    LCPActiveLabel *b;
+    LCPActiveLabel *b = nullptr;
 
     QLabel *lbl = new QLabel (QObject::tr ("S/V"), f);
     ll->addWidget (lbl);
@@ -1005,7 +1005,7 @@ LayerToolbox::rearrange (int w, int h)
 {
   for (std::vector <std::pair <QWidget *, QWidget *> >::iterator i = m_tool_panels.begin (); i != m_tool_panels.end (); ++i) {
 
-    int hh;
+    int hh = 0;
 
     if (!i->second->isHidden ()) {
       hh = i->second->sizeHint ().height ();

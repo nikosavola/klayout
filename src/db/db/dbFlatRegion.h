@@ -145,10 +145,10 @@ private:
 
   FlatRegion &operator= (const FlatRegion &other);
 
-  mutable bool m_is_merged;
+  mutable bool m_is_merged{};
   mutable tl::copy_on_write_ptr<db::Shapes> mp_polygons;
   mutable tl::copy_on_write_ptr<db::Shapes> mp_merged_polygons;
-  mutable bool m_merged_polygons_valid;
+  mutable bool m_merged_polygons_valid{};
   double m_area_ratio;
   size_t m_max_vertex_count;
 

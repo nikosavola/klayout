@@ -350,7 +350,7 @@ LayerControlPanel::LayerControlPanel (lay::LayoutViewBase *view, db::Manager *ma
 
   tb->setObjectName (QString::fromUtf8 ("lcp_buttons"));
 
-  QToolButton *b;
+  QToolButton *b = nullptr;
 
   b = new QToolButton (tb);
   b->setObjectName (QString::fromUtf8 ("lcp_dd"));

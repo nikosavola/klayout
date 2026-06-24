@@ -1366,7 +1366,7 @@ template <class Object, class Builder>
 void
 Writer::make_objects (const Compressed::compressed_container<Object> &container, Builder builder)
 {
-  size_t i;
+  size_t i = 0;
 
   builder.initBasic (container.plain.size ());
   i = 0;

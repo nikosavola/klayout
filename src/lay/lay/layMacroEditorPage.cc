@@ -402,7 +402,7 @@ void MacroEditorSidePanel::set_debugging_on (bool on)
 
 QSize MacroEditorSidePanel::sizeHint () const
 {
-  int w;
+  int w = 0;
 #if QT_VERSION >= 0x60000
   w = QFontMetrics (mp_text->font ()).horizontalAdvance (QString::fromUtf8 ("12345"));
 #else

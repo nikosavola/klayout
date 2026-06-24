@@ -317,7 +317,7 @@ tl::Variant python2c_func<tl::Variant>::operator() (PyObject *rval)
     tl::Variant r;
     r.set_array ();
     Py_ssize_t pos = 0;
-    PyObject *key, *value;
+    PyObject *key = nullptr, *value = nullptr;
     while (PyDict_Next (rval, &pos, &key, &value)) {
       r.insert (python2c<tl::Variant> (key), python2c<tl::Variant> (value));
     }

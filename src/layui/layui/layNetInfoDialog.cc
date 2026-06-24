@@ -23,6 +23,8 @@
 #if defined(HAVE_QT)
 
 #include "layNetInfoDialog.h"
+
+#include <math.h>
 #include "tlXMLWriter.h"
 
 #include "ui_NetInfoDialog.h"
@@ -188,7 +190,7 @@ void NetInfoDialog::update_info_text ()
       }
       info.end_element ("td");
 
-      size_t n;
+      size_t n = 0;
 
       info.start_element ("td");
       n = count_shapes (mp_l2ndb.get (), net.operator-> ());
@@ -395,8 +397,8 @@ void NetInfoDialog::update_info_text ()
           for (std::map<unsigned int, db::coord_traits<db::Coord>::area_type>::iterator i = statinfo_area.begin (); i != statinfo_area.end(); ++i) {
 
             unsigned int l = i->first;
-            size_t n;
-            double v;
+            size_t n = 0;
+            double v = NAN;
 
             info.start_element ("tr");
             info.start_element ("td");

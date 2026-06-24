@@ -45,7 +45,7 @@ Object::~Object ()
 void
 Object::reset ()
 {
-  WeakOrSharedPtr *ptrs;
+  WeakOrSharedPtr *ptrs = nullptr;
 
   //  NOTE: basically we'd need to lock the mutex here.
   //  But this will easily create deadlocks and the

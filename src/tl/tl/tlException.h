@@ -165,7 +165,7 @@ public:
 
 private:
   std::string m_msg;
-  bool m_first_chance;
+  bool m_first_chance{};
   void init (const std::string &fmt, const std::vector<tl::Variant> &a);
 };
 

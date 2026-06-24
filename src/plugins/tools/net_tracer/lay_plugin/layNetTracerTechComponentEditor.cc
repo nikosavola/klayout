@@ -135,7 +135,7 @@ NetTracerTechComponentEditor::NetTracerTechComponentEditor (QWidget *parent)
 {
   Ui::NetTracerTechComponentEditor::setupUi (this);
 
-  QAction *action;
+  QAction *action = nullptr;
   action = new QAction (QObject::tr ("Add Stack"), this);
   connect (action, SIGNAL (triggered ()), this, SLOT (add_clicked ()));
   stack_tree->addAction (action);

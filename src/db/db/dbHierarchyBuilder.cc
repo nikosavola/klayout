@@ -345,7 +345,7 @@ HierarchyBuilder::make_cell_variant (const HierarchyBuilder::CellMapKey &key, co
   m_cm_entry = m_cell_map.find (key);
   m_cm_new_entry = false;
 
-  db::cell_index_type new_cell;
+  db::cell_index_type new_cell = 0;
 
   if (m_cm_entry == m_cell_map.end ()) {
 
@@ -763,7 +763,7 @@ void PolygonReferenceHierarchyBuilderShapeReceiver::push (const db::Shape &shape
     }
     db::PolygonRef pref (poly, mp_layout->shape_repository ());
 
-    db::properties_id_type pid;
+    db::properties_id_type pid = 0;
 
     if (m_make_text_prop) {
 

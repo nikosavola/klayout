@@ -982,7 +982,7 @@ DeepShapeStore::layout_for_iter (const db::RecursiveShapeIterator &si, const db:
   layout_map_type::iterator l = m_layout_map.find (std::make_pair (si, std::make_pair (gen_id, trans)));
   if (l == m_layout_map.end () || m_layouts[l->second] == nullptr) {
 
-    unsigned int layout_index;
+    unsigned int layout_index = 0;
 
     if (l != m_layout_map.end ()) {
       //  reuse discarded entry

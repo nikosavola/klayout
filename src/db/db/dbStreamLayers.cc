@@ -659,7 +659,7 @@ LayerMap::mmap_expr (tl::Extractor &ex, unsigned int l)
       tl::Extractor ex_saved = ex;
 
       std::string name;
-      ld_type n;
+      ld_type n = 0;
       if (! ex.try_read (n) && ex.try_read_word_or_quoted (name)) {
 
         m_name_map [name].insert (l);
@@ -829,7 +829,7 @@ LayerMap::unmap_expr (tl::Extractor &ex)
       tl::Extractor ex_saved = ex;
 
       std::string name;
-      ld_type n;
+      ld_type n = 0;
       if (! ex.try_read (n) && ex.try_read_word_or_quoted (name)) {
 
         m_name_map.erase (name);

@@ -450,14 +450,14 @@ private:
   std::map<unsigned int, db::LayerProperties> m_layers;
   std::set<db::cell_index_type> m_cells;
   std::set<db::cell_index_type> m_implied_children;
-  bool m_all_layers;
-  bool m_all_cells;
-  double m_dbu;
-  double m_scale_factor;
+  bool m_all_layers{};
+  bool m_all_cells{};
+  double m_dbu{};
+  double m_scale_factor{};
   std::string m_libname;
-  bool m_keep_instances;
-  bool m_write_context_info;
-  bool m_dont_write_empty_cells;
+  bool m_keep_instances{};
+  bool m_write_context_info{};
+  bool m_dont_write_empty_cells{};
   std::map <std::string, FormatSpecificWriterOptions *> m_options;
 
   void release ();

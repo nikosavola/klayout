@@ -182,9 +182,9 @@ private:
   DeepEdges &operator= (const DeepEdges &other);
 
   mutable DeepLayer m_merged_edges;
-  mutable bool m_merged_edges_valid;
-  mutable size_t m_merged_edges_boc_hash;
-  bool m_is_merged;
+  mutable bool m_merged_edges_valid{};
+  mutable size_t m_merged_edges_boc_hash{};
+  bool m_is_merged{};
 
   void init ();
   void ensure_merged_edges_valid () const;

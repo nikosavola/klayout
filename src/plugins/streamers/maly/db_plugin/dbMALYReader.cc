@@ -166,7 +166,7 @@ MALYReader::import_data (db::Layout &layout, const MALYData &data)
         //  ignore if there is no MEBES support
       }
 
-      db::cell_index_type source_cell;
+      db::cell_index_type source_cell = 0;
 
       if (s->topcell.empty ()) {
 

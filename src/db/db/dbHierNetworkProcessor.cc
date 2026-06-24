@@ -2808,7 +2808,7 @@ hier_clusters<T>::propagate_cluster_inst (const db::Layout &layout, const db::Ce
           ClusterInstance ci2 (id, child_inst.cell_index (), child_inst.complex_trans (*pii), child_inst.prop_id ());
           if (seen.find (std::make_pair (pi->parent_cell_index (), ci2)) == seen.end ()) {
 
-            size_t id_dummy;
+            size_t id_dummy = 0;
 
             const typename db::local_cluster<T>::global_nets &gn = child_cc.cluster_by_id (id).get_global_nets ();
             if (gn.empty ()) {

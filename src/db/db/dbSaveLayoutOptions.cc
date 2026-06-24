@@ -459,7 +459,7 @@ SaveLayoutOptions::get_cells (const db::Layout &layout, std::set <db::cell_index
 
     }
 
-    bool repeat;
+    bool repeat = false;
     do {
 
       repeat = false;

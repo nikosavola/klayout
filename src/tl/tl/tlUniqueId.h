@@ -62,7 +62,7 @@ public:
 private:
   friend id_type id_of (const UniqueId *);
 
-  id_type m_id;
+  id_type m_id{};
 };
 
 /**

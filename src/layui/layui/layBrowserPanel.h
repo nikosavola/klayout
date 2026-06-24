@@ -454,7 +454,7 @@ protected:
   QSize sizeHint () const override;
 
 private:
-  bool m_enable_load, m_enable_reject;
+  bool m_enable_load{}, m_enable_reject{};
   tl::weak_ptr<BrowserSource> mp_source;
   std::string m_home;
   std::string m_cached_url;
@@ -462,16 +462,16 @@ private:
   std::string m_cached_next_url;
   std::string m_cached_prev_url;
   BrowserOutline m_cached_outline;
-  Ui::BrowserPanel *mp_ui;
-  bool m_schedule_back;
+  Ui::BrowserPanel *mp_ui{};
+  bool m_schedule_back{};
   tl::DeferredMethod<BrowserPanel> m_back_dm;
   tl::DeferredMethod<BrowserPanel> m_new_url_dm;
   std::string m_search_url, m_search_query_item;
   QString m_current_title;
   QList<QTextEdit::ExtraSelection> m_search_selection;
-  int m_search_index;
-  QCompleter *mp_completer;
-  QStringListModel *mp_completer_model;
+  int m_search_index{};
+  QCompleter *mp_completer{};
+  QStringListModel *mp_completer_model{};
   std::list<BookmarkItem> m_bookmarks;
   lay::Dispatcher *mp_dispatcher;
   std::string m_cfg_bookmarks;

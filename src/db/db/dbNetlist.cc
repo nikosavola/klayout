@@ -888,7 +888,7 @@ static void read_pins (tl::Extractor &ex, db::Circuit *circuit, std::map<std::st
 
     std::string pn;
     if (ex.test ("$")) {
-      size_t i;
+      size_t i = 0;
       ex.read (i);
     } else {
       ex.read_word_or_quoted (pn);
@@ -1008,7 +1008,7 @@ static void read_device (tl::Extractor &ex, db::Circuit *circuit, std::map<std::
 
   std::string dn;
   if (ex.test ("$")) {
-    size_t i;
+    size_t i = 0;
     ex.read (i);
   } else {
     ex.read_word_or_quoted (dn);
@@ -1031,7 +1031,7 @@ static void read_subcircuit_pins (tl::Extractor &ex, db::Circuit *circuit, db::S
 
     std::string pn;
     if (ex.test ("$")) {
-      size_t i;
+      size_t i = 0;
       ex.read (i);
     } else {
       ex.read_word_or_quoted (pn);
@@ -1087,7 +1087,7 @@ static void read_subcircuit (tl::Extractor &ex, db::Circuit *circuit, std::map<s
 
   std::string scn;
   if (ex.test ("$")) {
-    size_t i;
+    size_t i = 0;
     ex.read (i);
   } else {
     ex.read_word_or_quoted (scn);

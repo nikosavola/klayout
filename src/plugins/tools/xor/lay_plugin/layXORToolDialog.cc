@@ -45,6 +45,7 @@
 
 #include "ui_XORToolDialog.h"
 
+#include <math.h>
 #include <stdio.h>
 
 #include <QMessageBox>
@@ -321,7 +322,7 @@ BEGIN_PROTECTED
     std::string text (tl::to_string (mp_ui->tolerances->text ()));
     tl::Extractor ex (text.c_str ());
     while (! ex.at_end ()) {
-      double t;
+      double t = NAN;
       if (! ex.try_read (t) || t < -1e-6) {
         break;
       }
@@ -511,7 +512,7 @@ public:
 
   void update_progress (XORProgress &progress)
   {
-    unsigned int p;
+    unsigned int p = 0;
     {
       QMutexLocker locker (&m_mutex);
       p = m_progress;
@@ -873,7 +874,7 @@ XORWorker::do_perform_tiled (const XORTask *xor_task)
         if ((!la.empty () && !lb.empty ()) || mp_job->el_handling () == XORJob::EL_process) {
 
           tl::SelfTimer timer (tl::verbosity () >= 31, "Boolean part");
-          size_t n;
+          size_t n = 0;
 
           if (! merge_before_bool ()) {
 
@@ -1163,7 +1164,7 @@ XORToolDialog::run_xor ()
     std::string text (tl::to_string (mp_ui->tolerances->text ()));
     tl::Extractor ex (text.c_str ());
     while (! ex.at_end ()) {
-      double t;
+      double t = NAN;
       if (! ex.try_read (t) || t < -1e-6) {
         break;
       }
@@ -1325,7 +1326,7 @@ XORToolDialog::run_xor ()
 
         for (std::vector <db::Coord>::const_iterator t = tolerances.begin (); t != tolerances.end (); ++t) {
 
-          rdb::Category *subcat;
+          rdb::Category *subcat = nullptr;
           subcat = rdb->create_category (cat, tl::sprintf ("Tol_%g", *t * dbu));
           subcat->set_description (tl::sprintf ("XOR tolerance (min width reported): %g um", *t * dbu));
           sub_categories.push_back (subcat);

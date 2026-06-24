@@ -63,23 +63,23 @@ protected:
   GerberMetaData do_scan () override;
 
 private:
-  bool m_clear;
-  bool m_guess_polarity;
-  bool m_neg_polarity;
-  bool m_360deg_circular;
-  double m_x, m_y;
-  bool m_relative;
+  bool m_clear{};
+  bool m_guess_polarity{};
+  bool m_neg_polarity{};
+  bool m_360deg_circular{};
+  double m_x{}, m_y{};
+  bool m_relative{};
   std::string m_buffer;
-  int m_current_gcode;
-  int m_current_dcode;
-  bool m_polygon_mode;
+  int m_current_gcode{};
+  int m_current_dcode{};
+  bool m_polygon_mode{};
   std::vector<db::DPoint> m_polygon_points;
   std::vector<db::Polygon> m_polygons;
   std::vector<db::Polygon> m_clear_polygons;
   std::vector<RS274XApertureBase *> m_apertures;
   std::map<std::string, std::string> m_aperture_macros;
   enum { ab_xy, ab_yx } m_axis_mapping;
-  RS274XApertureBase *m_current_aperture;
+  RS274XApertureBase *m_current_aperture{};
   std::string m_net_name;
 
   void read_as_parameter (const std::string &block);

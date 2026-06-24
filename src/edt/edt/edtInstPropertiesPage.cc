@@ -314,7 +314,7 @@ InstPropertiesPage::description (size_t entry) const
   db::DCplxTrans dt = db::CplxTrans (dbu) * t * db::CplxTrans (dbu).inverted ();
 
   db::Vector rowv, columnv;
-  unsigned long rows, columns;
+  unsigned long rows = 0, columns = 0;
   if (pos->back ().inst_ptr.is_regular_array (rowv, columnv, rows, columns)) {
     d += tl::sprintf ("(%s; array %dx%d)", dt.to_string (true), rows, columns);
   } else {
@@ -408,7 +408,7 @@ InstPropertiesPage::update ()
   cell_name_le->blockSignals (false);
 
   db::Vector rowv, columnv;
-  unsigned long rows, columns;
+  unsigned long rows = 0, columns = 0;
 
   db::ICplxTrans gt;
   if (abs_cb->isChecked ()) {
@@ -534,7 +534,7 @@ InstPropertiesPage::create_applicator (db::Cell & /*cell*/, const db::Instance &
 
   bool du = dbu_cb->isChecked ();
 
-  db::Layout *layout;
+  db::Layout *layout = nullptr;
   db::Library *lib = lib_cbx->current_library ();
 
   //  find the layout the cell has to be looked up: that is either the layout of the current instance or 
@@ -971,7 +971,7 @@ InstPropertiesPage::update_pcell_parameters ()
     return;
   }
 
-  db::Layout *layout;
+  db::Layout *layout = nullptr;
 
   //  find the layout the cell has to be looked up: that is either the layout of the current instance or 
   //  the library selected

@@ -74,7 +74,7 @@ public:
    *  @brief The index of the fallback layer
    *  This is the layer to be used when this layer isn't specified for input or (more important) output
    */
-  size_t fallback_index;
+  size_t fallback_index{};
 };
 
 /**
@@ -469,7 +469,7 @@ private:
   tl::weak_ptr<db::Netlist> m_netlist;
   db::Layout *mp_layout;
   db::properties_id_type m_terminal_id_propname_id, m_device_id_propname_id, m_device_class_propname_id;
-  hier_clusters_type *mp_clusters;
+  hier_clusters_type *mp_clusters{};
   db::cell_index_type m_cell_index;
   const std::set<db::cell_index_type> *mp_breakout_cells;
   double m_device_scaling;

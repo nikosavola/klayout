@@ -29,6 +29,8 @@
 #include "layConverters.h"
 #include "layGerberImportDialog.h"
 
+#include <math.h>
+
 #include "tlExceptions.h"
 #include "tlXMLParser.h"
 
@@ -1251,7 +1253,7 @@ GerberImportDialog::commit_page ()
 
       } else {
 
-        double x, y;
+        double x = NAN, y = NAN;
 
         pcb_x.read (x);
         pcb_x.expect_end ();
@@ -1317,7 +1319,7 @@ GerberImportDialog::commit_page ()
 void 
 GerberImportDialog::update ()
 {
-  int n, nn;
+  int n = 0, nn = 0;
 
   std::string section_headers[] = {
     tl::to_string (QObject::tr ("General")),
@@ -1354,7 +1356,7 @@ GerberImportDialog::update ()
   nn = mp_ui->layout_layers_tree->topLevelItemCount ();
   for (std::vector <db::LayerProperties>::const_iterator l = mp_data->layout_layers.begin (); l != mp_data->layout_layers.end (); ++l, ++n) {
 
-    QTreeWidgetItem *item;
+    QTreeWidgetItem *item = nullptr;
     if (n < nn) {
       item = mp_ui->layout_layers_tree->topLevelItem (n);
     } else {
@@ -1543,7 +1545,7 @@ GerberImportDialog::update ()
   nn = mp_ui->free_layout_layers_tree->topLevelItemCount ();
   for (std::vector <db::LayerProperties>::const_iterator l = mp_data->layout_layers.begin (); l != mp_data->layout_layers.end (); ++l, ++n) {
 
-    QTreeWidgetItem *item;
+    QTreeWidgetItem *item = nullptr;
     if (n < nn) {
       item = mp_ui->free_layout_layers_tree->topLevelItem (n);
     } else {

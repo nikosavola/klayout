@@ -168,7 +168,7 @@ DeferredMethodScheduler::do_execute ()
   //  schedules another call.
   for (std::list<DeferredMethodBase *>::iterator m = m_executing.begin (); m != m_executing.end (); ++m) {
 
-    bool still_valid;
+    bool still_valid = false;
 
     m_lock.lock ();
     //  during execution a method may be unqueued - make sure this is not executed

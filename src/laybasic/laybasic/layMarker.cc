@@ -67,7 +67,7 @@ void render_cell_inst (const db::Layout &layout, const db::CellInstArray &inst, 
     n = (unsigned long long) amax * (unsigned long long) bmax;
   }
 
-  bool draw_shapes;
+  bool draw_shapes = false;
 
   if (max_shapes > 0) {
 
@@ -546,7 +546,7 @@ InstanceMarker::render (const Viewport &vp, ViewObjectCanvas &canvas)
     return;
   }
 
-  lay::CanvasPlane *fill, *contour, *vertex, *text;
+  lay::CanvasPlane *fill = nullptr, *contour = nullptr, *vertex = nullptr, *text = nullptr;
   get_bitmaps (vp, canvas, fill, contour, vertex, text);
   if (contour == nullptr && vertex == nullptr && fill == nullptr && text == nullptr) {
     return;
@@ -631,7 +631,7 @@ ShapeMarker::render (const Viewport &vp, ViewObjectCanvas &canvas)
     return;
   }
 
-  lay::CanvasPlane *fill, *contour, *vertex, *text; 
+  lay::CanvasPlane *fill = nullptr, *contour = nullptr, *vertex = nullptr, *text = nullptr; 
   get_bitmaps (vp, canvas, fill, contour, vertex, text);
   if (contour == nullptr && vertex == nullptr && fill == nullptr && text == nullptr) {
     return;
@@ -1162,7 +1162,7 @@ Marker::draw (lay::Renderer &r, const db::CplxTrans &t, lay::CanvasPlane *fill, 
 void 
 Marker::render (const Viewport &vp, ViewObjectCanvas &canvas)
 { 
-  lay::CanvasPlane *fill, *contour, *vertex, *text; 
+  lay::CanvasPlane *fill = nullptr, *contour = nullptr, *vertex = nullptr, *text = nullptr; 
   get_bitmaps (vp, canvas, fill, contour, vertex, text);
   if (contour == nullptr && vertex == nullptr && fill == nullptr && text == nullptr) {
     return;
@@ -1310,7 +1310,7 @@ DMarker::remove_object ()
 void 
 DMarker::render (const Viewport &vp, ViewObjectCanvas &canvas)
 { 
-  lay::CanvasPlane *fill, *contour, *vertex, *text; 
+  lay::CanvasPlane *fill = nullptr, *contour = nullptr, *vertex = nullptr, *text = nullptr; 
   get_bitmaps (vp, canvas, fill, contour, vertex, text);
   if (contour == nullptr && vertex == nullptr && fill == nullptr && text == nullptr) {
     return;

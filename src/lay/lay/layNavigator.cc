@@ -22,6 +22,8 @@
 
 
 #include "layNavigator.h"
+
+#include <math.h>
 #include "layMainWindow.h"
 #include "layConfig.h"
 #include "layMarker.h"
@@ -215,7 +217,7 @@ public:
 
           double zoom_step = 0.25; // TODO: make variable?
 
-          double f;
+          double f = NAN;
           if (delta > 0) {
             f = 1.0 / (1.0 + zoom_step * (delta / 120.0));
           } else {

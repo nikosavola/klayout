@@ -26,6 +26,7 @@
 #include "tlString.h"
 #include "tlHash.h"
 
+#include <math.h>
 #include <string.h>
 #include <limits>
 #include <cmath>
@@ -1465,7 +1466,7 @@ Variant::can_convert_to_float () const
   case t_string:
     {
       tl::Extractor ex (to_string ());
-      double d;
+      double d = NAN;
       return ex.try_read (d) && ex.at_end ();
     }
   default:
@@ -1505,7 +1506,7 @@ Variant::can_convert_to_double () const
   case t_string:
     {
       tl::Extractor ex (to_string ());
-      double d;
+      double d = NAN;
       return ex.try_read (d) && ex.at_end ();
     }
   default:
@@ -1592,7 +1593,7 @@ Variant::can_convert_to_ulonglong () const
     {
       tl::Extractor ex (to_string ());
       try {
-        unsigned long long ll;
+        unsigned long long ll = 0;
         return ex.try_read (ll) && ex.at_end ();
       } catch (...) {
         return false;
@@ -1640,7 +1641,7 @@ Variant::can_convert_to_longlong () const
     {
       tl::Extractor ex (to_string ());
       try {
-        long long ll;
+        long long ll = 0;
         return ex.try_read (ll) && ex.at_end ();
       } catch (...) {
         return false;
@@ -1694,7 +1695,7 @@ Variant::can_convert_to_ulong () const
     {
       tl::Extractor ex (to_string ());
       try {
-        unsigned long l;
+        unsigned long l = 0;
         return ex.try_read (l) && ex.at_end ();
       } catch (...) {
         return false;
@@ -1744,7 +1745,7 @@ Variant::can_convert_to_long () const
     {
       tl::Extractor ex (to_string ());
       try {
-        long l;
+        long l = 0;
         return ex.try_read (l) && ex.at_end ();
       } catch (...) {
         return false;
@@ -1796,7 +1797,7 @@ Variant::can_convert_to_int () const
     {
       tl::Extractor ex (to_string ());
       try {
-        long l;
+        long l = 0;
         return ex.try_read (l) && ex.at_end () && l >= (long) std::numeric_limits<int>::min () && l <= (long) std::numeric_limits<int>::max ();
       } catch (...) {
         return false;
@@ -1849,7 +1850,7 @@ Variant::can_convert_to_uint () const
     {
       tl::Extractor ex (to_string ());
       try {
-        long l;
+        long l = 0;
         return ex.try_read (l) && ex.at_end () && l >= (long) std::numeric_limits<int>::min () && l <= (long) std::numeric_limits<int>::max ();
       } catch (...) {
         return false;

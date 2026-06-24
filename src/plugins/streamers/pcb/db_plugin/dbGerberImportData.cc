@@ -21,6 +21,8 @@
 */
 
 #include "dbGerberImportData.h"
+
+#include <math.h>
 #include "dbGerberImporter.h"
 #include "dbPoint.h"
 #include "dbConverters.h"
@@ -115,7 +117,7 @@ GerberImportData::setup_importer (db::GerberImporter *importer)
 
       if (! file->filename.empty ()) {
 
-        size_t n;
+        size_t n = 0;
         if (mounting == MountingTop) {
           n = std::distance (artwork_files.begin (), file);
         } else {
@@ -137,7 +139,7 @@ GerberImportData::setup_importer (db::GerberImporter *importer)
 
       if (! file->filename.empty ()) {
 
-        size_t nstart, nstop;
+        size_t nstart = 0, nstop = 0;
         if (mounting == MountingTop) {
           nstart = std::distance (artwork_files.begin (), artwork_files.begin () + file->start);
           nstop = std::distance (artwork_files.begin (), artwork_files.begin () + file->stop);
@@ -378,7 +380,7 @@ GerberImportData::from_string (const std::string &s)
       ex.test ("=");
       reference_points.clear ();
       while (! ex.test (";") && ! ex.at_end ()) {
-        double x1, y1, x2, y2;
+        double x1 = NAN, y1 = NAN, x2 = NAN, y2 = NAN;
         ex.test ("(");
         ex.test ("(");
         ex.read (x1);

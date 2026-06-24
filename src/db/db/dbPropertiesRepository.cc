@@ -443,7 +443,7 @@ PropertiesRepository::properties_id (const PropertiesSet &props)
     return 0;
   }
 
-  properties_id_type pid;
+  properties_id_type pid = 0;
 
   {
     tl::MutexLocker locker (&m_lock);

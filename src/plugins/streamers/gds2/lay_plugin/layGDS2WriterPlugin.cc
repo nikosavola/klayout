@@ -75,7 +75,7 @@ GDS2WriterOptionPage::commit (db::FormatSpecificWriterOptions *o, const db::Tech
   db::GDS2WriterOptions *options = dynamic_cast<db::GDS2WriterOptions *> (o);
   if (options) {
 
-    unsigned int n;
+    unsigned int n = 0;
     options->multi_xy_records = mp_ui->multi_xy_cbx->isChecked ();
     options->resolve_skew_arrays = mp_ui->resolve_skew_arrays_cbx->isChecked ();
     options->write_timestamps = mp_ui->write_timestamps->isChecked ();

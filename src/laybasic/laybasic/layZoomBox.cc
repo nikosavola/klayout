@@ -22,6 +22,8 @@
 
 
 #include "layZoomBox.h"
+
+#include <math.h>
 #include "layRubberBox.h"
 #include "layLayoutViewBase.h"
 
@@ -231,7 +233,7 @@ ZoomService::wheel_event (int delta, bool /*horizontal*/, const db::DPoint &p, u
 
         double zoom_step = 0.25; // TODO: make variable?
 
-        double f;
+        double f = NAN;
         if (delta > 0) {
           f = 1.0 / (1.0 + zoom_step * (delta / 120.0));
         } else {

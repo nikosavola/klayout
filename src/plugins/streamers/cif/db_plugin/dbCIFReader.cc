@@ -150,7 +150,7 @@ CIFReader::skip_sep ()
 void 
 CIFReader::skip_comment ()
 {
-  char c;
+  char c = 0;
   int bl = 0;
   while (! m_stream.at_end () && ((c = m_stream.get_char ()) != ')' || bl > 0)) {
     // check for nested comments (bl is the nesting level)
@@ -420,7 +420,7 @@ CIFReader::read_cell (db::Layout &layout, db::Cell &cell, double sf, int level)
         std::swap (m_cellname, outer_cell);
 
         std::map <unsigned int, db::cell_index_type>::const_iterator c = m_cells_by_id.find (n);
-        db::cell_index_type ci;
+        db::cell_index_type ci = 0;
         if (c == m_cells_by_id.end ()) {
           ci = layout.add_cell (m_cellname.c_str ());
           m_cells_by_id.insert (std::make_pair (n, ci));

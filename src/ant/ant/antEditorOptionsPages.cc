@@ -25,6 +25,8 @@
 #include "antService.h"
 #include "antEditorOptionsPages.h"
 
+#include <math.h>
+
 #include "layWidgets.h"
 #include "layDispatcher.h"
 #include "tlInternational.h"
@@ -133,7 +135,7 @@ ToolkitWidget::configure (const std::string &name, const std::string &value)
 
     try {
 
-      double d;
+      double d = NAN;
       tl::from_string (value, d);
 
       mp_d_le->setText (tl::to_qstring (tl::micron_to_string (d)));

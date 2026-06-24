@@ -783,10 +783,10 @@ private:
   friend class Triangulation;
 
   Graph *mp_graph;
-  bool m_is_outside;
+  bool m_is_outside{};
   std::vector<Edge *> mp_e;
   std::vector<Vertex *> mp_v;
-  size_t m_id;
+  size_t m_id{};
 
   void init ();
 

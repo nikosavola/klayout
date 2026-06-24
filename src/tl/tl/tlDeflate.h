@@ -180,7 +180,7 @@ public:
 
 private:
   bool m_finished;
-  char m_buffer[65536];
+  char m_buffer[65536]{};
   tl::OutputStream *mp_output;
   z_stream_s *mp_stream;
   size_t m_uc, m_cc;

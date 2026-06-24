@@ -324,7 +324,7 @@ View::render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
     ep.boolean (sized_pp, sized_p, result, db::BooleanOp::ANotB);
 
     //  obtain bitmap to render on
-    lay::CanvasPlane *plane;
+    lay::CanvasPlane *plane = nullptr;
     std::vector <lay::ViewOp> vops;
     vops.reserve (2);
     vops.push_back (lay::ViewOp (canvas.background_color ().rgb (), lay::ViewOp::Copy, 0, 0, 0, lay::ViewOp::Rect, 1, 1));
@@ -340,7 +340,7 @@ View::render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
     if (! image->landmarks ().empty ()) {
 
       //  obtain bitmap to render on (handles are located over the usual content)
-      lay::CanvasPlane *plane_landmarks, *plane_frame;
+      lay::CanvasPlane *plane_landmarks = nullptr, *plane_frame = nullptr;
       plane_frame = canvas.plane (lay::ViewOp (canvas.foreground_color ().rgb (), lay::ViewOp::Copy, 0, 0, 0, lay::ViewOp::Rect, 1, -1));
       //  plane_fill and plane are prio 3 and 4 to be above the normal selection which is 1 and 2
       std::vector <lay::ViewOp> ops;
@@ -364,7 +364,7 @@ View::render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
     } else {
 
       //  obtain bitmap to render on
-      lay::CanvasPlane *plane, *plane_fill;
+      lay::CanvasPlane *plane = nullptr, *plane_fill = nullptr;
       plane = canvas.plane (lay::ViewOp (canvas.foreground_color ().rgb (), lay::ViewOp::Copy, 0, 0, 0));
       //  plane_fill is prio 3 to be above the normal selection which is 1 and 2
       plane_fill = canvas.plane (lay::ViewOp (canvas.foreground_color ().rgb (), lay::ViewOp::Copy, 0, 0, 0, lay::ViewOp::Rect, 1, 3));
@@ -399,7 +399,7 @@ View::render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
   } else {
 
     //  obtain bitmap to render on
-    lay::CanvasPlane *plane;
+    lay::CanvasPlane *plane = nullptr;
     plane = canvas.plane (lay::ViewOp (canvas.foreground_color ().rgb (), lay::ViewOp::Copy, 0, 0, 0));
 
     canvas.renderer ().draw (image_box_poly, db::DCplxTrans (), nullptr, plane, nullptr, nullptr);

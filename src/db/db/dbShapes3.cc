@@ -92,7 +92,7 @@ db::layer<Sh, StableTag> &
 Shapes::get_layer ()
 {
   typedef layer_class<Sh, StableTag> lay_cls;
-  lay_cls *lc;
+  lay_cls *lc = nullptr;
 
   for (typename tl::vector<LayerBase *>::iterator l = m_layers.begin (); l != m_layers.end (); ++l) {
     lc = dynamic_cast <lay_cls *> (*l);

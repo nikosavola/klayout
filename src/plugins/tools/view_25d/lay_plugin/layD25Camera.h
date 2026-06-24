@@ -133,10 +133,10 @@ protected:
   virtual double aspect_ratio () const { return 1.0; }
 
 private:
-  double m_cam_azimuth, m_cam_elevation;
-  bool m_top_view;
+  double m_cam_azimuth{}, m_cam_elevation{};
+  bool m_top_view{};
   QVector3D m_displacement;
-  double m_fov;
+  double m_fov{};
 
 };
 

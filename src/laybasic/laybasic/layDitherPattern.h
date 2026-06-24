@@ -233,10 +233,10 @@ public:
   std::vector<std::string> to_strings () const;
 
 private:
-  uint32_t *m_pattern[64];
-  uint32_t m_buffer [64 * 64];
+  uint32_t *m_pattern[64]{};
+  uint32_t m_buffer [64 * 64]{};
   unsigned int m_width, m_height;
-  unsigned int m_pattern_stride;
+  unsigned int m_pattern_stride{};
   unsigned int m_order_index;
   std::string m_name;
   mutable std::unique_ptr<std::map<unsigned int, DitherPatternInfo> > m_scaled_pattern;

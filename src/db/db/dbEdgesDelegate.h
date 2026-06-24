@@ -308,11 +308,11 @@ protected:
   virtual void merged_semantics_changed () { }
 
 private:
-  bool m_merged_semantics;
-  bool m_strict_handling;
-  bool m_report_progress;
+  bool m_merged_semantics{};
+  bool m_strict_handling{};
+  bool m_report_progress{};
   std::string m_progress_desc;
-  int m_base_verbosity;
+  int m_base_verbosity{};
 };
 
 }

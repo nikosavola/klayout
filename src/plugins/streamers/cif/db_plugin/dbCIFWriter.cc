@@ -27,6 +27,7 @@
 #include "tlUtils.h"
 #include "tlUniqueName.h"
 
+#include <math.h>
 #include <time.h>
 #include <string.h>
 #include <ctype.h>
@@ -257,8 +258,8 @@ CIFWriter::write (db::Layout &layout, tl::OutputStream &stream, const db::SaveLa
   *this << "(CIF file written " << (const char *)timestr << " by KLayout);" << m_endl;
 
   //  TODO: this can be done more intelligently ..
-  int tl_scale_divider;
-  int tl_scale_denom;
+  int tl_scale_divider = 0;
+  int tl_scale_denom = 0;
   for (tl_scale_divider = 1; tl_scale_divider < 1000; ++tl_scale_divider) {
     tl_scale_denom = int (floor (0.5 + tl_scale * tl_scale_divider));
     if (fabs (tl_scale_denom - tl_scale * tl_scale_divider) < 1e-6) {
@@ -328,7 +329,7 @@ CIFWriter::write (db::Layout &layout, tl::OutputStream &stream, const db::SaveLa
           double ya = sin(a / 180.0 * M_PI);
 
           //  normalize xa or ya whichever is better
-          double n;
+          double n = NAN;
           if (fabs (xa) >= M_SQRT1_2) {
             n = 1.0 / fabs (xa);
           } else {

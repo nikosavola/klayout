@@ -689,7 +689,7 @@ private:
   db::SaveLayoutOptions m_save_layout_options;
   std::string m_lyp_path;
   std::string m_lyt_path;
-  bool m_add_other_layers;
+  bool m_add_other_layers{};
   std::vector <TechnologyComponent *> m_components;
   bool m_persisted;
   bool m_readonly;

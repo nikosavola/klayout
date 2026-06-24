@@ -318,7 +318,7 @@ static EdgeAngleChecker s_orthodiagonal_checkers [] = {
 bool
 SpecialEdgeOrientationFilter::selected (const db::Edge &edge, properties_id_type) const
 {
-  const EdgeAngleChecker *eb, *ee;
+  const EdgeAngleChecker *eb = nullptr, *ee = nullptr;
 
   switch (m_type) {
   case Ortho:

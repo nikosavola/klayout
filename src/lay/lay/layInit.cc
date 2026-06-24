@@ -65,7 +65,7 @@ static PluginDescriptor do_load_plugin (const std::string &pp)
   }
   init_func = reinterpret_cast<klp_init_func_t> (GetProcAddress (handle, init_func_name));
 #else
-  void *handle;
+  void *handle = nullptr;
   handle = dlopen (tl::string_to_system (pp).c_str (), RTLD_LAZY);
   if (! handle) {
     throw tl::Exception (tl::to_string (QObject::tr ("Unable to load plugin: %s")), pp);

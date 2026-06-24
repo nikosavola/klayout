@@ -103,7 +103,7 @@ private:
   db::Point m_ref;
   double m_dbu;
   const db::Netlist *mp_netlist;
-  const db::LayoutToNetlist *mp_l2n;
+  const db::LayoutToNetlist *mp_l2n{};
   tl::AbsoluteProgress m_progress;
 
   void write (bool nested, TokenizedOutput &stream, std::map<const db::Circuit *, std::map<const db::Net *, unsigned int> > *net2id_per_circuit);

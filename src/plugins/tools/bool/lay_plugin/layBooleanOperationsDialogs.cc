@@ -23,6 +23,8 @@
 
 #include "layBooleanOperationsDialogs.h"
 
+#include <math.h>
+
 #include "layLayoutView.h"
 #include "tlExceptions.h"
 
@@ -266,7 +268,7 @@ BEGIN_PROTECTED;
     throw tl::Exception (tl::to_string (QObject::tr ("Source layout and result layout must be same in 'cell by cell' mode")));
   }
 
-  double x, y;
+  double x = NAN, y = NAN;
   tl::string t (tl::to_string (value_le->text ()));
   tl::Extractor ex (t.c_str ());
   ex.read (x);

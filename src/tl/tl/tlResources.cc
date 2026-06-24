@@ -37,9 +37,9 @@ public:
   struct DictEntry
   {
     std::string name;
-    const unsigned char *data;
-    size_t data_size;
-    bool compressed;
+    const unsigned char *data{};
+    size_t data_size{};
+    bool compressed{};
   };
 
   typedef std::vector<DictEntry>::const_iterator iterator;

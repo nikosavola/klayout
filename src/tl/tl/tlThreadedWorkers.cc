@@ -213,7 +213,7 @@ JobBase::log_error (const std::string &s)
 bool
 JobBase::has_error () 
 {
-  bool r;
+  bool r = false;
   m_lock.lock ();
   r = ! m_error_messages.empty ();
   m_lock.unlock ();

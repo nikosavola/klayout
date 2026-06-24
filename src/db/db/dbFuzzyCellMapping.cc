@@ -25,6 +25,8 @@
 #include "dbLayout.h"
 #include "dbCellGraphUtils.h"
 #include "dbFuzzyCellMapping.h"
+
+#include <math.h>
 #include "tlLog.h"
 #include "tlTimer.h"
 #include "tlProgress.h"
@@ -147,16 +149,16 @@ inline double distance_func (double a, double b)
 
 struct CellSignature
 {
-  size_t weight;
+  size_t weight{};
   db::Box bbox;
-  size_t instances;
+  size_t instances{};
   std::vector<size_t> shapes;
   db::Matrix2d tm_avg;
   db::DPoint p_avg;
 
   bool distance_less_or_equal (const CellSignature &other, double dmin, double &dmin_out) const
   {
-    double d;
+    double d = NAN;
     d = distance_func (weight, other.weight);
     if (dmin >= 0.0 && d > dmin + 1e-6) {
       return false;
@@ -410,7 +412,7 @@ FuzzyCellMapping::create (const db::Layout &layout_a, db::cell_index_type cell_i
     if (cmin.size () > 1) {
 
       int min_ed = std::numeric_limits<int>::max ();
-      db::cell_index_type min_ed_ci;
+      db::cell_index_type min_ed_ci = 0;
 
       for (std::vector<db::cell_index_type>::const_iterator c = cmin.begin (); c != cmin.end (); ++c) {
 

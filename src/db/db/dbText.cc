@@ -174,7 +174,7 @@ std::string text<C>::to_string (double dbu) const
     s += tl::to_string (int (font ()));
   }
 
-  char c;
+  char c = 0;
   c = halign2code (halign ());
   if (c) {
     s += " ha=";

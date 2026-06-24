@@ -22,6 +22,8 @@
 
 
 #include "dbGerberImporter.h"
+
+#include <math.h>
 #include "dbGerberImportData.h"
 #include "dbGerberDrillFileReader.h"
 #include "dbRS274XReader.h"
@@ -622,7 +624,7 @@ static void read_ref_point_spec (tl::Extractor &l, std::vector<std::pair<db::DBo
   }
 
   l.expect ("=");
-  double x, y;
+  double x = NAN, y = NAN;
   l.read (x);
   l.test (",");
   l.read (y);
@@ -681,26 +683,26 @@ GerberImporter::do_load_project (tl::TextInputStream &stream)
 
       //  ignored currently, kept for compatibility with prototype
       l.expect ("=");
-      int d; l.read (d);
+      int d = 0; l.read (d);
 
     } else if (l.test ("border")) {
 
       l.expect ("=");
-      double d; 
+      double d = NAN; 
       l.read (d);
       m_border = d;
 
     } else if (l.test ("invert-negative-layers")) {
 
       l.expect ("=");
-      int d; 
+      int d = 0; 
       l.read (d);
       m_invert_negative_layers = d;
 
     } else if (l.test ("merge")) {
 
       l.expect ("=");
-      int d; 
+      int d = 0; 
       l.read (d);
       m_merge = d;
 
@@ -722,7 +724,7 @@ GerberImporter::do_load_project (tl::TextInputStream &stream)
       l.expect ("=");
 
       l.expect ("(");
-      double x_pcb, y_pcb;
+      double x_pcb = NAN, y_pcb = NAN;
       l.read (x_pcb);
       l.expect (",");
       l.read (y_pcb);
@@ -731,7 +733,7 @@ GerberImporter::do_load_project (tl::TextInputStream &stream)
       l.expect (",");
 
       l.expect ("(");
-      double x_ly, y_ly;
+      double x_ly = NAN, y_ly = NAN;
       l.read (x_ly);
       l.expect (",");
       l.read (y_ly);
@@ -749,7 +751,7 @@ GerberImporter::do_load_project (tl::TextInputStream &stream)
     } else if (l.test ("mirror")) {
 
       l.expect ("=");
-      int d; 
+      int d = 0; 
       l.read (d);
       if (d != 0) {
         m_global_trans = db::DCplxTrans (db::DFTrans::m0) * m_global_trans;

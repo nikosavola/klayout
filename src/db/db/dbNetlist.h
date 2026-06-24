@@ -571,7 +571,7 @@ private:
   friend class Circuit;
   friend class DeviceAbstract;
 
-  bool m_case_sensitive;
+  bool m_case_sensitive{};
   tl::weak_ptr<db::NetlistManipulationCallbacks> mp_callbacks;
   circuit_list m_circuits;
   device_class_list m_device_classes;
@@ -581,7 +581,7 @@ private:
   tl::vector<Circuit *> m_top_down_circuits;
   tl::vector<tl::vector<Circuit *> > m_child_circuits;
   tl::vector<tl::vector<Circuit *> > m_parent_circuits;
-  size_t m_top_circuits;
+  size_t m_top_circuits{};
   object_by_attr<Netlist, Netlist::circuit_iterator, name_attribute<Circuit> > m_circuit_by_name;
   object_by_attr<Netlist, Netlist::circuit_iterator, cell_index_attribute<Circuit> > m_circuit_by_cell_index;
   object_by_attr<Netlist, Netlist::device_abstract_iterator, name_attribute<DeviceAbstract> > m_device_abstract_by_name;

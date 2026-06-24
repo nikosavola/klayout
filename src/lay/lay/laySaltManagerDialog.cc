@@ -311,7 +311,7 @@ SaltManagerDialog::SaltManagerDialog (QWidget *parent, lay::Salt *salt, const st
   salt_view->setModel (model);
   salt_view->setItemDelegate (new lay::HTMLItemDelegate (this));
 
-  SaltModel *mine_model;
+  SaltModel *mine_model = nullptr;
 
   //  This model will show only the grains of mp_salt_mine which are not present in mp_salt yet.
   mine_model = new SaltModel (this, &m_salt_mine, mp_salt, true);
@@ -352,7 +352,7 @@ SaltManagerDialog::SaltManagerDialog (QWidget *parent, lay::Salt *salt, const st
   connect (mark_new_button, SIGNAL (clicked ()), this, SLOT (mark_clicked ()));
   connect (mark_update_button, SIGNAL (clicked ()), this, SLOT (mark_clicked ()));
 
-  QAction *a;
+  QAction *a = nullptr;
 
   salt_view->addAction (actionCreatePackage);
   salt_view->addAction (actionDelete);
@@ -578,7 +578,7 @@ SaltManagerDialog::search_text_changed (const QString &text)
 void
 SaltManagerDialog::mark_clicked ()
 {
-  QListView *view;
+  QListView *view = nullptr;
   if (sender () == salt_mine_view_new || sender () == mark_new_button || sender () == actionMarkNew || sender () == actionUnmarkNew) {
     view = salt_mine_view_new;
   } else {
@@ -607,7 +607,7 @@ SaltManagerDialog::mark_clicked ()
 void
 SaltManagerDialog::update_apply_state ()
 {
-  SaltModel *model;
+  SaltModel *model = nullptr;
 
   model = dynamic_cast <SaltModel *> (salt_mine_view_new->model ());
   if (model) {
@@ -672,7 +672,7 @@ BEGIN_PROTECTED
   bool any = false;
 
   //  fetch all marked grains and register for download
-  SaltModel *model;
+  SaltModel *model = nullptr;
   if (update) {
     model = dynamic_cast <SaltModel *> (salt_mine_view_update->model ());
   } else {
@@ -835,7 +835,7 @@ SaltManagerDialog::salt_changed ()
 void
 SaltManagerDialog::salt_mine_about_to_change ()
 {
-  SaltModel *model;
+  SaltModel *model = nullptr;
 
   model = dynamic_cast <SaltModel *> (salt_mine_view_new->model ());
   tl_assert (model != nullptr);
@@ -971,7 +971,7 @@ SaltManagerDialog::update_models ()
   }
 
   SaltAPIVersionCheck svc;
-  SaltModel *mine_model;
+  SaltModel *mine_model = nullptr;
 
   mine_model = dynamic_cast <SaltModel *> (salt_mine_view_update->model ());
   tl_assert (mine_model != nullptr);

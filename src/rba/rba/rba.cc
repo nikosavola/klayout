@@ -1109,7 +1109,7 @@ static VALUE alloc_proxy (VALUE klass)
 std::string 
 method_name_from_id (int mid, VALUE self)
 {
-  const gsi::ClassBase *cls_decl;
+  const gsi::ClassBase *cls_decl = nullptr;
   Proxy *p = nullptr;
 
   if (TYPE (self) == T_CLASS) {
@@ -1249,7 +1249,7 @@ method_adaptor (int mid, int argc, VALUE *argv, VALUE self, bool ctor)
 
     tl::Heap heap;
 
-    const gsi::ClassBase *cls_decl;
+    const gsi::ClassBase *cls_decl = nullptr;
     Proxy *p = nullptr;
 
     //  this prevents side effects of callbacks raised from within the called functions -
@@ -1831,8 +1831,8 @@ static RubyInterpreter *sp_rba_interpreter = nullptr;
 
 struct RubyConstDescriptor
 {
-  VALUE klass;
-  const gsi::MethodBase *meth;
+  VALUE klass{};
+  const gsi::MethodBase *meth{};
   std::string name;
 };
 
@@ -1895,7 +1895,7 @@ public:
       super = make_class (cls->base (), as_static);
     }
 
-    VALUE klass;
+    VALUE klass = 0;
     if (as_static) {
 
       if (tl::verbosity () >= 20) {

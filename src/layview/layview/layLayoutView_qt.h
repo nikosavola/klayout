@@ -629,24 +629,24 @@ private:
   friend class LayoutViewSignalConnector;
   friend class LayoutViewWidget;
 
-  QTimer *mp_timer;
+  QTimer *mp_timer{};
   LayoutViewWidget *mp_widget;
-  LayoutViewSignalConnector *mp_connector;
-  bool m_activated;
-  QFrame *mp_left_frame;
-  lay::LayerControlPanel *mp_control_panel;
-  lay::HierarchyControlPanel *mp_hierarchy_panel;
-  lay::LibrariesView *mp_libraries_view;
-  lay::BookmarksView *mp_bookmarks_view;
-  lay::LayerToolbox *mp_toolbox;
-  QWidget *mp_control_frame, *mp_toolbox_frame, *mp_hierarchy_frame, *mp_libraries_frame, *mp_bookmarks_frame;
-  lay::EditorOptionsFrame *mp_editor_options_frame;
-  QSpinBox *mp_min_hier_spbx;
-  QSpinBox *mp_max_hier_spbx;
+  LayoutViewSignalConnector *mp_connector{};
+  bool m_activated{};
+  QFrame *mp_left_frame{};
+  lay::LayerControlPanel *mp_control_panel{};
+  lay::HierarchyControlPanel *mp_hierarchy_panel{};
+  lay::LibrariesView *mp_libraries_view{};
+  lay::BookmarksView *mp_bookmarks_view{};
+  lay::LayerToolbox *mp_toolbox{};
+  QWidget *mp_control_frame{}, *mp_toolbox_frame{}, *mp_hierarchy_frame{}, *mp_libraries_frame{}, *mp_bookmarks_frame{};
+  lay::EditorOptionsFrame *mp_editor_options_frame{};
+  QSpinBox *mp_min_hier_spbx{};
+  QSpinBox *mp_max_hier_spbx{};
   QPointer<lay::PropertiesDialog> mp_properties_dialog;
-  bool m_always_show_source;
-  bool m_always_show_ld;
-  bool m_always_show_layout_index;
+  bool m_always_show_source{};
+  bool m_always_show_ld{};
+  bool m_always_show_layout_index{};
 
   tl::DeferredMethod<lay::LayoutView> dm_setup_editor_option_pages;
 

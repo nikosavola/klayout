@@ -670,7 +670,7 @@ private slots:
 private:
   void refresh_flags ();
 
-  bool m_drag_and_drop_enabled;
+  bool m_drag_and_drop_enabled{};
 };
 
 } // namespace lay

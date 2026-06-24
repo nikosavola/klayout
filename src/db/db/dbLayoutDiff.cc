@@ -129,7 +129,7 @@ collect_insts (const db::Layout & /*l*/, const db::Cell *cell, unsigned int flag
       }
 
       db::Vector a, b;
-      unsigned long amax, bmax;
+      unsigned long amax = 0, bmax = 0;
       if ((flags & layout_diff::f_flatten_array_insts) == 0 && i->is_regular_array (a, b, amax, bmax) && (amax > 1 || bmax > 1)) {
 
         //  normalize arrays (this is a weak normalization!)
@@ -466,7 +466,7 @@ struct PathCompareOpWithTolerance
 
   bool operator() (const db::Path &a, const db::Path &b) const
   {
-    int c;
+    int c = 0;
 
     c = compare_coords (a.width (), b.width (), m_tolerance);
     if (c != 0) {
@@ -1344,7 +1344,7 @@ PrintingDifferenceReceiver::print_cell_inst (const db::CellInstArrayWithProperti
   enough (tl::info) << "  " << l.cell_name (ci.object ().cell_index ()) << " " << ci.complex_trans ().to_string () << tl::noendl;
 
   db::Vector a, b;
-  unsigned long amax, bmax;
+  unsigned long amax = 0, bmax = 0;
   if (ci.is_regular_array (a, b, amax, bmax)) {
     enough (tl::info) << "[a=" << a.to_string () << ", b=" << b.to_string () << ", na=" << amax << ", nb=" << bmax << "]" << tl::noendl;
   } else if (ci.size () > 1) {
@@ -1365,7 +1365,7 @@ PrintingDifferenceReceiver::print_cell_inst (const db::CellInstArrayWithProperti
   enough (tl::info) << "  " << cell_names [ci.object ().cell_index ()] << " " << ci.complex_trans ().to_string () << tl::noendl;
 
   db::Vector a, b;
-  unsigned long amax, bmax;
+  unsigned long amax = 0, bmax = 0;
   if (ci.is_regular_array (a, b, amax, bmax)) {
     enough (tl::info) << "[a=" << a.to_string () << ", b=" << b.to_string () << ", na=" << amax << ", nb=" << bmax << "]" << tl::noendl;
   } else if (ci.size () > 1) {

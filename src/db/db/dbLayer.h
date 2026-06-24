@@ -505,7 +505,7 @@ struct layer
   {
     m_box_tree.swap (other.m_box_tree);
     std::swap (m_bbox, other.m_bbox);
-    bool x;
+    bool x = false;
     x = other.m_bbox_dirty; other.m_bbox_dirty = m_bbox_dirty; m_bbox_dirty = x;
     x = other.m_tree_dirty; other.m_tree_dirty = m_tree_dirty; m_tree_dirty = x;
   }

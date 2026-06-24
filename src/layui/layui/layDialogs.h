@@ -520,7 +520,7 @@ private:
   Ui::UndoRedoListForm *mp_ui;
   bool m_for_undo;
   db::Manager *mp_manager;
-  int m_steps;
+  int m_steps{};
 };
 
 }

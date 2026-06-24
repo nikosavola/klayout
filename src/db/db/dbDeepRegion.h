@@ -178,9 +178,9 @@ private:
   DeepRegion &operator= (const DeepRegion &other);
 
   mutable DeepLayer m_merged_polygons;
-  mutable bool m_merged_polygons_valid;
-  mutable size_t m_merged_polygons_boc_hash;
-  mutable bool m_is_merged;
+  mutable bool m_merged_polygons_valid{};
+  mutable size_t m_merged_polygons_boc_hash{};
+  mutable bool m_is_merged{};
 
   void init ();
   void ensure_merged_polygons_valid () const;

@@ -1411,7 +1411,7 @@ RegionDelegate *DeepEdges::extended (coord_type ext_b, coord_type ext_e, coord_t
       const std::set<db::ICplxTrans> &vv = vars.variants (c->cell_index ());
       for (auto v = vv.begin (); v != vv.end (); ++v) {
 
-        db::Shapes *out;
+        db::Shapes *out = nullptr;
         if (vv.size () == 1) {
           out = & c->shapes (res->deep_layer ().layer ());
         } else {
@@ -1450,7 +1450,7 @@ RegionDelegate *DeepEdges::extended (coord_type ext_b, coord_type ext_e, coord_t
       const std::set<db::ICplxTrans> &vv = vars.variants (c->cell_index ());
       for (auto v = vv.begin (); v != vv.end (); ++v) {
 
-        db::Shapes *out;
+        db::Shapes *out = nullptr;
         if (vv.size () == 1) {
           out = & c->shapes (res->deep_layer ().layer ());
         } else {

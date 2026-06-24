@@ -22,6 +22,8 @@
 
 
 #include "dbMatrix.h"
+
+#include <math.h>
 #include "dbTrans.h"
 #include "tlString.h"
 
@@ -533,7 +535,7 @@ adjust_matrix (Matrix2d &matrix, db::DVector &disp, const std::vector <db::DPoin
   if (flags == MatrixAdjustFlags::RotationMirror && landmarks_after.size () == 3 && fixed_point >= 0 && fixed_point < 3) {
     for (int i = 0; i < 3; ++i) {
       if (i != fixed_point) {
-        double n;
+        double n = NAN;
         n = p [i].double_length ();
         if (fabs (n) > 1e-6) {
           p [i] *= 1.0 / n;

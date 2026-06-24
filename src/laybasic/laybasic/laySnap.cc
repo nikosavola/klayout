@@ -23,6 +23,8 @@
 
 
 #include "laySnap.h"
+
+#include <math.h>
 #include "layLayoutViewBase.h"
 
 #include "dbEdge.h"
@@ -83,7 +85,7 @@ snap (const db::DPoint &p1, const db::DPoint &p2)
     double x1 = floor (p1.x () + 0.5);
     double y1 = floor (p1.y () + 0.5);
     double x2 = floor (p2.x () + 0.5);
-    double y2;
+    double y2 = NAN;
     if (p2.y () < p1.y ()) {
       y2 = y1 - fabs (x2 - x1);
     } else {
@@ -163,7 +165,7 @@ draw_round_dbl (const db::DPoint &p1, const db::DPoint &p2, int /*h*/)
     double x1 = floor (p1.x () + 0.5);
     double y1 = floor (p1.y () + 0.5);
     double x2 = floor (p2.x () + 0.5);
-    double y2;
+    double y2 = NAN;
     if (p2.y () < p1.y ()) {
       y2 = y1 - fabs (x2 - x1);
     } else {
@@ -204,7 +206,7 @@ snap_angle (const db::DVector &in, lay::angle_constraint_type ac, db::DVector *s
   if (elen > 1e-6) {
     double max_proj = -10.0;
     for (std::vector <db::DVector>::const_iterator re = ref_dir.begin (); re != ref_dir.end (); ++re) {
-      double proj;
+      double proj = NAN;
       proj = db::sprod (*re, in) / (elen * re->length ());
       if (proj > max_proj) {
         max_proj = proj;

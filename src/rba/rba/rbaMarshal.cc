@@ -928,7 +928,7 @@ gsi::VectorAdaptorIterator *RubyBasedVectorAdaptor::create_iterator () const
 
 void RubyBasedVectorAdaptor::push (gsi::SerialArgs &r, tl::Heap &heap)
 {
-  VALUE member;
+  VALUE member = 0;
   gsi::do_on_type<reader> () (mp_ainner->type (), &r, &member, (Proxy *) nullptr, *mp_ainner, &heap);
   rb_ary_push (m_array, member);
 }
@@ -1004,7 +1004,7 @@ gsi::MapAdaptorIterator *RubyBasedMapAdaptor::create_iterator () const
 
 void RubyBasedMapAdaptor::insert (gsi::SerialArgs &r, tl::Heap &heap)
 {
-  VALUE k, v;
+  VALUE k = 0, v = 0;
   gsi::do_on_type<reader> () (mp_ainner_k->type (), &r, &k, (Proxy *) nullptr, *mp_ainner_k, &heap);
   gsi::do_on_type<reader> () (mp_ainner->type (), &r, &v, (Proxy *) nullptr, *mp_ainner, &heap);
   rb_hash_aset (m_hash, k, v);
@@ -1167,7 +1167,7 @@ struct test_arg_func<gsi::MapType>
       tl_assert (atype.inner () != nullptr);
       tl_assert (atype.inner_k () != nullptr);
 
-      HashTestKeyValueData args;
+      HashTestKeyValueData args{};
       args.ainner_k = atype.inner_k ();
       args.ainner = atype.inner ();
       args.ret = ret;

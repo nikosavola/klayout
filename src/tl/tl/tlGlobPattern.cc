@@ -548,7 +548,7 @@ void
 compile_emit_char_class (GlobPatternOp *&op_head, GlobPatternOp *&op, const char *&p, bool cs)
 {
   bool negate = false;
-  if (*p && *p == '^') {
+  if (*p && *p == '^') { // NOLINT(misc-redundant-expression): explicit non-empty guard for clarity
     ++p;
     negate = true;
   }

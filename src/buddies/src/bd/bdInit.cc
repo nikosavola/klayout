@@ -95,7 +95,7 @@ ProgressAdaptor::trigger (tl::Progress *progress)
 {
   if (progress && first () == progress && tl::verbosity () >= m_verbosity) {
 
-    std::string text = progress->desc ();
+    std::string text = progress->desc (); // NOLINT(performance-unnecessary-copy-initialization)
 
     if (m_progress_text != text) {
       tl::info << text << " ..";

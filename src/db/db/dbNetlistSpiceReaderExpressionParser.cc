@@ -112,7 +112,7 @@ NetlistSpiceReaderExpressionParser::eval_func (const std::string &name, const st
   if (name == "SGN") { f = sgn_f; } else
   if (name == "INT") { f = int_f; }
 
-  if (f != nullptr) {
+  if (f != nullptr) { // NOLINT(readability-misleading-indentation): not part of the preceding else-if chain
 
     if (params.empty() || ! params.front ().can_convert_to_double ()) {
       return tl::Variant ();

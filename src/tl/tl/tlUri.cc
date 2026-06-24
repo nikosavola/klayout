@@ -63,7 +63,7 @@ static std::string unescape (const std::string &s)
   std::string res;
   for (const char *cp = s.c_str (); *cp; ++cp) {
     if (*cp == '%' && is_hex (cp [1]) && is_hex (cp [2])) {
-      res += hex2int (cp[1]) * 16 + hex2int (cp[2]);
+      res += char (hex2int (cp[1]) * 16 + hex2int (cp[2]));
       cp += 2;
     } else {
       res += *cp;
@@ -117,7 +117,9 @@ URI::URI (const std::string &uri)
   }
 
   ex0 = ex;
-  if (ex.test ("//") || (ex.test ("/") ? prefer_authority : prefer_authority)) { // NOLINT(bugprone-branch-clone)
+  //  NOTE: ex.test ("/") is called for its side effect (consuming a single
+  //  leading slash); the result then defers to prefer_authority either way.
+  if (ex.test ("//") || (ex.test ("/") ? prefer_authority : prefer_authority)) { // NOLINT(bugprone-branch-clone,misc-redundant-expression)
     //  definitely an authority
     while (! ex.at_end () && *ex != '/') {
       m_authority += *ex;

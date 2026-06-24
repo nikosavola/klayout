@@ -608,11 +608,13 @@ struct TestImpl##NAME \
 #define CHECKPOINT() \
   _this->checkpoint (__FILE__, __LINE__);
 
+// NOLINTBEGIN(bugprone-macro-parentheses): MSG is a streamed message, parenthesising would change << grouping
 #define FAIL_ARG(MSG,WHAT) \
   { \
     std::ostringstream sstr; \
     sstr << MSG << ", value is " << (WHAT); \
     _this->raise (__FILE__, __LINE__, sstr.str ()); \
   }
+// NOLINTEND(bugprone-macro-parentheses)
 
 #endif

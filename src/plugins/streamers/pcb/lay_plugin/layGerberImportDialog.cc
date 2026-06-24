@@ -961,7 +961,7 @@ GerberImportDialog::enter_page ()
                 layers.push_back (l2v [l]);
               }
             }
-          } else if (f->first.function == db::GerberMetaData::NonPlatedHole || f->first.function == db::GerberMetaData::NonPlatedHole) {
+          } else if (f->first.function == db::GerberMetaData::NonPlatedHole) {
             layers.push_back (int (mp_data->layout_layers.size ()));
             mp_data->layout_layers.push_back (db::LayerProperties (++next_layer, 0, "Hole" + tl::to_string (++hole_num)));
           } else if (f->first.function == db::GerberMetaData::Profile) {

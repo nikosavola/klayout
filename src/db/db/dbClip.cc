@@ -99,10 +99,10 @@ clip_poly (const P &poly, const db::Box &box, Sink &psink, bool resolve_holes)
         db::Edge e1 (db::Point (ce.second.p1 ().x (), edge.p1 ().y ()), ce.second.p1 ());
         db::Edge e2 (ce.second.p2 (), db::Point (ce.second.p2 ().x (), edge.p2 ().y ()));
 
-        if (! e1.is_degenerate () && (ce = e1.clipped (box)).first && ! ce.second.is_degenerate ()) {
+        if (! e1.is_degenerate () && (ce = e1.clipped (box)).first && ! ce.second.is_degenerate ()) { // NOLINT(bugprone-assignment-in-if-condition)
           edges.push_back (ce.second);
         }
-        if (! e2.is_degenerate () && (ce = e2.clipped (box)).first && ! ce.second.is_degenerate ()) {
+        if (! e2.is_degenerate () && (ce = e2.clipped (box)).first && ! ce.second.is_degenerate ()) { // NOLINT(bugprone-assignment-in-if-condition)
           edges.push_back (ce.second);
         }
 

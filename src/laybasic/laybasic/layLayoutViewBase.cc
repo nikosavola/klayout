@@ -607,7 +607,7 @@ void LayoutViewBase::create_plugins (const lay::PluginDeclaration *except_this)
     if (current != except_this) {
 
       //  TODO: clean solution. The following is a HACK:
-      if (current_name == "ant::Plugin" || current_name == "img::Plugin") {
+      if (current_name == "ant::Plugin" || current_name == "img::Plugin") { // NOLINT(bugprone-branch-clone)
         //  ant and img are created always
         create_plugin (current);
       } else if (current_name == "laybasic::MouseTrackerPlugin") {
@@ -860,7 +860,7 @@ LayoutViewBase::configure (const std::string &name, const std::string &value)
       db::DCplxTrans t;
       ex.read (t);
       set_global_trans (t);
-    } catch (...) { }
+    } catch (...) { } // NOLINT(bugprone-empty-catch)
     return true;
 
   } else if (name == cfg_ctx_color) {
@@ -3401,7 +3401,7 @@ get_lyp_from_meta_info (const db::Layout &layout, std::string &lyp_file, bool &a
     if (meta->first == layer_properties_add_other_layers_name_id) {
       try {
         add_other_layers = meta->second.value.to_bool ();
-      } catch (...) {
+      } catch (...) { // NOLINT(bugprone-empty-catch)
       }
     }
   }

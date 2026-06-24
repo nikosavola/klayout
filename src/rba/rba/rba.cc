@@ -459,7 +459,7 @@ private:
 
       if ((*m)->is_signal ()) {
 
-        if (block_given) {
+        if (block_given) { // NOLINT(bugprone-branch-clone)
 
           //  events do not have parameters, but accept a Proc object -> no overloading -> take this one.
           candidates = 1;
@@ -1296,7 +1296,7 @@ method_adaptor (int mid, int argc, VALUE *argv, VALUE self, bool ctor)
       const MethodTableEntry &e = mt->entry (mid);
       for (auto m = e.begin (); m != e.end () && check_last; ++m) {
         auto a = (*m)->end_arguments ();
-        if (a != (*m)->begin_arguments () && (--a)->type () == gsi::T_map) {
+        if (a != (*m)->begin_arguments () && (--a)->type () == gsi::T_map) { // NOLINT(bugprone-inc-dec-in-conditions)
           check_last = false;
         }
       }
@@ -2788,7 +2788,7 @@ RubyInterpreter::begin_exec ()
 void
 RubyInterpreter::end_exec ()
 {
-  if (d->current_exec_level > 0 && --d->current_exec_level == 0 && d->current_exec_handler) {
+  if (d->current_exec_level > 0 && --d->current_exec_level == 0 && d->current_exec_handler) { // NOLINT(bugprone-inc-dec-in-conditions)
     d->current_exec_handler->end_exec (this);
   }
   if (d->exit_on_next) {

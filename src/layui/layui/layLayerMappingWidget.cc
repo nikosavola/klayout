@@ -164,7 +164,7 @@ LayerMappingWidget::load_button_pressed ()
       //  if successful, stop now.
       success = true;
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
       //  ...
     }
 

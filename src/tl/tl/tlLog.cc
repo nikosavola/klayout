@@ -43,7 +43,7 @@ static int default_verbosity ()
   if (! verbosity_str.empty ()) {
     try {
       tl::from_string (verbosity_str, verbosity);
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
   }
   return verbosity;
@@ -171,7 +171,7 @@ LogTee::puts (const char *s)
     for (tl::weak_collection<tl::Channel>::iterator c = m_channels.begin (); c != m_channels.end (); ++c) {
       c->puts (s);
     }
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  ignore exceptions here
   }
 }
@@ -183,7 +183,7 @@ LogTee::yield ()
     for (tl::weak_collection<tl::Channel>::iterator c = m_channels.begin (); c != m_channels.end (); ++c) {
       c->yield ();
     }
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  ignore exceptions here
   }
 }
@@ -195,7 +195,7 @@ LogTee::endl ()
     for (tl::weak_collection<tl::Channel>::iterator c = m_channels.begin (); c != m_channels.end (); ++c) {
       c->endl ();
     }
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  ignore exceptions here
   }
 }
@@ -207,7 +207,7 @@ LogTee::end ()
     for (tl::weak_collection<tl::Channel>::iterator c = m_channels.begin (); c != m_channels.end (); ++c) {
       c->end ();
     }
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  ignore exceptions here
   }
 }
@@ -219,7 +219,7 @@ LogTee::begin ()
     for (tl::weak_collection<tl::Channel>::iterator c = m_channels.begin (); c != m_channels.end (); ++c) {
       c->begin ();
     }
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  ignore exceptions here
   }
 }

@@ -175,7 +175,7 @@ namespace {
 
 void Netlist::validate_topology ()
 {
-  if (m_valid_topology) {
+  if (m_valid_topology) { // NOLINT(bugprone-branch-clone)
     return;
   } else if (m_lock_count > 0) {
     return;

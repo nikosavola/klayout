@@ -224,7 +224,7 @@ NetlistBrowserConfigPage2::setup (lay::Dispatcher *root)
   root->config_get (cfg_l2ndb_marker_cycle_colors, cc);
   try {
     m_palette.from_string (cc, true);
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
   }
 
   while (m_palette.colors () < sizeof (cc_buttons) / sizeof (cc_buttons [0])) {
@@ -321,7 +321,7 @@ NetlistBrowserConfigPage2::commit (lay::Dispatcher *root)
       int s;
       tl::from_string_ext (tl::to_string (mp_ui->lw_le->text ()), s);
       root->config_set (cfg_l2ndb_marker_line_width, s);
-    } catch (...) { }
+    } catch (...) { } // NOLINT(bugprone-empty-catch)
   }
 
   if (mp_ui->vs_le->text ().isEmpty ()) {
@@ -331,7 +331,7 @@ NetlistBrowserConfigPage2::commit (lay::Dispatcher *root)
       int s;
       tl::from_string_ext (tl::to_string (mp_ui->vs_le->text ()), s);
       root->config_set (cfg_l2ndb_marker_vertex_size, s);
-    } catch (...) { }
+    } catch (...) { } // NOLINT(bugprone-empty-catch)
   }
 
   root->config_set (cfg_l2ndb_marker_dither_pattern, mp_ui->stipple_pb->dither_pattern ());

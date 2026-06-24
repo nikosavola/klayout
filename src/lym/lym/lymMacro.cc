@@ -1005,7 +1005,7 @@ void Macro::install_doc () const
           cls = ext_cls;
         }
 
-      } else if (ex.test ("@method") || (st = ex.test ("@static_method")) == true) {
+      } else if (ex.test ("@method") || (st = ex.test ("@static_method")) == true) { // NOLINT(bugprone-assignment-in-if-condition)
 
         if (cls == nullptr) {
           tl::error << tl::to_string (tr ("Reading class doc from ")) << path () << ": " << tl::to_string (tr ("@method without preceding @class"));

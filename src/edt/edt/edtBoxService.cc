@@ -90,7 +90,7 @@ BoxService::function (const std::string &name, const std::string &value)
 
       finish_editing (true);
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
   }
@@ -135,7 +135,7 @@ BoxService::update_marker ()
     call_editor_hooks (editor_hooks (), &edt::EditorHooks::begin_new_shapes);
     try {
       deliver_shape_to_hooks (get_box ());
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
       //  ignore exceptions
     }
     call_editor_hooks (editor_hooks (), &edt::EditorHooks::end_new_shapes);

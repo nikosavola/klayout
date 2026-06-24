@@ -1547,7 +1547,7 @@ AsIfFlatRegion::sized_inside (const Region &inside, bool outside, coord_type dx,
 RegionDelegate *
 AsIfFlatRegion::and_with (const Region &other, PropertyConstraint property_constraint) const
 {
-  if (empty () || other.empty ()) {
+  if (empty () || other.empty ()) { // NOLINT(bugprone-branch-clone)
 
     //  Nothing to do
     return new EmptyRegion ();
@@ -1651,7 +1651,7 @@ AsIfFlatRegion::not_with (const Region &other, PropertyConstraint property_const
     //  Nothing to do
     return new EmptyRegion ();
 
-  } else if (other.empty () && ! strict_handling ()) {
+  } else if (other.empty () && ! strict_handling ()) { // NOLINT(bugprone-branch-clone)
 
     //  Nothing to do
     return clone ()->remove_properties (pc_remove (property_constraint));
@@ -1736,7 +1736,7 @@ AsIfFlatRegion::andnot_with (const Region &other, PropertyConstraint property_co
     //  Nothing to do
     return std::make_pair (new EmptyRegion (), new EmptyRegion ());
 
-  } else if (other.empty () && ! strict_handling ()) {
+  } else if (other.empty () && ! strict_handling ()) { // NOLINT(bugprone-branch-clone)
 
     //  Nothing to do
     return std::make_pair (new EmptyRegion (), clone ()->remove_properties (pc_remove (property_constraint)));

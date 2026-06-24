@@ -206,7 +206,7 @@ BrowserPanel::set_dispatcher (lay::Dispatcher *dispatcher, const std::string &cf
 
     }
 
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  exceptions ignored here
   }
 
@@ -678,7 +678,7 @@ BrowserPanel::loadResource (int type, const QUrl &url)
       return QVariant (mp_source->get_image (tl::to_string (url.toString ())));
     } catch (tl::Exception &ex) {
       tl::error << ex.msg ();
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
     return QVariant ();
@@ -689,7 +689,7 @@ BrowserPanel::loadResource (int type, const QUrl &url)
       return QVariant (tl::to_qstring (mp_source->get_css (tl::to_string (url.toString ()))));
     } catch (tl::Exception &ex) {
       tl::error << ex.msg ();
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
     return QVariant ();
@@ -766,7 +766,7 @@ BrowserPanel::loadResource (int type, const QUrl &url)
 
     } catch (tl::Exception &ex) {
       tl::error << ex.msg ();
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
     QApplication::restoreOverrideCursor ();

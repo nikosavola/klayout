@@ -263,7 +263,7 @@ MacroEditorHighlighters::load (const std::string &s)
 
     }
 
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  ignore errors;
   }
 }
@@ -682,7 +682,7 @@ void MacroEditorPage::do_run_mode_changed ()
     mp_text->setReadOnly (! mp_macro || mp_macro->is_readonly () || mp_exec_model->run_mode ());
     update_extra_selections ();
 
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  .. ignore exceptions here ..
   }
 
@@ -1364,7 +1364,7 @@ MacroEditorPage::replace_in_selection (const QString &replace, bool first)
       bool substitute = false;
 
       int i = m_current_search.indexIn (b.text (), o);
-      if (i < 0) {
+      if (i < 0) { // NOLINT(bugprone-branch-clone)
         break;
       } else if (m_current_search.matchedLength () == 0) {
         break;  //  avoid an infinite loop

@@ -910,7 +910,7 @@ void PythonInterpreter::begin_execution ()
 
 void PythonInterpreter::end_execution ()
 {
-  if (m_current_exec_level > 0 && --m_current_exec_level == 0 && mp_current_exec_handler) {
+  if (m_current_exec_level > 0 && --m_current_exec_level == 0 && mp_current_exec_handler) { // NOLINT(bugprone-inc-dec-in-conditions)
     mp_current_exec_handler->end_exec (this);
   }
 }

@@ -341,7 +341,7 @@ public:
       return false;
     } else {
       //  check value
-      if (m_equal && value == m_value) {
+      if (m_equal && value == m_value) { // NOLINT(bugprone-branch-clone)
         return true;
       } else if (! m_equal && value != m_value) {
         return true;

@@ -714,7 +714,7 @@ Layout::set_technology_name (const std::string &tech)
         continue;
       }
 
-      if ((m = mapping.find (lib_proxy->lib_id ())) != mapping.end ()) {
+      if ((m = mapping.find (lib_proxy->lib_id ())) != mapping.end ()) { // NOLINT(bugprone-assignment-in-if-condition)
 
         db::Library *lib = db::LibraryManager::instance ().lib (lib_proxy->lib_id ());
         db::Cell *lib_cell = &lib->layout ().cell (lib_proxy->library_cell_index ());

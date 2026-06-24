@@ -697,7 +697,7 @@ DEFImporter::read_single_net (std::string &nondefaultrule, Layout &layout, db::C
             new_mask = get_mask (get_long ());
             read_mask = false;
 
-            if (! peek ("(")) {
+            if (! peek ("(")) { // NOLINT(bugprone-branch-clone)
               break;
             } else if (new_mask != mask) {
               break;
@@ -903,7 +903,7 @@ DEFImporter::read_nets (db::Layout &layout, db::Cell &design, double scale, bool
         bool prefixed = false;
         bool can_have_rect_polygon_or_via = true;
 
-        if ((was_shield = test ("SHIELD")) == true || test ("NOSHIELD") || test ("ROUTED") || test ("FIXED") || test ("COVER")) {
+        if ((was_shield = test ("SHIELD")) == true || test ("NOSHIELD") || test ("ROUTED") || test ("FIXED") || test ("COVER")) { // NOLINT(bugprone-assignment-in-if-condition)
           if (was_shield) {
             take ();
           }
@@ -1144,7 +1144,7 @@ DEFImporter::read_vias (db::Layout &layout, db::Cell & /*design*/, double scale)
         vd.m1 = bn;
         vd.m2 = tn;
 
-      } else if ((is_polygon = test ("POLYGON")) || test ("RECT")) {
+      } else if ((is_polygon = test ("POLYGON")) || test ("RECT")) { // NOLINT(bugprone-assignment-in-if-condition)
 
         if (! geo_based_vg) {
           geo_based_vg.reset (new GeometryBasedLayoutGenerator ());
@@ -1863,7 +1863,7 @@ DEFImporter::do_read (db::Layout &layout)
       expect ("END");
       expect ("BLOCKAGES");
 
-    } else if ((specialnets = test ("SPECIALNETS")) == true || test ("NETS")) {
+    } else if ((specialnets = test ("SPECIALNETS")) == true || test ("NETS")) { // NOLINT(bugprone-assignment-in-if-condition)
 
       get_long ();
       expect (";");

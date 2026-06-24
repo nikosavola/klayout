@@ -457,7 +457,7 @@ std::string InputStream::absolute_file_path (const std::string &abstract_path)
   //  TODO: align this implementation with InputStream ctor
 
   tl::Extractor ex (abstract_path.c_str ());
-  if (ex.test (":")) {
+  if (ex.test (":")) { // NOLINT(bugprone-branch-clone)
     return abstract_path;
   } else if (ex.test ("http:") || ex.test ("https:") || ex.test ("pipe:") || ex.test ("data:")) {
     return abstract_path;
@@ -474,7 +474,7 @@ bool InputStream::is_absolute (const std::string &abstract_path)
   //  TODO: align this implementation with InputStream ctor
 
   tl::Extractor ex (abstract_path.c_str ());
-  if (ex.test (":")) {
+  if (ex.test (":")) { // NOLINT(bugprone-branch-clone)
     return true;
   } else if (ex.test ("http:") || ex.test ("https:") || ex.test ("pipe:") || ex.test ("data:")) {
     return true;
@@ -489,7 +489,7 @@ bool InputStream::is_absolute (const std::string &abstract_path)
 bool InputStream::is_file_path (const std::string &abstract_path)
 {
   tl::Extractor ex (abstract_path.c_str ());
-  if (ex.test (":")) {
+  if (ex.test (":")) { // NOLINT(bugprone-branch-clone)
     return false;
   } else if (ex.test ("http:") || ex.test ("https:") || ex.test ("pipe:") || ex.test ("data:")) {
     return false;
@@ -501,7 +501,7 @@ bool InputStream::is_file_path (const std::string &abstract_path)
 std::string InputStream::as_file_path (const std::string &abstract_path)
 {
   tl::Extractor ex (abstract_path.c_str ());
-  if (ex.test (":")) {
+  if (ex.test (":")) { // NOLINT(bugprone-branch-clone)
     return std::string ();
   } else if (ex.test ("http:") || ex.test ("https:") || ex.test ("pipe:") || ex.test ("data:")) {
     return std::string ();
@@ -551,7 +551,7 @@ std::string InputStream::relative_path (const std::string &path1, const std::str
   //  TODO: align this implementation with InputStream ctor
 
   tl::Extractor ex (path2);
-  if (ex.test (":")) {
+  if (ex.test (":")) { // NOLINT(bugprone-branch-clone)
     return path2;
   } else if (ex.test ("pipe:") || ex.test ("data:")) {
     return path2;
@@ -1147,7 +1147,7 @@ OutputStream::~OutputStream ()
 {
   try {
     close ();
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  no recursive exceptions
   }
 }

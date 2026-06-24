@@ -808,7 +808,7 @@ NetlistBrowserPage::navigate_to (const QModelIndex &index, bool fwd)
     QModelIndex circuit_index = tree_model->index_from_netpath (path);
     hierarchy_tree->setCurrentIndex (circuit_index);
 
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
   }
 
   m_signals_enabled = true;

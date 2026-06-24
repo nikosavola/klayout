@@ -1318,7 +1318,7 @@ MainService::cm_convert_to_pcell ()
           pcell_items.push_back (lib->get_name () + "." + pc_decl->name ());
         }
 
-      } catch (...) {
+      } catch (...) { // NOLINT(bugprone-empty-catch)
         //  ignore errors in can_create_from_shape
       }
 

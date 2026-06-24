@@ -155,7 +155,7 @@ public:
    */
   std::pair<bool, db::Point> move (const db::Point &p, const db::DVector &v)
   {
-    if (v == db::DVector ()) {
+    if (v == db::DVector ()) { // NOLINT(bugprone-branch-clone)
       return std::make_pair (true, p);
     } else if (m_mode == Free) {
       return std::make_pair (true, p + db::Vector (v));

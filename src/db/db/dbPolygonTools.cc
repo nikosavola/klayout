@@ -640,9 +640,9 @@ template <class PolygonType>
 bool
 suggest_split_polygon (const PolygonType &polygon, size_t max_vertex_count, double max_area_ratio)
 {
-  if (polygon.is_box () || polygon.vertices () <= 3) {
+  if (polygon.is_box () || polygon.vertices () <= 3) { // NOLINT(bugprone-branch-clone)
     return false;
-  } else if (max_vertex_count > 0 && polygon.vertices () > max_vertex_count) {
+  } else if (max_vertex_count > 0 && polygon.vertices () > max_vertex_count) { // NOLINT(bugprone-branch-clone)
     return true;
   } else if (max_area_ratio > 0 && polygon.area_ratio () > max_area_ratio) {
     return true;
@@ -814,7 +814,7 @@ smooth_contour (db::Polygon::polygon_contour_iterator from, db::Polygon::polygon
 
       if (keep_hv && (p1.x () == p0.x () || p1.y () == p0.y () || p2.x () == p1.x () || p2.y () == p1.y ())) {
         //  keep points which participate in either a vertical or horizontal edge
-      } else if (p1.double_distance (p0) <= d * (1.0 + db::epsilon) && db::sprod_sign (p2 - p1, p0 - pm1) > 0 && std::abs (db::vprod (p2 - p1, p0 - pm1)) < 0.8 * p2.distance (p1) * p0.distance (pm1)) {
+      } else if (p1.double_distance (p0) <= d * (1.0 + db::epsilon) && db::sprod_sign (p2 - p1, p0 - pm1) > 0 && std::abs (db::vprod (p2 - p1, p0 - pm1)) < 0.8 * p2.distance (p1) * p0.distance (pm1)) { // NOLINT(bugprone-branch-clone)
         //  jog configurations with small edges are candidates
         can_drop = true;
       } else if (db::vprod_sign (p2 - p1, p1 - p0) < 0) {
@@ -1107,7 +1107,7 @@ do_extract_rad_from_contour (typename db::polygon<C>::polygon_contour_iterator f
     if (first_or_last && db::sprod (ep, e) > cos_thr * e.double_length () * ep.double_length ()) {
       double ls = (db::vprod_sign (ep, e) > 0 ? ls_inner : ls_outer);
       if (! fallback && ((e.double_length () < circle_segment_thr * ls && ep.double_length () > circle_segment_thr * ls) 
-                         || db::vprod_sign (em, ep) * db::vprod_sign (ep, e) < 0)) {
+                         || db::vprod_sign (em, ep) * db::vprod_sign (ep, e) < 0)) { // NOLINT(bugprone-branch-clone)
         found = true;
         break;
       } else if (fallback && (ep.dx () == 0 || ep.dy () == 0)) {
@@ -1741,7 +1741,7 @@ template class area_map<db::DCoord>;
 static bool edge_is_partially_left_of (const db::Edge &e, const db::Edge &e_original, db::Coord x)
 {
   Coord xmin = db::edge_xmin (e);
-  if (xmin < x) {
+  if (xmin < x) { // NOLINT(bugprone-branch-clone)
     return true;
   } else if (xmin == x && e_original.dx () != 0) {
     //  the skew edge is cut partially rendering a straight vertical line (due to rounding)
@@ -1755,7 +1755,7 @@ static bool edge_is_partially_left_of (const db::Edge &e, const db::Edge &e_orig
 static bool edge_is_partially_left_of (const db::DEdge &e, const db::DEdge &e_original, db::DCoord x)
 {
   DCoord xmin = db::edge_xmin (e);
-  if (db::coord_traits<db::DCoord>::less (xmin, x)) {
+  if (db::coord_traits<db::DCoord>::less (xmin, x)) { // NOLINT(bugprone-branch-clone)
     return true;
   } else if (db::coord_traits<db::DCoord>::equal (xmin, x) && ! db::coord_traits<db::DCoord>::equal (e_original.dx (), 0)) {
     //  the skew edge is cut partially rendering a straight vertical line (due to rounding)
@@ -2508,7 +2508,7 @@ static void decompose_convex_helper (int depth, PreferredOrientation po, const d
             db::coord_traits<db::Coord>::area_type d1 = db::sprod (efc.p1 () - p, nv);
             db::coord_traits<db::Coord>::area_type d2 = db::sprod (efc.p2 () - p, nv);
 
-            if (d1 <= 0 && d2 >= 0) {
+            if (d1 <= 0 && d2 >= 0) { // NOLINT(bugprone-branch-clone)
               x = std::make_pair (true, p);
             } else if (d2 <= 0 && d1 >= 0) {
               x = std::make_pair (true, p);

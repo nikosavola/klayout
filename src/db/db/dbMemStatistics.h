@@ -152,7 +152,7 @@ template <class X>
 void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, const X &x, bool no_self = false, void *parent = nullptr)
 {
   if (! no_self) {
-    stat->add (typeid (X), (void *) &x, sizeof (X), sizeof (X), parent, purpose, cat);
+    stat->add (typeid (X), (void *) &x, sizeof (X), sizeof (X), parent, purpose, cat); // NOLINT(bugprone-sizeof-expression)
   }
 }
 
@@ -184,7 +184,7 @@ void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, c
     stat->add (typeid (v), (void *) &v, sizeof (v), sizeof (v), parent, purpose, cat);
   }
   if (! v.empty ()) {
-    stat->add (typeid (X[]), (void *) &v.front (), sizeof (X) * v.capacity (), sizeof (X) * v.size (), (void *) &v, purpose, cat);
+    stat->add (typeid (X[]), (void *) &v.front (), sizeof (X) * v.capacity (), sizeof (X) * v.size (), (void *) &v, purpose, cat); // NOLINT(bugprone-sizeof-expression)
   }
   for (size_t i = 0; i < v.size (); ++i) {
     mem_stat (stat, purpose, cat, v[i], true, (void *) &v);
@@ -198,7 +198,7 @@ void mem_stat (MemStatistics *stat, MemStatistics::purpose_t purpose, int cat, c
     stat->add (typeid (v), (void *) &v, sizeof (v), sizeof (v), parent, purpose, cat);
   }
   if (! v.empty ()) {
-    stat->add (typeid (X[]), (void *) &v.front (), sizeof (X) * v.capacity (), sizeof (X) * v.size (), (void *) &v, purpose, cat);
+    stat->add (typeid (X[]), (void *) &v.front (), sizeof (X) * v.capacity (), sizeof (X) * v.size (), (void *) &v, purpose, cat); // NOLINT(bugprone-sizeof-expression)
   }
   for (size_t i = 0; i < v.size (); ++i) {
     mem_stat (stat, purpose, cat, v[i], true, (void *) &v);

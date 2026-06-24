@@ -1331,7 +1331,7 @@ Variant::equal_core (const tl::Variant &d, type t) const
 bool 
 Variant::less_core (const tl::Variant &d, type t) const
 {
-  if (t == t_nil) {
+  if (t == t_nil) { // NOLINT(bugprone-branch-clone)
     return false;
   } else if (t == t_bool) {
     return m_var.m_bool < d.m_var.m_bool;
@@ -2177,7 +2177,7 @@ Variant::to_int128 () const
 unsigned long long
 Variant::to_ulonglong () const
 {
-  if (m_type == t_nil) {
+  if (m_type == t_nil) { // NOLINT(bugprone-branch-clone)
     return 0;
   } else if (m_type == t_double) {
     return (unsigned long long) (m_var.m_double);
@@ -2235,7 +2235,7 @@ Variant::to_ulonglong () const
 long long
 Variant::to_longlong () const
 {
-  if (m_type == t_nil) {
+  if (m_type == t_nil) { // NOLINT(bugprone-branch-clone)
     return 0;
   } else if (m_type == t_double) {
     return (long long) (m_var.m_double);
@@ -2293,7 +2293,7 @@ Variant::to_longlong () const
 unsigned long
 Variant::to_ulong () const
 {
-  if (m_type == t_nil) {
+  if (m_type == t_nil) { // NOLINT(bugprone-branch-clone)
     return 0;
   } else if (m_type == t_double) {
     return (unsigned long) (m_var.m_double);
@@ -2351,7 +2351,7 @@ Variant::to_ulong () const
 long 
 Variant::to_long () const
 {
-  if (m_type == t_nil) {
+  if (m_type == t_nil) { // NOLINT(bugprone-branch-clone)
     return 0;
   } else if (m_type == t_double) {
     return (long) (m_var.m_double);
@@ -2461,7 +2461,7 @@ Variant::to_id () const
 double 
 Variant::to_double () const
 {
-  if (m_type == t_nil) {
+  if (m_type == t_nil) { // NOLINT(bugprone-branch-clone)
     return 0;
   } else if (m_type == t_double) {
     return m_var.m_double;
@@ -2798,7 +2798,7 @@ QVariant Variant::to_qvariant () const
     {
       const tl::VariantUserClassBase *cls = user_cls ();
       //  try any of the other supported classes of QVariant:
-      if (dynamic_cast<const tl::VariantUserClass<QBitArray> *> (cls)) {
+      if (dynamic_cast<const tl::VariantUserClass<QBitArray> *> (cls)) { // NOLINT(bugprone-branch-clone)
         return QVariant (to_user<QBitArray> ());
       } else if (dynamic_cast<const tl::VariantUserClass<QBitArray> *> (cls)) {
         return QVariant (to_user<QBitArray> ());

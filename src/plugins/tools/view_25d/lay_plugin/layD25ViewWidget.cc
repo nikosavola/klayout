@@ -387,7 +387,7 @@ D25ViewWidget::hit_point_with_scene (const QVector3D &line_dir)
   QVector3D line = cam_position ();
 
   std::pair<bool, QVector3D> hp = lay::hit_point_with_cuboid (line, line_dir, corner, dim);
-  if (! hp.first) {
+  if (! hp.first) { // NOLINT(bugprone-branch-clone)
     return line + line_dir * min_focus_dist;
   } else if (QVector3D::dotProduct (line_dir, hp.second - line) < min_focus_dist) {
     //  limit to min focus distance (not behind)

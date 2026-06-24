@@ -777,10 +777,10 @@ static void sort_node_range_by_best_match (const NodeRange &nr)
   SortNodeByNet compare;
 
   while (i != nr.nn1 || j != nr.nn2) {
-    if (j == nr.nn2) {
+    if (j == nr.nn2) { // NOLINT(bugprone-branch-clone)
       nomatch1.push_back (*i);
       ++i;
-    } else if (i == nr.nn1) {
+    } else if (i == nr.nn1) { // NOLINT(bugprone-branch-clone)
       nomatch2.push_back (*j);
       ++j;
     } else if (compare (*i, *j)) {

@@ -145,7 +145,7 @@ void LayoutVsSchematicStandardReader::read_log_entry (db::NetlistCrossReference 
 
   Brace br (this);
   while (br) {
-    if (read_severity (severity)) {
+    if (read_severity (severity)) { // NOLINT(bugprone-branch-clone)
       //  continue
     } else if (read_message (msg)) {
       //  continue
@@ -236,7 +236,7 @@ void LayoutVsSchematicStandardReader::read_xref (db::NetlistCrossReference *xref
 
       while (br) {
 
-        if (read_status (status)) {
+        if (read_status (status)) { // NOLINT(bugprone-branch-clone)
           //  continue
         } else if (read_message (msg)) {
           //  continue

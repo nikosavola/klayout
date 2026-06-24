@@ -575,7 +575,7 @@ PropertiesPage::recompute_histogram ()
 
     }
 
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 
   false_color_control->set_histogram (histogram);
 }

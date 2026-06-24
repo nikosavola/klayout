@@ -268,7 +268,7 @@ const MacroCollection *MacroCollection::folder_by_name (const std::string &name)
 
 std::string MacroCollection::path () const
 {
-  if (m_virtual_mode) {
+  if (m_virtual_mode) { // NOLINT(bugprone-branch-clone)
     return m_path;
   } else if (mp_parent) {
     return tl::combine_path (mp_parent->path (), m_path);

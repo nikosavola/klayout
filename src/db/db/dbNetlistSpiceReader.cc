@@ -674,7 +674,7 @@ SpiceCircuitDict::read_card ()
   tl::Extractor ex (l.c_str ());
   std::string name;
 
-  if (ex.test_without_case (".model")) {
+  if (ex.test_without_case (".model")) { // NOLINT(bugprone-branch-clone)
 
     //  ignore model statements
 
@@ -1013,7 +1013,7 @@ make_circuit_name (const std::string &name, const NetlistSpiceReader::parameters
     if (p->second.can_convert_to_double()) {
       double v = p->second.to_double ();
       double va = fabs (v);
-      if (va < 1e-15) {
+      if (va < 1e-15) { // NOLINT(bugprone-branch-clone)
         res += tl::sprintf ("%g", v);
       } else if (va < 0.1e-12) {
         res += tl::sprintf ("%gF", v * 1e15);

@@ -37,7 +37,7 @@ static std::string
 join_names (const std::string &n1, const std::string &n2)
 {
   //  create a new name for the joined net
-  if (n2.empty ()) {
+  if (n2.empty ()) { // NOLINT(bugprone-branch-clone)
     return n1;
   } else if (n1.empty ()) {
     return n2;

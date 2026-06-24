@@ -180,7 +180,7 @@ RS274XReader::do_scan ()
               ex.test (",");
               data.position = parse_position (ex);
 
-            } else if ((plated = ex.test ("Plated")) || ex.test ("NonPlated")) {
+            } else if ((plated = ex.test ("Plated")) || ex.test ("NonPlated")) { // NOLINT(bugprone-assignment-in-if-condition)
 
               data.function = plated ? GerberMetaData::PlatedHole : GerberMetaData::NonPlatedHole;
 
@@ -421,7 +421,7 @@ RS274XReader::do_read ()
             // .. G74 - enable 360 degree circular interpolation
             m_360deg_circular = true;
 
-          } else if (gcode == 90) {
+          } else if (gcode == 90) { // NOLINT(bugprone-branch-clone)
 
             // .. G90 - absolute mode
             m_relative = false;
@@ -431,7 +431,7 @@ RS274XReader::do_read ()
             // .. G91 - relative mode
             m_relative = false;
 
-          } else if (gcode == 0) {
+          } else if (gcode == 0) { // NOLINT(bugprone-branch-clone)
 
             // .. G0 - move
             m_current_gcode = gcode;

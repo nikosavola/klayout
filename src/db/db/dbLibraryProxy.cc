@@ -53,7 +53,7 @@ LibraryProxy::~LibraryProxy ()
         lib->unregister_proxy (this, layout ());
       }
     }
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  ignore exceptions (may happen due to broken PCell instantiations)
   }
 }

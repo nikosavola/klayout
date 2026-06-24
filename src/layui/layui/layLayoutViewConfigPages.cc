@@ -266,13 +266,13 @@ LayoutViewConfigPage2a::commit (lay::Dispatcher *root)
     int n;
     tl::from_string_ext (tl::to_string (mp_ui->cell_min_size_for_label_edit->text ()), n);
     root->config_set (cfg_min_inst_label_size, n);
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 
   try {
     double ecd;
     tl::from_string_ext (tl::to_string (mp_ui->empty_cell_dimension->text ()), ecd);
     root->config_set (cfg_empty_cell_dimension, ecd);
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 }
 
 // ------------------------------------------------------------
@@ -348,7 +348,7 @@ LayoutViewConfigPage2b::commit (lay::Dispatcher *root)
     double s;
     tl::from_string_ext (tl::to_string (mp_ui->text_def_size_edit->text ()), s);
     root->config_set (cfg_default_text_size, s);
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 }
 
 // ------------------------------------------------------------
@@ -594,7 +594,7 @@ LayoutViewConfigPage3b::commit (lay::Dispatcher *root)
   double pd = 0.0;
   try {
     tl::from_string_ext (tl::to_string (mp_ui->pan_distance_le->text ()), pd);
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
   if (pd <= 0.0) {
     throw tl::Exception (tl::to_string (QObject::tr ("Invalid pan distance: must be larger than 0.0")));
   }
@@ -703,7 +703,7 @@ LayoutViewConfigPage3f::commit (lay::Dispatcher *root)
     unsigned int s;
     tl::from_string_ext (tl::to_string (mp_ui->drop_small_cells_value_le->text ()), s);
     root->config_set (cfg_drop_small_cells_value, s);
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 
   root->config_set (cfg_array_border_instances, mp_ui->array_border_insts_cbx->isChecked ());
 
@@ -1582,7 +1582,7 @@ LayoutViewConfigPage7::setup (lay::Dispatcher *root)
     db::DCplxTrans t;
     ex.read (t);
     mp_ui->global_trans->setCurrentIndex (t.rot ());
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 
   int def_depth = 0;
   root->config_get (cfg_initial_hier_depth, def_depth);

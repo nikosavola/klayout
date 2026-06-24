@@ -630,7 +630,7 @@ special_method_impl (gsi::MethodBase::special_method_type smt, tl::Variant &self
 {
   if (smt == gsi::MethodBase::Destroy) {
     self.user_destroy ();
-  } else if (smt == gsi::MethodBase::Keep) {
+  } else if (smt == gsi::MethodBase::Keep) { // NOLINT(bugprone-branch-clone)
     //  nothing to do here for GSI objects
   } else if (smt == gsi::MethodBase::Release) {
     //  nothing to do here for GSI objects

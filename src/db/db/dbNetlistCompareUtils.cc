@@ -116,7 +116,7 @@ bool combined_case_sensitive (const db::Netlist *a, const db::Netlist *b)
 //  for comparing the net names also employ the pin name if one is given
 const std::string &extended_net_name (const db::Net *n)
 {
-  if (! n->name ().empty ()) {
+  if (! n->name ().empty ()) { // NOLINT(bugprone-branch-clone)
     return n->name ();
   } else if (n->begin_pins () != n->end_pins ()) {
     return n->begin_pins ()->pin ()->name ();

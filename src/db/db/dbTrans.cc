@@ -36,7 +36,7 @@ namespace {
     db::FTrans f;
     db::vector<C> p;
     while (true) {
-      if (ex.try_read (f)) {
+      if (ex.try_read (f)) { // NOLINT(bugprone-branch-clone)
         any = true;
       } else if (ex.try_read (p)) {
         any = true;
@@ -131,7 +131,7 @@ namespace {
     C1 t1;
     C2 t2;
     while (true) {
-      if (ex.try_read (t1)) {
+      if (ex.try_read (t1)) { // NOLINT(bugprone-branch-clone)
         any = true;
       } else if (ex.try_read (t2)) {
         any = true;

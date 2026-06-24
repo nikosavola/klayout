@@ -158,7 +158,7 @@ NetTracerConfigPage::setup (lay::Dispatcher *root)
   root->config_get (cfg_nt_marker_cycle_colors, cc);
   try {
     m_palette.from_string (cc, true);
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
   }
 
   while (m_palette.colors () < sizeof (cc_buttons) / sizeof (cc_buttons [0])) {
@@ -264,7 +264,7 @@ NetTracerConfigPage::commit (lay::Dispatcher *root)
       int s;
       tl::from_string_ext (tl::to_string (lw_le->text ()), s);
       root->config_set (cfg_nt_marker_line_width, s);
-    } catch (...) { }
+    } catch (...) { } // NOLINT(bugprone-empty-catch)
   }
 
   if (vs_le->text ().isEmpty ()) {
@@ -274,7 +274,7 @@ NetTracerConfigPage::commit (lay::Dispatcher *root)
       int s;
       tl::from_string_ext (tl::to_string (vs_le->text ()), s);
       root->config_set (cfg_nt_marker_vertex_size, s);
-    } catch (...) { }
+    } catch (...) { } // NOLINT(bugprone-empty-catch)
   }
 
   root->config_set (cfg_nt_marker_dither_pattern, stipple_pb->dither_pattern ());

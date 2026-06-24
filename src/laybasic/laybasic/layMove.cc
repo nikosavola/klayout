@@ -104,7 +104,7 @@ MoveService::function (const std::string &name, const std::string &value)
 
       drag_cancel ();
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
   }

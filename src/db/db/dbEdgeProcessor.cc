@@ -147,7 +147,7 @@ inline bool
 is_point_on_fuzzy (const db::Edge &e, const db::Point &pt)
 {
   //  exclude the start and end point
-  if (pt == e.p1 () || pt == e.p2 ()) {
+  if (pt == e.p1 () || pt == e.p2 ()) { // NOLINT(bugprone-branch-clone)
 
     return false;
 
@@ -390,7 +390,7 @@ struct EdgeXAtYCompare
     //  simple cases ..
     if (a.dx () == 0 && b.dx () == 0) {
       return a.p1 ().x () == b.p1 ().x ();
-    } else if (edge_xmax (a) < edge_xmin (b)) {
+    } else if (edge_xmax (a) < edge_xmin (b)) { // NOLINT(bugprone-branch-clone)
       return false;
     } else if (edge_xmin (a) > edge_xmax (b)) {
       return false;
@@ -526,7 +526,7 @@ struct EdgeXAtYCompare2
     //  simple cases ..
     if (a.dx () == 0 && b.dx () == 0) {
       return a.p1 ().x () == b.p1 ().x ();
-    } else if (edge_xmax (a) < edge_xmin (b)) {
+    } else if (edge_xmax (a) < edge_xmin (b)) { // NOLINT(bugprone-branch-clone)
       return false;
     } else if (edge_xmin (a) > edge_xmax (b)) {
       return false;

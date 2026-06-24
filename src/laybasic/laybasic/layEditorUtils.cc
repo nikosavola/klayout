@@ -96,7 +96,7 @@ std::map<std::string, tl::Variant> pcell_parameters_from_string (const std::stri
       ex.read (pm.insert (std::make_pair (n, tl::Variant ())).first->second);
       ex.test (";");
     }
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  ignore errors
   }
 

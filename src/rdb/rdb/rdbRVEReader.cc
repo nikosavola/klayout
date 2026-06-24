@@ -85,7 +85,7 @@ public:
         warn (ex.msg ());
       }
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
       //  ignore stream errors
     }
   }

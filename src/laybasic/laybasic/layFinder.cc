@@ -452,7 +452,7 @@ ShapeFinder::find_internal (lay::LayoutViewBase *view, unsigned int cv_index, co
       db::DBox scan_region_mu = view->viewport ().box ();
       start (view, m_cv_index, trans_mu, region_mu, scan_region_mu, min_level, max_level, layers);
 
-    } catch (StopException) {
+    } catch (StopException) { // NOLINT(bugprone-empty-catch)
       //  ...
     } catch (...) {
       m_flags = flags_saved;
@@ -468,7 +468,7 @@ ShapeFinder::find_internal (lay::LayoutViewBase *view, unsigned int cv_index, co
     //  another pass with tight search box and without texts
     start (view, m_cv_index, trans_mu, region_mu, region_mu, min_level, max_level, layers);
 
-  } catch (StopException) {
+  } catch (StopException) { // NOLINT(bugprone-empty-catch)
     //  ...
   } catch (...) {
     m_flags = flags_saved;
@@ -817,7 +817,7 @@ InstFinder::find_internal (LayoutViewBase *view, unsigned int cv_index, const db
     std::vector<db::DCplxTrans> tv;
     tv.push_back (trans_mu);
     start (view, cv_index, tv, region_mu, region_mu, view->get_min_hier_levels (), view->get_max_hier_levels (), std::vector<unsigned int> ());
-  } catch (StopException) {
+  } catch (StopException) { // NOLINT(bugprone-empty-catch)
     // ..
   }
 
@@ -885,7 +885,7 @@ InstFinder::visit_cell (const db::Cell &cell, const db::Box &search_box, const d
           checkpoint ();
 
           db::Box ibox;
-          if (! m_visible_layers || level == mp_view->get_max_hier_levels () - 1 || inst_cell.is_real_ghost_cell () || mp_view->is_cell_hidden (inst_cell.cell_index (), m_cv_index)) {
+          if (! m_visible_layers || level == mp_view->get_max_hier_levels () - 1 || inst_cell.is_real_ghost_cell () || mp_view->is_cell_hidden (inst_cell.cell_index (), m_cv_index)) { // NOLINT(bugprone-branch-clone)
             ibox = inst_cell.bbox_with_empty ();
           } else if (inst_cell.bbox ().empty ()) {
             //  empty cells cannot be found by visible layers, so we always select them here
@@ -965,7 +965,7 @@ InstFinder::visit_cell (const db::Cell &cell, const db::Box &search_box, const d
           double d = std::numeric_limits<double>::max ();
 
           db::Box ibox;
-          if (! m_visible_layers || level == mp_view->get_max_hier_levels () - 1 || inst_cell.is_real_ghost_cell () || mp_view->is_cell_hidden (inst_cell.cell_index (), m_cv_index)) {
+          if (! m_visible_layers || level == mp_view->get_max_hier_levels () - 1 || inst_cell.is_real_ghost_cell () || mp_view->is_cell_hidden (inst_cell.cell_index (), m_cv_index)) { // NOLINT(bugprone-branch-clone)
             ibox = inst_cell.bbox_with_empty ();
           } else if (inst_cell.bbox ().empty ()) {
             //  empty cells cannot be found by visible layers, so we always select them here

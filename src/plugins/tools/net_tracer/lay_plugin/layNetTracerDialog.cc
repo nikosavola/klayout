@@ -345,7 +345,7 @@ BEGIN_PROTECTED
 
       }
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
       //  ignore errors on redo
     }
 
@@ -1575,7 +1575,7 @@ NetTracerDialog::get_trace_depth()
         n = 0.0;
       }
     }
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  .. nothing yet ..
   }
 

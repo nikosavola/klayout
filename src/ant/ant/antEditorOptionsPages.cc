@@ -109,7 +109,7 @@ ToolkitWidget::commit (lay::Dispatcher *dispatcher)
 
     }
 
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
   }
 }
 
@@ -126,7 +126,7 @@ ToolkitWidget::configure (const std::string &name, const std::string &value)
       mp_x_le->setText (tl::to_qstring (tl::micron_to_string (mv.x ())));
       mp_y_le->setText (tl::to_qstring (tl::micron_to_string (mv.y ())));
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
   } else if (name == ant::Service::d_configure_name () && ! mp_x_le->hasFocus () && ! mp_y_le->hasFocus ()) {
@@ -138,7 +138,7 @@ ToolkitWidget::configure (const std::string &name, const std::string &value)
 
       mp_d_le->setText (tl::to_qstring (tl::micron_to_string (d)));
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
   }

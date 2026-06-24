@@ -1484,7 +1484,7 @@ SearchReplaceDialog::configure (const std::string &name, const std::string &valu
   if (isVisible () && need_update && ! m_find_query.empty ()) {
     try {
       update_results (m_find_query);
-    } catch (...) { }
+    } catch (...) { } // NOLINT(bugprone-empty-catch)
   }
 
   return taken;
@@ -1857,7 +1857,7 @@ SearchReplaceDialog::query_to_model (SearchReplaceResults &model, const db::Layo
             inst_elements.push_back (i->to_user<db::InstElement> ());
           }
           model.shapes ().back ().inst_elements = std::move (inst_elements);
-        } catch (...) {
+        } catch (...) { // NOLINT(bugprone-empty-catch)
           //  ignore conversion errors
         }
       }
@@ -1895,7 +1895,7 @@ SearchReplaceDialog::query_to_model (SearchReplaceResults &model, const db::Layo
             inst_elements.push_back (i->to_user<db::InstElement> ());
           }
           model.instances ().back ().inst_elements = std::move (inst_elements);
-        } catch (...) {
+        } catch (...) { // NOLINT(bugprone-empty-catch)
           //  ignore conversion errors
         }
       }
@@ -2142,7 +2142,7 @@ SearchReplaceDialog::result_selection_changed ()
 
     }
 
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  .. ignore exceptions ..
   }
 }

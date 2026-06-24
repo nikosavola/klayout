@@ -210,7 +210,7 @@ public:
           handle_event_exception (ex);
         } catch (std::exception &ex) {
           handle_event_exception (ex);
-        } catch (...) {
+        } catch (...) { // NOLINT(bugprone-empty-catch)
           //  Unknown exceptions are ignored
         }
       }

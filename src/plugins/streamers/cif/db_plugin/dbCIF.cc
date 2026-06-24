@@ -146,7 +146,7 @@ public:
 
       }
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
       //  ignore errors
     }
 

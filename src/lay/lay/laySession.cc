@@ -194,7 +194,7 @@ Session::restore (lay::MainWindow &mw)
             cv = view->load_layout (fp, ld->second->load_options, cvd->tech_name, true /*add*/);
             view->cellview (cv)->set_save_options (ld->second->save_options, ld->second->save_options_valid);
             ok = true;
-          } catch (...) { }
+          } catch (...) { } // NOLINT(bugprone-empty-catch)
         } 
         if (!ok) {
           //  fallback if layout cannot be loaded
@@ -244,7 +244,7 @@ Session::restore (lay::MainWindow &mw)
         view->add_rdb (rdb.release ());
       } catch (tl::Exception &ex) {
         tl::error << ex.msg ();
-      } catch (...) {
+      } catch (...) { // NOLINT(bugprone-empty-catch)
       }
 
     }
@@ -256,7 +256,7 @@ Session::restore (lay::MainWindow &mw)
         view->add_l2ndb (l2ndb);
       } catch (tl::Exception &ex) {
         tl::error << ex.msg ();
-      } catch (...) {
+      } catch (...) { // NOLINT(bugprone-empty-catch)
       }
 
     }

@@ -249,7 +249,7 @@ std::string formatted_value (double v)
     return tl::to_string (v * 1e6) + "µ";
   } else if (va < 100e-3) {
     return tl::to_string (v * 1e3) + "m";
-  } else if (va < 100.0) {
+  } else if (va < 100.0) { // NOLINT(bugprone-branch-clone)
     return tl::to_string (v);
   } else if (va < 100e3) {
     return tl::to_string (v * 1e-3) + "k";
@@ -1362,7 +1362,7 @@ NetlistModelItemData::circuits ()
 bool
 NetlistModelItemData::derived_from_circuits (const std::pair<const db::Circuit *, const db::Circuit *> &cp)
 {
-  if (! cp.first && ! cp.second) {
+  if (! cp.first && ! cp.second) { // NOLINT(bugprone-branch-clone)
     return false;
   } else if (circuits_of_this () == cp) {
     return true;
@@ -1393,7 +1393,7 @@ NetlistModelItemData::devices ()
 bool
 NetlistModelItemData::derived_from_devices (const std::pair<const db::Device *, const db::Device *> &sp)
 {
-  if (! sp.first && ! sp.second) {
+  if (! sp.first && ! sp.second) { // NOLINT(bugprone-branch-clone)
     return false;
   } else if (devices_of_this () == sp) {
     return true;
@@ -1424,7 +1424,7 @@ NetlistModelItemData::pins ()
 bool
 NetlistModelItemData::derived_from_pins (const std::pair<const db::Pin *, const db::Pin *> &sp)
 {
-  if (! sp.first && ! sp.second) {
+  if (! sp.first && ! sp.second) { // NOLINT(bugprone-branch-clone)
     return false;
   } else if (pins_of_this () == sp) {
     return true;
@@ -1455,7 +1455,7 @@ NetlistModelItemData::subcircuits ()
 bool
 NetlistModelItemData::derived_from_subcircuits (const std::pair<const db::SubCircuit *, const db::SubCircuit *> &sp)
 {
-  if (! sp.first && ! sp.second) {
+  if (! sp.first && ! sp.second) { // NOLINT(bugprone-branch-clone)
     return false;
   } else if (subcircuits_of_this () == sp) {
     return true;
@@ -1486,7 +1486,7 @@ NetlistModelItemData::nets ()
 bool
 NetlistModelItemData::derived_from_nets (const std::pair<const db::Net *, const db::Net *> &np)
 {
-  if (! np.first && ! np.second) {
+  if (! np.first && ! np.second) { // NOLINT(bugprone-branch-clone)
     return false;
   } else if (nets_of_this () == np) {
     return true;

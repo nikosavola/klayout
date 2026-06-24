@@ -1334,7 +1334,7 @@ OASISReader::resolve_forward_references (db::PropertiesSet &properties)
           //  NOTE: property names ID 0 is reserved for context strings
           new_props.insert (property_names_id_type (0), value);
 
-        } else if (! m_read_properties) {
+        } else if (! m_read_properties) { // NOLINT(bugprone-branch-clone)
 
           //  ignore other properties
 
@@ -1427,7 +1427,7 @@ void
 OASISReader::store_last_properties (db::PropertiesSet &properties, bool ignore_special, bool with_context_props)
 {
   const tl::Variant &name = db::property_name (mm_last_property_name.get ());
-  if (name.is_id ()) {
+  if (name.is_id ()) { // NOLINT(bugprone-branch-clone)
 
     store_properties (properties, mm_last_property_name.get (), mm_last_value_list.get ());
 
@@ -1437,7 +1437,7 @@ OASISReader::store_last_properties (db::PropertiesSet &properties, bool ignore_s
 
     properties.insert (db::property_names_id_type (0), tl::Variant (mm_last_value_list.get ().begin (), mm_last_value_list.get ().end ()));
 
-  } else if (! m_read_properties) {
+  } else if (! m_read_properties) { // NOLINT(bugprone-branch-clone)
 
     //  All properties are ignored
 
@@ -1983,7 +1983,7 @@ OASISReader::do_read_placement (unsigned char r,
         instances.push_back (inst);
       }
 
-    } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) {
+    } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) { // NOLINT(bugprone-assignment-in-if-condition)
 
       db::CellInstArray inst;
 
@@ -2183,7 +2183,7 @@ OASISReader::do_read_text (bool xy_absolute,
           cell.shapes (ll.second).insert (db::Shape::text_ptr_array_type (text_ptr, db::Disp (pos), layout.array_repository (), a, b, (uint64_t) na, (uint64_t) nb));
         }
 
-      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) {
+      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) { // NOLINT(bugprone-assignment-in-if-condition)
 
         db::TextPtr text_ptr (text, layout.shape_repository ());
 
@@ -2327,7 +2327,7 @@ OASISReader::do_read_rectangle (bool xy_absolute,
           cell.shapes (ll.second).insert (db::Shape::box_array_type (box, db::UnitTrans (), layout.array_repository (), a, b, (uint64_t) na, (uint64_t) nb));
         }
 
-      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) {
+      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) { // NOLINT(bugprone-assignment-in-if-condition)
 
         //  Create an iterated box array
         db::Shape::box_array_type::iterated_array_type array;
@@ -2465,7 +2465,7 @@ OASISReader::do_read_polygon (bool xy_absolute, db::cell_index_type cell_index, 
             cell.shapes (ll.second).insert (db::array<db::SimplePolygonPtr, db::Disp> (poly_ptr, db::Disp (d + pos), layout.array_repository (), a, b, (uint64_t) na, (uint64_t) nb));
           }
 
-        } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) {
+        } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) { // NOLINT(bugprone-assignment-in-if-condition)
 
           db::Vector d (poly.box ().lower_left () - db::Point ());
           poly.move (-d);
@@ -2646,7 +2646,7 @@ OASISReader::do_read_path (bool xy_absolute, db::cell_index_type cell_index, db:
             cell.shapes (ll.second).insert (db::array<db::PathPtr, db::Disp> (path_ptr, db::Disp (d + pos), layout.array_repository (), a, b, (uint64_t) na, (uint64_t) nb));
           }
 
-        } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) {
+        } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) { // NOLINT(bugprone-assignment-in-if-condition)
 
           db::Vector d (*path.begin () - db::Point ());
           path.move (-d);
@@ -2827,7 +2827,7 @@ OASISReader::do_read_trapezoid (unsigned char r, bool xy_absolute,db::cell_index
           cell.shapes (ll.second).insert (db::array<db::SimplePolygonPtr, db::Disp> (poly_ptr, db::Disp (d + pos), layout.array_repository (), a, b, (uint64_t) na, (uint64_t) nb));
         }
 
-      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) {
+      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) { // NOLINT(bugprone-assignment-in-if-condition)
 
         db::Vector d (poly.box ().lower_left () - db::Point ());
         poly.move (-d);
@@ -3198,7 +3198,7 @@ OASISReader::do_read_ctrapezoid (bool xy_absolute,db::cell_index_type cell_index
           cell.shapes (ll.second).insert (db::array<db::SimplePolygonPtr, db::Disp> (poly_ptr, db::Disp (d + pos), layout.array_repository (), a, b, (uint64_t) na, (uint64_t) nb));
         }
 
-      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) {
+      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) { // NOLINT(bugprone-assignment-in-if-condition)
 
         db::Vector d (poly.box ().lower_left () - db::Point ());
         poly.move (-d);
@@ -3348,7 +3348,7 @@ OASISReader::do_read_circle (bool xy_absolute, db::cell_index_type cell_index, d
           cell.shapes (ll.second).insert (db::array<db::PathPtr, db::Disp> (path_ptr, db::Disp (pos), layout.array_repository (), a, b, (uint64_t) na, (uint64_t) nb));
         }
 
-      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) {
+      } else if (! layout.is_editable () && (points = mm_repetition.get ().is_iterated ()) != nullptr) { // NOLINT(bugprone-assignment-in-if-condition)
 
         db::PathPtr path_ptr (path, layout.shape_repository ());
 

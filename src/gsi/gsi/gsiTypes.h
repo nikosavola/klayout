@@ -92,7 +92,7 @@ template <class X> const ClassBase *cls_decl ();
 template<class X>
 unsigned int item_size () 
 {
-  return (sizeof (X) + (sizeof (void *) - 1)) & ~(sizeof (void *) - 1); 
+  return (sizeof (X) + (sizeof (void *) - 1)) & ~(sizeof (void *) - 1);  // NOLINT(bugprone-sizeof-expression)
 }
 
 template<class X>

@@ -83,7 +83,7 @@ static bool is_win ()
 {
   if (s_mode == OS_Windows) {
     return true;
-  } else if (s_mode == OS_Linux) {
+  } else if (s_mode == OS_Linux) { // NOLINT(bugprone-branch-clone)
     return false;
   } else {
 #if defined(_WIN32)
@@ -656,7 +656,7 @@ mv_dir_recursive (const std::string &source, const std::string &target)
   entries = dir_entries (path, false /*without_files*/, true /*with_dirs*/);
   for (std::vector<std::string>::const_iterator e = entries.begin (); e != entries.end (); ++e) {
     std::string tc = tl::combine_path (path_to, *e);
-    if (! mkpath (tc)) {
+    if (! mkpath (tc)) { // NOLINT(bugprone-branch-clone)
 #if defined(FILE_UTILS_VERBOSE)
       tl::error << tr ("Unable to create target directory: ") << tc;
 #endif

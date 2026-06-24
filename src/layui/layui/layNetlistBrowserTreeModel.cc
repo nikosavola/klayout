@@ -274,7 +274,7 @@ NetlistBrowserTreeModel::build_circuits_to_index (size_t nprod, const std::pair<
 
 static bool is_compatible (const std::pair<const db::Circuit *, const db::Circuit *> &a, const std::pair<const db::Circuit *, const db::Circuit *> &b)
 {
-  if (a.first && b.first && a.first == b.first) {
+  if (a.first && b.first && a.first == b.first) { // NOLINT(bugprone-branch-clone)
     return true;
   } else if (a.second && b.second && a.second == b.second) {
     return true;

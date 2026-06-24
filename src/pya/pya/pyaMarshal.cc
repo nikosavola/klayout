@@ -52,7 +52,7 @@ public:
       m_stdstr = python2c<std::string> (string.get ());
     } else
 #else
-    if (PyBytes_Check (string.get ())) {
+    if (PyBytes_Check (string.get ())) { // NOLINT(bugprone-branch-clone)
       m_stdstr = python2c<std::string> (string.get ());
     } else
 #endif
@@ -1100,7 +1100,7 @@ struct test_arg_func<gsi::StringType>
       *ret = true;
     } else
 #else
-    if (PyBytes_Check (arg)) {
+    if (PyBytes_Check (arg)) { // NOLINT(bugprone-branch-clone)
       *ret = true;
     } else
 #endif

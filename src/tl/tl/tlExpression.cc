@@ -1202,7 +1202,7 @@ public:
 
     } else if (v->is_a_string () || b->is_a_string ()) {
       v.set (tl::Variant (std::string (v->to_string ()) + b->to_string ()));
-    } else if (v->is_double () || b->is_double ()) {
+    } else if (v->is_double () || b->is_double ()) { // NOLINT(bugprone-branch-clone)
       v.set (tl::Variant (to_double (m_context, *v, 0) + to_double (m_context, *b, 1)));
     } else if (v->is_ulonglong () || b->is_ulonglong ()) {
       v.set (tl::Variant (to_ulonglong (m_context, *v, 0) + to_ulonglong (m_context, *b, 1)));
@@ -1262,7 +1262,7 @@ public:
       c->execute (m_context, o, v.get (), "-", vv, nullptr);
       v.swap (o);
 
-    } else if (v->is_double () || b->is_double ()) {
+    } else if (v->is_double () || b->is_double ()) { // NOLINT(bugprone-branch-clone)
       v.set (tl::Variant (to_double (m_context, *v, 0) - to_double (m_context, *b, 1)));
     } else if (v->is_ulonglong () || b->is_ulonglong ()) {
       v.set (tl::Variant (to_ulonglong (m_context, *v, 0) - to_ulonglong (m_context, *b, 1)));
@@ -1352,7 +1352,7 @@ public:
 
       v.set (tl::Variant (s));
 
-    } else if (v->is_double () || b->is_double ()) {
+    } else if (v->is_double () || b->is_double ()) { // NOLINT(bugprone-branch-clone)
       v.set (tl::Variant (to_double (m_context, *v, 0) * to_double (m_context, *b, 1)));
     } else if (v->is_ulonglong () || b->is_ulonglong ()) {
       v.set (tl::Variant (to_ulonglong (m_context, *v, 0) * to_ulonglong (m_context, *b, 1)));
@@ -3501,7 +3501,7 @@ Eval::eval_bitwise (ExpressionParserContext &ex, std::unique_ptr<ExpressionNode>
 
     ExpressionParserContext ex1 = ex;
     tl::Extractor exb = ex;
-    if (exb.test("||")) {
+    if (exb.test("||")) { // NOLINT(bugprone-branch-clone)
       break; // not handled here
     } else if (exb.test("&&")) {
       break; // not handled here
@@ -4058,7 +4058,7 @@ Eval::resolve_name (const std::string &t, const EvalFunction *&function, const t
   f = m_local_functions.find (t);
   if (f != m_local_functions.end ()) {
     function = f->second;
-  } else if ((function = EvalStaticFunction::function_by_name (t)) == nullptr) {
+  } else if ((function = EvalStaticFunction::function_by_name (t)) == nullptr) { // NOLINT(bugprone-assignment-in-if-condition)
     std::map<std::string, tl::Variant>::iterator v;
     v = m_local_vars.find (t);
     if (v != m_local_vars.end ()) {

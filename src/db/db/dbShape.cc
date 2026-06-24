@@ -724,7 +724,7 @@ size_t Shape::array_size () const
       const short_box_array_type *arr = basic_ptr (short_box_array_type::tag ());
       return arr->size ();
     }
-  case Box:
+  case Box: // NOLINT(bugprone-branch-clone)
   case ShortBox:
   case BoxArrayMember:
   case ShortBoxArrayMember:

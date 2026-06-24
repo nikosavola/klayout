@@ -168,7 +168,7 @@ PolygonService::function (const std::string &name, const std::string &value)
 
       }
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
   }
@@ -413,7 +413,7 @@ PolygonService::update_marker ()
     call_editor_hooks (editor_hooks (), &edt::EditorHooks::begin_new_shapes);
     try {
       deliver_shape_to_hooks (get_polygon (true));
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
       //  ignore exceptions
     }
     call_editor_hooks (editor_hooks (), &edt::EditorHooks::end_new_shapes);

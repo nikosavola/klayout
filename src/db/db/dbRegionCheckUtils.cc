@@ -170,7 +170,7 @@ Edge2EdgeCheckBase::feed_pseudo_edges (db::box_scanner<db::Edge, size_t> &scanne
 inline bool edges_considered (bool requires_different_polygons, bool requires_different_layers, size_t p1, size_t p2)
 {
   if (p1 == p2) {
-    if (requires_different_polygons) {
+    if (requires_different_polygons) { // NOLINT(bugprone-branch-clone)
       return false;
     } else if ((p1 & size_t (1)) != 0) {
       //  edges from the same polygon are only considered on first layer.
@@ -182,7 +182,7 @@ inline bool edges_considered (bool requires_different_polygons, bool requires_di
   }
 
   if (((p1 ^ p2) & size_t (1)) == 0) {
-    if (requires_different_layers) {
+    if (requires_different_layers) { // NOLINT(bugprone-branch-clone)
       return false;
     } else if ((p1 & size_t (1)) != 0) {
       //  edges on the same layer are only considered on first layer.

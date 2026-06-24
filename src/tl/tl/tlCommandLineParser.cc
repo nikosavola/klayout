@@ -409,7 +409,7 @@ CommandLineOptions::produce_help (const std::string &program_name, bool advanced
 
   for (std::vector<ArgBase *>::const_iterator a = sorted_args.begin (); a != sorted_args.end (); ++a) {
 
-    if (! (*a)->is_option ()) {
+    if (! (*a)->is_option ()) { // NOLINT(bugprone-branch-clone)
       continue;
     } else if ((*a)->option ().advanced && !advanced) {
       hidden = true;

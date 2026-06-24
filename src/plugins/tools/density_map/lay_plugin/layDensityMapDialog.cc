@@ -285,7 +285,7 @@ DensityMapDialog::configure (const std::string &name, const std::string &value)
     try {
       tl::from_string (value, px);
       le_pixel_size->setText (tl::to_qstring (tl::to_string (px)));
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
     return true;
 
@@ -299,7 +299,7 @@ DensityMapDialog::configure (const std::string &name, const std::string &value)
       } else {
         le_window_size->setText (QString ());
       }
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
     return true;
 
@@ -333,7 +333,7 @@ DensityMapDialog::configure (const std::string &name, const std::string &value)
     try {
       tl::from_string (value, thr);
       sb_threads->setValue (thr);
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
     return true;
 
@@ -343,7 +343,7 @@ DensityMapDialog::configure (const std::string &name, const std::string &value)
     try {
       tl::from_string (value, lp);
       cb_source_layer->set_current_layer (lp);
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
     return true;
 
@@ -353,7 +353,7 @@ DensityMapDialog::configure (const std::string &name, const std::string &value)
     try {
       tl::from_string (value, lp);
       cb_box_layer->set_current_layer (lp);
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
     return true;
 
@@ -373,7 +373,7 @@ DensityMapDialog::configure (const std::string &name, const std::string &value)
         le_x2->setText (tl::to_qstring (tl::to_string (bx.right ())));
         le_y2->setText (tl::to_qstring (tl::to_string (bx.top ())));
       }
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
     return true;
 

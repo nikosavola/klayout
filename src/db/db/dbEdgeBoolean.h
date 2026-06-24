@@ -214,7 +214,7 @@ struct EdgeBooleanCluster
 
       //  optimize for empty b
       OutputContainer *oc = nullptr;
-      if (m_op == EdgeAndNot) {
+      if (m_op == EdgeAndNot) { // NOLINT(bugprone-branch-clone)
         oc = mp_output;
       } else if (m_op != EdgeAnd) {
         oc = mp_output;

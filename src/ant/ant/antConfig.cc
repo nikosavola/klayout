@@ -57,7 +57,7 @@ void
 StyleConverter::from_string (const std::string &tt, ant::Object::style_type &s)
 {
   std::string t (tl::trim (tt));
-  if (t == "ruler") {
+  if (t == "ruler") { // NOLINT(bugprone-branch-clone)
     s = ant::Object::STY_ruler;
   } else if (t == "arrow_end") {
     s = ant::Object::STY_arrow_end;
@@ -108,7 +108,7 @@ void
 OutlineConverter::from_string (const std::string &s, ant::Object::outline_type &o)
 {
   std::string t (tl::trim (s));
-  if (t == "diag") {
+  if (t == "diag") { // NOLINT(bugprone-branch-clone)
     o = ant::Object::OL_diag;
   } else if (t == "xy") {
     o = ant::Object::OL_xy;
@@ -151,7 +151,7 @@ void
 PositionConverter::from_string (const std::string &s, ant::Object::position_type &p)
 {
   std::string t (tl::trim (s));
-  if (t == "auto") {
+  if (t == "auto") { // NOLINT(bugprone-branch-clone)
     p = ant::Object::POS_auto;
   } else if (t == "p1") {
     p = ant::Object::POS_p1;
@@ -184,7 +184,7 @@ void
 AlignmentConverter::from_string (const std::string &s, ant::Object::alignment_type &a)
 {
   std::string t (tl::trim (s));
-  if (t == "auto") {
+  if (t == "auto") { // NOLINT(bugprone-branch-clone)
     a = ant::Object::AL_auto;
   } else if (t == "center") {
     a = ant::Object::AL_center;
@@ -200,7 +200,7 @@ AlignmentConverter::from_string (const std::string &s, ant::Object::alignment_ty
 std::string
 RulerModeConverter::to_string (ant::Template::ruler_mode_type m)
 {
-  if (m == ant::Template::RulerNormal) {
+  if (m == ant::Template::RulerNormal) { // NOLINT(bugprone-branch-clone)
     return "normal";
   } else if (m == ant::Template::RulerSingleClick) {
     return "single_click";
@@ -221,7 +221,7 @@ void
 RulerModeConverter::from_string (const std::string &s, ant::Template::ruler_mode_type &a)
 {
   std::string t (tl::trim (s));
-  if (t == "normal") {
+  if (t == "normal") { // NOLINT(bugprone-branch-clone)
     a = ant::Template::RulerNormal;
   } else if (t == "single_click") {
     a = ant::Template::RulerSingleClick;

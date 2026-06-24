@@ -1078,7 +1078,7 @@ EdgesDelegate *DeepEdges::and_with (const Edges &other) const
 {
   const DeepEdges *other_deep = dynamic_cast <const DeepEdges *> (other.delegate ());
 
-  if (empty ()) {
+  if (empty ()) { // NOLINT(bugprone-branch-clone)
 
     return clone ();
 

@@ -173,7 +173,7 @@ MethodTable::MethodTable (const gsi::ClassBase *cls_decl, PythonModule *module)
 
       for (gsi::MethodBase::synonym_iterator syn = (*m)->begin_synonyms (); syn != (*m)->end_synonyms (); ++syn) {
         if (! syn->is_getter && ! syn->is_setter) {
-          if (no_args && is_property_setter (st, syn->name) && ! is_property_getter (st, syn->name)) {
+          if (no_args && is_property_setter (st, syn->name) && ! is_property_getter (st, syn->name)) { // NOLINT(bugprone-branch-clone)
             add_getter (syn->name, *m);
           } else if (st && no_args && (isupper (syn->name [0]) || (*m)->is_const ())) {
             //  static methods without arguments which start with a capital letter are treated as constants
@@ -441,7 +441,7 @@ static std::string extract_python_name (const std::string &name)
  */
 static bool is_method_with_fallback (const std::string &name)
 {
-  if (name == "+") {
+  if (name == "+") { // NOLINT(bugprone-branch-clone)
     return true;
   } else if (name == "-") {
     return true;

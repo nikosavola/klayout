@@ -1545,7 +1545,7 @@ public:
       }
       return true;
 
-    } else if (id == m_pids.cell) {
+    } else if (id == m_pids.cell) { // NOLINT(bugprone-branch-clone)
 
       if (m_reading) {
         v = tl::Variant::make_variant_ref ((const db::Cell *) &layout ()->cell (*m_cell));
@@ -1584,7 +1584,7 @@ public:
       get_property (m_pids.cell_index, v.get_list ().back ());
       return true;
 
-    } else if (id == m_pids.hier_levels) {
+    } else if (id == m_pids.hier_levels) { // NOLINT(bugprone-branch-clone)
 
       v = 0;
       return true;
@@ -2591,7 +2591,7 @@ parse_cell_name_filter_seq (tl::Extractor &ex, LayoutQuery *q, FilterBracket *br
 
   while (! ex.at_end ()) {
     
-    if (check_trailing_reserved_word (ex) || (f = parse_cell_name_filter_element (ex, q, instance_mode, reading)) == nullptr) {
+    if (check_trailing_reserved_word (ex) || (f = parse_cell_name_filter_element (ex, q, instance_mode, reading)) == nullptr) { // NOLINT(bugprone-assignment-in-if-condition)
       break;
     }
 
@@ -2610,7 +2610,7 @@ parse_cell_name_filter_seq (tl::Extractor &ex, LayoutQuery *q, FilterBracket *br
 
   //  satisfy instance mode if there is just a cell name filter
   CellFilter *cf;
-  if (instance_mode != NoInstances && f0 == fl && (cf = dynamic_cast<CellFilter *> (f0)) != nullptr) {
+  if (instance_mode != NoInstances && f0 == fl && (cf = dynamic_cast<CellFilter *> (f0)) != nullptr) { // NOLINT(bugprone-assignment-in-if-condition)
 
     fl = new ChildCellFilter (q, cf->name_filter (), instance_mode, reading);
     bracket->add_child (fl);

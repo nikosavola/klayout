@@ -278,7 +278,7 @@ GridNet::render_bg (const lay::Viewport &vp, ViewObjectCanvas &canvas)
     //  compute major grid and switch to secondary style if necessary
     int s = 0;
     while (dgrid < threshold) {
-      if (s == 0) {
+      if (s == 0) { // NOLINT(bugprone-branch-clone)
         dgrid *= 2.0;
       } else if (s == 1) {
         dgrid *= 2.5;

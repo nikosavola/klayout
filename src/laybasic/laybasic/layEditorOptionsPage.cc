@@ -68,7 +68,7 @@ EditorOptionsPage::init (lay::LayoutViewBase *view, lay::Dispatcher *dispatcher)
 int
 EditorOptionsPage::show ()
 {
-  if (! m_active) {
+  if (! m_active) { // NOLINT(bugprone-branch-clone)
     return -1;
   } else if (m_toolbox_widget) {
     set_focus ();

@@ -89,7 +89,7 @@ MoveEditorOptionsPage::commit (lay::Dispatcher *dispatcher)
 
     dispatcher->call_function (move_function_name, db::DVector (dx, dy).to_string ());
 
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
   }
 }
 
@@ -106,7 +106,7 @@ MoveEditorOptionsPage::configure (const std::string &name, const std::string &va
       mp_x_le->setText (tl::to_qstring (tl::micron_to_string (mv.x ())));
       mp_y_le->setText (tl::to_qstring (tl::micron_to_string (mv.y ())));
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
   }

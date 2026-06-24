@@ -181,7 +181,7 @@ public:
       tl::error << ex.msg ();
     } catch (std::exception &ex) {
       tl::error << ex.what ();
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
   }
 
@@ -224,7 +224,7 @@ public:
       tl::error << ex.msg ();
     } catch (std::exception &ex) {
       tl::error << ex.what ();
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
     return pages_out;
@@ -256,7 +256,7 @@ public:
       tl::error << ex.msg ();
     } catch (std::exception &ex) {
       tl::error << ex.what ();
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
     s_in_create_plugin = false;

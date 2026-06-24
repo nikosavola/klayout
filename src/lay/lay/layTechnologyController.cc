@@ -247,7 +247,7 @@ TechnologyController::configure (const std::string &name, const std::string &val
         new_tech.load_from_xml (value);
         replace_technologies (new_tech);
         m_technologies_configured = true;
-      } catch (...) {
+      } catch (...) { // NOLINT(bugprone-empty-catch)
       }
 
     }

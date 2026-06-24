@@ -845,7 +845,7 @@ CellTreeModel::data (const QModelIndex &index, int role) const
       return QVariant ();
     }
 
-  } else if (role == Qt::ForegroundRole) {
+  } else if (role == Qt::ForegroundRole) { // NOLINT(bugprone-branch-clone)
 
 #if 0 // do strikeout rather than making the color darker
     if (! mp_view) {
@@ -895,7 +895,7 @@ CellTreeModel::rowCount (const QModelIndex &parent) const
     return 0;
   } else if (parent.isValid ()) {
     CellTreeItem *item = (CellTreeItem *) parent.internalPointer ();
-    if (! item) {
+    if (! item) { // NOLINT(bugprone-branch-clone)
       return 0;
     } else if (! item->is_valid ()) {
       //  for safety we return 0 children for invalid cells
@@ -923,11 +923,11 @@ CellTreeModel::rowCount (const QModelIndex &parent) const
 QModelIndex 
 CellTreeModel::index (int row, int column, const QModelIndex &parent) const 
 {
-  if (mp_layout->under_construction () || (mp_layout->manager () && mp_layout->manager ()->transacting ())) {
+  if (mp_layout->under_construction () || (mp_layout->manager () && mp_layout->manager ()->transacting ())) { // NOLINT(bugprone-branch-clone)
     return QModelIndex ();
   } else if (parent.isValid ()) {
     CellTreeItem *item = (CellTreeItem *) parent.internalPointer ();
-    if (! item) {
+    if (! item) { // NOLINT(bugprone-branch-clone)
       return QModelIndex ();
     } else if (! item->is_valid ()) {
       //  for safety we don't return valid child indexes for invalid cells

@@ -78,7 +78,7 @@ public:
   virtual bool match (const char *s, std::vector<std::string> *e) const
   {
     size_t n = e ? e->size () : 0;
-    if (mp_next && mp_next->match (s, e)) {
+    if (mp_next && mp_next->match (s, e)) { // NOLINT(bugprone-branch-clone)
       return true;
     } else if (! mp_next && ! *s) {
       return true;
@@ -628,7 +628,7 @@ GlobPatternOp *compile (const char *&p, bool exact, bool cs, bool hm, bool for_b
 
   while (*p) {
 
-    if (exact) {
+    if (exact) { // NOLINT(bugprone-branch-clone)
 
       str += *p++;
 

@@ -475,7 +475,7 @@ ApplicationBase::parse_cmd (int &argc, char **argv)
 
       m_write_config_file = false;
 
-    } else if (a == "-z") {
+    } else if (a == "-z") { // NOLINT(bugprone-branch-clone)
 
       m_no_gui = true;
 
@@ -643,12 +643,12 @@ ApplicationBase::init_app ()
     for (std::vector <std::string>::const_iterator c = m_config_files.begin (); c != m_config_files.end (); ++c) {
       try {
         cfg.read_config (*c);
-      } catch (...) { }
+      } catch (...) { } // NOLINT(bugprone-empty-catch)
     }
 
     try {
       cfg.config_get (cfg_edit_mode, editable_from_config);
-    } catch (...) { }
+    } catch (...) { } // NOLINT(bugprone-empty-catch)
 
     try {
       std::string mp;
@@ -663,7 +663,7 @@ ApplicationBase::init_app ()
         }
         ex.test (";");
       }
-    } catch (...) { }
+    } catch (...) { } // NOLINT(bugprone-empty-catch)
 
   }
 
@@ -1458,7 +1458,7 @@ ApplicationBase::reset_config ()
   for (std::vector <std::string>::const_iterator c = m_initial_config_files.begin (); c != m_initial_config_files.end (); ++c) {
     try {
       read_config (*c);
-    } catch (...) { }
+    } catch (...) { } // NOLINT(bugprone-empty-catch)
   }
 }
 
@@ -1821,7 +1821,7 @@ GuiApplication::process_events_impl (QEventLoop::ProcessEventsFlags flags, bool 
       //  Qt seems not to send posted UserEvents in some cases (e.g. in the unit test application with GLib?
       //  Glib not doing this without a main window visible?). Hence we do this explicitly here.
       QApplication::sendPostedEvents ();
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
       //  ignore exceptions
     }
 

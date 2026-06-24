@@ -745,7 +745,7 @@ public:
 
           node = (MarkerBrowserTreeViewModelCacheEntry *) current_index.internalPointer ();
           rdb::id_type id = node->id ();
-          if (mp_database->cell_by_id (id) != nullptr && !descend_into_cell) {
+          if (mp_database->cell_by_id (id) != nullptr && !descend_into_cell) { // NOLINT(bugprone-branch-clone)
             break;
           } else if (mp_database->category_by_id (id) != nullptr && !descend_into_category) {
             break;
@@ -760,7 +760,7 @@ public:
 
         node = (MarkerBrowserTreeViewModelCacheEntry *) parent_index.internalPointer ();
         rdb::id_type id = node->id ();
-        if (mp_database->cell_by_id (id) != nullptr && !must_descend_into_category) {
+        if (mp_database->cell_by_id (id) != nullptr && !must_descend_into_category) { // NOLINT(bugprone-branch-clone)
           return parent_index;
         } else if (mp_database->category_by_id (id) != nullptr && !must_descend_into_cell) {
           return parent_index;

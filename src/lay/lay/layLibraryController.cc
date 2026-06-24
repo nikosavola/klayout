@@ -216,7 +216,7 @@ LibraryController::sync_files (bool always)
 
     } catch (tl::Exception &ex) {
       tl::error << tl::to_string (tr ("Error reading lib file")) << " " << lf->first << ":" << tl::endl << ex.msg ();
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
   }
@@ -289,7 +289,7 @@ LibraryController::sync_files (bool always)
         db::LibraryManager::instance ().delete_lib (lib);
       } catch (tl::Exception &ex) {
         tl::error << ex.msg ();
-      } catch (...) {
+      } catch (...) { // NOLINT(bugprone-empty-catch)
       }
 
     }
@@ -463,7 +463,7 @@ LibraryController::read_libs (const std::vector<LibraryController::LibFileInfo> 
     QFileInfo fi (tl::to_qstring (lib_path));
 
     auto ll = m_lib_files.find (lib_path);
-    if (ll == m_lib_files.end ()) {
+    if (ll == m_lib_files.end ()) { // NOLINT(bugprone-branch-clone)
       needs_load = true;
     } else if (fi.lastModified () > ll->second.time || im->tech != ll->second.tech || im->replicate != ll->second.replicate) {
       needs_load = true;
@@ -550,7 +550,7 @@ LibraryController::read_libs (const std::vector<LibraryController::LibFileInfo> 
         db::LibraryManager::instance ().register_lib (l->second);
       } catch (tl::Exception &ex) {
         tl::error << ex.msg ();
-      } catch (...) {
+      } catch (...) { // NOLINT(bugprone-empty-catch)
       }
     }
 

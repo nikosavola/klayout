@@ -2157,7 +2157,7 @@ struct array
     if (type () != d.type ()) {
       return (type () < d.type ());
     }
-    if (mp_base == d.mp_base) {
+    if (mp_base == d.mp_base) { // NOLINT(bugprone-branch-clone)
       return false;
     } else if (! mp_base) {
       return true;
@@ -2182,7 +2182,7 @@ struct array
     if (type () != d.type ()) {
       return (type () < d.type ());
     }
-    if (mp_base == d.mp_base) {
+    if (mp_base == d.mp_base) { // NOLINT(bugprone-branch-clone)
       return false;
     } else if (! mp_base) {
       return true;

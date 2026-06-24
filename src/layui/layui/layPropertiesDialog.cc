@@ -459,7 +459,7 @@ PropertiesDialog::current_index_changed (const QModelIndex &index, const QModelI
           m_transaction_id = t.id ();
         }
 
-      } catch (...) {
+      } catch (...) { // NOLINT(bugprone-empty-catch)
       }
 
       mp_properties_pages [m_index]->update ();
@@ -737,7 +737,7 @@ BEGIN_PROTECTED
     }
     mp_properties_pages [m_index]->update ();
 
-  } catch (tl::Exception &) {
+  } catch (tl::Exception &) { // NOLINT(bugprone-empty-catch)
     //  we assume the page somehow indicates the error and does not apply the values
   }
 

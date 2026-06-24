@@ -248,7 +248,7 @@ void
 ShapeIterator::skip_array ()
 {
   if (m_array_iterator_valid) {
-    if (m_type == PolygonPtrArray) {
+    if (m_type == PolygonPtrArray) { // NOLINT(bugprone-branch-clone)
       skip_array_iter<polygon_ptr_array_iterator_type> ();
     } else if (m_type == SimplePolygonPtrArray) {
       skip_array_iter<simple_polygon_ptr_array_iterator_type> ();
@@ -256,7 +256,7 @@ ShapeIterator::skip_array ()
       skip_array_iter<path_ptr_array_iterator_type> ();
     } else if (m_type == TextPtrArray) {
       skip_array_iter<text_ptr_array_iterator_type> ();
-    } else if (m_type == BoxArray) {
+    } else if (m_type == BoxArray) { // NOLINT(bugprone-branch-clone)
       skip_array_iter<box_array_iterator_type> ();
     } else if (m_type == ShortBoxArray) {
       skip_array_iter<short_box_array_iterator_type> ();
@@ -835,7 +835,7 @@ void
 ShapeIterator::do_skip_array_quad ()
 {
   if (m_array_iterator_valid) {
-    if (m_type == PolygonPtrArray) {
+    if (m_type == PolygonPtrArray) { // NOLINT(bugprone-branch-clone)
       do_skip_array_quad_iter<polygon_ptr_array_iterator_type> ();
     } else if (m_type == SimplePolygonPtrArray) {
       do_skip_array_quad_iter<simple_polygon_ptr_array_iterator_type> ();
@@ -843,7 +843,7 @@ ShapeIterator::do_skip_array_quad ()
       do_skip_array_quad_iter<path_ptr_array_iterator_type> ();
     } else if (m_type == TextPtrArray) {
       do_skip_array_quad_iter<text_ptr_array_iterator_type> ();
-    } else if (m_type == BoxArray) {
+    } else if (m_type == BoxArray) { // NOLINT(bugprone-branch-clone)
       do_skip_array_quad_iter<box_array_iterator_type> ();
     } else if (m_type == ShortBoxArray) {
       do_skip_array_quad_iter<short_box_array_iterator_type> ();
@@ -863,7 +863,7 @@ size_t
 ShapeIterator::array_quad_id () const
 {
   if (m_array_iterator_valid) {
-    if (m_type == PolygonPtrArray) {
+    if (m_type == PolygonPtrArray) { // NOLINT(bugprone-branch-clone)
       return get_array_quad_id<polygon_ptr_array_iterator_type> ();
     } else if (m_type == SimplePolygonPtrArray) {
       return get_array_quad_id<simple_polygon_ptr_array_iterator_type> ();
@@ -871,7 +871,7 @@ ShapeIterator::array_quad_id () const
       return get_array_quad_id<path_ptr_array_iterator_type> ();
     } else if (m_type == TextPtrArray) {
       return get_array_quad_id<text_ptr_array_iterator_type> ();
-    } else if (m_type == BoxArray) {
+    } else if (m_type == BoxArray) { // NOLINT(bugprone-branch-clone)
       return get_array_quad_id<box_array_iterator_type> ();
     } else if (m_type == ShortBoxArray) {
       return get_array_quad_id<short_box_array_iterator_type> ();

@@ -950,7 +950,7 @@ RedrawThreadWorker::draw_boxes_impl (bool drawing_context, db::cell_index_type c
     bbox_for_label = bbox;
   }
 
-  if (for_ghosts && cell.is_real_ghost_cell ()) {
+  if (for_ghosts && cell.is_real_ghost_cell ()) { // NOLINT(bugprone-branch-clone)
 
     //  paint the box on this level
     draw_cell (drawing_context, level, trans, bbox, bbox_for_label, empty_cell, mp_layout->display_name (ci), opt_bitmap);
@@ -1186,7 +1186,7 @@ RedrawThreadWorker::draw_box_properties_impl (bool drawing_context, db::cell_ind
 
     //  small cell dropped
 
-  } else if (for_ghosts && cell.is_real_ghost_cell ()) {
+  } else if (for_ghosts && cell.is_real_ghost_cell ()) { // NOLINT(bugprone-branch-clone)
 
     //  paint the box on this level
     draw_cell_properties (drawing_context, level, trans, bbox, prop_id);
@@ -1433,7 +1433,7 @@ RedrawThreadWorker::search_regions (const db::Box &cell_bbox, const db::Box &vp,
 
   //  create a set of boxes to look into
   db::Coord aw = db::coord_traits<db::Coord>::rounded (m_abstract_mode_width / mp_layout->dbu ());
-  if (vp == db::Box::world ()) {
+  if (vp == db::Box::world ()) { // NOLINT(bugprone-branch-clone)
     vv.push_back (vp);
   } else if (level == 1 && m_abstract_mode_width > 0 && cell_bbox.width () > db::Box::distance_type (aw * 2) && cell_bbox.height () > db::Box::distance_type (aw * 2)) {
     vv.push_back (vp & db::Box (cell_bbox.left (), cell_bbox.bottom (), cell_bbox.left () + aw, cell_bbox.top ()));

@@ -218,7 +218,7 @@ ShapePropertiesPage::current_layer_changed ()
   if (m_enable_cb_callback) {
     try {
       emit edited ();
-    } catch (tl::Exception &) {
+    } catch (tl::Exception &) { // NOLINT(bugprone-empty-catch)
       //  ignore exceptions
     }
   }
@@ -615,7 +615,7 @@ PolygonPropertiesPage::text_changed ()
   m_in_text_changed = true;
   try {
     emit edited ();
-  } catch (tl::Exception &) {
+  } catch (tl::Exception &) { // NOLINT(bugprone-empty-catch)
     //  ignore exceptions
   }
   m_in_text_changed = false;
@@ -928,7 +928,7 @@ BoxPropertiesPage::changed ()
 
   try {
     set_box (get_box (m_tab_index));
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
   }
 
   emit edited ();
@@ -1044,7 +1044,7 @@ PointPropertiesPage::changed ()
 {
   try {
     set_point (get_point ());
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
   }
 
   emit edited ();
@@ -1335,7 +1335,7 @@ EditablePathPropertiesPage::text_changed ()
   m_in_text_changed = true;
   try {
     emit edited ();
-  } catch (tl::Exception &) {
+  } catch (tl::Exception &) { // NOLINT(bugprone-empty-catch)
     //  ignore exceptions
   }
   m_in_text_changed = false;

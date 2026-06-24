@@ -841,10 +841,10 @@ DitherPatternInfo::scale_pattern (unsigned int n)
           mm <<= 1;
         }
         m <<= 1;
-        if ((ml <<= 1) == mmax) {
+        if ((ml <<= 1) == mmax) { // NOLINT(bugprone-assignment-in-if-condition)
           ml = 1;
         }
-        if ((mr <<= 1) == mmax) {
+        if ((mr <<= 1) == mmax) { // NOLINT(bugprone-assignment-in-if-condition)
           mr = 1;
         }
       }

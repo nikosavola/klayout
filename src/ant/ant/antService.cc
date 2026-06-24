@@ -2173,7 +2173,7 @@ Service::function (const std::string &name, const std::string &value)
 
       }
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
   } else if (name == d_function_name ()) {
@@ -2194,7 +2194,7 @@ Service::function (const std::string &name, const std::string &value)
 
       }
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
   }

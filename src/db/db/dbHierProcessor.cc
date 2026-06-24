@@ -105,7 +105,7 @@ void safe_insert2_into_box_scanner (db::box_scanner2 <T1, P1, T2, P2> &, const T
  */
 db::Box safe_box_enlarged (const db::Box &box, db::Coord dx, db::Coord dy)
 {
-  if (box.empty ()) {
+  if (box.empty ()) { // NOLINT(bugprone-branch-clone)
     return box;
   } else if (box == db::Box::world ()) {
     return box;

@@ -1377,7 +1377,7 @@ Object::from_string (const char *str, const char *base_dir)
 
     bool color = true;
 
-    if (ex.test ("empty:")) {
+    if (ex.test ("empty:")) { // NOLINT(bugprone-branch-clone)
       return;
     } else if (ex.test ("color:")) {
       color = true;
@@ -1650,7 +1650,7 @@ Object::read_file ()
     //  exit on success
     return;
 
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  continue with other formats ...
   }
 

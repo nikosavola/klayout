@@ -1957,7 +1957,7 @@ MainWindow::update_action_states ()
       prev_display_state_action->set_enabled (has_prev_display_state ());
     }
 
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  ignore exceptions
   }
 }

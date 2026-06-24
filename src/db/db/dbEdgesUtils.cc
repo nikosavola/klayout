@@ -251,7 +251,7 @@ EdgeAngleChecker::check (const db::Vector &a, const db::Vector &b) const
   bool vp1 = !opp1 && (m_include_start ? (db::vprod_sign (v1, vout) >= 0) : (db::vprod_sign (v1, vout) > 0));
   bool vp2 = !opp2 && (m_include_end ? (db::vprod_sign (v2, vout) <= 0) : (db::vprod_sign (v2, vout) < 0));
 
-  if (m_big_angle && (vp1 || vp2)) {
+  if (m_big_angle && (vp1 || vp2)) { // NOLINT(bugprone-branch-clone)
     return true;
   } else if (! m_big_angle && vp1 && vp2) {
     return true;

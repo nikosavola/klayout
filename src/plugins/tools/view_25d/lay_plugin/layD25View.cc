@@ -352,7 +352,7 @@ D25View::scale_value_edited ()
   try {
     tl::from_string_ext (tl::to_string (mp_ui->zoom_factor->text ()), f);
     f = std::min (1e6, std::max (1e-6, f));
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  ignore exceptions
   }
   mp_ui->d25_view->set_scale_factor (f);
@@ -366,7 +366,7 @@ D25View::vscale_value_edited ()
   try {
     tl::from_string_ext (tl::to_string (mp_ui->vzoom_factor->text ()), f);
     f = std::min (1e6, std::max (1e-6, f));
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  ignore exceptions
   }
   mp_ui->d25_view->set_vscale_factor (f);

@@ -366,7 +366,7 @@ struct DeepShapeStore::LayoutHolder
 
   bool remove_layer_ref (unsigned int layer)
   {
-    if ((layer_refs[layer] -= 1) <= 0) {
+    if ((layer_refs[layer] -= 1) <= 0) { // NOLINT(bugprone-assignment-in-if-condition)
       layout.delete_layer (layer);
       layer_refs.erase (layer);
       return true;
@@ -967,7 +967,7 @@ void DeepShapeStore::remove_ref (unsigned int layout, unsigned int layer)
 
   }
 
-  if ((m_layouts[layout]->refs -= 1) <= 0 && ! m_keep_layouts) {
+  if ((m_layouts[layout]->refs -= 1) <= 0 && ! m_keep_layouts) { // NOLINT(bugprone-assignment-in-if-condition)
     delete m_layouts[layout];
     m_layouts[layout] = nullptr;
     clear_breakout_cells (layout);

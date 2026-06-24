@@ -139,7 +139,7 @@ make_n_or_astring (const char *s, const std::string &subst, bool make_nstring)
 
   bool valid = true;
   for (const char *c = s; *c && valid; ++c) {
-    if (*c == 0x20 && make_nstring) {
+    if (*c == 0x20 && make_nstring) { // NOLINT(bugprone-branch-clone)
       valid = false;
     } else if (((unsigned char) *c) < 0x20 || ((unsigned char) *c) > 0x7e) {
       valid = false;
@@ -155,7 +155,7 @@ make_n_or_astring (const char *s, const std::string &subst, bool make_nstring)
 
     std::string nstr;
     for (const char *c = s; *c; ) {
-      if (*c == 0x20 && make_nstring) {
+      if (*c == 0x20 && make_nstring) { // NOLINT(bugprone-branch-clone)
         nstr += subst;
       } else if (((unsigned char) *c) < 0x20 || ((unsigned char) *c) > 0x7e) {
         nstr += subst;
@@ -2308,7 +2308,7 @@ OASISWriter::write_pointlist (const std::vector<db::Vector> &pointlist, bool for
 
   //  test last displacement for polygons
   if (for_polygons && type >= 0) {
-    if (hvlast != type) {
+    if (hvlast != type) { // NOLINT(bugprone-branch-clone)
       type = -1;
     } else if (plast.x () == 0) {
       if (hvlast != 0) {

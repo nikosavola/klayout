@@ -1196,7 +1196,7 @@ LayerPropertiesConstIterator::inc (unsigned int d)
         std::pair <size_t, size_t> f = factor ();
         m_uint += f.first;
         mp_obj.reset (nullptr);
-        if (m_uint / f.first < f.second - 1) {
+        if (m_uint / f.first < f.second - 1) { // NOLINT(bugprone-branch-clone)
           break;
         } else if (at_top ()) {
           break;

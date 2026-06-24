@@ -1585,7 +1585,7 @@ Recorder::eventFilter (QObject *object, QEvent *event)
       LogMouseEvent *me_log = nullptr;
       if (mouseEvent &&
           ! m_events.empty () && 
-          (me_log = dynamic_cast <LogMouseEvent *> (m_events.back ())) != nullptr &&
+          (me_log = dynamic_cast <LogMouseEvent *> (m_events.back ())) != nullptr && // NOLINT(bugprone-assignment-in-if-condition)
           (me_log->event ().type () == QEvent::MouseMove &&
            me_log->event ().buttons () == mouseEvent->buttons () &&
            me_log->event ().button () == mouseEvent->button () &&
@@ -1621,7 +1621,7 @@ Recorder::eventFilter (QObject *object, QEvent *event)
       LogResizeEvent *re_log = nullptr;
       QSize old_size (resizeEvent->oldSize ());
       if (! m_events.empty () && 
-          (re_log = dynamic_cast <LogResizeEvent *> (m_events.back ())) != nullptr) {
+          (re_log = dynamic_cast <LogResizeEvent *> (m_events.back ())) != nullptr) { // NOLINT(bugprone-assignment-in-if-condition)
         if (re_log->target () == target) {
           old_size = re_log->old_size ();
           delete m_events.back ();

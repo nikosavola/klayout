@@ -927,7 +927,7 @@ Service::mouse_move_event (const db::DPoint &p, unsigned int buttons, bool prio)
 
       m_alt_ac = lay::AC_Global;
 
-    } else if (prio) {
+    } else if (prio) { // NOLINT(bugprone-redundant-branch-condition)
       do_mouse_move_inactive (p);
     }
 
@@ -1399,7 +1399,7 @@ Service::display_status (bool transient)
   EditableSelectionIterator r = transient ? begin_transient_selection () : begin_selection ();
   EditableSelectionIterator rr = r;
 
-  if (! rr.at_end () && (++rr).at_end ()) {
+  if (! rr.at_end () && (++rr).at_end ()) { // NOLINT(bugprone-inc-dec-in-conditions)
 
     const db::Layout &layout = view ()->cellview (r->cv_index ())->layout ();
 

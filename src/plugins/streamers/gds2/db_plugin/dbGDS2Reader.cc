@@ -137,7 +137,7 @@ inline int
 GDS2Reader::get_int ()
 {
   unsigned char *b = mp_rec_buf + m_recptr;
-  if ((m_recptr += 4) > m_reclen) {
+  if ((m_recptr += 4) > m_reclen) { // NOLINT(bugprone-assignment-in-if-condition)
     record_underflow_error ();
   }
 
@@ -150,7 +150,7 @@ inline short
 GDS2Reader::get_short ()
 {
   unsigned char *b = mp_rec_buf + m_recptr;
-  if ((m_recptr += 2) > m_reclen) {
+  if ((m_recptr += 2) > m_reclen) { // NOLINT(bugprone-assignment-in-if-condition)
     record_underflow_error ();
   }
 
@@ -163,7 +163,7 @@ inline unsigned short
 GDS2Reader::get_ushort ()
 {
   unsigned char *b = mp_rec_buf + m_recptr;
-  if ((m_recptr += 2) > m_reclen) {
+  if ((m_recptr += 2) > m_reclen) { // NOLINT(bugprone-assignment-in-if-condition)
     record_underflow_error ();
   }
 
@@ -176,7 +176,7 @@ inline double
 GDS2Reader::get_double ()
 {
   unsigned char *b = mp_rec_buf + m_recptr;
-  if ((m_recptr += 8) > m_reclen) {
+  if ((m_recptr += 8) > m_reclen) { // NOLINT(bugprone-assignment-in-if-condition)
     record_underflow_error ();
   }
 

@@ -831,7 +831,7 @@ Action::get_shortcut () const
 QKeySequence
 Action::get_key_sequence () const
 {
-  if (m_hidden) {
+  if (m_hidden) { // NOLINT(bugprone-branch-clone)
     //  A hidden menu item does not have a key sequence too.
     return QKeySequence ();
   } else if (m_no_key_sequence) {
@@ -846,7 +846,7 @@ Action::get_key_sequence () const
 QKeySequence
 Action::get_key_sequence_for (const std::string &sc) const
 {
-  if (m_hidden) {
+  if (m_hidden) { // NOLINT(bugprone-branch-clone)
     //  A hidden menu item does not have a key sequence too.
     return QKeySequence ();
   } else if (sc.empty ()) {
@@ -899,7 +899,7 @@ Action::get_effective_shortcut () const
 std::string
 Action::get_effective_shortcut_for (const std::string &sc) const
 {
-  if (m_hidden) {
+  if (m_hidden) { // NOLINT(bugprone-branch-clone)
     //  A hidden menu item does not have a key sequence too.
     return std::string ();
   } else if (sc.empty ()) {
@@ -1724,7 +1724,7 @@ AbstractMenu::delete_item (const std::string &p)
 
     for (path_type::const_reverse_iterator p = path.rbegin (); p != path.rend (); ++p) {
 
-      if (p->second == p->first->children.end ()) {
+      if (p->second == p->first->children.end ()) { // NOLINT(bugprone-branch-clone)
         break;
       } else if (p != path.rbegin () && (! p->second->remove_on_empty () || ! p->second->children.empty ())) {
         //  stop on non-empty parent menus

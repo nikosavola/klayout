@@ -1169,7 +1169,7 @@ finish_loop (size_t from, size_t to, std::vector<db::Edge> &edges)
       for (size_t j = from; j < to; ++j) {
         db::Point pj1 = edges [j].p1 ();
         double dd = pj1.sq_double_distance (pi2);
-        if (j != i && (d < 0.0 || dd < d) && (ip1 = p1.find (pj1)) != p1.end ()) {
+        if (j != i && (d < 0.0 || dd < d) && (ip1 = p1.find (pj1)) != p1.end ()) { // NOLINT(bugprone-assignment-in-if-condition)
           ip1min = ip1;
           p1min = pj1;
           d = dd;
@@ -1223,7 +1223,7 @@ normalize_string (const std::string &in, bool for_mtext)
       //  replace %%d by %
       s += "%";
       c += 3;
-    } else if (for_mtext && *c == '^' && c[1] == 'J') {
+    } else if (for_mtext && *c == '^' && c[1] == 'J') { // NOLINT(bugprone-branch-clone)
       //  replace 
       s += "\n";
       c += 2;
@@ -1239,7 +1239,7 @@ normalize_string (const std::string &in, bool for_mtext)
 
       int code = 0;
       for (int i = 0; i < 4; ++i) {
-        if (!*c) {
+        if (!*c) { // NOLINT(bugprone-branch-clone)
           break;
         } else if (isdigit(*c)) {
           code = (code * 16) + int(*c - '0');
@@ -1259,7 +1259,7 @@ normalize_string (const std::string &in, bool for_mtext)
     } else if (for_mtext && *c == '\\' && c[1] && tolower(c[1]) == 'p') {
       s += "\n";
       c += 2;
-    } else if (for_mtext && *c == '\\' && c[1] && (tolower(c[1]) == 'o' || tolower(c[1]) == 'l')) {
+    } else if (for_mtext && *c == '\\' && c[1] && (tolower(c[1]) == 'o' || tolower(c[1]) == 'l')) { // NOLINT(bugprone-branch-clone)
       //  ignore underline, overline, 
       c += 2;
     } else if (for_mtext && *c == '\\' && c[1] && tolower(c[1]) == '~') {
@@ -1452,7 +1452,7 @@ DXFReader::read_entities (db::Layout &layout, db::Cell &cell, const db::DVector 
 
     const std::string &entity_code = read_string (true);
 
-    if (entity_code == "ENDSEC") {
+    if (entity_code == "ENDSEC") { // NOLINT(bugprone-branch-clone)
       break;
     } else if (entity_code == "ENDBLK") {
       break;
@@ -2661,7 +2661,7 @@ DXFReader::read_entities (db::Layout &layout, db::Cell &cell, const db::DVector 
           p2.set_x (read_double ());
         } else if (g == 21) {
           p2.set_y (read_double ());
-        } else if (g == 210) {
+        } else if (g == 210) { // NOLINT(bugprone-branch-clone)
           //  not used currently: ex = read_double ();
         } else if (g == 220) {
           //  not used currently: ey = read_double ();
@@ -2958,13 +2958,13 @@ void
 DXFReader::skip_value (int g) 
 {
   //  TODO: this table is very likely to be incomplete ..
-  if (g < 10) {
+  if (g < 10) { // NOLINT(bugprone-branch-clone)
     read_string (false);
-  } else if (g < 60) {
+  } else if (g < 60) { // NOLINT(bugprone-branch-clone)
     read_double ();
-  } else if (g < 90) {
+  } else if (g < 90) { // NOLINT(bugprone-branch-clone)
     read_int16 ();
-  } else if (g < 100) {
+  } else if (g < 100) { // NOLINT(bugprone-branch-clone)
     read_int32 (); 
   } else if (g < 110) {
     read_string (false); 

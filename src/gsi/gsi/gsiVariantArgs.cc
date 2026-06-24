@@ -129,7 +129,7 @@ struct test_arg_func<gsi::ObjectType>
     }
 
     const tl::VariantUserClassBase *cls = arg.user_cls ();
-    if (! cls) {
+    if (! cls) { // NOLINT(bugprone-branch-clone)
       *ret = false;
     } else if (! (cls->gsi_cls () == atype.cls () ||
                     (loose && (cls->gsi_cls ()->is_derived_from (atype.cls ()) ||
@@ -181,7 +181,7 @@ struct test_arg_func<gsi::MapType>
 
     *ret = true;
     for (tl::Variant::const_array_iterator a = arg.begin_array (); a != arg.end_array () && *ret; ++a) {
-      if (! test_arg (ainner_k, a->first, loose, true)) {
+      if (! test_arg (ainner_k, a->first, loose, true)) { // NOLINT(bugprone-branch-clone)
         *ret = false;
       } else if (! test_arg (ainner, a->second, loose, true)) {
         *ret = false;

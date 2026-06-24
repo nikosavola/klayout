@@ -560,7 +560,7 @@ bool
 LayerTreeModel::empty_within_view_predicate (const QModelIndex &index) const
 {
   lay::LayerPropertiesConstIterator iter (iterator (index));
-  if (iter.is_null () || iter.at_end ()) {
+  if (iter.is_null () || iter.at_end ()) { // NOLINT(bugprone-branch-clone)
     return false;
   } else if (iter->is_standard_layer ()) {
 

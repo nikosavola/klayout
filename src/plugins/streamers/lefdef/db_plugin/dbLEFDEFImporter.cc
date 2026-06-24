@@ -2460,7 +2460,7 @@ LEFDEFImporter::next ()
 db::FTrans
 LEFDEFImporter::get_orient (bool optional)
 {
-  if (test ("N")) {
+  if (test ("N")) { // NOLINT(bugprone-branch-clone)
     return db::FTrans (db::FTrans::r0);
   } else if (test ("S")) {
     return db::FTrans (db::FTrans::r180);

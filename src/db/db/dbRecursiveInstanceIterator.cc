@@ -721,7 +721,7 @@ RecursiveInstanceIterator::new_inst_member (RecursiveInstanceReceiver *receiver)
 RecursiveInstanceIterator::box_type
 RecursiveInstanceIterator::correct_box_overlapping (const box_type &box) const
 {
-  if (! m_overlapping) {
+  if (! m_overlapping) { // NOLINT(bugprone-branch-clone)
     return box;
   } else if (box.empty () || box == box_type::world ()) {
     return box;

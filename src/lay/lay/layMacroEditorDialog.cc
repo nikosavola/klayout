@@ -946,7 +946,7 @@ MacroEditorDialog::showEvent (QShowEvent *)
       ex.test (";");
       input_field->addItem (tl::to_qstring (h));
     }
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
   m_history_index = -1;
   input_field->clearEditText ();
 
@@ -992,7 +992,7 @@ MacroEditorDialog::showEvent (QShowEvent *)
 
     }
 
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 
   try {
     std::string om;
@@ -1005,7 +1005,7 @@ MacroEditorDialog::showEvent (QShowEvent *)
       //  this will open an editor for the macro with path h
       editor_for_file (h); 
     }
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 
   std::string am;
   mp_plugin_root->config_get (cfg_macro_editor_active_macro, am);
@@ -1330,7 +1330,7 @@ MacroEditorDialog::execute (const QString &cmd)
     write_str (ex.msg ().c_str (), OS_stderr);
     write_str ("\n", OS_stderr);
 
-  } catch (tl::CancelException & /*ex*/) {
+  } catch (tl::CancelException & /*ex*/) { // NOLINT(bugprone-empty-catch)
 
     //  ignore CancelException
     
@@ -2634,7 +2634,7 @@ get_custom_paths (lay::Dispatcher *root)
 
     }
 
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 
   return paths;
 }
@@ -2823,7 +2823,7 @@ MacroEditorDialog::do_refresh_file_watcher ()
       sync_file_watcher (mp_root);
       m_file_watcher->enable (true);
     }
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
   }
 }
 
@@ -3095,7 +3095,7 @@ MacroEditorDialog::start_exec (gsi::Interpreter *ec)
   if (m_in_exec) {
     tl_assert (ec != mp_exec_controller);
     return;
-  } else if (m_ignore_exec_events) {
+  } else if (m_ignore_exec_events) { // NOLINT(bugprone-branch-clone)
     return;
   } else if (lay::BusySection::is_busy () || m_in_breakpoint) {
     return;
@@ -3128,7 +3128,7 @@ MacroEditorDialog::start_exec (gsi::Interpreter *ec)
 
     do_update_ui_to_run_mode ();
 
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  .. ignore exceptions here ..
   }
 
@@ -3163,7 +3163,7 @@ MacroEditorDialog::end_exec (gsi::Interpreter *ec)
 
     do_update_ui_to_run_mode ();
 
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  .. ignore exceptions here ..
   }
 

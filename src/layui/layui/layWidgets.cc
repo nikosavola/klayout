@@ -244,7 +244,7 @@ DitherPatternSelectionButton::update_menu ()
       }
     }
 
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 }
 
 // -------------------------------------------------------------
@@ -431,7 +431,7 @@ LineStyleSelectionButton::update_menu ()
       }
     }
 
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 }
 
 // -------------------------------------------------------------
@@ -1281,7 +1281,7 @@ ColorButton::build_color_menu (QMenu *menu, QObject *receiver, const char *brows
 
     }
 
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 }
 
 void 
@@ -1507,7 +1507,7 @@ bool DecoratedLineEdit::event (QEvent *event)
   //  Handling this event makes the widget receive all keystrokes
   if (event->type () == QEvent::ShortcutOverride) {
     QKeyEvent *ke = static_cast<QKeyEvent *> (event);
-    if (ke->key () == Qt::Key_Escape && m_escape_signal_enabled) {
+    if (ke->key () == Qt::Key_Escape && m_escape_signal_enabled) { // NOLINT(bugprone-branch-clone)
       ke->accept ();
     } else if ((ke->key () == Qt::Key_Tab || ke->key () == Qt::Key_Backtab) && m_tab_signal_enabled) {
       ke->accept ();

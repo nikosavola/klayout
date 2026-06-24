@@ -75,7 +75,7 @@ GDS2ReaderBase::finish_element ()
 
     if (rec_id == sENDEL) {
       break;
-    } else if (rec_id == sPROPATTR) {
+    } else if (rec_id == sPROPATTR) { // NOLINT(bugprone-branch-clone)
       //  skip this record
     } else if (rec_id == sPROPVALUE) {
       //  skip this record
@@ -624,7 +624,7 @@ GDS2ReaderBase::read_boundary (db::Layout &layout, db::Cell &cell, bool from_box
             m_all_points.push_back (pt_conv (*xy));
           }
 
-          if ((rec_id = get_record ()) == sXY) {
+          if ((rec_id = get_record ()) == sXY) { // NOLINT(bugprone-assignment-in-if-condition)
             xy_data = get_xy_data (xy_length);
             if (! m_allow_multi_xy_records) {
               error (tl::to_string (tr ("Multiple XY records detected on BOUNDARY element (reader is configured not to allow this)")));
@@ -767,7 +767,7 @@ GDS2ReaderBase::read_path (db::Layout &layout, db::Cell &cell)
           m_all_points.push_back (pt_conv (*xy));
         }
 
-        if ((rec_id = get_record ()) == sXY) {
+        if ((rec_id = get_record ()) == sXY) { // NOLINT(bugprone-assignment-in-if-condition)
           xy_data = get_xy_data (xy_length);
           if (! m_allow_multi_xy_records) {
             error (tl::to_string (tr ("Multiple XY records detected on PATH element (reader is configured not to allow this)")));

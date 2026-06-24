@@ -195,7 +195,7 @@ get_cell_or_pcell_ids_by_name (const db::Layout *layout, const std::string &name
   ci = layout->cell_by_name (name.c_str ());
   pci = layout->pcell_by_name (name.c_str ());
 
-  if (pci.first) {
+  if (pci.first) { // NOLINT(bugprone-branch-clone)
     //  prefer PCell names
     ci.first = false;
   } else if (ci.first && layout->cell (ci.second).is_proxy ()) {

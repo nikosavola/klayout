@@ -847,9 +847,9 @@ Service::do_move (const db::DPoint &p, lay::angle_constraint_type ac)
 
       }
 
-      if (m_move_mode == move_l) {
+      if (m_move_mode == move_l) { // NOLINT(bugprone-branch-clone)
         v = db::DVector (-vv.x (), 0.0);
-      } else if (m_move_mode == move_b) {
+      } else if (m_move_mode == move_b) { // NOLINT(bugprone-branch-clone)
         v = db::DVector (0.0, -vv.y ());
       } else if (m_move_mode == move_ll) {
         v = db::DVector (-vv.x (), -vv.y ());

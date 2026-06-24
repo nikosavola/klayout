@@ -353,7 +353,7 @@ GerberImportDialog::reset_clicked ()
   //  Commit everything that is not loaded
   try {
     commit_page ();
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     // ..
   }
 
@@ -385,7 +385,7 @@ GerberImportDialog::open_clicked ()
   //  Commit everything that is not loaded
   try {
     commit_page ();
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     // ..
   }
 
@@ -434,7 +434,7 @@ GerberImportDialog::reject ()
 {
   try {
     commit_page ();
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     // .. nothing yet ..
   }
 
@@ -502,7 +502,7 @@ GerberImportDialog::last_page ()
   // "safe" commit
   try {
     commit_page ();
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 
   BEGIN_PROTECTED 
 
@@ -659,7 +659,7 @@ GerberImportDialog::add_free_file ()
   // "safe" commit
   try {
     commit_page ();
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 
   QTreeWidget *tree = mp_ui->free_files_tree;
 
@@ -701,7 +701,7 @@ GerberImportDialog::delete_free_file ()
   // "safe" commit
   try {
     commit_page ();
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 
   std::vector <db::GerberFreeFileDescriptor>::iterator lw = mp_data->free_files.begin ();
   for (std::vector <db::GerberFreeFileDescriptor>::iterator l = mp_data->free_files.begin (); l != mp_data->free_files.end (); ++l) {
@@ -735,7 +735,7 @@ GerberImportDialog::move_free_file_up ()
   // "safe" commit
   try {
     commit_page ();
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 
   for (std::vector <db::GerberFreeFileDescriptor>::iterator l = mp_data->free_files.begin (); l != mp_data->free_files.end (); ++l) {
     int n = int (std::distance (mp_data->free_files.begin (), l));
@@ -782,7 +782,7 @@ GerberImportDialog::move_free_file_down ()
   // "safe" commit
   try {
     commit_page ();
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 
   for (std::vector <db::GerberFreeFileDescriptor>::iterator l = mp_data->free_files.end (); l != mp_data->free_files.begin (); ) {
     --l;

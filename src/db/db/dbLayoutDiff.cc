@@ -1408,7 +1408,7 @@ PrintingDifferenceReceiver::dbu_differs (double dbu_a, double dbu_b)
 {
   try {
     enough (tl::error) << "Database units differ " << dbu_a << " vs. " << dbu_b;
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1418,7 +1418,7 @@ PrintingDifferenceReceiver::layout_meta_info_differs (const std::string &name, c
 {
   try {
     enough (tl::error) << "Global meta info differs - [" << name << "]: " << a << " vs. " << b;
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1428,7 +1428,7 @@ PrintingDifferenceReceiver::layer_in_a_only (const db::LayerProperties &la)
 {
   try {
     enough (tl::error) << "Layer " << la.to_string () << " is not present in layout b, but in a";
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1438,7 +1438,7 @@ PrintingDifferenceReceiver::layer_in_b_only (const db::LayerProperties &lb)
 {
   try {
     enough (tl::error) << "Layer " << lb.to_string () << " is not present in layout a, but in b";
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1449,7 +1449,7 @@ PrintingDifferenceReceiver::layer_name_differs (const db::LayerProperties &la, c
   try {
     enough (tl::error) << "Layer names differ between layout a and b for layer " << la.layer << "/" << la.datatype << ": "
                        << la.name << " vs. " << lb.name;
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1459,7 +1459,7 @@ PrintingDifferenceReceiver::cell_in_a_only (const std::string &cellname, db::cel
 {
   try {
     enough (tl::error) << "Cell " << cellname << " is not present in layout b, but in a";
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1469,7 +1469,7 @@ PrintingDifferenceReceiver::cell_in_b_only (const std::string &cellname, db::cel
 {
   try {
     enough (tl::error) << "Cell " << cellname << " is not present in layout a, but in b";
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1479,7 +1479,7 @@ PrintingDifferenceReceiver::cell_name_differs (const std::string &cellname_a, db
 {
   try {
     enough (tl::error) << "Cell " << cellname_a << " in a is renamed to " << cellname_b << " in b";
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1489,7 +1489,7 @@ PrintingDifferenceReceiver::bbox_differs (const db::Box &ba, const db::Box &bb)
 {
   try {
     enough (tl::error) << "Bounding boxes differ for cell " << m_cellname << ", " << ba.to_string () << " vs. " << bb.to_string ();
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1505,7 +1505,7 @@ PrintingDifferenceReceiver::cell_meta_info_differs (const std::string &name, con
 {
   try {
     enough (tl::error) << "Meta info differs in cell " << m_cellname << " - [" << name << "]: " << a << " vs. " << b;
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1515,7 +1515,7 @@ PrintingDifferenceReceiver::begin_inst_differences ()
 {
   try {
     enough (tl::error) << "Instances differ in cell " << m_cellname;
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1538,7 +1538,7 @@ PrintingDifferenceReceiver::instances_in_a_only (const std::vector <db::CellInst
     for (std::vector <db::CellInstArrayWithProperties>::const_iterator s = anotb.begin (); s != anotb.end (); ++s) {
       print_cell_inst (*s, a);
     }
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1551,7 +1551,7 @@ PrintingDifferenceReceiver::instances_in_b_only (const std::vector <db::CellInst
     for (std::vector <db::CellInstArrayWithProperties>::const_iterator s = bnota.begin (); s != bnota.end (); ++s) {
       print_cell_inst (*s, b);
     }
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1573,7 +1573,7 @@ PrintingDifferenceReceiver::per_layer_bbox_differs (const db::Box &ba, const db:
   try {
     enough (tl::error) << "Per-layer bounding boxes differ for cell " << m_cellname << ", layer (" << m_layer.to_string () << "), "
                        << ba.to_string () << " vs. " << bb.to_string ();
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1583,7 +1583,7 @@ PrintingDifferenceReceiver::begin_polygon_differences ()
 {
   try {
     enough (tl::error) << "Polygons differ for layer " << m_layer.to_string () << " in cell " << m_cellname;
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1596,7 +1596,7 @@ PrintingDifferenceReceiver::detailed_diff (const std::vector <std::pair <db::Pol
     print_diffs (a, b);
     enough (tl::info) << "Not in a but in b:";
     print_diffs (b, a);
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1611,7 +1611,7 @@ PrintingDifferenceReceiver::begin_path_differences ()
 {
   try {
     enough (tl::error) << "Paths differ for layer " << m_layer.to_string () << " in cell " << m_cellname;
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1624,7 +1624,7 @@ PrintingDifferenceReceiver::detailed_diff (const std::vector <std::pair <db::Pat
     print_diffs (a, b);
     enough (tl::info) << "Not in a but in b:";
     print_diffs (b, a);
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1639,7 +1639,7 @@ PrintingDifferenceReceiver::begin_box_differences ()
 {
   try {
     enough (tl::error) << "Boxes differ for layer " << m_layer.to_string () << " in cell " << m_cellname;
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1652,7 +1652,7 @@ PrintingDifferenceReceiver::detailed_diff (const std::vector <std::pair <db::Box
     print_diffs (a, b);
     enough (tl::info) << "Not in a but in b:";
     print_diffs (b, a);
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1667,7 +1667,7 @@ PrintingDifferenceReceiver::begin_edge_differences ()
 {
   try {
     enough (tl::error) << "Edges differ for layer " << m_layer.to_string () << " in cell " << m_cellname;
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1680,7 +1680,7 @@ PrintingDifferenceReceiver::detailed_diff (const std::vector <std::pair <db::Edg
     print_diffs (a, b);
     enough (tl::info) << "Not in a but in b:";
     print_diffs (b, a);
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1695,7 +1695,7 @@ PrintingDifferenceReceiver::begin_edge_pair_differences ()
 {
   try {
     enough (tl::error) << "Edge pairs differ for layer " << m_layer.to_string () << " in cell " << m_cellname;
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1708,7 +1708,7 @@ PrintingDifferenceReceiver::detailed_diff (const std::vector <std::pair <db::Edg
     print_diffs (a, b);
     enough (tl::info) << "Not in a but in b:";
     print_diffs (b, a);
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1723,7 +1723,7 @@ PrintingDifferenceReceiver::begin_text_differences ()
 {
   try {
     enough (tl::error) << "Texts differ for layer " << m_layer.to_string () << " in cell " << m_cellname;
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }
@@ -1736,7 +1736,7 @@ PrintingDifferenceReceiver::detailed_diff (const std::vector <std::pair <db::Tex
     print_diffs (a, b);
     enough (tl::info) << "Not in a but in b:";
     print_diffs (b, a);
-  } catch (tl::CancelException &) {
+  } catch (tl::CancelException &) { // NOLINT(bugprone-empty-catch)
     //  ignore cancel exceptions
   }
 }

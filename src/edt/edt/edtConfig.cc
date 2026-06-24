@@ -91,7 +91,7 @@ void
 CMConverter::from_string (const std::string &s, edt::combine_mode_type &m)
 {
   std::string t (tl::trim (s));
-  if (t == "add") {
+  if (t == "add") { // NOLINT(bugprone-branch-clone)
     m = edt::CM_Add;
   } else if (t == "merge") {
     m = edt::CM_Merge;
@@ -129,7 +129,7 @@ void
 PathExtConverter::from_string (const std::string &tt, edt::path_ext_type &m)
 {
   std::string t (tl::trim (tt));
-  if (t == "flush") {
+  if (t == "flush") { // NOLINT(bugprone-branch-clone)
     m = edt::Flush;
   } else if (t == "square") {
     m = edt::Square;

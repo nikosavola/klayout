@@ -188,7 +188,7 @@ SaltGrains::from_path (const std::string &path, const std::string &prefix)
           SaltGrain g (SaltGrain::from_path (epath));
           g.set_name (new_prefix);
           grains.add_grain (g);
-        } catch (...) {
+        } catch (...) { // NOLINT(bugprone-empty-catch)
           //  ignore errors (TODO: what to do here?)
         }
       } else if (QFileInfo (tl::to_qstring (epath)).isDir ()) {
@@ -222,7 +222,7 @@ SaltGrains::from_path (const std::string &path, const std::string &prefix)
             SaltGrain g (SaltGrain::from_path (epath));
             g.set_name (new_prefix);
             grains.add_grain (g);
-          } catch (...) {
+          } catch (...) { // NOLINT(bugprone-empty-catch)
             //  ignore errors (TODO: what to do here?)
           }
         } else if (OpenResource (tl::to_qstring (epath)).isDir ()) {

@@ -2599,7 +2599,7 @@ NetBuilder::build_net_rec (const db::Net &net, db::cell_index_type circuit_cell,
 db::properties_id_type
 NetBuilder::make_netname_propid (NetPropertyMode net_prop_mode, const tl::Variant &netname_prop, const db::Net &net, const std::string &net_name_prefix)
 {
-  if (net_prop_mode == NPM_NoProperties) {
+  if (net_prop_mode == NPM_NoProperties) { // NOLINT(bugprone-branch-clone)
 
     return 0;
 

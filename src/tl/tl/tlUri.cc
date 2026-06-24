@@ -117,7 +117,7 @@ URI::URI (const std::string &uri)
   }
 
   ex0 = ex;
-  if (ex.test ("//") || (ex.test ("/") ? prefer_authority : prefer_authority)) {
+  if (ex.test ("//") || (ex.test ("/") ? prefer_authority : prefer_authority)) { // NOLINT(bugprone-branch-clone)
     //  definitely an authority
     while (! ex.at_end () && *ex != '/') {
       m_authority += *ex;

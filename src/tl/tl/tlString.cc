@@ -994,9 +994,9 @@ void
 from_string (const std::string &s, bool &b)
 {
   std::string t (tl::trim (s));
-  if (t == "true") {
+  if (t == "true") { // NOLINT(bugprone-branch-clone)
     b = true;
-  } else if (t == "false") {
+  } else if (t == "false") { // NOLINT(bugprone-branch-clone)
     b = false;
   } else if (t == "1") {
     b = true;

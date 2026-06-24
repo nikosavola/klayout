@@ -611,7 +611,7 @@ Worker::run ()
     try {
       std::unique_ptr<Task> task (mp_job->get_task (m_worker_index));
       perform_task (task.get ());
-    } catch (TaskTerminatedException) {
+    } catch (TaskTerminatedException) { // NOLINT(bugprone-empty-catch)
       //  .. try again
     } catch (WorkerTerminatedException) {
       //  Stop the thread.

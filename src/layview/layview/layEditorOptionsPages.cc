@@ -236,7 +236,7 @@ EditorOptionsPages::activate_page (lay::EditorOptionsPage *page)
     if (page->active ()) {
       page->setup (mp_view);
     }
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  catch any errors related to configuration file errors etc.
   }
 

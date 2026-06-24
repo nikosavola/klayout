@@ -239,7 +239,7 @@ static bool find_and_normalize_file (const tl::URI &uri, std::string &path)
           path = us;
           return true;
         }
-      } catch (...) {
+      } catch (...) { // NOLINT(bugprone-empty-catch)
         //  .. nothing yet ..
       }
 
@@ -444,7 +444,7 @@ MAGReader::do_read_part (db::Layout &layout, db::cell_index_type cell_index, tl:
       std::string lname;
       ex.read_word_or_quoted (lname);
 
-      if (lname == "end") {
+      if (lname == "end") { // NOLINT(bugprone-branch-clone)
         in_labels = false;
         valid_layer = false;
       } else if (lname == "labels") {

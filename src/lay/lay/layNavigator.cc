@@ -323,11 +323,11 @@ public:
     
     if (m_drag_mode == DM_move) {
       set_cursor (Cursor::size_all);
-    } else if (m_drag_mode == DM_l) {
+    } else if (m_drag_mode == DM_l) { // NOLINT(bugprone-branch-clone)
       set_cursor (Cursor::size_hor);
     } else if (m_drag_mode == DM_r) {
       set_cursor (Cursor::size_hor);
-    } else if (m_drag_mode == DM_t) {
+    } else if (m_drag_mode == DM_t) { // NOLINT(bugprone-branch-clone)
       set_cursor (Cursor::size_ver);
     } else if (m_drag_mode == DM_b) {
       set_cursor (Cursor::size_ver);

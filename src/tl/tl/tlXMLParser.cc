@@ -965,7 +965,7 @@ XMLElementBase::write_string (tl::OutputStream &os, const std::string &s)
       os << "&gt;";
     } else if (c == '\r') {
       //  ignore CR characters (#13)
-    } else if (c == '\t' || c == '\n') {
+    } else if (c == '\t' || c == '\n') { // NOLINT(bugprone-branch-clone)
       os << c;
     } else if (c < ' ') {
       os << "&#" << int (c) << ";";

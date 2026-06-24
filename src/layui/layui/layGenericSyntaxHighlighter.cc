@@ -392,7 +392,7 @@ public:
   virtual bool match (const QString &input, unsigned int /*generation_id*/, int index, int &end_index, const QList<QString> & /*input_args*/, QList<QString> & /*output_args*/) const
   {
     for (end_index = index; end_index != input.length (); ++end_index) {
-      if (end_index == index && ! input [end_index].isLetter ()) {
+      if (end_index == index && ! input [end_index].isLetter ()) { // NOLINT(bugprone-branch-clone)
         break;
       } else if (! input [end_index].isLetterOrNumber ()) {
         break;
@@ -1298,9 +1298,9 @@ static bool
 string_to_bool (const QString &n)
 {
   QString nt = n.trimmed ().toLower ();
-  if (nt == QString::fromUtf8 ("true")) {
+  if (nt == QString::fromUtf8 ("true")) { // NOLINT(bugprone-branch-clone)
     return true;
-  } else if (nt == QString::fromUtf8 ("false")) {
+  } else if (nt == QString::fromUtf8 ("false")) { // NOLINT(bugprone-branch-clone)
     return false;
   } else if (nt == QString::fromUtf8 ("1")) {
     return true;
@@ -1535,7 +1535,7 @@ parse_item_data (QDomElement e, GenericSyntaxHighlighterAttributes &attributes, 
     else if (s == QString::fromUtf8 ("dsPreprocessor")) { ds = dsPreprocessor; }
     else if (s == QString::fromUtf8 ("dsImport")) { ds = dsImport; }
     else if (s == QString::fromUtf8 ("dsVerbatimString")) { ds = dsVerbatimString; }
-    else if (s == QString::fromUtf8 ("dsSpecialString")) { ds = dsSpecialString; }
+    else if (s == QString::fromUtf8 ("dsSpecialString")) { ds = dsSpecialString; } // NOLINT(bugprone-branch-clone)
     else if (s == QString::fromUtf8 ("dsSpecialString")) { ds = dsSpecialString; }
     else if (s == QString::fromUtf8 ("dsSpecialChar")) { ds = dsSpecialChar; }
     else if (s == QString::fromUtf8 ("dsAttribute")) { ds = dsAttribute; }

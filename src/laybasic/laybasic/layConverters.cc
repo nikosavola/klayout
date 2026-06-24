@@ -106,7 +106,7 @@ void
 ACConverter::from_string (const std::string &tt, lay::angle_constraint_type &m)
 {
   std::string t (tl::trim (tt));
-  if (t == "any") {
+  if (t == "any") { // NOLINT(bugprone-branch-clone)
     m = lay::AC_Any;
   } else if (t == "diagonal") {
     m = lay::AC_Diagonal;

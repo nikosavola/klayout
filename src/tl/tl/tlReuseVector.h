@@ -992,7 +992,7 @@ private:
   {
     if (n > capacity ()) {
 
-      value_type *new_start = (value_type *) (new char [sizeof (value_type) * n]);
+      value_type *new_start = (value_type *) (new char [sizeof (value_type) * n]); // NOLINT(bugprone-sizeof-expression)
 
       size_type l = last ();
       for (size_type i = first (); i < l; ++i) {
@@ -1023,7 +1023,7 @@ private:
   {
     if (n > capacity ()) {
 
-      value_type *new_start = (value_type *) (new char [sizeof (value_type) * n]);
+      value_type *new_start = (value_type *) (new char [sizeof (value_type) * n]); // NOLINT(bugprone-sizeof-expression)
 
       size_type e = 0;
 
@@ -1033,7 +1033,7 @@ private:
 
         size_type l = last ();
         size_type i = first ();
-        memcpy ((void *)(new_start + i), (void *)(mp_start + i), (l - i) * sizeof (Value));
+        memcpy ((void *)(new_start + i), (void *)(mp_start + i), (l - i) * sizeof (Value)); // NOLINT(bugprone-sizeof-expression)
 
         delete [] ((char *) mp_start);
 

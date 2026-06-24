@@ -707,7 +707,7 @@ PCellParametersPage::setup (lay::LayoutViewBase *view, int cv_index, const db::P
     tl::error << ex.msg ();
   } catch (std::runtime_error &ex) {
     tl::error << ex.what ();
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  ignore other errors
   }
 
@@ -801,7 +801,7 @@ PCellParametersPage::parameter_changed ()
     tl::error << ex.msg ();
   } catch (std::runtime_error &ex) {
     tl::error << ex.what ();
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  ignore other errors
   }
 
@@ -946,7 +946,7 @@ PCellParametersPage::get_parameters_internal (db::ParameterStates &states, bool 
                 ex.read (v);
                 ps.set_value (v);
                 break;
-              } catch (...) {
+              } catch (...) { // NOLINT(bugprone-empty-catch)
                 //  ignore errors
               }
             } else if (ex.at_end ()) {
@@ -1084,7 +1084,7 @@ PCellParametersPage::set_parameters (const std::vector<tl::Variant> &parameters)
     tl::error << ex.msg ();
   } catch (std::runtime_error &ex) {
     tl::error << ex.what ();
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  ignore other errors
   }
 

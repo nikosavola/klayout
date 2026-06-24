@@ -830,7 +830,7 @@ InstService::update_marker ()
 
       }
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
       //  ignore exceptions
     }
 

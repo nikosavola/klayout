@@ -402,7 +402,7 @@ void signal_handler (int signo, siginfo_t *si, void *)
 
     text += "\nCrash log written to " + crash_log;
 
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  .. ignore errors
   }
 

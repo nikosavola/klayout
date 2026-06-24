@@ -162,7 +162,7 @@ MALYReader::import_data (db::Layout &layout, const MALYData &data)
         options.set_option_by_name ("mebes_produce_boundary", false);
         options.set_option_by_name ("mebes_data_layer", s->layer);
         options.set_option_by_name ("mebes_data_datatype", int (0));
-      } catch (...) {
+      } catch (...) { // NOLINT(bugprone-empty-catch)
         //  ignore if there is no MEBES support
       }
 
@@ -668,7 +668,7 @@ MALYReader::read_strgroup (MALYReaderStrGroupData &data)
         }
       }
 
-    } else if ((is_sref = ex.test ("SREF")) || ex.test ("AREF")) {
+    } else if ((is_sref = ex.test ("SREF")) || ex.test ("AREF")) { // NOLINT(bugprone-assignment-in-if-condition)
 
       data.refs.push_back (MALYReaderStrRefData ());
       MALYReaderStrRefData &ref = data.refs.back ();

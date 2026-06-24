@@ -153,7 +153,7 @@ NetlistLogModel::rowCount (const QModelIndex &parent) const
 {
   if (! parent.isValid ()) {
     return int (m_circuits.size ()) + m_global_entries;
-  } else if (parent.parent ().isValid ()) {
+  } else if (parent.parent ().isValid ()) { // NOLINT(bugprone-branch-clone)
     return 0;
   } else if (parent.row () >= m_global_entries && parent.row () < int (m_circuits.size ()) + m_global_entries) {
     return int (m_circuits [parent.row () - m_global_entries].second->size ());

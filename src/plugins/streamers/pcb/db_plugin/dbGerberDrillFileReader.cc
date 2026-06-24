@@ -45,12 +45,12 @@ GerberDrillFileReader::does_accept ()
 {
   for (int i = 0; i < 100; ++i) {
     tl::Extractor ex (get_block ().c_str ());
-    if (ex.test ("M71")) {
+    if (ex.test ("M71")) { // NOLINT(bugprone-branch-clone)
       return true;
     } else if (ex.test ("M48")) {
       return true;
     } else if (ex.test (";")) {
-      if (ex.test ("Holesize")) {
+      if (ex.test ("Holesize")) { // NOLINT(bugprone-branch-clone)
         return true;
       } else if (ex.test ("T")) {
         return true;
@@ -123,7 +123,7 @@ GerberDrillFileReader::process_line (const std::string &s)
   char c = *ex.skip ();
   double xi = m_x, yi = m_y;
 
-  if (ex.at_end ()) {
+  if (ex.at_end ()) { // NOLINT(bugprone-branch-clone)
 
     //  ignore empty line
  

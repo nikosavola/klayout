@@ -359,7 +359,7 @@ Triangulation::find_closest_edge (const db::DPoint &p, Vertex *vstart, bool insi
 
       double ds = (*e)->distance (p);
 
-      if (d < 0.0) {
+      if (d < 0.0) { // NOLINT(bugprone-branch-clone)
 
         d = ds;
         edge = *e;
@@ -1106,7 +1106,7 @@ Triangulation::find_vertexes_along_line (const db::DPoint &p1, const db::DPoint 
     for (auto e = v->begin_edges (); e != v->end_edges (); ++e) {
       Vertex *vv = (*e)->other (v);
       int cs = 0;
-      if (db::vprod_sign (e12.d (), *vv - *v) == 0 && db::sprod_sign (e12.d (), *vv - *v) > 0 && (cs = db::sprod_sign (e12.d (), *vv - e12.p2 ())) <= 0) {
+      if (db::vprod_sign (e12.d (), *vv - *v) == 0 && db::sprod_sign (e12.d (), *vv - *v) > 0 && (cs = db::sprod_sign (e12.d (), *vv - e12.p2 ())) <= 0) { // NOLINT(bugprone-assignment-in-if-condition)
         result.push_back (vv);
         if (cs < 0) {
           //  continue searching

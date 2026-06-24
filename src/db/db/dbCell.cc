@@ -355,7 +355,7 @@ Cell::update_bbox (unsigned int layers)
     const cell_inst_array_type *o1_inst = *o;
 
     instances_type::sorted_inst_iterator oo = o;
-    while (++oo != m_instances.end_sorted_insts () && (*oo)->raw_equal (*o1_inst)) 
+    while (++oo != m_instances.end_sorted_insts () && (*oo)->raw_equal (*o1_inst))  // NOLINT(bugprone-inc-dec-in-conditions)
       ;
 
     box_type raw_box;

@@ -64,7 +64,7 @@ class GDS2TextFormatDeclaration
 
       }
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
     return false;

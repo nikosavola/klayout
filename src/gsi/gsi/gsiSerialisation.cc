@@ -44,7 +44,7 @@ public:
       mp_src->copy_to (mp_target, *mp_heap);
     } catch (tl::Exception &ex) {
       tl::error << ex.msg ();
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
     delete mp_src;

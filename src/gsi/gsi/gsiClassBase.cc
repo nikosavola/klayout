@@ -148,7 +148,7 @@ ClassBase::add_child_class (const ClassBase *cls)
 bool 
 ClassBase::is_derived_from (const ClassBase *base) const
 {
-  if (! base) {
+  if (! base) { // NOLINT(bugprone-branch-clone)
     return false;
   } else if (base == this) {
     return true;
@@ -182,7 +182,7 @@ is_constructor_of (const ClassBase *target, const MethodBase *m, const ClassBase
   }
 
   //  And finally the argument must be of const ref or direct type
-  if (a0.is_cref ()) {
+  if (a0.is_cref ()) { // NOLINT(bugprone-branch-clone)
     return true;
   } else if (! a0.is_ptr () && ! a0.is_cptr () && ! a0.is_ref ()) {
     return true;

@@ -1108,7 +1108,7 @@ static const tl::Variant &cell_meta_info_value (db::Cell *cell, const std::strin
 
 static MetaInfo *cell_meta_info (db::Cell *cell, const std::string &name)
 {
-  if (! cell->layout ()) {
+  if (! cell->layout ()) { // NOLINT(bugprone-branch-clone)
     return nullptr;
   } else if (cell->layout ()->has_meta_info (cell->cell_index (), name)) {
     const db::MetaInfo &value = cell->layout ()->meta_info (cell->cell_index (), name);

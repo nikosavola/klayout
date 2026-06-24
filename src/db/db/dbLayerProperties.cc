@@ -131,7 +131,7 @@ LayerProperties::operator< (const LayerProperties &b) const
 
 static std::string format_ld (db::ld_type ld)
 {
-  if (db::is_static_ld (ld)) {
+  if (db::is_static_ld (ld)) { // NOLINT(bugprone-branch-clone)
     return tl::to_string (ld);
   } else if (db::is_any_ld (ld)) {
     return "*";

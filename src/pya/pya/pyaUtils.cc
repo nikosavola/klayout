@@ -108,7 +108,7 @@ void check_error ()
 
         }
 
-      } catch (...) {
+      } catch (...) { // NOLINT(bugprone-empty-catch)
         //  ignore exceptions here
       }
 

@@ -172,7 +172,7 @@ public:
       m_mode = mode;
       drag_cancel ();
 
-      if (m_mode == LandmarksDialog::Move) {
+      if (m_mode == LandmarksDialog::Move) { // NOLINT(bugprone-branch-clone)
         
         // ..
 

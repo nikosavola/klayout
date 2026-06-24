@@ -68,7 +68,7 @@ Executable::do_cleanup ()
     tl::error << ex.msg ();
   } catch (std::runtime_error &ex) {
     tl::error << ex.what ();
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     //  ignore exceptions here
   }
 }

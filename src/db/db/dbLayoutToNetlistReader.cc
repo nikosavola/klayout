@@ -35,7 +35,7 @@ namespace l2n_std_reader {
 
   Brace::operator bool ()
   {
-    if (! m_has_brace) {
+    if (! m_has_brace) { // NOLINT(bugprone-branch-clone)
       m_checked = true;
       return false;
     } else if (mp_reader->test (")")) {
@@ -155,7 +155,7 @@ void LayoutToNetlistStandardReader::skip_element ()
     }
     br.done ();
 
-  } else if (m_ex.test ("*")) {
+  } else if (m_ex.test ("*")) { // NOLINT(bugprone-branch-clone)
 
     //  asterisk is allowed as element (e.g. inside point)
 
@@ -275,7 +275,7 @@ void LayoutToNetlistStandardReader::read_message_entry (db::LogEntryData &data)
 
   Brace br (this);
   while (br) {
-    if (read_severity (severity)) {
+    if (read_severity (severity)) { // NOLINT(bugprone-branch-clone)
       //  continue
     } else if (read_message (msg)) {
       //  continue

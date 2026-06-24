@@ -137,7 +137,7 @@ MainConfigPage::commit (lay::Dispatcher *root)
     double g;
     tl::from_string (tl::to_string (mp_ui->grid_edit->text ()), g);
     root->config_set (cfg_grid, g);
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 }
 
 // -------------------------------------------------------------
@@ -172,7 +172,7 @@ MainConfigPage6::commit (lay::Dispatcher *root)
     tl::from_string (tl::to_string (mp_ui->circle_points->text ()), cp);
     cp = std::max (4, std::min (10000000, cp));
     root->config_set (cfg_circle_points, cp);
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 }
 
 // -------------------------------------------------------------
@@ -219,7 +219,7 @@ MainConfigPage7::commit (lay::Dispatcher *root)
     root->config_set (cfg_auto_sync_libraries, mp_ui->auto_sync_libraries->isChecked ());
     root->config_set (cfg_keep_backups, mp_ui->keep_backups->value ());
     root->config_set (cfg_always_exit_without_saving, mp_ui->always_exit_without_saving->isChecked ());
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 }
 
 // ------------------------------------------------------------

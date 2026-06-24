@@ -236,7 +236,7 @@ StreamImportDialog::reject ()
 {
   try {
     commit_page ();
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     // .. nothing yet ..
   }
 
@@ -296,7 +296,7 @@ StreamImportDialog::last_page ()
   // "safe" commit
   try {
     commit_page ();
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 
   BEGIN_PROTECTED 
 
@@ -485,7 +485,7 @@ StreamImportDialog::reset ()
   //  Commit everything that is not loaded
   try {
     commit_page ();
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
     // ..
   }
 

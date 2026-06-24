@@ -801,7 +801,7 @@ EditorOptionsInstPCellParam::setup (lay::Dispatcher *root)
             ex.read (parameters.insert (std::make_pair (n, tl::Variant ())).first->second);
             ex.test (";");
           }
-        } catch (...) { }
+        } catch (...) { } // NOLINT(bugprone-empty-catch)
 
         const std::vector<db::PCellParameterDeclaration> &pcp = pc_decl->parameter_declarations ();
         for (std::vector<db::PCellParameterDeclaration>::const_iterator pd = pcp.begin (); pd != pcp.end (); ++pd) {
@@ -830,7 +830,7 @@ EditorOptionsInstPCellParam::setup (lay::Dispatcher *root)
     if (needs_update) {
       update_pcell_parameters (pv);
     }
-  } catch (...) { }
+  } catch (...) { } // NOLINT(bugprone-empty-catch)
 }
 
 void
@@ -952,7 +952,7 @@ BoxToolboxWidget::commit (lay::Dispatcher *dispatcher)
 
     dispatcher->call_function (BoxService::function_name (), db::DVector (dx, dy).to_string ());
 
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
   }
 }
 
@@ -969,7 +969,7 @@ BoxToolboxWidget::configure (const std::string &name, const std::string &value)
       mp_x_le->setText (tl::to_qstring (tl::micron_to_string (mv.x ())));
       mp_y_le->setText (tl::to_qstring (tl::micron_to_string (mv.y ())));
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
   }
@@ -1030,7 +1030,7 @@ ConnectionToolboxWidget::commit (lay::Dispatcher *dispatcher)
 
     dispatcher->call_function (ShapeEditService::connection_function_name (), db::DVector (dx, dy).to_string ());
 
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
   }
 
   m_in_commit = false;
@@ -1050,7 +1050,7 @@ ConnectionToolboxWidget::configure (const std::string &name, const std::string &
       mp_x_le->setText (tl::to_qstring (tl::micron_to_string (mv.x ())));
       mp_y_le->setText (tl::to_qstring (tl::micron_to_string (mv.y ())));
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
   }
@@ -1127,7 +1127,7 @@ PathConnectionToolboxWidget::commit (lay::Dispatcher *dispatcher)
 
     }
 
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
   }
 
   m_in_commit = false;
@@ -1147,7 +1147,7 @@ PathConnectionToolboxWidget::configure (const std::string &name, const std::stri
       mp_x_le->setText (tl::to_qstring (tl::micron_to_string (mv.x ())));
       mp_y_le->setText (tl::to_qstring (tl::micron_to_string (mv.y ())));
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
   } else if (name == cfg_edit_path_width &&
@@ -1160,7 +1160,7 @@ PathConnectionToolboxWidget::configure (const std::string &name, const std::stri
 
       mp_width->setText (tl::to_qstring (tl::micron_to_string (w)));
 
-    } catch (...) {
+    } catch (...) { // NOLINT(bugprone-empty-catch)
     }
 
   }
@@ -1210,7 +1210,7 @@ TextToolboxWidget::commit (lay::Dispatcher *dispatcher)
 
   try {
     dispatcher->config_set (cfg_edit_text_string, tl::to_string (mp_text->text ()));
-  } catch (...) {
+  } catch (...) { // NOLINT(bugprone-empty-catch)
   }
 
   m_in_commit = false;

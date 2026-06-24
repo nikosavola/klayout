@@ -1713,9 +1713,9 @@ GuiApplication::shutdown ()
   //  (problem case: showing a dialog inside main windows's destroyed signal - this will
   //  process events and trigger execution if not disabled)
   if (! tl::DeferredMethodScheduler::instance ()->is_disabled ()) {
-    tl::DeferredMethodScheduler::instance ()->execute ();
+    tl::DeferredMethodScheduler::instance ()->execute (); // NOLINT(readability-static-accessed-through-instance)
   }
-  tl::DeferredMethodScheduler::instance ()->enable (false);
+  tl::DeferredMethodScheduler::instance ()->enable (false); // NOLINT(readability-static-accessed-through-instance)
 
   if (mp_mw) {
     delete mp_mw;

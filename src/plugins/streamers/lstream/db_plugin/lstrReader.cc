@@ -830,7 +830,7 @@ Reader::read_text_strings (stream::library::Library::Reader library)
   for (auto t = text_strings.begin (); t != text_strings.end (); ++t) {
 
     const db::StringRef *string_ref = db::StringRepository::instance ()->create_string_ref ();
-    db::StringRepository::instance ()->change_string_ref (string_ref, *t);
+    db::StringRepository::instance ()->change_string_ref (string_ref, *t); // NOLINT(readability-static-accessed-through-instance)
 
     m_text_strings_by_id.insert (std::make_pair (uint64_t (t - text_strings.begin ()), string_ref));
 

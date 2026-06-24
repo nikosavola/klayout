@@ -1537,7 +1537,7 @@ Recorder::eventFilter (QObject *object, QEvent *event)
         event.ignore ();
 
         for (QWidget *w = rec; w != nullptr; w = w->parentWidget ()) {
-          QApplication::instance ()->sendEvent (w, &event);
+          QApplication::instance ()->sendEvent (w, &event); // NOLINT(readability-static-accessed-through-instance)
           if (event.isAccepted ()) {
             tl::info << tl::to_string (QObject::tr ("Probed widget ")) << widget_to_path (w);
             return true;

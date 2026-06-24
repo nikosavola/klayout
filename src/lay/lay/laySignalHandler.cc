@@ -418,7 +418,7 @@ void signal_handler (int signo, siginfo_t *si, void *)
     //  from our stack frames) and everything is better than just core dumping.
     //  Isn't it?
 
-    lay::ApplicationBase::instance ()->qapp_gui ()->setOverrideCursor (QCursor ());
+    lay::ApplicationBase::instance ()->qapp_gui ()->setOverrideCursor (QCursor ()); // NOLINT(readability-static-accessed-through-instance)
 
     std::unique_ptr<CrashMessage> msg;
     msg.reset (new CrashMessage (nullptr, can_resume, tl::to_qstring (text)));

@@ -412,9 +412,9 @@ TechnologyController::replace_technologies (const db::Technologies &technologies
     active_tech_name = mp_active_technology->name ();
   }
 
-  db::Technologies ().instance ()->begin_updates ();
-  *db::Technologies ().instance () = technologies;
-  db::Technologies ().instance ()->end_updates_no_event ();
+  db::Technologies ().instance ()->begin_updates (); // NOLINT(readability-static-accessed-through-instance)
+  *db::Technologies ().instance () = technologies; // NOLINT(readability-static-accessed-through-instance)
+  db::Technologies ().instance ()->end_updates_no_event (); // NOLINT(readability-static-accessed-through-instance)
 
   if (has_active_tech) {
     mp_active_technology = db::Technologies::instance ()->technology_by_name (active_tech_name);
@@ -424,7 +424,7 @@ TechnologyController::replace_technologies (const db::Technologies &technologies
 void
 TechnologyController::show_editor ()
 {
-  db::Technologies new_tech = *db::Technologies ().instance ();
+  db::Technologies new_tech = *db::Technologies ().instance (); // NOLINT(readability-static-accessed-through-instance)
 
   if (mp_editor && mp_editor->exec_dialog (new_tech)) {
 

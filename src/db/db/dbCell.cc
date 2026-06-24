@@ -99,7 +99,7 @@ Cell::Cell (cell_index_type ci, db::Layout &l)
   m_bbox_with_empty = box_type (box_type::point_type (), box_type::point_type ());
 }
 
-Cell::Cell (const Cell &d) // NOLINT(bugprone-copy-constructor-init)
+Cell::Cell (const Cell &d) // NOLINT(bugprone-copy-constructor-init,cppcoreguidelines-pro-type-member-init): operator= initializes the remaining members
   : db::Object (d), 
     gsi::ObjectBase (),
     mp_layout (d.mp_layout), m_instances (this), m_prop_id (d.m_prop_id), m_hier_levels (d.m_hier_levels),

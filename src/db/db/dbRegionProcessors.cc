@@ -99,7 +99,7 @@ void CornerDetectorCore::detect_corners (const db::PolygonWithProperties &poly, 
 
 void Extents::process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const
 {
-  db::Box b = poly.box ();
+  db::Box b = poly.box (); // NOLINT(performance-unnecessary-copy-initialization)
   if (! b.empty ()) {
     result.push_back (db::PolygonWithProperties (db::Polygon (b), poly.properties_id ()));
   }
@@ -110,7 +110,7 @@ void Extents::process (const db::PolygonWithProperties &poly, std::vector<db::Po
 
 void RelativeExtents::process (const db::PolygonWithProperties &poly, std::vector<db::PolygonWithProperties> &result) const
 {
-  db::Box b = poly.box ();
+  db::Box b = poly.box (); // NOLINT(performance-unnecessary-copy-initialization)
   db::Point p1 (b.left () + db::coord_traits<db::Coord>::rounded (m_fx1 * b.width ()),
                 b.bottom () + db::coord_traits<db::Coord>::rounded (m_fy1 * b.height ()));
   db::Point p2 (b.left () + db::coord_traits<db::Coord>::rounded (m_fx2 * b.width ()),
@@ -137,7 +137,7 @@ const TransformationReducer *RelativeExtents::vars () const
 
 void RelativeExtentsAsEdges::process (const db::PolygonWithProperties &poly, std::vector<db::EdgeWithProperties> &result) const
 {
-  db::Box b = poly.box ();
+  db::Box b = poly.box (); // NOLINT(performance-unnecessary-copy-initialization)
   db::Point p1 (b.left () + db::coord_traits<db::Coord>::rounded (m_fx1 * b.width ()),
                 b.bottom () + db::coord_traits<db::Coord>::rounded (m_fy1 * b.height ()));
   db::Point p2 (b.left () + db::coord_traits<db::Coord>::rounded (m_fx2 * b.width ()),
@@ -500,7 +500,7 @@ DRCHullProcessor::do_process (const db::Polygon &poly, db::PolygonSink &psink) c
 
     points.clear ();
 
-    auto c = poly.contour (i);
+    auto c = poly.contour (i); // NOLINT(performance-unnecessary-copy-initialization)
     if (c.size () < 2) {
       continue;
     }

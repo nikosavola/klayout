@@ -525,7 +525,7 @@ void std_writer_impl<Keys>::write (TokenizedOutput &stream, const db::Circuit &c
     db::Polygon poly = circuit.boundary ().transformed (db::VCplxTrans (1.0 / m_dbu));
     if (poly.is_box ()) {
 
-      db::Box box = poly.box ();
+      db::Box box = poly.box (); // NOLINT(performance-unnecessary-copy-initialization)
 
       TokenizedOutput out (stream, Keys::rect_key);
       write_point (out, box.p1 (), m_ref, true);

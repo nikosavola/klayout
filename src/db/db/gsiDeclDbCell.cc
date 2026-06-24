@@ -1477,7 +1477,7 @@ begin_shapes_rec (const db::Cell *cell, unsigned int layer)
 }
 
 static db::RecursiveShapeIterator 
-begin_shapes_rec_touching (const db::Cell *cell, unsigned int layer, db::Box region)
+begin_shapes_rec_touching (const db::Cell *cell, unsigned int layer, db::Box region) // NOLINT(performance-unnecessary-value-param)
 {
   const db::Layout *layout = cell->layout ();
   if (! layout) {
@@ -1488,7 +1488,7 @@ begin_shapes_rec_touching (const db::Cell *cell, unsigned int layer, db::Box reg
 }
 
 static db::RecursiveShapeIterator
-begin_shapes_rec_touching_um (const db::Cell *cell, unsigned int layer, db::DBox region)
+begin_shapes_rec_touching_um (const db::Cell *cell, unsigned int layer, db::DBox region) // NOLINT(performance-unnecessary-value-param)
 {
   const db::Layout *layout = cell->layout ();
   if (! layout) {
@@ -1499,7 +1499,7 @@ begin_shapes_rec_touching_um (const db::Cell *cell, unsigned int layer, db::DBox
 }
 
 static db::RecursiveShapeIterator
-begin_shapes_rec_overlapping (const db::Cell *cell, unsigned int layer, db::Box region)
+begin_shapes_rec_overlapping (const db::Cell *cell, unsigned int layer, db::Box region) // NOLINT(performance-unnecessary-value-param)
 {
   const db::Layout *layout = cell->layout ();
   if (! layout) {
@@ -1510,7 +1510,7 @@ begin_shapes_rec_overlapping (const db::Cell *cell, unsigned int layer, db::Box 
 }
 
 static db::RecursiveShapeIterator
-begin_shapes_rec_overlapping_um (const db::Cell *cell, unsigned int layer, db::DBox region)
+begin_shapes_rec_overlapping_um (const db::Cell *cell, unsigned int layer, db::DBox region) // NOLINT(performance-unnecessary-value-param)
 {
   const db::Layout *layout = cell->layout ();
   if (! layout) {
@@ -1531,7 +1531,7 @@ begin_instances_rec (const db::Cell *cell)
 }
 
 static db::RecursiveInstanceIterator
-begin_instances_rec_touching (const db::Cell *cell, db::Box region)
+begin_instances_rec_touching (const db::Cell *cell, db::Box region) // NOLINT(performance-unnecessary-value-param)
 {
   const db::Layout *layout = cell->layout ();
   if (! layout) {
@@ -1541,7 +1541,7 @@ begin_instances_rec_touching (const db::Cell *cell, db::Box region)
 }
 
 static db::RecursiveInstanceIterator
-begin_instances_rec_touching_um (const db::Cell *cell, db::DBox region)
+begin_instances_rec_touching_um (const db::Cell *cell, db::DBox region) // NOLINT(performance-unnecessary-value-param)
 {
   const db::Layout *layout = cell->layout ();
   if (! layout) {
@@ -1551,7 +1551,7 @@ begin_instances_rec_touching_um (const db::Cell *cell, db::DBox region)
 }
 
 static db::RecursiveInstanceIterator
-begin_instances_rec_overlapping (const db::Cell *cell, db::Box region)
+begin_instances_rec_overlapping (const db::Cell *cell, db::Box region) // NOLINT(performance-unnecessary-value-param)
 {
   const db::Layout *layout = cell->layout ();
   if (! layout) {
@@ -1561,7 +1561,7 @@ begin_instances_rec_overlapping (const db::Cell *cell, db::Box region)
 }
 
 static db::RecursiveInstanceIterator
-begin_instances_rec_overlapping_um (const db::Cell *cell, db::DBox region)
+begin_instances_rec_overlapping_um (const db::Cell *cell, db::DBox region) // NOLINT(performance-unnecessary-value-param)
 {
   const db::Layout *layout = cell->layout ();
   if (! layout) {

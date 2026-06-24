@@ -202,7 +202,7 @@ RectangleFilter::selected (const db::Polygon &poly, properties_id_type) const
 {
   bool ok = poly.is_box ();
   if (ok && m_is_square) {
-    db::Box box = poly.box ();
+    db::Box box = poly.box (); // NOLINT(performance-unnecessary-copy-initialization)
     ok = box.width () == box.height ();
   }
   return ok != m_inverse;
@@ -297,7 +297,7 @@ static double compute_ratio_parameter (const P &poly, RegionRatioFilter::paramet
 
   } else if (parameter == RegionRatioFilter::AspectRatio) {
 
-    db::Box box = poly.box ();
+    db::Box box = poly.box (); // NOLINT(performance-unnecessary-copy-initialization)
     double f = std::max (box.height (), box.width ());
     double d = std::min (box.height (), box.width ());
     if (d < 1) {
@@ -308,7 +308,7 @@ static double compute_ratio_parameter (const P &poly, RegionRatioFilter::paramet
 
   } else if (parameter == RegionRatioFilter::RelativeHeight) {
 
-    db::Box box = poly.box ();
+    db::Box box = poly.box (); // NOLINT(performance-unnecessary-copy-initialization)
     double f = box.height ();
     double d = box.width ();
     if (d < 1) {

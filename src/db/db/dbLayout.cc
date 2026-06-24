@@ -1073,7 +1073,7 @@ Layout::insert (db::cell_index_type cell, int layer, const db::Texts &texts)
 void
 Layout::flatten (const db::Cell &source_cell, db::Cell &target_cell, const db::ICplxTrans &t, int levels)
 {
-  db::ICplxTrans tt = t;
+  db::ICplxTrans tt = t; // NOLINT(performance-unnecessary-copy-initialization)
 
   if (&source_cell != &target_cell) {
 

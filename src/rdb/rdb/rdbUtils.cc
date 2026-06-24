@@ -374,13 +374,13 @@ ValueBase *add_item_value (rdb::Item *item, const tl::Variant &v, const db::Cplx
   } else if (v.is_user<db::DBox> ()) {
     return item->add_value (v.to_user<db::DBox> (), tag_id);
   } else if (v.is_user<db::DPoint> ()) {
-    db::DPoint p = v.to_user<db::DPoint> ();
+    db::DPoint p = v.to_user<db::DPoint> (); // NOLINT(performance-unnecessary-copy-initialization)
     return item->add_value (db::DEdge (p, p), tag_id);
   } else if (v.is_user<db::DPolygon> ()) {
     return item->add_value (v.to_user<db::DPolygon> (), tag_id);
   } else if (v.is_user<db::DSimplePolygon> ()) {
     db::DPolygon p;
-    db::DSimplePolygon sp = v.to_user<db::DSimplePolygon> ();
+    db::DSimplePolygon sp = v.to_user<db::DSimplePolygon> (); // NOLINT(performance-unnecessary-copy-initialization)
     p.assign_hull (sp.begin_hull (), sp.end_hull ());
     return item->add_value (p, tag_id);
   } else if (v.is_user<db::DEdge> ()) {
@@ -423,13 +423,13 @@ ValueBase *add_item_value(rdb::Item *item, const tl::Variant &v, double dbu, rdb
   } else if (v.is_user<db::DBox> ()) {
     return item->add_value (v.to_user<db::DBox> (), tag_id);
   } else if (v.is_user<db::DPoint> ()) {
-    db::DPoint p = v.to_user<db::DPoint> ();
+    db::DPoint p = v.to_user<db::DPoint> (); // NOLINT(performance-unnecessary-copy-initialization)
     return item->add_value (db::DEdge (p, p), tag_id);
   } else if (v.is_user<db::DPolygon> ()) {
     return item->add_value (v.to_user<db::DPolygon> (), tag_id);
   } else if (v.is_user<db::DSimplePolygon> ()) {
     db::DPolygon p;
-    db::DSimplePolygon sp = v.to_user<db::DSimplePolygon> ();
+    db::DSimplePolygon sp = v.to_user<db::DSimplePolygon> (); // NOLINT(performance-unnecessary-copy-initialization)
     p.assign_hull (sp.begin_hull (), sp.end_hull ());
     return item->add_value (p, tag_id);
   } else if (v.is_user<db::DEdge> ()) {

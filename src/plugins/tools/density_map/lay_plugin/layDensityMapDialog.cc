@@ -519,7 +519,7 @@ DensityMapDialog::make_density_map ()
     auto sel = view ()->selected_layers ();
     for (auto s = sel.begin (); s != sel.end (); ++s) {
 
-      auto l = *s;
+      auto l = *s; // NOLINT(performance-unnecessary-copy-initialization)
       if (! l->has_children ()) {
 
         int cvi = (l->cellview_index () >= 0) ? l->cellview_index () : 0;
@@ -717,7 +717,7 @@ inline int safe_mod (int a, int b)
 }
 
 void
-DensityMapDialog::average_window (img::Object &img_object, const std::string boundary_mode, int wh, const std::vector<double> &weights)
+DensityMapDialog::average_window (img::Object &img_object, const std::string boundary_mode, int wh, const std::vector<double> &weights) // NOLINT(performance-unnecessary-value-param)
 {
   tl_assert (weights.size () == size_t (wh * 2 + 1));
 

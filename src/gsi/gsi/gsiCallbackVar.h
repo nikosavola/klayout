@@ -47,7 +47,7 @@ void issue (void (X::*) (_FUNCARGLIST) const _COMMA _CALLARGLIST) const
 }
 
 template <class X, class R _COMMA _TMPLARGPART>
-R issue (R (X::*) (_FUNCARGLIST) _COMMA _CALLARGLIST) const
+R issue (R (X::*) (_FUNCARGLIST) _COMMA _CALLARGLIST) const // NOLINT(performance-unnecessary-value-param)
 {
   tl::Heap heap;
   SerialArgs args (argsize), ret (retsize);

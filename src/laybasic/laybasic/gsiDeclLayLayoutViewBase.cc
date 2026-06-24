@@ -88,7 +88,7 @@ static unsigned int add_stipple2 (lay::LayoutViewBase *view, const std::string &
 
 static std::string get_stipple (lay::LayoutViewBase *view, unsigned int index)
 {
-  lay::DitherPattern pattern (view->dither_pattern ());
+  lay::DitherPattern pattern (view->dither_pattern ()); // NOLINT(performance-unnecessary-copy-initialization)
   return pattern.pattern (index).to_string ();
 }
 

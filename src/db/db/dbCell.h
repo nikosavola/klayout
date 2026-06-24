@@ -240,7 +240,7 @@ public:
    *  on the cell instances. update_bbox() must be called 
    *  explicitly before the bounding box can be updated.
    */
-  void erase (const_iterator e)
+  void erase (const_iterator e) // NOLINT(performance-unnecessary-value-param)
   {
     m_instances.erase (e);
   }

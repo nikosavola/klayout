@@ -189,7 +189,7 @@ public:
     mp_destroyed_sentinel = nullptr;
   }
 
-  void operator() (_CALLARGLIST)
+  void operator() (_CALLARGLIST) // NOLINT(performance-unnecessary-value-param)
   {
     bool was_destroyed = false;
     bool *org_sentinel = mp_destroyed_sentinel;

@@ -2369,7 +2369,7 @@ OASISWriter::write (const db::Text &text, db::properties_id_type prop_id, const 
 {
   m_progress.set (mp_stream->pos ());
 
-  db::Trans trans = text.trans ();
+  db::Trans trans = text.trans (); // NOLINT(performance-unnecessary-copy-initialization)
 
   uint64_t text_id = 0;
   std::map <std::string, uint64_t>::const_iterator ts = m_textstrings.find (text.string ());

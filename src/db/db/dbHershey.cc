@@ -181,7 +181,7 @@ hershey_text_box (const std::string &s, unsigned int f)
 }
 
 void
-hershey_justify (const std::string &s, unsigned int f, db::DBox bx, HAlign halign, VAlign valign, std::vector<db::DPoint> &linestarts, double &left, double &bottom)
+hershey_justify (const std::string &s, unsigned int f, db::DBox bx, HAlign halign, VAlign valign, std::vector<db::DPoint> &linestarts, double &left, double &bottom) // NOLINT(performance-unnecessary-value-param)
 {
   left = 0.0;
   bottom = 0.0;

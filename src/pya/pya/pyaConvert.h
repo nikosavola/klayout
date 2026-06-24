@@ -641,7 +641,7 @@ template <> struct c2python_func<tl::Variant> : public c2python_func<const tl::V
  *  @brief Converts the Python object to the given type
  */
 template <class T>
-inline PyObject *c2python (T t)
+inline PyObject *c2python (T t) // NOLINT(performance-unnecessary-value-param)
 {
   return c2python_func<T> () (t);
 }

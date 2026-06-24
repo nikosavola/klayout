@@ -827,7 +827,7 @@ begin_shapes2 (const db::Layout *layout, const db::Cell *cell, unsigned int laye
 }
 
 static db::RecursiveShapeIterator 
-begin_shapes_touching (const db::Layout *layout, db::cell_index_type starting_cell, unsigned int layer, db::Box region)
+begin_shapes_touching (const db::Layout *layout, db::cell_index_type starting_cell, unsigned int layer, db::Box region) // NOLINT(performance-unnecessary-value-param)
 {
   check_layer (layout, layer);
   check_cell_index (layout, starting_cell);
@@ -837,11 +837,11 @@ begin_shapes_touching (const db::Layout *layout, db::cell_index_type starting_ce
 static db::RecursiveShapeIterator 
 begin_shapes_touching2 (const db::Layout *layout, const db::Cell *cell, unsigned int layer, db::Box region)
 {
-  return begin_shapes_touching (layout, cell->cell_index (), layer, region);
+  return begin_shapes_touching (layout, cell->cell_index (), layer, region); // NOLINT(performance-unnecessary-value-param)
 }
 
 static db::RecursiveShapeIterator 
-begin_shapes_overlapping (const db::Layout *layout, db::cell_index_type starting_cell, unsigned int layer, db::Box region)
+begin_shapes_overlapping (const db::Layout *layout, db::cell_index_type starting_cell, unsigned int layer, db::Box region) // NOLINT(performance-unnecessary-value-param)
 {
   check_layer (layout, layer);
   check_cell_index (layout, starting_cell);
@@ -851,11 +851,11 @@ begin_shapes_overlapping (const db::Layout *layout, db::cell_index_type starting
 static db::RecursiveShapeIterator 
 begin_shapes_overlapping2 (const db::Layout *layout, const db::Cell *cell, unsigned int layer, db::Box region)
 {
-  return begin_shapes_overlapping (layout, cell->cell_index (), layer, region);
+  return begin_shapes_overlapping (layout, cell->cell_index (), layer, region); // NOLINT(performance-unnecessary-value-param)
 }
 
 static db::RecursiveShapeIterator
-begin_shapes_touching_um (const db::Layout *layout, db::cell_index_type starting_cell, unsigned int layer, db::DBox region)
+begin_shapes_touching_um (const db::Layout *layout, db::cell_index_type starting_cell, unsigned int layer, db::DBox region) // NOLINT(performance-unnecessary-value-param)
 {
   check_layer (layout, layer);
   check_cell_index (layout, starting_cell);
@@ -865,11 +865,11 @@ begin_shapes_touching_um (const db::Layout *layout, db::cell_index_type starting
 static db::RecursiveShapeIterator
 begin_shapes_touching2_um (const db::Layout *layout, const db::Cell *cell, unsigned int layer, db::DBox region)
 {
-  return begin_shapes_touching_um (layout, cell->cell_index (), layer, region);
+  return begin_shapes_touching_um (layout, cell->cell_index (), layer, region); // NOLINT(performance-unnecessary-value-param)
 }
 
 static db::RecursiveShapeIterator
-begin_shapes_overlapping_um (const db::Layout *layout, db::cell_index_type starting_cell, unsigned int layer, db::DBox region)
+begin_shapes_overlapping_um (const db::Layout *layout, db::cell_index_type starting_cell, unsigned int layer, db::DBox region) // NOLINT(performance-unnecessary-value-param)
 {
   check_layer (layout, layer);
   check_cell_index (layout, starting_cell);
@@ -879,7 +879,7 @@ begin_shapes_overlapping_um (const db::Layout *layout, db::cell_index_type start
 static db::RecursiveShapeIterator
 begin_shapes_overlapping2_um (const db::Layout *layout, const db::Cell *cell, unsigned int layer, db::DBox region)
 {
-  return begin_shapes_overlapping_um (layout, cell->cell_index (), layer, region);
+  return begin_shapes_overlapping_um (layout, cell->cell_index (), layer, region); // NOLINT(performance-unnecessary-value-param)
 }
 
 static db::Layout *layout_ctor_with_manager(db::Manager &manager)

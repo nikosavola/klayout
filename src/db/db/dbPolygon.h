@@ -225,7 +225,7 @@ public:
   template <class Iter>
   void assign (Iter from, Iter to, bool hole, bool compress = default_compression<C> (), bool normalize = true, bool remove_reflected = false)
   {
-    assign (from, to, db::unit_trans<C> (), hole, compress, normalize, remove_reflected);
+    assign (from, to, db::unit_trans<C> (), hole, compress, normalize, remove_reflected); // NOLINT(performance-unnecessary-value-param)
   }
 
   /**
@@ -244,7 +244,7 @@ public:
    *  @param remove_reflected true, to remove reflecting spikes if compress is true
    */
   template <class Iter, class Trans>
-  void assign (Iter from, Iter to, Trans tr, bool hole, bool compress = default_compression<C> (), bool normalize = true, bool remove_reflected = false)
+  void assign (Iter from, Iter to, Trans tr, bool hole, bool compress = default_compression<C> (), bool normalize = true, bool remove_reflected = false) // NOLINT(performance-unnecessary-value-param)
   {
     if (compress && remove_reflected) {
 
@@ -2078,7 +2078,7 @@ public:
   template <class I> 
   void assign_hull (I start, I end, bool compress = default_compression<C> (), bool remove_reflected = false, bool normalize = true)
   {
-    m_ctrs [0].assign (start, end, false, compress, normalize, remove_reflected);
+    m_ctrs [0].assign (start, end, false, compress, normalize, remove_reflected); // NOLINT(performance-unnecessary-value-param)
     m_bbox = m_ctrs [0].bbox ();
   }
 
@@ -2097,9 +2097,9 @@ public:
    *  @param end The end of the sequence of points for the contour
    */
   template <class I, class T> 
-  void assign_hull (I start, I end, T op, bool compress = default_compression<C> (), bool remove_reflected = false, bool normalize = true)
+  void assign_hull (I start, I end, T op, bool compress = default_compression<C> (), bool remove_reflected = false, bool normalize = true) // NOLINT(performance-unnecessary-value-param)
   {
-    m_ctrs [0].assign (start, end, op, false, compress, normalize, remove_reflected);
+    m_ctrs [0].assign (start, end, op, false, compress, normalize, remove_reflected); // NOLINT(performance-unnecessary-value-param)
     m_bbox = m_ctrs [0].bbox ();
   }
 
@@ -2156,7 +2156,7 @@ public:
   template <class I, class T> 
   void assign_hole (unsigned int h, I start, I end, T op, bool compress = default_compression<C> (), bool remove_reflected = false, bool normalize = true)
   {
-    m_ctrs [h + 1].assign (start, end, op, true, compress, normalize, remove_reflected);
+    m_ctrs [h + 1].assign (start, end, op, true, compress, normalize, remove_reflected); // NOLINT(performance-unnecessary-value-param)
   }
 
   /** 
@@ -2193,7 +2193,7 @@ public:
   template <class I> 
   void insert_hole (I start, I end, bool compress = default_compression<C> (), bool remove_reflected = false, bool normalize = true)
   {
-    insert_hole (start, end, db::unit_trans<C> (), compress, remove_reflected, normalize);
+    insert_hole (start, end, db::unit_trans<C> (), compress, remove_reflected, normalize); // NOLINT(performance-unnecessary-value-param)
   }
 
   /** 
@@ -2213,11 +2213,11 @@ public:
    *  @param normalize If true, the orientation is normalized
    */
   template <class I, class T> 
-  void insert_hole (I start, I end, T op, bool compress = default_compression<C> (), bool remove_reflected = false, bool normalize = true)
+  void insert_hole (I start, I end, T op, bool compress = default_compression<C> (), bool remove_reflected = false, bool normalize = true) // NOLINT(performance-unnecessary-value-param)
   {
     //  add the hole
     contour_type &h = add_hole ();
-    h.assign (start, end, op, true, compress, normalize, remove_reflected);
+    h.assign (start, end, op, true, compress, normalize, remove_reflected); // NOLINT(performance-unnecessary-value-param)
   }
 
   /**
@@ -2985,7 +2985,7 @@ public:
   template <class I> 
   void assign_hull (I start, I end, bool compress = default_compression<C> (), bool remove_reflected = false) 
   {
-    m_hull.assign (start, end, false, compress, true /*normalize*/, remove_reflected);
+    m_hull.assign (start, end, false, compress, true /*normalize*/, remove_reflected); // NOLINT(performance-unnecessary-value-param)
     m_bbox = m_hull.bbox ();
   }
 
@@ -3004,9 +3004,9 @@ public:
    *  @param normalize If true, the orientation is normalized
    */
   template <class I, class T> 
-  void assign_hull (I start, I end, T op, bool compress = default_compression<C> (), bool remove_reflected = false, bool normalize = true)
+  void assign_hull (I start, I end, T op, bool compress = default_compression<C> (), bool remove_reflected = false, bool normalize = true) // NOLINT(performance-unnecessary-value-param)
   {
-    m_hull.assign (start, end, op, false, compress, normalize, remove_reflected);
+    m_hull.assign (start, end, op, false, compress, normalize, remove_reflected); // NOLINT(performance-unnecessary-value-param)
     m_bbox = m_hull.bbox ();
   }
 
@@ -3093,7 +3093,7 @@ public:
    *  Asserts, if begin called.
    */
   template <class I> 
-  void insert_hole (I, I, bool /*compress*/ = default_compression<C> ()) 
+  void insert_hole (I, I, bool /*compress*/ = default_compression<C> ())  // NOLINT(performance-unnecessary-value-param)
   {
     tl_assert (false);
   }

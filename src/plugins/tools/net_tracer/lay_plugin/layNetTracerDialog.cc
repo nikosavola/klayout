@@ -723,7 +723,7 @@ NetTracerDialog::menu_activated (const std::string &symbol)
 }
 
 void 
-NetTracerDialog::net_color_changed (QColor qc)
+NetTracerDialog::net_color_changed (QColor qc) // NOLINT(performance-unnecessary-value-param)
 {
   bool changed = false;
   tl::Color color (qc);

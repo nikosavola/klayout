@@ -1722,7 +1722,7 @@ Instances::clear_properties (const instance_type &ref)
 
     invalidate_prop_ids ();
 
-    cell_inst_array_type new_inst (ref.cell_inst ());
+    cell_inst_array_type new_inst (ref.cell_inst ()); // NOLINT(performance-unnecessary-copy-initialization)
     erase (ref);
     return insert (new_inst);
 

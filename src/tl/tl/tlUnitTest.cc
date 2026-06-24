@@ -379,7 +379,7 @@ void TestBase::compare_text_files (const std::string &path_a, const std::string 
   int n = 0;
   for ( ; ! equal; ++n) {
 
-    std::string fn_a = path_a;  //  no variants for a
+    std::string fn_a = path_a;  //  no variants for a // NOLINT(performance-unnecessary-copy-initialization)
     std::string fn_b = path_b;
     if (n > 0) {
       fn_b += tl::sprintf (".%d", n);

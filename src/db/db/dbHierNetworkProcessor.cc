@@ -389,7 +389,7 @@ bool Connectivity::interact (const db::Cell &a, const T &ta, const db::Cell &b, 
     if (! ba.empty ()) {
       ba.transform (ta);
       for (layers_type::const_iterator j = i->second.begin (); j != i->second.end (); ++j) {
-        db::Box bb = b.bbox (j->first);
+        db::Box bb = b.bbox (j->first); // NOLINT(performance-unnecessary-copy-initialization)
         if (! bb.empty () && bb.transformed (tb).touches (ba)) {
           return true;
         }
@@ -802,7 +802,7 @@ size_t split_cluster (const local_cluster<T> &cl, double max_area_ratio, Iter &o
   }
 
   db::box_convert<T> bc;
-  typename local_cluster<T>::box_type bx = cl.bbox ();
+  typename local_cluster<T>::box_type bx = cl.bbox (); // NOLINT(performance-unnecessary-copy-initialization)
 
   int xthr = bx.width () > bx.height () ? bx.center ().x () : bx.left ();
   int ythr = bx.width () > bx.height () ? bx.bottom () : bx.center ().y ();
@@ -1984,7 +1984,7 @@ public:
   /**
    *  @brief Receiver main event for local-to-instance interactions
    */
-  void add (const local_cluster<T> *c1, db::Box /*p1*/, const db::Instance *i2, db::Box /*p2*/)
+  void add (const local_cluster<T> *c1, db::Box /*p1*/, const db::Instance *i2, db::Box /*p2*/) // NOLINT(performance-unnecessary-value-param)
   {
     std::list<ClusterInstanceInteraction> ic;
 
@@ -2472,7 +2472,7 @@ private:
 
     const db::Cell &cell2 = mp_layout->cell (i2.cell_index ());
 
-    box_type b1 = c1.bbox ();
+    box_type b1 = c1.bbox (); // NOLINT(performance-unnecessary-copy-initialization)
     box_type b2 = i2.cell_inst ().bbox (*mp_cbc).transformed (t2);
 
     if (! b1.touches (b2)) {

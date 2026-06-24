@@ -590,8 +590,8 @@ static db::DBox net_geometry_box (const db::Circuit &c, const db::Net *net, cons
     return db::DBox ();
   }
 
-  auto nc = net_clusters.clusters_per_cell (c.cell_index ());
-  auto lc = nc.cluster_by_id (net->cluster_id ());
+  auto nc = net_clusters.clusters_per_cell (c.cell_index ()); // NOLINT(performance-unnecessary-copy-initialization)
+  auto lc = nc.cluster_by_id (net->cluster_id ()); // NOLINT(performance-unnecessary-copy-initialization)
 
   return db::CplxTrans (layout->dbu ()) * lc.bbox ();
 }
@@ -792,7 +792,7 @@ void LayoutToNetlist::place_soft_connection_diodes ()
 
     for (auto n = c->begin_nets (); n != c->end_nets (); ++n) {
 
-      auto soft_connections = clusters.upward_soft_connections (n->cluster_id ());
+      auto soft_connections = clusters.upward_soft_connections (n->cluster_id ()); // NOLINT(performance-unnecessary-copy-initialization)
       for (auto sc = soft_connections.begin (); sc != soft_connections.end (); ++sc) {
 
         if (! soft_diode) {
@@ -1423,7 +1423,7 @@ LayoutToNetlist::collect_shapes_of_pin (const local_cluster<db::NetShape> &c, co
   }
 
   auto cc_other = m_net_clusters.clusters_per_cell (other_net->circuit ()->cell_index ());
-  auto c_other = cc_other.cluster_by_id (other_net->cluster_id ());
+  auto c_other = cc_other.cluster_by_id (other_net->cluster_id ()); // NOLINT(performance-unnecessary-copy-initialization)
 
   std::map<unsigned int, std::vector<const db::NetShape *> > interacting;
   int soft = 0;
@@ -1463,7 +1463,7 @@ LayoutToNetlist::shapes_of_pin (const db::NetSubcircuitPinRef &pin, const db::IC
   }
 
   auto cc = m_net_clusters.clusters_per_cell (net->circuit ()->cell_index ());
-  auto c = cc.cluster_by_id (net->cluster_id ());
+  auto c = cc.cluster_by_id (net->cluster_id ()); // NOLINT(performance-unnecessary-copy-initialization)
 
   double dbu = internal_layout ()->dbu ();
   db::ICplxTrans sc_trans = db::CplxTrans (dbu).inverted () * pin.subcircuit ()->trans () * db::CplxTrans (dbu);
@@ -1485,13 +1485,13 @@ LayoutToNetlist::shapes_of_terminal (const db::NetTerminalRef &terminal, const d
   }
 
   auto cc = m_net_clusters.clusters_per_cell (net->circuit ()->cell_index ());
-  auto c = cc.cluster_by_id (net->cluster_id ());
+  auto c = cc.cluster_by_id (net->cluster_id ()); // NOLINT(performance-unnecessary-copy-initialization)
 
   double dbu = internal_layout ()->dbu ();
   db::ICplxTrans d_trans = db::CplxTrans (dbu).inverted () * terminal.device ()->trans () * db::CplxTrans (dbu);
 
   auto cc_other = m_net_clusters.clusters_per_cell (terminal.device ()->device_abstract ()->cell_index ());
-  auto c_other = cc_other.cluster_by_id (terminal.device ()->device_abstract ()->cluster_id_for_terminal (terminal.terminal_id ()));
+  auto c_other = cc_other.cluster_by_id (terminal.device ()->device_abstract ()->cluster_id_for_terminal (terminal.terminal_id ())); // NOLINT(performance-unnecessary-copy-initialization)
 
   std::map<unsigned int, std::vector<const db::NetShape *> > interacting;
   int soft = 0;

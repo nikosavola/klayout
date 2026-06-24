@@ -58,7 +58,7 @@ void render_cell_inst (const db::Layout &layout, const db::CellInstArray &inst, 
 
   const db::Cell &cell = layout.cell (inst.object ().cell_index ());
   std::string cell_name = layout.display_name (inst.object ().cell_index ());
-  db::Box cell_box = cell.bbox_with_empty ();
+  db::Box cell_box = cell.bbox_with_empty (); // NOLINT(performance-unnecessary-copy-initialization)
 
   db::Vector a, b;
   unsigned long amax = 0, bmax = 0;
@@ -93,7 +93,7 @@ void render_cell_inst (const db::Layout &layout, const db::CellInstArray &inst, 
 
     if (n > 1000) {
 
-      db::Vector av(a), bv(b);
+      db::Vector av(a), bv(b); // NOLINT(performance-unnecessary-copy-initialization)
 
       //  fallback to simpler representation using a description text
       db::CplxTrans tbox (trans * inst.complex_trans ());
@@ -1323,7 +1323,7 @@ DMarker::render (const Viewport &vp, ViewObjectCanvas &canvas)
   r.default_text_size_dbl (view ()->default_text_size ());
   r.set_precise (true);
 
-  db::DCplxTrans t = vp.trans ();
+  db::DCplxTrans t = vp.trans (); // NOLINT(performance-unnecessary-copy-initialization)
 
   if (m_type == Box) {
     r.draw (*m_object.box, t, fill, contour, vertex, text);

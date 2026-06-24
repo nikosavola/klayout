@@ -139,7 +139,7 @@ bool euclidian_near_part_of_edge (zero_distance_mode zd_mode, db::coord_traits<d
 
     } else {
 
-      db::Point o = g.p1 ();
+      db::Point o = g.p1 (); // NOLINT(performance-unnecessary-copy-initialization)
 
       if (e.side_of (o) > thr) {
         return false;

@@ -276,7 +276,7 @@ credentials_cb (git_cred ** /*out*/, const char * /*url*/, const char * /*userna
 void
 GitObject::read (const std::string &org_url, const std::string &org_filter, const std::string &subfolder, const std::string &branch, double timeout, tl::InputHttpStreamCallback *callback)
 {
-  std::string url = org_url;
+  std::string url = org_url; // NOLINT(performance-unnecessary-copy-initialization)
 
   std::string filter = org_filter;
   if (! subfolder.empty ()) {

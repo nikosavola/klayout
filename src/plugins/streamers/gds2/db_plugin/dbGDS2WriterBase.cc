@@ -438,7 +438,7 @@ GDS2WriterBase::write (db::Layout &layout, tl::OutputStream &stream, const db::S
     sf = 1.0;
   }
 
-  db::GDS2WriterOptions gds2_options = options.get_options<db::GDS2WriterOptions> ();
+  db::GDS2WriterOptions gds2_options = options.get_options<db::GDS2WriterOptions> (); // NOLINT(performance-unnecessary-copy-initialization)
 
   m_libname = options.libname ();
   if (m_libname.empty () && layout.has_meta_info ("libname")) {

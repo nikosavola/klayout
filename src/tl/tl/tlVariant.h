@@ -515,7 +515,7 @@ public:
   Variant (Iter from, Iter to)
     : m_type (t_list), m_string (nullptr)
   {
-    m_var.m_list = new std::vector<tl::Variant> (from, to);
+    m_var.m_list = new std::vector<tl::Variant> (from, to); // NOLINT(performance-unnecessary-value-param)
   }
 
   /**

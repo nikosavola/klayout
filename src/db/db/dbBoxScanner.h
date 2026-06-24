@@ -126,7 +126,7 @@ struct box_scanner_receiver
    *  The finish method is called when an object is no longer in the queue and can be
    *  discarded.
    */
-  virtual void finish (const Obj * /*obj*/, Prop /*prop*/) { }
+  virtual void finish (const Obj * /*obj*/, Prop /*prop*/) { } // NOLINT(performance-unnecessary-value-param)
 
   /**
    *  @brief Callback for an interaction of o1 with o2.
@@ -134,7 +134,7 @@ struct box_scanner_receiver
    *  This method is called when the object o1 interacts with o2 within the current 
    *  definition.
    */
-  virtual void add (const Obj * /*o1*/, Prop /*p1*/, const Obj * /*o2*/, Prop /*p2*/) { }
+  virtual void add (const Obj * /*o1*/, Prop /*p1*/, const Obj * /*o2*/, Prop /*p2*/) { } // NOLINT(performance-unnecessary-value-param)
 
   /**
    *  @brief Indicates whether the scanner may stop
@@ -377,7 +377,7 @@ private:
       //  below m_scanner_thr elements use the brute force approach which is faster in that case
 
       for (iterator_type i = m_pp.begin (); i != m_pp.end (); ++i) {
-        box_type b1 = bc (*i);
+        box_type b1 = bc (*i); // NOLINT(performance-unnecessary-copy-initialization)
         for (iterator_type j = i + 1; j != m_pp.end (); ++j) {
           if (bs_boxes_overlap (b1, bc (*j), enl)) {
             rec.add (i->first, i->second, j->first, j->second);
@@ -875,7 +875,7 @@ private:
       //  below m_scanner_thr elements use the brute force approach which is faster in that case
 
       for (iterator_type1 i = m_pp1.begin (); i != m_pp1.end (); ++i) {
-        box_type b1 = bc1 (*i);
+        box_type b1 = bc1 (*i); // NOLINT(performance-unnecessary-copy-initialization)
         for (iterator_type2 j = m_pp2.begin (); j != m_pp2.end (); ++j) {
           if (bs_boxes_overlap (b1, bc2 (*j), enl)) {
             rec.add (i->first, i->second, j->first, j->second);

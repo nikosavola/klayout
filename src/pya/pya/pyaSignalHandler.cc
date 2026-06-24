@@ -32,7 +32,7 @@ namespace pya
 // --------------------------------------------------------------------------
 //  Implementation of CallbackFunction
 
-CallbackFunction::CallbackFunction (PythonRef pym, const gsi::MethodBase *m)
+CallbackFunction::CallbackFunction (PythonRef pym, const gsi::MethodBase *m) // NOLINT(performance-unnecessary-value-param)
   : mp_method (m)
 {
   //  We have a problem here with cyclic references. Bound instances methods can

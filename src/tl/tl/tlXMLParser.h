@@ -772,7 +772,7 @@ private:
   Write m_w;
 
   //  this write helper is used if the reader delivers an object by value
-  void write_obj (Obj obj, tl::OutputStream &os, int indent, tl::pass_by_value_tag, XMLWriterState &objs) const
+  void write_obj (Obj obj, tl::OutputStream &os, int indent, tl::pass_by_value_tag, XMLWriterState &objs) const // NOLINT(performance-unnecessary-value-param)
   {
     XMLObjTag<Obj> tag;
     objs.push (&obj);
@@ -920,7 +920,7 @@ class TL_PUBLIC_TEMPLATE XMLMember
 {
 public:
   XMLMember (const Read &r, const Write &w, const std::string &name, Converter c = Converter ())
-    : XMLElementBase (name, XMLElementList::empty ()), m_r (r), m_w (w), m_c (c)
+    : XMLElementBase (name, XMLElementList::empty ()), m_r (r), m_w (w), m_c (c) // NOLINT(performance-unnecessary-value-param)
   {
     // .. nothing yet ..
   }
@@ -1947,7 +1947,7 @@ make_member (Value (Parent::*getter) () const, void (Parent::*setter) (Value), c
 {
   return XMLMember<Value, Parent, XMLMemberAccReadAdaptor <Value, Parent>, XMLMemberAccWriteAdaptor <Value, Parent>, Converter> ( 
           XMLMemberAccReadAdaptor <Value, Parent> (getter), 
-          XMLMemberAccWriteAdaptor <Value, Parent> (setter), name, conv); 
+          XMLMemberAccWriteAdaptor <Value, Parent> (setter), name, conv);  // NOLINT(performance-unnecessary-value-param)
 }
 
 /**

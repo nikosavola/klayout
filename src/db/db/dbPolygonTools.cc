@@ -674,7 +674,7 @@ split_polygon (const PolygonType &polygon, std::vector<PolygonType> &output)
   typedef typename PolygonType::box_type box_type;
   typedef db::edge<coord_type> edge_type;
 
-  box_type bbox = polygon.box ();
+  box_type bbox = polygon.box (); // NOLINT(performance-unnecessary-copy-initialization)
   box_type b1, b2;
 
   coord_type x = bbox.center ().x ();
@@ -756,7 +756,7 @@ template DB_PUBLIC void split_polygon<> (const db::DSimplePolygon &polygon, std:
 //  Smoothing tools
 
 void 
-smooth_contour (db::Polygon::polygon_contour_iterator from, db::Polygon::polygon_contour_iterator to, std::vector <db::Point> &points, db::Coord d, bool keep_hv)
+smooth_contour (db::Polygon::polygon_contour_iterator from, db::Polygon::polygon_contour_iterator to, std::vector <db::Point> &points, db::Coord d, bool keep_hv) // NOLINT(performance-unnecessary-value-param)
 {
   points.clear ();
   points.reserve (std::distance (from, to));
@@ -796,10 +796,10 @@ smooth_contour (db::Polygon::polygon_contour_iterator from, db::Polygon::polygon
         break;
       }
 
-      db::Point pm1 = points [(i + points.size () - 2) % points.size ()];
-      db::Point p0 = points [(i + points.size () - 1) % points.size ()];
-      db::Point p1 = points [i];
-      db::Point p2 = points [(i + 1) % points.size ()];
+      db::Point pm1 = points [(i + points.size () - 2) % points.size ()]; // NOLINT(performance-unnecessary-copy-initialization)
+      db::Point p0 = points [(i + points.size () - 1) % points.size ()]; // NOLINT(performance-unnecessary-copy-initialization)
+      db::Point p1 = points [i]; // NOLINT(performance-unnecessary-copy-initialization)
+      db::Point p2 = points [(i + 1) % points.size ()]; // NOLINT(performance-unnecessary-copy-initialization)
 
       size_t pi0 = point_indexes [(i + points.size () - 1) % points.size ()];
       size_t pi1 = point_indexes [i];
@@ -1004,7 +1004,7 @@ is_non_orientable_polygon (const db::Polygon &poly, std::vector<db::Polygon> *st
 
 template <class C>
 static bool
-do_extract_rad_from_contour (typename db::polygon<C>::polygon_contour_iterator from, typename db::polygon<C>::polygon_contour_iterator to, double &rinner, double &router, unsigned int &n, std::vector <db::point<C> > *new_pts, bool fallback)
+do_extract_rad_from_contour (typename db::polygon<C>::polygon_contour_iterator from, typename db::polygon<C>::polygon_contour_iterator to, double &rinner, double &router, unsigned int &n, std::vector <db::point<C> > *new_pts, bool fallback) // NOLINT(performance-unnecessary-value-param)
 {
   if (from == to) {
     return false;
@@ -1346,13 +1346,13 @@ do_extract_rad_from_contour (typename db::polygon<C>::polygon_contour_iterator f
 bool
 extract_rad_from_contour (db::Polygon::polygon_contour_iterator from, db::Polygon::polygon_contour_iterator to, double &rinner, double &router, unsigned int &n, std::vector <db::Point> *new_pts, bool fallback)
 {
-  return do_extract_rad_from_contour (from, to, rinner, router, n, new_pts, fallback);
+  return do_extract_rad_from_contour (from, to, rinner, router, n, new_pts, fallback); // NOLINT(performance-unnecessary-value-param)
 }
 
 bool
 extract_rad_from_contour (db::DPolygon::polygon_contour_iterator from, db::DPolygon::polygon_contour_iterator to, double &rinner, double &router, unsigned int &n, std::vector <db::DPoint> *new_pts, bool fallback)
 {
-  return do_extract_rad_from_contour (from, to, rinner, router, n, new_pts, fallback);
+  return do_extract_rad_from_contour (from, to, rinner, router, n, new_pts, fallback); // NOLINT(performance-unnecessary-value-param)
 }
 
 template <class C>
@@ -1423,7 +1423,7 @@ extract_rad (const db::DPolygon &polygon, double &rinner, double &router, unsign
 
 template <class C>
 static void
-do_compute_rounded_contour (typename db::polygon<C>::polygon_contour_iterator from, typename db::polygon<C>::polygon_contour_iterator to, std::vector <db::point<C> > &new_pts, double rinner, double router, unsigned int n)
+do_compute_rounded_contour (typename db::polygon<C>::polygon_contour_iterator from, typename db::polygon<C>::polygon_contour_iterator to, std::vector <db::point<C> > &new_pts, double rinner, double router, unsigned int n) // NOLINT(performance-unnecessary-value-param)
 {
   std::vector<db::point<C> > points;
 
@@ -1464,9 +1464,9 @@ do_compute_rounded_contour (typename db::polygon<C>::polygon_contour_iterator fr
 
   for (size_t i = 0; i < points.size (); ++i) {
 
-    db::point<C>  p0 = points [(i + points.size () - 1) % points.size ()];
-    db::point<C>  p1 = points [i];
-    db::point<C>  p2 = points [(i + points.size () + 1) % points.size ()];
+    db::point<C>  p0 = points [(i + points.size () - 1) % points.size ()]; // NOLINT(performance-unnecessary-copy-initialization)
+    db::point<C>  p1 = points [i]; // NOLINT(performance-unnecessary-copy-initialization)
+    db::point<C>  p2 = points [(i + points.size () + 1) % points.size ()]; // NOLINT(performance-unnecessary-copy-initialization)
 
     db::DVector e1 = (db::DPoint (p1) - db::DPoint (p0)) * (1.0 / p0.double_distance (p1));
     db::DVector e2 = (db::DPoint (p2) - db::DPoint (p1)) * (1.0 / p1.double_distance (p2));
@@ -1487,9 +1487,9 @@ do_compute_rounded_contour (typename db::polygon<C>::polygon_contour_iterator fr
 
   for (size_t i = 0; i < points.size (); ++i) {
 
-    db::point<C>  p0 = points [(i + points.size () - 1) % points.size ()];
-    db::point<C>  p1 = points [i];
-    db::point<C>  p2 = points [(i + points.size () + 1) % points.size ()];
+    db::point<C>  p0 = points [(i + points.size () - 1) % points.size ()]; // NOLINT(performance-unnecessary-copy-initialization)
+    db::point<C>  p1 = points [i]; // NOLINT(performance-unnecessary-copy-initialization)
+    db::point<C>  p2 = points [(i + points.size () + 1) % points.size ()]; // NOLINT(performance-unnecessary-copy-initialization)
 
     db::DVector e1 = (db::DPoint (p1) - db::DPoint (p0)) * (1.0 / p0.double_distance (p1));
     db::DVector e2 = (db::DPoint (p2) - db::DPoint (p1)) * (1.0 / p1.double_distance (p2));
@@ -1552,13 +1552,13 @@ do_compute_rounded_contour (typename db::polygon<C>::polygon_contour_iterator fr
 void
 compute_rounded_contour (db::Polygon::polygon_contour_iterator from, db::Polygon::polygon_contour_iterator to, std::vector <db::Point> &new_pts, double rinner, double router, unsigned int n)
 {
-  do_compute_rounded_contour (from, to, new_pts, rinner, router, n);
+  do_compute_rounded_contour (from, to, new_pts, rinner, router, n); // NOLINT(performance-unnecessary-value-param)
 }
 
 void
 compute_rounded_contour (db::DPolygon::polygon_contour_iterator from, db::DPolygon::polygon_contour_iterator to, std::vector <db::DPoint> &new_pts, double rinner, double router, unsigned int n)
 {
-  do_compute_rounded_contour (from, to, new_pts, rinner, router, n);
+  do_compute_rounded_contour (from, to, new_pts, rinner, router, n); // NOLINT(performance-unnecessary-value-param)
 }
 
 template <class C>
@@ -1797,7 +1797,7 @@ rasterize_impl (const db::polygon<C> &polygon, db::area_map<C> &am)
   typedef db::edge<C> edge_type;
 
   box_type box = am.bbox ();
-  box_type pbox = polygon.box ();
+  box_type pbox = polygon.box (); // NOLINT(performance-unnecessary-copy-initialization)
 
   //  check if the polygon overlaps the rasterization area. Otherwise, we simply do nothing.
   if (! pbox.overlaps (box)) {
@@ -2403,7 +2403,7 @@ static void decompose_convex_helper (int depth, PreferredOrientation po, const d
     return;
   }
 
-  db::Box bbox = sp.box ();
+  db::Box bbox = sp.box (); // NOLINT(performance-unnecessary-copy-initialization)
   db::coord_traits<db::Coord>::area_type atot = 0;
   db::coord_traits<db::Coord>::distance_type min_edge = std::numeric_limits<db::coord_traits<db::Coord>::distance_type>::max ();
   for (size_t i = 0; i < n; ++i) {
@@ -2482,7 +2482,7 @@ static void decompose_convex_helper (int depth, PreferredOrientation po, const d
 
     for (std::set<db::Vector>::const_iterator c = cuts.begin (); c != cuts.end (); ++c) {
 
-      db::Vector nv = *c;
+      db::Vector nv = *c; // NOLINT(performance-unnecessary-copy-initialization)
 
       int cut_rating_inner = 0;
       size_t jmin_inner = 0;

@@ -908,7 +908,7 @@ public:
    *
    *  Specify an empty string to disable that feature.
    */
-  void set_layer_styles (const std::string ls)
+  void set_layer_styles (const std::string ls) // NOLINT(performance-unnecessary-value-param)
   {
     m_layer_styles = ls;
   }

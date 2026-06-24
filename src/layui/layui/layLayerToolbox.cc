@@ -1063,7 +1063,7 @@ struct SetColor
    *  @param c The color to apply
    */
   SetColor (QColor c, unsigned int flags)
-    : m_color (c), m_flags (flags)
+    : m_color (c), m_flags (flags) // NOLINT(performance-unnecessary-value-param)
   {
     // .. nothing yet ..
   }
@@ -1102,7 +1102,7 @@ LayerToolbox::fill_color_changed (QColor c)
 
   db::Transaction tr (mp_view->manager (), tl::to_string (QObject::tr ("Change fill color")));
 
-  SetColor op (c, 3 /*fill,frame and vertex*/);
+  SetColor op (c, 3 /*fill,frame and vertex*/); // NOLINT(performance-unnecessary-value-param)
   foreach_selected (op);
 }
 
@@ -1115,7 +1115,7 @@ LayerToolbox::frame_color_changed (QColor c)
 
   db::Transaction tr (mp_view->manager (), tl::to_string (QObject::tr ("Change frame color")));
 
-  SetColor op (c, 1 /*frame and vertex*/);
+  SetColor op (c, 1 /*frame and vertex*/); // NOLINT(performance-unnecessary-value-param)
   foreach_selected (op);
 }
 

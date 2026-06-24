@@ -149,7 +149,7 @@ SaltGrainDetailsTextWidget::loadResource (int type, const QUrl &url)
   }
 }
 
-static void produce_listing (QTextStream &stream, QDir dir, int level)
+static void produce_listing (QTextStream &stream, QDir dir, int level) // NOLINT(performance-unnecessary-value-param)
 {
   for (int i = 0; i < level + 1; ++i) {
     stream << "<img src=\":/empty_12px.png\"/>&nbsp;&nbsp;";

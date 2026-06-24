@@ -214,7 +214,7 @@ LayerTreeModel::set_font_no_signal (const QFont &font)
 void
 LayerTreeModel::set_text_color (QColor color)
 {
-  m_text_color = color;
+  m_text_color = color; // NOLINT(performance-unnecessary-value-param)
   signal_data_changed ();
 }
 
@@ -252,7 +252,7 @@ LayerTreeModel::set_filter_mode (bool f)
 void 
 LayerTreeModel::set_background_color (QColor background)
 {
-  m_background_color = background;
+  m_background_color = background; // NOLINT(performance-unnecessary-value-param)
   signal_data_changed ();
 }
 
@@ -703,8 +703,8 @@ LayerTreeModel::data (const QModelIndex &index, int role) const
       if (mp_parent && m_selected_ids.find (size_t (index.internalPointer ())) != m_selected_ids.end ()) {
         //  for selected items pick a color between Highlight and Base
         QPalette pl (mp_parent->palette ());
-        QColor c1 = pl.color (QPalette::Highlight);
-        QColor cb = pl.color (QPalette::Base);
+        QColor c1 = pl.color (QPalette::Highlight); // NOLINT(performance-unnecessary-copy-initialization)
+        QColor cb = pl.color (QPalette::Base); // NOLINT(performance-unnecessary-copy-initialization)
         return QVariant (QColor ((c1.red () + cb.red ()) / 2, (c1.green () + cb.green ()) / 2, (c1.blue () + cb.blue ()) / 2));
       } else {
         return QVariant ();

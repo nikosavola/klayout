@@ -448,7 +448,7 @@ separate_interactions_to_interactions_by_properties (const shape_interactions<TS
     const std::set<unsigned int> &intruder_ids = intruder_ids_by_prop_id [i->first];
 
     for (auto ii = intruder_ids.begin (); ii != intruder_ids.end (); ++ii) {
-      auto is = interactions.intruder_shape (*ii);
+      auto is = interactions.intruder_shape (*ii); // NOLINT(performance-unnecessary-copy-initialization)
       s2p.add_intruder_shape (*ii, is.first, is.second);
     }
 

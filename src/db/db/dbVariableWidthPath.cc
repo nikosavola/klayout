@@ -126,7 +126,7 @@ variable_width_path<C>::init ()
 
 template <class C, class Iter, class WIter, class Inserter>
 static
-void create_shifted_points (C /*c*/, bool forward, Iter from, Iter to, WIter wfrom, WIter wto, Inserter pts)
+void create_shifted_points (C /*c*/, bool forward, Iter from, Iter to, WIter wfrom, WIter wto, Inserter pts) // NOLINT(performance-unnecessary-value-param)
 {
   //  for safety reasons
   if (from == to) {

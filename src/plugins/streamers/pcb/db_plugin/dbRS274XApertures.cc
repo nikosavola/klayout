@@ -553,7 +553,7 @@ void RS274XRegionAperture::do_produce_flash ()
 {
   for (db::Region::const_iterator p = m_region.begin (); ! p.at_end (); ++p) {
 
-    db::Polygon poly = *p;
+    db::Polygon poly = *p; // NOLINT(performance-unnecessary-copy-initialization)
 
     clear_points ();
     for (db::Polygon::polygon_contour_iterator pt = poly.begin_hull (); pt != poly.end_hull (); ++pt) {

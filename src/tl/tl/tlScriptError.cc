@@ -36,7 +36,7 @@ BacktraceElement::BacktraceElement (const std::string &_file, int _line)
   translate_includes ();
 }
 
-BacktraceElement::BacktraceElement (const std::string &_file, int _line, const std::string _more_info)
+BacktraceElement::BacktraceElement (const std::string &_file, int _line, const std::string _more_info) // NOLINT(performance-unnecessary-value-param)
   : file (_file), line (_line), more_info (_more_info)
 {
   translate_includes ();

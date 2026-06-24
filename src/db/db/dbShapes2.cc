@@ -114,7 +114,7 @@ private:
   template <class C, class R, class ATrans, class PropIdMap>
   void op (const db::array<db::box<C, R>, ATrans> &sh, PropIdMap & /*pm*/)
   {
-    db::box<C> box (sh.object ()); // avoid problems with short boxes
+    db::box<C> box (sh.object ()); // avoid problems with short boxes // NOLINT(performance-unnecessary-copy-initialization)
     for (typename db::array<db::box<C, R>, ATrans>::iterator a = sh.begin (); ! a.at_end (); ++a) {
       mp_shapes->insert (box.transformed (*a));
     }
@@ -163,7 +163,7 @@ private:
   template <class C, class R, class ATrans, class PropIdMap>
   void op (const db::object_with_properties<db::array<db::box<C, R>, ATrans> > &sh, PropIdMap &pm)
   {
-    db::box<C> box (sh.object ()); // avoid problems with short boxes
+    db::box<C> box (sh.object ()); // avoid problems with short boxes // NOLINT(performance-unnecessary-copy-initialization)
     for (typename db::array<db::box<C, R>, ATrans>::iterator a = sh.begin (); ! a.at_end (); ++a) {
       mp_shapes->insert (db::object_with_properties<db::box<C> > (box.transformed (*a), pm (sh.properties_id ())));
     }
@@ -271,7 +271,7 @@ private:
   void op (const db::box<C, R> &sh, const T &trans, PropIdMap & /*pm*/)
   {
     if (trans.is_ortho ()) {
-      db::box<C> box (sh); // avoid problems with short boxes
+      db::box<C> box (sh); // avoid problems with short boxes // NOLINT(performance-unnecessary-copy-initialization)
       mp_shapes->insert (box.transformed (trans));
     } else {
       db::polygon<C> poly = db::polygon<C> (db::box<C> (sh));
@@ -285,7 +285,7 @@ private:
   void op (const db::array<db::box<C, R>, ATrans> &sh, const Trans &trans, PropIdMap & /*pm*/)
   {
     if (trans.is_ortho ()) {
-      db::box<C> box (sh.object ()); // avoid problems with short boxes
+      db::box<C> box (sh.object ()); // avoid problems with short boxes // NOLINT(performance-unnecessary-copy-initialization)
       for (typename db::array<db::box<C, R>, ATrans>::iterator a = sh.begin (); ! a.at_end (); ++a) {
         mp_shapes->insert (box.transformed (trans * Trans (*a)));
       }
@@ -347,7 +347,7 @@ private:
   void op (const db::object_with_properties<db::box<C, R> > &sh, const Trans &trans, PropIdMap &pm)
   {
     if (trans.is_ortho ()) {
-      db::box<C> box (sh); // avoid problems with short boxes
+      db::box<C> box (sh); // avoid problems with short boxes // NOLINT(performance-unnecessary-copy-initialization)
       mp_shapes->insert (db::object_with_properties<db::box<C> > (box.transformed (trans), pm (sh.properties_id ())));
     } else {
       db::polygon<C> poly  = db::polygon<C> (db::box<C> (sh));
@@ -388,7 +388,7 @@ private:
   void op (const db::object_with_properties<db::array<db::box<C, R>, ATrans> > &sh, const Trans &trans, PropIdMap &pm)
   {
     if (trans.is_ortho ()) {
-      db::box<C> box (sh.object ()); // avoid problems with short boxes
+      db::box<C> box (sh.object ()); // avoid problems with short boxes // NOLINT(performance-unnecessary-copy-initialization)
       for (typename db::array<db::box<C, R>, ATrans>::iterator a = sh.begin (); ! a.at_end (); ++a) {
         mp_shapes->insert (db::object_with_properties<db::box<C> > (box.transformed (trans * Trans (*a)), pm (sh.properties_id ())));
       }
@@ -546,7 +546,7 @@ private:
   void op (const box<C, R> &sh, const T &trans, PropIdMap & /*pm*/)
   {
     if (trans.is_ortho ()) {
-      db::box<C> box (sh); // avoid problems with short boxes
+      db::box<C> box (sh); // avoid problems with short boxes // NOLINT(performance-unnecessary-copy-initialization)
       mp_shapes->insert (box.transformed (trans));
     } else {
       db::polygon<C> poly = db::polygon<C> (db::box<C> (sh));
@@ -560,7 +560,7 @@ private:
   void op (const db::object_with_properties<box<C, R> > &sh, const T &trans, PropIdMap &pm)
   {
     if (trans.is_ortho ()) {
-      db::box<C> box (sh); // avoid problems with short boxes
+      db::box<C> box (sh); // avoid problems with short boxes // NOLINT(performance-unnecessary-copy-initialization)
       mp_shapes->insert (db::object_with_properties<db::box<C> > (box.transformed (trans), pm (sh.properties_id ())));
     } else {
       db::polygon<C> poly = db::polygon<C> (db::box<C> (sh));

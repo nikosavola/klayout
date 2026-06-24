@@ -1149,8 +1149,8 @@ NetTracer::trace (const db::Layout &layout, const db::Cell &cell, const NetTrace
         }
 
         std::set <unsigned int> computed_layers;
-        std::set <unsigned int> all_connected = data.log_connections (seed_layer);
-        std::set <unsigned int> involved = data.log_connections (seed_layer);
+        std::set <unsigned int> all_connected = data.log_connections (seed_layer); // NOLINT(performance-unnecessary-copy-initialization)
+        std::set <unsigned int> involved = data.log_connections (seed_layer); // NOLINT(performance-unnecessary-copy-initialization)
         for (std::set <unsigned int>::const_iterator i = connected_layers_with_booleans.begin (); i != connected_layers_with_booleans.end (); ++i) {
           std::set <unsigned int> ll = data.log_layers_for (*i);
           std::set_intersection (all_connected.begin (), all_connected.end (), ll.begin (), ll.end (), std::inserter (computed_layers, computed_layers.begin ()));

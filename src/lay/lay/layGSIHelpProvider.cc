@@ -164,7 +164,7 @@ struct DocumentationParser
 {
   DocumentationParser (const gsi::MethodBase *method)
   {
-    std::string doc = method->doc ();
+    std::string doc = method->doc (); // NOLINT(performance-unnecessary-copy-initialization)
     parse_doc (doc);
   }
 

@@ -816,7 +816,7 @@ struct iterated_array_iterator
   iterated_array_iterator (box_tree_touching_iterator from)
     : m_normal (false)
   { 
-    m_t = from;
+    m_t = from; // NOLINT(performance-unnecessary-value-param)
   }
 
   virtual ~iterated_array_iterator ()

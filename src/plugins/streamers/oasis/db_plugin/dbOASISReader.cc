@@ -101,11 +101,11 @@ OASISReader::init (const db::LoadLayoutOptions &options)
 {
   CommonReader::init (options);
 
-  db::CommonReaderOptions common_options = options.get_options<db::CommonReaderOptions> ();
+  db::CommonReaderOptions common_options = options.get_options<db::CommonReaderOptions> (); // NOLINT(performance-unnecessary-copy-initialization)
   m_read_texts = common_options.enable_text_objects;
   m_read_properties = common_options.enable_properties;
 
-  db::OASISReaderOptions oasis_options = options.get_options<db::OASISReaderOptions> ();
+  db::OASISReaderOptions oasis_options = options.get_options<db::OASISReaderOptions> (); // NOLINT(performance-unnecessary-copy-initialization)
   m_read_all_properties = oasis_options.read_all_properties;
   m_expect_strict_mode = oasis_options.expect_strict_mode;
 }

@@ -325,7 +325,7 @@ fill_polygon_impl (db::Cell *cell, const db::Polygon &fp0, db::cell_index_type f
   db::Coord dx = fc_bbox.width () / 2 - 1, dy = fc_bbox.height () / 2 - 1;
 
   db::Region fr (fp0);
-  db::Box rasterized_area = fp0.box ();
+  db::Box rasterized_area = fp0.box (); // NOLINT(performance-unnecessary-copy-initialization)
 
   std::unique_ptr<GenericRasterizer> exclude_rasterized;
   bool has_exclude_area = false;

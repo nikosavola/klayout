@@ -2303,8 +2303,8 @@ LayerControlPanel::upup_clicked ()
 static void
 move_algo (std::vector<lay::LayerPropertiesConstIterator>::const_iterator from, 
            std::vector<lay::LayerPropertiesConstIterator>::const_iterator to, 
-           lay::LayerPropertiesConstIterator parent,
-           lay::LayerPropertiesIterator new_parent,
+           lay::LayerPropertiesConstIterator parent, // NOLINT(performance-unnecessary-value-param)
+           lay::LayerPropertiesIterator new_parent, // NOLINT(performance-unnecessary-value-param)
            std::vector<lay::LayerPropertiesConstIterator> &new_sel,
            int mode)
 {

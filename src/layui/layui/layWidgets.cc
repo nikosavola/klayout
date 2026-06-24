@@ -1052,11 +1052,11 @@ SimpleColorButton::SimpleColorButton (QPushButton *&to_replace, const char *name
 void
 SimpleColorButton::set_color (QColor c)
 {
-  set_color_internal (c);
+  set_color_internal (c); // NOLINT(performance-unnecessary-value-param)
 }
 
 void 
-SimpleColorButton::set_color_internal (QColor c)
+SimpleColorButton::set_color_internal (QColor c) // NOLINT(performance-unnecessary-value-param)
 {
   m_color = c;
 
@@ -1293,11 +1293,11 @@ ColorButton::build_menu ()
 void
 ColorButton::set_color (QColor c)
 {
-  set_color_internal (c);
+  set_color_internal (c); // NOLINT(performance-unnecessary-value-param)
 }
 
 void 
-ColorButton::set_color_internal (QColor c)
+ColorButton::set_color_internal (QColor c) // NOLINT(performance-unnecessary-value-param)
 {
   m_color = c;
 

@@ -227,7 +227,7 @@ static std::string instance_to_string (const db::Instance &inst, const db::ICplx
     return std::string ();
   }
 
-  db::CellInstArray ci = inst.cell_inst ();
+  db::CellInstArray ci = inst.cell_inst (); // NOLINT(performance-unnecessary-copy-initialization)
 
   std::string r;
   double dbu = 1.0;

@@ -73,7 +73,7 @@ TwoColorWidget::TwoColorWidget (QWidget *parent)
 }
 
 void
-TwoColorWidget::set_color (std::pair<QColor, QColor> c)
+TwoColorWidget::set_color (std::pair<QColor, QColor> c) // NOLINT(performance-unnecessary-value-param)
 {
   mp_left->set_color (c.first);
   mp_right->set_color (c.second);
@@ -88,7 +88,7 @@ TwoColorWidget::set_single_mode (bool f)
 }
 
 void
-TwoColorWidget::lcolor_changed (QColor)
+TwoColorWidget::lcolor_changed (QColor) // NOLINT(performance-unnecessary-value-param)
 {
   if (mp_lock->isChecked ()) {
     mp_right->set_color (mp_left->get_color ());
@@ -97,7 +97,7 @@ TwoColorWidget::lcolor_changed (QColor)
 }
 
 void
-TwoColorWidget::rcolor_changed (QColor)
+TwoColorWidget::rcolor_changed (QColor) // NOLINT(performance-unnecessary-value-param)
 {
   if (mp_lock->isChecked ()) {
     mp_left->set_color (mp_right->get_color ());
@@ -158,7 +158,7 @@ ColorBar::mouseMoveEvent (QMouseEvent *event)
 }
 
 void 
-ColorBar::set_current_color (std::pair<QColor, QColor> c)
+ColorBar::set_current_color (std::pair<QColor, QColor> c) // NOLINT(performance-unnecessary-value-param)
 {
   if (has_selection ()) {
     m_nodes [m_selected].second = std::make_pair (tl::Color (c.first.rgb ()), tl::Color (c.second.rgb ()));

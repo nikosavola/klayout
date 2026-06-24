@@ -1390,7 +1390,7 @@ Shapes::clear_properties_iter (typename db::object_tag<Sh>, const Iter &iter)
     check_is_editable_for_undo_redo ();
     db::layer_op<db::object_with_properties <Sh>, db::stable_layer_tag>::queue_or_append (manager (), this, false /*not insert*/, *iter);
   }
-  Sh wop (*iter);
+  Sh wop (*iter); // NOLINT(performance-unnecessary-copy-initialization)
   invalidate_state ();  //  HINT: must come before the change is done!
   get_layer<db::object_with_properties <Sh>, db::stable_layer_tag> ().erase (iter);
   if (manager () && manager ()->transacting ()) {

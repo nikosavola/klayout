@@ -84,7 +84,7 @@ public:
    *
    *  @param axis Gives the direction in which the point can move, if 0 same as fixed constraint
    */
-  Constraint (db::Vector axis)
+  Constraint (db::Vector axis) // NOLINT(performance-unnecessary-value-param)
     : m_axis (axis)
   { 
     if (axis == db::Vector ()) {
@@ -532,7 +532,7 @@ constrain (std::map <PointWithIndex, Constraint> &constr, const EdgeWithIndex &e
 }
 
 static void
-create_shift_sets (const db::Shape &shape, const std::set <EdgeWithIndex> &sel, std::map <PointWithIndex, db::Point> &new_points, std::map <EdgeWithIndex, db::Edge> &new_edges, db::Vector mv)
+create_shift_sets (const db::Shape &shape, const std::set <EdgeWithIndex> &sel, std::map <PointWithIndex, db::Point> &new_points, std::map <EdgeWithIndex, db::Edge> &new_edges, db::Vector mv) // NOLINT(performance-unnecessary-value-param)
 {
   //  Set up a map of new edges and new points
   for (std::set <EdgeWithIndex>::const_iterator e = sel.begin (); e != sel.end (); ++e) {

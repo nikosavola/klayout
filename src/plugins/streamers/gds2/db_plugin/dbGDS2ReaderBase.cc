@@ -57,11 +57,11 @@ GDS2ReaderBase::init (const db::LoadLayoutOptions &options)
 {
   CommonReader::init (options);
 
-  db::CommonReaderOptions common_options = options.get_options<db::CommonReaderOptions> ();
+  db::CommonReaderOptions common_options = options.get_options<db::CommonReaderOptions> (); // NOLINT(performance-unnecessary-copy-initialization)
   m_read_texts = common_options.enable_text_objects;
   m_read_properties = common_options.enable_properties;
 
-  db::GDS2ReaderOptions gds2_options = options.get_options<db::GDS2ReaderOptions> ();
+  db::GDS2ReaderOptions gds2_options = options.get_options<db::GDS2ReaderOptions> (); // NOLINT(performance-unnecessary-copy-initialization)
   m_allow_multi_xy_records = gds2_options.allow_multi_xy_records;
   m_box_mode = gds2_options.box_mode;
 }

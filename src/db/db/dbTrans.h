@@ -195,7 +195,7 @@ struct unit_trans
   /**
    *  @brief (dummy) equality
    */
-  bool operator== (unit_trans /*b*/) const
+  bool operator== (unit_trans /*b*/) const // NOLINT(performance-unnecessary-value-param)
   {
     return true;
   }
@@ -219,7 +219,7 @@ struct unit_trans
   /**
    *  @brief (dummy) inequality
    */
-  bool operator!= (unit_trans /*b*/) const
+  bool operator!= (unit_trans /*b*/) const // NOLINT(performance-unnecessary-value-param)
   {
     return false;
   }
@@ -227,7 +227,7 @@ struct unit_trans
   /**
    *  @brief (dummy) comparison
    */
-  bool operator< (unit_trans /*b*/) const
+  bool operator< (unit_trans /*b*/) const // NOLINT(performance-unnecessary-value-param)
   {
     return false;
   }
@@ -784,7 +784,7 @@ public:
   /**
    *  @brief The "conversion" from the unit transformation to a displacement
    */
-  disp_trans (unit_trans<C>)
+  disp_trans (unit_trans<C>) // NOLINT(performance-unnecessary-value-param)
     : m_u ()
   {
     // .. nothing else ..
@@ -1148,7 +1148,7 @@ public:
   /**
    *  @brief Conversion constructor from a unit transformation
    */
-  explicit simple_trans (unit_trans<C>)
+  explicit simple_trans (unit_trans<C>) // NOLINT(performance-unnecessary-value-param)
     : fixpoint_trans<C> (0), m_u ()
   {
     // .. nothing else ..
@@ -1572,7 +1572,7 @@ public:
   /**
    *  @brief Conversion constructor from a unit transformation
    */
-  explicit complex_trans (unit_trans<I> /*f*/)
+  explicit complex_trans (unit_trans<I> /*f*/) // NOLINT(performance-unnecessary-value-param)
     : m_sin (0.0), m_cos (1.0), m_mag (1.0)
   {
     // .. nothing else ..
@@ -2149,7 +2149,7 @@ public:
     //  Note: preserving type consistency is a bit tedious here. We assume we can simply
     //  return the same type as *this. Ideally *this would be of type (C,C). U would be
     //  of type (C,F). Then the output would be (F,F).
-    complex_trans u (uin);
+    complex_trans u (uin); // NOLINT(performance-unnecessary-copy-initialization)
     complex_trans uinv (u);
     uinv.invert ();
     return u.concat_same (*this).concat_same (uinv);

@@ -459,7 +459,7 @@ write_data (const tl::Variant &data, std::ostream &os, unsigned int level)
       os << "<string>" << escape_string (data.to_string ()) << "</string>" << '\n';
     } else if (data.is_user<QImage> ()) {
 
-      QImage img (data.to_user<QImage> ());
+      QImage img (data.to_user<QImage> ()); // NOLINT(performance-unnecessary-copy-initialization)
       QByteArray ba;
       QBuffer buffer (&ba);
       buffer.open (QIODevice::WriteOnly);

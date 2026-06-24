@@ -134,7 +134,7 @@ struct MacroEditorSetupDialogData
 };
 
 static void
-update_item (QListWidgetItem *item, QTextCharFormat format)
+update_item (QListWidgetItem *item, QTextCharFormat format) // NOLINT(performance-unnecessary-value-param)
 {
   item->setData (Qt::FontRole, format.font ());
   item->setData (Qt::ForegroundRole, format.foreground ());
@@ -165,7 +165,7 @@ MacroEditorSetupPage::~MacroEditorSetupPage ()
 }
 
 void 
-MacroEditorSetupPage::color_changed (QColor)
+MacroEditorSetupPage::color_changed (QColor) // NOLINT(performance-unnecessary-value-param)
 {
   commit_attributes (styles_list->currentItem ());
 }

@@ -194,7 +194,7 @@ TriangulationRExtractor::extract (const db::Polygon &polygon, const std::vector<
       continue;
     }
 
-    db::Point vp = vertex_ports [iv];
+    db::Point vp = vertex_ports [iv]; // NOLINT(performance-unnecessary-copy-initialization)
 
     for (auto p = polygon_ports.begin (); p != polygon_ports.end (); ++p) {
 

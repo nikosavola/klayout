@@ -169,7 +169,7 @@ RNetExtractor::create_via_port (const pex::RExtractorTechVia &tech,
   RNode *b = rnetwork.create_node (RNode::Internal, port_index++, tech.top_conductor);
 
   db::CplxTrans to_um (m_dbu);
-  db::Box box = poly.box ();
+  db::Box box = poly.box (); // NOLINT(performance-unnecessary-copy-initialization)
   b->location = a->location = to_um * box;
 
   rnetwork.create_element (conductance, a, b);

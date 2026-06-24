@@ -838,8 +838,8 @@ CellTreeModel::data (const QModelIndex &index, int role) const
     if (m_selected_indexes_set.find (index.internalPointer ()) != m_selected_indexes_set.end ()) {
       //  for selected items pick a color between Highlight and Base
       QPalette pl (mp_parent->palette ());
-      QColor c1 = pl.color (QPalette::Highlight);
-      QColor cb = pl.color (QPalette::Base);
+      QColor c1 = pl.color (QPalette::Highlight); // NOLINT(performance-unnecessary-copy-initialization)
+      QColor cb = pl.color (QPalette::Base); // NOLINT(performance-unnecessary-copy-initialization)
       return QVariant (QColor ((c1.red () + cb.red ()) / 2, (c1.green () + cb.green ()) / 2, (c1.blue () + cb.blue ()) / 2));
     } else {
       return QVariant ();

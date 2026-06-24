@@ -252,7 +252,7 @@ namespace {
 
     virtual void put (const db::SimplePolygon &polygon)
     {
-      db::Box b = polygon.box ();
+      db::Box b = polygon.box (); // NOLINT(performance-unnecessary-copy-initialization)
       if (b.empty () || b.height () == 0 || b.width () == 0) {
         //  safe fallback for degenerated polygons
         return;
@@ -349,7 +349,7 @@ MAGWriter::write_instance (const db::CellInstArray &inst, const db::Layout &layo
 }
 
 void
-MAGWriter::write_single_instance (db::cell_index_type ci, db::ICplxTrans trans, db::Vector a, db::Vector b, unsigned long na, unsigned long nb, const db::Layout &layout, tl::OutputStream &os)
+MAGWriter::write_single_instance (db::cell_index_type ci, db::ICplxTrans trans, db::Vector a, db::Vector b, unsigned long na, unsigned long nb, const db::Layout &layout, tl::OutputStream &os) // NOLINT(performance-unnecessary-value-param)
 {
   if (trans.is_mag ()) {
     throw tl::Exception (tl::to_string (tr ("Cannot write magnified instance to MAG files: ")) + trans.to_string () + tl::to_string (tr (" of cell ")) + layout.cell_name (ci));

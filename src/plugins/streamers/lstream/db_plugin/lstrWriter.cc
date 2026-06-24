@@ -86,7 +86,7 @@ Writer::write (db::Layout &layout, tl::OutputStream &stream, const db::SaveLayou
   //  TODO: this seems to be needed to properly enumerate the properties in "collect_property_ids"
   layout.update ();
 
-  auto lstr_options = options.get_options<lstr::WriterOptions> ();
+  auto lstr_options = options.get_options<lstr::WriterOptions> (); // NOLINT(performance-unnecessary-copy-initialization)
   m_permissive = lstr_options.permissive;
   m_compression_level = lstr_options.compression_level;
   m_recompress = lstr_options.recompress;
@@ -1124,9 +1124,9 @@ Writer::make_repetition (const std::vector<db::Vector> &disp_array, stream::repe
  */
 template <class Iter>
 static void 
-make_contour (Iter begin, Iter end, size_t n, stream::geometry::Contour::Builder builder)
+make_contour (Iter begin, Iter end, size_t n, stream::geometry::Contour::Builder builder) // NOLINT(performance-unnecessary-value-param)
 {
-  auto p = begin;
+  auto p = begin; // NOLINT(performance-unnecessary-value-param)
   tl_assert (n > 0);
 
   db::Point pl = *p;

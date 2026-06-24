@@ -117,7 +117,7 @@ struct A
   static std::vector<int> qba_ref_to_ia (QByteArray &ba)           { return qba_cref_to_ia (ba); }
   static std::vector<int> qba_cptr_to_ia (const QByteArray *ba)    { return qba_cref_to_ia (*ba); }
   static std::vector<int> qba_ptr_to_ia (QByteArray *ba)           { return qba_cref_to_ia (*ba); }
-  static std::vector<int> qba_to_ia (QByteArray ba)                { return qba_cref_to_ia (ba); }
+  static std::vector<int> qba_to_ia (QByteArray ba)                { return qba_cref_to_ia (ba); } // NOLINT(performance-unnecessary-value-param)
 
 #if QT_VERSION >= 0x60000
 
@@ -139,7 +139,7 @@ struct A
   static std::vector<int> qs_ref_to_ia (QString &qs)                    { return qs_cref_to_ia (qs); }
   static std::vector<int> qs_cptr_to_ia (const QString *qs)             { return qs_cref_to_ia (*qs); }
   static std::vector<int> qs_ptr_to_ia (QString *qs)                    { return qs_cref_to_ia (*qs); }
-  static std::vector<int> qs_to_ia (QString qs)                         { return qs_cref_to_ia (qs); }
+  static std::vector<int> qs_to_ia (QString qs)                         { return qs_cref_to_ia (qs); } // NOLINT(performance-unnecessary-value-param)
 
 #if QT_VERSION >= 0x50000
 
@@ -233,7 +233,7 @@ struct A
   static std::vector<int> ba_ref_to_ia (std::vector<char> &ba)           { return ba_cref_to_ia (ba); }
   static std::vector<int> ba_cptr_to_ia (const std::vector<char> *ba)    { return ba_cref_to_ia (*ba); }
   static std::vector<int> ba_ptr_to_ia (std::vector<char> *ba)           { return ba_cref_to_ia (*ba); }
-  static std::vector<int> ba_to_ia (std::vector<char> ba)                { return ba_cref_to_ia (ba); }
+  static std::vector<int> ba_to_ia (std::vector<char> ba)                { return ba_cref_to_ia (ba); } // NOLINT(performance-unnecessary-value-param)
 
   /**
    *  @brief Byte sequences: tests return of std::vector<char>
@@ -678,7 +678,7 @@ struct B
     m_a.n = n;
   }
 
-  int an (A a)
+  int an (A a) // NOLINT(performance-unnecessary-value-param)
   { 
     return a.n;
   }
@@ -781,7 +781,7 @@ struct B
 
   void set_av (std::vector <A> v)
   {
-    m_av = v;
+    m_av = v; // NOLINT(performance-unnecessary-value-param)
   }
 
   void set_av_cptr (const std::vector <A> *v)
@@ -802,7 +802,7 @@ struct B
     }
   }
 
-  void push_a (A a)
+  void push_a (A a) // NOLINT(performance-unnecessary-value-param)
   {
     m_av.push_back (a);
   }
@@ -848,7 +848,7 @@ struct B
 
   bool b20a (const tl::Variant &var) const { return var.is_nil (); }
   bool b20b (tl::Variant &var) const { return var.is_double (); }
-  bool b20c (tl::Variant var) const { return var.is_long () || var.is_longlong (); }
+  bool b20c (tl::Variant var) const { return var.is_long () || var.is_longlong (); } // NOLINT(performance-unnecessary-value-param)
   bool b20d (const tl::Variant &var) const { return var.is_a_string (); }
   bool b20e (const tl::Variant &var) const { return var.is_bool (); }
 
@@ -896,7 +896,7 @@ struct B
   int b30 () const { return 17; }
   const char *b31 (int) const { return "xz"; }
   const char *b33 (const A & /*a*/) const { return "aref"; }
-  const char *b34 (A /*a*/, int /*x*/) const { return "aref+i"; }
+  const char *b34 (A /*a*/, int /*x*/) const { return "aref+i"; } // NOLINT(performance-unnecessary-value-param)
   double b32 (const char *, int) const { return 20.5; }
 
   void insert_map1 (int k, const std::string &v) { m_map1[k] = v; }
@@ -911,7 +911,7 @@ struct B
   void set_map1_ref (std::map<int, std::string> &m) { m_map1 = m; }
   void set_map1_cptr (const std::map<int, std::string> *m) { if (m) { m_map1 = *m; } }
   void set_map1_ptr (std::map<int, std::string> *m) { if (m) { m_map1 = *m; } }
-  void set_map1 (std::map<int, std::string> m) { m_map1 = m; }
+  void set_map1 (std::map<int, std::string> m) { m_map1 = m; } // NOLINT(performance-unnecessary-value-param)
 
   void insert_map2 (const tl::Variant &k, const tl::Variant &v) { m_map2[k] = v; }
   const std::map<tl::Variant, tl::Variant> *map2 () const { return &m_map2; }
@@ -952,7 +952,7 @@ struct B
   std::map<int, A *> *map_iaptr_ptr () { return &m_map_iaptr; }
 
   static void insert_map_iaptr (std::map<int, A *> &m, int k, A *v) { m.insert (std::make_pair (k, v)); }
-  void set_map_iaptr (std::map<int, A *> m) { m_map_iaptr = m; }
+  void set_map_iaptr (std::map<int, A *> m) { m_map_iaptr = m; } // NOLINT(performance-unnecessary-value-param)
   void set_map_iaptr_cref (const std::map<int, A *> &m) { m_map_iaptr = m; }
   void set_map_iaptr_ref (std::map<int, A *> &m) { m_map_iaptr = m; }
 
@@ -978,7 +978,7 @@ struct B
   const std::map<int, const A *> &map_iacptr () { return m_map_iacptr; }
   void set_map_iacptr (const std::map<int, const A *> &m) { m_map_iacptr = m; }
 
-  static void insert_map_ia (std::map<int, A> &m, int k, A v) { m.insert (std::make_pair (k, v)); }
+  static void insert_map_ia (std::map<int, A> &m, int k, A v) { m.insert (std::make_pair (k, v)); } // NOLINT(performance-unnecessary-value-param)
   const std::map<int, A> &map_ia () { return m_map_ia; }
   void set_map_ia (const std::map<int, A> &m) { m_map_ia = m; }
 
@@ -993,7 +993,7 @@ struct B
   std::vector<std::vector<std::string> > *vvs_ptr () { return &m_vvs; }
   const std::vector<std::vector<std::string> > &vvs_cref () const { return m_vvs; }
   const std::vector<std::vector<std::string> > *vvs_cptr () const { return &m_vvs; }
-  void set_vvs (std::vector<std::vector<std::string> > v) { m_vvs = v; }
+  void set_vvs (std::vector<std::vector<std::string> > v) { m_vvs = v; } // NOLINT(performance-unnecessary-value-param)
   void set_vvs_ref (std::vector<std::vector<std::string> > &v) { m_vvs = v; }
   void set_vvs_cref (const std::vector<std::vector<std::string> > &v) { m_vvs = v; }
 
@@ -1017,40 +1017,40 @@ struct B
 
   static void push_ls (std::list<std::string> &m, const std::string &v) { m.push_back (v); }
   std::list<std::string> ls () { return m_ls; }
-  void set_ls (std::list<std::string> v) { m_ls = v; }
+  void set_ls (std::list<std::string> v) { m_ls = v; } // NOLINT(performance-unnecessary-value-param)
 
   static void push_ss (std::set<std::string> &m, const std::string &v) { m.insert (v); }
   std::set<std::string> ss () { return m_ss; }
-  void set_ss (std::set<std::string> v) { m_ss = v; }
+  void set_ss (std::set<std::string> v) { m_ss = v; } // NOLINT(performance-unnecessary-value-param)
 
 #if defined(HAVE_QT)
   static void push_qls (QList<QString> &m, const QString &v) { m.push_back (v); }
   QList<QString> qls () { return m_qls; }
-  void set_qls (QList<QString> v) { m_qls = v; }
+  void set_qls (QList<QString> v) { m_qls = v; } // NOLINT(performance-unnecessary-value-param)
 
   static void push_qsl (QStringList &m, const QString &v) { m.push_back (v); }
   QStringList qsl () { return m_qls; }
-  void set_qsl (QStringList v) { m_qls = v; }
+  void set_qsl (QStringList v) { m_qls = v; } // NOLINT(performance-unnecessary-value-param)
 
   static void push_qlv (QList<QVariant> &m, const QVariant &v) { m.push_back (v); }
   QList<QVariant> qlv () { return m_qlv; }
-  void set_qlv (QList<QVariant> v) { m_qlv = v; }
+  void set_qlv (QList<QVariant> v) { m_qlv = v; } // NOLINT(performance-unnecessary-value-param)
 
   static void push_qvs (QVector<QString> &m, const QString &v) { m.push_back (v); }
   QVector<QString> qvs () { return m_qvs; }
-  void set_qvs (QVector<QString> v) { m_qvs = v; }
+  void set_qvs (QVector<QString> v) { m_qvs = v; } // NOLINT(performance-unnecessary-value-param)
 
   static void push_qss (QSet<QString> &m, const QString &v) { m.insert (v); }
   QSet<QString> qss () { return m_qss; }
-  void set_qss (QSet<QString> v) { m_qss = v; }
+  void set_qss (QSet<QString> v) { m_qss = v; } // NOLINT(performance-unnecessary-value-param)
 
   static void insert_qmap_is (QMap<int, QString> &m, int k, const QString &v) { m.insert (k, v); }
   QMap<int, QString> qmap_is () { return m_qmap_is; }
-  void set_qmap_is (QMap<int, QString> v) { m_qmap_is = v; }
+  void set_qmap_is (QMap<int, QString> v) { m_qmap_is = v; } // NOLINT(performance-unnecessary-value-param)
 
   static void insert_qhash_is (QHash<int, QString> &m, int k, const QString &v) { m.insert (k, v); }
   QHash<int, QString> qhash_is () { return m_qhash_is; }
-  void set_qhash_is (QHash<int, QString> v) { m_qhash_is = v; }
+  void set_qhash_is (QHash<int, QString> v) { m_qhash_is = v; } // NOLINT(performance-unnecessary-value-param)
 #endif
 
   std::string m;
@@ -1122,7 +1122,7 @@ public:
     return 1977;
   }
 
-  unsigned int g (const std::string s) const
+  unsigned int g (const std::string s) const // NOLINT(performance-unnecessary-value-param)
   {
     return f(s);
   }

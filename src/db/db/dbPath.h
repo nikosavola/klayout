@@ -516,7 +516,7 @@ public:
    *  @param t The transformation to apply
    */
   template <class Iter, class Op>
-  void assign (Iter from, Iter to, Op t)
+  void assign (Iter from, Iter to, Op t) // NOLINT(performance-unnecessary-value-param)
   {
     m_bbox = box_type ();
     m_points.clear ();
@@ -916,7 +916,7 @@ private:
    *  This will render half of the path's outline.
    */
   template <class Iter, class Inserter>
-  void create_shifted_points (coord_type start, coord_type end, coord_type width, bool forward, Iter from, Iter to, int ncircle, Inserter pts) const;
+  void create_shifted_points (coord_type start, coord_type end, coord_type width, bool forward, Iter from, Iter to, int ncircle, Inserter pts) const; // NOLINT(performance-unnecessary-value-param)
 };
 
 /**

@@ -109,7 +109,7 @@ namespace tl
 
     for (_RandomAccessIter __i = __first + 1; __i != __last; ++__i)
     {
-      typename std::iterator_traits<_RandomAccessIter>::value_type __val = *__i;
+      typename std::iterator_traits<_RandomAccessIter>::value_type __val = *__i; // NOLINT(performance-unnecessary-copy-initialization)
       if (__val < *__first) {
         std::copy_backward(__first, __i, __i + 1);
         *__first = __val;
@@ -128,7 +128,7 @@ namespace tl
 
     for (_RandomAccessIter __i = __first + 1; __i != __last; ++__i)
     {
-      typename std::iterator_traits<_RandomAccessIter>::value_type __val = *__i;
+      typename std::iterator_traits<_RandomAccessIter>::value_type __val = *__i; // NOLINT(performance-unnecessary-copy-initialization)
       if (__comp(__val, *__first)) {
         std::copy_backward(__first, __i, __i + 1);
         *__first = __val;

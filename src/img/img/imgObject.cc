@@ -1237,7 +1237,7 @@ Object::clear ()
 }
 
 db::DPolygon
-Object::image_box_poly (const db::DBox vp, const db::DCplxTrans &vpt) const
+Object::image_box_poly (const db::DBox vp, const db::DCplxTrans &vpt) const // NOLINT(performance-unnecessary-value-param)
 {
   db::Matrix3d t = db::Matrix3d (vpt) * matrix ();
   db::Matrix3d ti = t.inverted ();

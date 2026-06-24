@@ -238,7 +238,7 @@ EdgeAngleChecker::EdgeAngleChecker (double angle_start, bool include_angle_start
 bool
 EdgeAngleChecker::check (const db::Vector &a, const db::Vector &b) const
 {
-  db::Vector vout (b);
+  db::Vector vout (b); // NOLINT(performance-unnecessary-copy-initialization)
 
   db::Vector v1 = m_t_start * a;
   db::Vector v2 = m_t_end * a;

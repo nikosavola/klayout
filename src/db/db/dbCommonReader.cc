@@ -617,7 +617,7 @@ CommonReader::init (const LoadLayoutOptions &options)
   ReaderBase::init (options);
   CommonReaderBase::start ();
 
-  db::CommonReaderOptions common_options = options.get_options<db::CommonReaderOptions> ();
+  db::CommonReaderOptions common_options = options.get_options<db::CommonReaderOptions> (); // NOLINT(performance-unnecessary-copy-initialization)
   set_conflict_resolution_mode (common_options.cell_conflict_resolution);
   set_create_layers (common_options.create_other_layers);
   set_layer_map (common_options.layer_map);

@@ -1210,7 +1210,7 @@ private:
 
       box_type bbox;
       for (typename obj_vector_type::const_iterator o = m_objects.begin (); o != m_objects.end (); ++o) {
-        box_type b = conv (*o);
+        box_type b = conv (*o); // NOLINT(performance-unnecessary-copy-initialization)
         m_elements.push_back (o.index ());
         bbox += b;
       }
@@ -1272,7 +1272,7 @@ private:
 
     for (element_iterator e = from; e != to; ++e) {
 
-      box_type b = picker (&m_objects.item (*e));
+      box_type b = picker (&m_objects.item (*e)); // NOLINT(performance-unnecessary-copy-initialization)
 
       int q = 0;
       if (b.empty ()) {
@@ -2179,7 +2179,7 @@ private:
 
     box_type bbox;
     for (typename obj_vector_type::const_iterator o = m_objects.begin (); o != m_objects.end (); ++o) {
-      box_type b = conv (*o);
+      box_type b = conv (*o); // NOLINT(performance-unnecessary-copy-initialization)
       if (! b.empty ()) {
         bbox += b;
       }
@@ -2254,7 +2254,7 @@ private:
         //  objects, we have to rotate the box cache of the caching picker as well:
         picker.rotate_boxes (q, e, qloc[0], qloc[1], qloc[2], qloc[3], qloc[4]);
 
-        object_type el = *e;
+        object_type el = *e; // NOLINT(performance-unnecessary-copy-initialization)
         for (int i = 4; i > q; --i) {
           *qloc [i] = *qloc [i - 1];
           ++qloc [i];

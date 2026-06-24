@@ -737,7 +737,7 @@ inline ArgSpec<void> arg (const std::string &name)
  *  With that key, a named argument with a default value will be generated.
  */
 template <class T>
-inline ArgSpec<T> arg (const std::string &name, T t) 
+inline ArgSpec<T> arg (const std::string &name, T t)  // NOLINT(performance-unnecessary-value-param)
 {
   return ArgSpec<T> (name, t);
 }
@@ -747,7 +747,7 @@ inline ArgSpec<T> arg (const std::string &name, T t)
  *  With that key, a named argument with a default value will be generated.
  */
 template <class T>
-inline ArgSpec<T> arg (const std::string &name, T t, const std::string &t_doc) 
+inline ArgSpec<T> arg (const std::string &name, T t, const std::string &t_doc)  // NOLINT(performance-unnecessary-value-param)
 {
   return ArgSpec<T> (name, t, t_doc);
 }

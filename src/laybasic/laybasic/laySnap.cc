@@ -129,7 +129,7 @@ int draw_round (double x)
   }
 }
 
-db::Point draw_round (db::DPoint p, int h)
+db::Point draw_round (db::DPoint p, int h) // NOLINT(performance-unnecessary-value-param)
 {
   return db::Point (draw_round (p.x ()), h - 1 - draw_round (p.y ()));
 }
@@ -848,8 +848,8 @@ do_obj_snap (lay::LayoutViewBase *view, const db::DPoint &pt, const db::DVector 
 static TwoPointSnapToObjectResult
 do_obj_snap2 (lay::LayoutViewBase *view, const db::DPoint &pt1, const db::DPoint &pt2, const db::DVector &grid, double min_search_range, double max_search_range, const std::vector <db::DEdge> &cutlines)
 {
-  db::DPoint dp1 (pt1);
-  db::DPoint dp2 (pt2);
+  db::DPoint dp1 (pt1); // NOLINT(performance-unnecessary-copy-initialization)
+  db::DPoint dp2 (pt2); // NOLINT(performance-unnecessary-copy-initialization)
 
   ContourFinder finder (dp1, grid, cutlines, cutlines.empty () ? 1 : 0 /*vertex snap on "any direction", edge vertexes*/);
 

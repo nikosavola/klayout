@@ -2483,25 +2483,25 @@ private:
 //  Create adaptors for various categories
 
 template <class X, class V>
-inline AdaptorBase *create_adaptor_by_category(const vector_adaptor_tag & /*tag*/, V v)
+inline AdaptorBase *create_adaptor_by_category(const vector_adaptor_tag & /*tag*/, V v) // NOLINT(performance-unnecessary-value-param)
 {
   return new VectorAdaptorImpl<X> (v);
 }
 
 template <class X, class V>
-inline AdaptorBase *create_adaptor_by_category(const map_adaptor_tag & /*tag*/, V v)
+inline AdaptorBase *create_adaptor_by_category(const map_adaptor_tag & /*tag*/, V v) // NOLINT(performance-unnecessary-value-param)
 {
   return new MapAdaptorImpl<X> (v);
 }
 
 template <class X, class V>
-inline AdaptorBase *create_adaptor_by_category(const string_adaptor_tag & /*tag*/, V v)
+inline AdaptorBase *create_adaptor_by_category(const string_adaptor_tag & /*tag*/, V v) // NOLINT(performance-unnecessary-value-param)
 {
   return new StringAdaptorImpl<X> (v);
 }
 
 template <class X, class V>
-inline AdaptorBase *create_adaptor_by_category(const byte_array_adaptor_tag & /*tag*/, V v)
+inline AdaptorBase *create_adaptor_by_category(const byte_array_adaptor_tag & /*tag*/, V v) // NOLINT(performance-unnecessary-value-param)
 {
   return new ByteArrayAdaptorImpl<X> (v);
 }

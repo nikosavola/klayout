@@ -370,7 +370,7 @@ Reader::init (const db::LoadLayoutOptions &options)
 {
   db::CommonReader::init (options);
 
-  lstr::ReaderOptions lstr_options = options.get_options<lstr::ReaderOptions> ();
+  lstr::ReaderOptions lstr_options = options.get_options<lstr::ReaderOptions> (); // NOLINT(performance-unnecessary-copy-initialization)
   m_bbox_meta_data_key = lstr_options.bbox_meta_info_key;
 }
 

@@ -194,7 +194,7 @@ int compare_seq (I b1, I e1, I b2, I e2, Op op)
  *  achieved. This is useful with tolerances since the sorting is not strict in that case.
  */
 template <class X, class Op>
-void reduce (std::vector<X> &a, std::vector<X> &b, Op op, bool iterate, bool no_duplicates)
+void reduce (std::vector<X> &a, std::vector<X> &b, Op op, bool iterate, bool no_duplicates) // NOLINT(performance-unnecessary-value-param)
 {
   do {
 

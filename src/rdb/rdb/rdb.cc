@@ -1788,7 +1788,7 @@ read_db_from_layout (rdb::Database *db, tl::InputStream &is)
 }
 
 void
-Database::load (std::string fn)
+Database::load (std::string fn) // NOLINT(performance-unnecessary-value-param)
 {
   tl::log << "Loading RDB from " << fn;
 

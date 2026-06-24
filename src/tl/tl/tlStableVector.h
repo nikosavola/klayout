@@ -92,7 +92,7 @@ public:
       //  .. nothing yet ..
     }
 
-    const_iterator &operator= (const_iterator d) 
+    const_iterator &operator= (const_iterator d)  // NOLINT(performance-unnecessary-value-param)
     {
       m_iter = d.m_iter;
       return *this;
@@ -104,12 +104,12 @@ public:
       return *this;
     }
 
-    bool operator== (const_iterator d) const
+    bool operator== (const_iterator d) const // NOLINT(performance-unnecessary-value-param)
     {
       return m_iter == d.m_iter;
     }
 
-    bool operator!= (const_iterator d) const
+    bool operator!= (const_iterator d) const // NOLINT(performance-unnecessary-value-param)
     {
       return m_iter != d.m_iter;
     }
@@ -119,7 +119,7 @@ public:
       return m_iter < d.m_iter;
     }
 
-    ptrdiff_t operator- (const_iterator d) const
+    ptrdiff_t operator- (const_iterator d) const // NOLINT(performance-unnecessary-value-param)
     {
       return m_iter - d.m_iter;
     }
@@ -229,7 +229,7 @@ public:
       return m_iter == d.m_iter;
     }
 
-    bool operator!= (iterator d) const
+    bool operator!= (iterator d) const // NOLINT(performance-unnecessary-value-param)
     {
       return m_iter != d.m_iter;
     }
@@ -239,7 +239,7 @@ public:
       return m_iter < d.m_iter;
     }
 
-    ptrdiff_t operator- (iterator d) const
+    ptrdiff_t operator- (iterator d) const // NOLINT(performance-unnecessary-value-param)
     {
       return m_iter - d.m_iter;
     }
@@ -727,7 +727,7 @@ public:
     m_objects.erase (p, q);
   }
 
-  iterator insert (iterator pos, const X &value)
+  iterator insert (iterator pos, const X &value) // NOLINT(performance-unnecessary-value-param)
   {
     size_t p = pos - begin ();
     m_objects.insert (m_objects.begin () + p, new X (value));
@@ -741,7 +741,7 @@ public:
     return begin () + p;
   }
 
-  void erase (iterator pos)
+  void erase (iterator pos) // NOLINT(performance-unnecessary-value-param)
   {
     typename std::vector <X *>::iterator p = m_objects.begin () + (pos - begin ());
     delete *p;

@@ -1265,7 +1265,7 @@ GenericSyntaxHighlighterState::current_context_id () const
 //  Implementation of GenericSyntaxHighlighter
 
 static GenericSyntaxHighlighterRuleStringList 
-parse_list (QDomElement e) 
+parse_list (QDomElement e)  // NOLINT(performance-unnecessary-value-param)
 {
   QList<QString> items;
 

@@ -263,7 +263,7 @@ GridNet::render_bg (const lay::Viewport &vp, ViewObjectCanvas &canvas)
 
     PixelBufferPainter painter (*bmp_canvas->bg_image (), bmp_canvas->canvas_width (), bmp_canvas->canvas_height (), bmp_canvas->resolution (), bmp_canvas->font_resolution ());
 
-    db::DCplxTrans trans = vp.trans ();
+    db::DCplxTrans trans = vp.trans (); // NOLINT(performance-unnecessary-copy-initialization)
     db::DCplxTrans::inverse_trans trans_inv (trans.inverted ());
 
     db::DBox dbworld (trans_inv * db::DBox (0.0, 0.0, double (vp.width ()), double (vp.height ())));

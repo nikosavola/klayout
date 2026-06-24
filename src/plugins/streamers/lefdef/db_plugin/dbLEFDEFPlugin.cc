@@ -131,7 +131,7 @@ LEFDEFReader::read_lefdef (db::Layout &layout, const db::LoadLayoutOptions &opti
   state->start ();
 
   //  Configure the conflict resolution mode
-  db::CommonReaderOptions common_options = options.get_options<db::CommonReaderOptions> ();
+  db::CommonReaderOptions common_options = options.get_options<db::CommonReaderOptions> (); // NOLINT(performance-unnecessary-copy-initialization)
   state->set_conflict_resolution_mode (common_options.cell_conflict_resolution);
 
   //  Import LEF

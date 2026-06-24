@@ -438,7 +438,7 @@ PluginImpl::mouse_press_event (const db::DPoint &p, unsigned int buttons, bool p
 
 //  NOTE: this version doesn't take a point reference which allows us to store the point in script code without generating a reference
 bool
-PluginImpl::mouse_press_event_noref (db::DPoint p, unsigned int buttons, bool prio)
+PluginImpl::mouse_press_event_noref (db::DPoint p, unsigned int buttons, bool prio) // NOLINT(performance-unnecessary-value-param)
 {
   return mouse_press_event (p, buttons, prio);
 }
@@ -455,7 +455,7 @@ PluginImpl::mouse_click_event (const db::DPoint &p, unsigned int buttons, bool p
 
 //  NOTE: this version doesn't take a point reference which allows us to store the point in script code without generating a reference
 bool
-PluginImpl::mouse_click_event_noref (db::DPoint p, unsigned int buttons, bool prio)
+PluginImpl::mouse_click_event_noref (db::DPoint p, unsigned int buttons, bool prio) // NOLINT(performance-unnecessary-value-param)
 {
   return mouse_click_event (p, buttons, prio);
 }
@@ -472,7 +472,7 @@ PluginImpl::mouse_double_click_event (const db::DPoint &p, unsigned int buttons,
 
 //  NOTE: this version doesn't take a point reference which allows us to store the point in script code without generating a reference
 bool
-PluginImpl::mouse_double_click_event_noref (db::DPoint p, unsigned int buttons, bool prio)
+PluginImpl::mouse_double_click_event_noref (db::DPoint p, unsigned int buttons, bool prio) // NOLINT(performance-unnecessary-value-param)
 {
   return mouse_double_click_event (p, buttons, prio);
 }
@@ -509,7 +509,7 @@ PluginImpl::mouse_move_event (const db::DPoint &p, unsigned int buttons, bool pr
 
 //  NOTE: this version doesn't take a point reference which allows us to store the point in script code without generating a reference
 bool
-PluginImpl::mouse_move_event_noref (db::DPoint p, unsigned int buttons, bool prio)
+PluginImpl::mouse_move_event_noref (db::DPoint p, unsigned int buttons, bool prio) // NOLINT(performance-unnecessary-value-param)
 {
   return mouse_move_event (p, buttons, prio);
 }
@@ -526,7 +526,7 @@ PluginImpl::mouse_release_event (const db::DPoint &p, unsigned int buttons, bool
 
 //  NOTE: this version doesn't take a point reference which allows us to store the point in script code without generating a reference
 bool
-PluginImpl::mouse_release_event_noref (db::DPoint p, unsigned int buttons, bool prio)
+PluginImpl::mouse_release_event_noref (db::DPoint p, unsigned int buttons, bool prio) // NOLINT(performance-unnecessary-value-param)
 {
   return mouse_release_event (p, buttons, prio);
 }
@@ -543,7 +543,7 @@ PluginImpl::wheel_event (int delta, bool horizontal, const db::DPoint &p, unsign
 
 //  NOTE: this version doesn't take a point reference which allows us to store the point in script code without generating a reference
 bool
-PluginImpl::wheel_event_noref (int delta, bool horizontal, db::DPoint p, unsigned int buttons, bool prio)
+PluginImpl::wheel_event_noref (int delta, bool horizontal, db::DPoint p, unsigned int buttons, bool prio) // NOLINT(performance-unnecessary-value-param)
 {
   return wheel_event (delta, horizontal, p, buttons, prio);
 }

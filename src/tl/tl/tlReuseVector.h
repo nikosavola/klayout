@@ -758,7 +758,7 @@ public:
         //  Special case: we are inserting an element from our own space - since reserve will first 
         //  release the element we have to create a copy before we insert it.
         if (&item >= mp_start && &item < mp_finish) {
-          value_type copy (item);
+          value_type copy (item); // NOLINT(performance-unnecessary-copy-initialization)
           return insert (copy);
         }
         reserve (size () == 0 ? 4 : size () * 2);

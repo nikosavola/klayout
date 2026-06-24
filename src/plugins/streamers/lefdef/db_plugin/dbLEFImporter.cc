@@ -944,7 +944,7 @@ LEFImporter::read_macro (Layout &layout)
 
           //  produce pin labels
           //  TODO: put a label on every single object?
-          std::string label = pn;
+          std::string label = pn; // NOLINT(performance-unnecessary-copy-initialization)
           /* don't add the direction currently, a name is sufficient
           if (! dir.empty ()) {
             label += ":";

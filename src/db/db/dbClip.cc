@@ -64,7 +64,7 @@ private:
 template <class P, class Sink> static void
 clip_poly (const P &poly, const db::Box &box, Sink &psink, bool resolve_holes)
 {
-  db::Box pbox = poly.box ();
+  db::Box pbox = poly.box (); // NOLINT(performance-unnecessary-copy-initialization)
 
   //  Polygon completely inside the clip box -> return the polygon
   if (pbox.inside (box)) {

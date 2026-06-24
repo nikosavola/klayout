@@ -4259,7 +4259,7 @@ MainWindow::dropEvent(QDropEvent *event)
     QList<QUrl> urls = event->mimeData ()->urls ();
     for (QList<QUrl>::const_iterator url = urls.begin (); url != urls.end (); ++url) {
 
-      QUrl eff_url (*url);
+      QUrl eff_url (*url); // NOLINT(performance-unnecessary-copy-initialization)
 
       QString path;
       if (eff_url.scheme () == QString::fromUtf8 ("file")) {

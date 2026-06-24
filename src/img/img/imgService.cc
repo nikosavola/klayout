@@ -193,7 +193,7 @@ static bool
 is_selected (const img::Object &image, const db::DPoint &pos, const db::DBox &vpbox, double enl, double &distance) 
 {
   db::DPolygon b (image.image_box_poly (vpbox, db::DCplxTrans ()));
-  db::DBox bb (b.box ());
+  db::DBox bb (b.box ()); // NOLINT(performance-unnecessary-copy-initialization)
   if (! bb.enlarged (db::DVector (enl, enl)).contains (pos)) {
     return false;
   }
@@ -302,7 +302,7 @@ View::render (const lay::Viewport &vp, lay::ViewObjectCanvas &canvas)
 
     std::vector <db::Polygon> frame_p;
 
-    db::DBox b = image_box_poly.box ();
+    db::DBox b = image_box_poly.box (); // NOLINT(performance-unnecessary-copy-initialization)
     if (b.left () < std::numeric_limits<db::Coord>::min () / 2 || // NOLINT(bugprone-integer-division)
         b.right () > std::numeric_limits<db::Coord>::max () / 2 || // NOLINT(bugprone-integer-division)
         b.bottom () < std::numeric_limits<db::Coord>::min () / 2 || // NOLINT(bugprone-integer-division)

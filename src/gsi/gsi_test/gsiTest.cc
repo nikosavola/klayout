@@ -1740,7 +1740,7 @@ gsi::EnumIn<B3, B3::E> enum_in_b3 ("", "E",
   gsi::enum_const ("E3C", B3::E3C)
 );
 
-static std::string d4 (BB *, int a, std::string b, double c, B3::E d, tl::Variant e)
+static std::string d4 (BB *, int a, std::string b, double c, B3::E d, tl::Variant e) // NOLINT(performance-unnecessary-value-param)
 {
   return tl::sprintf ("%d,%s,%.12g,%d,%s", a, b, c, int (d), e.to_string ());
 }

@@ -1435,7 +1435,7 @@ LayoutViewFunctions::cm_lay_free_rot ()
 }
 
 void
-LayoutViewFunctions::on_lay_free_rot (std::string text)
+LayoutViewFunctions::on_lay_free_rot (std::string text) // NOLINT(performance-unnecessary-value-param)
 {
   double angle = 0.0;
   tl::from_string_ext (text, angle);
@@ -1459,7 +1459,7 @@ LayoutViewFunctions::cm_lay_scale ()
 }
 
 void
-LayoutViewFunctions::on_lay_scale (std::string text)
+LayoutViewFunctions::on_lay_scale (std::string text) // NOLINT(performance-unnecessary-value-param)
 {
   double scale = 0.0;
   tl::from_string_ext (text, scale);
@@ -1479,7 +1479,7 @@ LayoutViewFunctions::cm_lay_move ()
 }
 
 void
-LayoutViewFunctions::on_lay_move (db::DVector dist)
+LayoutViewFunctions::on_lay_move (db::DVector dist) // NOLINT(performance-unnecessary-value-param)
 {
   transform_layout (db::DCplxTrans (dist));
 }
@@ -1544,7 +1544,7 @@ LayoutViewFunctions::cm_sel_free_rot ()
 }
 
 void
-LayoutViewFunctions::on_sel_free_rot (std::string text)
+LayoutViewFunctions::on_sel_free_rot (std::string text) // NOLINT(performance-unnecessary-value-param)
 {
   double angle = 0.0;
   tl::from_string_ext (text, angle);
@@ -1573,7 +1573,7 @@ LayoutViewFunctions::cm_sel_scale ()
 }
 
 void
-LayoutViewFunctions::on_sel_scale (std::string text)
+LayoutViewFunctions::on_sel_scale (std::string text) // NOLINT(performance-unnecessary-value-param)
 {
   double scale = 0.0;
   tl::from_string_ext (text, scale);
@@ -1630,7 +1630,7 @@ LayoutViewFunctions::cm_sel_move ()
 }
 
 void
-LayoutViewFunctions::on_sel_move(db::DVector disp)
+LayoutViewFunctions::on_sel_move(db::DVector disp) // NOLINT(performance-unnecessary-value-param)
 {
   do_transform (db::DCplxTrans (disp));
 }

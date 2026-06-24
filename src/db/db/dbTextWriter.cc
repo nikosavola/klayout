@@ -113,14 +113,14 @@ TextWriter::operator<< (double d)
 }
 
 TextWriter &
-TextWriter::operator<< (db::Point p)
+TextWriter::operator<< (db::Point p) // NOLINT(performance-unnecessary-value-param)
 {
   *this << tl::sprintf ("{%d %d}", p.x (), p.y ());
   return *this;
 }
 
 TextWriter &
-TextWriter::operator<< (db::Vector p)
+TextWriter::operator<< (db::Vector p) // NOLINT(performance-unnecessary-value-param)
 {
   *this << tl::sprintf ("{%d %d}", p.x (), p.y ());
   return *this;

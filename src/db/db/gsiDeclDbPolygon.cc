@@ -360,7 +360,7 @@ struct simple_polygon_defs
     return c;
   }
 
-  static bool inside (const C *poly, point_type pt)
+  static bool inside (const C *poly, point_type pt) // NOLINT(performance-unnecessary-value-param)
   {
     return db::inside_poly (poly->begin_edge (), pt) >= 0;
   }
@@ -1387,7 +1387,7 @@ struct polygon_defs
     return poly->sized (dv.x (), dv.y (), mode);
   }
 
-  static bool inside (const C *poly, point_type pt)
+  static bool inside (const C *poly, point_type pt) // NOLINT(performance-unnecessary-value-param)
   {
     return db::inside_poly (poly->begin_edge (), pt) >= 0;
   }

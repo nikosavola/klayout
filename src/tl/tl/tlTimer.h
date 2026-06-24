@@ -204,7 +204,7 @@ public:
   /**
    *  @brief Assignment 
    */
-  Clock &operator= (Clock d)
+  Clock &operator= (Clock d) // NOLINT(performance-unnecessary-value-param)
   {
     m_clock_ns = d.m_clock_ns;
     return *this;
@@ -213,7 +213,7 @@ public:
   /**
    *  @brief Equality 
    */
-  bool operator== (Clock d) const
+  bool operator== (Clock d) const // NOLINT(performance-unnecessary-value-param)
   {
     return m_clock_ns == d.m_clock_ns;
   }
@@ -221,7 +221,7 @@ public:
   /**
    *  @brief Inequality 
    */
-  bool operator!= (Clock d) const
+  bool operator!= (Clock d) const // NOLINT(performance-unnecessary-value-param)
   {
     return ! operator== (d);
   }
@@ -229,7 +229,7 @@ public:
   /**
    *  @brief Comparison 
    */
-  bool operator< (Clock d) const
+  bool operator< (Clock d) const // NOLINT(performance-unnecessary-value-param)
   {
     return m_clock_ns < d.m_clock_ns;
   }
@@ -237,7 +237,7 @@ public:
   /**
    *  @brief Difference (in place)
    */
-  Clock &operator-= (Clock d)
+  Clock &operator-= (Clock d) // NOLINT(performance-unnecessary-value-param)
   {
     m_clock_ns -= d.m_clock_ns;
     return *this;
@@ -246,7 +246,7 @@ public:
   /**
    *  @brief Difference
    */
-  Clock operator- (Clock d) const
+  Clock operator- (Clock d) const // NOLINT(performance-unnecessary-value-param)
   {
     Clock c (*this);
     c -= d;

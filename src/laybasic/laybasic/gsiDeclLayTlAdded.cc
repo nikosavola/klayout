@@ -32,7 +32,7 @@ namespace gsi
 
 #if defined(HAVE_QT) && defined(HAVE_QTBINDINGS)
 
-static void fill_with_qcolor (tl::PixelBuffer *pb, QColor c)
+static void fill_with_qcolor (tl::PixelBuffer *pb, QColor c) // NOLINT(performance-unnecessary-value-param)
 {
   pb->fill (c.rgb ());
 }

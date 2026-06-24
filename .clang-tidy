@@ -32,7 +32,8 @@ Checks: >
   -performance-no-int-to-ptr,
   -performance-enum-size,
   -performance-noexcept-move-constructor,
-  -performance-noexcept-swap
+  -performance-noexcept-swap,
+  -bugprone-reserved-identifier
 
 # Disabled, with reasons (re-enable once cleaned):
 #   - performance-enum-size: would shrink enum underlying types, an ABI/behaviour
@@ -40,6 +41,10 @@ Checks: >
 #   - performance-noexcept-move-constructor / -noexcept-swap: the fix inserts
 #     "noexcept" once per template instantiation, so clang-tidy --fix stacks
 #     duplicate tokens on templated headers and corrupts them. Apply by hand.
+#   - bugprone-reserved-identifier: KLayout consistently uses leading-underscore
+#     names as a deliberate convention (e.g. "_HDR_*" include guards and the
+#     "_ARGSPEC*" helper macros in gsiMethods.h). These are not defects, and
+#     renaming the convention tree-wide is out of scope.
 
 # Treat nothing as an error yet (informational rollout).
 WarningsAsErrors: ''

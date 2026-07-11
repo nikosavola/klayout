@@ -114,9 +114,18 @@ public:
 
   /**
    *  @brief Gets the interaction distance
-   *  A distance of means the shapes must overlap in order to interact.
+   *  A distance of zero means the shapes must overlap in order to interact.
+   *  A distance of 1 means the shapes need to touch in order to interact.
    */
   virtual db::Coord dist () const { return 0; }
+
+  /**
+   *  @brief Gets a override distance for a specific input layer
+   *  The input layers are numbered from 0 to n-1, where n is the allowed number of intruder layers
+   *  The override distance is used insted of the global distance ("dist()") for the given
+   *  input layer. The override distance cannot be bigger than the global distance.
+   */
+  virtual std::map<unsigned int, db::Coord> override_distance () const { return std::map<unsigned int, db::Coord> (); }
 
   /**
    *  @brief Gets the cell variant reducer that indicates whether to build cell variants and which

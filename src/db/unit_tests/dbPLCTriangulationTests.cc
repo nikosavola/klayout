@@ -896,8 +896,8 @@ TEST(triangulate_geo)
   }
 
   EXPECT_LT (n_skinny, size_t (20));
-  EXPECT_GT (plc.num_polygons (), size_t (29000));
-  EXPECT_LT (plc.num_polygons (), size_t (30000));
+  EXPECT_GT (plc.num_polygons (), size_t (30000));
+  EXPECT_LT (plc.num_polygons (), size_t (30200));
 }
 
 TEST(triangulate_analytic)
@@ -951,8 +951,8 @@ TEST(triangulate_analytic)
     EXPECT_GE (t->b (), param.min_b);
   }
 
-  EXPECT_GT (plc.num_polygons (), size_t (1250));
-  EXPECT_LT (plc.num_polygons (), size_t (1300));
+  EXPECT_GT (plc.num_polygons (), size_t (1300));
+  EXPECT_LT (plc.num_polygons (), size_t (1340));
 }
 
 TEST(triangulate_problematic)
@@ -1078,6 +1078,114 @@ TEST(triangulate_issue1996)
   EXPECT_LT (plc.num_polygons (), size_t (132000));
 }
 
+TEST(triangulate_issue_2429)
+{
+  db::DPoint contour[] = {
+    db::DPoint (-13025.428, -33338.541),
+    db::DPoint (-13127.959, -33236.01),
+    db::DPoint (-13132.732, -33240.783),
+    db::DPoint (-13135.914, -33237.601),
+    db::DPoint (-13026.136, -33127.823),
+    db::DPoint (-12923.605, -33230.354),
+    db::DPoint (-12920.423, -33227.172),
+    db::DPoint (-13022.954, -33124.641),
+    db::DPoint (-13014.999, -33116.686),
+    db::DPoint (-13011.817, -33119.868),
+    db::DPoint (-13016.59, -33124.641),
+    db::DPoint (-12914.059, -33227.172),
+    db::DPoint (-12923.605, -33236.718),
+    db::DPoint (-13026.136, -33134.187),
+    db::DPoint (-13029.317, -33137.369),
+    db::DPoint (-12926.787, -33239.899),
+    db::DPoint (-12936.333, -33249.445),
+    db::DPoint (-13038.863, -33146.915),
+    db::DPoint (-13042.045, -33150.097),
+    db::DPoint (-12939.515, -33252.627),
+    db::DPoint (-12949.061, -33262.173),
+    db::DPoint (-13051.591, -33159.643),
+    db::DPoint (-13054.773, -33162.825),
+    db::DPoint (-12952.243, -33265.355),
+    db::DPoint (-13012.701, -33325.813),
+    db::DPoint (-13115.231, -33223.283),
+    db::DPoint (-13118.413, -33226.464),
+    db::DPoint (-13015.882, -33328.995)
+  };
+
+  db::DPolygon poly;
+  poly.assign_hull (contour + 0, contour + sizeof (contour) / sizeof (contour[0]));
+
+  double dbu = 1.0;
+
+  {
+    db::plc::TriangulationParameters param;
+    param.min_b = 0.3;
+    param.max_area = 0.0;
+
+    db::plc::Graph plc;
+    TestableTriangulation tri (&plc);
+    db::DCplxTrans trans = db::DCplxTrans (dbu) * db::DCplxTrans (db::DTrans (db::DPoint () - poly.box ().center ()));
+    tri.triangulate (trans * poly, param);
+
+    EXPECT_EQ (tri.check (false), true);
+
+    //  for debugging:
+    //  tri.dump ("debug.gds");
+
+    for (auto t = plc.begin (); t != plc.end (); ++t) {
+      EXPECT_GE (t->b (), param.min_b);
+    }
+
+    EXPECT_GE (plc.num_polygons (), size_t (65));
+    EXPECT_LE (plc.num_polygons (), size_t (67));
+  }
+
+  {
+    db::plc::TriangulationParameters param;
+    param.min_b = 0.3;
+    param.max_area = 500.0;
+
+    db::plc::Graph plc;
+    TestableTriangulation tri (&plc);
+    db::DCplxTrans trans = db::DCplxTrans (dbu) * db::DCplxTrans (db::DTrans (db::DPoint () - poly.box ().center ()));
+    tri.triangulate (trans * poly, param);
+
+    EXPECT_EQ (tri.check (false), true);
+
+    //  for debugging:
+    //  tri.dump ("debug.gds");
+
+    for (auto t = plc.begin (); t != plc.end (); ++t) {
+      EXPECT_GE (t->b (), param.min_b);
+    }
+
+    EXPECT_GE (plc.num_polygons (), size_t (94));
+    EXPECT_LE (plc.num_polygons (), size_t (96));
+  }
+
+  {
+    db::plc::TriangulationParameters param;
+    param.min_b = 0.9;
+    param.max_area = 50.0;
+
+    db::plc::Graph plc;
+    TestableTriangulation tri (&plc);
+    db::DCplxTrans trans = db::DCplxTrans (dbu) * db::DCplxTrans (db::DTrans (db::DPoint () - poly.box ().center ()));
+    tri.triangulate (trans * poly, param);
+
+    EXPECT_EQ (tri.check (false), true);
+
+    //  for debugging:
+    //  tri.dump ("debug.gds");
+
+    for (auto t = plc.begin (); t != plc.end (); ++t) {
+      EXPECT_GE (t->b (), param.min_b);
+    }
+
+    EXPECT_GE (plc.num_polygons (), size_t (670));
+    EXPECT_LE (plc.num_polygons (), size_t (676));
+  }
+}
+
 TEST(triangulate_with_vertexes)
 {
   db::Point contour[] = {
@@ -1172,3 +1280,4 @@ TEST(triangulate_with_vertexes)
     }
   }
 }
+

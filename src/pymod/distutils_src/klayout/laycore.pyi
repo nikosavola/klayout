@@ -6111,7 +6111,7 @@ class LayerPropertiesNodeRef(LayerPropertiesNode):
         r"""
         @brief Assigns the contents of the 'other' object to self.
 
-        This version accepts a \LayerProperties object. Assignment will change the properties of the layer in the view.
+        This version accepts a \LayerPropertiesNode object and allows modification of the layer node's hierarchy. Assignment will reconfigure the layer node in the view.
         """
         ...
     @overload
@@ -6119,7 +6119,7 @@ class LayerPropertiesNodeRef(LayerPropertiesNode):
         r"""
         @brief Assigns the contents of the 'other' object to self.
 
-        This version accepts a \LayerPropertiesNode object and allows modification of the layer node's hierarchy. Assignment will reconfigure the layer node in the view.
+        This version accepts a \LayerProperties object. Assignment will change the properties of the layer in the view.
         """
         ...
     def delete(self) -> None:
@@ -10956,6 +10956,16 @@ class PixelBuffer:
     By default, the pixel buffer does not support an alpha channel.
     """
     @classmethod
+    def from_bytes(cls, data: bytes) -> PixelBuffer:
+        r"""
+        @brief Reconstructs a pixel buffer from a byte stream produced by \to_bytes
+
+        The width and height are taken from the header and the stream length is checked against them. The dimensions are capped at 65536 x 65536; a header exceeding this limit raises an error.
+
+        This method has been added in version 0.30.10.
+        """
+        ...
+    @classmethod
     def from_png_data(cls, data: bytes) -> PixelBuffer:
         r"""
         @brief Reads the pixel buffer from a PNG byte stream
@@ -11140,6 +11150,15 @@ class PixelBuffer:
     def swap(self, other: PixelBuffer) -> None:
         r"""
         @brief Swaps data with another PixelBuffer object
+        """
+        ...
+    def to_bytes(self) -> bytes:
+        r"""
+        @brief Converts the pixel buffer to a raw byte stream
+
+        The stream starts with an 8-byte header (width and height as 32-bit unsigned integers) followed by the raw ARGB32 pixel data with 4 bytes per pixel in row-major order, top to bottom. Unlike \to_png_data this method has zero encoding overhead. Use \from_bytes to reconstruct the pixel buffer.
+
+        This method has been added in version 0.30.10.
         """
         ...
     def to_png_data(self) -> bytes:

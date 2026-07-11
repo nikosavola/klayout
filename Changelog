@@ -1,3 +1,66 @@
+0.30.12          (2026-08-26):
+* Bugfix: %GITHUB%/issues/2434 Application crashes with Ruby PCell
+
+0.30.11          (2026-08-23):
+* Bugfix: %GITHUB%/issues/2362 Range checks of integers in Python API and correct string deserialization of MIN_INT
+* Bugfix: %GITHUB%/issues/2369 Skipping cell name in OASIS error messages or warning unless inside a cell
+* Enhancement: %GITHUB%/issues/2374 LEF/DEF Import - skip duplicate Macros feature
+* Enhancement: %GITHUB%/issues/2407 Visualize "Select" and "Partial" via selection box style
+* Bugfix: %GITHUB%/issues/2416 Two-layer DRC check without merged first input produces separation violations that 0.30.9 does not reportbug
+* Enhancement: %GITHUB%/issues/2417 Better error message in LVS "name" function
+* Bugfix: %GITHUB%/issues/2419 Arc disappears when zoomed in and all anchor points are outside the viewportbug
+* Bugfix: %GITHUB%/issues/2423 DRC regression (separation check)
+* Bugfix: %GITHUB%/issues/2429 Internal error on triangulation
+* Bugfix: DXF - avoiding generating duplicates of zero layer during DXF read/write spin.
+* Bugfix: PCellDeclarationHelper documentation for Python was not visible in Assistant
+* Enhancement: Text markers can now be configured to have a filled text box
+* Bugfix: Python does not generate "long long" Variant types when not required
+* Bugfix: Labels with unconfigured text height and without a default text height set are consistently non-scaling now
+* Bugfix: Avoid a segfault when using an invalid font number in labels
+* Bugfix: Edge layers are ignored in flat LVS's name() function like in deep mode
+* Bugfix: Fixing an issue with the Macro Editors search function - page does not jump to search position
+* Enhancement: Help browser on-page search function now supports search forward and backward
+* Enhancement: Experimental support for custom PCell parameter pages
+  With this feature, a PCell can supply a custom-made parameter page. For details
+  and a sample see the "PCellParametersPage" class documentation.
+* Enhancement: Some widget classes from KLayout's core available in Python/Ruby
+  - DitherPatternSelectionButton
+  - LineStyleSelectionButton
+  - LibrarySelectionComboBox
+  - CellViewSelectionComboBox
+  - LayerSelectionComboBox
+  - SimpleColorButton
+  - ColorButton
+
+0.30.10          (2026-07-25):
+* Bugfix: %GITHUB%/issues/2384 Deep DRC failure with scaled instances
+* Enhancement: %GITHUB%/issues/2391 Grid Features: switching between coarser and finier grids with keyboard shortcut
+* Bugfix: %GITHUB%/issues/2392 Wrong PCell instantiations when switching technologies
+* Bugfix: %GITHUB%/issues/2396 Python objects did nott support weak refs
+* Bugfix: Region#edges was not working properly when used on Regions with properties
+  enabled. Now, with properties enabled, the regions are consistently formed from polygons with
+  identical properties before generating the edges.
+* Enhancement: %GITHUB%/issues/2398 Clarify 'move to' (and others) scope in window caption
+* Enhancement: DRC two-layer checks now do not necessarily require merging for the
+  first input. This in general speeds up the operation in certain cases.
+  As a side effect, the error markers may be split according to partial input
+  polygons, as is the case for plain "space" check already.
+* Enhancement: Use multiple drawing workers for image_with_options rendering
+* Bugfix: Update layer names in layer list (when used in addition to layer/datatypes) on reload
+  As a side effect, the layer properties nodes will update the "real source" according to
+  the actual name if the name is used in addition to layer/datatypes. Also, the layout readers
+  will update layer names in the layer properties of the Layout object.
+* Bugfix: Marek's bug: move interactive/copy interactive did not do anything when the mouse wasn't moved
+* Bugfix: Entering '16:17' (or other nonsense) into 'new layout' layer list made KLayout hang
+* Bugfix: API: removing a pin from a Circuit does not crash if the pin was not disconnected before.
+  Now it's disconnected automatically
+* Enhancement: Improved the image pixel value display: favors selected image, and follows mouse instantly
+* Bugfix: When images are selected and images are turned off, the selection no longer persists
+* Bugfix: Using PCell parameter name 'name' won't break PCell's cell_name_impl default implementation
+* Enhancement: New API functions
+  - Create a Layout as a deep copy of a cell (Layout#new)
+  - PixelBuffer#to_bytes and PixelBuffer#from_bytes for zero-overhead RGBA pixel access
+
 0.30.9           (2026-05-25):
 * Bugfix: %GITHUB%/issues/2331 Screen size error (Assertion tlPixelBuffer.cc:260 n < m_height was not true)
 * Enhancement: %GITHUB%/issues/2335 Editor Options (F3) behaviour has changed
@@ -16,11 +79,11 @@
   to GDS and back.
 * Bugfix: %GITHUB%/issues/2356 Edit options always shown, even for klayout -ne
 * Enhancement: because of issue #2356 and #2335, the "Editor Options" dock was overhauled
-  * It is called "Tool Options" now as it hosts not just shape editor options
-  * The Ruler tool got its own page as the original page was not functional and
+  - It is called "Tool Options" now as it hosts not just shape editor options
+  - The Ruler tool got its own page as the original page was not functional and
     rulers have other options. This replicates some settings from the "Ruler
     and annotations setup" page.
-  * The dock widget's visibility can be controlled in the same way than the other
+  - The dock widget's visibility can be controlled in the same way than the other
     docks. The "Edit/Editor Options" entry moved to "View/Tool Options". It turns
     on or off the tool options dock, which is populated with pages depending on the tool.
     The default key binding (F3) will now show or hide this dock.
@@ -48,22 +111,22 @@
 * Enhancement: renamed ruler option for more clarity - changed 
   'snap to objects (unless disabled in template)' to 'never snap to object' (inverted)
 * Enhancement: enhancements in the script API
-  * Cell#is_cold_proxy?: indicates if a cell is a "defunc" library reference
-  * Cell#library_cell_name: gets the library cell name for a "defunc" reference
-  * Cell#library_name: gets the library name for a "defunc" reference
-  * Cell#pcell_name: gets the pcell name for a "defunct" reference
-  * Layout#delete_cells: now available with a list of cell object
-  * Layout#delete_cell_rec: now available with a cell object
-  * Layout#prune_cell: now available with a cell object
-  * Layout#prune_cells: for pruning multiple cells in one call
-  * Layout#prune_subcells: now with a cell object
-  * Layout#prune_subcells: now with multiple root cells
-  * Layout#flatten: now with a cell object
-  * Layout#flatten_into: now with cell objects
-  * Layout#delete_cell: now with a cell object
-  * Default value "all" for "levels" argument in "prune_subcells" and "prune_cell"
-  * Default value "all" for "levels" and "true" for "prune" argument in "flatten"
-  * Default value "all" for "levels" and "unity" for "trans" argument in "flatten_into"
+  - Cell#is_cold_proxy?: indicates if a cell is a "defunc" library reference
+  - Cell#library_cell_name: gets the library cell name for a "defunc" reference
+  - Cell#library_name: gets the library name for a "defunc" reference
+  - Cell#pcell_name: gets the pcell name for a "defunct" reference
+  - Layout#delete_cells: now available with a list of cell object
+  - Layout#delete_cell_rec: now available with a cell object
+  - Layout#prune_cell: now available with a cell object
+  - Layout#prune_cells: for pruning multiple cells in one call
+  - Layout#prune_subcells: now with a cell object
+  - Layout#prune_subcells: now with multiple root cells
+  - Layout#flatten: now with a cell object
+  - Layout#flatten_into: now with cell objects
+  - Layout#delete_cell: now with a cell object
+  - Default value "all" for "levels" argument in "prune_subcells" and "prune_cell"
+  - Default value "all" for "levels" and "true" for "prune" argument in "flatten"
+  - Default value "all" for "levels" and "unity" for "trans" argument in "flatten_into"
 
 0.30.8           (2026-04-14):
 * Enhancement: %GITHUB%/issues/2248 Switch layouts but without losing the handle
@@ -253,7 +316,7 @@
 * Enhancement: DRC function "def_output": A simple yet useful extension to obtain 
   the output layout and to manipulate it (within limits)
 * Bugfixes and enhancements: fill feature (see also issue #2087)
-  - tiles in tiled mode most not overlap when the origin is not global as tiles may use different origins
+  - tiles in tiled mode must not overlap when the origin is not global as tiles may use different origins
   - more efficient computation of remaining fill area
   - fill pattern "margin" feature simplifies keeping distance to other fill
     shapes or original features in multi-fill scenarios

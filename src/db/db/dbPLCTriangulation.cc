@@ -42,6 +42,10 @@ static inline bool is_equal (const db::DPoint &a, const db::DPoint &b)
          std::abs (a.y () - b.y ()) < std::max (1.0, (std::abs (a.y ()) + std::abs (b.y ()))) * db::epsilon;
 }
 
+//  distance of point to edge center to be considered "on edge center" relative to edge length involved
+const double snap_to_edge_center = 1e-3;
+
+
 Triangulation::Triangulation (Graph *graph)
 {
   mp_graph = graph;
@@ -231,66 +235,67 @@ Triangulation::insert_point (db::DCoord x, db::DCoord y, std::list<tl::weak_ptr<
 Vertex *
 Triangulation::insert (Vertex *vertex, std::list<tl::weak_ptr<Polygon> > *new_triangles)
 {
-  std::vector<Polygon *> tris = find_triangle_for_point (*vertex);
+  Polygon *in_triangle = 0;
+  Edge *on_edge = 0;
 
-  //  the new vertex is outside the domain
-  if (tris.empty ()) {
+  if (! find_triangle_for_point (*vertex, in_triangle, on_edge)) {
+
+    //  the new vertex is outside the domain
     tl_assert (! m_is_constrained);
     insert_new_vertex (vertex, new_triangles);
     return vertex;
+
   }
 
-  //  check, if the new vertex is on an edge (may be edge between triangles or edge on outside)
-  std::vector<Edge *> on_edges;
-  std::vector<Edge *> on_vertex;
-  for (int i = 0; i < 3; ++i) {
-    Edge *e = tris.front ()->edge (i);
-    if (e->side_of (*vertex) == 0) {
-      if (is_equal (*vertex, *e->v1 ()) || is_equal (*vertex, *e->v2 ())) {
-        on_vertex.push_back (e);
-      } else {
-        on_edges.push_back (e);
-      }
+  if (on_edge) {
+
+    if (is_equal (*vertex, *on_edge->v1 ())) {
+      return on_edge->v1 ();
+    } else if (is_equal (*vertex, *on_edge->v2 ())) {
+      return on_edge->v2 ();
+    } else {
+      split_triangles_on_edge (vertex, on_edge, new_triangles);
+      return vertex;
     }
-  }
 
-  if (! on_vertex.empty ()) {
+  } else if (in_triangle) {
 
-    tl_assert (on_vertex.size () == size_t (2));
-    return on_vertex.front ()->common_vertex (on_vertex [1]);
-
-  } else if (! on_edges.empty ()) {
-
-    tl_assert (on_edges.size () == size_t (1));
-    split_triangles_on_edge (vertex, on_edges.front (), new_triangles);
+    split_triangle (in_triangle, vertex, new_triangles);
     return vertex;
 
-  } else if (tris.size () == size_t (1)) {
+  } else {
 
-    //  the new vertex is inside one triangle
-    split_triangle (tris.front (), vertex, new_triangles);
-    return vertex;
+    tl_assert (false);
+    return 0;
 
   }
-
-  tl_assert (false);
 }
 
-std::vector<Polygon *>
-Triangulation::find_triangle_for_point (const db::DPoint &point)
+bool Triangulation::find_triangle_for_point (const db::DPoint &point, Polygon *&in_triangle, Edge *&on_edge)
 {
   Edge *edge = find_closest_edge (point);
 
-  std::vector<Polygon *> res;
   if (edge) {
-    for (auto t = edge->begin_polygons (); t != edge->end_polygons (); ++t) {
-      if (t->contains (point) >= 0) {
-        res.push_back (t.operator-> ());
+
+    if (edge->side_of (point) == 0) {
+
+      on_edge = edge;
+      return true;
+
+    } else {
+
+      for (auto t = edge->begin_polygons (); t != edge->end_polygons (); ++t) {
+        if (t->contains (point) >= 0) {
+          in_triangle = t.operator-> ();
+          return true;
+        }
       }
+
     }
+
   }
 
-  return res;
+  return false;
 }
 
 Edge *
@@ -1129,17 +1134,23 @@ static bool is_touching (const db::DEdge &a, const db::DEdge &b)
 std::vector<Edge *>
 Triangulation::ensure_edge_inner (Vertex *from, Vertex *to)
 {
-  auto crossed_edges = search_edges_crossing (from, to);
   std::vector<Edge *> result;
+
+  //  check if there is an edge already
+  Edge *already_there = find_edge_for_points (*from, *to);
+  if (already_there) {
+    result.push_back (already_there);
+    return result;
+  }
+
+  auto crossed_edges = search_edges_crossing (from, to);
 
   db::DEdge dedge (*from , *to);
 
   if (crossed_edges.empty ()) {
 
     //  no crossing edge - there should be a edge already
-    Edge *res = find_edge_for_points (*from, *to);
-    tl_assert (res != 0);
-    result.push_back (res);
+    tl_assert (false);
 
   } else if (crossed_edges.size () == 1 && ! is_touching (dedge, crossed_edges.front ()->edge ())) {
 
@@ -1160,7 +1171,7 @@ Triangulation::ensure_edge_inner (Vertex *from, Vertex *to)
       db::DPoint p = (*e)->intersection_point (dedge);
       double dp = fabs ((p - *from).sq_length () - l_half);
       if (d < 0.0 || dp < d) {
-        dp = d;
+        d = dp;
         split_point = p;
         split_edge = *e;
       }
@@ -1385,6 +1396,9 @@ template DB_PUBLIC void Triangulation::make_contours (const db::DPolygon &, cons
 void
 Triangulation::create_constrained_delaunay (const db::Region &region, const CplxTrans &trans)
 {
+  std::vector<std::vector<Vertex *> > box_contours;
+  make_contours (db::Polygon (region.bbox ()), trans, box_contours);
+
   std::vector<std::vector<Vertex *> > edge_contours;
 
   for (auto p = region.begin_merged (); ! p.at_end (); ++p) {
@@ -1397,6 +1411,9 @@ Triangulation::create_constrained_delaunay (const db::Region &region, const Cplx
 void
 Triangulation::create_constrained_delaunay (const db::Polygon &p, const CplxTrans &trans)
 {
+  std::vector<std::vector<Vertex *> > box_contours;
+  make_contours (db::Polygon (p.box ()), trans, box_contours);
+
   std::vector<std::vector<Vertex *> > edge_contours;
   make_contours (p, trans, edge_contours);
 
@@ -1406,6 +1423,9 @@ Triangulation::create_constrained_delaunay (const db::Polygon &p, const CplxTran
 void
 Triangulation::create_constrained_delaunay (const db::DPolygon &p, const DCplxTrans &trans)
 {
+  std::vector<std::vector<Vertex *> > box_contours;
+  make_contours (db::DPolygon (p.box ()), trans, box_contours);
+
   std::vector<std::vector<Vertex *> > edge_contours;
   make_contours (p, trans, edge_contours);
 
@@ -1474,6 +1494,9 @@ Triangulation::triangulate (const db::Region &region, const std::vector<db::Poin
 
   clear ();
 
+  std::vector<std::vector<Vertex *> > box_contours;
+  make_contours (db::Polygon (region.bbox ()), trans, box_contours);
+
   std::vector<std::vector<Vertex *> > edge_contours;
   for (auto p = region.begin_merged (); ! p.at_end (); ++p) {
     make_contours (*p, trans, edge_contours);
@@ -1503,6 +1526,9 @@ Triangulation::triangulate (const db::Polygon &poly, const std::vector<db::Point
 
   clear ();
 
+  std::vector<std::vector<Vertex *> > box_contours;
+  make_contours (db::Polygon (poly.box ()), trans, box_contours);
+
   std::vector<std::vector<Vertex *> > edge_contours;
   make_contours (poly, trans, edge_contours);
 
@@ -1528,6 +1554,9 @@ Triangulation::triangulate (const db::Polygon &poly, const std::vector<db::Point
 
   clear ();
 
+  std::vector<std::vector<Vertex *> > box_contours;
+  make_contours (db::Polygon (poly.box ()), trans, box_contours);
+
   std::vector<std::vector<Vertex *> > edge_contours;
   make_contours (poly, trans, edge_contours);
 
@@ -1552,6 +1581,9 @@ Triangulation::triangulate (const db::DPolygon &poly, const std::vector<db::DPoi
   tl::SelfTimer timer (tl::verbosity () > parameters.base_verbosity, "Triangles::triangulate");
 
   clear ();
+
+  std::vector<std::vector<Vertex *> > box_contours;
+  make_contours (db::DPolygon (poly.box ()), trans, box_contours);
 
   std::vector<std::vector<Vertex *> > edge_contours;
   make_contours (poly, trans, edge_contours);
@@ -1624,8 +1656,6 @@ Triangulation::refine (const TriangulationParameters &parameters)
 
         if (s > 0) {
 
-          double snap = 1e-3;
-
           //  Snap the center to a segment center if "close" to it.
           //  This avoids generating very skinny triangles that can't be fixed as the
           //  segment cannot be flipped. This a part of the issue #1996 problem.
@@ -1633,7 +1663,7 @@ Triangulation::refine (const TriangulationParameters &parameters)
             if ((*t)->edge (i)->is_segment ()) {
               auto e = (*t)->edge (i)->edge ();
               auto c = e.p1 () + e.d () * 0.5;
-              if (c.distance (center) < e.length () * 0.5 * snap - db::epsilon) {
+              if (c.distance (center) < e.length () * 0.5 * snap_to_edge_center - db::epsilon) {
                 center = c;
                 break;
               }

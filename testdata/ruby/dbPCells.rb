@@ -173,6 +173,20 @@ if RBA.constants.member?(:PCellDeclarationHelper)
       
   end
 
+  # A PCell with a parameter named "name"
+  class PCellWithNameParameter < RBA::PCellDeclarationHelper
+
+    def initialize
+      super()
+      param(:name, TypeString, "Name", :default => "")
+    end
+
+    def produce_impl
+      cell.shapes(layout.layer(1, 0)).insert(RBA::Text::new(name, RBA::Trans::new))
+    end
+
+  end
+
   class PCellTestLib2 < RBA::Library
 
     def initialize  
@@ -182,6 +196,7 @@ if RBA.constants.member?(:PCellDeclarationHelper)
       
       # create the PCell declarations
       layout.register_pcell("Box2", BoxPCell2::new)
+      layout.register_pcell("PCellWithNameParameter", PCellWithNameParameter::new)
 
       # register us with the name "MyLib"
       self.register("PCellTestLib2")
@@ -1012,6 +1027,25 @@ class DBPCell_TestClass < TestBase
 
   end
 
+  # PCell with "name" parameter
+  def test_15
+
+    # instantiate and register the library
+    tl = PCellTestLib2::new
+
+    lib = RBA::Library::library_by_name("PCellTestLib2")
+    pcell_decl_id = lib.layout.pcell_id("PCellWithNameParameter")
+
+    param = { "name" => "xyz" }
+    pcell_var_id = lib.layout.add_pcell_variant(pcell_decl_id, param)
+
+    assert_equal(lib.layout.cell(pcell_var_id).name, "PCellWithNameParameter")
+    assert_equal(first_shape(lib.layout.begin_shapes(pcell_var_id, lib.layout.layer(1, 0))).to_s, "text ('xyz',r0 0,0)")
+
+    tl._destroy
+
+  end
+
 end
 
 class DBPCellParameterStates_TestClass < TestBase
@@ -1045,6 +1079,34 @@ class DBPCellParameterStates_TestClass < TestBase
 
     ps.icon = RBA::PCellParameterState::InfoIcon
     assert_equal(ps.icon, RBA::PCellParameterState::InfoIcon)
+
+  end
+
+  def test_2
+
+    pss = RBA::PCellParameterStates::new
+    assert_equal(pss.has_parameter?("a"), false)
+    pa = pss.parameter("a")
+    assert_equal(pss.has_parameter?("a"), true)
+
+    # manipulating the value is reflected in the states collection
+    pa.value = 17
+    assert_equal(pss.parameter("a").value, 17)
+
+    pss_const = pss._to_const_object
+    assert_equal(pss_const._is_const_object?, true)
+
+    assert_equal(pss_const.has_parameter?("a"), true)
+    pa = pss_const.parameter("a")
+    assert_equal(pa.value, 17)
+
+    begin
+      # can't manipulate the const value
+      pa.value = 18
+      assert_equal(true, false)
+    rescue => ex
+      # goes here
+    end
 
   end
 

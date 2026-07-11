@@ -22,6 +22,7 @@ import os
 import sys
 import gc
 import copy
+import weakref
 
 # Set this to True to disable some tests involving exceptions
 leak_check = "TEST_LEAK_CHECK" in os.environ
@@ -144,6 +145,13 @@ class PyGFactory(pya.GFactory):
   # reimplementation of "virtual GObject *f(int)"
   def f(self, z):
     return PyGObject(z)
+
+class PyNilGFactory(pya.GFactory):
+  def __init__(self):
+    super(PyNilGFactory, self).__init__()
+  # reimplementation of "virtual GObject *f(int)"
+  def f(self, z):
+    return None
 
 class BasicTest(unittest.TestCase):
 
@@ -536,20 +544,20 @@ class BasicTest(unittest.TestCase):
     self.assertEqual( a3.get_n(), -11 )
 
     self.assertEqual( a1.a10_d(5.2), "5.2" )
-    self.assertEqual( a1.a10_s(0x70000000), "0" )
-    self.assertEqual( a1.a10_s(0x7fffffff), "-1" )
-    self.assertEqual( a1.a10_us(0x70000000), "0" )
-    self.assertEqual( a1.a10_us(0x7fffffff), "65535" )
+    self.assertEqual( a1.a10_s(0x7fff), "32767" )
+    self.assertEqual( a1.a10_s(-32768), "-32768" )
+    self.assertEqual( a1.a10_us(0), "0" )
+    self.assertEqual( a1.a10_us(0xffff), "65535" )
     self.assertEqual( a1.a10_i(-0x80000000), "-2147483648" )
     self.assertEqual( a1.a10_l(-0x80000000), "-2147483648" )
     self.assertEqual( a1.a10_ll(-0x80000000), "-2147483648" )
     self.assertEqual( a1.a10_ui(0xffffffff), "4294967295" )
     self.assertEqual( a1.a10_ul(0xffffffff), "4294967295" )
     self.assertEqual( a1.a10_ull(0xffffffff), "4294967295" )
-    self.assertEqual( a1.a11_s(0x70000000), 0 )
-    self.assertEqual( a1.a11_s(0x7fffffff), -1 )
-    self.assertEqual( a1.a11_us(0x70000000), 0 )
-    self.assertEqual( a1.a11_us(0x7fffffff), 65535 )
+    self.assertEqual( a1.a11_s(0x7fff), 32767 )
+    self.assertEqual( a1.a11_s(-32768), -32768 )
+    self.assertEqual( a1.a11_us(0), 0 )
+    self.assertEqual( a1.a11_us(0xffff), 65535 )
     self.assertEqual( a1.a11_i(-0x80000000), -2147483648 )
     self.assertEqual( a1.a11_l(-0x80000000), -2147483648 )
     self.assertEqual( a1.a11_ll(-0x80000000), -2147483648 )
@@ -3208,6 +3216,24 @@ class BasicTest(unittest.TestCase):
 
     self.assertEqual(pya.A.ba_to_ia(b'\x00\x01\x02'), [ 0, 1, 2 ])
 
+  def test_variant_formation(self):
+
+    self.assertEqual(pya.A.var2s(1.5), "##1.5")
+    self.assertEqual(pya.A.var2s(-17), "#-17")
+    self.assertEqual(pya.A.var2s("abc"), "'abc'")
+    self.assertEqual(pya.A.var2s(None), "nil")
+    self.assertEqual(pya.A.var2s(True), "true")
+    self.assertEqual(pya.A.var2s(False), "false")
+    self.assertEqual(pya.A.var2s(pya.DBox(0, 0, 10, 20)), "[dbox:(0,0;10,20)]")
+    self.assertEqual(pya.A.var2s([ 0.5, "hello" ]), "(##0.5,'hello')")
+    self.assertEqual(pya.A.var2s(( 0.5, "hello" )), "(##0.5,'hello')")
+    self.assertEqual(pya.A.var2s([ 0.5, [ 1, 2 ] ]), "(##0.5,(#1,#2))")
+    self.assertEqual(pya.A.var2s({ 1: 'one', 'two': 17 }), "{#1=>'one','two'=>#17}")
+    if pya.A.l_size() == 4:
+      self.assertEqual(pya.A.var2s(100000000000), "#l100000000000")
+    else:
+      self.assertEqual(pya.A.var2s(100000000000), "#100000000000")
+
   # Tests multi-base mixins (only constants and enums available)
   def test_multiBaseMixins(self):
     
@@ -3235,6 +3261,10 @@ class BasicTest(unittest.TestCase):
     self.assertEqual(pya.GObject.g_inst_count(), gc + 1)
     go = None
     self.assertEqual(pya.GObject.g_inst_count(), gc)
+
+    gf = PyNilGFactory()
+    go = pya.GFactory.create_f(gf, 17)
+    self.assertEqual(go is None, True)
 
   # fallback to __rmul__ for not implemented __mul__
 
@@ -3351,6 +3381,48 @@ class BasicTest(unittest.TestCase):
     self.assertEqual(b.str(), "xyz")
     self.assertEqual(bc.str(), "xyz")
     self.assertEqual(bnc.str(), "xyz")
+
+  # weak refs
+  def test_94(self):
+
+    b = pya.B()
+    b.set_str("abc")
+
+    r = weakref.ref(b)
+    self.assertEqual(r() is None, False)
+    self.assertEqual(r().str(), "abc")
+
+    b = None
+    self.assertEqual(r() is None, True)
+
+  # range checks
+  def test_95(self):
+
+    # uses the A single-argument constructor to verify that int ranges
+    # are tested
+    a = pya.A.new_a(100)
+    self.assertEqual(a.a1(), 100)
+    a = pya.A.new_a(2147483647)
+    self.assertEqual(a.a1(), 2147483647)
+    a = pya.A.new_a(-2147483648)
+    self.assertEqual(a.a1(), -2147483648)
+
+    m = ""
+    try:
+      a = pya.A.new_a(2147483648)
+      self.assertEqual(a.a1(), 2147483648)
+    except Exception as ex:
+      m = str(ex)
+    self.assertEqual(m, "Value out of range: 2147483648, max value is 2147483647 for argument #1 in A.new_a")
+
+    m = ""
+    try:
+      a = pya.A.new_a(-2147483649)
+      self.assertEqual(a.a1(), -2147483649)
+    except Exception as ex:
+      m = str(ex)
+    self.assertEqual(m, "Value out of range: -2147483649, min value is -2147483648 for argument #1 in A.new_a")
+
 
 # run unit tests
 if __name__ == '__main__':

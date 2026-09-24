@@ -456,6 +456,7 @@ DEPENDPATH += $$TL_INC $$GSI_INC
 LIBS += -L$$DESTDIR -lklayout_tl -lklayout_gsi
 
 packagesExist(tbb) {
-    LIBS += -ltbb
+    CONFIG += link_pkgconfig
+    PKGCONFIG += tbb
 }
 

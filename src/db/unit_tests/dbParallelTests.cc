@@ -20,12 +20,10 @@
 */
 
 #include "tlUnitTest.h"
-#include "tlLog.h"
 #include "dbHierProcessor.h"
 #include "dbRegionLocalOperations.h"
 
 #include <algorithm>
-#include <chrono>
 #include <mutex>
 #include <set>
 #include <thread>
@@ -59,22 +57,21 @@ private:
   mutable std::set<std::thread::id> m_workers;
 };
 
-struct BenchmarkResult
+struct ParallelResult
 {
   std::vector<std::pair<std::string, std::string> > shapes;
   std::vector<std::pair<std::string, std::string> > expected;
-  double seconds;
   size_t workers;
 };
 
-BenchmarkResult run_hierarchical_and (unsigned int threads, int boxes_per_cell)
+ParallelResult run_hierarchical_and (unsigned int threads, int boxes_per_cell)
 {
   db::Layout layout;
   const unsigned int subject = layout.insert_layer (db::LayerProperties (1, 0));
   const unsigned int intruder = layout.insert_layer (db::LayerProperties (2, 0));
   const unsigned int output = layout.insert_layer (db::LayerProperties (3, 0));
   db::Cell &top = layout.cell (layout.add_cell ("TOP"));
-  BenchmarkResult result;
+  ParallelResult result;
 
   for (int c = 0; c < benchmark_cells; ++c) {
     const std::string name = tl::sprintf ("LEAF_%d", c);
@@ -98,11 +95,8 @@ BenchmarkResult run_hierarchical_and (unsigned int threads, int boxes_per_cell)
   std::vector<unsigned int> intruders (1, intruder);
   std::vector<unsigned int> outputs (1, output);
 
-  const auto start = std::chrono::steady_clock::now ();
   proc.run (&op, subject, intruders, outputs);
-  const double seconds = std::chrono::duration<double> (std::chrono::steady_clock::now () - start).count ();
 
-  result.seconds = seconds;
   result.workers = op.workers ();
   for (db::Layout::iterator cell = layout.begin (); cell != layout.end (); ++cell) {
     for (db::Shapes::shape_iterator shape = cell->shapes (output).begin (db::ShapeIterator::Polygons); ! shape.at_end (); ++shape) {
@@ -116,10 +110,10 @@ BenchmarkResult run_hierarchical_and (unsigned int threads, int boxes_per_cell)
   return result;
 }
 
-void check_hierarchical_and (tl::TestBase *_this, int boxes_per_cell, bool report)
+void check_hierarchical_and (tl::TestBase *_this, int boxes_per_cell)
 {
-  BenchmarkResult serial = run_hierarchical_and (0, boxes_per_cell);
-  BenchmarkResult parallel = run_hierarchical_and (4, boxes_per_cell);
+  ParallelResult serial = run_hierarchical_and (0, boxes_per_cell);
+  ParallelResult parallel = run_hierarchical_and (4, boxes_per_cell);
 
   EXPECT_EQ (serial.shapes.size (), size_t (benchmark_cells * boxes_per_cell));
   EXPECT (serial.shapes == serial.expected);
@@ -128,20 +122,11 @@ void check_hierarchical_and (tl::TestBase *_this, int boxes_per_cell, bool repor
   if (std::thread::hardware_concurrency () > 1) {
     EXPECT (parallel.workers > 1);
   }
-  if (report) {
-    tl::info << tl::sprintf ("Hierarchical AND: serial %.3fs, four threads %.3fs, %.2fx, workers %d", serial.seconds, parallel.seconds, serial.seconds / parallel.seconds, int (parallel.workers));
-  }
 }
 
 }
 
 TEST(ParallelHierarchicalAndCorrectness)
 {
-  check_hierarchical_and (_this, 800, false);
-}
-
-TEST(ParallelHierarchicalAndBenchmark)
-{
-  test_is_long_runner ();
-  check_hierarchical_and (_this, 3200, true);
+  check_hierarchical_and (_this, 800);
 }

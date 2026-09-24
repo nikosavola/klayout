@@ -30,7 +30,7 @@ SOURCES = \
   dbHierarchyBuilderTests.cc \
   dbRecursiveShapeIteratorTests.cc \
   dbHierProcessorTests.cc \
-  dbParallelBenchmarkTests.cc \
+  dbParallelTests.cc \
   dbDeepRegionTests.cc \
   dbDeepShapeStoreTests.cc \
   dbHierNetworkProcessorTests.cc \

@@ -24,4 +24,13 @@ done
 export DYLD_LIBRARY_PATH="${DYLD_LIBRARY_PATH:+$DYLD_LIBRARY_PATH:}$library_path"
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$library_path"
 shift "$(( $# < 2 ? $# : 2 ))"
-"$build_dir/db_parallel_benchmarks" "--benchmark_repetitions=$repeats" --benchmark_min_time=0.5s --benchmark_min_warmup_time=0.1 --benchmark_enable_random_interleaving "$@"
+output=$(mktemp)
+trap 'rm -f "$output"' EXIT HUP INT TERM
+if ! "$build_dir/db_parallel_benchmarks" "--benchmark_repetitions=$repeats" --benchmark_min_time=0.5s --benchmark_min_warmup_time=0.1 --benchmark_enable_random_interleaving "$@" > "$output" 2>&1; then
+  cat "$output"
+  exit 1
+fi
+cat "$output"
+if grep -q 'ERROR OCCURRED' "$output"; then
+  exit 1
+fi

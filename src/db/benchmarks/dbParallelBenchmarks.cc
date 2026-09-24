@@ -20,7 +20,13 @@
 */
 
 #include "dbEdgeProcessor.h"
+#include "dbCompoundOperation.h"
+#include "dbHierNetworkProcessor.h"
 #include "dbHierProcessor.h"
+#include "dbNetlistCompare.h"
+#include "dbNetlistDeviceClasses.h"
+#include "dbPolygonTools.h"
+#include "dbRegion.h"
 #include "dbRegionLocalOperations.h"
 
 #include <benchmark/benchmark.h>
@@ -28,6 +34,10 @@
 #include <cstdint>
 #include <string>
 #include <vector>
+
+#if defined(_OPENMP)
+#include <omp.h>
+#endif
 
 namespace {
 
@@ -139,8 +149,170 @@ void edge_merge (benchmark::State &state)
   state.SetItemsProcessed (int64_t (state.iterations ()) * boxes);
 }
 
+void compound_region (benchmark::State &state, bool boolean_or)
+{
+  const unsigned int threads = unsigned (state.range (0));
+  const int boxes_per_cell = int (state.range (1));
+  db::Layout layout;
+  const unsigned int subject = layout.insert_layer (db::LayerProperties (1, 0));
+  const unsigned int intruder = layout.insert_layer (db::LayerProperties (2, 0));
+  const db::cell_index_type top = layout.add_cell ("TOP");
+  for (int c = 0; c < 32; ++c) {
+    db::Cell &leaf = layout.cell (layout.add_cell (("LEAF_" + std::to_string (c)).c_str ()));
+    layout.cell (top).insert (db::CellInstArray (db::CellInst (leaf.cell_index ()), db::Trans (0, false, db::Vector (c * 2000, 0))));
+    for (int b = 0; b < boxes_per_cell; ++b) {
+      const int x = (b % 16) * 20;
+      const int y = (b / 16) * 20;
+      const db::PolygonRef shape (db::Polygon (db::Box (x, y, x + 10, y + 10)), layout.shape_repository ());
+      leaf.shapes (subject).insert (shape);
+      leaf.shapes (intruder).insert (shape);
+    }
+  }
+
+  db::DeepShapeStore store;
+  store.set_threads (int (threads));
+  db::Region left (db::RecursiveShapeIterator (layout, layout.cell (top), subject), store);
+  db::Region right (db::RecursiveShapeIterator (layout, layout.cell (top), intruder), store);
+  const size_t expected = size_t (32 * boxes_per_cell);
+
+  for (auto _ : state) {
+    db::CompoundRegionOperationPrimaryNode *primary = new db::CompoundRegionOperationPrimaryNode ();
+    db::CompoundRegionOperationSecondaryNode *secondary = new db::CompoundRegionOperationSecondaryNode (&right);
+    size_t count = 0;
+    if (boolean_or) {
+      db::CompoundRegionGeometricalBoolOperationNode op (db::CompoundRegionGeometricalBoolOperationNode::Or, primary, secondary);
+      db::Region result = left.cop_to_region (op);
+      count = result.count ();
+    } else {
+      db::CompoundRegionInteractOperationNode op (primary, secondary, 0, true, false);
+      db::Region result = left.cop_to_region (op);
+      count = result.count ();
+    }
+    benchmark::DoNotOptimize (count);
+    if (count != expected) {
+      state.SkipWithError ("compound region operation produced the wrong number of polygons");
+      break;
+    }
+  }
+  state.SetItemsProcessed (int64_t (state.iterations ()) * int64_t (expected));
+}
+
+void compound_bool_or (benchmark::State &state)
+{
+  compound_region (state, true);
+}
+
+void compound_interact (benchmark::State &state)
+{
+  compound_region (state, false);
+}
+
+void hierarchical_connectivity (benchmark::State &state)
+{
+  const int threads = int (state.range (0));
+  const int cells = int (state.range (1));
+  db::Layout layout;
+  const unsigned int layer = layout.insert_layer (db::LayerProperties (1, 0));
+  const db::cell_index_type top = layout.add_cell ("TOP");
+  std::vector<db::cell_index_type> leaves;
+  for (int c = 0; c < cells; ++c) {
+    db::Cell &leaf = layout.cell (layout.add_cell (("LEAF_" + std::to_string (c)).c_str ()));
+    leaves.push_back (leaf.cell_index ());
+    for (int b = 0; b < 16; ++b) {
+      const int x = (b % 4) * 20;
+      const int y = (b / 4) * 20;
+      leaf.shapes (layer).insert (db::PolygonRef (db::Polygon (db::Box (x, y, x + 10, y + 10)), layout.shape_repository ()));
+    }
+    layout.cell (top).insert (db::CellInstArray (db::CellInst (leaf.cell_index ()), db::Trans (0, false, db::Vector (c * 200, 0))));
+  }
+  db::Connectivity conn;
+  conn.connect (layer, layer);
+
+#if defined(_OPENMP)
+  omp_set_dynamic (0);
+  omp_set_num_threads (threads);
+#endif
+
+  for (auto _ : state) {
+    db::hier_clusters<db::PolygonRef> clusters;
+    clusters.build (layout, layout.cell (top), conn);
+    size_t count = 0;
+    for (db::cell_index_type leaf : leaves) {
+      count += clusters.clusters_per_cell (leaf).size ();
+    }
+    benchmark::DoNotOptimize (count);
+    if (count != size_t (cells * 16)) {
+      state.SkipWithError ("hierarchical connectivity produced the wrong number of clusters");
+      break;
+    }
+  }
+  state.SetItemsProcessed (int64_t (state.iterations ()) * cells * 16);
+}
+
+void netlist_compare (benchmark::State &state)
+{
+  const int devices = int (state.range (0));
+  std::string source = "circuit ARRAY (CENTER=C);\n";
+  for (int i = 0; i < devices; ++i) {
+    source += "  device RES $" + std::to_string (i + 1) + " (A=C,B=N" + std::to_string (i + 1) + ") (R=" + std::to_string (i + 1) + ");\n";
+  }
+  source += "end;\n";
+  db::Netlist left, right;
+  db::DeviceClass *left_resistor = new db::DeviceClassResistor ();
+  db::DeviceClass *right_resistor = new db::DeviceClassResistor ();
+  left_resistor->set_name ("RES");
+  right_resistor->set_name ("RES");
+  left.add_device_class (left_resistor);
+  right.add_device_class (right_resistor);
+  left.from_string (source.c_str ());
+  right.from_string (source.c_str ());
+
+  for (auto _ : state) {
+    db::NetlistComparer comparer;
+    comparer.set_dont_consider_net_names (true);
+    const bool equal = comparer.compare (&left, &right);
+    benchmark::DoNotOptimize (equal);
+    if (! equal) {
+      state.SkipWithError ("identical netlists did not compare equal");
+      break;
+    }
+  }
+  state.SetItemsProcessed (int64_t (state.iterations ()) * devices);
+}
+
+void polygon_rasterize (benchmark::State &state)
+{
+  const int vertices = int (state.range (0));
+  db::Polygon polygon;
+  std::vector<db::Point> points;
+  points.reserve (size_t (vertices));
+  for (int i = 0; i < vertices / 2; ++i) {
+    points.push_back (db::Point (i * 2, i % 2 == 0 ? 0 : 1));
+  }
+  for (int i = vertices / 2 - 1; i >= 0; --i) {
+    points.push_back (db::Point (i * 2, 200 + (i % 2)));
+  }
+  polygon.assign_hull (points.begin (), points.end ());
+
+  for (auto _ : state) {
+    db::AreaMap map (db::Point (-10, -10), db::Vector (10, 10), size_t (vertices / 10 + 3), 24);
+    const bool changed = db::rasterize (polygon, map);
+    benchmark::DoNotOptimize (changed);
+    if (! changed) {
+      state.SkipWithError ("polygon rasterization produced no area");
+      break;
+    }
+  }
+  state.SetItemsProcessed (int64_t (state.iterations ()) * vertices);
+}
+
 BENCHMARK (hierarchical_and)->Args ({0, 800})->Args ({1, 800})->Args ({2, 800})->Args ({4, 800})->Args ({0, 3200})->Args ({1, 3200})->Args ({2, 3200})->Args ({4, 3200})->UseRealTime ()->Unit (benchmark::kMillisecond);
 BENCHMARK (edge_merge)->Arg (4096)->Arg (16384)->UseRealTime ()->Unit (benchmark::kMillisecond);
+BENCHMARK (compound_bool_or)->Args ({0, 128})->Args ({2, 128})->Args ({4, 128})->Args ({0, 512})->Args ({2, 512})->Args ({4, 512})->UseRealTime ()->Unit (benchmark::kMillisecond);
+BENCHMARK (compound_interact)->Args ({0, 128})->Args ({2, 128})->Args ({4, 128})->Args ({0, 512})->Args ({2, 512})->Args ({4, 512})->UseRealTime ()->Unit (benchmark::kMillisecond);
+BENCHMARK (hierarchical_connectivity)->Args ({1, 64})->Args ({2, 64})->Args ({4, 64})->Args ({1, 256})->Args ({2, 256})->Args ({4, 256})->UseRealTime ()->Unit (benchmark::kMillisecond);
+BENCHMARK (netlist_compare)->Arg (512)->Arg (2048)->UseRealTime ()->Unit (benchmark::kMillisecond);
+BENCHMARK (polygon_rasterize)->Arg (2048)->Arg (8192)->UseRealTime ()->Unit (benchmark::kMillisecond);
 
 }
 

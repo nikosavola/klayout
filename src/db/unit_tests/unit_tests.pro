@@ -30,6 +30,7 @@ SOURCES = \
   dbHierarchyBuilderTests.cc \
   dbRecursiveShapeIteratorTests.cc \
   dbHierProcessorTests.cc \
+  dbParallelBenchmarkTests.cc \
   dbDeepRegionTests.cc \
   dbDeepShapeStoreTests.cc \
   dbHierNetworkProcessorTests.cc \
@@ -103,4 +104,3 @@ INCLUDEPATH += $$TL_INC $$DB_INC $$GSI_INC
 DEPENDPATH += $$TL_INC $$DB_INC $$GSI_INC
 
 LIBS += -L$$DESTDIR_UT -lklayout_db -lklayout_tl -lklayout_gsi
-

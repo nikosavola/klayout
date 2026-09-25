@@ -1,3 +1,14 @@
+#if __cplusplus >= 201703L
+  #if __has_include(<execution>)
+    #include <execution>
+  #endif
+#endif
+
+#if defined(__cpp_lib_execution)
+#define PARALLEL_EXEC_POLICY std::execution::par,
+#else
+#define PARALLEL_EXEC_POLICY
+#endif
 
 /*
 
@@ -111,7 +122,7 @@ layer_op<Sh, StableTag>::erase (Shapes *shapes)
     std::vector<bool> done;
     done.resize (m_shapes.size (), false);
 
-    std::sort (m_shapes.begin (), m_shapes.end ());
+    std::sort (PARALLEL_EXEC_POLICY m_shapes.begin (), m_shapes.end ());
 
     typename std::vector<Sh>::const_iterator s_begin = m_shapes.begin ();
     typename std::vector<Sh>::const_iterator s_end = m_shapes.end ();
@@ -1635,4 +1646,3 @@ template class DB_PUBLIC layer_op<db::Shape::user_object_type, db::unstable_laye
 template class DB_PUBLIC layer_op<db::object_with_properties<db::Shape::user_object_type>, db::unstable_layer_tag>;
 
 }
-

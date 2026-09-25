@@ -25,9 +25,11 @@
 #include "dbHierProcessor.h"
 #include "dbNetlistCompare.h"
 #include "dbNetlistDeviceClasses.h"
+#include "dbPLCConvexDecomposition.h"
 #include "dbPolygonTools.h"
 #include "dbRegion.h"
 #include "dbRegionLocalOperations.h"
+#include "dbShapes.h"
 
 #include <benchmark/benchmark.h>
 
@@ -306,13 +308,115 @@ void polygon_rasterize (benchmark::State &state)
   state.SetItemsProcessed (int64_t (state.iterations ()) * vertices);
 }
 
-BENCHMARK (hierarchical_and)->Args ({0, 800})->Args ({1, 800})->Args ({2, 800})->Args ({4, 800})->Args ({0, 3200})->Args ({1, 3200})->Args ({2, 3200})->Args ({4, 3200})->UseRealTime ()->Unit (benchmark::kMillisecond);
+void region_merge_properties (benchmark::State &state)
+{
+  const int boxes = int (state.range (0));
+  db::PropertiesSet properties;
+  std::vector<db::properties_id_type> property_ids;
+  for (int group = 0; group < 8; ++group) {
+    properties.clear ();
+    properties.insert (tl::Variant ("group"), group);
+    property_ids.push_back (db::properties_id (properties));
+  }
+
+  db::Region region;
+  for (int b = 0; b < boxes; ++b) {
+    const int x = (b % 128) * 20;
+    const int y = (b / 128) * 20;
+    region.insert (db::BoxWithProperties (db::Box (x, y, x + 10, y + 10), property_ids[size_t (b % 8)]));
+  }
+
+  for (auto _ : state) {
+    db::Region result = region.merged (false, 0, false);
+    const size_t count = result.count ();
+    benchmark::DoNotOptimize (count);
+    if (count != size_t (boxes)) {
+      state.SkipWithError ("property-aware region merge produced the wrong number of polygons");
+      break;
+    }
+  }
+  state.SetItemsProcessed (int64_t (state.iterations ()) * boxes);
+}
+
+void shapes_erase (benchmark::State &state)
+{
+  const int boxes = int (state.range (0));
+  std::vector<db::Polygon> all, to_remove;
+  all.reserve (size_t (boxes));
+  to_remove.reserve (size_t (boxes / 2));
+  for (int b = 0; b < boxes; ++b) {
+    const int x = (b % 128) * 20;
+    const int y = (b / 128) * 20;
+    db::Polygon polygon (db::Box (x, y, x + 10, y + 10));
+    all.push_back (polygon);
+    if (b % 2 == 0) {
+      to_remove.push_back (polygon);
+    }
+  }
+
+  for (auto _ : state) {
+    state.PauseTiming ();
+    db::Shapes shapes (true);
+    for (const db::Polygon &polygon : all) {
+      shapes.insert (polygon);
+    }
+    state.ResumeTiming ();
+
+    db::layer_op<db::Polygon, db::stable_layer_tag> operation (false, to_remove.begin (), to_remove.end ());
+    operation.redo (&shapes);
+    const size_t count = shapes.size ();
+    benchmark::DoNotOptimize (count);
+    if (count != size_t (boxes / 2)) {
+      state.SkipWithError ("shape erasure produced the wrong number of polygons");
+      break;
+    }
+  }
+  state.SetItemsProcessed (int64_t (state.iterations ()) * boxes);
+}
+
+#if defined(__linux__)
+void plc_decomposition (benchmark::State &state)
+{
+  const int contours = int (state.range (0));
+  const db::Point points[] = {
+    db::Point (0, 0), db::Point (0, 100), db::Point (1000, 100),
+    db::Point (1000, 500), db::Point (1100, 500),
+    db::Point (1100, 100), db::Point (2100, 100), db::Point (2100, 0)
+  };
+  db::Polygon polygon;
+  polygon.assign_hull (points, points + sizeof (points) / sizeof (points[0]));
+  db::plc::ConvexDecompositionParameters parameters;
+  parameters.with_segments = true;
+
+  for (auto _ : state) {
+    for (int n = 0; n < contours; ++n) {
+      db::plc::Graph graph;
+      db::plc::ConvexDecomposition decomposition (&graph);
+      decomposition.decompose (polygon, parameters, 0.001);
+      const size_t count = graph.num_polygons ();
+      benchmark::DoNotOptimize (count);
+      if (count == 0) {
+        state.SkipWithError ("PLC decomposition produced no polygons");
+        break;
+      }
+    }
+  }
+  state.SetItemsProcessed (int64_t (state.iterations ()) * contours);
+}
+#endif
+
+BENCHMARK (hierarchical_and)->ArgsProduct ({{0, 1, 2, 3, 4, 6, 8, 10, 12}, {800, 3200}})->UseRealTime ()->Unit (benchmark::kMillisecond);
 BENCHMARK (edge_merge)->Arg (4096)->Arg (16384)->UseRealTime ()->Unit (benchmark::kMillisecond);
-BENCHMARK (compound_bool_or)->Args ({0, 128})->Args ({2, 128})->Args ({4, 128})->Args ({0, 512})->Args ({2, 512})->Args ({4, 512})->UseRealTime ()->Unit (benchmark::kMillisecond);
-BENCHMARK (compound_interact)->Args ({0, 128})->Args ({2, 128})->Args ({4, 128})->Args ({0, 512})->Args ({2, 512})->Args ({4, 512})->UseRealTime ()->Unit (benchmark::kMillisecond);
-BENCHMARK (hierarchical_connectivity)->Args ({1, 64})->Args ({2, 64})->Args ({4, 64})->Args ({1, 256})->Args ({2, 256})->Args ({4, 256})->UseRealTime ()->Unit (benchmark::kMillisecond);
+BENCHMARK (compound_bool_or)->ArgsProduct ({{0, 1, 2, 3, 4, 6, 8, 10, 12}, {128, 512}})->UseRealTime ()->Unit (benchmark::kMillisecond);
+BENCHMARK (compound_interact)->ArgsProduct ({{0, 1, 2, 3, 4, 6, 8, 10, 12}, {128, 512}})->UseRealTime ()->Unit (benchmark::kMillisecond);
+BENCHMARK (hierarchical_connectivity)->ArgsProduct ({{1, 2, 3, 4, 6, 8, 10, 12}, {64, 256}})->UseRealTime ()->Unit (benchmark::kMillisecond);
 BENCHMARK (netlist_compare)->Arg (512)->Arg (2048)->UseRealTime ()->Unit (benchmark::kMillisecond);
 BENCHMARK (polygon_rasterize)->Arg (2048)->Arg (8192)->UseRealTime ()->Unit (benchmark::kMillisecond);
+BENCHMARK (region_merge_properties)->Arg (4096)->Arg (16384)->UseRealTime ()->Unit (benchmark::kMillisecond);
+BENCHMARK (shapes_erase)->Arg (4096)->Arg (16384)->UseRealTime ()->Unit (benchmark::kMillisecond);
+#if defined(__linux__)
+BENCHMARK (plc_decomposition)->Arg (16)->Arg (64)->UseRealTime ()->Unit (benchmark::kMillisecond);
+#endif
 
 }
 

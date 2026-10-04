@@ -119,6 +119,17 @@ equals(HAVE_GIT2, "1") {
   DEFINES += HAVE_GIT2
 }
 
+# GPU acceleration via CUDA
+equals(HAVE_CUDA, "1") {
+  DEFINES += HAVE_CUDA
+  LIBS += -lcudart
+  CUDA_DIR = $$system(echo $$(CUDA_DIR))
+  !isEmpty(CUDA_DIR) {
+    QMAKE_INCDIR += $$CUDA_DIR/include
+    QMAKE_LFLAGS += -L$$CUDA_DIR/lib64
+  }
+}
+
 # Use the Address Sanitizer for the debug build on Mac
 mac {
   USE_ASAN_MAC = $$system(echo $$(MAC_USE_ASAN))

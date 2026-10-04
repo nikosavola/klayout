@@ -42,6 +42,7 @@ HAVE_EXPAT=0
 HAVE_GIT2=1
 HAVE_LSTREAM=1
 HAVE_CPP20=0
+HAVE_CUDA=0
 
 RUBYINCLUDE=""
 RUBYINCLUDE2=""
@@ -220,6 +221,9 @@ while [ "$*" != "" ]; do
     ;;
   -cpp20)
     HAVE_CPP20=1
+    ;;
+  -cuda)
+    HAVE_CUDA=1
     ;;
   -qt5)
     echo "*** WARNING: -qt5 option is ignored - Qt version is auto-detected now."
@@ -516,6 +520,9 @@ fi
 if [ $HAVE_LSTREAM != 0 ]; then
   echo "    Includes LStream plugin"
 fi
+if [ $HAVE_CUDA != 0 ]; then
+  echo "    CUDA GPU acceleration enabled"
+fi
 if [ "$RPATH" = "" ]; then
   RPATH="$BIN"
 fi
@@ -601,6 +608,7 @@ echo "      HAVE_PNG=$HAVE_PNG"
 echo "      HAVE_EXPAT=$HAVE_EXPAT"
 echo "      HAVE_GIT2=$HAVE_GIT2"
 echo "      HAVE_LSTREAM=$HAVE_LSTREAM"
+echo "      HAVE_CUDA=$HAVE_CUDA"
 echo "      RPATH=$RPATH"
 
 mkdir -p $BUILD
@@ -675,6 +683,7 @@ qmake_options=(
   HAVE_PNG="$HAVE_PNG"
   HAVE_GIT2="$HAVE_GIT2"
   HAVE_LSTREAM="$HAVE_LSTREAM"
+  HAVE_CUDA="$HAVE_CUDA"
   HAVE_CPP20="$HAVE_CPP20"
   PREFIX="$BIN"
   RPATH="$RPATH"
